@@ -1,36 +1,35 @@
 <?php
-/*****************************************************************************
-**	File:	action/admin.php												**
-**	Diplom:	Gallery															**
-**	Date:	13/01-2009														**
-**	Ver.:	0.1																**
-**	Autor:	Gold Rigma														**
-**	E-mail:	nvn62@mail.ru													**
-**	Decr.:	Администрирование сайта											**
-*****************************************************************************/
+/**
+* @file		action/admin.php
+* @brief	Администрирование сайта.
+* @author	Dark Dayver
+* @version	0.1.1
+* @date		27/03-2012
+* @details	Используется для управления настройками и пользователями галереи.
+*/
 
 // Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
-if (IN_DIPLOM)
+if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/main.php'); // подключаем языковый файл основной страницы
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/menu.php'); // подключаем языковый файл меню
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/admin.php'); // подключаем языковый файл Админки
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php'); // подключаем языковый файл основной страницы
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php'); // подключаем языковый файл меню
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/admin.php'); // подключаем языковый файл Админки
 
-if ($_SESSION['admin_on'] !== true && $user->user['admin'] == true && isset($_POST['admin_password']) && !empty($_POST['admin_password']) && $user->user['password'] == md5($_POST['admin_password'])) // если не открыта сессия для Админа, пользователь имеет право на вход в Админку, был передан пароль для входа и пароль совпадает с паролем пользователя, то...
+if ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== true) && $user->user['admin'] == true && isset($_POST['admin_password']) && !empty($_POST['admin_password']) && $user->user['password'] == md5($_POST['admin_password'])) // если не открыта сессия для Админа, пользователь имеет право на вход в Админку, был передан пароль для входа и пароль совпадает с паролем пользователя, то...
 {
 	$_SESSION['admin_on'] = true; // открываем сессию для Админа
 }
 
-if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если открыта сессия для Админа и пользователь имеет права Админа, то...
+if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->user['admin'] == true) // если открыта сессия для Админа и пользователь имеет права Админа, то...
 {
-	if ($_REQUEST['subact'] == 'settings') // если была команда на общие настройки, то...
+	if (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'settings') // если была команда на общие настройки, то...
 	{
 		if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y'])) // если поступил запрос на сохранение общих настроек, то...
 		{
-			$new_config = $work->config(array()); // формируем массив настроек, хранящихся в базе на текущий момент
+			$new_config = $work->config(); // формируем массив настроек, хранящихся в базе на текущий момент
 
 			// проверим введенные пользователем данные на соотвествие формата, если формат соответствует, то используем введенное пользователем, если нет - остается старая настройка
 			if (isset($_POST['title_name']) && !empty($_POST['title_name'])) $new_config['title_name'] = $_POST['title_name'];
@@ -40,8 +39,8 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 			if (isset($_POST['gal_width']) && !empty($_POST['gal_width']) && mb_ereg('^([0-9]+)(%){0,1}$', $_POST['gal_width'])) $new_config['gal_width'] = $_POST['gal_width'];
 			if (isset($_POST['left_panel']) && !empty($_POST['left_panel']) && mb_ereg('^([0-9]+)(%){0,1}$', $_POST['left_panel'])) $new_config['left_panel'] = $_POST['left_panel'];
 			if (isset($_POST['right_panel']) && !empty($_POST['right_panel']) && mb_ereg('^([0-9]+)(%){0,1}$', $_POST['right_panel'])) $new_config['right_panel'] = $_POST['right_panel'];
-			if (isset($_POST['language']) && !empty($_POST['language']) && is_dir($config['site_dir'] . 'language/' . $_POST['language'])) $new_config['language'] = $_POST['language'];
-			if (isset($_POST['themes']) && !empty($_POST['themes']) && is_dir($config['site_dir'] . 'themes/' . $_POST['themes'])) $new_config['themes'] = $_POST['themes'];
+			if (isset($_POST['language']) && !empty($_POST['language']) && is_dir($work->config['site_dir'] . 'language/' . $_POST['language'])) $new_config['language'] = $_POST['language'];
+			if (isset($_POST['themes']) && !empty($_POST['themes']) && is_dir($work->config['site_dir'] . 'themes/' . $_POST['themes'])) $new_config['themes'] = $_POST['themes'];
 			if (isset($_POST['max_file_size']) && !empty($_POST['max_file_size']) && mb_ereg('^[0-9]+$', $_POST['max_file_size']) && isset($_POST['max_file_size_letter']) && mb_ereg('^(B|K|M|G)$', $_POST['max_file_size_letter']))
 			{
 				if ($_POST['max_file_size_letter'] == 'B')
@@ -69,11 +68,11 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 			foreach ($new_config as $name => $value) // по результатам проверки внесем новые настройки в базу данных
 			{
 				$db->query("UPDATE `config` SET `value` = '" . $value . "' WHERE `name` = '" . $name . "'"); // обновление настроек сайта в базе данных
+				$work->config[$name] = $value;
 			}
-			$config = $work->config($config); // заменим старые настройки на новые
 		}
 
-		$max_file_size = trim($config['max_file_size']); // удаляем пробельные символы в начале и конце строки
+		$max_file_size = trim($work->config['max_file_size']); // удаляем пробельные символы в начале и конце строки
 		$max_file_size_letter = strtolower($max_file_size[strlen($max_file_size)-1]); // получаем последний символ строки и переводим его в нижний регистр
 		if ($max_file_size_letter == 'k' || $max_file_size_letter == 'm' || $max_file_size_letter == 'g') // если последний символ является указателем на кило-, мега- или гиго-байты
 		{
@@ -85,12 +84,12 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 		}
 
 		$language = '<select name="language">'; // открываем список доступных языков
-		$language_dir = dir($config['site_dir'] . '/language'); // проверяем допустимые для выбора языки
+		$language_dir = dir($work->config['site_dir'] . '/language'); // проверяем допустимые для выбора языки
 		while (false !== ($entry = $language_dir->read())) // до тех пор, пока существуют файлы в папке
 		{
 			if($entry != '.' && $entry !='..' && is_dir($language_dir->path . '/' . $entry))
 			{
-				if($entry == $config['language']) $selected = ' selected'; else $selected = ''; // если очередной язык является текущим для сайта - помечаем его выбранным по-умолчанию
+				if($entry == $work->config['language']) $selected = ' selected'; else $selected = ''; // если очередной язык является текущим для сайта - помечаем его выбранным по-умолчанию
 				$language .= '<option value="' . $entry . '"' . $selected . '>' . $entry . '</option>'; // наполняем список доступных языков
 			}
 		}
@@ -98,12 +97,12 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 		$language .= '</select>'; // открываем список доступных языков
 
 		$themes = '<select name="themes">'; // открываем список доступных тем
-		$themes_dir = dir($config['site_dir'] . '/themes'); // проверяем допустимые для выбора темы
+		$themes_dir = dir($work->config['site_dir'] . '/themes'); // проверяем допустимые для выбора темы
 		while (false !== ($entry = $themes_dir->read())) // до тех пор, пока существуют файлы в папке
 		{
 			if($entry != '.' && $entry !='..' && is_dir($themes_dir->path . '/' . $entry))
 			{
-				if($entry == $config['themes']) $selected = ' selected'; else $selected = ''; // если очередная тема является текущей для сайта - помечаем его выбранным по-умолчанию
+				if($entry == $work->config['themes']) $selected = ' selected'; else $selected = ''; // если очередная тема является текущей для сайта - помечаем его выбранным по-умолчанию
 				$themes .= '<option value="' . $entry . '"' . $selected . '>' . $entry . '</option>'; // наполняем список доступных тем
 			}
 		}
@@ -159,13 +158,13 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 					'L_MAX_RATE_DESCRIPTION' => $lang['admin_max_rate_description'],
 					'L_SAVE_SETTINGS' => $lang['admin_save_settings'],
 
-					'D_TITLE_NAME' => $config['title_name'],
-					'D_TITLE_DESCRIPTION' => $config['title_description'],
-					'D_META_DESCRIPTION' => $config['meta_description'],
-					'D_META_KEYWORDS' => $config['meta_keywords'],
-					'D_GAL_WIDTH' => $config['gal_width'],
-					'D_LEFT_PANEL' => $config['left_panel'],
-					'D_RIGHT_PANEL' => $config['right_panel'],
+					'D_TITLE_NAME' => $work->config['title_name'],
+					'D_TITLE_DESCRIPTION' => $work->config['title_description'],
+					'D_META_DESCRIPTION' => $work->config['meta_description'],
+					'D_META_KEYWORDS' => $work->config['meta_keywords'],
+					'D_GAL_WIDTH' => $work->config['gal_width'],
+					'D_LEFT_PANEL' => $work->config['left_panel'],
+					'D_RIGHT_PANEL' => $work->config['right_panel'],
 					'D_LANGUAGE' => $language,
 					'D_THEMES' => $themes,
 					'D_MAX_FILE_SIZE' => $max_file_size,
@@ -173,25 +172,25 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 					'D_SEL_K' => $max_file_size_letter == 'k' ? ' selected' : '',
 					'D_SEL_M' => $max_file_size_letter == 'm' ? ' selected' : '',
 					'D_SEL_G' => $max_file_size_letter == 'g' ? ' selected' : '',
-					'D_MAX_PHOTO_W' => $config['max_photo_w'],
-					'D_MAX_PHOTO_H' => $config['max_photo_h'],
-					'D_TEMP_PHOTO_W' => $config['temp_photo_w'],
-					'D_TEMP_PHOTO_H' => $config['temp_photo_h'],
-					'D_MAX_AVATAR_W' => $config['max_avatar_w'],
-					'D_MAX_AVATAR_H' => $config['max_avatar_h'],
-					'D_COPYRIGHT_YEAR' => $config['copyright_year'],
-					'D_COPYRIGHT_TEXT' => $config['copyright_text'],
-					'D_COPYRIGHT_URL' => $config['copyright_url'],
-					'D_LAST_NEWS' => $config['last_news'],
-					'D_BEST_USER' => $config['best_user'],
-					'D_MAX_RATE' => $config['max_rate']
+					'D_MAX_PHOTO_W' => $work->config['max_photo_w'],
+					'D_MAX_PHOTO_H' => $work->config['max_photo_h'],
+					'D_TEMP_PHOTO_W' => $work->config['temp_photo_w'],
+					'D_TEMP_PHOTO_H' => $work->config['temp_photo_h'],
+					'D_MAX_AVATAR_W' => $work->config['max_avatar_w'],
+					'D_MAX_AVATAR_H' => $work->config['max_avatar_h'],
+					'D_COPYRIGHT_YEAR' => $work->config['copyright_year'],
+					'D_COPYRIGHT_TEXT' => $work->config['copyright_text'],
+					'D_COPYRIGHT_URL' => $work->config['copyright_url'],
+					'D_LAST_NEWS' => $work->config['last_news'],
+					'D_BEST_USER' => $work->config['best_user'],
+					'D_MAX_RATE' => $work->config['max_rate']
 		); // наполняем массив данными для замены по шаблону
 
 		$act = ''; // активного пункта меню - нет
 		$title = $lang['admin_settings']; // дполнительный заговловок - Общие настройки
 		$main_block = $template->create_template('admin_settings.tpl', $array_data); // формируем центральный блок - Общие настройки
 	}
-	elseif ($_REQUEST['subact'] == 'admin_user') // иначе если было запрошено Управление пользователями
+	elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'admin_user') // иначе если было запрошено Управление пользователями
 	{
 		$array_data = array(); // инициируем массив
 
@@ -277,7 +276,7 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 							'D_REAL_NAME' => $temp['real_name'],
 							'D_GROUP' => $select_group,
 
-							'U_AVATAR' => $config['site_url'] . $config['avatar_folder'] . '/' . $temp['avatar']
+							'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
 			)); // наполняем массив данными для замены по шаблону и включаем блок отображения прав пользователя
 		}
 		else // иначе если идентификатор небыл запрошен, то...
@@ -292,7 +291,7 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 					$find_data = $lang['admin_find_user'] . ': '; // инициируем список пользователей
 					for($i = 1; $i <= $find[0]; $i++) // обрабатываем найденных пользователей по списку
 					{
-						$find_data .= '<a href="' . $config['site_url']  . '?action=admin&subact=admin_user&uid=' . $find[$i]['id'] . '" title="' . $find[$i]['real_name'] . '">' . $find[$i]['real_name'] . '</a>'; // формируем список, выводя на экран отображаемое имя пользователя ввиде ссылки на профиль
+						$find_data .= '<a href="' . $work->config['site_url']  . '?action=admin&subact=admin_user&uid=' . $find[$i]['id'] . '" title="' . $find[$i]['real_name'] . '">' . $find[$i]['real_name'] . '</a>'; // формируем список, выводя на экран отображаемое имя пользователя ввиде ссылки на профиль
 						if ($i < $find[0]) $find_data .= ', '; // если НЕ последний пользователь, ставим после него запятую
 						if ($i == $find[0]) $find_data .= '.'; // если последний - точку
 					}
@@ -314,7 +313,7 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 							'L_SEARCH_USER' => $lang['admin_search_user'],
 							'L_HELP_SEARCH' => $lang['admin_help_search_user'],
 
-							'D_SEARCH_USER' => $_POST['search_user'],
+							'D_SEARCH_USER' => isset($_POST['search_user']) ? $_POST['search_user'] : '',
 							'IF_NEED_FIND' => true
 			)); // наполняем массив данными для замены по шаблону - включаем блок поиска пользователей
 		}
@@ -323,7 +322,7 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 		$title = $lang['admin_admin_user']; // дполнительный заговловок - Управление пользователями
 		$main_block = $template->create_template('admin_user.tpl', $array_data); // формируем центральный блок - Управление пользователями
 	}
-	elseif ($_REQUEST['subact'] == 'admin_group') // иначе если запрошено Управление группами, то...
+	elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'admin_group') // иначе если запрошено Управление группами, то...
 	{
 		$array_data = array(); // инициируем массив
 
@@ -404,9 +403,9 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 	else
 	{
 		// наполним данные для пунктов выбора в Админке
-		$select_subact = '&bull;&nbsp;<a href="' . $config['site_url'] . '?action=admin&subact=settings" title="' . $lang['admin_settings'] . '">' . $lang['admin_settings'] . '</a><br />'; // Общие настройки
-		$select_subact .= '&bull;&nbsp;<a href="' . $config['site_url'] . '?action=admin&subact=admin_user" title="' . $lang['admin_admin_user'] . '">' . $lang['admin_admin_user'] . '</a><br />'; // Управление пользователями
-		$select_subact .= '&bull;&nbsp;<a href="' . $config['site_url'] . '?action=admin&subact=admin_group" title="' . $lang['admin_admin_group'] . '">' . $lang['admin_admin_group'] . '</a><br />'; // Управление группами
+		$select_subact = '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=admin&subact=settings" title="' . $lang['admin_settings'] . '">' . $lang['admin_settings'] . '</a><br />'; // Общие настройки
+		$select_subact .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=admin&subact=admin_user" title="' . $lang['admin_admin_user'] . '">' . $lang['admin_admin_user'] . '</a><br />'; // Управление пользователями
+		$select_subact .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=admin&subact=admin_group" title="' . $lang['admin_admin_group'] . '">' . $lang['admin_admin_group'] . '</a><br />'; // Управление группами
 
 		$array_data = array(); // инициируем массив
 
@@ -425,7 +424,7 @@ if ($_SESSION['admin_on'] === true && $user->user['admin'] == true) // если 
 		$main_block = $template->create_template('admin_start.tpl', $array_data); // формируем центральный блок - список выбора пунктов Админки
 	}
 }
-elseif ($_SESSION['admin_on'] !== true && $user->user['admin'] == true) // иначе если сессия для Админа не открыта, но пользователь имеет право её открыть, то...
+elseif ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== true) && $user->user['admin'] == true) // иначе если сессия для Админа не открыта, но пользователь имеет право её открыть, то...
 {
 	$array_data = array(); // инициируем массив
 
@@ -446,7 +445,7 @@ else // иначе...
 {
 	$act = 'main'; // активный пункт меню - main
 	$title = $lang['main_main']; // дополнительный заголовок - Главная страницы
-	$main_block = $template->template_news($config['last_news']); // формируем главную страницу сайта
+	$main_block = $template->template_news($work->config['last_news']); // формируем главную страницу сайта
 }
 
 echo $template->create_main_template($act, $title, $main_block); // выводим сформированную страницу сайта

@@ -1,23 +1,24 @@
 <?php
-/*****************************************************************************
-**	File:	action/news.php													**
-**	Diplom:	Gallery															**
-**	Date:	13/01-2009														**
-**	Ver.:	0.1																**
-**	Autor:	Gold Rigma														**
-**	E-mail:	nvn62@mail.ru													**
-**	Decr.:	Вывод и обработка новостей сайта								**
-*****************************************************************************/
+/**
+* @file		action/news.php
+* @brief	Новости сайта.
+* @author	Dark Dayver
+* @version	0.1.1
+* @date		27/03-2012
+* @details	Вывод и обработка новостей сайта.
+*/
 
 // Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
-if (IN_DIPLOM)
+if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/main.php'); // подключаем языковый файл основной страницы
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/menu.php'); // подключаем языковый файл меню
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/news.php'); // подключаем языковый файл новостей
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php'); // подключаем языковый файл основной страницы
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php'); // подключаем языковый файл меню
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/news.php'); // подключаем языковый файл новостей
+
+$title = $lang['news_title']; // дополнительным названием страницы будет Архив новостей
 
 if(!isset($_REQUEST['news']) || empty($_REQUEST['news']) || !(mb_ereg('^[0-9]+$', $_REQUEST['news']))) // если не указан идентификатор новости или идентификатор не является числом, то...
 {
@@ -34,6 +35,7 @@ if(isset($_REQUEST['subact']) && !empty($_REQUEST['subact'])) // если ука
 {
 	$subact = $_REQUEST['subact']; // сохраняем данную команду
 }
+else $subact = '';
 
 if ($subact == 'save') // если поступила команда н сохранение (добавленной новости или редактируемой)
 {
@@ -94,7 +96,7 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
 	$user_add = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $temp['user_post']); // запрашиваем данные об отображаемом имени пользователя, добавившего новость
 	if ($user_add) // если пользователь существует, то...
 	{
-		$name_user = '<a href="' . $config['site_url']  . '?action=login&subact=profile&uid=' . $temp_news['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>'; // сохраняем его отобржаемое имя и делаем его ссылкой на профиль пользователя
+		$name_user = '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_news['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>'; // сохраняем его отобржаемое имя и делаем его ссылкой на профиль пользователя
 	}
 	else // иначе
 	{
@@ -116,7 +118,7 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
 
 				'IF_NEED_USER' => true,
 
-				'U_SAVE_NEWS' => $config['site_url'] . '?action=news&subact=save&news=' . $news
+				'U_SAVE_NEWS' => $work->config['site_url'] . '?action=news&subact=save&news=' . $news
 	); // наполняем массив данными для замены по шаблону
 
 	$main_block = $template->create_template('news_save.tpl', $array_data); // создаем центральный блок - заполненный шаблон для редактирования новости
@@ -125,11 +127,11 @@ elseif ($subact == 'delete' && $news !== false && ($user->user['news_moderate'] 
 {
 	if (!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'action=news') !== false) // проверяем реферальную ссылку - если пользователь удаляет новость из Архива новостей, то...
 	{
-		$redirect_url = $config['site_url'] . '?action=news'; // после удаления переместим пользователя обратно в архив
+		$redirect_url = $work->config['site_url'] . '?action=news'; // после удаления переместим пользователя обратно в архив
 	}
 	else // иначе
 	{
-		$redirect_url = $config['site_url']; // переместим пользователя на главную страницу
+		$redirect_url = $work->config['site_url']; // переместим пользователя на главную страницу
 	}
 	$redirect_time = 5; // устанавливаем время редиректа 5 сек
 	$redirect_message = $lang['news_title'] . ' ' . $temp['name_post'] . ' ' . $lang['news_del_post']; // сообщаем пользователю об удачном удалении новости
@@ -155,7 +157,7 @@ elseif ($subact == 'add' && $news === false && $user->user['news_add'] == true) 
 
 				'IF_NEED_USER' => false,
 
-				'U_SAVE_NEWS' => $config['site_url'] . '?action=news&subact=save'
+				'U_SAVE_NEWS' => $work->config['site_url'] . '?action=news&subact=save'
 	); // наполняем массив данными для замены по шаблону
 
 	$main_block = $template->create_template('news_save.tpl', $array_data); // формируем центральный блок - форму добавления новостей
@@ -166,7 +168,6 @@ else // иначе если не указаны доп-команды, то вы
 	{
 		$main_block = $template->template_news($news, 'id'); // выведем соотвествующую новость в центральный блок
 		$act = ''; // активного пункта меню нет
-		$title = $lang['news_title']; // дополнительным названием страницы будет Архив новостей
 	}
 	else // иначе, если не указан идентификатор, то...
 	{
@@ -176,7 +177,7 @@ else // иначе если не указаны доп-команды, то вы
 			$temp = $db->fetch_big_array("SELECT DISTINCT DATE_FORMAT(`data_last_edit`, '%Y') AS 'year' FROM `news` ORDER BY `data_last_edit` ASC"); // запрос из базы всех лет, в которые производились изменения новостей
 			if(!$temp) // если нет таких данных, то...
 			{
-				$main_block = $template->template_news($config['last_news']); // вывести последнии новости (фактически фнукция класса выведет сообщение, что на сайте нет новостей)
+				$main_block = $template->template_news($work->config['last_news']); // вывести последнии новости (фактически фнукция класса выведет сообщение, что на сайте нет новостей)
 			}
 			else // иначе если такие данные есть, то формируем вывод пунктов по годам
 			{
@@ -184,7 +185,7 @@ else // иначе если не указаны доп-команды, то вы
 				for($i = 1; $i <= $temp[0]; $i++) // обрабатываем в цикле имеющиемя данные
 				{
 					$temp2 = $db->num_rows("SELECT * FROM `news` WHERE DATE_FORMAT(`data_last_edit`, '%Y') = '" . $temp[$i]['year'] . "'"); // запрашиваем данные о том, сколько новостей существует в проверяемый год
-					$spisok .= '&bull;&nbsp;<a href="' . $config['site_url'] . '?action=news&y=' . $temp[$i]['year'] . '" title="' . $temp[$i]['year'] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $temp[$i]['year'] . ' (' . $temp2 . ')</a><br /><br />'; // формируем ссылку вида: YYYY (кол-во новостей) и добавляем её в список
+					$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&y=' . $temp[$i]['year'] . '" title="' . $temp[$i]['year'] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $temp[$i]['year'] . ' (' . $temp2 . ')</a><br /><br />'; // формируем ссылку вида: YYYY (кол-во новостей) и добавляем её в список
 				}
 
 				$array_data = array(); // инициируем массив
@@ -211,7 +212,7 @@ else // иначе если не указаны доп-команды, то вы
 				$temp = $db->fetch_big_array("SELECT DISTINCT DATE_FORMAT(`data_last_edit`, '%m') AS 'month' FROM `news` WHERE DATE_FORMAT(`data_last_edit`, '%Y') = '" . $year . "' ORDER BY `data_last_edit` ASC"); // запрашиваем список месяцев, когда были редактированы новости в указанном году
 				if(!$temp) // если нет таких данных, то...
 				{
-					$main_block = $template->template_news($config['last_news']); // выводим список последних новостей
+					$main_block = $template->template_news($work->config['last_news']); // выводим список последних новостей
 				}
 				else // иначе...
 				{
@@ -219,7 +220,7 @@ else // иначе если не указаны доп-команды, то вы
 					for($i = 1; $i <= $temp[0]; $i++) // обрабатываем по циклу все месяца, полученный в запросе
 					{
 						$temp2 = $db->num_rows("SELECT * FROM `news` WHERE DATE_FORMAT(`data_last_edit`, '%Y') = '" . $year . "' AND DATE_FORMAT(`data_last_edit`, '%m') = '" . $temp[$i]['month'] . "'"); // запрашиываем количество новостей в указанном месяце указанного года
-						$spisok .= '&bull;&nbsp;<a href="' . $config['site_url'] . '?action=news&y=' . $year . '&m=' . $temp[$i]['month'] . '" title="' . $lang['news'][$temp[$i]['month']] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $lang['news'][$temp[$i]['month']] . ' (' . $temp2 . ')</a><br />'; // формируем ссылку вида Месяц (кол-во новостей)
+						$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&y=' . $year . '&m=' . $temp[$i]['month'] . '" title="' . $lang['news'][$temp[$i]['month']] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $lang['news'][$temp[$i]['month']] . ' (' . $temp2 . ')</a><br />'; // формируем ссылку вида Месяц (кол-во новостей)
 					}
 
 					$array_data = array(); // инициируем массив
@@ -245,14 +246,14 @@ else // иначе если не указаны доп-команды, то вы
 				$temp = $db->fetch_big_array("SELECT * FROM `news` WHERE DATE_FORMAT(`data_last_edit`, '%Y') = '" . $year . "' AND DATE_FORMAT(`data_last_edit`, '%m') = '" . $month . "' ORDER BY `data_last_edit` ASC"); // запрашиваем список новостей, которые были в указанном месяце указанного года
 				if(!$temp) // если нет таких данных, то...
 				{
-					$main_block = $template->template_news($config['last_news']); // выводим список последних новостей
+					$main_block = $template->template_news($work->config['last_news']); // выводим список последних новостей
 				}
 				else // иначе формируем список названий новостей
 				{
 					$spisok = '<br />'; // инициируем переменную списка
 					for($i = 1; $i <= $temp[0]; $i++) // обрабатываем полученные новости в цикле
 					{
-						$spisok .= '&bull;&nbsp;<a href="' . $config['site_url'] . '?action=news&news=' . $temp[$i]['id'] . '" title="' . substr($temp[$i]['text_post'], 0, 100) . '">' . $temp[$i]['name_post'] . '</a><br />'; // формируем ссылку типа "Название новости" с всплывающей подсказкой, содержащей 100 первых символов текста новости
+						$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&news=' . $temp[$i]['id'] . '" title="' . substr($temp[$i]['text_post'], 0, 100) . '">' . $temp[$i]['name_post'] . '</a><br />'; // формируем ссылку типа "Название новости" с всплывающей подсказкой, содержащей 100 первых символов текста новости
 					}
 
 					$array_data = array(); // инициируем массив

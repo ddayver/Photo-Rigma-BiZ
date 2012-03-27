@@ -1,21 +1,28 @@
 <?php
-/*************************************************************************
-**	File:	language/russian/main.php									**
-**	Diplom:	Gallery														**
-**	Date:	13/01-2009													**
-**	Ver.:	0.1															**
-**	Autor:	Gold Rigma													**
-**	E-mail:	nvn62@mail.ru												**
-**	Decr.:	Языкоый файл для основной страницы сайта					**
-**	Lang.:	Russian (Русский)											**
-*************************************************************************/
-
-// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
-if (IN_DIPLOM)
+/**
+* @file		language/russian/main.php
+* @brief	Переменные языка для основной страницы сайта (русский)
+* @author	Dark Dayver
+* @version	0.1.1
+* @date		27/03-2012
+* @details	Содержит переменные языка для основной страницы сайта (русский). Более подробная информация в группе @ref LanguageRussian
+*/
+/// @cond
+if (IN_GALLERY)
 {
 	die('HACK!');
 }
+/// @endcond
 
+/**
+* @defgroup LanguageRussian Языковые переменные русского языка
+*/
+/*@{*/
+
+/**
+* @defgroup LanguageRussianMain Основные языковые переменные
+*/
+/*@{*/
 $lang['main_main'] = 'Главная';
 $lang['main_search'] = 'Поиск';
 $lang['main_rate'] = 'Оценка';
@@ -63,5 +70,6 @@ $lang['main_no_category'] = 'Нет разделов!';
 $lang['main_edit_news'] = 'Редактировать новость';
 $lang['main_delete_news'] = 'Удалить новость';
 $lang['main_confirm_delete_news'] = 'Вы уверены, что хотите удалить новость';
-
+/*@}*/
+/*@}*/
 ?>

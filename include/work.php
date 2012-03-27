@@ -1,58 +1,51 @@
 <?php
-/*****************************************************************************
-**	File:	include/common.php												**
-**	Diplom:	Gallery															**
-**	Date:	13/01-2009														**
-**	Ver.:	0.1																**
-**	Autor:	Gold Rigma														**
-**	E-mail:	nvn62@mail.ru													**
-**	Decr.:	Класс с общими функциями										**
-*****************************************************************************/
+/**
+* @file		include/work.php
+* @brief	Класс с общими функциями.
+* @author	Dark Dayver
+* @version	0.1.1
+* @date		27/03-2012
+* @details	Класс с общими функциями.
+*/
 
 // Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
-if (IN_DIPLOM)
+if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
-class Work
+class work
 {
 	// Класс с общими функциями, принимаемые и отдаваемые переменные зависят от конкретной функции
 
 	// При создании класса автоматически стартует сессия (функция Work())
 
 	// Функции:
-	// config($config) - формирует массив настроек из файла config.php и БД. На входе: значения, полученные из файла, на выходе - полностью заполненный массив конфигураций.
 	// category($cat_id, $user_flag) - формирует информационную строку по конктретному разделу, идентификатор которого приходит в переменной $cat_id, если $user_flag = 0, то формируется по обычному списку разделов, если $user_flag = 1 - формирование идет по списку пользовательских альбомов и значением $cat_id приходит идентификатор пользователя
 	// del_photo($photo_id) - удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов
 	// return_bytes($val) - преобразует полученное значение в байты - используется для преобразования значений типа 2M(егабайта) в размер в байтах
 	// encodename($string) - преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания)
 
-	var $conf = array(); // Резервируем и очищаем массив для хранения настроек
+	var $config = array(); // Резервируем и очищаем массив для хранения настроек
 
-	function Work()
+	function work()
 	{
+		global $db, $config; // Используем глобальный объект для работы с БД
 		session_start(); // стартуем сессию
-	}
 
-	function config($config)
-	{
-		global $db; // Используем глобальный объект для работы с БД
-
-		$this->conf = $config; // Внесем настроечные параметры, полученные на входе в текущий массив
+		$this->config = $config; // Внесем настроечные параметры, полученные на входе в текущий массив
 		$result = $db->query("SELECT * FROM `config`"); // Запрос настроек из БД
 		if ($result) // Проверка, что получен результат запроса к БД
 		{
 			while($res = mysql_fetch_array($result)) //До тех пор, пока еще есть строки результата - обрабатываем их
 			{
-				$this->conf[$res['name']] = $res['value']; // Дополняем настройки из БД в текущий массив
+				$this->config[$res['name']] = $res['value']; // Дополняем настройки из БД в текущий массив
 			}
 		}
 		else
 		{
 			die('Невозможно получить настройки'); // Если не получили настройки - выдаем сообщение и останавливаем скрипт
 		}
-		return $this->conf; // Передаем сформированный массив настроек
 	}
 
 	function category($cat_id = 0, $user_flag = 0)
@@ -91,23 +84,23 @@ class Work
 		if($temp_last && $user->user['pic_view'] == true) // если есть последнее залитое изображение и пользователь имеет право просмотра изображений, то...
 		{
 			$photo['last_name'] = $temp_last['name'] . ' (' . $temp_last['description'] . ')'; // формируем название последнего изображения в виде: Название (Описание)
-			$photo['last_url'] = $config['site_url'] . '?action=photo&id=' . $temp_last['id']; // формируем ссылку для просмотра данного изображения
+			$photo['last_url'] = $this->config['site_url'] . '?action=photo&id=' . $temp_last['id']; // формируем ссылку для просмотра данного изображения
 		}
 		else // иначе
 		{
 			$photo['last_name'] = $lang['main_no_foto']; // выдаем сообщение, что нет изображения
-			$photo['last_url'] = $config['site_url'] . '?action=photo&id=0'; // ссылка будет указывать на вывод несуществующего изображения
+			$photo['last_url'] = $this->config['site_url'] . '?action=photo&id=0'; // ссылка будет указывать на вывод несуществующего изображения
 		}
 
 		if($temp_top && $user->user['pic_view'] == true) // если есть изображение с максимальной оценкой и пользователь имеет право просмотра изображений, то...
 		{
 			$photo['top_name'] = $temp_top['name'] . ' (' . $temp_top['description'] . ')'; // формируем название изображения с мксимальной оценкой в виде: Название (Описание)
-			$photo['top_url'] = $config['site_url'] . '?action=photo&id=' . $temp_top['id']; // формируем ссылку для просмотра данного изображения
+			$photo['top_url'] = $this->config['site_url'] . '?action=photo&id=' . $temp_top['id']; // формируем ссылку для просмотра данного изображения
 		}
 		else // иначе
 		{
 			$photo['top_name'] = $lang['main_no_foto']; // выдаем сообщение, что нет изображения
-			$photo['top_url'] = $config['site_url'] . '?action=photo&id=0'; // ссылка будет указывать на вывод несуществующего изображения
+			$photo['top_url'] = $this->config['site_url'] . '?action=photo&id=0'; // ссылка будет указывать на вывод несуществующего изображения
 		}
 
 		if($cat_id == 0) // если получен идентификатор на общий список пользовательских альбомов (идентификатор равен 0)
@@ -136,7 +129,7 @@ class Work
 					'D_LAST_PHOTO' => $photo['last_name'],
 					'D_TOP_PHOTO' => $photo['top_name'],
 
-					'U_CATEGORY' => $config['site_url'] . '?action=category&cat=' . $temp['id'],
+					'U_CATEGORY' => $this->config['site_url'] . '?action=category&cat=' . $temp['id'],
 					'U_LAST_PHOTO' => $photo['last_url'],
 					'U_TOP_PHOTO' => $photo['top_url']
 		); // наполняем массив данными для замены по шаблону
@@ -160,8 +153,8 @@ class Work
 	    		$temp_category = $db->fetch_array("SELECT * FROM `category` WHERE `id` = " .  $temp_foto['category']); // получаем данные о разделе, где хранится данное изображение
 				if($temp_category) // если данные о разделе существуют, то...
 				{
-					$path_thumbnail = $this->conf['site_dir'] . $this->conf['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // формируем полный путь к эскизу изображения
-					$path_photo = $this->conf['site_dir'] . $this->conf['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // и формируем полный путь к файлу изображения
+					$path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // формируем полный путь к эскизу изображения
+					$path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // и формируем полный путь к файлу изображения
 					if($db->query("DELETE FROM `photo` WHERE `id` = " . $photo_id)) // если удалось удалить запись о файле из базы данных, то...
 					{
 						@unlink($path_thumbnail); // удаляем файл эскиза
@@ -253,9 +246,4 @@ class Work
 		return $hack;
 	}
 }
-
-$work = new Work(); // инициируем общий класс и стартуем сессию
-
-$config = $work->config($config); // формируем массив настроек
-
 ?>

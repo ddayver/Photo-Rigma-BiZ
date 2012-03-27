@@ -1,23 +1,22 @@
 <?php
-/*****************************************************************************
-**	File:	action/search.php												**
-**	Diplom:	Gallery															**
-**	Date:	13/01-2009														**
-**	Ver.:	0.1																**
-**	Autor:	Gold Rigma														**
-**	E-mail:	nvn62@mail.ru													**
-**	Decr.:	Обработка поисковых запросов									**
-*****************************************************************************/
+/**
+* @file		action/search.php
+* @brief	Поиск по сайту.
+* @author	Dark Dayver
+* @version	0.1.1
+* @date		27/03-2012
+* @details	Обработка поисковых запросов.
+*/
 
 // Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
-if (IN_DIPLOM)
+if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/main.php'); // подключаем языковый файл основной страницы
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/menu.php'); // подключаем языковый файл меню
-include_once($config['site_dir'] . 'language/' . $config['language'] . '/search.php'); // подключаем языковый файл поиска
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php'); // подключаем языковый файл основной страницы
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php'); // подключаем языковый файл меню
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/search.php'); // подключаем языковый файл поиска
 
 if(isset($_POST['search_main_text']) && !empty($_POST['search_main_text']) && empty($_POST['search_text'])) // если запрос поступил с шапки сайта и нет данных с самой страницы поиска, то...
 {
@@ -75,7 +74,7 @@ if($search_user) // если включен поиск по пользовате
 		$find_data['d_search_user'] = ''; // инициируем мссив списка пользователей
 		for($i = 1; $i <= $find[0]; $i++) // обрабатываем найденных пользователей по списку
 		{
-			$find_data['d_search_user'] .= '<a href="' . $config['site_url']  . '?action=login&subact=profile&uid=' . $find[$i]['id'] . '" title="' . $find[$i]['real_name'] . '">' . $find[$i]['real_name'] . '</a>'; // формируем список, выводя на экран отображаемое имя пользователя ввиде ссылки на профиль
+			$find_data['d_search_user'] .= '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $find[$i]['id'] . '" title="' . $find[$i]['real_name'] . '">' . $find[$i]['real_name'] . '</a>'; // формируем список, выводя на экран отображаемое имя пользователя ввиде ссылки на профиль
 			if ($i < $find[0]) $find_data['d_search_user'] .= ', '; // если НЕ последний пользователь, ставим после него запятую
 			if ($i == $find[0]) $find_data['d_search_user'] .= '.'; // если последний - точку
 		}
@@ -97,7 +96,7 @@ if($search_category) // если включен поиск по атегория
 		$find_data['d_search_category'] = ''; // инициируем список найденных разделов
 		for($i = 1; $i <= $find[0]; $i++) // обрабатываем в цикле данный список
 		{
-			$find_data['d_search_category'] .= '<a href="' . $config['site_url']  . '?action=category&cat=' . $find[$i]['id'] . '" title="' . $find[$i]['description'] . '">' . $find[$i]['name'] . '</a>'; // формируем ссылку типа "Название раздела" и всплывающей подсказкой - описание раздела
+			$find_data['d_search_category'] .= '<a href="' . $work->config['site_url']  . '?action=category&cat=' . $find[$i]['id'] . '" title="' . $find[$i]['description'] . '">' . $find[$i]['name'] . '</a>'; // формируем ссылку типа "Название раздела" и всплывающей подсказкой - описание раздела
 			if ($i < $find[0]) $find_data['d_search_category'] .= ', '; // если раздел не последний - ставим после него запятую
 			if ($i == $find[0]) $find_data['d_search_category'] .= '.'; // если последний - точку
 		}
@@ -119,7 +118,7 @@ if($search_news) // если включен поиск по новостям
 		$find_data['d_search_news'] = ''; // инициируем список новостей
 		for($i = 1; $i <= $find[0]; $i++) // обрабатываем найденные новости по циклу
 		{
-			$find_data['d_search_news'] .= '<a href="' . $config['site_url']  . '?action=news&news=' . $find[$i]['id'] . '" title="' . substr($find[$i]['text_post'], 0, 100) . '">' . $find[$i]['name_post'] . '</a>'; // формируем ссылку типа "Название новости" и во всплывающей подсказке - первые 100 символов новости
+			$find_data['d_search_news'] .= '<a href="' . $work->config['site_url']  . '?action=news&news=' . $find[$i]['id'] . '" title="' . substr($find[$i]['text_post'], 0, 100) . '">' . $find[$i]['name_post'] . '</a>'; // формируем ссылку типа "Название новости" и во всплывающей подсказке - первые 100 символов новости
 			if ($i < $find[0]) $find_data['d_search_news'] .= ', '; // если новость не последняя - ставим запятую
 			if ($i == $find[0]) $find_data['d_search_news'] .= '.'; // если последняя - точка
 		}
@@ -150,35 +149,37 @@ if($search_photo) // если включен поис по изображени�
 	}
 }
 
+if (isset($_POST['search_text'])) $_POST['search_text'] = htmlspecialchars($_POST['search_text'], ENT_QUOTES);
+
 $array_data = array(
 			'NAME_BLOCK' => $lang['main_search'],
-			'L_SEARCH' => $lang['login_login'],
+			'L_SEARCH' => $lang['main_search'],
 			'L_SEARCH_TITLE' => $lang['search_title'],
 			'L_NEED_USER' => $lang['search_need_user'],
 			'L_NEED_CATEGORY' => $lang['search_need_category'],
 			'L_NEED_NEWS' => $lang['search_need_news'],
 			'L_NEED_PHOTO' => $lang['search_need_photo'],
-			'L_FIND_USER' => $find_data['l_search_user'],
-			'L_FIND_CATEGORY' => $find_data['l_search_category'],
-			'L_FIND_NEWS' => $find_data['l_search_news'],
-			'L_FIND_PHOTO' => $find_data['l_search_photo'],
+			'L_FIND_USER' => isset($find_data['l_search_user']) ? $find_data['l_search_user'] : '',
+			'L_FIND_CATEGORY' => isset($find_data['l_search_category']) ? $find_data['l_search_category'] : '',
+			'L_FIND_NEWS' => isset($find_data['l_search_news']) ? $find_data['l_search_news'] : '',
+			'L_FIND_PHOTO' => isset($find_data['l_search_photo']) ? $find_data['l_search_photo'] : '',
 
-			'D_SEARCH_TEXT' => htmlspecialchars($_POST['search_text'], ENT_QUOTES),
-			'D_NEED_USER' => $check['user'],
-			'D_NEED_CATEGORY' => $check['category'],
-			'D_NEED_NEWS' => $check['news'],
-			'D_NEED_PHOTO' => $check['photo'],
-			'D_FIND_USER' => $find_data['d_search_user'],
-			'D_FIND_CATEGORY' => $find_data['d_search_category'],
-			'D_FIND_NEWS' => $find_data['d_search_news'],
-			'D_FIND_PHOTO' => $find_data['d_search_photo'],
+			'D_SEARCH_TEXT' => isset($_POST['search_text']) ? $_POST['search_text'] : '',
+			'D_NEED_USER' => isset($check['user']) ? $check['user'] : '',
+			'D_NEED_CATEGORY' => isset($check['category']) ? $check['category'] : '',
+			'D_NEED_NEWS' => isset($check['news']) ? $check['news'] : '',
+			'D_NEED_PHOTO' => isset($check['photo']) ? $check['photo'] : '',
+			'D_FIND_USER' => isset($find_data['d_search_user']) ? $find_data['d_search_user'] : '',
+			'D_FIND_CATEGORY' => isset($find_data['d_search_category']) ? $find_data['d_search_category'] : '',
+			'D_FIND_NEWS' => isset($find_data['d_search_news']) ? $find_data['d_search_news'] : '',
+			'D_FIND_PHOTO' => isset($find_data['d_search_photo']) ? $find_data['d_search_photo'] : '',
 
 			'IF_NEED_USER' => $search_user,
 			'IF_NEED_CATEGORY' => $search_category,
 			'IF_NEED_NEWS' => $search_news,
 			'IF_NEED_PHOTO' => $search_photo,
 
-			'U_SEARCH' => $config['site_url'] . '?action=search'
+			'U_SEARCH' => $work->config['site_url'] . '?action=search'
 ); // наполняем массив данными для замены по шаблону, используя ранее полученные данные
 
 
