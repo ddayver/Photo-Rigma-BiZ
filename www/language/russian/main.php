@@ -29,6 +29,7 @@ $lang['main_rate'] = 'Оценка';
 $lang['main_top_foto'] = 'Лучшее фото';
 $lang['main_last_foto'] = 'Последнее фото';
 $lang['main_rand_foto'] = 'Случайное фото';
+$lang['main_cat_foto'] = 'Раздел с фото';
 $lang['main_no_foto'] = 'Нет фото!';
 $lang['main_user_add'] = 'Добавил';
 $lang['main_data_add'] = 'Дата публикации (последней редакции)';

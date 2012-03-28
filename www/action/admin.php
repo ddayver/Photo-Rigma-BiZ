@@ -333,7 +333,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						'IF_EDIT_GROUP' => false
 		); // наполняем массив данными для замены по шаблону - по умолчанию все блоки отключены
 
-		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && mb_ereg('^[0-9]+$', $_POST['id_group'])) // если поступила команда на сохранение настроек группы, то...
+		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group']))) // если поступила команда на сохранение настроек группы, то...
 		{
 			$temp = $db->fetch_array("SELECT * FROM `group` WHERE `id` = " . $_POST['id_group']); // запрашиваем текущие данные о группе
 			if(isset($_POST['name_group']) && !empty($_POST['name_group'])) $db->query("UPDATE `group` SET `name` = '" . $_POST['name_group'] . "' WHERE `id` = " . $_POST['id_group']); // если не пустое поле названия группы, то заменяем текущее на переданное со страницы
@@ -362,7 +362,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 			{
 				if ($key != 'id' && $key != 'name') // если это поля прав доступа, то...
 				{
-					$array_data['L_' . strtoupper($key)] = $lang['admin'][$key]; // формируем название права доступа
+					$array_data['L_' . strtoupper($key)] = $lang['admin_' . $key]; // формируем название права доступа
 					if ($value == 1) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = ''; // если право включено - ставим галочку, иначе - нет
 				}
 			}

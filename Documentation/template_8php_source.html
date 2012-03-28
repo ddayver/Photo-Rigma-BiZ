@@ -212,7 +212,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00132"></a>00132 
 <a name="l00133"></a>00133     <span class="keyword">function</span> create_menu(<a class="code" href="index_8php.html#aa698a3e72116e8e778be0e95d908ee30" title="Действие, которое необходимо выполнить">$action</a> = <span class="stringliteral">&#39;main&#39;</span>, $menu = 0)
 <a name="l00134"></a>00134     {
-<a name="l00135"></a>00135         global $db, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив настроек сайта ($config), массив языковых переменных ($lang), объект текущего пользователя на сайте ($user)</span>
+<a name="l00135"></a>00135         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив настроек сайта ($config), массив языковых переменных ($lang), объект текущего пользователя на сайте ($user)</span>
 <a name="l00136"></a>00136 
 <a name="l00137"></a>00137         $m[0] = <span class="stringliteral">&#39;short&#39;</span>; <span class="comment">// формируем массив для</span>
 <a name="l00138"></a>00138         $m[1] = <span class="stringliteral">&#39;long&#39;</span>; <span class="comment">// работы с шаблонами</span>
@@ -272,7 +272,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00192"></a>00192 
 <a name="l00193"></a>00193     <span class="keyword">function</span> create_foto($type = <span class="stringliteral">&#39;top&#39;</span>, $id_photo = 0)
 <a name="l00194"></a>00194     {
-<a name="l00195"></a>00195         global $db, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив настроек сайта ($config), массив языковых переменных ($lang), объект текущего пользователя на сайте ($user)</span>
+<a name="l00195"></a>00195         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив настроек сайта ($config), массив языковых переменных ($lang), объект текущего пользователя на сайте ($user)</span>
 <a name="l00196"></a>00196 
 <a name="l00197"></a>00197         <span class="keywordflow">if</span> ($user-&gt;user[<span class="stringliteral">&#39;pic_view&#39;</span>] == <span class="keyword">true</span>) <span class="comment">// если пользователь имеет право просматривать изображения, то...</span>
 <a name="l00198"></a>00198         {
@@ -465,7 +465,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00385"></a>00385 
 <a name="l00386"></a>00386     <span class="keyword">function</span> template_user()
 <a name="l00387"></a>00387     {
-<a name="l00388"></a>00388         global $db, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config), объект текущего пользователя на сайте ($user)</span>
+<a name="l00388"></a>00388         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config), объект текущего пользователя на сайте ($user)</span>
 <a name="l00389"></a>00389 
 <a name="l00390"></a>00390         <span class="keywordflow">if</span> ($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] == 0) <span class="comment">// если пользователь НЕ онлайн, то...</span>
 <a name="l00391"></a>00391         {
@@ -504,7 +504,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00424"></a>00424 
 <a name="l00425"></a>00425     <span class="keyword">function</span> template_news($news_data = 1, $act=<span class="stringliteral">&#39;last&#39;</span>)
 <a name="l00426"></a>00426     {
-<a name="l00427"></a>00427         global $db, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config), объект текущего пользователя на сайте ($user)</span>
+<a name="l00427"></a>00427         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config), объект текущего пользователя на сайте ($user)</span>
 <a name="l00428"></a>00428 
 <a name="l00429"></a>00429         $news[<span class="stringliteral">&#39;IF_EDIT_LONG&#39;</span>] = <span class="keyword">false</span>; <span class="comment">//спорно - есть ли необходимость в таком выводе, но зарезервировано</span>
 <a name="l00430"></a>00430 
@@ -569,7 +569,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00489"></a>00489 
 <a name="l00490"></a>00490     <span class="keyword">function</span> template_stat()
 <a name="l00491"></a>00491     {
-<a name="l00492"></a>00492         global $db, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config)</span>
+<a name="l00492"></a>00492         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config)</span>
 <a name="l00493"></a>00493 
 <a name="l00494"></a>00494         $temp = $db-&gt;num_rows(<span class="stringliteral">&quot;SELECT `id` FROM `user`&quot;</span>); <span class="comment">// получаем информацию о кол-ве пользователей на сайте</span>
 <a name="l00495"></a>00495         <span class="keywordflow">if</span>($temp) <span class="comment">// если информация есть, то...</span>
@@ -695,7 +695,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00615"></a>00615 
 <a name="l00616"></a>00616     <span class="keyword">function</span> template_best_user($best_user = 1)
 <a name="l00617"></a>00617     {
-<a name="l00618"></a>00618         global $db, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config)</span>
+<a name="l00618"></a>00618         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>; <span class="comment">// подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config)</span>
 <a name="l00619"></a>00619 
 <a name="l00620"></a>00620         $temp = $db-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT DISTINCT `user_upload` FROM `photo`&quot;</span>); <span class="comment">// получаем данные о заливавших фото пользователях</span>
 <a name="l00621"></a>00621         $name_block = $lang[<span class="stringliteral">&#39;main_best_user_1&#39;</span>] . $best_user . $lang[<span class="stringliteral">&#39;main_best_user_2&#39;</span>]; <span class="comment">// формируем название блока в стиле &quot;кол-во лучших пользователей&quot;</span>
@@ -898,7 +898,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">

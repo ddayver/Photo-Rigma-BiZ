@@ -73,37 +73,767 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li><a href="classes.html"><span>Алфавитный&#160;указатель&#160;структур&#160;данных</span></a></li>
+      <li><a href="functions.html"><span>Поля&#160;структур</span></a></li>
     </ul>
   </div>
 </div>
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Открытые члены</a> &#124;
-<a href="#pub-attribs">Поля данных</a>  </div>
+<a href="#pub-attribs">Поля данных</a> &#124;
+<a href="#pri-methods">Закрытые члены</a> &#124;
+<a href="#pri-attribs">Закрытые данные</a>  </div>
   <div class="headertitle">
 <div class="title">Класс db</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="db" --><table class="memberdecls">
+<!-- doxytag: class="db" -->
+<p>Класс по работе с БД MySQL.  
+ <a href="classdb.html#details">Подробнее...</a></p>
+<table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Открытые члены</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03e9ab6d80aeae541df9e4282bc580ea"></a><!-- doxytag: member="db::db" ref="a03e9ab6d80aeae541df9e4282bc580ea" args="($dbhost, $dbuser, $dbpass, $dbname)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>db</b> ($dbhost, $dbuser, $dbpass, $dbname)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9fddec3f6bd1db128887a1b211d90f0"></a><!-- doxytag: member="db::query" ref="ac9fddec3f6bd1db128887a1b211d90f0" args="($query)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>query</b> ($query)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d5fca37c2f726b76f6c27108cd29909"></a><!-- doxytag: member="db::insert_id" ref="a3d5fca37c2f726b76f6c27108cd29909" args="($query)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>insert_id</b> ($query)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abefe93c500ae2f81956a060a5c761c10"></a><!-- doxytag: member="db::num_rows" ref="abefe93c500ae2f81956a060a5c761c10" args="($query)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>num_rows</b> ($query)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97b1b694e8d8e436823f947eba5de124"></a><!-- doxytag: member="db::fetch_array" ref="a97b1b694e8d8e436823f947eba5de124" args="($query)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>fetch_array</b> ($query)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4705313cceea3fe298b553a4bc187ab3"></a><!-- doxytag: member="db::fetch_big_array" ref="a4705313cceea3fe298b553a4bc187ab3" args="($query)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>fetch_big_array</b> ($query)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a03e9ab6d80aeae541df9e4282bc580ea">db</a> ($dbhost, $dbuser, $dbpass, $dbname)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор класса, выполняет ряд ключевых задач.  <a href="#a03e9ab6d80aeae541df9e4282bc580ea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a">select</a> ($select, $from_tbl, $where=false, $order=false, $group=false, $limit=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирования SELECT-запроса  <a href="#ae783d934ff080ae4cd14b9cbc87a238a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834">delete</a> ($from_tbl, $where=false, $order=false, $limit=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирования запроса на удаление  <a href="#a8ee189e21457bf7b0c5e518d80b53834"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb">truncate</a> ($tbl)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирования запроса на очистку таблицы  <a href="#a8296b3c656f04ac84c5bc427d095dfdb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059">update</a> ($update, $to_tbl, $where=false, $order=false, $limit=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирования простого запроса на обновление  <a href="#a512f62229ee3f1a8824ae3787e1a0059"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a5bc69d085ce2355434b9639b75b549fe">insert</a> ($insert, $to_tbl, $type=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирования запроса на вставку строк  <a href="#a5bc69d085ce2355434b9639b75b549fe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a974af553ef190897a8849c77166ea32d">res_row</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция получения строки результатов  <a href="#a974af553ef190897a8849c77166ea32d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция получения массива результатов  <a href="#a0bfd8e43ae69ed64120dd984b9e288a4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Поля данных</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8a3d0085346dd9a4d7bfa9500faae20"></a><!-- doxytag: member="db::$txt_query" ref="ad8a3d0085346dd9a4d7bfa9500faae20" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20">$txt_query</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Сформированный запрос <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e0fa9799781410b983bb2581c2ace29"></a><!-- doxytag: member="db::$res_query" ref="a4e0fa9799781410b983bb2581c2ace29" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29">$res_query</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Ссылка на полученный результат <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a112ef069ddc0454086e3d1e6d8d55d07"></a><!-- doxytag: member="db::$result" ref="a112ef069ddc0454086e3d1e6d8d55d07" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">$result</a> = false</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат выполнения запроса <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adac4bb14b3d809b245c89d5e7388096f"></a><!-- doxytag: member="db::$aff_rows" ref="adac4bb14b3d809b245c89d5e7388096f" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f">$aff_rows</a> = false</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество вставленных строк <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d5870c89e950451ed8a204c07c66a30"></a><!-- doxytag: member="db::$insert_id" ref="a7d5870c89e950451ed8a204c07c66a30" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30">$insert_id</a> = false</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">ID последней вставленной через INSERT строки <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeba2ab722cedda53dbb7ec1a59f45550"></a><!-- doxytag: member="db::$error" ref="aeba2ab722cedda53dbb7ec1a59f45550" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550">$error</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Номер и текст ошибки <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Закрытые члены</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция обработки запроса с получением предварительных результатов  <a href="#a8dbd35d765e8ff0d1c34461ef67c5abf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">where</a> ($where)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция дополнения запроса условием  <a href="#a3d91c73d66310744d20c15945cd0ccb4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87">order</a> ($order, $sort=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция дополнения запроса сортировкой  <a href="#ac8c5f016d7aa4e83ff4bda7192a53b87"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a3c29f28d3f15af12cb6378aadd1dd67d">group</a> ($group, $sort=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция дополнения запроса группировкой  <a href="#a3c29f28d3f15af12cb6378aadd1dd67d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">limit</a> ($limit, $start=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция дополнения запроса ограничением на число результатов  <a href="#a65de01e83d8d1ba5764f39f89823ec13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция очистки переменных класса  <a href="#adb40b812890a8bc058bf6b7a0e1a54d9"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Закрытые данные</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d346e31b75d916e3bac9cb193bfc97f"></a><!-- doxytag: member="db::$link" ref="a5d346e31b75d916e3bac9cb193bfc97f" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$link</b></td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb.html#a5d346e31b75d916e3bac9cb193bfc97f">$link</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Ссылка на подключенную базу данных <br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
+<div class="textblock"><p>Класс по работе с БД MySQL. </p>
+<p>Данный класс содержит набор функций по работе с БД MySQL: установка соединения, формирование и отправка запросов, обработка результатов. </p>
+</div><hr/><h2>Методы</h2>
+<a class="anchor" id="adb40b812890a8bc058bf6b7a0e1a54d9"></a><!-- doxytag: member="db::clean" ref="adb40b812890a8bc058bf6b7a0e1a54d9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">clean </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция очистки переменных класса </p>
+<p>Очищает переменные класса, возвращая им исходные значения, а именно: $txt_query, $res_query, $result, $aff_rows, $insert_id, $error </p>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a>, <a class="el" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f" title="Количество вставленных строк">$aff_rows</a>, <a class="el" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30" title="ID последней вставленной через INSERT строки">$insert_id</a>, <a class="el" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550" title="Номер и текст ошибки">$error</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00344">344</a></p>
+
+<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_adb40b812890a8bc058bf6b7a0e1a54d9_icgraph.png" border="0" usemap="#classdb_adb40b812890a8bc058bf6b7a0e1a54d9_icgraph" alt=""/></div>
+<map name="classdb_adb40b812890a8bc058bf6b7a0e1a54d9_icgraph" id="classdb_adb40b812890a8bc058bf6b7a0e1a54d9_icgraph">
+<area shape="rect" id="node3" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="115,5,173,32"/><area shape="rect" id="node5" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="114,56,174,83"/><area shape="rect" id="node7" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb" title="Функция формирования запроса на очистку таблицы" alt="" coords="110,107,178,133"/><area shape="rect" id="node9" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="113,157,175,184"/><area shape="rect" id="node11" href="classdb.html#a5bc69d085ce2355434b9639b75b549fe" title="Функция формирования запроса на вставку строк" alt="" coords="117,208,171,235"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a03e9ab6d80aeae541df9e4282bc580ea"></a><!-- doxytag: member="db::db" ref="a03e9ab6d80aeae541df9e4282bc580ea" args="($dbhost, $dbuser, $dbpass, $dbname)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdb.html">db</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>dbhost</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>dbuser</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>dbpass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>dbname</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Конструктор класса, выполняет ряд ключевых задач. </p>
+<ol type="1">
+<li>Создает ссылку на соединение с указанной базой данных;</li>
+<li>Передает базе запросы для принудительной установки соединения с таблицой символов UTF-8.</li>
+</ol>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$dbhost</td><td>содержит хост, где расположен сервер БД </td></tr>
+    <tr><td class="paramname">$dbuser</td><td>содержит имя пользователя для работы с БД </td></tr>
+    <tr><td class="paramname">$dbpass</td><td>содержит пароль пользователя для работы с БД </td></tr>
+    <tr><td class="paramname">$dbname</td><td>содержит название БД </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00040">40</a></p>
+
+</div>
+</div>
+<a class="anchor" id="a8ee189e21457bf7b0c5e518d80b53834"></a><!-- doxytag: member="db::delete" ref="a8ee189e21457bf7b0c5e518d80b53834" args="($from_tbl, $where=false, $order=false, $limit=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">delete </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>from_tbl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>where</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>order</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>limit</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция формирования запроса на удаление </p>
+<p>Формирует запрос на удаление, основываясь на полученных аргументах, размещает его в $txt_query и выполняет </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$from_tbl</td><td>указывает, с какой таблицой необходимо выполнять работу </td></tr>
+    <tr><td class="paramname">$where</td><td>содержит условия выбора, иначе False </td></tr>
+    <tr><td class="paramname">$order</td><td>содержит условия сортировки, иначе False </td></tr>
+    <tr><td class="paramname">$limit</td><td>содержит условия лимита выводимых строк, иначе False </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>, <a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой">order</a>, <a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00123">123</a></p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a8ee189e21457bf7b0c5e518d80b53834_cgraph.png" border="0" usemap="#classdb_a8ee189e21457bf7b0c5e518d80b53834_cgraph" alt=""/></div>
+<map name="classdb_a8ee189e21457bf7b0c5e518d80b53834_cgraph" id="classdb_a8ee189e21457bf7b0c5e518d80b53834_cgraph">
+<area shape="rect" id="node3" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="117,5,171,32"/><area shape="rect" id="node5" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием" alt="" coords="115,56,173,83"/><area shape="rect" id="node7" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой" alt="" coords="117,107,171,133"/><area shape="rect" id="node9" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов" alt="" coords="121,157,167,184"/><area shape="rect" id="node11" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="116,208,172,235"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c29f28d3f15af12cb6378aadd1dd67d"></a><!-- doxytag: member="db::group" ref="a3c29f28d3f15af12cb6378aadd1dd67d" args="($group, $sort=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">group </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>group</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>sort</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция дополнения запроса группировкой </p>
+<p>Дополняет запрос, размещенный в $txt_query группировкой типа GROUP BY </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$group</td><td>содержит имя поля, по которому следует группировать результаты </td></tr>
+    <tr><td class="paramname">$sort</td><td>содержит указание на порядок сортировки записей во время группировки: down - сортировка по убыванию, up - сортировка по возрастанию; любое другое значение предоставит БД самой выбирать порядок сортировки (по-умолчанию равно False) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00258">258</a></p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a3c29f28d3f15af12cb6378aadd1dd67d_icgraph.png" border="0" usemap="#classdb_a3c29f28d3f15af12cb6378aadd1dd67d_icgraph" alt=""/></div>
+<map name="classdb_a3c29f28d3f15af12cb6378aadd1dd67d_icgraph" id="classdb_a3c29f28d3f15af12cb6378aadd1dd67d_icgraph">
+<area shape="rect" id="node3" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="109,5,168,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a5bc69d085ce2355434b9639b75b549fe"></a><!-- doxytag: member="db::insert" ref="a5bc69d085ce2355434b9639b75b549fe" args="($insert, $to_tbl, $type=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">insert </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>insert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>to_tbl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>type</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция формирования запроса на вставку строк </p>
+<p>Формирует запрос на вставку строк, основываясь на полученных аргументах, размещает его в $txt_query и выполняет </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$insert</td><td>содержит массив данных, которые необходимо внести в БД в формате: 'имя_поля' =&gt; 'значение' </td></tr>
+    <tr><td class="paramname">$to_tbl</td><td>указывает, с какой таблицой необходимо выполнять работу </td></tr>
+    <tr><td class="paramname">$type</td><td>указывает тип запроса: ignore - формирует запрос типа "INSERT IGNORE INTO"; replace - формирует запрос типа "REPLACE INTO", при любом другом значении формирует запрос типа "INSERT INTO" (по-умолчанию значение равно False) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00187">187</a></p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a5bc69d085ce2355434b9639b75b549fe_cgraph.png" border="0" usemap="#classdb_a5bc69d085ce2355434b9639b75b549fe_cgraph" alt=""/></div>
+<map name="classdb_a5bc69d085ce2355434b9639b75b549fe_cgraph" id="classdb_a5bc69d085ce2355434b9639b75b549fe_cgraph">
+<area shape="rect" id="node3" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="110,5,165,32"/><area shape="rect" id="node5" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="109,56,165,83"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a65de01e83d8d1ba5764f39f89823ec13"></a><!-- doxytag: member="db::limit" ref="a65de01e83d8d1ba5764f39f89823ec13" args="($limit, $start=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">limit </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>limit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>start</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция дополнения запроса ограничением на число результатов </p>
+<p>Дополняет запрос, размещенный в $txt_query ограничением вывода числа результатов </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$limit</td><td>указывает, сколько необходимо получить результатов </td></tr>
+    <tr><td class="paramname">$start</td><td>указывает, начиная с какой записи выводит запрошенное количество результатов (по-умолчанию 0 - с первой) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00282">282</a></p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a65de01e83d8d1ba5764f39f89823ec13_icgraph.png" border="0" usemap="#classdb_a65de01e83d8d1ba5764f39f89823ec13_icgraph" alt=""/></div>
+<map name="classdb_a65de01e83d8d1ba5764f39f89823ec13_icgraph" id="classdb_a65de01e83d8d1ba5764f39f89823ec13_icgraph">
+<area shape="rect" id="node3" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="101,5,160,32"/><area shape="rect" id="node5" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="101,56,161,83"/><area shape="rect" id="node7" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="99,107,162,133"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ac8c5f016d7aa4e83ff4bda7192a53b87"></a><!-- doxytag: member="db::order" ref="ac8c5f016d7aa4e83ff4bda7192a53b87" args="($order, $sort=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">order </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>order</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>sort</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция дополнения запроса сортировкой </p>
+<p>Дополняет запрос, размещенный в $txt_query сортировкой типа ORDER BY </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$order</td><td>содержит имя поля, по которому следует сортировать результаты </td></tr>
+    <tr><td class="paramname">$sort</td><td>содержит указание на порядок сортировки: down - сортировка по убыванию, up - сортировка по возрастанию; любое другое значение предоставит БД самой выбирать порядок сортировки (по-умолчанию равно False) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00234">234</a></p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_ac8c5f016d7aa4e83ff4bda7192a53b87_icgraph.png" border="0" usemap="#classdb_ac8c5f016d7aa4e83ff4bda7192a53b87_icgraph" alt=""/></div>
+<map name="classdb_ac8c5f016d7aa4e83ff4bda7192a53b87_icgraph" id="classdb_ac8c5f016d7aa4e83ff4bda7192a53b87_icgraph">
+<area shape="rect" id="node3" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="112,5,171,32"/><area shape="rect" id="node5" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="111,56,171,83"/><area shape="rect" id="node7" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="110,107,173,133"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8dbd35d765e8ff0d1c34461ef67c5abf"></a><!-- doxytag: member="db::query" ref="a8dbd35d765e8ff0d1c34461ef67c5abf" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">query </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция обработки запроса с получением предварительных результатов </p>
+<ol type="1">
+<li>Обнуляет $aff_rows, $insert_id;</li>
+<li>Выполняет запрос из $txt_query и размещает ссылку на результат выполнения в $res_query;</li>
+<li>Если запрос выполнился без ошибок, то заполняет $aff_rows, $insert_id соответствующими значениями. <dl class="return"><dt><b>Возвращает:</b></dt><dd>True, если запрос успешно выполнен, иначе False. </dd></dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f" title="Количество вставленных строк">$aff_rows</a>, <a class="el" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30" title="ID последней вставленной через INSERT строки">$insert_id</a> </dd></dl>
+</li>
+</ol>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00056">56</a></p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a8dbd35d765e8ff0d1c34461ef67c5abf_icgraph.png" border="0" usemap="#classdb_a8dbd35d765e8ff0d1c34461ef67c5abf_icgraph" alt=""/></div>
+<map name="classdb_a8dbd35d765e8ff0d1c34461ef67c5abf_icgraph" id="classdb_a8dbd35d765e8ff0d1c34461ef67c5abf_icgraph">
+<area shape="rect" id="node3" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="115,5,173,32"/><area shape="rect" id="node5" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="114,56,174,83"/><area shape="rect" id="node7" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb" title="Функция формирования запроса на очистку таблицы" alt="" coords="110,107,178,133"/><area shape="rect" id="node9" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="113,157,175,184"/><area shape="rect" id="node11" href="classdb.html#a5bc69d085ce2355434b9639b75b549fe" title="Функция формирования запроса на вставку строк" alt="" coords="117,208,171,235"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0bfd8e43ae69ed64120dd984b9e288a4"></a><!-- doxytag: member="db::res_arr" ref="a0bfd8e43ae69ed64120dd984b9e288a4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">res_arr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция получения массива результатов </p>
+<p>Обрабатывает ссылку на результаты, полученную через query ($res_query), помещая полученный массив результатов в $result </p>
+<dl class="return"><dt><b>Возвращает:</b></dt><dd>Массив результатов по ранее сформированному запросу. </dd></dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00316">316</a></p>
+
+</div>
+</div>
+<a class="anchor" id="a974af553ef190897a8849c77166ea32d"></a><!-- doxytag: member="db::res_row" ref="a974af553ef190897a8849c77166ea32d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">res_row </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция получения строки результатов </p>
+<p>Обрабатывает ссылку на результаты, полученную через query ($res_query), помещая полученный результат в $result </p>
+<dl class="return"><dt><b>Возвращает:</b></dt><dd>Строку результатов по ранее сформированному запросу </dd></dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00297">297</a></p>
+
+</div>
+</div>
+<a class="anchor" id="ae783d934ff080ae4cd14b9cbc87a238a"></a><!-- doxytag: member="db::select" ref="ae783d934ff080ae4cd14b9cbc87a238a" args="($select, $from_tbl, $where=false, $order=false, $group=false, $limit=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">select </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>select</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>from_tbl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>where</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>order</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>group</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>limit</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция формирования SELECT-запроса </p>
+<p>Формирует SELECT-запрос, основываясь на полученных аргументах, размещает его в $txt_query и выполняет </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$select</td><td>может содержать как одиночное название поля, так и массив с перечислением полей, которые необходимо получить в результате запроса </td></tr>
+    <tr><td class="paramname">$from_tbl</td><td>указывает, с какой таблицой необходимо выполнять работу </td></tr>
+    <tr><td class="paramname">$where</td><td>содержит условия выбора, иначе False </td></tr>
+    <tr><td class="paramname">$order</td><td>содержит условия сортировки, иначе False </td></tr>
+    <tr><td class="paramname">$group</td><td>содержит условия группировки, иначе False </td></tr>
+    <tr><td class="paramname">$limit</td><td>содержит условия лимита выводимых строк, иначе False </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>, <a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой">order</a>, <a class="el" href="classdb.html#a3c29f28d3f15af12cb6378aadd1dd67d" title="Функция дополнения запроса группировкой">group</a>, <a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00085">85</a></p>
+
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_ae783d934ff080ae4cd14b9cbc87a238a_cgraph.png" border="0" usemap="#classdb_ae783d934ff080ae4cd14b9cbc87a238a_cgraph" alt=""/></div>
+<map name="classdb_ae783d934ff080ae4cd14b9cbc87a238a_cgraph" id="classdb_ae783d934ff080ae4cd14b9cbc87a238a_cgraph">
+<area shape="rect" id="node3" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="114,5,169,32"/><area shape="rect" id="node5" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием" alt="" coords="112,56,171,83"/><area shape="rect" id="node7" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой" alt="" coords="114,107,169,133"/><area shape="rect" id="node9" href="classdb.html#a3c29f28d3f15af12cb6378aadd1dd67d" title="Функция дополнения запроса группировкой" alt="" coords="113,157,169,184"/><area shape="rect" id="node11" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов" alt="" coords="119,208,164,235"/><area shape="rect" id="node13" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="113,259,169,285"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8296b3c656f04ac84c5bc427d095dfdb"></a><!-- doxytag: member="db::truncate" ref="a8296b3c656f04ac84c5bc427d095dfdb" args="($tbl)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">truncate </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>tbl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция формирования запроса на очистку таблицы </p>
+<p>Формирует запрос на очистку таблицы, основываясь на полученных аргументах, размещает его в $txt_query и выполняет </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$tbl</td><td>указывает, какую таблицу необходимо очистить </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00139">139</a></p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a8296b3c656f04ac84c5bc427d095dfdb_cgraph.png" border="0" usemap="#classdb_a8296b3c656f04ac84c5bc427d095dfdb_cgraph" alt=""/></div>
+<map name="classdb_a8296b3c656f04ac84c5bc427d095dfdb_cgraph" id="classdb_a8296b3c656f04ac84c5bc427d095dfdb_cgraph">
+<area shape="rect" id="node3" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="123,5,178,32"/><area shape="rect" id="node5" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="123,56,179,83"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a512f62229ee3f1a8824ae3787e1a0059"></a><!-- doxytag: member="db::update" ref="a512f62229ee3f1a8824ae3787e1a0059" args="($update, $to_tbl, $where=false, $order=false, $limit=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">update </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>update</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>to_tbl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>where</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>order</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>limit</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция формирования простого запроса на обновление </p>
+<p>Формирует простой запрос на обновление, основываясь на полученных аргументах, размещает его в $txt_query и выполняет </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$update</td><td>содержит массив данных, которые необходимо внести в БД в формате: 'имя_поля' =&gt; 'значение' </td></tr>
+    <tr><td class="paramname">$to_tbl</td><td>указывает, с какой таблицой необходимо выполнять работу </td></tr>
+    <tr><td class="paramname">$where</td><td>содержит условия выбора, иначе False </td></tr>
+    <tr><td class="paramname">$order</td><td>содержит условия сортировки, иначе False </td></tr>
+    <tr><td class="paramname">$limit</td><td>содержит условия лимита выводимых строк, иначе False </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>, <a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой">order</a>, <a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00156">156</a></p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a512f62229ee3f1a8824ae3787e1a0059_cgraph.png" border="0" usemap="#classdb_a512f62229ee3f1a8824ae3787e1a0059_cgraph" alt=""/></div>
+<map name="classdb_a512f62229ee3f1a8824ae3787e1a0059_cgraph" id="classdb_a512f62229ee3f1a8824ae3787e1a0059_cgraph">
+<area shape="rect" id="node3" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="119,5,174,32"/><area shape="rect" id="node5" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием" alt="" coords="117,56,176,83"/><area shape="rect" id="node7" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой" alt="" coords="119,107,174,133"/><area shape="rect" id="node9" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов" alt="" coords="124,157,169,184"/><area shape="rect" id="node11" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="119,208,175,235"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a3d91c73d66310744d20c15945cd0ccb4"></a><!-- doxytag: member="db::where" ref="a3d91c73d66310744d20c15945cd0ccb4" args="($where)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">where </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>where</em></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция дополнения запроса условием </p>
+<p>Дополняет запрос, размещенный в $txt_query условием типа WHERE </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$where</td><td>содержит строку для вставки в условие после WHERE </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00219">219</a></p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classdb_a3d91c73d66310744d20c15945cd0ccb4_icgraph.png" border="0" usemap="#classdb_a3d91c73d66310744d20c15945cd0ccb4_icgraph" alt=""/></div>
+<map name="classdb_a3d91c73d66310744d20c15945cd0ccb4_icgraph" id="classdb_a3d91c73d66310744d20c15945cd0ccb4_icgraph">
+<area shape="rect" id="node3" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="115,5,173,32"/><area shape="rect" id="node5" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="114,56,174,83"/><area shape="rect" id="node7" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="113,107,175,133"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <hr/>Объявления и описания членов класса находятся в файле:<ul>
 <li>www/include/<a class="el" href="db_8php_source.html">db.php</a></li>
 </ul>
@@ -113,7 +843,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">

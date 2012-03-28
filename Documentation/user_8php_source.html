@@ -106,7 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027     <span class="keyword">function</span> <a class="code" href="classuser.html">user</a>()
 <a name="l00028"></a>00028     {
-<a name="l00029"></a>00029         global $db; <span class="comment">// подключаем глобальный объект для работы с БД</span>
+<a name="l00029"></a>00029         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>; <span class="comment">// подключаем глобальный объект для работы с БД</span>
 <a name="l00030"></a>00030 
 <a name="l00031"></a>00031         <span class="keywordflow">if</span> (empty($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>])) <span class="comment">// если Не существует текущая сессия, то...</span>
 <a name="l00032"></a>00032         {
@@ -166,7 +166,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">

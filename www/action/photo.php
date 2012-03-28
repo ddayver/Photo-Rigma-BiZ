@@ -648,8 +648,8 @@ else // если предыдущих команд не поступало, то
 				'NAME_BLOCK' => $lang['photo_title'] . ' - ' . $photo['name'],
 				'DESCRIPTION_BLOCK' => $photo['description'],
 				'L_EDIT_BLOCK' => $photo['url_edit_text'],
-				'L_CONFIRM_DELETE_BLOCK' => $photo['url_delete_confirm'],
-				'L_DELETE_BLOCK' => $photo['url_delete_text'],
+				'L_CONFIRM_DELETE_BLOCK' => isset($photo['url_delete_confirm']) ? $photo['url_delete_confirm'] : '',
+				'L_DELETE_BLOCK' => isset($photo['url_delete_text']) ? $photo['url_delete_text'] : '',
 				'L_USER_ADD' => $lang['main_user_add'],
 				'L_NAME_CATEGORY' => $lang['main_name_of'] . ' ' . $lang['category_of_category'],
 				'L_DESCRIPTION_CATEGORY' => $lang['main_description_of'] . ' ' . $lang['category_of_category'],
@@ -667,7 +667,7 @@ else // если предыдущих команд не поступало, то
 
 				'U_USER_ADD' => $photo['user_url'],
 				'U_EDIT_BLOCK' => $photo['url_edit'],
-				'U_DELETE_BLOCK' => $photo['url_delete'],
+				'U_DELETE_BLOCK' => isset($photo['url_delete']) ? $photo['url_delete'] : '',
 				'U_CATEGORY' => $photo['category_url'],
 				'U_FOTO' => $photo['url'],
 

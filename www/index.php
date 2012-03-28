@@ -17,11 +17,14 @@ include_once ('config.php'); // Подключаем файл редактиру
 
 include_once ($config['inc_dir'] . 'db.php');
 /**
-* @var $db_w
+* @var $db
 * @brief Создание объекта класса db для работы с основной БД
 * @see ::$config, db
 */
-$db = new db($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+$db = new db_old($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+$db2 = new db($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+
+include_once ($config['inc_dir'] . 'common.php');
 
 include_once ($config['inc_dir'] . 'work.php');
 /**
