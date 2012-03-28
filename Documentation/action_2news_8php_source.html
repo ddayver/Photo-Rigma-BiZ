@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Photo-RigmaBiZ: Исходный файл www/action/news.php</title>
+
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+
+</head>
+<body>
+<div id="top"><!-- do not remove this div! -->
+
+
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  
+  
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Photo-RigmaBiZ
+   &#160;<span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
+  </td>
+  
+  
+  
+ </tr>
+ </tbody>
+</table>
+</div>
+
+<!-- Создано системой Doxygen 1.7.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="modules.html"><span>Группы</span></a></li>
+      <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
+      <li class="navelem"><a class="el" href="dir_c3145d3cdbce35b5443e4e08db970cbc.html">action</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">news.php</div>  </div>
+</div>
+<div class="contents">
+<a href="action_2news_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
+<a name="l00011"></a>00011 <span class="comment">// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке</span>
+<a name="l00012"></a>00012 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00013"></a>00013 {
+<a name="l00014"></a>00014     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00015"></a>00015 }
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>); <span class="comment">// подключаем языковый файл основной страницы</span>
+<a name="l00018"></a>00018 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>); <span class="comment">// подключаем языковый файл меню</span>
+<a name="l00019"></a>00019 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/news.php&#39;</span>); <span class="comment">// подключаем языковый файл новостей</span>
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021 $title = $lang[<span class="stringliteral">&#39;news_title&#39;</span>]; <span class="comment">// дополнительным названием страницы будет Архив новостей</span>
+<a name="l00022"></a>00022 
+<a name="l00023"></a>00023 <span class="keywordflow">if</span>(!isset($_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]) || empty($_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]) || !(mb_ereg(<span class="stringliteral">&#39;^[0-9]+$&#39;</span>, $_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]))) <span class="comment">// если не указан идентификатор новости или идентификатор не является числом, то...</span>
+<a name="l00024"></a>00024 {
+<a name="l00025"></a>00025     $news = <span class="keyword">false</span>; <span class="comment">// идентификатор равен false (ЛОЖЬ)</span>
+<a name="l00026"></a>00026 }
+<a name="l00027"></a>00027 <span class="keywordflow">else</span>
+<a name="l00028"></a>00028 {
+<a name="l00029"></a>00029     $news = $_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]; <span class="comment">// иначе сохраняем идентификатор</span>
+<a name="l00030"></a>00030     $temp = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `news` WHERE `id` = &quot;</span> . $news); <span class="comment">// и проверяем - есть ли новость с данным идентификатором</span>
+<a name="l00031"></a>00031     <span class="keywordflow">if</span> (!$temp) $news = <span class="keyword">false</span>; <span class="comment">// если нету, то идентификатор равен false (ЛОЖЬ)</span>
+<a name="l00032"></a>00032 }
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keywordflow">if</span>(isset($_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>]) &amp;&amp; !empty($_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>])) <span class="comment">// если указана дополнительная команда, то...</span>
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036     $subact = $_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>]; <span class="comment">// сохраняем данную команду</span>
+<a name="l00037"></a>00037 }
+<a name="l00038"></a>00038 <span class="keywordflow">else</span> $subact = <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040 <span class="keywordflow">if</span> ($subact == <span class="stringliteral">&#39;save&#39;</span>) <span class="comment">// если поступила команда н сохранение (добавленной новости или редактируемой)</span>
+<a name="l00041"></a>00041 {
+<a name="l00042"></a>00042     <span class="keywordflow">if</span>($news === <span class="keyword">false</span> &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_add&#39;</span>] == <span class="keyword">true</span>) <span class="comment">// если не указан идентификатор новости и пользователь имеет право добавления новостей на сайт, то производим добавление новости в базу</span>
+<a name="l00043"></a>00043     {
+<a name="l00044"></a>00044         <span class="keywordflow">if</span>(!isset($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || !isset($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;text_post&#39;</span>])) <span class="comment">// если не заполнены поля названия и текста новости, то...</span>
+<a name="l00045"></a>00045         {
+<a name="l00046"></a>00046             $subact = <span class="stringliteral">&#39;add&#39;</span>; <span class="comment">// указать дополнительной командой - добавление новости</span>
+<a name="l00047"></a>00047         }
+<a name="l00048"></a>00048         <span class="keywordflow">else</span> <span class="comment">// иначе</span>
+<a name="l00049"></a>00049         {
+<a name="l00050"></a>00050             $name_post = $_POST[<span class="stringliteral">&#39;name_post&#39;</span>]; <span class="comment">// сохраняем название новости</span>
+<a name="l00051"></a>00051             $text_post = trim($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]); <span class="comment">// сохраняем текст новости с удаленными в начале и конце пробелами</span>
+<a name="l00052"></a>00052             $news = $db-&gt;insert_id(<span class="stringliteral">&quot;INSERT IGNORE INTO `news` (`data_post`, `data_last_edit`, `user_post`, `name_post`, `text_post`) VALUES (CURDATE(), CURRENT_TIMESTAMP, &#39;&quot;</span> . <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&quot;&#39;, &#39;&quot;</span> . $name_post . <span class="stringliteral">&quot;&#39;, &#39;&quot;</span> . $text_post . <span class="stringliteral">&quot;&#39;)&quot;</span>); <span class="comment">// вносим в базу новость и получаем в ответ идентификатор новости</span>
+<a name="l00053"></a>00053         }
+<a name="l00054"></a>00054     }
+<a name="l00055"></a>00055     elseif ($news !== <span class="keyword">false</span> &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_moderate&#39;</span>] == <span class="keyword">true</span>) <span class="comment">// иначе если есть идентификатор новости и пользователь имеет право редактирования новостей, то проходим процедуру изменения новости</span>
+<a name="l00056"></a>00056     {
+<a name="l00057"></a>00057         <span class="keywordflow">if</span>(!isset($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;name_post&#39;</span>])) <span class="comment">// если не указано название новости, то...</span>
+<a name="l00058"></a>00058         {
+<a name="l00059"></a>00059             $name_post = $temp[<span class="stringliteral">&#39;name_post&#39;</span>]; <span class="comment">// название новости остается старым</span>
+<a name="l00060"></a>00060             $ch_name = <span class="keyword">false</span>; <span class="comment">// указываем, что не производилось изменение названия</span>
+<a name="l00061"></a>00061         }
+<a name="l00062"></a>00062         <span class="keywordflow">else</span> <span class="comment">// иначе</span>
+<a name="l00063"></a>00063         {
+<a name="l00064"></a>00064             $name_post = $_POST[<span class="stringliteral">&#39;name_post&#39;</span>]; <span class="comment">// сохраняем новое название новости</span>
+<a name="l00065"></a>00065             $ch_name = <span class="keyword">true</span>; <span class="comment">// отмечаем, что произошло изменение новости</span>
+<a name="l00066"></a>00066         }
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068         <span class="keywordflow">if</span>(!isset($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;text_post&#39;</span>])) <span class="comment">// если не указан текст новости, то...</span>
+<a name="l00069"></a>00069         {
+<a name="l00070"></a>00070             $text_post = trim($temp[<span class="stringliteral">&#39;text_post&#39;</span>]); <span class="comment">// текст новости остается старым</span>
+<a name="l00071"></a>00071             $ch_text = <span class="keyword">false</span>; <span class="comment">// указываем, что изменений текста не производилось</span>
+<a name="l00072"></a>00072         }
+<a name="l00073"></a>00073         <span class="keywordflow">else</span> <span class="comment">// иначе</span>
+<a name="l00074"></a>00074         {
+<a name="l00075"></a>00075             $text_post = trim($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]); <span class="comment">// сохраняем новый текст новости</span>
+<a name="l00076"></a>00076             $ch_text = <span class="keyword">true</span>; <span class="comment">// и указываем, что он изменялся</span>
+<a name="l00077"></a>00077         }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079         <span class="keywordflow">if</span>($ch_name || $ch_text) <span class="comment">// если изменялись название или текст новости, то...</span>
+<a name="l00080"></a>00080         {
+<a name="l00081"></a>00081             $db-&gt;query(<span class="stringliteral">&quot;UPDATE `news` SET `data_last_edit` = CURRENT_TIMESTAMP, `name_post` = &#39;&quot;</span> . $name_post . <span class="stringliteral">&quot;&#39;, `text_post` = &#39;&quot;</span> . $text_post . <span class="stringliteral">&quot;&#39; WHERE `id` = &quot;</span> . $news); <span class="comment">// вносим в базу изменения в новость</span>
+<a name="l00082"></a>00082         }
+<a name="l00083"></a>00083     }
+<a name="l00084"></a>00084     <span class="keywordflow">else</span> <span class="comment">// во всех остальных случаях</span>
+<a name="l00085"></a>00085     {
+<a name="l00086"></a>00086         $news = <span class="keyword">false</span>; <span class="comment">// идентификатор новости равен false (ЛОЖЬ)</span>
+<a name="l00087"></a>00087     }
+<a name="l00088"></a>00088 }
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="keywordflow">if</span> ($subact == <span class="stringliteral">&#39;edit&#39;</span> &amp;&amp; $news !== <span class="keyword">false</span> &amp;&amp; (<a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_moderate&#39;</span>] == <span class="keyword">true</span> || (<a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] != 0 &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] == $temp[<span class="stringliteral">&#39;user_post&#39;</span>]))) <span class="comment">// если поступила команда на редактирование новости и пользователь имеет право модерировать новости или является автором новости при идентификаторе пользователя не равном 0 (Гость), то...</span>
+<a name="l00091"></a>00091 {
+<a name="l00092"></a>00092     $title = $lang[<span class="stringliteral">&#39;main_edit_news&#39;</span>]; <span class="comment">// устанавливаем доп-название страницы - Редактирование новостей</span>
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094     $temp = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `news` WHERE `id` = &quot;</span> . $news); <span class="comment">// запрашиваем данные о новости</span>
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096     $user_add = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT `real_name` FROM `user` WHERE `id` = &quot;</span> . $temp[<span class="stringliteral">&#39;user_post&#39;</span>]); <span class="comment">// запрашиваем данные об отображаемом имени пользователя, добавившего новость</span>
+<a name="l00097"></a>00097     <span class="keywordflow">if</span> ($user_add) <span class="comment">// если пользователь существует, то...</span>
+<a name="l00098"></a>00098     {
+<a name="l00099"></a>00099         $name_user = <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $temp_news[<span class="stringliteral">&#39;user_post&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>; <span class="comment">// сохраняем его отобржаемое имя и делаем его ссылкой на профиль пользователя</span>
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101     <span class="keywordflow">else</span> <span class="comment">// иначе</span>
+<a name="l00102"></a>00102     {
+<a name="l00103"></a>00103         $name_user = $lang[<span class="stringliteral">&#39;main_no_user_add&#39;</span>]; <span class="comment">// указываем, что пользователя не существует</span>
+<a name="l00104"></a>00104     }
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106     $array_data = array(); <span class="comment">// инициируем массив</span>
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108     $array_data = array(
+<a name="l00109"></a>00109                 <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_edit_news&#39;</span>] . <span class="stringliteral">&#39; - &#39;</span> . $temp[<span class="stringliteral">&#39;name_post&#39;</span>],
+<a name="l00110"></a>00110                 <span class="stringliteral">&#39;L_NAME_USER&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_user_add&#39;</span>],
+<a name="l00111"></a>00111                 <span class="stringliteral">&#39;L_NAME_POST&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_name_post&#39;</span>],
+<a name="l00112"></a>00112                 <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_text_post&#39;</span>],
+<a name="l00113"></a>00113                 <span class="stringliteral">&#39;L_SAVE_NEWS&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_edit_post&#39;</span>],
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115                 <span class="stringliteral">&#39;D_NAME_USER&#39;</span> =&gt; $name_user,
+<a name="l00116"></a>00116                 <span class="stringliteral">&#39;D_NAME_POST&#39;</span> =&gt; $temp[<span class="stringliteral">&#39;name_post&#39;</span>],
+<a name="l00117"></a>00117                 <span class="stringliteral">&#39;D_TEXT_POST&#39;</span> =&gt; $temp[<span class="stringliteral">&#39;text_post&#39;</span>],
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119                 <span class="stringliteral">&#39;IF_NEED_USER&#39;</span> =&gt; <span class="keyword">true</span>,
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121                 <span class="stringliteral">&#39;U_SAVE_NEWS&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;subact=save&amp;news=&#39;</span> . $news
+<a name="l00122"></a>00122     ); <span class="comment">// наполняем массив данными для замены по шаблону</span>
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;news_save.tpl&#39;</span>, $array_data); <span class="comment">// создаем центральный блок - заполненный шаблон для редактирования новости</span>
+<a name="l00125"></a>00125 }
+<a name="l00126"></a>00126 elseif ($subact == <span class="stringliteral">&#39;delete&#39;</span> &amp;&amp; $news !== <span class="keyword">false</span> &amp;&amp; (<a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_moderate&#39;</span>] == <span class="keyword">true</span> || (<a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] != 0 &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] == $temp[<span class="stringliteral">&#39;user_post&#39;</span>]))) <span class="comment">// если поступила команда на удаление новости и пользователь имеет право модерировать новости или является автором новости при идентификаторе пользователя не равном 0 (Гость), то...</span>
+<a name="l00127"></a>00127 {
+<a name="l00128"></a>00128     <span class="keywordflow">if</span> (!empty($_SERVER[<span class="stringliteral">&#39;HTTP_REFERER&#39;</span>]) &amp;&amp; strpos($_SERVER[<span class="stringliteral">&#39;HTTP_REFERER&#39;</span>], <span class="stringliteral">&#39;action=news&#39;</span>) !== <span class="keyword">false</span>) <span class="comment">// проверяем реферальную ссылку - если пользователь удаляет новость из Архива новостей, то...</span>
+<a name="l00129"></a>00129     {
+<a name="l00130"></a>00130         $redirect_url = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&#39;</span>; <span class="comment">// после удаления переместим пользователя обратно в архив</span>
+<a name="l00131"></a>00131     }
+<a name="l00132"></a>00132     <span class="keywordflow">else</span> <span class="comment">// иначе</span>
+<a name="l00133"></a>00133     {
+<a name="l00134"></a>00134         $redirect_url = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]; <span class="comment">// переместим пользователя на главную страницу</span>
+<a name="l00135"></a>00135     }
+<a name="l00136"></a>00136     $redirect_time = 5; <span class="comment">// устанавливаем время редиректа 5 сек</span>
+<a name="l00137"></a>00137     $redirect_message = $lang[<span class="stringliteral">&#39;news_title&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $temp[<span class="stringliteral">&#39;name_post&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_del_post&#39;</span>]; <span class="comment">// сообщаем пользователю об удачном удалении новости</span>
+<a name="l00138"></a>00138     $db-&gt;query(<span class="stringliteral">&quot;DELETE FROM `fotorigma`.`news` WHERE `id` = &quot;</span> . $news); <span class="comment">// удаляем новость из базы данных</span>
+<a name="l00139"></a>00139 }
+<a name="l00140"></a>00140 elseif ($subact == <span class="stringliteral">&#39;add&#39;</span> &amp;&amp; $news === <span class="keyword">false</span> &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_add&#39;</span>] == <span class="keyword">true</span>) <span class="comment">// если поступила команда на добавление новости и пользователь имеет право добавлять новости, то...</span>
+<a name="l00141"></a>00141 {
+<a name="l00142"></a>00142     $title = $lang[<span class="stringliteral">&#39;news_add_post&#39;</span>]; <span class="comment">// указываем дополнительным названием страницы - Добавление новости</span>
+<a name="l00143"></a>00143     $act = <span class="stringliteral">&#39;news_add&#39;</span>; <span class="comment">// активный пункт меню - news_add</span>
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145     $array_data = array(); <span class="comment">// инициируем массив</span>
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147     $array_data = array(
+<a name="l00148"></a>00148                 <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_add_post&#39;</span>],
+<a name="l00149"></a>00149                 <span class="stringliteral">&#39;L_NAME_USER&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00150"></a>00150                 <span class="stringliteral">&#39;L_NAME_POST&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_name_post&#39;</span>],
+<a name="l00151"></a>00151                 <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_text_post&#39;</span>],
+<a name="l00152"></a>00152                 <span class="stringliteral">&#39;L_SAVE_NEWS&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_edit_post&#39;</span>],
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154                 <span class="stringliteral">&#39;D_NAME_USER&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00155"></a>00155                 <span class="stringliteral">&#39;D_NAME_POST&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00156"></a>00156                 <span class="stringliteral">&#39;D_TEXT_POST&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158                 <span class="stringliteral">&#39;IF_NEED_USER&#39;</span> =&gt; <span class="keyword">false</span>,
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160                 <span class="stringliteral">&#39;U_SAVE_NEWS&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;subact=save&#39;</span>
+<a name="l00161"></a>00161     ); <span class="comment">// наполняем массив данными для замены по шаблону</span>
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;news_save.tpl&#39;</span>, $array_data); <span class="comment">// формируем центральный блок - форму добавления новостей</span>
+<a name="l00164"></a>00164 }
+<a name="l00165"></a>00165 <span class="keywordflow">else</span> <span class="comment">// иначе если не указаны доп-команды, то выводим или отдельно текст новости или архив по годам и месяцам</span>
+<a name="l00166"></a>00166 {
+<a name="l00167"></a>00167     <span class="keywordflow">if</span>($news !== <span class="keyword">false</span>) <span class="comment">// если указан идентификатор новости, то...</span>
+<a name="l00168"></a>00168     {
+<a name="l00169"></a>00169         $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news($news, <span class="stringliteral">&#39;id&#39;</span>); <span class="comment">// выведем соотвествующую новость в центральный блок</span>
+<a name="l00170"></a>00170         $act = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// активного пункта меню нет</span>
+<a name="l00171"></a>00171     }
+<a name="l00172"></a>00172     <span class="keywordflow">else</span> <span class="comment">// иначе, если не указан идентификатор, то...</span>
+<a name="l00173"></a>00173     {
+<a name="l00174"></a>00174         <span class="keywordflow">if</span> (!isset($_REQUEST[<span class="charliteral">&#39;y&#39;</span>]) || empty($_REQUEST[<span class="charliteral">&#39;y&#39;</span>]) || !mb_ereg(<span class="stringliteral">&#39;^[0-9]{4}$&#39;</span>, $_REQUEST[<span class="charliteral">&#39;y&#39;</span>])) <span class="comment">// если не поступало запроса на отображение поределенного года из архива или год указан в неверном формате (YYYY), то...</span>
+<a name="l00175"></a>00175         {
+<a name="l00176"></a>00176             $act = <span class="stringliteral">&#39;news&#39;</span>; <span class="comment">// активный пункт меню - news</span>
+<a name="l00177"></a>00177             $temp = $db-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT DISTINCT DATE_FORMAT(`data_last_edit`, &#39;%Y&#39;) AS &#39;year&#39; FROM `news` ORDER BY `data_last_edit` ASC&quot;</span>); <span class="comment">// запрос из базы всех лет, в которые производились изменения новостей</span>
+<a name="l00178"></a>00178             <span class="keywordflow">if</span>(!$temp) <span class="comment">// если нет таких данных, то...</span>
+<a name="l00179"></a>00179             {
+<a name="l00180"></a>00180                 $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>]); <span class="comment">// вывести последнии новости (фактически фнукция класса выведет сообщение, что на сайте нет новостей)</span>
+<a name="l00181"></a>00181             }
+<a name="l00182"></a>00182             <span class="keywordflow">else</span> <span class="comment">// иначе если такие данные есть, то формируем вывод пунктов по годам</span>
+<a name="l00183"></a>00183             {
+<a name="l00184"></a>00184                 $spisok = <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>; <span class="comment">// инициируем переменную списка лет</span>
+<a name="l00185"></a>00185                 <span class="keywordflow">for</span>($i = 1; $i &lt;= $temp[0]; $i++) <span class="comment">// обрабатываем в цикле имеющиемя данные</span>
+<a name="l00186"></a>00186                 {
+<a name="l00187"></a>00187                     $temp2 = $db-&gt;num_rows(<span class="stringliteral">&quot;SELECT * FROM `news` WHERE DATE_FORMAT(`data_last_edit`, &#39;%Y&#39;) = &#39;&quot;</span> . $temp[$i][<span class="stringliteral">&#39;year&#39;</span>] . <span class="stringliteral">&quot;&#39;&quot;</span>); <span class="comment">// запрашиваем данные о том, сколько новостей существует в проверяемый год</span>
+<a name="l00188"></a>00188                     $spisok .= <span class="stringliteral">&#39;&amp;bull;&amp;nbsp;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;y=&#39;</span> . $temp[$i][<span class="stringliteral">&#39;year&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $temp[$i][<span class="stringliteral">&#39;year&#39;</span>] . <span class="stringliteral">&#39; (&#39;</span> . $lang[<span class="stringliteral">&#39;news_num_news&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $temp2 . <span class="stringliteral">&#39;)&quot;&gt;&#39;</span> . $temp[$i][<span class="stringliteral">&#39;year&#39;</span>] . <span class="stringliteral">&#39; (&#39;</span> . $temp2 . <span class="stringliteral">&#39;)&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;&#39;</span>; <span class="comment">// формируем ссылку вида: YYYY (кол-во новостей) и добавляем её в список</span>
+<a name="l00189"></a>00189                 }
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191                 $array_data = array(); <span class="comment">// инициируем массив</span>
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193                 $array_data = array(
+<a name="l00194"></a>00194                                 <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_news&#39;</span>],
+<a name="l00195"></a>00195                                 <span class="stringliteral">&#39;L_NEWS_DATA&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on_years&#39;</span>],
+<a name="l00196"></a>00196                                 <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; $spisok,
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198                                 <span class="stringliteral">&#39;IF_EDIT_SHORT&#39;</span> =&gt; <span class="keyword">false</span>,
+<a name="l00199"></a>00199                                 <span class="stringliteral">&#39;IF_EDIT_LONG&#39;</span> =&gt; <span class="keyword">false</span>
+<a name="l00200"></a>00200                 ); <span class="comment">// наполняем массив данными для замены по шаблону</span>
+<a name="l00201"></a>00201 
+<a name="l00202"></a>00202                 $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;news.tpl&#39;</span>, $array_data); <span class="comment">// формируем центральный блок - список лет, в которые есть новости</span>
+<a name="l00203"></a>00203                 $title = $lang[<span class="stringliteral">&#39;news_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on_years&#39;</span>]; <span class="comment">// формируем дополнительный заголовок страницы вида Архив новостей по годам</span>
+<a name="l00204"></a>00204             }
+<a name="l00205"></a>00205         }
+<a name="l00206"></a>00206         <span class="keywordflow">else</span> <span class="comment">// иначе если указан правильный запрос года, то...</span>
+<a name="l00207"></a>00207         {
+<a name="l00208"></a>00208             $year = $_REQUEST[<span class="charliteral">&#39;y&#39;</span>]; <span class="comment">// сохраняем запрошенный год</span>
+<a name="l00209"></a>00209             <span class="keywordflow">if</span> (!isset($_REQUEST[<span class="charliteral">&#39;m&#39;</span>]) || empty($_REQUEST[<span class="charliteral">&#39;m&#39;</span>]) || !mb_ereg(<span class="stringliteral">&#39;^[0-9]{2}$&#39;</span>, $_REQUEST[<span class="charliteral">&#39;m&#39;</span>])) <span class="comment">// если не указан месяц, по которому надо вывести список новостей или формат месяца не соответствует формату (MM), то формируем список месяцев, в которые есть редактируемые новости соглсно запрошенного года</span>
+<a name="l00210"></a>00210             {
+<a name="l00211"></a>00211                 $act = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// активного пункта меняю - нет</span>
+<a name="l00212"></a>00212                 $temp = $db-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT DISTINCT DATE_FORMAT(`data_last_edit`, &#39;%m&#39;) AS &#39;month&#39; FROM `news` WHERE DATE_FORMAT(`data_last_edit`, &#39;%Y&#39;) = &#39;&quot;</span> . $year . <span class="stringliteral">&quot;&#39; ORDER BY `data_last_edit` ASC&quot;</span>); <span class="comment">// запрашиваем список месяцев, когда были редактированы новости в указанном году</span>
+<a name="l00213"></a>00213                 <span class="keywordflow">if</span>(!$temp) <span class="comment">// если нет таких данных, то...</span>
+<a name="l00214"></a>00214                 {
+<a name="l00215"></a>00215                     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>]); <span class="comment">// выводим список последних новостей</span>
+<a name="l00216"></a>00216                 }
+<a name="l00217"></a>00217                 <span class="keywordflow">else</span> <span class="comment">// иначе...</span>
+<a name="l00218"></a>00218                 {
+<a name="l00219"></a>00219                     $spisok = <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>; <span class="comment">// инициируем список новостей</span>
+<a name="l00220"></a>00220                     <span class="keywordflow">for</span>($i = 1; $i &lt;= $temp[0]; $i++) <span class="comment">// обрабатываем по циклу все месяца, полученный в запросе</span>
+<a name="l00221"></a>00221                     {
+<a name="l00222"></a>00222                         $temp2 = $db-&gt;num_rows(<span class="stringliteral">&quot;SELECT * FROM `news` WHERE DATE_FORMAT(`data_last_edit`, &#39;%Y&#39;) = &#39;&quot;</span> . $year . <span class="stringliteral">&quot;&#39; AND DATE_FORMAT(`data_last_edit`, &#39;%m&#39;) = &#39;&quot;</span> . $temp[$i][<span class="stringliteral">&#39;month&#39;</span>] . <span class="stringliteral">&quot;&#39;&quot;</span>); <span class="comment">// запрашиываем количество новостей в указанном месяце указанного года</span>
+<a name="l00223"></a>00223                         $spisok .= <span class="stringliteral">&#39;&amp;bull;&amp;nbsp;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;y=&#39;</span> . $year . <span class="stringliteral">&#39;&amp;m=&#39;</span> . $temp[$i][<span class="stringliteral">&#39;month&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $lang[<span class="stringliteral">&#39;news&#39;</span>][$temp[$i][<span class="stringliteral">&#39;month&#39;</span>]] . <span class="stringliteral">&#39; (&#39;</span> . $lang[<span class="stringliteral">&#39;news_num_news&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $temp2 . <span class="stringliteral">&#39;)&quot;&gt;&#39;</span> . $lang[<span class="stringliteral">&#39;news&#39;</span>][$temp[$i][<span class="stringliteral">&#39;month&#39;</span>]] . <span class="stringliteral">&#39; (&#39;</span> . $temp2 . <span class="stringliteral">&#39;)&lt;/a&gt;&lt;br /&gt;&#39;</span>; <span class="comment">// формируем ссылку вида Месяц (кол-во новостей)</span>
+<a name="l00224"></a>00224                     }
+<a name="l00225"></a>00225 
+<a name="l00226"></a>00226                     $array_data = array(); <span class="comment">// инициируем массив</span>
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228                     $array_data = array(
+<a name="l00229"></a>00229                                     <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_news&#39;</span>],
+<a name="l00230"></a>00230                                     <span class="stringliteral">&#39;L_NEWS_DATA&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $year . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on_month&#39;</span>],
+<a name="l00231"></a>00231                                     <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; $spisok,
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233                                     <span class="stringliteral">&#39;IF_EDIT_SHORT&#39;</span> =&gt; <span class="keyword">false</span>,
+<a name="l00234"></a>00234                                     <span class="stringliteral">&#39;IF_EDIT_LONG&#39;</span> =&gt; <span class="keyword">false</span>
+<a name="l00235"></a>00235                     ); <span class="comment">// наполняем массив данными для замены по шаблону</span>
+<a name="l00236"></a>00236 
+<a name="l00237"></a>00237                     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;news.tpl&#39;</span>, $array_data); <span class="comment">// формируем центральный блок - список новостей по месяцам</span>
+<a name="l00238"></a>00238                     $title = $lang[<span class="stringliteral">&#39;news_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $year. <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on_month&#39;</span>]; <span class="comment">// дополнительным заголовком страницы будет текст &quot;Архив новостей за YYYY год по месяцам&quot;</span>
+<a name="l00239"></a>00239                 }
+<a name="l00240"></a>00240             }
+<a name="l00241"></a>00241             <span class="keywordflow">else</span> <span class="comment">// иначе если был правильно указан месяц, то формируем список названий новостей в данном месяце данного года</span>
+<a name="l00242"></a>00242             {
+<a name="l00243"></a>00243                 $month = $_REQUEST[<span class="charliteral">&#39;m&#39;</span>]; <span class="comment">// сохраняем месяц</span>
+<a name="l00244"></a>00244                 $act = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// активного пукта меню - нет</span>
+<a name="l00245"></a>00245 
+<a name="l00246"></a>00246                 $temp = $db-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT * FROM `news` WHERE DATE_FORMAT(`data_last_edit`, &#39;%Y&#39;) = &#39;&quot;</span> . $year . <span class="stringliteral">&quot;&#39; AND DATE_FORMAT(`data_last_edit`, &#39;%m&#39;) = &#39;&quot;</span> . $month . <span class="stringliteral">&quot;&#39; ORDER BY `data_last_edit` ASC&quot;</span>); <span class="comment">// запрашиваем список новостей, которые были в указанном месяце указанного года</span>
+<a name="l00247"></a>00247                 <span class="keywordflow">if</span>(!$temp) <span class="comment">// если нет таких данных, то...</span>
+<a name="l00248"></a>00248                 {
+<a name="l00249"></a>00249                     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>]); <span class="comment">// выводим список последних новостей</span>
+<a name="l00250"></a>00250                 }
+<a name="l00251"></a>00251                 <span class="keywordflow">else</span> <span class="comment">// иначе формируем список названий новостей</span>
+<a name="l00252"></a>00252                 {
+<a name="l00253"></a>00253                     $spisok = <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>; <span class="comment">// инициируем переменную списка</span>
+<a name="l00254"></a>00254                     <span class="keywordflow">for</span>($i = 1; $i &lt;= $temp[0]; $i++) <span class="comment">// обрабатываем полученные новости в цикле</span>
+<a name="l00255"></a>00255                     {
+<a name="l00256"></a>00256                         $spisok .= <span class="stringliteral">&#39;&amp;bull;&amp;nbsp;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;news=&#39;</span> . $temp[$i][<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . substr($temp[$i][<span class="stringliteral">&#39;text_post&#39;</span>], 0, 100) . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $temp[$i][<span class="stringliteral">&#39;name_post&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&lt;br /&gt;&#39;</span>; <span class="comment">// формируем ссылку типа &quot;Название новости&quot; с всплывающей подсказкой, содержащей 100 первых символов текста новости</span>
+<a name="l00257"></a>00257                     }
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259                     $array_data = array(); <span class="comment">// инициируем массив</span>
+<a name="l00260"></a>00260 
+<a name="l00261"></a>00261                     $array_data = array(
+<a name="l00262"></a>00262                                     <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_news&#39;</span>],
+<a name="l00263"></a>00263                                     <span class="stringliteral">&#39;L_NEWS_DATA&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;news_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news&#39;</span>][$month] . <span class="charliteral">&#39; &#39;</span> . $year . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_years&#39;</span>],
+<a name="l00264"></a>00264                                     <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; $spisok,
+<a name="l00265"></a>00265 
+<a name="l00266"></a>00266                                     <span class="stringliteral">&#39;IF_EDIT_SHORT&#39;</span> =&gt; <span class="keyword">false</span>,
+<a name="l00267"></a>00267                                     <span class="stringliteral">&#39;IF_EDIT_LONG&#39;</span> =&gt; <span class="keyword">false</span>
+<a name="l00268"></a>00268                     ); <span class="comment">// наполняем массив данными для замены по шаблону</span>
+<a name="l00269"></a>00269 
+<a name="l00270"></a>00270                     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;news.tpl&#39;</span>, $array_data); <span class="comment">// формируем центральный блок - список новостей за указанный год и месяц</span>
+<a name="l00271"></a>00271                     $title = $lang[<span class="stringliteral">&#39;news_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_on&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news&#39;</span>][$month] . <span class="charliteral">&#39; &#39;</span> . $year . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;news_years&#39;</span>]; <span class="comment">// дополнительным заголовком страницы будет текст вида &quot;Архив новостей за Месяц YYYY года&quot;</span>
+<a name="l00272"></a>00272                 }
+<a name="l00273"></a>00273             }
+<a name="l00274"></a>00274         }
+<a name="l00275"></a>00275     }
+<a name="l00276"></a>00276 }
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 $redirect = array(); <span class="comment">// инициируем пустой массив для редиректа</span>
+<a name="l00279"></a>00279 
+<a name="l00280"></a>00280 <span class="keywordflow">if</span> (!empty($redirect_time)) <span class="comment">// если есть данные о времени редиректа, то...</span>
+<a name="l00281"></a>00281 {
+<a name="l00282"></a>00282     $array_data = array(); <span class="comment">// инициируем массив</span>
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284     $array_data = array(
+<a name="l00285"></a>00285                 <span class="stringliteral">&#39;L_REDIRECT_DESCRIPTION&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_redirect_description&#39;</span>],
+<a name="l00286"></a>00286                 <span class="stringliteral">&#39;L_REDIRECT_URL&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_redirect_url&#39;</span>],
+<a name="l00287"></a>00287 
+<a name="l00288"></a>00288                 <span class="stringliteral">&#39;L_REDIRECT_MASSAGE&#39;</span> =&gt; $redirect_message,
+<a name="l00289"></a>00289                 <span class="stringliteral">&#39;U_REDIRECT_URL&#39;</span> =&gt; $redirect_url
+<a name="l00290"></a>00290     ); <span class="comment">// наполняем массив данными для замены по шаблону</span>
+<a name="l00291"></a>00291 
+<a name="l00292"></a>00292     $redirect = array(
+<a name="l00293"></a>00293                 <span class="stringliteral">&#39;U_REDIRECT_URL&#39;</span> =&gt; $redirect_url,
+<a name="l00294"></a>00294                 <span class="stringliteral">&#39;REDIRECT_TIME&#39;</span> =&gt; $redirect_time,
+<a name="l00295"></a>00295                 <span class="stringliteral">&#39;IF_NEED_REDIRECT&#39;</span> =&gt; <span class="keyword">true</span>
+<a name="l00296"></a>00296     ); <span class="comment">// наполняем массив данными для редиректа</span>
+<a name="l00297"></a>00297     $title = $lang[<span class="stringliteral">&#39;main_redirect_title&#39;</span>]; <span class="comment">// дополнительным заголовком будет сообщение о переадресации</span>
+<a name="l00298"></a>00298     $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;redirect.tpl&#39;</span>, $array_data); <span class="comment">// формируем центральный блок для редиректа</span>
+<a name="l00299"></a>00299 }
+<a name="l00300"></a>00300 echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template($act, $title, $main_block, $redirect); <span class="comment">// выводим сформированную страницу</span>
+<a name="l00301"></a>00301 ?&gt;
+</pre></div></div>
+</div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.7.5
+</small></address>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Photo-RigmaBiZ: Исходный файл www/language/russian/main.php</title>
+
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+
+</head>
+<body>
+<div id="top"><!-- do not remove this div! -->
+
+
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  
+  
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Photo-RigmaBiZ
+   &#160;<span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
+  </td>
+  
+  
+  
+ </tr>
+ </tbody>
+</table>
+</div>
+
+<!-- Создано системой Doxygen 1.7.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="modules.html"><span>Группы</span></a></li>
+      <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
+      <li class="navelem"><a class="el" href="dir_a87cfc1b0b904e6285c3cb5db73f1748.html">language</a>      </li>
+      <li class="navelem"><a class="el" href="dir_a36965c7cf0ddb5d9afb1f7d680904ee.html">russian</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">main.php</div>  </div>
+</div>
+<div class="contents">
+<a href="language_2russian_2main_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00014"></a>00014 }
+<a name="l00016"></a>00016 
+<a name="l00021"></a>00021 
+<a name="l00026"></a>00026 $lang[<span class="stringliteral">&#39;main_main&#39;</span>] = <span class="stringliteral">&#39;Главная&#39;</span>;
+<a name="l00027"></a>00027 $lang[<span class="stringliteral">&#39;main_search&#39;</span>] = <span class="stringliteral">&#39;Поиск&#39;</span>;
+<a name="l00028"></a>00028 $lang[<span class="stringliteral">&#39;main_rate&#39;</span>] = <span class="stringliteral">&#39;Оценка&#39;</span>;
+<a name="l00029"></a>00029 $lang[<span class="stringliteral">&#39;main_top_foto&#39;</span>] = <span class="stringliteral">&#39;Лучшее фото&#39;</span>;
+<a name="l00030"></a>00030 $lang[<span class="stringliteral">&#39;main_last_foto&#39;</span>] = <span class="stringliteral">&#39;Последнее фото&#39;</span>;
+<a name="l00031"></a>00031 $lang[<span class="stringliteral">&#39;main_rand_foto&#39;</span>] = <span class="stringliteral">&#39;Случайное фото&#39;</span>;
+<a name="l00032"></a>00032 $lang[<span class="stringliteral">&#39;main_no_foto&#39;</span>] = <span class="stringliteral">&#39;Нет фото!&#39;</span>;
+<a name="l00033"></a>00033 $lang[<span class="stringliteral">&#39;main_user_add&#39;</span>] = <span class="stringliteral">&#39;Добавил&#39;</span>;
+<a name="l00034"></a>00034 $lang[<span class="stringliteral">&#39;main_data_add&#39;</span>] = <span class="stringliteral">&#39;Дата публикации (последней редакции)&#39;</span>;
+<a name="l00035"></a>00035 $lang[<span class="stringliteral">&#39;main_title_news&#39;</span>] = <span class="stringliteral">&#39;Новости&#39;</span>;
+<a name="l00036"></a>00036 $lang[<span class="stringliteral">&#39;main_no_news&#39;</span>] = <span class="stringliteral">&#39;Нет новостей&#39;</span>;
+<a name="l00037"></a>00037 $lang[<span class="stringliteral">&#39;main_no_user_add&#39;</span>] = <span class="stringliteral">&#39;Автор не существует&#39;</span>;
+<a name="l00038"></a>00038 $lang[<span class="stringliteral">&#39;main_user_block&#39;</span>] = <span class="stringliteral">&#39;Панель пользователя&#39;</span>;
+<a name="l00039"></a>00039 $lang[<span class="stringliteral">&#39;main_login&#39;</span>] = <span class="stringliteral">&#39;Логин&#39;</span>;
+<a name="l00040"></a>00040 $lang[<span class="stringliteral">&#39;main_pass&#39;</span>] = <span class="stringliteral">&#39;Пароль&#39;</span>;
+<a name="l00041"></a>00041 $lang[<span class="stringliteral">&#39;main_enter&#39;</span>] = <span class="stringliteral">&#39;Войти&#39;</span>;
+<a name="l00042"></a>00042 $lang[<span class="stringliteral">&#39;main_logout&#39;</span>] = <span class="stringliteral">&#39;Выйти&#39;</span>;
+<a name="l00043"></a>00043 $lang[<span class="stringliteral">&#39;main_forgot_password&#39;</span>] = <span class="stringliteral">&#39;Потеряли пароль?&#39;</span>;
+<a name="l00044"></a>00044 $lang[<span class="stringliteral">&#39;main_registration&#39;</span>] = <span class="stringliteral">&#39;Зарегистрироваться&#39;</span>;
+<a name="l00045"></a>00045 $lang[<span class="stringliteral">&#39;main_redirect_title&#39;</span>] = <span class="stringliteral">&#39;Переадресация&#39;</span>;
+<a name="l00046"></a>00046 $lang[<span class="stringliteral">&#39;main_redirect_description&#39;</span>] = <span class="stringliteral">&#39;Сейчас произойдет автоматический переход на страницу сайта&#39;</span>;
+<a name="l00047"></a>00047 $lang[<span class="stringliteral">&#39;main_redirect_url&#39;</span>] = <span class="stringliteral">&#39;Нажмите здесь если Ваш браузер не поддерживает переадресацию&#39;</span>;
+<a name="l00048"></a>00048 $lang[<span class="stringliteral">&#39;main_login_ok&#39;</span>] = <span class="stringliteral">&#39;, вход успешно выполнен!&#39;</span>;
+<a name="l00049"></a>00049 $lang[<span class="stringliteral">&#39;main_login_error&#39;</span>] = <span class="stringliteral">&#39;Неверные имя пользователя и/или пароль!&#39;</span>;
+<a name="l00050"></a>00050 $lang[<span class="stringliteral">&#39;main_logout_ok&#39;</span>] = <span class="stringliteral">&#39;, выход успешно произведен!&#39;</span>;
+<a name="l00051"></a>00051 $lang[<span class="stringliteral">&#39;main_hi_user&#39;</span>] = <span class="stringliteral">&#39;Привет&#39;</span>;
+<a name="l00052"></a>00052 $lang[<span class="stringliteral">&#39;main_group&#39;</span>] = <span class="stringliteral">&#39;Группа&#39;</span>;
+<a name="l00053"></a>00053 $lang[<span class="stringliteral">&#39;main_stat_title&#39;</span>] = <span class="stringliteral">&#39;Статистика&#39;</span>;
+<a name="l00054"></a>00054 $lang[<span class="stringliteral">&#39;main_stat_regist&#39;</span>] = <span class="stringliteral">&#39;Зарегистрировано пользователей на сайте&#39;</span>;
+<a name="l00055"></a>00055 $lang[<span class="stringliteral">&#39;main_stat_photo&#39;</span>] = <span class="stringliteral">&#39;Всего загружено изображений&#39;</span>;
+<a name="l00056"></a>00056 $lang[<span class="stringliteral">&#39;main_stat_category&#39;</span>] = <span class="stringliteral">&#39;Всего разделов (из них пользовательских)&#39;</span>;
+<a name="l00057"></a>00057 $lang[<span class="stringliteral">&#39;main_stat_user_admin&#39;</span>] = <span class="stringliteral">&#39;Всего администраторов&#39;</span>;
+<a name="l00058"></a>00058 $lang[<span class="stringliteral">&#39;main_stat_user_moder&#39;</span>] = <span class="stringliteral">&#39;Всего преподавателей&#39;</span>;
+<a name="l00059"></a>00059 $lang[<span class="stringliteral">&#39;main_stat_rate_user&#39;</span>] = <span class="stringliteral">&#39;Выставлено оценок пользователями&#39;</span>;
+<a name="l00060"></a>00060 $lang[<span class="stringliteral">&#39;main_stat_rate_moder&#39;</span>] = <span class="stringliteral">&#39;Выставлено оценок преподавателями&#39;</span>;
+<a name="l00061"></a>00061 $lang[<span class="stringliteral">&#39;main_stat_online&#39;</span>] = <span class="stringliteral">&#39;Зарегистрированные пользователи на сайте&#39;</span>;
+<a name="l00062"></a>00062 $lang[<span class="stringliteral">&#39;main_stat_no_online&#39;</span>] = <span class="stringliteral">&#39;отсутствуют.&#39;</span>;
+<a name="l00063"></a>00063 $lang[<span class="stringliteral">&#39;main_user_name&#39;</span>] = <span class="stringliteral">&#39;Имя пользователя&#39;</span>;
+<a name="l00064"></a>00064 $lang[<span class="stringliteral">&#39;main_best_user_1&#39;</span>] = <span class="stringliteral">&#39;ТОП-&#39;</span>;
+<a name="l00065"></a>00065 $lang[<span class="stringliteral">&#39;main_best_user_2&#39;</span>] = <span class="stringliteral">&#39; пользователей&#39;</span>;
+<a name="l00066"></a>00066 $lang[<span class="stringliteral">&#39;main_best_user_photo&#39;</span>] = <span class="stringliteral">&#39;Загружено изображений&#39;</span>;
+<a name="l00067"></a>00067 $lang[<span class="stringliteral">&#39;main_name_of&#39;</span>] = <span class="stringliteral">&#39;Название&#39;</span>;
+<a name="l00068"></a>00068 $lang[<span class="stringliteral">&#39;main_description_of&#39;</span>] = <span class="stringliteral">&#39;Описание&#39;</span>;
+<a name="l00069"></a>00069 $lang[<span class="stringliteral">&#39;main_no_category&#39;</span>] = <span class="stringliteral">&#39;Нет разделов!&#39;</span>;
+<a name="l00070"></a>00070 $lang[<span class="stringliteral">&#39;main_edit_news&#39;</span>] = <span class="stringliteral">&#39;Редактировать новость&#39;</span>;
+<a name="l00071"></a>00071 $lang[<span class="stringliteral">&#39;main_delete_news&#39;</span>] = <span class="stringliteral">&#39;Удалить новость&#39;</span>;
+<a name="l00072"></a>00072 $lang[<span class="stringliteral">&#39;main_confirm_delete_news&#39;</span>] = <span class="stringliteral">&#39;Вы уверены, что хотите удалить новость&#39;</span>;
+<a name="l00075"></a>00075 ?&gt;
+</pre></div></div>
+</div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.7.5
+</small></address>
+
+</body>
+</html>

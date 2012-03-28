@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Photo-RigmaBiZ: Исходный файл www/language/russian/news.php</title>
+
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+
+</head>
+<body>
+<div id="top"><!-- do not remove this div! -->
+
+
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  
+  
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Photo-RigmaBiZ
+   &#160;<span id="projectnumber">0.1.1</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
+  </td>
+  
+  
+  
+ </tr>
+ </tbody>
+</table>
+</div>
+
+<!-- Создано системой Doxygen 1.7.5 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="modules.html"><span>Группы</span></a></li>
+      <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
+      <li class="navelem"><a class="el" href="dir_a87cfc1b0b904e6285c3cb5db73f1748.html">language</a>      </li>
+      <li class="navelem"><a class="el" href="dir_a36965c7cf0ddb5d9afb1f7d680904ee.html">russian</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">news.php</div>  </div>
+</div>
+<div class="contents">
+<a href="language_2russian_2news_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00014"></a>00014 }
+<a name="l00016"></a>00016 
+<a name="l00021"></a>00021 
+<a name="l00026"></a>00026 $lang[<span class="stringliteral">&#39;news_news&#39;</span>] = <span class="stringliteral">&#39;Архив новостей&#39;</span>;
+<a name="l00027"></a>00027 $lang[<span class="stringliteral">&#39;news_title&#39;</span>] = <span class="stringliteral">&#39;Новость&#39;</span>;
+<a name="l00028"></a>00028 $lang[<span class="stringliteral">&#39;news_name_post&#39;</span>] = <span class="stringliteral">&#39;Название&#39;</span>;
+<a name="l00029"></a>00029 $lang[<span class="stringliteral">&#39;news_text_post&#39;</span>] = <span class="stringliteral">&#39;Содержание&#39;</span>;
+<a name="l00030"></a>00030 $lang[<span class="stringliteral">&#39;news_edit_post&#39;</span>] = <span class="stringliteral">&#39;Сохранить изменения&#39;</span>;
+<a name="l00031"></a>00031 $lang[<span class="stringliteral">&#39;news_add_post&#39;</span>] = <span class="stringliteral">&#39;Добавить новость&#39;</span>;
+<a name="l00032"></a>00032 $lang[<span class="stringliteral">&#39;news_del_post&#39;</span>] = <span class="stringliteral">&#39;успешно удалена!&#39;</span>;
+<a name="l00033"></a>00033 $lang[<span class="stringliteral">&#39;news_num_news&#39;</span>] = <span class="stringliteral">&#39;Всего новостей&#39;</span>;
+<a name="l00034"></a>00034 $lang[<span class="stringliteral">&#39;news_on_years&#39;</span>] = <span class="stringliteral">&#39;по годам&#39;</span>;
+<a name="l00035"></a>00035 $lang[<span class="stringliteral">&#39;news_on&#39;</span>] = <span class="stringliteral">&#39;за&#39;</span>;
+<a name="l00036"></a>00036 $lang[<span class="stringliteral">&#39;news_year&#39;</span>] = <span class="stringliteral">&#39;год&#39;</span>;
+<a name="l00037"></a>00037 $lang[<span class="stringliteral">&#39;news_years&#39;</span>] = <span class="stringliteral">&#39;года&#39;</span>;
+<a name="l00038"></a>00038 $lang[<span class="stringliteral">&#39;news_on_month&#39;</span>] = <span class="stringliteral">&#39;по месяцам&#39;</span>;
+<a name="l00039"></a>00039 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;01&#39;</span>] = <span class="stringliteral">&#39;январь&#39;</span>;
+<a name="l00040"></a>00040 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;02&#39;</span>] = <span class="stringliteral">&#39;февраль&#39;</span>;
+<a name="l00041"></a>00041 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;03&#39;</span>] = <span class="stringliteral">&#39;март&#39;</span>;
+<a name="l00042"></a>00042 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;04&#39;</span>] = <span class="stringliteral">&#39;апрель&#39;</span>;
+<a name="l00043"></a>00043 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;05&#39;</span>] = <span class="stringliteral">&#39;май&#39;</span>;
+<a name="l00044"></a>00044 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;06&#39;</span>] = <span class="stringliteral">&#39;июнь&#39;</span>;
+<a name="l00045"></a>00045 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;07&#39;</span>] = <span class="stringliteral">&#39;июль&#39;</span>;
+<a name="l00046"></a>00046 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;08&#39;</span>] = <span class="stringliteral">&#39;август&#39;</span>;
+<a name="l00047"></a>00047 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;09&#39;</span>] = <span class="stringliteral">&#39;сентябрь&#39;</span>;
+<a name="l00048"></a>00048 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;10&#39;</span>] = <span class="stringliteral">&#39;октябрь&#39;</span>;
+<a name="l00049"></a>00049 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;11&#39;</span>] = <span class="stringliteral">&#39;ноябрь&#39;</span>;
+<a name="l00050"></a>00050 $lang[<span class="stringliteral">&#39;news&#39;</span>][<span class="stringliteral">&#39;12&#39;</span>] = <span class="stringliteral">&#39;декабрь&#39;</span>;
+<a name="l00053"></a>00053 ?&gt;
+</pre></div></div>
+</div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.7.5
+</small></address>
+
+</body>
+</html>
