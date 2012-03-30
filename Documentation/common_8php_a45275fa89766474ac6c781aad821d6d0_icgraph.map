@@ -1,5 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$classwork.html#a1c69e4c5de965a3854ac85f38db024f4" title="Конструктор класса, выполняет ряд ключевых задач." alt="" coords="151,5,233,32"/>
-<area shape="rect" id="node5" href="$classwork.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Функция проверки полученного сервером URL на содержание вредоносного кода." alt="" coords="137,56,247,83"/>
-<area shape="rect" id="node7" href="$classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6" title="Функция формирует информационную строку по конктретному разделу" alt="" coords="139,107,245,133"/>
+<area shape="rect" id="node3" href="$classuser.html#ae8a275690ff1b618e1947378b0ed73ae" title="Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе..." alt="" coords="154,5,233,32"/>
+<area shape="rect" id="node5" href="$classwork.html#a1c69e4c5de965a3854ac85f38db024f4" title="Конструктор класса, выполняет ряд ключевых задач." alt="" coords="152,56,235,83"/>
+<area shape="rect" id="node7" href="$classwork.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Функция проверки полученного сервером URL на содержание вредоносного кода." alt="" coords="138,107,249,133"/>
+<area shape="rect" id="node9" href="$classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6" title="Функция формирует информационную строку по конктретному разделу" alt="" coords="140,157,247,184"/>
+<area shape="rect" id="node11" href="$classwork.html#a60353d13b64ee02fe027d3727d07bc4b" title="Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении..." alt="" coords="137,208,250,235"/>
 </map>

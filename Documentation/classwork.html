@@ -118,12 +118,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция обработки email-адреса  <a href="#aa89658e6e6731f430f93c8193169ab1d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6">category</a> ($cat_id=0, $user_flag=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирует информационную строку по конктретному разделу  <a href="#a9662afa35a1b3f0206ffa7830f5b69e6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60353d13b64ee02fe027d3727d07bc4b"></a><!-- doxytag: member="work::del_photo" ref="a60353d13b64ee02fe027d3727d07bc4b" args="($photo_id)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>del_photo</b> ($photo_id)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0137c58d47b0c6d6ffe81b51fa9ae13b"></a><!-- doxytag: member="work::return_bytes" ref="a0137c58d47b0c6d6ffe81b51fa9ae13b" args="($val)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>return_bytes</b> ($val)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd4ee05da4428a5b4941fe29d2fa71aa"></a><!-- doxytag: member="work::encodename" ref="abd4ee05da4428a5b4941fe29d2fa71aa" args="($string)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>encodename</b> ($string)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a60353d13b64ee02fe027d3727d07bc4b">del_photo</a> ($photo_id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов  <a href="#a60353d13b64ee02fe027d3727d07bc4b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a0137c58d47b0c6d6ffe81b51fa9ae13b">return_bytes</a> ($val)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция преобразует полученное значение в байты - используется для преобразования значений типа 2M(егабайта) в размер в байтах  <a href="#a0137c58d47b0c6d6ffe81b51fa9ae13b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#abd4ee05da4428a5b4941fe29d2fa71aa">encodename</a> ($string)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания)  <a href="#abd4ee05da4428a5b4941fe29d2fa71aa"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Поля данных</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49c7011be9c979d9174c52a8b83e5d8e"></a><!-- doxytag: member="work::$config" ref="a49c7011be9c979d9174c52a8b83e5d8e" args="" -->
@@ -137,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </table>
 <hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
 <div class="textblock"><p>Общий класс (набор функций) + хранилище для данных о конфигурации. </p>
-<p>Данный класс содержит набор общих для всей игры функций, а так же используется для хранения данных о конфигурации. </p>
+<p>Данный класс содержит набор общих для всей галереи функций, а так же используется для хранения данных о конфигурации. </p>
 </div><hr/><h2>Методы</h2>
 <a class="anchor" id="a9662afa35a1b3f0206ffa7830f5b69e6"></a><!-- doxytag: member="work::category" ref="a9662afa35a1b3f0206ffa7830f5b69e6" args="($cat_id=0, $user_flag=0)" -->
 <div class="memitem">
@@ -173,8 +173,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   </dd>
 </dl>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Информационная строка по конктретному разделу. </dd></dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00342">342</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00339">339</a></p>
 
 <p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -232,7 +233,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>False, если $field не соотвествует заданному набору параметров, иначе True. </dd></dl>
 <dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classwork.html#a99d3e24aeb01e2a579563a62bf61676e" title="Функция проверки данных, переданных через $_GET[].">work::check_get</a>, <a class="el" href="classwork.html#acd6ad2a4ff726bb59bf6224d302ce092" title="Функция проверки данных, переданных через $_POST[].">work::check_post</a>, <a class="el" href="classwork.html#a6de84ee24deba0a9e3e1d9788c7ca5d6" title="Функция проверки данных, переданных через $_SESSION[].">work::check_session</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00144">144</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00140">140</a></p>
 
 <p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
@@ -304,7 +305,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>False, если $_GET[$field] не соотвествует заданному набору параметров, иначе True. </dd></dl>
 <dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classwork.html#a7db71b93c4e36c32a7a8082d80c8428a" title="Функция проверки содержимого на соотвествие регулярному выражению">work::check_field</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00112">112</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00108">108</a></p>
 
 <p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -376,7 +377,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>False, если $_POST[$field] не соотвествует заданному набору параметров, иначе True. </dd></dl>
 <dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classwork.html#a7db71b93c4e36c32a7a8082d80c8428a" title="Функция проверки содержимого на соотвествие регулярному выражению">work::check_field</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00095">95</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00091">91</a></p>
 
 <p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -448,7 +449,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>False, если $_SESSION[$field] не соотвествует заданному набору параметров, иначе True. </dd></dl>
 <dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="classwork.html#a7db71b93c4e36c32a7a8082d80c8428a" title="Функция проверки содержимого на соотвествие регулярному выражению">work::check_field</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00129">129</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00125">125</a></p>
 
 <p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -487,7 +488,75 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </dl>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Строку, обработанную функциями strip_tags и htmlspecialchars. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00175">175</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00171">171</a></p>
+
+</div>
+</div>
+<a class="anchor" id="a60353d13b64ee02fe027d3727d07bc4b"></a><!-- doxytag: member="work::del_photo" ref="a60353d13b64ee02fe027d3727d07bc4b" args="($photo_id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">del_photo </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>photo_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$photo_id</td><td>содержит идентификатор удаляемого изображения (обязательное поле). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Возвращает:</b></dt><dd>True если удалось удалить, иначе False. </dd></dl>
+<dl class="see"><dt><b>См. также:</b></dt><dd><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00455">455</a></p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph.png" border="0" usemap="#classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph" alt=""/></div>
+<map name="classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph" id="classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph">
+<area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="136,5,219,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abd4ee05da4428a5b4941fe29d2fa71aa"></a><!-- doxytag: member="work::encodename" ref="abd4ee05da4428a5b4941fe29d2fa71aa" args="($string)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">encodename </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>string</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания) </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$string</td><td>строка для перекодировки (обязательное поле). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Возвращает:</b></dt><dd>Перекодированная строка. </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00521">521</a></p>
 
 </div>
 </div>
@@ -515,7 +584,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </dl>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Email-адрес, в котором '@' заменено на '[at]' и '.' - на '[dot]'. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00329">329</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00325">325</a></p>
 
 </div>
 </div>
@@ -536,7 +605,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <p>Функция, генерирующая анти-спам-бот вопрос и ответ </p>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Массив, содержащий в элементе question сам вопрос и в элементе answer - ответ на него. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00287">287</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00283">283</a></p>
 
 </div>
 </div>
@@ -557,7 +626,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <p>Функция получения списка доступных языков на сервере </p>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Массив, содержащий данные о доступных на сервере языках, с локализованным выводом названий языков. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00239">239</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00235">235</a></p>
 
 </div>
 </div>
@@ -578,7 +647,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <p>Функция получения списка доступных тем оформления на сервере </p>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Массив, содержащий данные о доступных на сервере темах оформления. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00264">264</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00260">260</a></p>
+
+</div>
+</div>
+<a class="anchor" id="a0137c58d47b0c6d6ffe81b51fa9ae13b"></a><!-- doxytag: member="work::return_bytes" ref="a0137c58d47b0c6d6ffe81b51fa9ae13b" args="($val)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">return_bytes </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Функция преобразует полученное значение в байты - используется для преобразования значений типа 2M(егабайта) в размер в байтах </p>
+<dl><dt><b>Аргументы:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$val</td><td>текстовое значение размера, например 2M (обязательное поле). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Возвращает:</b></dt><dd>Полученное значение в байтах. </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00500">500</a></p>
 
 </div>
 </div>
@@ -599,13 +696,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <p>Функция проверки полученного сервером URL на содержание вредоносного кода. </p>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>True, если строка содержала вредоносный код, иначе возвращает False. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00065">65</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00061">61</a></p>
 
-<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph.png" border="0" usemap="#classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" alt=""/></div>
 <map name="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" id="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="133,5,216,32"/></map>
@@ -656,7 +753,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </dl>
 <dl class="return"><dt><b>Возвращает:</b></dt><dd>Строку, разбитую на несколько с указанной максимальной длиной и указанным разделителем. </dd></dl>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00189">189</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00185">185</a></p>
 
 </div>
 </div>
@@ -681,13 +778,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </li>
 </ol>
 
-<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00034">34</a></p>
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00030">30</a></p>
 
-<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph.png" border="0" usemap="#classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph" alt=""/></div>
 <map name="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph" id="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="104,5,187,32"/></map>

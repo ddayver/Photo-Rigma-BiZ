@@ -14,14 +14,10 @@ if (IN_GALLERY)
 
 /// Общий класс (набор функций) + хранилище для данных о конфигурации.
 /**
-* Данный класс содержит набор общих для всей игры функций, а так же используется для хранения данных о конфигурации.
+* Данный класс содержит набор общих для всей галереи функций, а так же используется для хранения данных о конфигурации.
 */
 class work
 {
-	// del_photo($photo_id) - удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов
-	// return_bytes($val) - преобразует полученное значение в байты - используется для преобразования значений типа 2M(егабайта) в размер в байтах
-	// encodename($string) - преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания)
-
 	var $config = array(); ///< Массив, хранящий конфигурацию.
 	private $array_rules = array(); ///< Массив с правилами защиты.
 
@@ -338,6 +334,7 @@ class work
 	* @param $cat_id содержит идентификатор раздела или, если $user_flag = 1,то идентификатор пользователя
 	* @param $user_flag флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1)
 	* @return Информационная строка по конктретному разделу.
+	* @see ::$db
 	*/
 	function category($cat_id = 0, $user_flag = 0)
 	{
@@ -449,65 +446,78 @@ class work
 		return $template->create_template('category_dir.tpl', $array_data);
 	}
 
+	/// Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов
+	/**
+	* @param $photo_id содержит идентификатор удаляемого изображения (обязательное поле).
+	* @return True если удалось удалить, иначе False.
+	* @see ::$db
+	*/
 	function del_photo($photo_id)
 	{
-		global $db; // Используем глобальный объект для работы с БД
+		global $db2;
 
-		if (!mb_ereg('^[0-9]+$', $photo_id)) // если идентификатор изображения не является числом
+		if (mb_ereg('^[0-9]+$', $photo_id))
 		{
-			return false; // передаем ответ о невозможности удалить изображение
-		}
-		else // иначе
-		{
-			$temp_foto = $db->fetch_array("SELECT * FROM `photo` WHERE `id` = " . $photo_id); // получаем данные об удаляемом изображении
-			if ($temp_foto) // если есть данные об изображении в базе, то...
+			if ($db2->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
 			{
-	    		$temp_category = $db->fetch_array("SELECT * FROM `category` WHERE `id` = " .  $temp_foto['category']); // получаем данные о разделе, где хранится данное изображение
-				if($temp_category) // если данные о разделе существуют, то...
+				$temp_photo = $db2->res_row();
+				if ($temp_photo)
 				{
-					$path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // формируем полный путь к эскизу изображения
-					$path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // и формируем полный путь к файлу изображения
-					if($db->query("DELETE FROM `photo` WHERE `id` = " . $photo_id)) // если удалось удалить запись о файле из базы данных, то...
+					if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
 					{
-						@unlink($path_thumbnail); // удаляем файл эскиза
-						@unlink($path_photo); // и удаляем файл самого изображения
-						$db->query("DELETE FROM `rate_user` WHERE `id_foto` = " . $photo_id); // удаляем проставленные оценки этого файла из базы пользовательских оценок
-						$db->query("DELETE FROM `rate_moder` WHERE `id_foto` = " . $photo_id); // удаляем проставленные оценки этого файла из базы преподавательских оценок
-						return true; // возвращаем данные, что файл успешно удален
+						$temp_category = $db2->res_row();
+						if ($temp_category)
+						{
+							$path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
+							$path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
+							if ($db2->delete(TBL_PHOTO, '`id` = ' . $photo_id))
+							{
+								if ($db2->aff_rows == 1)
+								{
+									@unlink($path_thumbnail);
+									@unlink($path_photo);
+									if (!$db2->delete(TBL_RATE_USER, '`id_foto` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
+									if (!$db2->delete(TBL_RATE_MODER, '`id_foto` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
+									return true;
+								}
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
 					}
-					else // иначе
-					{
-						return false; // передаем ответ о невозможности удалить изображение
-					}
-	    		}
-	    		else // иначе
-	    		{
-	    			return false; // передаем ответ о невозможности удалить изображение
-	    		}
-	    	}
-	    	else // иначе
-	    	{
-				return false; // передаем ответ о невозможности удалить изображение
-	    	}
-    	}
+					else log_in_file($db2->error, DIE_IF_ERROR);
+				}
+			}
+			else log_in_file($db2->error, DIE_IF_ERROR);
+		}
+		return false;
 	}
 
+	/// Функция преобразует полученное значение в байты - используется для преобразования значений типа 2M(егабайта) в размер в байтах
+	/**
+	* @param $val текстовое значение размера, например 2M (обязательное поле).
+	* @return Полученное значение в байтах.
+	*/
 	function return_bytes($val)
 	{
-		$val = trim($val); // удаляем пробельные символы в начале и конце строки
-		$last = strtolower($val[strlen($val)-1]); // получаем последний символ строки и переводим его в нижний регистр
-		switch($last) // используем ступени обработки
+		$val = trim($val);
+		$last = strtolower($val[strlen($val)-1]);
+		switch($last)
 		{
-			case 'g': // если данные были в гигабайтах
-				$val *= 1024; // умножим значение на 1024 - перевод в мегабайты
-			case 'm': // если в мегабайтах
-				$val *= 1024; // умножим значение на 1024 - перевод в килобайты
-			case 'k': // если в кидобайтах
-				$val *= 1024; // умножим значение на 1024 - перевод в байты
+			case 'g':
+				$val *= 1024;
+			case 'm':
+				$val *= 1024;
+			case 'k':
+				$val *= 1024;
 		}
-		return $val; // вернем полученное значение в байтах
+		return $val;
 	}
 
+	/// Функция преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания)
+	/**
+	* @param $string строка для перекодировки (обязательное поле).
+	* @return Перекодированная строка.
+	*/
 	function encodename($string)
 	{
 		$table = array(
@@ -527,16 +537,15 @@ class work
 				'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h',
 				'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'csh',
 				'ь' => '', 'ы' => 'y', 'ъ' => '', 'э' => 'e',
-				'ю' => 'yu', 'я' => 'ya',
-		); // формируем таблицу замены русских букв их транслит-аналогами
+				'ю' => 'yu', 'я' => 'ya'
+		);
 
-		$string = str_replace(array_keys($table), array_values($table), $string); // произведем замену русских букв в строке на траснлит
+		$string = str_replace(array_keys($table), array_values($table), $string);
 
-		// Заменим все возможные знаки пунктуации на "_", предварительно исключив оттуда символ """
 		$string=strtr($string,'"', '_');
 		$string=strtr($string,"-!#$%&'()*+,./:;<=>?@[\]`{|}~", "_____________________________");
 
-		return $string; // возвращаем преобразованную строку
+		return $string;
 	}
 }
 ?>

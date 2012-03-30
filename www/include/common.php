@@ -42,8 +42,14 @@ define ('TBL_CONFIG', 'config');
 define ('TBL_CATEGORY', 'category');
 /// Таблица с списком фотографий на сервере
 define ('TBL_PHOTO', 'photo');
-/// Общая таблица пользователей
+/// Таблица с оценками фотографий от пользователей
+define ('TBL_RATE_USER', 'rate_user');
+/// Таблица с оценками фотографий от модераторов
+define ('TBL_RATE_MODER', 'rate_moder');
+/// Таблица пользователей
 define ('TBL_USERS', 'user');
+/// Таблица групп пользователей с их правами
+define ('TBL_GROUP', 'group');
 
 /// Останавливать ли скрипт во время серьезных ошибок? (True - останавливать) @see ::log_in_file
 define ('DIE_IF_ERROR', true);

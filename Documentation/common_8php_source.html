@@ -114,18 +114,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00040"></a><a class="code" href="common_8php.html#a9380332e1bb2deca0a97dc689c826765">00040</a> <span class="comment"></span>define (<span class="stringliteral">&#39;TBL_CONFIG&#39;</span>, <span class="stringliteral">&#39;config&#39;</span>);
 <a name="l00042"></a><a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324">00042</a> define (<span class="stringliteral">&#39;TBL_CATEGORY&#39;</span>, <span class="stringliteral">&#39;category&#39;</span>);
 <a name="l00044"></a><a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b">00044</a> define (<span class="stringliteral">&#39;TBL_PHOTO&#39;</span>, <span class="stringliteral">&#39;photo&#39;</span>);
-<a name="l00046"></a><a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8">00046</a> define (<span class="stringliteral">&#39;TBL_USERS&#39;</span>, <span class="stringliteral">&#39;user&#39;</span>);
-<a name="l00047"></a>00047 
-<a name="l00049"></a><a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4">00049</a> define (<span class="stringliteral">&#39;DIE_IF_ERROR&#39;</span>, <span class="keyword">true</span>);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="comment">//Что использовать как конец строки (для Win-серверов)</span>
-<a name="l00052"></a>00052 <span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;PHP_EOL&#39;</span>)) define (<span class="stringliteral">&#39;PHP_EOL&#39;</span>, strtoupper(substr(PHP_OS, 0, 3) == <span class="stringliteral">&#39;WIN&#39;</span>) ? chr(13) . chr(10) : chr(10));
+<a name="l00046"></a><a class="code" href="common_8php.html#a52df2a93d890b1c0ac6f467ece1b0daa">00046</a> define (<span class="stringliteral">&#39;TBL_RATE_USER&#39;</span>, <span class="stringliteral">&#39;rate_user&#39;</span>);
+<a name="l00048"></a><a class="code" href="common_8php.html#abc852d793cdd27bfbd495f2c45f102a0">00048</a> define (<span class="stringliteral">&#39;TBL_RATE_MODER&#39;</span>, <span class="stringliteral">&#39;rate_moder&#39;</span>);
+<a name="l00050"></a><a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8">00050</a> define (<span class="stringliteral">&#39;TBL_USERS&#39;</span>, <span class="stringliteral">&#39;user&#39;</span>);
+<a name="l00052"></a><a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839">00052</a> define (<span class="stringliteral">&#39;TBL_GROUP&#39;</span>, <span class="stringliteral">&#39;group&#39;</span>);
 <a name="l00053"></a>00053 
-<a name="l00055"></a><a class="code" href="common_8php.html#ae10650a7a939d30df8d519b13693bcd4">00055</a> define(<span class="stringliteral">&#39;REG_LOGIN&#39;</span>, <span class="stringliteral">&#39;^[\u0030-\u0039\u0041-\u005A\u0061-\u007A]{1}[\u0020\u0030-\u0039\u0041-\u005A\u005F\u0061-\u007A]*[\u0030-\u0039\u0041-\u005A\u0061-\u007A]?\$&#39;</span>);
-<a name="l00057"></a><a class="code" href="common_8php.html#af4340956377b492ec15a72d781a021b2">00057</a> define(<span class="stringliteral">&#39;REG_NAME&#39;</span>, <span class="stringliteral">&#39;^[\u0021-\u10FFFF]{1}[\u0020-\u10FFFF]*[\u0021-\u10FFFF]?\$&#39;</span>);
-<a name="l00059"></a><a class="code" href="common_8php.html#a01e3bc15c9ae05b9c6a69efc07b737c9">00059</a> define(<span class="stringliteral">&#39;REG_EMAIL&#39;</span>, <span class="stringliteral">&#39;^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\$&#39;</span>);
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 ?&gt;
+<a name="l00055"></a><a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4">00055</a> define (<span class="stringliteral">&#39;DIE_IF_ERROR&#39;</span>, <span class="keyword">true</span>);
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057 <span class="comment">//Что использовать как конец строки (для Win-серверов)</span>
+<a name="l00058"></a>00058 <span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;PHP_EOL&#39;</span>)) define (<span class="stringliteral">&#39;PHP_EOL&#39;</span>, strtoupper(substr(PHP_OS, 0, 3) == <span class="stringliteral">&#39;WIN&#39;</span>) ? chr(13) . chr(10) : chr(10));
+<a name="l00059"></a>00059 
+<a name="l00061"></a><a class="code" href="common_8php.html#ae10650a7a939d30df8d519b13693bcd4">00061</a> define(<span class="stringliteral">&#39;REG_LOGIN&#39;</span>, <span class="stringliteral">&#39;^[\u0030-\u0039\u0041-\u005A\u0061-\u007A]{1}[\u0020\u0030-\u0039\u0041-\u005A\u005F\u0061-\u007A]*[\u0030-\u0039\u0041-\u005A\u0061-\u007A]?\$&#39;</span>);
+<a name="l00063"></a><a class="code" href="common_8php.html#af4340956377b492ec15a72d781a021b2">00063</a> define(<span class="stringliteral">&#39;REG_NAME&#39;</span>, <span class="stringliteral">&#39;^[\u0021-\u10FFFF]{1}[\u0020-\u10FFFF]*[\u0021-\u10FFFF]?\$&#39;</span>);
+<a name="l00065"></a><a class="code" href="common_8php.html#a01e3bc15c9ae05b9c6a69efc07b737c9">00065</a> define(<span class="stringliteral">&#39;REG_EMAIL&#39;</span>, <span class="stringliteral">&#39;^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\$&#39;</span>);
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 ?&gt;
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->

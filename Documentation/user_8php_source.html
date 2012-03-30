@@ -88,77 +88,86 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </div>
 <div class="contents">
 <a href="user_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00011"></a>00011 <span class="comment">// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке</span>
-<a name="l00012"></a>00012 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
-<a name="l00013"></a>00013 {
-<a name="l00014"></a>00014     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
-<a name="l00015"></a>00015 }
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="keyword">class </span><a class="code" href="classuser.html">user</a>
-<a name="l00018"></a>00018 {
-<a name="l00019"></a>00019     <span class="comment">// Внутри класса используются:</span>
-<a name="l00020"></a>00020     <span class="comment">// $user - массив, содержащий все данные о текущем пользователе</span>
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022     <span class="comment">// Функции:</span>
-<a name="l00023"></a>00023     <span class="comment">// User() - заполняет данные при создании объекта класса данными о текущем пользователе</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025     var $user = array();
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027     <span class="keyword">function</span> <a class="code" href="classuser.html">user</a>()
-<a name="l00028"></a>00028     {
-<a name="l00029"></a>00029         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>; <span class="comment">// подключаем глобальный объект для работы с БД</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031         <span class="keywordflow">if</span> (empty($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>])) <span class="comment">// если Не существует текущая сессия, то...</span>
-<a name="l00032"></a>00032         {
-<a name="l00033"></a>00033             $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] = 0; <span class="comment">// указываем, что текущий пользователь является гостем</span>
-<a name="l00034"></a>00034         }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036         <span class="keywordflow">if</span> ($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] === 0) <span class="comment">// если текущий пользователь является гостем, то...</span>
-<a name="l00037"></a>00037         {
-<a name="l00038"></a>00038             $this-&gt;<a class="code" href="classuser.html">user</a> = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `group` WHERE `id` = 0&quot;</span>); <span class="comment">// получаем данные для пользователя из группы &quot;Гость&quot;</span>
-<a name="l00039"></a>00039         }
-<a name="l00040"></a>00040         <span class="keywordflow">else</span> <span class="comment">// иначе...</span>
-<a name="l00041"></a>00041         {
-<a name="l00042"></a>00042             $this-&gt;<a class="code" href="classuser.html">user</a> = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `user` WHERE `id` = &quot;</span> . $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]); <span class="comment">// получаем данные о текущем пользователе</span>
-<a name="l00043"></a>00043             <span class="keywordflow">if</span> ($this-&gt;<a class="code" href="classuser.html">user</a>) <span class="comment">// если данные получены, то...</span>
-<a name="l00044"></a>00044             {
-<a name="l00045"></a>00045                 $temp = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `group` WHERE `id` = &quot;</span> . $this-&gt;<a class="code" href="classuser.html">user</a>[<span class="stringliteral">&#39;group&#39;</span>]); <span class="comment">// получаем данные о групе, в которой состоит пользователеь</span>
-<a name="l00046"></a>00046                 <span class="keywordflow">if</span> (!$temp) <span class="comment">// если нет данных о групе, то...</span>
-<a name="l00047"></a>00047                 {
-<a name="l00048"></a>00048                     $this-&gt;<a class="code" href="classuser.html">user</a>[<span class="stringliteral">&#39;group&#39;</span>] = 0; <span class="comment">// принимаем, что пользователь состоит в группе &quot;Гость&quot;</span>
-<a name="l00049"></a>00049                     $temp = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `group` WHERE `id` = &quot;</span> . $this-&gt;<a class="code" href="classuser.html">user</a>[<span class="stringliteral">&#39;group&#39;</span>]); <span class="comment">// повторно запрашиваем данные о группе (теперь уже о группе &quot;Гость&quot;)</span>
-<a name="l00050"></a>00050                 }
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052                 <span class="keywordflow">foreach</span> ($temp as $key =&gt; $value) <span class="comment">// извлекаем права доступа для группы, в которой пользователь состоит</span>
-<a name="l00053"></a>00053                 {
-<a name="l00054"></a>00054                     <span class="keywordflow">if</span> ($key != <span class="stringliteral">&#39;id&#39;</span> &amp;&amp; $key != <span class="stringliteral">&#39;name&#39;</span>) <span class="comment">// если это НЕ поля идентификатора или названия группы, то...</span>
-<a name="l00055"></a>00055                     {
-<a name="l00056"></a>00056                         <span class="keywordflow">if</span> ($this-&gt;<a class="code" href="classuser.html">user</a>[$key] == 0 &amp;&amp; $value == 0) <span class="comment">// если привелегия как в правах пользователя, так и правах группы не существует, то...</span>
-<a name="l00057"></a>00057                         {
-<a name="l00058"></a>00058                             $this-&gt;<a class="code" href="classuser.html">user</a>[$key] = <span class="keyword">false</span>; <span class="comment">// эта привелегия равна false (ложь)</span>
-<a name="l00059"></a>00059                         }
-<a name="l00060"></a>00060                         <span class="keywordflow">else</span> <span class="comment">// иначе...</span>
-<a name="l00061"></a>00061                         {
-<a name="l00062"></a>00062                             $this-&gt;<a class="code" href="classuser.html">user</a>[$key] = <span class="keyword">true</span>; <span class="comment">// эта привлегеия равна true (истина)</span>
-<a name="l00063"></a>00063                         }
-<a name="l00064"></a>00064                     }
-<a name="l00065"></a>00065                     elseif ($key == <span class="stringliteral">&#39;name&#39;</span>) <span class="comment">// если это поле названия группы, то...</span>
-<a name="l00066"></a>00066                     {
-<a name="l00067"></a>00067                         $this-&gt;<a class="code" href="classuser.html">user</a>[<span class="stringliteral">&#39;group_id&#39;</span>] = $this-&gt;<a class="code" href="classuser.html">user</a>[<span class="stringliteral">&#39;group&#39;</span>]; <span class="comment">// дополняем данные о группе, в которой состоит пользователь - идентификатором группы</span>
-<a name="l00068"></a>00068                         $this-&gt;<a class="code" href="classuser.html">user</a>[<span class="stringliteral">&#39;group&#39;</span>] = $value; <span class="comment">// заменяем текущее значение идентификатора группы её названием</span>
-<a name="l00069"></a>00069                     }
-<a name="l00070"></a>00070                 }
-<a name="l00071"></a>00071                 $db-&gt;query(<span class="stringliteral">&quot;UPDATE `user` SET `date_last_activ` = NOW() WHERE `id` = &quot;</span> . $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]); <span class="comment">// обновляем поле последней активности пользователя на сайте (срабатывает при каждом переходе по сайту)</span>
-<a name="l00072"></a>00072             }
-<a name="l00073"></a>00073             <span class="keywordflow">else</span> <span class="comment">// иначе</span>
-<a name="l00074"></a>00074             {
-<a name="l00075"></a>00075                 $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] = 0; <span class="comment">// пользователь является Гостем</span>
-<a name="l00076"></a>00076                 $this-&gt;<a class="code" href="classuser.html">user</a> = $db-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `group` WHERE `id` = 0&quot;</span>); <span class="comment">// получаем данные для группы &quot;Гость&quot;</span>
-<a name="l00077"></a>00077             }
-<a name="l00078"></a>00078         }
-<a name="l00079"></a>00079     }
-<a name="l00080"></a>00080 }
-<a name="l00081"></a>00081 ?&gt;
+<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00014"></a>00014 }
+<a name="l00015"></a>00015 
+<a name="l00017"></a>00017 
+<a name="l00020"></a>00020 <span class="keyword">class </span><a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>
+<a name="l00021"></a>00021 {
+<a name="l00022"></a><a class="code" href="classuser.html#a598ca4e71b15a1313ec95f0df1027ca5">00022</a>     var <a class="code" href="classuser.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Массив, содержащий все данные о текущем пользователе.">$user</a> = array(); 
+<a name="l00023"></a>00023 
+<a name="l00025"></a>00025 
+<a name="l00028"></a><a class="code" href="classuser.html#ae8a275690ff1b618e1947378b0ed73ae">00028</a>     <span class="keyword">function</span> <a class="code" href="classuser.html#ae8a275690ff1b618e1947378b0ed73ae" title="Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе...">user</a>()
+<a name="l00029"></a>00029     {
+<a name="l00030"></a>00030         global $db2;
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032         <span class="keywordflow">if</span> (!isset($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]) || (isset($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]) &amp;&amp; empty($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]))) $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] = 0;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034         <span class="keywordflow">if</span> ($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] === 0)
+<a name="l00035"></a>00035         {
+<a name="l00036"></a>00036             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839" title="Таблица групп пользователей с их правами">TBL_GROUP</a>, <span class="stringliteral">&#39;`id` = 0&#39;</span>))
+<a name="l00037"></a>00037             {
+<a name="l00038"></a>00038                 $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a> = $db2-&gt;res_row();
+<a name="l00039"></a>00039                 <span class="keywordflow">if</span> (!$this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<span class="stringliteral">&#39;Unable to get the guest group&#39;</span>, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00040"></a>00040             }
+<a name="l00041"></a>00041             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00042"></a>00042         }
+<a name="l00043"></a>00043         <span class="keywordflow">else</span>
+<a name="l00044"></a>00044         {
+<a name="l00045"></a>00045             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]))
+<a name="l00046"></a>00046             {
+<a name="l00047"></a>00047                 $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a> = $db2-&gt;res_row();
+<a name="l00048"></a>00048                 <span class="keywordflow">if</span> ($this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>)
+<a name="l00049"></a>00049                 {
+<a name="l00050"></a>00050                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839" title="Таблица групп пользователей с их правами">TBL_GROUP</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $this-&gt;user[<span class="stringliteral">&#39;group&#39;</span>]))
+<a name="l00051"></a>00051                     {
+<a name="l00052"></a>00052                         $temp = $db2-&gt;res_row();
+<a name="l00053"></a>00053                         <span class="keywordflow">if</span> (!$temp)
+<a name="l00054"></a>00054                         {
+<a name="l00055"></a>00055                             $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[<span class="stringliteral">&#39;group&#39;</span>] = 0;
+<a name="l00056"></a>00056                             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839" title="Таблица групп пользователей с их правами">TBL_GROUP</a>, <span class="stringliteral">&#39;`id` = 0&#39;</span>))
+<a name="l00057"></a>00057                             {
+<a name="l00058"></a>00058                                 $temp = $db2-&gt;res_row();
+<a name="l00059"></a>00059                                 <span class="keywordflow">if</span> (!$temp) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<span class="stringliteral">&#39;Unable to get the guest group&#39;</span>, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00060"></a>00060                             }
+<a name="l00061"></a>00061                             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00062"></a>00062                         }
+<a name="l00063"></a>00063                         <span class="keywordflow">foreach</span> ($temp as $key =&gt; $value)
+<a name="l00064"></a>00064                         {
+<a name="l00065"></a>00065                             <span class="keywordflow">if</span> ($key != <span class="stringliteral">&#39;id&#39;</span> &amp;&amp; $key != <span class="stringliteral">&#39;name&#39;</span>)
+<a name="l00066"></a>00066                             {
+<a name="l00067"></a>00067                                 <span class="keywordflow">if</span> ($this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[$key] == 0 &amp;&amp; $value == 0) $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[$key] = <span class="keyword">false</span>;
+<a name="l00068"></a>00068                                 <span class="keywordflow">else</span> $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[$key] = <span class="keyword">true</span>;
+<a name="l00069"></a>00069                             }
+<a name="l00070"></a>00070                             elseif ($key == <span class="stringliteral">&#39;name&#39;</span>)
+<a name="l00071"></a>00071                             {
+<a name="l00072"></a>00072                                 $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[<span class="stringliteral">&#39;group_id&#39;</span>] = $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[<span class="stringliteral">&#39;group&#39;</span>];
+<a name="l00073"></a>00073                                 $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>[<span class="stringliteral">&#39;group&#39;</span>] = $value;
+<a name="l00074"></a>00074                             }
+<a name="l00075"></a>00075                         }
+<a name="l00076"></a>00076                         <span class="keywordflow">if</span> (!$db2-&gt;update(array(<span class="stringliteral">&#39;date_last_activ&#39;</span> =&gt; date(<span class="stringliteral">&#39;Y-m-d H:i:s&#39;</span>)), <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>])) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078                     }
+<a name="l00079"></a>00079                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00080"></a>00080                 }
+<a name="l00081"></a>00081                 <span class="keywordflow">else</span>
+<a name="l00082"></a>00082                 {
+<a name="l00083"></a>00083                     $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] = 0;
+<a name="l00084"></a>00084                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839" title="Таблица групп пользователей с их правами">TBL_GROUP</a>, <span class="stringliteral">&#39;`id` = 0&#39;</span>))
+<a name="l00085"></a>00085                     {
+<a name="l00086"></a>00086                         $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a> = $db2-&gt;res_row();
+<a name="l00087"></a>00087                         <span class="keywordflow">if</span> (!$this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<span class="stringliteral">&#39;Unable to get the guest group&#39;</span>, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00088"></a>00088                     }
+<a name="l00089"></a>00089                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00090"></a>00090                 }
+<a name="l00091"></a>00091             }
+<a name="l00092"></a>00092             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00093"></a>00093         }
+<a name="l00094"></a>00094     }
+<a name="l00095"></a>00095 }
+<a name="l00096"></a>00096 ?&gt;
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->

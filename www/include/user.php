@@ -3,78 +3,92 @@
 * @file		include/user.php
 * @brief	Класс работы с пользователем.
 * @author	Dark Dayver
-* @version	0.1.1
-* @date		27/03-2012
+* @version	0.2.0
+* @date		28/03-2012
 * @details	Класс работы с пользователем.
 */
 
-// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
 if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
+/// Класс по работе с пользователями.
+/**
+* Данный класс содержит набор функций для работы с пользователями, а так же используется для хранения всех данных о текущем пользователе.
+*/
 class user
 {
-	// Внутри класса используются:
-	// $user - массив, содержащий все данные о текущем пользователе
+	var $user = array(); ///< Массив, содержащий все данные о текущем пользователе.
 
-	// Функции:
-	// User() - заполняет данные при создании объекта класса данными о текущем пользователе
-
-	var $user = array();
-
+	/// Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе.
+	/**
+	* @see ::$db
+	*/
 	function user()
 	{
-		global $db; // подключаем глобальный объект для работы с БД
+		global $db2;
 
-		if (empty($_SESSION['login_id'])) // если Не существует текущая сессия, то...
-		{
-			$_SESSION['login_id'] = 0; // указываем, что текущий пользователь является гостем
-		}
+		if (!isset($_SESSION['login_id']) || (isset($_SESSION['login_id']) && empty($_SESSION['login_id']))) $_SESSION['login_id'] = 0;
 
-		if ($_SESSION['login_id'] === 0) // если текущий пользователь является гостем, то...
+		if ($_SESSION['login_id'] === 0)
 		{
-			$this->user = $db->fetch_array("SELECT * FROM `group` WHERE `id` = 0"); // получаем данные для пользователя из группы "Гость"
-		}
-		else // иначе...
-		{
-			$this->user = $db->fetch_array("SELECT * FROM `user` WHERE `id` = " . $_SESSION['login_id']); // получаем данные о текущем пользователе
-			if ($this->user) // если данные получены, то...
+			if ($db2->select('*', TBL_GROUP, '`id` = 0'))
 			{
-				$temp = $db->fetch_array("SELECT * FROM `group` WHERE `id` = " . $this->user['group']); // получаем данные о групе, в которой состоит пользователеь
-				if (!$temp) // если нет данных о групе, то...
-				{
-					$this->user['group'] = 0; // принимаем, что пользователь состоит в группе "Гость"
-					$temp = $db->fetch_array("SELECT * FROM `group` WHERE `id` = " . $this->user['group']); // повторно запрашиваем данные о группе (теперь уже о группе "Гость")
-				}
-
-				foreach ($temp as $key => $value) // извлекаем права доступа для группы, в которой пользователь состоит
-				{
-					if ($key != 'id' && $key != 'name') // если это НЕ поля идентификатора или названия группы, то...
-					{
-						if ($this->user[$key] == 0 && $value == 0) // если привелегия как в правах пользователя, так и правах группы не существует, то...
-						{
-							$this->user[$key] = false; // эта привелегия равна false (ложь)
-						}
-						else // иначе...
-						{
-							$this->user[$key] = true; // эта привлегеия равна true (истина)
-						}
-					}
-					elseif ($key == 'name') // если это поле названия группы, то...
-					{
-						$this->user['group_id'] = $this->user['group']; // дополняем данные о группе, в которой состоит пользователь - идентификатором группы
-						$this->user['group'] = $value; // заменяем текущее значение идентификатора группы её названием
-					}
-				}
-				$db->query("UPDATE `user` SET `date_last_activ` = NOW() WHERE `id` = " . $_SESSION['login_id']); // обновляем поле последней активности пользователя на сайте (срабатывает при каждом переходе по сайту)
+				$this->user = $db2->res_row();
+				if (!$this->user) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
 			}
-			else // иначе
+			else log_in_file($db2->error, DIE_IF_ERROR);
+		}
+		else
+		{
+			if ($db2->select('*', TBL_USERS, '`id` = ' . $_SESSION['login_id']))
 			{
-				$_SESSION['login_id'] = 0; // пользователь является Гостем
-				$this->user = $db->fetch_array("SELECT * FROM `group` WHERE `id` = 0"); // получаем данные для группы "Гость"
+				$this->user = $db2->res_row();
+				if ($this->user)
+				{
+					if ($db2->select('*', TBL_GROUP, '`id` = ' . $this->user['group']))
+					{
+						$temp = $db2->res_row();
+						if (!$temp)
+						{
+							$this->user['group'] = 0;
+							if ($db2->select('*', TBL_GROUP, '`id` = 0'))
+							{
+								$temp = $db2->res_row();
+								if (!$temp) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
+						foreach ($temp as $key => $value)
+						{
+							if ($key != 'id' && $key != 'name')
+							{
+								if ($this->user[$key] == 0 && $value == 0) $this->user[$key] = false;
+								else $this->user[$key] = true;
+							}
+							elseif ($key == 'name')
+							{
+								$this->user['group_id'] = $this->user['group'];
+								$this->user['group'] = $value;
+							}
+						}
+						if (!$db2->update(array('date_last_activ' => date('Y-m-d H:i:s')), TBL_USERS, '`id` = ' . $_SESSION['login_id'])) log_in_file($db2->error, DIE_IF_ERROR);
+					}
+					else log_in_file($db2->error, DIE_IF_ERROR);
+				}
+				else
+				{
+					$_SESSION['login_id'] = 0;
+					if ($db2->select('*', TBL_GROUP, '`id` = 0'))
+					{
+						$this->user = $db2->res_row();
+						if (!$this->user) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
+					}
+					else log_in_file($db2->error, DIE_IF_ERROR);
+				}
 			}
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
 	}
 }
