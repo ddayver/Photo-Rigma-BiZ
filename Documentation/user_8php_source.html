@@ -148,26 +148,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00074"></a>00074                             }
 <a name="l00075"></a>00075                         }
 <a name="l00076"></a>00076                         <span class="keywordflow">if</span> (!$db2-&gt;update(array(<span class="stringliteral">&#39;date_last_activ&#39;</span> =&gt; date(<span class="stringliteral">&#39;Y-m-d H:i:s&#39;</span>)), <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>])) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078                     }
-<a name="l00079"></a>00079                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
-<a name="l00080"></a>00080                 }
-<a name="l00081"></a>00081                 <span class="keywordflow">else</span>
-<a name="l00082"></a>00082                 {
-<a name="l00083"></a>00083                     $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] = 0;
-<a name="l00084"></a>00084                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839" title="Таблица групп пользователей с их правами">TBL_GROUP</a>, <span class="stringliteral">&#39;`id` = 0&#39;</span>))
-<a name="l00085"></a>00085                     {
-<a name="l00086"></a>00086                         $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a> = $db2-&gt;res_row();
-<a name="l00087"></a>00087                         <span class="keywordflow">if</span> (!$this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<span class="stringliteral">&#39;Unable to get the guest group&#39;</span>, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
-<a name="l00088"></a>00088                     }
-<a name="l00089"></a>00089                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
-<a name="l00090"></a>00090                 }
-<a name="l00091"></a>00091             }
-<a name="l00092"></a>00092             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
-<a name="l00093"></a>00093         }
-<a name="l00094"></a>00094     }
-<a name="l00095"></a>00095 }
-<a name="l00096"></a>00096 ?&gt;
+<a name="l00077"></a>00077                     }
+<a name="l00078"></a>00078                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00079"></a>00079                 }
+<a name="l00080"></a>00080                 <span class="keywordflow">else</span>
+<a name="l00081"></a>00081                 {
+<a name="l00082"></a>00082                     $_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] = 0;
+<a name="l00083"></a>00083                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a3498d5fbc856b71fc1d26be937410839" title="Таблица групп пользователей с их правами">TBL_GROUP</a>, <span class="stringliteral">&#39;`id` = 0&#39;</span>))
+<a name="l00084"></a>00084                     {
+<a name="l00085"></a>00085                         $this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a> = $db2-&gt;res_row();
+<a name="l00086"></a>00086                         <span class="keywordflow">if</span> (!$this-&gt;<a class="code" href="classuser.html" title="Класс по работе с пользователями.">user</a>) <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<span class="stringliteral">&#39;Unable to get the guest group&#39;</span>, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00087"></a>00087                     }
+<a name="l00088"></a>00088                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00089"></a>00089                 }
+<a name="l00090"></a>00090             }
+<a name="l00091"></a>00091             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00092"></a>00092         }
+<a name="l00093"></a>00093     }
+<a name="l00094"></a>00094 }
+<a name="l00095"></a>00095 ?&gt;
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->

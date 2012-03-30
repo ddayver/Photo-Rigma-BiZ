@@ -1,61 +1,62 @@
 <?php
 /**
 * @file		include/template.php
-* @brief	Класс обработки шаблонов перед выводом пользователю.
+* @brief	Работа с шаблонами
 * @author	Dark Dayver
-* @version	0.1.1
-* @date		27/03-2012
-* @details	Класс обработки шаблонов перед выводом пользователю.
+* @version	0.2.0
+* @date		28/03-2012
+* @details	Содержит класс работы с шаблонами на сервере
 */
 
-// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
 if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
+/// Класс работы с шаблонами.
+/**
+* Данный класс содержит функции по работе с шаблонами (наполнение данными, обработка).
+*/
 class template
 {
-	// В качестве переменных классу передаются:
-	// $site_url - URL корня сайта
-	// $site_dir - системный путь к корню сайта
-	// $themes - имя используемой темы
+	private $themes_path; ///< Путь к корню темы
+	private $themes_url; ///< Ссылка на корень темы
+	private $site_url; ///< Ссылка корня сайта
+	private $site_dir; ///< Путь к корню сайта
+	private $theme; ///< Тема пользователя
 
-	// Внутри класса используются:
-	// $themes_path - содержит системный путь к файлам шаблона
-	// $themes_url - URL к файлам темы
-	// $themes_path и $themes_url - генерируются при создании объекта класса
-
-	// Функции:
-	// Themes_Work($site_url, $site_dir, $themes) - создает объект класа и генерирует внутренние переменные
-	// create_main_template($action_menu, $title, $main_block, $redirect) - формирует главную страницу сайта испрользуя как полученные переменные, так и внутренние функции класса; $action_menu - указатель на активный пункт меню, $title - значение дополнения к названию сайта в шапку страницы, $main_block - центральный блок страницы, $redirect = массив с данными для редиректа страницы, если поступает пустой, то редирект не происходит
-	// create_template($file_name, $array_data) - обрабатывает шаблон из файла $file_name, заменяя в файле данные, используя массив $array_data - ключи используются как фрагменты шаблона, значения - как данные, которые на которые они будут заменены.
-	// create_menu($action, $menu) - генерирует меню, в качестве данных получает: $action - пункт меню, который является активным, $menu - если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню, на выходе - сформированный HTML-код.
-	// create_foto($type, $id_photo) - генерирует блок вывода последнего, лучшего, случайного или указанного в $id_photo изображения, если на входе значение $top равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение; на выходе - сформированный HTML-код
-	// template_user() - формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе
-	// template_news($news_data, $act) - формируем вывод новостей сайта, если $act = 'last', то выводим последнии новости сайта в количестве, указанном в $news_data, иначе если $act = 'id', то выводим новость с идентификатором, полученным в $news_data
-	// template_stat() - формирует блок статистики для сайта
-	// template_best_user($best_user) формирует список из пользователей, заливших максимальное кол-во изображений в кол-ве, полученном в $best_user
-	// template_rate($if_who, $rate) - формирует фрагмент оценки от пользователя, если $if_who = 'user', то формирует для пользователя, если $if_who = 'moder', то для преподавателя; если $rate = 'false', то предлагает возможность проголосовать пользователю, иначе выводит только текущий результат голоса для пользователя
-	// Image_Attach($full_path, $name_file) - выводит изображение, скрывая путь к нему, на входе: $full_path - системный путь к изображению, $name_file - имя файла, на выходе - изображение.
-	// Image_Resize($full_path, $thumbnail_path) - преобразует изображение, полученное из $full_path, в эскиз, путь к которому казан в $thumbnail_path; при этом проводится проверка - если эскиз уже существует и его размеры соотвествуют нстройкам, указанным в конфигурации сайта, то просто возвращает уведомление о том, что изображение преобразовано - не выполняя никаких операций
-
-	var $themes_path;
-	var $themes_url;
-
-	function template($site_url, $site_dir, $themes)
+	/// Конструктор класса, формирует массив данных об используемой теме
+	/**
+	* @param $site_url содержит ссылку на корень сайта
+	* @param $site_dir содержит путь к корню сайта
+	* @param $theme содержит название используемой темы
+	* @see $themes_path, $themes_url
+	*/
+	function template($site_url, $site_dir, $theme)
 	{
-		$this->themes_path = $site_dir . 'themes/' . $themes . '/'; // генерация системного пути к файлам шаблона
-		$this->themes_url = $site_url . 'themes/' . $themes . '/'; // генерация URL к файлам шаблона
+		$this->site_url = $site_url;
+		$this->site_dir = $site_dir;
+		$this->theme = $theme;
+		$this->themes_path = $site_dir . 'themes/' . $theme . '/'; // генерация системного пути к файлам шаблона
+		$this->themes_url = $site_url . 'themes/' . $theme . '/'; // генерация URL к файлам шаблона
 	}
 
+	/// Функция формирует главную страницу сайта испрользуя как полученные переменные, так и внутренние функции класса
+	/**
+	* @param $action_menu содержит указатель на активный пункт меню
+	* @param $title значение дополнения к названию сайта в шапку страницы
+	* @param $main_block содержит центральный блок страницы
+	* @param $redirect содержит массив с данными для редиректа страницы, если поступает пустой, то редирект не происходит
+	* @return Обработанный шаблон главной страницы
+	* @see work, create_menu, create_foto, template_user, template_stat, template_best_user, create_template
+	*/
 	function create_main_template($action_menu = '', $title, $main_block, $redirect = array())
 	{
-		global $work, $lang; // Подключение массива глобальных настроек и языковых значений
+		global $work, $lang;
 
 		if (!isset($redirect['IF_NEED_REDIRECT']) || empty($redirect['IF_NEED_REDIRECT']))
 		{
-			$redirect['IF_NEED_REDIRECT'] = false; // если данные о редиректе не поступили, то редирект происходить не будет
+			$redirect['IF_NEED_REDIRECT'] = false;
 			$redirect['REDIRECT_TIME'] = false;
 			$redirect['U_REDIRECT_URL'] = false;
 		}
@@ -79,280 +80,275 @@ class template
 
 						'SITE_NAME' => $work->config['title_name'],
 						'SITE_DESCRIPTION' => $work->config['title_description']
-		); // наполняем массив данными для замены по шаблону
+		);
 
-		$content = $this->create_template('main.tpl', $array_data); // формируем основную страницу сайта
+		$content = $this->create_template('main.tpl', $array_data);
 
-		// Дополнительная обработка сформированной страницы
-		$content = str_replace('{THEMES_PATH}', $this->themes_url, $content); // замена всех упоминаний пути к файлам шаблона на соотвествующий URL
-		$content = str_replace('{LEFT_PANEL_WIDHT}', $work->config['left_panel'], $content); // замена всех упоминаний значения ширины левой панели
-		$content = str_replace('{RIGHT_PANEL_WIDHT}', $work->config['right_panel'], $content); // замена всех упоминаний значения ширины правой панели
-		$content = str_replace('{GALLERY_WIDHT}', $work->config['gal_width'], $content); // замена всех упоминаний значения ширины галлереи
-		$content = str_replace('{COPYRIGHT_YEAR}', $work->config['copyright_year'], $content); // замена всех на год копирайта
-		$content = str_replace('{COPYRIGHT_URL}', $work->config['copyright_url'], $content); // замена всех упоминаний ссылки копирайта
-		$content = str_replace('{COPYRIGHT_TEXT}', $work->config['copyright_text'], $content); // замена всех упоминаний текста копирайта
-		$content = str_replace('{U_SEARCH}', $work->config['site_url'] . '?action=search', $content); // замена всех ссылки на поиск
-		$content = str_replace('{L_SEARCH}', $lang['main_search'], $content); // замена всех упоминаний названия кнопки поиска
+		$content = str_replace('{THEMES_PATH}', $this->themes_url, $content);
+		$content = str_replace('{LEFT_PANEL_WIDHT}', $work->config['left_panel'], $content);
+		$content = str_replace('{RIGHT_PANEL_WIDHT}', $work->config['right_panel'], $content);
+		$content = str_replace('{GALLERY_WIDHT}', $work->config['gal_width'], $content);
+		$content = str_replace('{COPYRIGHT_YEAR}', $work->config['copyright_year'], $content);
+		$content = str_replace('{COPYRIGHT_URL}', $work->config['copyright_url'], $content);
+		$content = str_replace('{COPYRIGHT_TEXT}', $work->config['copyright_text'], $content);
+		$content = str_replace('{U_SEARCH}', $work->config['site_url'] . '?action=search', $content);
+		$content = str_replace('{L_SEARCH}', $lang['main_search'], $content);
 
-		if(get_magic_quotes_gpc()) // если включены магические кавычки, то...
+		if(get_magic_quotes_gpc())
 		{
-			$content = stripslashes($content); // удаляем все экранирующие слеши
+			$content = stripslashes($content);
 		}
 
-		return $content; // вернуть полученный обработанный шаблон главной страницы
+		return $content;
 	}
 
+	/// Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива
+	/**
+	* @param $file_name содержит указатель на файл с шаблоном
+	* @param $array_data сожержит массив, в котором ключи используются как фрагменты шаблона, значения - как данные, на которые они будут заменены
+	* @return Обработанный шаблон
+	* @see $themes_path
+	*/
 	function create_template($file_name, $array_data)
 	{
-		$content = file_get_contents($this->themes_path . $file_name); // получение содержимого файла шаблона с именем $file_name
-		if (!$content) die ('Error template file!'); // если файла нет - выдать сообщение с ошибкой и остановка скрипта
+		$content = @file_get_contents($this->themes_path . $file_name);
+		if (!$content) log_in_file('Error template file: ' . $file_name . '!', DIE_IF_ERROR);
 
-		while (list($key, $val) = each($array_data)) // обработка полученного массива
+		foreach ($array_data as $key=>$val)
 		{
-			if (substr($key, 0, 3) == 'IF_' && $val == false) // если получена перменная - указатель на условность вывода на экран - название переменной начинается на 'IF_'...
+			if (substr($key, 0, 3) == 'IF_' && $val == false)
 			{
-				if ($val == false) // и значение переменной равно false, то...
+				if ($val == false)
 				{
-					$content = mb_ereg_replace('<!-- ' . $key . '_BEGIN -->.*<!-- ' . $key . '_END -->', '', $content); // удаляем из шаблона блок, содержащийся в закоментированном участке вида: <!-- IF_KEY_BEGIN -->блок шаблона<!-- IF_KEY_END -->
+					$content = mb_ereg_replace('<!-- ' . $key . '_BEGIN -->.*<!-- ' . $key . '_END -->', '', $content);
 				}
-				else // иначе...
+				else
 				{
-					$content = str_replace('<!-- ' . $key . '_BEGIN -->', '', $content); // удаляем из шаблона <!-- IF_KEY_BEGIN -->
-					$content = str_replace('<!-- ' . $key . '_END -->', '', $content); // удаляем из шаблона <!-- IF_KEY_END -->
+					$content = str_replace('<!-- ' . $key . '_BEGIN -->', '', $content);
+					$content = str_replace('<!-- ' . $key . '_END -->', '', $content);
 				}
 			}
-			else // иначе
+			else
 			{
-				$content = str_replace('{' . $key . '}', $val, $content); // замена переменных в шаблоне используя массив $array_data
+				$content = str_replace('{' . $key . '}', $val, $content);
 			}
 		}
 
-		return $content; // вернуть полученный обработанный файл
+		return $content;
 	}
 
+	/// Функция генерирует меню
+	/**
+	* @param $action содержит пункт меню, который является активным
+	* @param $menu если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню
+	* @return Сформированный HTML-код меню
+	* @see db, work, user, create_template
+	*/
 	function create_menu($action = 'main', $menu = 0)
 	{
-		global $db, $work, $lang, $user; // подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив настроек сайта ($config), массив языковых переменных ($lang), объект текущего пользователя на сайте ($user)
+		global $db2, $work, $lang, $user;
 
-		$m[0] = 'short'; // формируем массив для
-		$m[1] = 'long'; // работы с шаблонами
+		$m[0] = 'short';
+		$m[1] = 'long';
+		$text_menu = '';
 
-		$temp_menu = $db->fetch_big_array("SELECT * FROM `menu` WHERE `" . $m[$menu] . "` = '1' ORDER BY `id` ASC"); // запрашиваем из базы пункты меню в зависимости от $menu - краткое или длинное
-		$text_menu = ''; // инициируем переменную для хранения кода меню
-
-		if ($temp_menu) // если получены данные для меню...
+		if ($db2->select('*', TBL_MENU, '`' . $m[$menu] . '` = 1', array('id' => 'up')))
 		{
-			for ($i = 1; $i <= $temp_menu[0]; $i++) // цикл обработки каждого пункта меню
+			$temp_menu = $db2->res_arr();
+			if ($temp_menu)
 			{
-				$visible = true; // по умолчанию пункт меню - видим
-
-				if($temp_menu[$i]['user_login'] != '') // если есть указатель условия на то, вошел ли пользователь под своим именем, то...
+				foreach ($temp_menu as $val)
 				{
-					if ($temp_menu[$i]['user_login'] == 0 && $user->user['id'] > 0) $visible = false; // если требуется только "Гостям", а пользователь уже онлайн, то скрываем пункт меню
-					if ($temp_menu[$i]['user_login'] == 1 && $user->user['id'] == 0) $visible = false; // если пользователь должен быть онлайн, но является "гостем" - скрываем пункт меню
-				}
+					$visible = true;
 
-				if ($temp_menu[$i]['user_access'] != '') // если есть указатель на определенные привелегии пользователя, то...
-				{
-					if($user->user[$temp_menu[$i]['user_access']] != 1) $visible = false; // если указанное значение привлелегии у пользователя отсутствует - скрываем пункт меню
-				}
-
-				if($visible) // если разрешено показать пункт меню пользователю, то...
-				{
-					$array_data = array(); // инициируем массив
-
-					$array_data = array(
-							'U_MENU' => $work->config['site_url'] . $temp_menu[$i]['url_action'],
-							'L_MENU' => $lang['menu'][$temp_menu[$i]['name_action']]
-					); // заполняем массив данными
-
-					if ($temp_menu[$i]['action'] == $action) // проверяем, является ли текущий пункт - активным
+					if($val['user_login'] != '')
 					{
-						$text_menu .= $this->create_template($m[$menu] . '_menu_txt.tpl', $array_data); // если активный, то обрабатываем через шаблон для активного пункта
+						if ($val['user_login'] == 0 && $user->user['id'] > 0) $visible = false;
+						if ($val['user_login'] == 1 && $user->user['id'] == 0) $visible = false;
 					}
-					else
+					if ($val['user_access'] != '') if($user->user[$val['user_access']] != 1) $visible = false;
+
+					if($visible)
 					{
-						$text_menu .= $this->create_template($m[$menu] . '_menu_url.tpl', $array_data); // иначе через обычным шаблон
+						$array_data = array();
+
+						$array_data = array(
+								'U_MENU' => $work->config['site_url'] . $val['url_action'],
+								'L_MENU' => $lang['menu'][$val['name_action']]
+						);
+
+						if ($val['action'] == $action) $text_menu .= $this->create_template($m[$menu] . '_menu_txt.tpl', $array_data);
+						else $text_menu .= $this->create_template($m[$menu] . '_menu_url.tpl', $array_data);
 					}
 				}
 			}
+			else log_in_file('Unable to get the menu', DIE_IF_ERROR);
 		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$array_data = array(); // инициируем массив
+		$array_data = array();
 
 		$array_data = array (
 						'MENU_TEXT' => $text_menu,
 						'NAME_BLOCK' => $lang['menu']['name_block']
-		); // передаем собранные данные в массив
+		);
 
-		$text_menu = $this->create_template($m[$menu] . '_menu.tpl', $array_data); // обрабатываем данные и формируем полный код
+		$text_menu = $this->create_template($m[$menu] . '_menu.tpl', $array_data);
 
-		return $text_menu; // возвращаем полностью сформированный код меню
+		return $text_menu;
 	}
 
+	/// Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения
+	/**
+	* @param $type если значение равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение
+	* @param $id_photo если $type равно 'cat' - выводит фото с указанным идентификатором
+	* @return Сформированный HTML-код блока изображения
+	* @see db, work, user, create_template
+	*/
 	function create_foto($type = 'top', $id_photo = 0)
 	{
-		global $db, $work, $lang, $user; // подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив настроек сайта ($config), массив языковых переменных ($lang), объект текущего пользователя на сайте ($user)
+		global $db2, $work, $lang, $user;
 
-		if ($user->user['pic_view'] == true) // если пользователь имеет право просматривать изображения, то...
+		if ($user->user['pic_view'] == true)
 		{
-			if ($type == 'top') // если получили top - вывести лучшее...
+			$where = false;
+			$order = false;
+			$limit = false;
+			if ($type == 'top')
 			{
-				$query = "SELECT * FROM `photo` WHERE `rate_user` != 0 ORDER BY `rate_user` DESC LIMIT 1"; // запрос на получение данных по лучшему фото
+				$where = '`rate_user` != 0';
+				$order = array('rate_user' => 'down');
+				$limit = 1;
 			}
-			elseif ($type == 'last') // если получили last - вывести последнее...
+			elseif ($type == 'last')
 			{
-				$query = "SELECT * FROM `photo` ORDER BY `date_upload` DESC LIMIT 1"; // запрос на получение данных по последнему фото
+				$order = array('date_upload' => 'down');
+				$limit = 1;
 			}
-			elseif ($type == 'cat') //если получили cat - вывести для разделов...
+			elseif ($type == 'cat') $where = '`id` = ' . $id_photo;
+			else
 			{
-                $query = "SELECT * FROM `photo` WHERE `id` = " . $id_photo; // запрос на полчение данных по опеределеному изображению
+				$order = 'rand()';
+				$limit = 1;
 			}
-			else // иначе - случайное фото
-			{
-				$temp = $db->fetch_big_array("SELECT `id` FROM `photo`"); // получаем массив идентификаторов
-				if ($temp) // если есть в наличии идентификаторы, то...
-				{
-					$id_array = array(); // инициируем одномерный массив идентификаторов
-					for($i = 1; $i <= $temp[0]; $i++)
-					{
-						$id_array[$i] = $temp[$i]['id']; // формируем одномерный массив идентификаторов
-					}
-						shuffle($id_array); // перемешиваем полученный одномерный массив идентификаторов
-				}
-				else // иначе...
-				{
-					$id_array[0] = 0; // присваиваем нулевому элементу значение "0"
-				}
-				$query = "SELECT * FROM `photo` WHERE `id` = " . $id_array[0]; // запрос на получение данных по случайной фотографии (используя 0-вой элемент перемешанного одномерного массива идентификаторов)
-			}
-			$temp_foto = $db->fetch_array($query); // отправляем сформированный ранее запрос
+			if ($db2->select('*', TBL_PHOTO, $where, $order, false, $limit)) $temp_foto = $db2->res_row();
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			$temp_foto = false; // иначе запрет на вывод изображения
+			$temp_foto = false;
 		}
 
-		$name_block = $lang['main_' . $type . '_foto']; // формируем заголовок окна в зависимости от полученного значения $type
+		$name_block = $lang['main_' . $type . '_foto'];
 
-		if ($temp_foto) // если запрос выполнился без ошибок, то...
+		if ($temp_foto)
 		{
-			$temp_category = $db->fetch_array("SELECT * FROM `category` WHERE `id` = " . $temp_foto['category']); // запрос на получение данных о категории, где хранится фото
-			if ($temp_category) // если запрос выполнился без ошибок, то...
+			if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
 			{
-				$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // формируем путь к изображению
-				$foto['url'] = $work->config['site_url'] . '?action=photo&id=' . $temp_foto['id']; // формируем ссылку на изображение
-				$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=' . $temp_foto['id'] . '&thumbnail=1'; // формируем ссылку для вывода эскиза изображения
-				$foto['name'] = $temp_foto['name']; // формируем имя фото
-				$foto['category_name'] = $temp_category['name']; // формируем название раздела
-				$foto['description'] = $temp_foto['description']; // формируем описание фото
-				$foto['category_description'] = $temp_category['description']; // формируем описание раздела
-				$foto['rate'] = $lang['main_rate'] . ': ' . $temp_foto['rate_user'] . '/' . $temp_foto['rate_moder']; // формируем ввыод оценки фото ввиде: Оценка: оценка пользователей/оценка модераторов
-				$user_add = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $temp_foto['user_upload']); // получаем данные об отображаемом имени пользователя, разместившего данное фото
-				if ($user_add) // если пользователь существует, то...
+				$temp_category = $db2->res_row();
+				if ($temp_category)
 				{
-					$foto['user'] = $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>'; // формируем имя пользователя с ссылкой на его профиль
-				}
-				else // иначе
-				{
-					$foto['user'] = $lang['main_no_user_add']; // указываем, что данный пользователь не существует
-				}
-				if($temp_category['id'] == 0) // если раздел является пользовательским альбомом, то..
-				{
-					$foto['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name']; // к названию раздела добавляем имя пользователя - владельца персонального альбома
-					$foto['category_description'] = $foto['category_name']; // устанавливаем в качестве описания - имя раздела
-					$foto['category_url'] = $work->config['site_url'] . '?action=category&cat=user&id=' . $temp_foto['user_upload']; // формируем ссылку для перехода на пользовательский раздел
+					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
+					$foto['url'] = $work->config['site_url'] . '?action=photo&id=' . $temp_foto['id'];
+					$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=' . $temp_foto['id'] . '&thumbnail=1';
+					$foto['name'] = $temp_foto['name'];
+					$foto['category_name'] = $temp_category['name'];
+					$foto['description'] = $temp_foto['description'];
+					$foto['category_description'] = $temp_category['description'];
+					$foto['rate'] = $lang['main_rate'] . ': ' . $temp_foto['rate_user'] . '/' . $temp_foto['rate_moder'];
+
+					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
+					{
+						$user_add = $db2->res_row();
+						if ($user_add) $foto['user'] = $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
+						else
+						{
+							$foto['user'] = $lang['main_no_user_add'];
+							$user_add['real_name'] = $lang['main_no_user_add'];
+						}
+					}
+					else log_in_file($db2->error, DIE_IF_ERROR);
+					if($temp_category['id'] == 0)
+					{
+						$foto['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name'];
+						$foto['category_description'] = $foto['category_name'];
+						$foto['category_url'] = $work->config['site_url'] . '?action=category&cat=user&id=' . $temp_foto['user_upload'];
+					}
+					else $foto['category_url'] = $work->config['site_url'] . '?action=category&cat=' . $temp_category['id'];
 				}
 				else
 				{
-					$foto['category_url'] = $work->config['site_url'] . '?action=category&cat=' . $temp_category['id']; // иначе формируем ссылку на переход в обычный раздел
+					$temp_foto['file'] = 'no_foto.png';
+					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
+					$foto['url'] = $work->config['site_url'] . '?action=photo&id=0';
+					$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+					$foto['name'] = $lang['main_no_foto'];
+					$foto['description'] = $lang['main_no_foto'];
+					$foto['category_name'] = $lang['main_no_category'];
+					$foto['category_description'] = $lang['main_no_category'];
+					$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+					$foto['user'] = $lang['main_no_user_add'];
+					$foto['category_url'] = $work->config['site_url'];
 				}
 			}
-			else // иначе формируем вывод для несуществующего фото
-			{
-				$temp_foto['file'] = 'no_foto.png'; // меняем имя файла
-				$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file']; // прописываем путь к новому файлу
-				$foto['url'] = $work->config['site_url'] . '?action=photo&id=0'; // формируем ссылку на изображение
-				$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1'; // формируем ссылку для вывода эскиза изображения
-				$foto['name'] = $lang['main_no_foto']; // название - НЕТ ФОТО
-				$foto['description'] = $lang['main_no_foto']; // описание - НЕТ ФОТО
-				$foto['category_name'] = $lang['main_no_category']; // название раздела - НЕТ РАЗДЕЛА
-				$foto['category_description'] = $lang['main_no_category']; // описание раздела - НЕТ РАЗДЕЛА
-				$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto']; // Оценка: НЕТ ФОТО
-				$foto['user'] = $lang['main_no_user_add']; // пользователь - не существует
-				$foto['category_url'] = $work->config['site_url']; // ссылка на категорию заменяется ссылкой на главную страницу
-			}
-		}
-		else // иначе формируем вывод для несуществующего фото
-		{
-			$temp_foto['file'] = 'no_foto.png'; // меняем имя файла
-			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file']; // прописываем путь к новому файлу
-			$foto['url'] = $work->config['site_url'] . '?action=photo&id=0'; // формируем ссылку на изображение
-			$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1'; // формируем ссылку для вывода эскиза изображения
-			$foto['name'] = $lang['main_no_foto']; // название - НЕТ ФОТО
-			$foto['description'] = $lang['main_no_foto']; // описание - НЕТ ФОТО
-			$foto['category_name'] = $lang['main_no_category']; // название раздела - НЕТ РАЗДЕЛА
-			$foto['category_description'] = $lang['main_no_category']; // описание раздела - НЕТ РАЗДЕЛА
-			$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto']; // Оценка: НЕТ ФОТО
-			$foto['user'] = $lang['main_no_user_add']; // пользователь - не существует
-			$foto['category_url'] = $work->config['site_url']; // ссылка на категорию заменяется ссылкой на главную страницу
-		}
-
-		if(!@fopen($temp_path, 'r')) // проверяем доступность файла, если не доступен, то формируем замену для несуществующего фото
-		{
-			$temp_foto['file'] = 'no_foto.png'; // меняем имя файла
-			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file']; // прописываем путь к новому файлу
-			$foto['url'] = $work->config['site_url'] . '?action=photo&id=0'; // формируем ссылку на изображение
-			$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1'; // формируем ссылку для вывода эскиза изображения
-			$foto['name'] = $lang['main_no_foto']; // название - НЕТ ФОТО
-			$foto['description'] = $lang['main_no_foto']; // описание - НЕТ ФОТО
-			$foto['category_name'] = $lang['main_no_category']; // название раздела - НЕТ РАЗДЕЛА
-			$foto['category_description'] = $lang['main_no_category']; // описание раздела - НЕТ РАЗДЕЛА
-			$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto']; // Оценка: НЕТ ФОТО
-			$foto['user'] = $lang['main_no_user_add']; // пользователь - не существует
-			$foto['category_url'] = $work->config['site_url']; // ссылка на категорию заменяется ссылкой на главную страницу
-		}
-
-		$size = getimagesize($temp_path); // получаем размеры файла
-
-		if ($work->config['temp_photo_w'] == '0') // если ширина вывода не ограничена...
-		{
-			$ratioWidth = 1; // коэффициент изменения размера по ширине приравниваем 1
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			$ratioWidth = $size[0]/$work->config['temp_photo_w']; // иначе рассчитываем этот коэффициент
+			$temp_foto['file'] = 'no_foto.png';
+			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
+			$foto['url'] = $work->config['site_url'] . '?action=photo&id=0';
+			$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+			$foto['name'] = $lang['main_no_foto'];
+			$foto['description'] = $lang['main_no_foto'];
+			$foto['category_name'] = $lang['main_no_category'];
+			$foto['category_description'] = $lang['main_no_category'];
+			$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+			$foto['user'] = $lang['main_no_user_add'];
+			$foto['category_url'] = $work->config['site_url'];
 		}
 
-		if ($work->config['temp_photo_h'] == '0') // если высота вывода не ограничена...
+		if(!@fopen($temp_path, 'r'))
 		{
-			$ratioHeight = 1;  // коэффициент изменения размера по высоте приравниваем 1
+			$temp_foto['file'] = 'no_foto.png';
+			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
+			$foto['url'] = $work->config['site_url'] . '?action=photo&id=0';
+			$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+			$foto['name'] = $lang['main_no_foto'];
+			$foto['description'] = $lang['main_no_foto'];
+			$foto['category_name'] = $lang['main_no_category'];
+			$foto['category_description'] = $lang['main_no_category'];
+			$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+			$foto['user'] = $lang['main_no_user_add'];
+			$foto['category_url'] = $work->config['site_url'];
+		}
+
+		$size = getimagesize($temp_path);
+		if ($work->config['temp_photo_w'] == '0') $ratioWidth = 1;
+		else $ratioWidth = $size[0]/$work->config['temp_photo_w'];
+		if ($work->config['temp_photo_h'] == '0') $ratioHeight = 1;
+		else $ratioHeight = $size[1]/$work->config['temp_photo_h'];
+
+		if($size[0] < $work->config['temp_photo_w'] && $size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0')
+		{
+			$foto['width'] = $size[0];
+			$foto['height'] = $size[1];
 		}
 		else
 		{
-			$ratioHeight = $size[1]/$work->config['temp_photo_h']; // иначе рассчитываем этот коэффициент
-		}
-
-		if($size[0] < $work->config['temp_photo_w'] && $size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0') // если размеры изображения соответствуют или ограничения отсутствуют, то...
-		{
-			$foto['width'] = $size[0]; // выводимая ширина равна ширине изображения
-			$foto['height'] = $size[1]; // выводимая высота равна высоте изображения
-		}
-		else // иначе...
-		{
-			if($ratioWidth < $ratioHeight) // если высота больше ширины, то...
+			if($ratioWidth < $ratioHeight)
 			{
-				$foto['width'] = $size[0]/$ratioHeight; // выводимая ширина рассчитываается по высоте изображения
-				$foto['height'] = $size[1]/$ratioHeight; // выводимая высота рассчитываается по высоте изображения
+				$foto['width'] = $size[0]/$ratioHeight;
+				$foto['height'] = $size[1]/$ratioHeight;
 			}
-			else // иначе...
+			else
 			{
-				$foto['width'] = $size[0]/$ratioWidth; // выводимая ширина рассчитываается по ширине изображения
-				$foto['height'] = $size[1]/$ratioWidth; // выводимая высота рассчитываается по ширине изображения
+				$foto['width'] = $size[0]/$ratioWidth;
+				$foto['height'] = $size[1]/$ratioWidth;
 			}
 		}
 
-		$array_data = array(); // инициируем массив
+		$array_data = array();
 
 		$array_data = array(
 				'NAME_BLOCK' => $name_block,
@@ -371,25 +367,24 @@ class template
 				'U_FOTO' => $foto['url'],
 				'U_THUMBNAIL_PHOTO' => $foto['thumbnail_url'],
 				'U_CATEGORY' => $foto['category_url']
-		); // передаем в массив собранные данные по изображению
+		);
 
-			if ($type == 'cat') //если получили cat - формируем и отдаем полный HTML-код для вывода фото для разделов
-			{
-				return $this->create_template('mini_foto_category.tpl', $array_data);
-			}
-			else // формируем и отдаем полный HTML-код для вывода лучшего, последнего или случайного фото
-			{
-				return $this->create_template('mini_foto.tpl', $array_data);
-			}
+		if ($type == 'cat') return $this->create_template('mini_foto_category.tpl', $array_data);
+		else return $this->create_template('mini_foto.tpl', $array_data);
 	}
 
+	/// Функция формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе
+	/**
+	* @return Сформированный HTML-код блока пользователя
+	* @see work, user, create_template
+	*/
 	function template_user()
 	{
-		global $db, $lang, $work, $user; // подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config), объект текущего пользователя на сайте ($user)
+		global $lang, $work, $user;
 
-		if ($_SESSION['login_id'] == 0) // если пользователь НЕ онлайн, то...
+		if ($_SESSION['login_id'] == 0)
 		{
-			$array_data = array(); // инициируем массив
+			$array_data = array();
 
 			$array_data = array(
 					'NAME_BLOCK' => $lang['main_user_block'],
@@ -402,412 +397,431 @@ class template
 					'U_LOGIN' => $work->config['site_url'] . '?action=login&subact=login',
 					'U_FORGOT_PASSWORD' => $work->config['site_url'] . '?action=login&subact=forgot',
 					'U_REGISTRATION' => $work->config['site_url'] . '?action=login&subact=regist'
-			); // наполняем массив данными
+			);
 
-			return $this->create_template('login_user.tpl', $array_data); // возвращаем блок для входа или регистрации пользователя
+			return $this->create_template('login_user.tpl', $array_data);
 		}
-		else // иначе если пользователь онлайн, то...
+		else
 		{
-			$array_data = array(); // инициируем массив
+			$array_data = array();
 
 			$array_data = array(
 					'NAME_BLOCK' => $lang['main_user_block'],
 					'L_HI_USER' => $lang['main_hi_user'] . ', ' . $user->user['real_name'],
 					'L_GROUP' => $lang['main_group'] . ': ' . $user->user['group'],
-
 					'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user->user['avatar']
-			); // наполняем массив данными
+			);
 
-			return $this->create_template('profile_user.tpl', $array_data); // возвращаем краткую информацию о пользователе
+			return $this->create_template('profile_user.tpl', $array_data);
 		}
 	}
 
+	/// Функция формирует вывод новостей сайта
+	/**
+	* @param $news_data сожержит идентификатор новости (если $act = 'id') или количество выводимых новостей (если $act = 'last')
+	* @param $act если $act = 'last', то выводим последнии новости сайта, иначе если $act = 'id', то выводим новость с указанным идентификатором
+	* @return Сформированный HTML-код блока новостей
+	* @see db, work, user, create_template
+	*/
 	function template_news($news_data = 1, $act='last')
 	{
-		global $db, $lang, $work, $user; // подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config), объект текущего пользователя на сайте ($user)
+		global $db2, $lang, $work, $user;
 
-		$news['IF_EDIT_LONG'] = false; //спорно - есть ли необходимость в таком выводе, но зарезервировано
+		$news['IF_EDIT_LONG'] = false;
 
-		if($act == 'id') // если требуется вывести определенную новость, то...
+		if($act == 'id')
 		{
-			$temp_news = $db->fetch_big_array("SELECT * FROM `news` WHERE `id` = " . $news_data); // получаем данные по этой новости
+			if ($db2->select('*', TBL_NEWS, '`id` = ' . $news_data)) $temp_news = $db2->res_arr();
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
-		else // иначе...
+		else
 		{
-			$temp_news = $db->fetch_big_array("SELECT * FROM `news` ORDER BY `data_last_edit` DESC LIMIT 0 , " . $news_data); // получаем данные по $news_data последним новостям (список берется по дате последнего редактирования)
+			if ($db2->select('*', TBL_NEWS, false, array('data_last_edit' => 'down'), false, $news_data)) $temp_news = $db2->res_arr();
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
 
-		if ($temp_news && $user->user['news_view'] == true) // если есть данные о новостях и если пользователь имеет право просматривать новости, то...
+		if ($temp_news && $user->user['news_view'] == true)
 		{
-			$result = ''; // инициируем переменную для хранения новостей
-			for ($i = 1; $i <= $temp_news[0]; $i++) // запускаем цикл по обработке списка новостей
+			$result = '';
+			foreach ($temp_news as $val)
 			{
-				$news['NAME_BLOCK'] = $lang['main_title_news'] . ' - ' . $temp_news[$i]['name_post']; // формируем название блока в виде Новость - Название новости
-				$news['L_NEWS_DATA'] = $lang['main_data_add'] . ': ' . $temp_news[$i]['data_post'] . ' (' . $temp_news[$i]['data_last_edit'] . ').'; // формирует вывод данных о дате публикации и последнего редактирования новости
-				$news['L_TEXT_POST'] = $temp_news[$i]['text_post']; // формируем текст самой новости
-				$user_add = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $temp_news[$i]['user_post']); // делаем запрос на отобржаемое имя автора ноости
-				if ($user_add) // если автор существует, то...
+				$news['NAME_BLOCK'] = $lang['main_title_news'] . ' - ' . $val['name_post'];
+				$news['L_NEWS_DATA'] = $lang['main_data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').';
+				$news['L_TEXT_POST'] = $val['text_post'];
+				if ($db2->select('real_name', TBL_USERS, '`id` = ' . $val['user_post']))
 				{
-					$news['L_NEWS_DATA'] .= '<br />' . $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_news[$i]['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.'; // добавляем данные об автаре, разместившем новость с указанием ссылки на его профиль
+					$user_add = $db2->res_row();
+					if ($user_add) $news['L_NEWS_DATA'] .= '<br />' . $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.';
 				}
-				$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST'])); // обрабатываем текст новости - удаляем пробелы в начале и конце, заменяем символы перевода строки тэгами перевода строки
+				else log_in_file($db2->error, DIE_IF_ERROR);
+				$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST']));
 
-				if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $temp_news[$i]['user_post'])) // если пользователь имеет право на редактирование ноости или является её автором, то...
+				if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
 				{
-					// заполняем данные для кнопок и ссылок по редактированию или удалению новости
 					$news['L_EDIT_BLOCK'] = $lang['main_edit_news'];
 					$news['L_DELETE_BLOCK'] = $lang['main_delete_news'];
-					$news['L_CONFIRM_DELETE_BLOCK'] = $lang['main_confirm_delete_news'] . ' ' . $temp_news[$i]['name_post'] . '?';
-					$news['U_EDIT_BLOCK'] = $work->config['site_url'] . '?action=news&subact=edit&news=' . $temp_news[$i]['id'];
-					$news['U_DELETE_BLOCK'] = $work->config['site_url'] . '?action=news&subact=delete&news=' . $temp_news[$i]['id'];
-					$news['IF_EDIT_SHORT'] = true; // разрешаем вывод в шаблоне данных кнопок
+					$news['L_CONFIRM_DELETE_BLOCK'] = $lang['main_confirm_delete_news'] . ' ' . $val['name_post'] . '?';
+					$news['U_EDIT_BLOCK'] = $work->config['site_url'] . '?action=news&subact=edit&news=' . $val['id'];
+					$news['U_DELETE_BLOCK'] = $work->config['site_url'] . '?action=news&subact=delete&news=' . $val['id'];
+					$news['IF_EDIT_SHORT'] = true;
 				}
-				else // иначе все значения равны пустуым строкам и...
+				else
 				{
 					$news['L_EDIT_BLOCK'] = '';
 					$news['L_DELETE_BLOCK'] = '';
 					$news['L_CONFIRM_DELETE_BLOCK'] = '';
 					$news['U_EDIT_BLOCK'] = '';
 					$news['U_DELETE_BLOCK'] = '';
-					$news['IF_EDIT_SHORT'] = false; // запрещаем вывод кнопок редактирования и удаления
+					$news['IF_EDIT_SHORT'] = false;
 				}
-				$result .= $this->create_template('news.tpl', $news); // добавляем к текущему списку новостей очередную обработанную новость
+				$result .= $this->create_template('news.tpl', $news);
 			}
 		}
-		else // иначе
+		else
 		{
-			$news['NAME_BLOCK'] = $lang['main_no_news']; // присваиваем НЕТ НОВОСТЕЙ
-			$news['L_NEWS_DATA'] = ''; // указываем пустую строку по информации о новости
-			$news['L_TEXT_POST'] = $lang['main_no_news']; // присваиваем НЕТ НОВСТЕЙ
-			$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST'])); // дополнительно обрабатываем вывод текста новости
+			$news['NAME_BLOCK'] = $lang['main_no_news'];
+			$news['L_NEWS_DATA'] = '';
+			$news['L_TEXT_POST'] = $lang['main_no_news'];
+			$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST']));
+			$news['L_EDIT_BLOCK'] = '';
+			$news['L_DELETE_BLOCK'] = '';
+			$news['L_CONFIRM_DELETE_BLOCK'] = '';
+			$news['U_EDIT_BLOCK'] = '';
+			$news['U_DELETE_BLOCK'] = '';
 			$news['IF_EDIT_SHORT'] = false;
-			$result = $this->create_template('news.tpl', $news); // формируем пстой вывод новости
+			$result = $this->create_template('news.tpl', $news);
 		}
 
-		return $result; // возвращаем полностью сформированный список ноостей
+		return $result;
 	}
 
+	/// Функция формирует блок статистики для сайта
+	/**
+	* @return Сформированный HTML-код блока статистики
+	* @see db, work, create_template
+	*/
 	function template_stat()
 	{
-		global $db, $lang, $work; // подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config)
+		global $db2, $lang, $work;
 
-		$temp = $db->num_rows("SELECT `id` FROM `user`"); // получаем информацию о кол-ве пользователей на сайте
-		if($temp) // если информация есть, то...
+		if ($db2->select('COUNT(*) AS `regist_user`', TBL_USERS))
 		{
-			$stat['regist'] = $temp; // наполняем массив статистики данными о кол-ве зарегистрированных пользователей
+			$temp = $db2->res_row();
+			if ($temp) $stat['regist'] = $temp['regist_user'];
+			else $stat['regist'] = 0;
 		}
-		else // иначе
-		{
-			$stat['regist'] = 0; // зарегистрировано 0 пользователей
-		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$temp = $db->num_rows("SELECT `id` FROM `photo`"); // получаем информацию о кол-ве изображений на сайте
-		if($temp) // если информация есть, то...
+		if ($db2->select('COUNT(*) AS `photo_count`', TBL_PHOTO))
 		{
-			$stat['photo'] = $temp; // наполняем массив статистики данными о кол-ве загруженных изображений
+			$temp = $db2->res_row();
+			if ($temp) $stat['photo'] = $temp['photo_count'];
+			else $stat['photo'] = 0;
 		}
-		else // иначе...
-		{
-			$stat['photo'] = 0; // загружено 0 изображений
-		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$temp = $db->num_rows("SELECT `id` FROM `category` WHERE `id` !=0"); // получаем данные о кол-ве НЕ пользовательских разделов на сайте
-		if($temp) // если данные есть, то...
+		if ($db2->select('COUNT(*) AS `category`', TBL_CATEGORY, '`id` != 0'))
 		{
-			$stat['category'] = $temp; // наполняем массив статистики данными о кол-ве НЕ пользовательских разделов
+			$temp = $db2->res_row();
+			if ($temp) $stat['category'] = $temp['category'];
+			else $stat['category'] = 0;
 		}
-		else // иначе...
-		{
-			$stat['category'] = 0; // НЕ пользовательских разделов на сайте нет
-		}
-		$temp = $db->num_rows("SELECT DISTINCT `user_upload` FROM `photo` WHERE `category` = 0"); // подсчитываем кол-во пользовательских альбомов на сайте
-		if($temp) // если данные есть, то...
-		{
-			$stat['category_user'] = $temp; // наполняем массив статистики данными о кол-ве пользовательских альбомов
-		}
-		else // иначе
-		{
-			$stat['category_user'] = 0; // пользовательских альбомов на сайте 0
-		}
-		$stat['category'] = $stat['category'] + $stat['category_user']; // сумируем кол-во пользовательских альбомов и НЕ пользовательских разделов и получаем общее число разделов
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$temp = $db->num_rows("SELECT `id` FROM `user` WHERE `group` =3"); // получаем данных о кол-ве пользователей в группе Администратор
-		if($temp) // если данные есть, то...
+		if ($db2->select('COUNT(DISTINCT `user_upload`) AS `category_user`', TBL_PHOTO, '`category` = 0'))
 		{
-			$stat['user_admin'] = $temp; // наполняем массив статистики данными о кол-ве Администраторов
+			$temp = $db2->res_row();
+			if ($temp) $stat['category_user'] = $temp['category_user'];
+			else $stat['category_user'] = 0;
 		}
-		else // иначе...
-		{
-			$stat['user_admin'] = 0; // на сайте 0 Администраторов
-		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$temp = $db->num_rows("SELECT `id` FROM `user` WHERE `group` =2"); // получаем данных о кол-ве пользователей в группе Преподаватель (модератор)
-		if($temp) // если данные есть, то...
-		{
-			$stat['user_moder'] = $temp; // наполняем массив статистики данными о кол-ве Преподаватель (модератор)
-		}
-		else // иначе
-		{
-			$stat['user_moder'] = 0; // на сайте 0 Преподавателей (модераторов)
-		}
+		$stat['category'] = $stat['category'] + $stat['category_user'];
 
-		$temp = $db->num_rows("SELECT * FROM `rate_user`"); // получаем данных о кол-ве оценок, поставленных пользователями
-		if($temp) // если данные есть, то...
+		if ($db2->select('COUNT(*) AS `user_admin`', TBL_USERS, '`group` = 3'))
 		{
-			$stat['rate_user'] = $temp; // наполняем массив статистики данными о кол-ве оценок, поставленных пользователями
+			$temp = $db2->res_row();
+			if ($temp) $stat['user_admin'] = $temp['user_admin'];
+			else $stat['user_admin'] = 0;
 		}
-		else // иначе...
-		{
-			$stat['rate_user'] = 0; // пользователи оставили 0 оценок
-		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$temp = $db->num_rows("SELECT * FROM `rate_moder`"); // получаем данных о кол-ве оценок, поставленных преподавателями (модераторами)
-		if($temp) // если данные есть, то...
+		if ($db2->select('COUNT(*) AS `user_moder`', TBL_USERS, '`group` = 2'))
 		{
-			$stat['rate_moder'] = $temp; // наполняем массив статистики данными о кол-ве оценок, поставленных  преподавателями (модераторами)
+			$temp = $db2->res_row();
+			if ($temp) $stat['user_moder'] = $temp['user_moder'];
+			else $stat['user_moder'] = 0;
 		}
-		else // иначе...
-		{
-			$stat['rate_moder'] = 0; //  преподаватели (модераторы) оставили 0 оценок
-		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-		$temp = $db->fetch_big_array("SELECT `id`, `real_name` FROM `user` WHERE `date_last_activ` >= (CURRENT_TIMESTAMP - 900 )"); // получаем данные об активности зарегистрированных пользователей за последнии 900 секунд (15 минут)
-		if($temp || $temp[0] > 0) // если есть такие пользователи, то...
+		if ($db2->select('COUNT(*) AS `rate_user`', TBL_RATE_USER))
 		{
-			$stat['online'] =''; // инициируем список онлайн-пользователей
-			for($i=1; $i<=$temp[0]; $i++) // обрабатываем список активных пользователей
+			$temp = $db2->res_row();
+			if ($temp) $stat['rate_user'] = $temp['rate_user'];
+			else $stat['rate_user'] = 0;
+		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
+
+		if ($db2->select('COUNT(*) AS `rate_moder`', TBL_RATE_MODER))
+		{
+			$temp = $db2->res_row();
+			if ($temp) $stat['rate_moder'] = $temp['rate_moder'];
+			else $stat['rate_moder'] = 0;
+		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
+
+		if ($db2->select(array('id', 'real_name'), TBL_USERS, '`date_last_activ` >= (CURRENT_TIMESTAMP - 900 )'))
+		{
+			$temp = $db2->res_arr();
+			if ($temp)
 			{
-				$stat['online'] .= '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp[$i]['id'] . '" title="' . $temp[$i]['real_name'] . '">' . $temp[$i]['real_name'] . '</a>'; // формируем ссылку на профиль активного пользователя с выводом его отображаемого имени
-				if ($i < $temp[0]) $stat['online'] .= ', '; // если это НЕ последний пользователь, то добавляем запятую
-				if ($i == $temp[0]) $stat['online'] .= '.'; // если последний, то точку
+				$stat['online'] ='';
+				foreach ($temp as $val)
+				{
+					$stat['online'] .= ', <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+				}
+				$stat['online'] = substr($stat['online'], 2) . '.';
 			}
+			else $stat['online'] = $lang['main_stat_no_online'];
 		}
-		else // иначе
-		{
-			$stat['online'] = $lang['main_stat_no_online']; // сообщаем, что нет активных зарегистрированных пользователей на сайте
-		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
 
-			$array_data = array(); // инициируем массив
+		$array_data = array();
 
-			$array_data = array(
-					'NAME_BLOCK' => $lang['main_stat_title'],
-					'L_STAT_REGIST' => $lang['main_stat_regist'],
-					'L_STAT_PHOTO' => $lang['main_stat_photo'],
-					'L_STAT_CATEGORY' => $lang['main_stat_category'],
-					'L_STAT_USER_ADMIN' => $lang['main_stat_user_admin'],
-					'L_STAT_USER_MODER' => $lang['main_stat_user_moder'],
-					'L_STAT_RATE_USER' => $lang['main_stat_rate_user'],
-					'L_STAT_RATE_MODER' => $lang['main_stat_rate_moder'],
-					'L_STAT_ONLINE' => $lang['main_stat_online'],
+		$array_data = array(
+				'NAME_BLOCK' => $lang['main_stat_title'],
+				'L_STAT_REGIST' => $lang['main_stat_regist'],
+				'L_STAT_PHOTO' => $lang['main_stat_photo'],
+				'L_STAT_CATEGORY' => $lang['main_stat_category'],
+				'L_STAT_USER_ADMIN' => $lang['main_stat_user_admin'],
+				'L_STAT_USER_MODER' => $lang['main_stat_user_moder'],
+				'L_STAT_RATE_USER' => $lang['main_stat_rate_user'],
+				'L_STAT_RATE_MODER' => $lang['main_stat_rate_moder'],
+				'L_STAT_ONLINE' => $lang['main_stat_online'],
 
-					'D_STAT_REGIST' => $stat['regist'],
-					'D_STAT_PHOTO' => $stat['photo'],
-					'D_STAT_CATEGORY' => $stat['category'] . '(' . $stat['category_user'] . ')',
-					'D_STAT_USER_ADMIN' => $stat['user_admin'],
-					'D_STAT_USER_MODER' => $stat['user_moder'],
-					'D_STAT_RATE_USER' => $stat['rate_user'],
-					'D_STAT_RATE_MODER' => $stat['rate_moder'],
-					'D_STAT_ONLINE' => $stat['online']
-			); // наполняем массив данными статистики
+				'D_STAT_REGIST' => $stat['regist'],
+				'D_STAT_PHOTO' => $stat['photo'],
+				'D_STAT_CATEGORY' => $stat['category'] . '(' . $stat['category_user'] . ')',
+				'D_STAT_USER_ADMIN' => $stat['user_admin'],
+				'D_STAT_USER_MODER' => $stat['user_moder'],
+				'D_STAT_RATE_USER' => $stat['rate_user'],
+				'D_STAT_RATE_MODER' => $stat['rate_moder'],
+				'D_STAT_ONLINE' => $stat['online']
+		);
 
-			return $this->create_template('stat.tpl', $array_data); // формируем и передаем блок ститистики
+		return $this->create_template('stat.tpl', $array_data);
 	}
 
+	/// Функция формирует список из пользователей, заливших максимальное кол-во изображений
+	/**
+	* @param $best_user сожержит указатель, сколько выводить лучших пользователей
+	* @return Сформированный HTML-код блока лучших пользователей
+	* @see db, work, create_template
+	*/
 	function template_best_user($best_user = 1)
 	{
-		global $db, $lang, $work; // подключаем глобальные массивы и объекты: объект для работы с базой данных ($db), массив языковых переменных ($lang), массив настроек сайта ($config)
+		global $db2, $lang, $work;
 
-		$temp = $db->fetch_big_array("SELECT DISTINCT `user_upload` FROM `photo`"); // получаем данные о заливавших фото пользователях
-		$name_block = $lang['main_best_user_1'] . $best_user . $lang['main_best_user_2']; // формируем название блока в стиле "кол-во лучших пользователей"
-		if($temp) // если такие данные есть, то...
+		$name_block = $lang['main_best_user_1'] . $best_user . $lang['main_best_user_2'];
+		if ($db2->select('DISTINCT `user_upload`', TBL_PHOTO))
 		{
-			$best_user_array = array(); // инициируем масиив лучших пользователей
-			for ($i = 1; $i <= $temp[0]; $i++) // обрабатываем полученные идентификаторы пользователей, заливших фото на сайт
+			$temp = $db2->res_arr();
+			if ($temp)
 			{
-				$temp2 = $db->fetch_array("SELECT COUNT(`id`) AS `user_photo` FROM `photo` WHERE `user_upload` = " . $temp[$i]['user_upload']); // подсчитываем число изображений, залитых пользователем
-				if($temp2)
+				$best_user_array = array();
+				foreach ($temp as $val)
 				{
-					$temp[$i]['user_photo'] = $temp2['user_photo']; // если такие данные есть, то присваиваем их в массив
+					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $val['user_upload']))
+					{
+						$temp2 = $db2->res_row();
+						if ($temp2)
+						{
+							if ($db2->select('COUNT(*) AS `user_photo`', TBL_PHOTO, '`user_upload` = ' . $val['user_upload']))
+							{
+								$temp2 = $db2->res_row();
+								if ($temp2) $val['user_photo'] = $temp2['user_photo'];
+								else $val['user_photo'] = 0;
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
+						else $val['user_photo'] = 0;
+					}
+					else log_in_file($db2->error, DIE_IF_ERROR);
+					$best_user_array[$val['user_upload']] = $val['user_photo'];
 				}
-				else // иначе
+				arsort($best_user_array);
+				$text_best_user = '';
+				foreach ($best_user_array as $best_user_name => $best_user_photo)
 				{
-					$temp[$i]['user_photo'] = 0; // число залитых изображений равно 0
+					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $best_user_name))
+					{
+						$temp2 = $db2->res_row();
+						$array_data = array();
+						$array_data = array(
+								'D_USER_NAME' => '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $best_user_name . '" title="' . $temp2['real_name'] . '">' . $temp2['real_name'] . '</a>',
+								'D_USER_PHOTO' => $best_user_photo
+						);
+					$text_best_user .= $this->create_template('best_user.tpl', $array_data);
+					}
+					else log_in_file($db2->error, DIE_IF_ERROR);
 				}
-
-				$temp2 = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $temp[$i]['user_upload']); // запрашиваем отображаемое имя пользователя
-				if(!$temp2) // если таких данных НЕТ, то...
-				{
-					$temp[$i]['user_photo'] = 0; // кол-во залитых изображений равно 0 (защита от удаленных пользователей)
-				}
-				$best_user_array[$temp[$i]['user_upload']] = $temp[$i]['user_photo']; // формируем массив, где ключ равен идентификатору пользователя, а значение - кол-ву залитых им изображений
 			}
-			arsort($best_user_array); // сортируем массив в порядке убывания кол-ва залитых изображений
-			$text_best_user = ''; // инициируем переменную для вывода списка лучших пользователей
-			if (count($best_user_array) < $best_user) $best_user = count($best_user_array);
-			reset($best_user_array); // если число пользователей, заливших изображение меньше требуемого, то выведем только их
-			for ($i = 1; $i <= $best_user; $i++) // цикл обработки лучших пользователей
+			else
 			{
-				list($best_user_name, $best_user_photo) = each($best_user_array); // выносим из масива ключ и значение
-				$temp2 = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $best_user_name); // по ключу получаем отображаемое имя пользователя
-				$array_data = array(); // инициируем массив
+				$array_data = array();
 				$array_data = array(
-						'D_USER_NAME' => '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $best_user_name . '" title="' . $temp2['real_name'] . '">' . $temp2['real_name'] . '</a>',
-						'D_USER_PHOTO' => $best_user_photo
-				); // наполняем мссив данными о пользователе с ссылкой на его профиль + кол-во залитых им изображений
-				$text_best_user .= $this->create_template('best_user.tpl', $array_data); // пополняем массив очередным пользователем
+						'D_USER_NAME' => '---',
+						'D_USER_PHOTO' => '-'
+				);
+				$text_best_user = $this->create_template('best_user.tpl', $array_data);
 			}
 		}
-		else // иначе...
-		{
-			$array_data = array(); // инициируем массив
-			$array_data = array(
-					'D_USER_NAME' => '---',
-					'D_USER_PHOTO' => '-'
-			); // вносим в него пометку об отсутствии пользователей, заливших изображение
-			$text_best_user = $this->create_template('best_user.tpl', $array_data); // формируем пустой список
-		}
-		$array_data = array(); // инициируем массив
+		else log_in_file($db2->error, DIE_IF_ERROR);
+
+		$array_data = array();
 		$array_data = array(
 				'NAME_BLOCK' => $name_block,
 				'L_USER_NAME' => $lang['main_user_name'],
 				'L_USER_PHOTO' => $lang['main_best_user_photo'],
 
 				'TEXT_BEST_USER' => $text_best_user
-		); // наполняем мссив полученными ранее данными
-		return $this->create_template('best.tpl', $array_data); // формируем и выводим блок лучших пользователей
+		);
+
+		return $this->create_template('best.tpl', $array_data);
 	}
 
+	/// Функция формирует фрагмент оценки
+	/**
+	* @param $if_who если равно 'user', то формирует для пользователя, если равно 'moder', то для преподавателя
+	* @param $rate если равно 'false', то предлагает возможность проголосовать пользователю, иначе выводит только текущий результат голоса для пользователя
+	* @return Сформированный HTML-код фрагмента оценки
+	* @see work, create_template
+	*/
 	function template_rate($if_who = 'user', $rate = 'false')
 	{
-		global $lang, $work; // подключаем глобальные массивы: массив языковых переменных ($lang), массив настроек сайта ($config)
+		global $lang, $work;
 
-		if ($rate == '') $rate = 'false'; // если нет данных о голое пользователя, то указываем, что пользователь должен проголосовать
+		if ($rate == '') $rate = 'false';
 
-		$array_data = array(); // инициируем массив
-		$array_data['L_IF_RATE'] = $lang['photo_if_' . $if_who]; // указываем, кто голосует - пользователь или преподаватель (модератор)
+		$array_data = array();
+		$array_data['L_IF_RATE'] = $lang['photo_if_' . $if_who];
 
-		if($rate == 'false') // если НЕ голосовал, то...
+		if($rate == 'false')
 		{
-            $array_data['D_IF_RATE'] = '<select name="rate_' . $if_who . '">'; // формируем список вариантов голоса
-            for ($i=-$work->config['max_rate']; $i<=$work->config['max_rate']; $i++) // для варианта от - максимальная оценка до + максимальная оценка (максимальная оценка берется из настроек сайта)
+            $array_data['D_IF_RATE'] = '<select name="rate_' . $if_who . '">';
+            for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++)
             {
-				if($i == 0) $selected = ' selected'; else $selected = ''; // указываем, что по умолчанию выбрана оценка с значением 0
-				$array_data['D_IF_RATE'] .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>'; // формируем пункт списка
+				if($i == 0) $selected = ' selected'; else $selected = '';
+				$array_data['D_IF_RATE'] .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
-			$array_data['D_IF_RATE'] .= '</select>'; // закрываем список
+			$array_data['D_IF_RATE'] .= '</select>';
 		}
-		else // иначе...
-		{
-		    $array_data['D_IF_RATE'] = $rate; // выводим результат голоса
-		}
+		else $array_data['D_IF_RATE'] = $rate;
 
-		return $this->create_template('rate_blank.tpl', $array_data); // возвращаем сформированный фрагмент голосования
+		return $this->create_template('rate_blank.tpl', $array_data);
 	}
 
-	function Image_Attach($full_path, $name_file)
+	/// Функция выводит изображение, скрывая путь к нему
+	/**
+	* @param $full_path системный путь к изображению
+	* @param $name_file имя файла
+	* @return Изображение
+	*/
+	function image_attach($full_path, $name_file)
 	{
-		$size = getimagesize($full_path); // получаем данные об изображении
+		$size = getimagesize($full_path);
 
-		header("Content-Type: " . $size['mime']); // передаем в заголовок - MIME-тип файла
-		header("Content-Disposition: inline; filename=\"" . $name_file . "\""); // передаем в заголовке имя файла
-		header("Content-Length: " . (string)(filesize($full_path))); // передаем в заголовке размер файла
+		header("Content-Type: " . $size['mime']);
+		header("Content-Disposition: inline; filename=\"" . $name_file . "\"");
+		header("Content-Length: " . (string)(filesize($full_path)));
 
-		flush(); // инициируем вывод
+		flush();
 
-		$fh = fopen($full_path, 'rb'); // открываем файл для бинарного чтения
-		fpassthru($fh); // выводим содержимое файла
-		fclose($fh); // закрываем файл
-		exit(); // выходим из скрипта
+		$fh = fopen($full_path, 'rb');
+		fpassthru($fh);
+		fclose($fh);
+		exit();
 	}
 
-	function Image_Resize($full_path, $thumbnail_path)
+	/// Функция преобразует изображение в эскиз, при этом проводится проверка - если эскиз уже существует и его размеры соотвествуют нстройкам, указанным в конфигурации сайта, то просто возвращает уведомление о том, что изображение преобразовано - не выполняя никаких операций
+	/**
+	* @param $full_path системный путь к изображению
+	* @param $thumbnail_path системный путь к эскизу
+	* @return True если удалось создать эскиз, иначе False
+	* @see work
+	*/
+	function image_resize($full_path, $thumbnail_path)
 	{
-		global $work; // подключаем глобальный массив настроек сайта
+		global $work;
 
-		$thumbnail_size = @getimagesize($thumbnail_path); // получаем размеры файла эскиза
-		$full_size = getimagesize($full_path); // получаем размеры файла оригинала
-		$foto['type'] = $full_size[2]; // тип изображения берем из файла оригинала
+		$thumbnail_size = @getimagesize($thumbnail_path);
+		$full_size = getimagesize($full_path);
+		$foto['type'] = $full_size[2];
 
-		if ($work->config['temp_photo_w'] == '0') // если ширина вывода не ограничена...
+		if ($work->config['temp_photo_w'] == '0') $ratioWidth = 1;
+		else $ratioWidth = $full_size[0]/$work->config['temp_photo_w'];
+		if ($work->config['temp_photo_h'] == '0') $ratioHeight = 1;
+		else $ratioHeight = $full_size[1]/$work->config['temp_photo_h'];
+
+		if($full_size[0] < $work->config['temp_photo_w'] && $full_size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0')
 		{
-			$ratioWidth = 1; // коэффициент изменения размера по ширине приравниваем 1
+			$foto['width'] = $full_size[0];
+			$foto['height'] = $full_size[1];
 		}
 		else
 		{
-			$ratioWidth = $full_size[0]/$work->config['temp_photo_w']; // иначе рассчитываем этот коэффициент
-		}
-
-		if ($work->config['temp_photo_h'] == '0') // если высота вывода не ограничена...
-		{
-			$ratioHeight = 1;  // коэффициент изменения размера по высоте приравниваем 1
-		}
-		else
-		{
-			$ratioHeight = $full_size[1]/$work->config['temp_photo_h']; // иначе рассчитываем этот коэффициент
-		}
-
-		if($full_size[0] < $work->config['temp_photo_w'] && $full_size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0') // если размеры изображения соответствуют или ограничения отсутствуют, то...
-		{
-			$foto['width'] = $full_size[0]; // выводимая ширина равна ширине изображения
-			$foto['height'] = $full_size[1]; // выводимая высота равна высоте изображения
-		}
-		else // иначе...
-		{
-			if($ratioWidth < $ratioHeight) // если высота больше ширины, то...
+			if($ratioWidth < $ratioHeight)
 			{
-				$foto['width'] = $full_size[0]/$ratioHeight; // выводимая ширина рассчитываается по высоте изображения
-				$foto['height'] = $full_size[1]/$ratioHeight; // выводимая высота рассчитываается по высоте изображения
+				$foto['width'] = $full_size[0]/$ratioHeight;
+				$foto['height'] = $full_size[1]/$ratioHeight;
 			}
-			else // иначе...
+			else
 			{
-				$foto['width'] = $full_size[0]/$ratioWidth; // выводимая ширина рассчитываается по ширине изображения
-				$foto['height'] = $full_size[1]/$ratioWidth; // выводимая высота рассчитываается по ширине изображения
+				$foto['width'] = $full_size[0]/$ratioWidth;
+				$foto['height'] = $full_size[1]/$ratioWidth;
 			}
 		}
 
-		if ($thumbnail_size[0] != $foto['width'] || $thumbnail_size[1] != $foto['height']) // если размер эскиза не соответствует требуемым, то...
+		if ($thumbnail_size[0] != $foto['width'] || $thumbnail_size[1] != $foto['height'])
 		{
-			switch($foto['type']) // согласно типа файла оригинала открываем его как...
+			switch($foto['type'])
 			{
 				case "1":
-					$imorig = imagecreatefromgif($full_path); // gif-файл
+					$imorig = imagecreatefromgif($full_path);
 					break;
 				case "2":
-					$imorig = imagecreatefromjpeg($full_path); // jpeg-файл
+					$imorig = imagecreatefromjpeg($full_path);
 					break;
 				case "3":
-					$imorig = imagecreatefrompng($full_path); // png-файл
+					$imorig = imagecreatefrompng($full_path);
 					break;
 				default:
-					$imorig = imagecreatefromjpeg($full_path); // если не определен тип, то открываем как jpeg-файл
+					$imorig = imagecreatefromjpeg($full_path);
 			}
-			$im = imagecreatetruecolor($foto['width'], $foto['height']); // создаем пустой макет
-			if (imagecopyresampled($im, $imorig , 0, 0, 0, 0, $foto['width'], $foto['height'], $full_size[0], $full_size[1])) // если удалось сжать исходный файл в указанный макет, то...
+			$im = imagecreatetruecolor($foto['width'], $foto['height']);
+			if (imagecopyresampled($im, $imorig , 0, 0, 0, 0, $foto['width'], $foto['height'], $full_size[0], $full_size[1]))
 			{
-				@unlink($thumbnail_path); // удаляем текущий эскиз, если он есть...
+				@unlink($thumbnail_path);
 
-				switch($foto['type']) // сохраняем новый эских в зависимости от типа фала оригианала, как...
+				switch($foto['type'])
 				{
 					case "1":
-						imagegif($im, $thumbnail_path); // gif-файл
+						imagegif($im, $thumbnail_path);
 						break;
 					case "2":
-						imagejpeg($im, $thumbnail_path); // jpeg-файл
+						imagejpeg($im, $thumbnail_path);
 						break;
 					case "3":
-						imagepng($im, $thumbnail_path); // png-файл
+						imagepng($im, $thumbnail_path);
 						break;
 					default:
-						imagejpeg($im, $thumbnail_path); // если не определен тип, то сохраняем как jpeg-файл
+						imagejpeg($im, $thumbnail_path);
 				}
-				return true; // возвращаем, что создание эскиза успешно завершено
+				return true;
 			}
-			return false; // возвращаем, что эскиз НЕ создан
+			return false;
 		}
-		else // иначе...
-		{
-			return true; // возвращаем, что эскиз НЕ создан
-		}
+		else return true;
 	}
 }
 ?>

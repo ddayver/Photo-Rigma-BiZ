@@ -55,9 +55,9 @@ if(!@fopen($temp_path, 'r')) // проверяем доступность фай
 
 if (isset($_REQUEST['thumbnail']) && $_REQUEST['thumbnail'] == 1) // если был запрошен эскиз, то...
 {
-	if($template->Image_Resize($temp_path, $thumbnail_path)) // создаем эскиз, если удалось создать эскиз, то...
+	if($template->image_resize($temp_path, $thumbnail_path)) // создаем эскиз, если удалось создать эскиз, то...
 	{
-		echo $template->Image_Attach($thumbnail_path, $temp_foto['file']); // выводим полученное изображение
+		echo $template->image_attach($thumbnail_path, $temp_foto['file']); // выводим полученное изображение
 	}
 	else // иначе выдадим сообщение об ошибке...
 	{
@@ -66,6 +66,6 @@ if (isset($_REQUEST['thumbnail']) && $_REQUEST['thumbnail'] == 1) // если б
 }
 else // иначе если надо вывести полное изображение
 {
-	echo $template->Image_Attach($temp_path, $temp_foto['file']); // выводим полное изображение
+	echo $template->image_attach($temp_path, $temp_foto['file']); // выводим полное изображение
 }
 ?>

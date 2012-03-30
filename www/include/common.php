@@ -38,6 +38,10 @@ function log_in_file($txt, $die = false)
 // Общие таблицы для серверов
 /// Таблица с настройками сервера
 define ('TBL_CONFIG', 'config');
+/// Таблица с пунктами меню
+define ('TBL_MENU', 'menu');
+/// Таблица с новостями
+define ('TBL_NEWS', 'news');
 /// Таблица с списком категорий на сервере
 define ('TBL_CATEGORY', 'category');
 /// Таблица с списком фотографий на сервере

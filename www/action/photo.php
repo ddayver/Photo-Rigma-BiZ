@@ -505,7 +505,7 @@ else // иначе если не указан был идентификатор 
 				$photo['thumbnail_path'] = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $file_name; // формируем путь к эскизу
 				if (move_uploaded_file($_FILES['file_photo']['tmp_name'], $photo['path'])) // пробуем поместить изображение в нужную папку, если получилось, то...
 				{
-					$template->Image_Resize($photo['path'], $photo['thumbnail_path']); // выполняем команду на создание эскиза к изображению
+					$template->image_resize($photo['path'], $photo['thumbnail_path']); // выполняем команду на создание эскиза к изображению
 				}
 				else // иначе, если не удалось поместить изображение
 				{

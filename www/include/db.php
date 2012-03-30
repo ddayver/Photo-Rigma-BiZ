@@ -233,18 +233,16 @@ class db
 	*/
 	private function order($order, $sort = false)
 	{
-		if (is_array($order)) list($order, $sort) = $order;
+		if (is_array($order)) list($order, $sort) = each($order);
 		if (strlen($this->txt_query) > 0)
 		{
-			$this->txt_query .= ' ORDER BY `' . $order . '`';
-			if ($sort == 'down')
+			if ($order !== 'rand()')
 			{
-				$this->txt_query .= ' DESC';
+				$this->txt_query .= ' ORDER BY `' . $order . '`';
+				if ($sort == 'down') $this->txt_query .= ' DESC';
+				else if ($sort == 'up') $this->txt_query .= ' ASC';
 			}
-			else if ($sort == 'up')
-			{
-				$this->txt_query .= ' ASC';
-			}
+			else $this->txt_query .= ' ORDER BY rand()';
 		}
 	}
 
@@ -257,7 +255,7 @@ class db
 	*/
 	private function group($group, $sort = false)
 	{
-		if (is_array($group)) list($group, $sort) = $group;
+		if (is_array($group)) list($group, $sort) = each($group);
 		if (strlen($this->txt_query) > 0)
 		{
 			$this->txt_query .= ' GROUP BY `' . $group . '`';
@@ -281,7 +279,7 @@ class db
 	*/
 	private function limit($limit, $start = 0)
 	{
-		if (is_array($limit)) list($limit, $start) = $limit;
+		if (is_array($limit)) list($limit, $start) = each($limit);
 		if (strlen($this->txt_query) > 0 && $limit > 0)
 		{
 			$this->txt_query .= ' LIMIT ' . $start . ', ' . $limit;

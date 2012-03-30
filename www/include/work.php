@@ -383,9 +383,9 @@ class work
 			$temp_photo = $db2->res_row();
 			if ($temp_photo)
 			{
-				if ($db2->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query, array('date_upload', 'down'), false, 1)) $temp_last = $db2->res_row();
+				if ($db2->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query, array('date_upload' => 'down'), false, 1)) $temp_last = $db2->res_row();
 				else log_in_file($db2->error, DIE_IF_ERROR);
-				if ($db2->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query . ' AND `rate_user` != 0', array('rate_user', 'down'), false, 1)) $temp_top = $db2->res_row();
+				if ($db2->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query . ' AND `rate_user` != 0', array('rate_user' => 'down'), false, 1)) $temp_top = $db2->res_row();
 				else log_in_file($db2->error, DIE_IF_ERROR);
 				$photo['count'] = $temp_photo['num_photo'];
 			}
