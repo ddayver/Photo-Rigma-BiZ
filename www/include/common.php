@@ -55,6 +55,9 @@ define ('TBL_USERS', 'user');
 /// Таблица групп пользователей с их правами
 define ('TBL_GROUP', 'group');
 
+/// Группа по-умолчанию для новых пользователей
+define ('DEFAULT_GROUP', 1);
+
 /// Останавливать ли скрипт во время серьезных ошибок? (True - останавливать) @see ::log_in_file
 define ('DIE_IF_ERROR', true);
 

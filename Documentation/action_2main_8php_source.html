@@ -27,7 +27,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
-   &#160;<span id="projectnumber">0.1.1</span>
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
@@ -88,18 +88,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </div>
 <div class="contents">
 <a href="action_2main_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00011"></a>00011 <span class="comment">// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке</span>
-<a name="l00012"></a>00012 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
-<a name="l00013"></a>00013 {
-<a name="l00014"></a>00014     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
-<a name="l00015"></a>00015 }
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>); <span class="comment">// подключаем языковый файл основной страницы</span>
-<a name="l00018"></a>00018 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>); <span class="comment">// подключаем языковый файл меню</span>
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020 echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template(<span class="stringliteral">&#39;main&#39;</span>, $lang[<span class="stringliteral">&#39;main_main&#39;</span>], <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>])); <span class="comment">// выводим сформированную главную страницу сайта</span>
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022 ?&gt;
+<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00014"></a>00014 }
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>);
+<a name="l00017"></a>00017 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>);
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template(<span class="stringliteral">&#39;main&#39;</span>, $lang[<span class="stringliteral">&#39;main_main&#39;</span>], <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>]));
+<a name="l00020"></a>00020 ?&gt;
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->

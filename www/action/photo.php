@@ -3,406 +3,479 @@
 * @file		action/photo.php
 * @brief	Работа с фото.
 * @author	Dark Dayver
-* @version	0.1.1
-* @date		27/03-2012
+* @version	0.2.0
+* @date		28/03-2012
 * @details	Вывод, редактировани, загрузка и обработка изображений, оценок.
 */
 
-// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
 if (IN_GALLERY)
 {
 	die('HACK!');
 }
 
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php'); // подключаем языковый файл основной страницы
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php'); // подключаем языковый файл меню
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/photo.php'); // подключаем языковый файл изображений
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/category.php'); // подключаем языковый файл разделов
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/photo.php');
+include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/category.php');
 
-if (!isset($_REQUEST['id']) || empty($_REQUEST['id']) || !mb_ereg('^[0-9]+$', $_REQUEST['id']) || $user->user['pic_view'] != true) // если не поступил запрос на вывод определенного изображения, идентификатор не является числом или пользователь не имеет права просматривать изображения, то...
+if (!isset($_REQUEST['id']) || empty($_REQUEST['id']) || !mb_ereg('^[0-9]+$', $_REQUEST['id']) || $user->user['pic_view'] != true) $photo_id = 0;
+else $photo_id = $_REQUEST['id'];
+
+$cur_act = '';
+$photo = array();
+
+if ($db2->select(array('file', 'category'), TBL_PHOTO, '`id` = ' . $photo_id))
 {
-	$photo_id = 0; // установить идентификатор выводимого изоюражения равным 0
+	$temp = $db2->res_row();
+	if ($temp)
+	{
+		if ($db2->select('folder', TBL_CATEGORY, '`id` = ' . $temp['category']))
+		{
+			$temp2 = $db2->res_row();
+			if ($temp2)
+			{
+				if(!@fopen($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp2['folder'] . '/' . $temp['file'], 'r')) $photo_id = 0;
+			}
+			else $photo_id = 0;
+		}
+		else log_in_file($db2->error, DIE_IF_ERROR);
+	}
+	else $photo_id = 0;
 }
-else // иначе
+else log_in_file($db2->error, DIE_IF_ERROR);
+
+$main_tpl = 'photo_view.tpl';
+$max_photo_w = $work->config['max_photo_w'];
+$max_photo_h = $work->config['max_photo_h'];
+
+if ($photo_id != 0)
 {
-	$photo_id = $_REQUEST['id']; // сохранить поступивший идентификатор
-}
-
-$cur_act = ''; // активного пункта меню - нет
-$photo = array(); // инициируем массив изображений
-
-$temp = $db->fetch_array("SELECT `file` , `category` FROM `photo` WHERE `id` = " . $photo_id); // запрашиваем данные об изображении
-if (!$temp) // если изображения не существует, то...
-{
-    $photo_id = 0; // установить идентификатор выводимого изоюражения равным 0
-}
-else // иначе
-{
-    $temp2 = $db->fetch_array("SELECT `folder` FROM `category` WHERE `id` = " .  $temp['category']); // запрашиваем данные о разделе изображения
-    if(!$temp2) // если раздел не существует, то...
-    {
-        $photo_id = 0; // установить идентификатор выводимого изоюражения равным 0
-	}
-	else
+	if ($db2->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
 	{
-		if(!@fopen($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp2['folder'] . '/' . $temp['file'], 'r')) // проверяем, существует ли файл изображения, если не существует, то...
+		$temp_foto = $db2->res_row();
+		if ($temp_foto)
 		{
-            $photo_id = 0; // установить идентификатор выводимого изоюражения равным 0
-		}
-	}
-}
-
-$main_tpl = 'photo_view.tpl'; // устанавливаем основной шаблон для вывода изображения
-$max_photo_w = $work->config['max_photo_w']; // получаем данные о максимальной ширине изображения
-$max_photo_h = $work->config['max_photo_h']; // и о максимальной высоте
-
-if ($photo_id != 0) // если существует идентификатор изображения (не равен 0)
-{
-	$temp_foto = $db->fetch_array("SELECT * FROM `photo` WHERE `id` = " . $photo_id); // получаем данные об изображении
-   	$temp_category = $db->fetch_array("SELECT * FROM `category` WHERE `id` = " .  $temp_foto['category']); // и данные о разделе изображения
-
-	if(isset($_REQUEST['subact']) && $_REQUEST['subact'] == "rate" && ($user->user['pic_rate_user'] == true || $user->user['pic_rate_moder'] == true) && $temp_foto['user_upload'] != $user->user['id']) // если поступила команда на оценку изображения и пользователь имеет право оценивать изображение как пользователь или преподаватель (модератор), то...
-	{
-		if ($user->user['pic_rate_user'] == true && isset($_POST['rate_user']) && mb_ereg('^[0-9]+$', abs($_POST['rate_user'])) && abs($_POST['rate_user']) <= $work->config['max_rate'] && !($db->fetch_array("SELECT `rate` FROM `rate_user` WHERE `id_foto` = " . $photo_id . " AND `id_user` = " . $user->user['id']))) // если поступила оценка как от пользователя и данный пользователь еще не оценивал это изображение и не является его автором, то...
-		{
-			$db->query("INSERT IGNORE INTO `rate_user` (`id_foto`, `id_user`, `rate`) VALUES ('" . $photo_id . "', '" . $user->user['id'] . "', '" . $_POST['rate_user'] . "')"); // сохраним оценку от пользователя
-			$temp = $db->fetch_big_array("SELECT `rate` FROM `rate_user` WHERE `id_foto` = " . $photo_id); // запросим данные о всех оценках указанного изображения от пользователей для перерасчета рейтинга
-			if($temp && $temp[0] > 0) // если существуют оценки изображения, то...
+			if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
 			{
-				$rate_user = 0; // стартовая оценка равна 0
-				for($i=1; $i<= $temp[0]; $i++) // обработаем в цикле имеющиеся оценки
+				$temp_category = $db2->res_row();
+				if ($temp_category)
 				{
-					$rate_user += $temp[$i]['rate']; // суммируя их
-				}
-				$rate_user = $rate_user/$temp[0]; // расчитаем среднюю оценку от пользователей
-				$db->query("UPDATE `photo` SET `rate_user` = '" . $rate_user . "' WHERE `id` = " . $photo_id); // обновим в данных об изображении рейтинг пользователей
-			}
-		}
-
-		if ($user->user['pic_rate_moder'] == true && isset($_POST['rate_moder']) && mb_ereg('^[0-9]+$', abs($_POST['rate_moder'])) && abs($_POST['rate_moder']) <= $work->config['max_rate'] && !($db->fetch_array("SELECT `rate` FROM `rate_moder` WHERE `id_foto` = " . $photo_id . " AND `id_user` = " . $user->user['id']))) // если поступила оценка как от преподавателя (модератора) и данный пользователь еще не оценивал это изображение и не является его автором, то...
-		{
-			$db->query("INSERT IGNORE INTO `rate_moder` (`id_foto`, `id_user`, `rate`) VALUES ('" . $photo_id . "', '" . $user->user['id'] . "', '" . $_POST['rate_moder'] . "')"); // сохраним оценку от преподавателя (модератора)
-			$temp = $db->fetch_big_array("SELECT `rate` FROM `rate_moder` WHERE `id_foto` = " . $photo_id); // запросим данные о всех оценках указанного изображения от преподавателей (модераторов) для перерасчета рейтинга
-			if($temp && $temp[0] > 0) // если существуют оценки изображения, то...
-			{
-				$rate_moder = 0; // стартовая оценка равна 0
-				for($i=1; $i<= $temp[0]; $i++) // обработаем в цикле имеющиеся оценки
-				{
-					$rate_moder += $temp[$i]['rate']; // суммируя их
-				}
-				$rate_moder = $rate_moder/$temp[0]; // расчитаем среднюю оценку от преподавателей (модераторов)
-				$db->query("UPDATE `photo` SET `rate_moder` = '" . $rate_moder . "' WHERE `id` = " . $photo_id); // обновим в данных об изображении рейтинг преподавателей (модераторов)
-			}
-		}
-	}
-	elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'saveedit' && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true)) // если поступила команда на сохранение изменений в изображении и пользователь имеет право редактировать изображение или является его автором, то...
-	{
-		$temp_foto = $db->fetch_array("SELECT * FROM `photo` WHERE `id` = " . $photo_id); // запросим данные об изображении
-
-		if(!isset($_POST['name_photo']) || empty($_POST['name_photo'])) // если не поступило данных о названии или название пустое, то...
-		{
-            $photo['name'] = $temp_foto['name']; // используем старое название изображения
-		}
-		else
-		{
-            $photo['name'] = $_POST['name_photo']; // иначе сохраним новое название
-		}
-
-		if(!isset($_POST['description_photo']) || empty($_POST['description_photo'])) // если не поступило данных об описании или описание пустое, то...
-		{
-            $photo['description'] = $temp_foto['description']; // используем старое описание изображения
-		}
-		else
-		{
-            $photo['description'] = $_POST['description_photo']; // иначе сохраним новое описание
-		}
-
-    	$category = true; // служебная метка о смене раздела - разрешена смена
-
-		if(!isset($_POST['name_category']) || !mb_ereg('^[0-9]+$', $_POST['name_category'])) // если не поступило данных о разделе или данные не являются числом, то...
-		{
-	    	$category = false; // смена раздела запрещена
-		}
-		else // иначе
-		{
-			if ($user->user['cat_user'] == true || $user->user['pic_moderate'] == true) // если пользователю разрешено использовать собственный альбом или пользователь является модератором изображений, то...
-			{
-		    	$select_cat = ' WHERE `id` = ' . $_POST['name_category']; // в запросе указать ВСЕ разделы
-			}
-			else // иначе
-			{
-		    	$select_cat = ' WHERE `id` != 0 AND `id` =' . $_POST['name_category']; // исключить из разделов пользовательские альбомы
-			}
-
-	    	if (!$db->fetch_array("SELECT * FROM `category`" .  $select_cat)) $category = false; // если указанный раздел не существует, то запретить смену раздела
-		}
-
-		if($category && $temp_foto['category'] != $_POST['name_category']) // если смена раздела разрешена и новый раздел не является таким же, как и был, то...
-		{
-			$temp_old = $db->fetch_array("SELECT `folder` FROM `category` WHERE `id` = " . $temp_foto['category']); // получаем данные о папке старого раздела
-			$temp_new = $db->fetch_array("SELECT `folder` FROM `category` WHERE `id` = " . $_POST['name_category']); // получаем данные о папке нового раздела
-			$path_old_photo = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_old['folder'] . '/' . $temp_foto['file']; // формируем старый путь к изображению
-			$path_new_photo = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_new['folder'] . '/' . $temp_foto['file']; // формируем новый путь к изображению
-			$path_old_thumbnail = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_old['folder'] . '/' . $temp_foto['file']; // формируем старый путь к эскизу
-			$path_new_thumbnail = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_new['folder'] . '/' . $temp_foto['file']; // формируем новый путь к эскизу
-			if (!rename($path_old_photo, $path_new_photo)) // пробуем перенести изображение из старого раздела в новый, если не получилось, то...
-			{
-    			$photo['category_name'] = $temp_foto['category']; // оставляем старый раздел
-			}
-			else // иначе
-			{
-				if(!rename($path_old_thumbnail, $path_new_thumbnail)) // пробуем перенести эскиз с старого места на новое, если не получилось
-				{
-                    @unlink($path_old_thumbnail); // удаляем старый эскиз (новый будет сформирован при первом же обржении к нему)
-				}
-				$photo['category_name'] = $_POST['name_category']; // сохраняем новый раздел
-			}
-		}
-		else // если запрет на изменение раздела или раздел остался тем же, то...
-		{
-            $photo['category_name'] = $temp_foto['category']; // оставляем старый раздел для изображения
-		}
-
-		if(!get_magic_quotes_gpc()) // если не включены magic_quotes_gpc в настройках PHP, то...
-		{
-			$photo['name'] = addslashes($photo['name']); // экранируем название
-			$photo['description'] = addslashes($photo['description']); // и описание изображения
-		}
-
-		$db->query("UPDATE `photo` SET `name` = '" . $photo['name'] . "', `description` = '" . $photo['description'] . "', `category` = '" . $photo['category_name'] . "' WHERE `id` = " . $photo_id); // обновляем данные об изображении в базе данных
-	}
-
-	if (isset($_REQUEST['subact']) && $_REQUEST['subact'] == "edit" && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true)) // если поступила команда на редактирование изображения и пользователь является владельцем изображения и не является гстем или пользователь имеет право редактирования изображений, то формируем блок редактирования изображения
-	{
-		$main_tpl = 'photo_edit.tpl'; // устанавливаем шаблон для центрального блока
-		$temp_foto = $db->fetch_array("SELECT * FROM `photo` WHERE `id` = " . $photo_id); // полчаем данные об изображении
-    	$temp_category = $db->fetch_array("SELECT * FROM `category` WHERE `id` = " .  $temp_foto['category']); // получаем данные о разделе изображения
-		$photo['path'] = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // формируем путь к эскизу изображения
-		$photo['url'] = $work->config['site_url'] . '?action=attach&foto=' . $temp_foto['id'] . '&thumbnail=1'; // формируем ссылку для вывода эскиза изображения
-		$photo['name'] = $temp_foto['name']; // сохраняем название изображения
-		$photo['file'] = $temp_foto['file']; // сохраняем имя фафла изображения
-		$photo['description'] = $temp_foto['description']; // сохраняем описание изображения
-		$user_add = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $temp_foto['user_upload']); // запрашиваем отображаемое имя автара изображения
-		if ($user_add) // если пользователь существует, то...
-		{
-			$photo['user'] = $user_add['real_name']; // сохраняем отображаемое имя
-			$photo['user_url'] = $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload']; // и формируем ссылку на профиль
-		}
-		else // иначе
-		{
-			$photo['user'] = $lang['main_no_user_add']; // указываем, что пользователя не существует
-			$photo['user_url'] = ''; // и сосавляем пустую ссылку
-		}
-
-		if ($user->user['cat_user'] == true || $user->user['pic_moderate'] == true) // если пользователь имеет право добавлять в пользовательские альбомы или обладаем правами на редактирование изображений, то...
-		{
-		    $select_cat = ''; // не ограничиваем список разделов
-		}
-		else // иначе
-		{
-		    $select_cat = ' WHERE `id` != 0'; // убираем из списка допустимых разделов - пользовательские альбомы
-		}
-
-    	$temp_category = $db->fetch_big_array("SELECT * FROM `category`" .  $select_cat); // формируем массив для списка допустимых разделов для переноса изображения
-
-        $photo['category_name'] = '<select name="name_category">'; // иниуиируем выпадающий список разделов
-		for ($i = 1; $i <= $temp_category[0]; $i++) // обрабатываем массив с разделами
-		{
-            if($temp_category[$i]['id'] == $temp_foto['category']) $selected = ' selected'; else $selected = ''; // если очередной раздел является текущим для данного изображения - помечаем его выбранным по-умолчанию
-            if($temp_category[$i]['id'] == 0) $temp_category[$i]['name'] .= ' ' . $photo['user']; // если раздел является пользовательским альбомом, то добавляем к название - отображаемое имя пользователя - владельца изображения
-			$photo['category_name'] .= '<option value="' . $temp_category[$i]['id'] . '"' . $selected . '>' . $temp_category[$i]['name'] . '</option>'; // наполняем список разделов
-		}
-		$photo['category_name'] .= '</select>'; // закрываем список разделов
-   	    $photo['url_edited'] = $work->config['site_url'] . '?action=photo&subact=saveedit&id=' . $temp_foto['id']; // ссылка для сохранения изменений
-       	$photo['url_edited_text'] = $lang['photo_save']; // надпись для кнопки Сохранить
-		$max_photo_w = $work->config['temp_photo_w']; // изменяем максимальную высоту изображения на максимальную высоту эскиза
-		$max_photo_h = $work->config['temp_photo_h']; // и аналогично для ширины
-	}
-	elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == "delete" && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true)) // если поступила команда на удаление изображения и пользователь является владельцем изображения и не является гостем или пользователь имеет право редактирования изображений, то производим процедуру удаления
-	{
-		$photo['name'] = $temp_foto['name']; // сохраняем название изображения
-		if($temp_category['id'] == 0) // если удаляется файл из пользовательского альбома, формируем ссылку для редиректа...
-		{
-			$temp = $db->num_rows("SELECT * FROM `photo` WHERE `id` !=" . $photo_id . " AND `category` = 0 AND `user_upload` = " . $temp_foto['user_upload']); // проверяем, остались ли еще изображения в данном пользовательско альбоме
-			if($temp > 0) // если да, то...
-			{
-				$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=user&id=' . $temp_foto['user_upload']; // ссылка на редирект будет отправлять в этот пользовательский альбом
-			}
-			else // иначе
-			{
-				$temp = $db->num_rows("SELECT * FROM `photo` WHERE `id` !=" . $photo_id . " AND `category` = 0"); // проверяем есть ли вообще изображения в пользовательских альбомах
-				if($temp > 0) // если да, то...
-				{
-					$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=user'; // редирект произойдет к списку пользовательских альбомов
-				}
-				else // иначе
-				{
-					$temp = $db->num_rows("SELECT * FROM `photo` WHERE `id` !=" . $photo_id); // проверяем есть ли изображения на сайте
-					if($temp > 0) // если да, то...
+					if(isset($_REQUEST['subact']) && $_REQUEST['subact'] == "rate" && ($user->user['pic_rate_user'] == true || $user->user['pic_rate_moder'] == true) && $temp_foto['user_upload'] != $user->user['id'])
 					{
-						$photo['category_url'] = $work->config['site_url'] . '?action=category'; // редирект произойдет к списку разделов
+						if ($db2->select('rate', TBL_RATE_USER, '`id_foto` = ' . $photo_id . ' AND `id_user` = ' . $user->user['id']))
+						{
+							$temp = $db2->res_row();
+							if ($temp) $rate_user = $temp['rate'];
+							else $rate_user = false;
+						}
+						else log_in_file($db2->error, DIE_IF_ERROR);
+						if ($user->user['pic_rate_user'] == true && isset($_POST['rate_user']) && mb_ereg('^[0-9]+$', abs($_POST['rate_user'])) && abs($_POST['rate_user']) <= $work->config['max_rate'] && $rate_user === false)
+						{
+							$query_rate = array();
+							$query_rate['id_foto'] = $photo_id;
+							$query_rate['id_user'] = $user->user['id'];
+							$query_rate['rate'] = $_POST['rate_user'];
+							if (!$db2->insert($query_rate, TBL_RATE_USER, 'ignore')) log_in_file($db2->error, DIE_IF_ERROR);
+							if ($db2->select('rate', TBL_RATE_USER, '`id_foto` = ' . $photo_id))
+							{
+								$temp = $db2->res_arr();
+								$rate_user = 0;
+								if ($temp)
+								{
+									foreach ($temp as $val)
+									{
+										$rate_user += $val['rate'];
+									}
+									$rate_user = $rate_user/count($temp);
+								}
+								if (!$db2->update(array('rate_user' => $rate_user), TBL_PHOTO, '`id` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
+
+						if ($db2->select('rate', TBL_RATE_MODER, '`id_foto` = ' . $photo_id . ' AND `id_user` = ' . $user->user['id']))
+						{
+							$temp = $db2->res_row();
+							if ($temp) $rate_moder = $temp['rate'];
+							else $rate_moder = false;
+						}
+						else log_in_file($db2->error, DIE_IF_ERROR);
+						if ($user->user['pic_rate_moder'] == true && isset($_POST['rate_moder']) && mb_ereg('^[0-9]+$', abs($_POST['rate_moder'])) && abs($_POST['rate_moder']) <= $work->config['max_rate'] && $rate_moder === false)
+						{
+							$query_rate = array();
+							$query_rate['id_foto'] = $photo_id;
+							$query_rate['id_user'] = $user->user['id'];
+							$query_rate['rate'] = $_POST['rate_user'];
+							if (!$db2->insert($query_rate, TBL_RATE_MODER, 'ignore')) log_in_file($db2->error, DIE_IF_ERROR);
+							if ($db2->select('rate', TBL_RATE_MODER, '`id_foto` = ' . $photo_id))
+							{
+								$temp = $db2->res_arr();
+								$rate_moder = 0;
+								if ($temp)
+								{
+									foreach ($temp as $val)
+									{
+										$rate_moder += $val['rate'];
+									}
+									$rate_moder = $rate_moder/count($temp);
+								}
+								if (!$db2->update(array('rate_moder' => $rate_moder), TBL_PHOTO, '`id` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
 					}
-					else // иначе
+					elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'saveedit' && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true))
 					{
-						$photo['category_url'] = $work->config['site_url']; // редирект будет на главную страницу сайта
+						if ($db2->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
+						{
+							$temp_foto = $db2->res_row();
+							if ($temp_foto)
+							{
+								if(!isset($_POST['name_photo']) || empty($_POST['name_photo'])) $photo['name'] = $temp_foto['name'];
+								else $photo['name'] = $_POST['name_photo'];
+
+								if(!isset($_POST['description_photo']) || empty($_POST['description_photo'])) $photo['description'] = $temp_foto['description'];
+								else $photo['description'] = $_POST['description_photo'];
+
+    							$category = true;
+
+								if(!isset($_POST['name_category']) || !mb_ereg('^[0-9]+$', $_POST['name_category'])) $category = false;
+								else
+								{
+									if ($user->user['cat_user'] == true || $user->user['pic_moderate'] == true) $select_cat = 'WHERE `id` = ' . $_POST['name_category'];
+									else $select_cat = 'WHERE `id` != 0 AND `id` =' . $_POST['name_category'];
+									if ($db2->select('*', TBL_CATEGORY, $select_cat))
+									{
+										$temp = $db2->res_row();
+										if (!$temp) $category = false;
+									}
+									else log_in_file($db2->error, DIE_IF_ERROR);
+								}
+
+								if($category && $temp_foto['category'] != $_POST['name_category'])
+								{
+									if ($db2->select('folder', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
+									{
+										$temp_old = $db2->res_row();
+										if (!$temp_old) log_in_file('Unable to get the category', DIE_IF_ERROR);
+									}
+									else log_in_file($db2->error, DIE_IF_ERROR);
+									if ($db2->select('folder', TBL_CATEGORY, '`id` = ' . $_POST['name_category']))
+									{
+										$temp_new = $db2->res_row();
+										if (!$temp_new) log_in_file('Unable to get the category', DIE_IF_ERROR);
+									}
+									else log_in_file($db2->error, DIE_IF_ERROR);
+									$path_old_photo = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_old['folder'] . '/' . $temp_foto['file'];
+									$path_new_photo = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_new['folder'] . '/' . $temp_foto['file'];
+									$path_old_thumbnail = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_old['folder'] . '/' . $temp_foto['file'];
+									$path_new_thumbnail = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_new['folder'] . '/' . $temp_foto['file'];
+									if (!rename($path_old_photo, $path_new_photo)) $photo['category_name'] = $temp_foto['category'];
+									else
+									{
+										if(!rename($path_old_thumbnail, $path_new_thumbnail)) @unlink($path_old_thumbnail);
+										$photo['category_name'] = $_POST['name_category'];
+									}
+								}
+								else $photo['category_name'] = $temp_foto['category'];
+
+								if(!get_magic_quotes_gpc())
+								{
+									$photo['name'] = addslashes($photo['name']);
+									$photo['description'] = addslashes($photo['description']);
+								}
+
+								if (!$db2->update(array('name' => $photo['name'], 'description' => $photo['description'], 'category' => $photo['category_name']), TBL_PHOTO, '`id` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
+							}
+							else log_in_file('Unable to get the photo', DIE_IF_ERROR);
+						}
+						else log_in_file($db2->error, DIE_IF_ERROR);
+					}
+
+					if (isset($_REQUEST['subact']) && $_REQUEST['subact'] == "edit" && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true))
+					{
+						$main_tpl = 'photo_edit.tpl';
+
+						if ($db2->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
+						{
+							$temp_foto = $db2->res_row();
+							if ($temp_foto)
+							{
+								if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
+								{
+									$temp_category = $db2->res_row();
+									if ($temp_category)
+									{
+										$photo['path'] = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
+										$photo['url'] = $work->config['site_url'] . '?action=attach&foto=' . $temp_foto['id'] . '&thumbnail=1';
+										$photo['name'] = $temp_foto['name'];
+										$photo['file'] = $temp_foto['file'];
+										$photo['description'] = $temp_foto['description'];
+										if ($db2->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
+										{
+											$user_add = $db2->res_row();
+											if ($user_add)
+											{
+												$photo['user'] = $user_add['real_name'];
+												$photo['user_url'] = $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'];
+											}
+											else
+											{
+												$photo['user'] = $lang['main_no_user_add'];
+												$photo['user_url'] = '';
+											}
+										}
+										else log_in_file($db2->error, DIE_IF_ERROR);
+
+										if ($user->user['cat_user'] == true || $user->user['pic_moderate'] == true) $select_cat = false;
+										else $select_cat = ' WHERE `id` != 0';
+
+										if ($db2->select('*', TBL_CATEGORY, $select_cat))
+										{
+											$temp_category = $db2->res_arr();
+											if ($temp_category)
+											{
+												$photo['category_name'] = '<select name="name_category">';
+												foreach ($temp_category as $val)
+												{
+            										if($val['id'] == $temp_foto['category']) $selected = ' selected'; else $selected = '';
+				        		    				if($val['id'] == 0) $val['name'] .= ' ' . $photo['user'];
+													$photo['category_name'] .= '<option value="' . $val['id'] . '"' . $selected . '>' . $val['name'] . '</option>';
+												}
+												$photo['category_name'] .= '</select>';
+						   	    				$photo['url_edited'] = $work->config['site_url'] . '?action=photo&subact=saveedit&id=' . $temp_foto['id'];
+       											$photo['url_edited_text'] = $lang['photo_save'];
+												$max_photo_w = $work->config['temp_photo_w'];
+												$max_photo_h = $work->config['temp_photo_h'];
+											}
+											else log_in_file('Unable to get the category', DIE_IF_ERROR);
+										}
+										else log_in_file($db2->error, DIE_IF_ERROR);
+									}
+									else log_in_file('Unable to get the category', DIE_IF_ERROR);
+								}
+								else log_in_file($db2->error, DIE_IF_ERROR);
+							}
+							else log_in_file('Unable to get the photo', DIE_IF_ERROR);
+						}
+						else log_in_file($db2->error, DIE_IF_ERROR);
+					}
+					elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == "delete" && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true))
+					{
+						$photo['name'] = $temp_foto['name'];
+						if($temp_category['id'] == 0)
+						{
+							if ($db2->select('COUNT(*) as `count_photo`', TBL_PHOTO, '`id` != ' . $photo_id . ' AND `category` = 0 AND `user_upload` = ' . $temp_foto['user_upload']))
+							{
+								$temp = $db2->res_row();
+								if (isset($temp['count_photo']) && $temp['count_photo'] > 0) $photo['category_url'] = $work->config['site_url'] . '?action=category&cat=user&id=' . $temp_foto['user_upload'];
+								else
+								{
+									if ($db2->select('COUNT(*) as `count_photo`', TBL_PHOTO, '`id` != ' . $photo_id . ' AND `category` = 0'))
+									{
+										$temp = $db2->res_row();
+										if (isset($temp['count_photo']) && $temp['count_photo'] > 0) $photo['category_url'] = $work->config['site_url'] . '?action=category&cat=user';
+										else
+										{
+											if ($db2->select('COUNT(*) as `count_photo`', TBL_PHOTO, '`id` != ' . $photo_id))
+											{
+												$temp = $db2->res_row();
+												if (isset($temp['count_photo']) && $temp['count_photo'] > 0) $photo['category_url'] = $work->config['site_url'] . '?action=category';
+												else $photo['category_url'] = $work->config['site_url'];
+											}
+											else log_in_file($db2->error, DIE_IF_ERROR);
+										}
+									}
+									else log_in_file($db2->error, DIE_IF_ERROR);
+								}
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
+						else
+						{
+							if ($db2->select('COUNT(*) as `count_photo`', TBL_PHOTO, '`id` != ' . $photo_id . ' AND `category` = ' . $temp_category['id']))
+							{
+								$temp = $db2->res_row();
+								if (isset($temp['count_photo']) && $temp['count_photo'] > 0) $photo['category_url'] = $work->config['site_url'] . '?action=category&cat=' . $temp_category['id'];
+								else
+								{
+									if ($db2->select('COUNT(*) as `count_photo`', TBL_PHOTO, '`id` != ' . $photo_id))
+									{
+										$temp = $db2->res_row();
+										if (isset($temp['count_photo']) && $temp['count_photo'] > 0) $photo['category_url'] = $work->config['site_url'] . '?action=category';
+										else $photo['category_url'] = $work->config['site_url'];
+									}
+									else log_in_file($db2->error, DIE_IF_ERROR);
+								}
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
+
+						if($work->del_photo($photo_id))
+						{
+							$redirect_url = $photo['category_url'];
+							$redirect_time = 5;
+							$redirect_message = $lang['photo_title'] . ' ' . $photo['name'] . ' ' . $lang['photo_complite_delete'];
+						}
+						else
+						{
+							$redirect_url = $work->config['site_url'] . '?action=photo&id=' . $photo_id;
+							$redirect_time = 5;
+							$redirect_message = $lang['photo_title'] . ' ' . $photo['name'] . ' ' . $lang['photo_error_delete'];
+						}
+					}
+					else
+					{
+
+						if ($db2->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
+						{
+							$temp_foto = $db2->res_row();
+							if ($temp_foto)
+							{
+								if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
+								{
+									$temp_category = $db2->res_row();
+									if ($temp_category)
+									{
+										$photo['path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
+										$photo['url'] = $work->config['site_url'] . '?action=attach&foto=' . $temp_foto['id'];
+										$photo['name'] = $temp_foto['name'];
+										$photo['description'] = $temp_foto['description'];
+										$photo['category_name'] = $temp_category['name'];
+										$photo['category_description'] = $temp_category['description'];
+										
+										if (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true)
+										{
+				    	    				$photo['url_edit'] = $work->config['site_url'] . '?action=photo&subact=edit&id=' . $temp_foto['id'];
+				        					$photo['url_edit_text'] = $lang['photo_edit'];
+    	    								$photo['url_delete'] = $work->config['site_url'] . '?action=photo&subact=delete&id=' . $temp_foto['id'];
+				        					$photo['url_delete_text'] = $lang['photo_delete'];
+        									$photo['url_delete_confirm'] = $lang['photo_confirm_delete'] . ' ' . $photo['name'];
+											$photo['if_edit_photo'] = true;
+										}
+										else
+										{
+				        					$photo['url_edit'] = '';
+	        								$photo['url_edit_text'] = '';
+				    	    				$photo['url_delete'] = '';
+        									$photo['url_delete_text'] = '';
+				        					$photo['url_delete_confirm'] = '';
+    	    								$photo['if_edit_photo'] = false;
+										}
+
+										if ($db2->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
+										{
+											$user_add = $db2->res_row();
+											if ($user_add)
+											{
+												$photo['user'] = $user_add['real_name'];
+												$photo['user_url'] = $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'];
+											}
+											else
+											{
+												$photo['user'] = $lang['main_no_user_add'];
+												$photo['user_url'] = '';
+											}
+										}
+										else log_in_file($db2->error, DIE_IF_ERROR);
+
+										if($temp_category['id'] == 0) // если раздел является пользовательским альбомом, то...
+										{
+											$photo['category_name'] .= ' ' . $user_add['real_name']; // к названию раздела добавляем отображаемое имя автора изображения
+											$photo['category_description'] .=  ' ' . $user_add['real_name']; // аналогично с описанием
+											$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=user&id=' . $temp_foto['user_upload']; // сохраняем ссылку на пользовательский альбом
+										}
+										else // иначе
+										{
+											$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=' . $temp_category['id']; // сохраняем ссылку на обычный раздел
+										}
+    									$photo['rate_user'] = $lang['photo_rate_user'] . ': ' . $temp_foto['rate_user']; // формируем сообщение о текущей оценке изображения пользователями
+					    				$photo['rate_moder'] = $lang['photo_rate_moder'] . ': ' . $temp_foto['rate_moder']; // формируем сообщение о текущей оценке изображения преподавателями (модераторами)
+										$photo['rate_you'] = ''; // инициируем вывод собственной оценки
+
+										if ($user->user['pic_rate_user'] == true) // если есть право оценивать как пользователь, то...
+										{
+											$temp_rate = $db->fetch_array("SELECT `rate` FROM `rate_user` WHERE `id_foto` = " . $photo_id . " AND `id_user` = " . $user->user['id']); // запрашиваем данные об текущей оценке, поставленной как пользователь
+											if(!$temp_rate) // если таких данных нет, то...
+											{
+												$user_rate = 'false'; // оценки не существует
+											}
+											else // иначе
+											{
+												$user_rate = $temp_rate['rate']; // сохраняем поставленную оценку
+											}
+											$photo['rate_you_user'] = $template->template_rate('user', $user_rate); // формируем фрагмент блока оценки от имени пользователя
+										}
+										else // иначе
+										{
+											$user_rate = 'false'; // оценки не существует
+											$photo['rate_you_user'] = ''; // фрагмент оценки от пользователя отсутствует
+										}
+
+										if ($user->user['pic_rate_moder'] == true) // если есть право оценивать как преподаватель (модератор), то...
+										{
+											$temp_rate = $db->fetch_array("SELECT `rate` FROM `rate_moder` WHERE `id_foto` = " . $photo_id . " AND `id_user` = " . $user->user['id']); // запрашиваем данные об текущей оценке, поставленной как преподаватель (модератор)
+											if(!$temp_rate) // если таких данных нет, то...
+											{
+												$moder_rate = 'false'; // оценки не существует
+											}
+											else // иначе
+											{
+												$moder_rate = $temp_rate['rate']; // сохраняем поставленную оценку
+											}
+											$photo['rate_you_moder'] = $template->template_rate('moder', $moder_rate); // формируем фрагмент блока оценки от имени преподавателя (модератора)
+										}
+										else // иначе
+										{
+											$moder_rate = 'false'; // оценки не существует
+											$photo['rate_you_moder'] = ''; // фрагмент оценки от преподавателя (модератора) отсутствует
+										}
+
+										if (($user->user['pic_rate_user'] == true || $user->user['pic_rate_moder'] == true) && $temp_foto['user_upload'] != $user->user['id']) // если пользователь имеет право оценивать изображения как пользователь или как преподаватель (модератор) и не является автором изображения, то...
+										{
+											$array_data = array(); // инициируем массив
+
+											if($user_rate == 'false' && $moder_rate == 'false') // если не существует оценки от пользователя и преподавателя (модератора), то...
+											{
+				        	    				$photo['rate_you_url'] = $work->config['site_url'] . '?action=photo&subact=rate&id=' . $photo_id; // сохраняем ссылку для оценки изображения
+            									$rate_this = true; // разрешаем вывести кнопку и форму для оценки
+											}
+											else // иначе
+											{
+												$photo['rate_you_url'] = ''; // ссылки не существует
+    	        								$rate_this = false; // и вывод кнопки и формы запрещен
+											}
+
+											$array_data = array(
+														'U_RATE' => $photo['rate_you_url'],
+														'L_RATE' => $lang['photo_rate_you'],
+														'L_RATE_THIS' => $lang['photo_rate'],
+														'D_RATE' => $photo['rate_you_user'] . $photo['rate_you_moder'],
+
+														'IF_RATE_THIS' => $rate_this
+											); // наполняем массив данными для замены по шаблону
+
+	        								$photo['rate_you'] = $template->create_template('rate_form.tpl', $array_data); // формируем фрагмент с оценками от пользователя
+										}
+										
+										
+									}
+									else log_in_file('Unable to get the category', DIE_IF_ERROR);
+								}
+								else log_in_file($db2->error, DIE_IF_ERROR);
+							}
+							else log_in_file('Unable to get the photo', DIE_IF_ERROR);
+						}
+						else log_in_file($db2->error, DIE_IF_ERROR);
 					}
 				}
+				else log_in_file('Unable to get the category', DIE_IF_ERROR);
 			}
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
-		else // иначе если удаление НЕ из пользовательского раздела
-		{
-			$temp = $db->num_rows("SELECT * FROM `photo` WHERE `id` !=" . $photo_id . " AND `category` =  " . $temp_category['id']); // проверяем есть ли еще изображения в данном разделе
-			if($temp > 0) // если да, то...
-			{
-				$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=' . $temp_category['id']; // редирект в данный раздел
-			}
-			else // иначе
-			{
-				$temp = $db->num_rows("SELECT * FROM `photo` WHERE `id` !=" . $photo_id); // проверяем, есть ли еще изображения на сайте
-				if($temp > 0) // если да, то...
-				{
-					$photo['category_url'] = $work->config['site_url'] . '?action=category'; // редирект к спску разделов
-				}
-				else // иначе
-				{
-					$photo['category_url'] = $work->config['site_url']; // редирект на главную страницу сайта
-				}
-			}
-		}
-
-		if($work->del_photo($photo_id)) // производим удаление изображения, если все получилось, то...
-		{
-			$redirect_url = $photo['category_url']; // сохраняем ссылку для редиректа
-			$redirect_time = 5; // устанавливаем время редиректа 5 сек
-			$redirect_message = $lang['photo_title'] . ' ' . $photo['name'] . ' ' . $lang['photo_complite_delete']; // сообщаем о том, что изображение успешно удалено
-		}
-		else // иначе
-		{
-			$redirect_url = $work->config['site_url'] . '?action=photo&id=' . $photo_id; // редирект на не удачно удаленное изображение
-			$redirect_time = 5; // устанавливаем время редиректа 5 сек
-			$redirect_message = $lang['photo_title'] . ' ' . $photo['name'] . ' ' . $lang['photo_error_delete']; // сообщаем о неудачном удалении
-		}
+		else log_in_file('Unable to get the photo', DIE_IF_ERROR);
 	}
-	else // если не поступило никаких команд, то формируем вывод изображения
-	{
-		$temp_foto = $db->fetch_array("SELECT * FROM `photo` WHERE `id` = " . $photo_id); // полчаем данные об изображении
-    	$temp_category = $db->fetch_array("SELECT * FROM `category` WHERE `id` = " .  $temp_foto['category']); // получаем данные о разделе изображения
-		$photo['path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file']; // формируем путь к изображению
-		$photo['url'] = $work->config['site_url'] . '?action=attach&foto=' . $temp_foto['id']; // формируем ссылку для вывода изображения
-		$photo['name'] = $temp_foto['name']; // сохраняем название изображения
-		$photo['description'] = $temp_foto['description']; // сохраняем описание изображения
-		$photo['category_name'] = $temp_category['name']; // сохраняем название раздела
-		$photo['category_description'] = $temp_category['description']; // сохраняем описание раздела
-
-		if (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true) // если пользователь является владельцем изображения или имеет прво на редактирование изображений, то формируем блок редактирования или удаления изображения
-		{
-    	    $photo['url_edit'] = $work->config['site_url'] . '?action=photo&subact=edit&id=' . $temp_foto['id']; // ссылка на редактирование
-        	$photo['url_edit_text'] = $lang['photo_edit']; // текст Редактировать
-    	    $photo['url_delete'] = $work->config['site_url'] . '?action=photo&subact=delete&id=' . $temp_foto['id']; // ссылка на удаление
-        	$photo['url_delete_text'] = $lang['photo_delete']; // текст Удалить
-        	$photo['url_delete_confirm'] = $lang['photo_confirm_delete'] . ' ' . $photo['name']; // текст для подтверждения удаления
-			$photo['if_edit_photo'] = true; // разрешить вывести блок редактирования и удаления изображения
-		}
-		else // иначе формируем пустой массив данных
-		{
-        	$photo['url_edit'] = '';
-	        $photo['url_edit_text'] = '';
-    	    $photo['url_delete'] = '';
-        	$photo['url_delete_text'] = '';
-        	$photo['url_delete_confirm'] = '';
-    	    $photo['if_edit_photo'] = false; // и запрещаем выводить блок редактирования и удаления изображений
-		}
-
-		$user_add = $db->fetch_array("SELECT `real_name` FROM `user` WHERE `id` = " . $temp_foto['user_upload']); // получаем данные об отображаемом имени автора изображения
-		if ($user_add) // если автор существует, то...
-		{
-			$photo['user'] = $user_add['real_name']; // сохраняем отображаемое имя
-			$photo['user_url'] = $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload']; // и ссылку на профиль автора
-		}
-		else // иначе
-		{
-			$photo['user'] = $lang['main_no_user_add']; // указываем на то, что автора не существует
-			$photo['user_url'] = ''; // сохраняем пустую ссылку
-		}
-		if($temp_category['id'] == 0) // если раздел является пользовательским альбомом, то...
-		{
-			$photo['category_name'] .= ' ' . $user_add['real_name']; // к названию раздела добавляем отображаемое имя автора изображения
-			$photo['category_description'] .=  ' ' . $user_add['real_name']; // аналогично с описанием
-			$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=user&id=' . $temp_foto['user_upload']; // сохраняем ссылку на пользовательский альбом
-		}
-		else // иначе
-		{
-			$photo['category_url'] = $work->config['site_url'] . '?action=category&cat=' . $temp_category['id']; // сохраняем ссылку на обычный раздел
-		}
-    	$photo['rate_user'] = $lang['photo_rate_user'] . ': ' . $temp_foto['rate_user']; // формируем сообщение о текущей оценке изображения пользователями
-	    $photo['rate_moder'] = $lang['photo_rate_moder'] . ': ' . $temp_foto['rate_moder']; // формируем сообщение о текущей оценке изображения преподавателями (модераторами)
-		$photo['rate_you'] = ''; // инициируем вывод собственной оценки
-
-		if ($user->user['pic_rate_user'] == true) // если есть право оценивать как пользователь, то...
-		{
-			$temp_rate = $db->fetch_array("SELECT `rate` FROM `rate_user` WHERE `id_foto` = " . $photo_id . " AND `id_user` = " . $user->user['id']); // запрашиваем данные об текущей оценке, поставленной как пользователь
-			if(!$temp_rate) // если таких данных нет, то...
-			{
-				$user_rate = 'false'; // оценки не существует
-			}
-			else // иначе
-			{
-				$user_rate = $temp_rate['rate']; // сохраняем поставленную оценку
-			}
-			$photo['rate_you_user'] = $template->template_rate('user', $user_rate); // формируем фрагмент блока оценки от имени пользователя
-		}
-		else // иначе
-		{
-			$user_rate = 'false'; // оценки не существует
-			$photo['rate_you_user'] = ''; // фрагмент оценки от пользователя отсутствует
-		}
-
-		if ($user->user['pic_rate_moder'] == true) // если есть право оценивать как преподаватель (модератор), то...
-		{
-			$temp_rate = $db->fetch_array("SELECT `rate` FROM `rate_moder` WHERE `id_foto` = " . $photo_id . " AND `id_user` = " . $user->user['id']); // запрашиваем данные об текущей оценке, поставленной как преподаватель (модератор)
-			if(!$temp_rate) // если таких данных нет, то...
-			{
-				$moder_rate = 'false'; // оценки не существует
-			}
-			else // иначе
-			{
-				$moder_rate = $temp_rate['rate']; // сохраняем поставленную оценку
-			}
-			$photo['rate_you_moder'] = $template->template_rate('moder', $moder_rate); // формируем фрагмент блока оценки от имени преподавателя (модератора)
-		}
-		else // иначе
-		{
-			$moder_rate = 'false'; // оценки не существует
-			$photo['rate_you_moder'] = ''; // фрагмент оценки от преподавателя (модератора) отсутствует
-		}
-
-		if (($user->user['pic_rate_user'] == true || $user->user['pic_rate_moder'] == true) && $temp_foto['user_upload'] != $user->user['id']) // если пользователь имеет право оценивать изображения как пользователь или как преподаватель (модератор) и не является автором изображения, то...
-		{
-			$array_data = array(); // инициируем массив
-
-			if($user_rate == 'false' && $moder_rate == 'false') // если не существует оценки от пользователя и преподавателя (модератора), то...
-			{
-        	    $photo['rate_you_url'] = $work->config['site_url'] . '?action=photo&subact=rate&id=' . $photo_id; // сохраняем ссылку для оценки изображения
-            	$rate_this = true; // разрешаем вывести кнопку и форму для оценки
-			}
-			else // иначе
-			{
-				$photo['rate_you_url'] = ''; // ссылки не существует
-    	        $rate_this = false; // и вывод кнопки и формы запрещен
-			}
-
-			$array_data = array(
-						'U_RATE' => $photo['rate_you_url'],
-						'L_RATE' => $lang['photo_rate_you'],
-						'L_RATE_THIS' => $lang['photo_rate'],
-						'D_RATE' => $photo['rate_you_user'] . $photo['rate_you_moder'],
-
-						'IF_RATE_THIS' => $rate_this
-			); // наполняем массив данными для замены по шаблону
-
-	        $photo['rate_you'] = $template->create_template('rate_form.tpl', $array_data); // формируем фрагмент с оценками от пользователя
-		}
-	}
+	else log_in_file($db2->error, DIE_IF_ERROR);
 }
 else // иначе если не указан был идентификатор изображения, то...
 {

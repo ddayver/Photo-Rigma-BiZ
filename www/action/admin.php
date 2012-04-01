@@ -3,12 +3,11 @@
 * @file		action/admin.php
 * @brief	Администрирование сайта.
 * @author	Dark Dayver
-* @version	0.1.1
-* @date		27/03-2012
+* @version	0.2.0
+* @date		28/03-2012
 * @details	Используется для управления настройками и пользователями галереи.
 */
 
-// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке
 if (IN_GALLERY)
 {
 	die('HACK!');
@@ -29,7 +28,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 	{
 		if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y'])) // если поступил запрос на сохранение общих настроек, то...
 		{
-			$new_config = $work->config(); // формируем массив настроек, хранящихся в базе на текущий момент
+			$new_config = $work->config; // формируем массив настроек, хранящихся в базе на текущий момент
 
 			// проверим введенные пользователем данные на соотвествие формата, если формат соответствует, то используем введенное пользователем, если нет - остается старая настройка
 			if (isset($_POST['title_name']) && !empty($_POST['title_name'])) $new_config['title_name'] = $_POST['title_name'];
@@ -65,10 +64,13 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 			if (isset($_POST['best_user']) && !empty($_POST['best_user']) && mb_ereg('^[0-9]+$', $_POST['best_user'])) $new_config['best_user'] = $_POST['best_user'];
 			if (isset($_POST['max_rate']) && !empty($_POST['max_rate']) && mb_ereg('^[0-9]+$', $_POST['max_rate'])) $new_config['max_rate'] = $_POST['max_rate'];
 
-			foreach ($new_config as $name => $value) // по результатам проверки внесем новые настройки в базу данных
+			foreach ($new_config as $name => $value)
 			{
-				$db->query("UPDATE `config` SET `value` = '" . $value . "' WHERE `name` = '" . $name . "'"); // обновление настроек сайта в базе данных
-				$work->config[$name] = $value;
+				if ($work->config[$name] !== $value)
+				{
+					if ($db2->update(array('value' => $value), TBL_CONFIG, '`name` = \'' . $name . '\'')) $work->config[$name] = $value;
+					else log_in_file($db2->error, DIE_IF_ERROR);
+				}
 			}
 		}
 
@@ -204,109 +206,132 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 
 		if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && mb_ereg('^[0-9]+$', $_REQUEST['uid'])) // если был передан идентификатор пользователя для редактирования, то...
 		{
-			$temp = $db->fetch_array("SELECT * FROM `user` WHERE `id` = " . $_REQUEST['uid']); // запрашиваем данные о пользователе
-
-			if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y'])) // если поступил запрос на сохранение пользователя, то...
+			if ($db2->select('*', TBL_USERS, '`id` = ' . $_REQUEST['uid']))
 			{
-				if ($_POST['group'] != $temp['group']) // если была изменена группа пользователя, то...
+				$temp = $db2->res_row();
+				if ($temp)
 				{
-					$query = 'UPDATE `user` SET `group` = ' . "'" . $_POST['group'] . "'"; //создаем заготовку запроса
-					$temp_group = $db->fetch_array("SELECT * FROM `group` WHERE `id` = " . $_POST['group']); // запрашиваем данные о новой групе для получения прав доступа
-					foreach ($temp_group as $key => $value) // разносим данные о правах из ключей и значений в переменные
+					if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']))
 					{
-						if ($key != 'id' && $key != 'name') // если ключ не равен идентификатору или названию группы, то...
+						if ($_POST['group'] != $temp['group'])
 						{
-							$query .= ', `' . $key . "` = '" . $value . "'"; // дополняем запрос
+							$query['group'] = $_POST['group'];
+							$new_temp = $temp;
+							if ($db2->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
+							{
+								$temp_group = $db2->res_row();
+								if ($temp_group)
+								{
+									foreach ($temp_group as $key => $value)
+									{
+										if ($key != 'id' && $key != 'name')
+										{
+											$query[$key] = $value;
+											$new_temp[$key] = $value;
+										}
+									}
+									if ($db2->update($query, TBL_USERS, '`id` = ' . $_REQUEST['uid'])) $temp = $new_temp;
+									else log_in_file($db2->error, DIE_IF_ERROR);
+								}
+								else log_in_file('Unable to get the group', DIE_IF_ERROR);
+							}
+							else log_in_file($db2->error, DIE_IF_ERROR);
+						}
+						else
+						{
+							foreach ($temp as $key => $value)
+							{
+								if ($key != 'id' && $key != 'login' && $key != 'password' && $key != 'real_name' && $key != 'email' && $key != 'avatar' && $key != 'date_regist' && $key != 'date_last_activ' && $key != 'date_last_logout' && $key != 'group')
+								{
+									if (isset($_POST[$key]) && ($_POST[$key] == 'on' || $_POST[$key] === true)) $_POST[$key] = '1';
+									else $_POST[$key] = '0';
+									if ($_POST[$key] != $value)
+									{
+										if ($db2->update(array($key => $_POST[$key]), TBL_USERS, '`id` = ' . $_REQUEST['uid'])) $temp[$key] = $_POST[$key];
+										else log_in_file($db2->error, DIE_IF_ERROR);
+									}
+								}
+							}
 						}
 					}
-					$query .= " WHERE `id` = " . $_REQUEST['uid']; // заканчиваем формировать запрос на изменение прав
-					$db->query($query); // изменяем группу и права пользователя
-				}
-				else // иначе, если группа не менялась, то...
-				{
-					foreach ($temp as $key => $value) // извлекаем права доступа для пользователя, переданные с страницы
+
+					if ($db2->select('*', TBL_GROUP, '`id` !=0'))
 					{
-						if ($key != 'id' && $key != 'login' && $key != 'password' && $key != 'real_name' && $key != 'email' && $key != 'avatar' && $key != 'date_regist' && $key != 'date_last_activ' && $key != 'date_last_logout' && $key != 'group') // если это поля прав доступа, то...
+						$group = $db2->res_arr();
+						if ($group)
 						{
-							if (isset($_POST[$key]) && $_POST[$key] == on) // если галочка была установлена, то...
+							$select_group = '<select name="group">';
+							foreach ($group as $val)
 							{
-								$db->query("UPDATE `user` SET `" . $key . "` = '1' WHERE `id` = " . $_REQUEST['uid']); // включим её для пользователя
+								if ($val['id'] == $temp['group']) $selected = ' selected'; else $selected = '';
+								$select_group .= '<option value="' . $val['id'] . '"' . $selected . '>' . $val['name'] . '</option>';
 							}
-							else // иначе
+							$select_group .= '</select>';
+
+							foreach ($temp as $key => $value)
 							{
-								$db->query("UPDATE `user` SET `" . $key . "` = '0' WHERE `id` = " . $_REQUEST['uid']); // отключим эти права
+								if ($key != 'id' && $key != 'login' && $key != 'password' && $key != 'real_name' && $key != 'email' && $key != 'avatar' && $key != 'date_regist' && $key != 'date_last_activ' && $key != 'date_last_logout' && $key != 'group')
+								{
+									$array_data['L_' . strtoupper($key)] = $lang['admin_' . $key];
+									if ($value == 1 || $value == '1' || $value === true) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = '';
+								}
 							}
+
+							$array_data = array_merge ($array_data, array (
+											'IF_FIND_USER' => true,
+											'L_LOGIN' => $lang['admin_login'],
+											'L_EMAIL' => $lang['admin_email'],
+											'L_REAL_NAME' => $lang['admin_real_name'],
+											'L_AVATAR' => $lang['admin_avatar'],
+											'L_GROUP' => $lang['main_group'],
+											'L_USER_RIGHTS' => $lang['admin_user_rights'],
+											'L_HELP_EDIT' => $lang['admin_help_edit_user'],
+											'L_SAVE_USER' => $lang['admin_save_user'],
+
+											'D_LOGIN' => $temp['login'],
+											'D_EMAIL' => $temp['email'],
+											'D_REAL_NAME' => $temp['real_name'],
+											'D_GROUP' => $select_group,
+
+											'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
+							));
 						}
+						else log_in_file('Unable to get the group', DIE_IF_ERROR);
 					}
+					else log_in_file($db2->error, DIE_IF_ERROR);
 				}
-				$temp = $db->fetch_array("SELECT * FROM `user` WHERE `id` = " . $_REQUEST['uid']); // запрашиваем данные о пользователе
+				else log_in_file('Unable to get the user', DIE_IF_ERROR);
 			}
-
-			$group = $db->fetch_big_array("SELECT * FROM `group` WHERE `id` !=0"); // запрашиваем список групп, кроме Гость
-			$select_group = '<select name="group">'; // начинаем формировать список групп для выбора
-			for($i = 1; $i <= $group[0]; $i++) // формируем список групп для выбора
-			{
-				if ($group[$i]['id'] == $temp['group']) $selected = ' selected'; else $selected = '';
-				$select_group .= '<option value="' . $group[$i]['id'] . '"' . $selected . '>' . $group[$i]['name'] . '</option>'; // вносим группы в пункты списка
-			}
-			$select_group .= '</select>'; // завершаем формировать список групп
-
-			foreach ($temp as $key => $value) // извлекаем права доступа для пользователя
-			{
-				if ($key != 'id' && $key != 'login' && $key != 'password' && $key != 'real_name' && $key != 'email' && $key != 'avatar' && $key != 'date_regist' && $key != 'date_last_activ' && $key != 'date_last_logout' && $key != 'group') // если это поля прав доступа, то...
-				{
-					$array_data['L_' . strtoupper($key)] = $lang['admin'][$key]; // передаем название права доступа
-					if ($value == 1) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = ''; // и, если пункт активен - отмечаем его галочкой, иначе - нет
-				}
-			}
-
-			$array_data = array_merge ($array_data, array (
-							'IF_FIND_USER' => true,
-							'L_LOGIN' => $lang['admin_login'],
-							'L_EMAIL' => $lang['admin_email'],
-							'L_REAL_NAME' => $lang['admin_real_name'],
-							'L_AVATAR' => $lang['admin_avatar'],
-							'L_GROUP' => $lang['main_group'],
-							'L_USER_RIGHTS' => $lang['admin_user_rights'],
-							'L_HELP_EDIT' => $lang['admin_help_edit_user'],
-							'L_SAVE_USER' => $lang['admin_save_user'],
-
-							'D_LOGIN' => $temp['login'],
-							'D_EMAIL' => $temp['email'],
-							'D_REAL_NAME' => $temp['real_name'],
-							'D_GROUP' => $select_group,
-
-							'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
-			)); // наполняем массив данными для замены по шаблону и включаем блок отображения прав пользователя
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
-		else // иначе если идентификатор небыл запрошен, то...
+		else
 		{
-			if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && !empty($_POST['search_user'])) // если поступил запрос на поиск пользователя, то...
+			if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && !empty($_POST['search_user']))
 			{
-				if ($_POST['search_user'] == '*') $_POST['search_user'] = '%'; // если пуступила '*' - поиск всех - делаем замену по шаблону
-				$find = $db->fetch_big_array("SELECT * FROM `user` WHERE `real_name` LIKE '%" . $_POST['search_user'] . "%'"); // делаем запрос на поиск пользователей, в отображаемом имени которых содержится искомая строка
+				if ($_POST['search_user'] == '*') $_POST['search_user'] = '%';
 
-				if($find && $find[0] > 0) // если найдены такие пользователи, то...
+				if ($db2->select('*', TBL_USERS, '`real_name` LIKE \'%' . $_POST['search_user'] . '%\''))
 				{
-					$find_data = $lang['admin_find_user'] . ': '; // инициируем список пользователей
-					for($i = 1; $i <= $find[0]; $i++) // обрабатываем найденных пользователей по списку
+					$find = $db2->res_arr();
+					if ($find)
 					{
-						$find_data .= '<a href="' . $work->config['site_url']  . '?action=admin&subact=admin_user&uid=' . $find[$i]['id'] . '" title="' . $find[$i]['real_name'] . '">' . $find[$i]['real_name'] . '</a>'; // формируем список, выводя на экран отображаемое имя пользователя ввиде ссылки на профиль
-						if ($i < $find[0]) $find_data .= ', '; // если НЕ последний пользователь, ставим после него запятую
-						if ($i == $find[0]) $find_data .= '.'; // если последний - точку
+						$find_data = '';
+						foreach ($find as $val)
+						{
+							$find_data .= ', <a href="' . $work->config['site_url']  . '?action=admin&subact=admin_user&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+						}
+						$find_data = $lang['admin_find_user'] . ': ' . substr($find_data, 2) . '.';
 					}
+					else $find_data = $lang['admin_no_find_user'];
 				}
-				else // иначе если пользователи не найдены, то...
-				{
-					$find_data = $lang['admin_no_find_user']; // сообщаем об этом пользователю
-				}
+				else log_in_file($db2->error, DIE_IF_ERROR);
 
 				$array_data = array_merge ($array_data, array (
 							'D_FIND_USER' => $find_data,
 
 							'IF_NEED_USER' => true
-				)); // наполняем массив данными для замены по шаблону - включаем блок вывода найденных пользователей
-				if ($_POST['search_user'] == '%') $_POST['search_user'] = '*'; // если изменяли '*' на '%', то возвращаем обратно '*'
+				));
+				if ($_POST['search_user'] == '%') $_POST['search_user'] = '*';
 			}
 
 			$array_data = array_merge ($array_data, array (
@@ -315,12 +340,12 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 
 							'D_SEARCH_USER' => isset($_POST['search_user']) ? $_POST['search_user'] : '',
 							'IF_NEED_FIND' => true
-			)); // наполняем массив данными для замены по шаблону - включаем блок поиска пользователей
+			));
 		}
 
-		$act = ''; // активного пункта меню - нет
-		$title = $lang['admin_admin_user']; // дполнительный заговловок - Управление пользователями
-		$main_block = $template->create_template('admin_user.tpl', $array_data); // формируем центральный блок - Управление пользователями
+		$act = '';
+		$title = $lang['admin_admin_user'];
+		$main_block = $template->create_template('admin_user.tpl', $array_data);
 	}
 	elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'admin_group') // иначе если запрошено Управление группами, то...
 	{
@@ -333,72 +358,97 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						'IF_EDIT_GROUP' => false
 		); // наполняем массив данными для замены по шаблону - по умолчанию все блоки отключены
 
-		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group']))) // если поступила команда на сохранение настроек группы, то...
+		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group'])))
 		{
-			$temp = $db->fetch_array("SELECT * FROM `group` WHERE `id` = " . $_POST['id_group']); // запрашиваем текущие данные о группе
-			if(isset($_POST['name_group']) && !empty($_POST['name_group'])) $db->query("UPDATE `group` SET `name` = '" . $_POST['name_group'] . "' WHERE `id` = " . $_POST['id_group']); // если не пустое поле названия группы, то заменяем текущее на переданное со страницы
-			foreach ($temp as $key => $value) // извлекаем права доступа для группы из базы
+			if ($db2->select('*', TBL_GROUP, '`id` = ' . $_POST['id_group']))
 			{
-				if ($key != 'id' && $key != 'name') // если это поля прав доступа, то...
+				$temp = $db2->res_row();
+				if ($temp)
 				{
-					if (isset($_POST[$key]) && $_POST[$key] == on) // если со страницы поступил включить право доступа, то...
+					if(isset($_POST['name_group']) && !empty($_POST['name_group']) && $_POST['name_group'] != $temp['name'])
 					{
-						$db->query("UPDATE `group` SET `" . $key . "` = '1' WHERE `id` = " . $_POST['id_group']); // включить в базе соотвествующие права
+						if ($db2->update(array('name' => $_POST['name_group']), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp['name'] = $_POST['name_group'];
+						else log_in_file($db2->error, DIE_IF_ERROR);
 					}
-					else // иначе
+					foreach ($temp as $key => $value)
 					{
-						$db->query("UPDATE `group` SET `" . $key . "` = '0' WHERE `id` = " . $_POST['id_group']); // отключить права в базе
+						if ($key != 'id' && $key != 'name')
+						{
+							if (isset($_POST[$key]) && ($_POST[$key] == 'on' || $_POST[$key] === true)) $_POST[$key] = '1';
+							else $_POST[$key] = '0';
+							if ($_POST[$key] != $value)
+							{
+								if ($db2->update(array($key => $_POST[$key]), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp[$key] = $_POST[$key];
+								else log_in_file($db2->error, DIE_IF_ERROR);
+							}
+						}
 					}
+					$_POST['group'] = $_POST['id_group'];
 				}
+				else log_in_file('Unable to get the group', DIE_IF_ERROR);
 			}
-			$_POST['group'] = $_POST['id_group']; // передаем следующему блоку кода идентификатор группы
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
 
-		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && mb_ereg('^[0-9]+$', $_POST['group'])) // если выбрана группа для редактирования, то...
+		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && mb_ereg('^[0-9]+$', $_POST['group']))
 		{
-			$temp = $db->fetch_array("SELECT * FROM `group` WHERE `id` = " . $_POST['group']); // запрашиваем данные о групе
-
-			foreach ($temp as $key => $value) // извлекаем права доступа для группы
+			if ($db2->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
 			{
-				if ($key != 'id' && $key != 'name') // если это поля прав доступа, то...
+				$temp = $db2->res_row();
+				if ($temp)
 				{
-					$array_data['L_' . strtoupper($key)] = $lang['admin_' . $key]; // формируем название права доступа
-					if ($value == 1) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = ''; // если право включено - ставим галочку, иначе - нет
+					foreach ($temp as $key => $value)
+					{
+						if ($key != 'id' && $key != 'name')
+						{
+							$array_data['L_' . strtoupper($key)] = $lang['admin_' . $key];
+							if ($value == 1) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = '';
+						}
+					}
+
+					$array_data = array_merge ($array_data, array (
+									'L_NAME_GROUP' => $lang['main_group'],
+									'L_GROUP_RIGHTS' => $lang['admin_group_rights'],
+									'L_SAVE_GROUP' => $lang['admin_save_group'],
+
+									'D_ID_GROUP' => $temp['id'],
+									'D_NAME_GROUP' => $temp['name'],
+									'IF_EDIT_GROUP' => true
+					));
 				}
+				else log_in_file('Unable to get the group', DIE_IF_ERROR);
 			}
-
-			$array_data = array_merge ($array_data, array (
-							'L_NAME_GROUP' => $lang['main_group'],
-							'L_GROUP_RIGHTS' => $lang['admin_group_rights'],
-							'L_SAVE_GROUP' => $lang['admin_save_group'],
-
-							'D_ID_GROUP' => $temp['id'],
-							'D_NAME_GROUP' => $temp['name'],
-							'IF_EDIT_GROUP' => true
-			)); // наполняем массив данными для замены по шаблону - включаем блок редактирования группы
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
-		else // иначе если группа не выбрана
+		else
 		{
-			$group = $db->fetch_big_array("SELECT * FROM `group`"); // формируем список групп
-			$select_group = '<select name="group">'; // начинаем список групп
-			for($i = 1; $i <= $group[0]; $i++) // формируем список групп для выбора
+			if ($db2->select('*', TBL_GROUP))
 			{
-				$select_group .= '<option value="' . $group[$i]['id'] . '">' . $group[$i]['name'] . '</option>'; // вносим группу в поле
+				$group = $db2->res_arr();
+				if ($group)
+				{
+					$select_group = '<select name="group">';
+					foreach ($group as $val)
+					{
+						$select_group .= '<option value="' . $val['id'] . '">' . $val['name'] . '</option>';
+					}
+					$select_group .= '</select>';
+					$array_data = array_merge ($array_data, array (
+									'L_SELECT_GROUP' => $lang['admin_select_group'],
+									'L_EDIT' => $lang['admin_edit_group'],
+
+									'D_GROUP' => $select_group,
+									'IF_SELECT_GROUP' => true
+					));
+				}
+				else log_in_file('Unable to get the group', DIE_IF_ERROR);
 			}
-			$select_group .= '</select>'; // закрываем список групп
-
-			$array_data = array_merge ($array_data, array (
-							'L_SELECT_GROUP' => $lang['admin_select_group'],
-							'L_EDIT' => $lang['admin_edit_group'],
-
-							'D_GROUP' => $select_group,
-							'IF_SELECT_GROUP' => true
-			)); // наполняем массив данными для замены по шаблону - включен блок выбора группы
+			else log_in_file($db2->error, DIE_IF_ERROR);
 		}
 
-		$act = ''; // активного пункта меню - нет
-		$title = $lang['admin_admin_group']; // дполнительный заговловок - Управление группами
-		$main_block = $template->create_template('admin_group.tpl', $array_data); // формируем центральный блок - Управление группами
+		$act = '';
+		$title = $lang['admin_admin_group'];
+		$main_block = $template->create_template('admin_group.tpl', $array_data);
 	}
 	else
 	{

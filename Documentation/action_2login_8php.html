@@ -27,7 +27,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
-   &#160;<span id="projectnumber">0.1.1</span>
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
@@ -101,12 +101,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (<a class="el" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494">IN_GALLERY</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a803ebd53a997095d233a89ba39792a75"></a><!-- doxytag: member="action/login.php::$menu_act" ref="a803ebd53a997095d233a89ba39792a75" args="" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>$menu_act</b> = ''</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8dca1dcd2124d93120535dc8db79293"></a><!-- doxytag: member="action/login.php::$subact" ref="af8dca1dcd2124d93120535dc8db79293" args="" -->
+if(!isset($_REQUEST['subact'])||empty($_REQUEST['subact'])) <br class="typebreak"/>
+else&#160;</td><td class="memItemRight" valign="bottom"><b>$subact</b> = $_REQUEST['subact']</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae05e9ac8b38fc3f4277edaf5ca3f070e"></a><!-- doxytag: member="action/login.php::$redirect_url" ref="ae05e9ac8b38fc3f4277edaf5ca3f070e" args="" -->
+else&#160;</td><td class="memItemRight" valign="bottom"><b>$redirect_url</b> = $<a class="el" href="classwork.html">work</a>-&gt;config['site_url']</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
 <div class="textblock"><p>Работа с пользователями. </p>
 <dl class="author"><dt><b>Автор:</b></dt><dd>Dark Dayver </dd></dl>
-<dl class="version"><dt><b>Версия:</b></dt><dd>0.1.1 </dd></dl>
-<dl class="date"><dt><b>Дата:</b></dt><dd>27/03-2012</dd></dl>
+<dl class="version"><dt><b>Версия:</b></dt><dd>0.2.0 </dd></dl>
+<dl class="date"><dt><b>Дата:</b></dt><dd>28/03-2012</dd></dl>
 <p>Обработка процедур входа/выхода/регистрации/изменения и просмотра профиля пользователя. </p>
 
 <p>См. определение в файле <a class="el" href="action_2login_8php_source.html">login.php</a></p>

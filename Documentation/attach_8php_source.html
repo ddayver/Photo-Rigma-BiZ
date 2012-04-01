@@ -27,7 +27,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
-   &#160;<span id="projectnumber">0.1.1</span>
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
@@ -88,67 +88,74 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </div>
 <div class="contents">
 <a href="attach_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00011"></a>00011 <span class="comment">// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке</span>
-<a name="l00012"></a>00012 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
-<a name="l00013"></a>00013 {
-<a name="l00014"></a>00014     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
-<a name="l00015"></a>00015 }
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="keywordflow">if</span> (!isset($_REQUEST[<span class="stringliteral">&#39;foto&#39;</span>]) || empty($_REQUEST[<span class="stringliteral">&#39;foto&#39;</span>]) || <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;pic_view&#39;</span>] == <span class="keyword">false</span>) <span class="comment">// проверка - указан ли в запросе идентификатор выводимого изображения и имеет ли пользователь право на просмотр изображения, если не указан, то...</span>
-<a name="l00018"></a>00018 {
-<a name="l00019"></a>00019     $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>; <span class="comment">// формируем вывод для отсустствующего изображения</span>
-<a name="l00020"></a>00020     $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь</span>
-<a name="l00021"></a>00021     $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь к эскизу</span>
-<a name="l00022"></a>00022 }
-<a name="l00023"></a>00023 <span class="keywordflow">else</span> <span class="comment">// иначе...</span>
-<a name="l00024"></a>00024 {
-<a name="l00025"></a>00025     $temp_foto = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `photo` WHERE `id` =&quot;</span> . $_REQUEST[<span class="stringliteral">&#39;foto&#39;</span>]); <span class="comment">// запрашиваем из базы инормацию о выводимом изображении...</span>
-<a name="l00026"></a>00026     <span class="keywordflow">if</span> ($temp_foto) <span class="comment">// если информация есть, то...</span>
-<a name="l00027"></a>00027     {
-<a name="l00028"></a>00028         $temp_category = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;fetch_array(<span class="stringliteral">&quot;SELECT * FROM `category` WHERE `id` = &quot;</span> .  $temp_foto[<span class="stringliteral">&#39;category&#39;</span>]); <span class="comment">// запрашиваем из базы информации о категории изображения</span>
-<a name="l00029"></a>00029         <span class="keywordflow">if</span> ($temp_category) <span class="comment">// если информация по категории есть, то...</span>
-<a name="l00030"></a>00030         {
-<a name="l00031"></a>00031             $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_category[<span class="stringliteral">&#39;folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// формируем полный путь к изображению</span>
-<a name="l00032"></a>00032             $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_category[<span class="stringliteral">&#39;folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// формируем полный путь к эскизу изображения</span>
-<a name="l00033"></a>00033         }
-<a name="l00034"></a>00034         <span class="keywordflow">else</span> <span class="comment">// иначе...</span>
-<a name="l00035"></a>00035         {
-<a name="l00036"></a>00036             $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>; <span class="comment">// формируем вывод для отсустствующего изображения</span>
-<a name="l00037"></a>00037             $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь</span>
-<a name="l00038"></a>00038             $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь к эскизу</span>
-<a name="l00039"></a>00039         }
-<a name="l00040"></a>00040     }
-<a name="l00041"></a>00041     <span class="keywordflow">else</span> <span class="comment">// иначе...</span>
-<a name="l00042"></a>00042     {
-<a name="l00043"></a>00043         $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>; <span class="comment">// формируем вывод для отсустствующего изображения</span>
-<a name="l00044"></a>00044         $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь</span>
-<a name="l00045"></a>00045         $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь к эскизу</span>
-<a name="l00046"></a>00046     }
-<a name="l00047"></a>00047 }
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 <span class="keywordflow">if</span>(!@fopen($temp_path, <span class="charliteral">&#39;r&#39;</span>)) <span class="comment">// проверяем доступность файла с изображением, если файл недоступен, то...</span>
-<a name="l00050"></a>00050 {
-<a name="l00051"></a>00051     $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>; <span class="comment">// формируем вывод для отсустствующего изображения</span>
-<a name="l00052"></a>00052     $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь</span>
-<a name="l00053"></a>00053     $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь к эскизу</span>
+<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00014"></a>00014 }
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="keywordflow">if</span> (!isset($_REQUEST[<span class="stringliteral">&#39;foto&#39;</span>]) || empty($_REQUEST[<span class="stringliteral">&#39;foto&#39;</span>]) || <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;pic_view&#39;</span>] == <span class="keyword">false</span>) <span class="comment">// проверка - указан ли в запросе идентификатор выводимого изображения и имеет ли пользователь право на просмотр изображения, если не указан, то...</span>
+<a name="l00017"></a>00017 {
+<a name="l00018"></a>00018     $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>; <span class="comment">// формируем вывод для отсустствующего изображения</span>
+<a name="l00019"></a>00019     $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь</span>
+<a name="l00020"></a>00020     $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь к эскизу</span>
+<a name="l00021"></a>00021 }
+<a name="l00022"></a>00022 <span class="keywordflow">else</span>
+<a name="l00023"></a>00023 {
+<a name="l00024"></a>00024     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $_REQUEST[<span class="stringliteral">&#39;foto&#39;</span>]))
+<a name="l00025"></a>00025     {
+<a name="l00026"></a>00026         $temp_foto = $db2-&gt;res_row();
+<a name="l00027"></a>00027         <span class="keywordflow">if</span> ($temp_foto)
+<a name="l00028"></a>00028         {
+<a name="l00029"></a>00029             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324" title="Таблица с списком категорий на сервере">TBL_CATEGORY</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $temp_foto[<span class="stringliteral">&#39;category&#39;</span>]))
+<a name="l00030"></a>00030             {
+<a name="l00031"></a>00031                 $temp_category = $db2-&gt;res_row();
+<a name="l00032"></a>00032                 <span class="keywordflow">if</span> ($temp_category)
+<a name="l00033"></a>00033                 {
+<a name="l00034"></a>00034                     $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_category[<span class="stringliteral">&#39;folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
+<a name="l00035"></a>00035                     $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_category[<span class="stringliteral">&#39;folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
+<a name="l00036"></a>00036                 }
+<a name="l00037"></a>00037                 <span class="keywordflow">else</span>
+<a name="l00038"></a>00038                 {
+<a name="l00039"></a>00039                     $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>;
+<a name="l00040"></a>00040                     $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
+<a name="l00041"></a>00041                     $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
+<a name="l00042"></a>00042                 }
+<a name="l00043"></a>00043             }
+<a name="l00044"></a>00044             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00045"></a>00045         }
+<a name="l00046"></a>00046         <span class="keywordflow">else</span>
+<a name="l00047"></a>00047         {
+<a name="l00048"></a>00048             $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>;
+<a name="l00049"></a>00049             $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
+<a name="l00050"></a>00050             $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
+<a name="l00051"></a>00051         }
+<a name="l00052"></a>00052     }
+<a name="l00053"></a>00053     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00054"></a>00054 }
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keywordflow">if</span> (isset($_REQUEST[<span class="stringliteral">&#39;thumbnail&#39;</span>]) &amp;&amp; $_REQUEST[<span class="stringliteral">&#39;thumbnail&#39;</span>] == 1) <span class="comment">// если был запрошен эскиз, то...</span>
+<a name="l00056"></a>00056 <span class="keywordflow">if</span>(!@fopen($temp_path, <span class="charliteral">&#39;r&#39;</span>)) <span class="comment">// проверяем доступность файла с изображением, если файл недоступен, то...</span>
 <a name="l00057"></a>00057 {
-<a name="l00058"></a>00058     <span class="keywordflow">if</span>(<a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_resize($temp_path, $thumbnail_path)) <span class="comment">// создаем эскиз, если удалось создать эскиз, то...</span>
-<a name="l00059"></a>00059     {
-<a name="l00060"></a>00060         echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_attach($thumbnail_path, $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]); <span class="comment">// выводим полученное изображение</span>
-<a name="l00061"></a>00061     }
-<a name="l00062"></a>00062     <span class="keywordflow">else</span> <span class="comment">// иначе выдадим сообщение об ошибке...</span>
-<a name="l00063"></a>00063     {
-<a name="l00064"></a>00064         die(<span class="stringliteral">&#39;Error Image Resize&#39;</span>); <span class="comment">// и остановим скрипт</span>
-<a name="l00065"></a>00065     }
-<a name="l00066"></a>00066 }
-<a name="l00067"></a>00067 <span class="keywordflow">else</span> <span class="comment">// иначе если надо вывести полное изображение</span>
-<a name="l00068"></a>00068 {
-<a name="l00069"></a>00069     echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_attach($temp_path, $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]); <span class="comment">// выводим полное изображение</span>
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 ?&gt;
+<a name="l00058"></a>00058     $temp_foto[<span class="stringliteral">&#39;file&#39;</span>] = <span class="stringliteral">&#39;no_foto.png&#39;</span>; <span class="comment">// формируем вывод для отсустствующего изображения</span>
+<a name="l00059"></a>00059     $temp_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь</span>
+<a name="l00060"></a>00060     $thumbnail_path = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;thumbnail_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]; <span class="comment">// включая полный путь к эскизу</span>
+<a name="l00061"></a>00061 }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063 <span class="keywordflow">if</span> (isset($_REQUEST[<span class="stringliteral">&#39;thumbnail&#39;</span>]) &amp;&amp; $_REQUEST[<span class="stringliteral">&#39;thumbnail&#39;</span>] == 1) <span class="comment">// если был запрошен эскиз, то...</span>
+<a name="l00064"></a>00064 {
+<a name="l00065"></a>00065     <span class="keywordflow">if</span>(<a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_resize($temp_path, $thumbnail_path)) <span class="comment">// создаем эскиз, если удалось создать эскиз, то...</span>
+<a name="l00066"></a>00066     {
+<a name="l00067"></a>00067         echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_attach($thumbnail_path, $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]); <span class="comment">// выводим полученное изображение</span>
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069     <span class="keywordflow">else</span> <span class="comment">// иначе выдадим сообщение об ошибке...</span>
+<a name="l00070"></a>00070     {
+<a name="l00071"></a>00071         die(<span class="stringliteral">&#39;Error Image Resize&#39;</span>); <span class="comment">// и остановим скрипт</span>
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 <span class="keywordflow">else</span> <span class="comment">// иначе если надо вывести полное изображение</span>
+<a name="l00075"></a>00075 {
+<a name="l00076"></a>00076     echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_attach($temp_path, $temp_foto[<span class="stringliteral">&#39;file&#39;</span>]); <span class="comment">// выводим полное изображение</span>
+<a name="l00077"></a>00077 }
+<a name="l00078"></a>00078 ?&gt;
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->

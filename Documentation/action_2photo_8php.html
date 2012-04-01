@@ -27,7 +27,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
-   &#160;<span id="projectnumber">0.1.1</span>
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
@@ -99,10 +99,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 Переменные</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50b867397071a95fbfd1d69911b92a0b"></a><!-- doxytag: member="action/photo.php::if" ref="a50b867397071a95fbfd1d69911b92a0b" args="(IN_GALLERY)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (<a class="el" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494">IN_GALLERY</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af8059a6b6b771828ffab1af60cee73"></a><!-- doxytag: member="action/photo.php::$photo_id" ref="a2af8059a6b6b771828ffab1af60cee73" args="" -->
+else&#160;</td><td class="memItemRight" valign="bottom"><b>$photo_id</b> = $_REQUEST['id']</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa26df3247f7b5a00d9be4e1b1f1084c"></a><!-- doxytag: member="action/photo.php::$cur_act" ref="aaa26df3247f7b5a00d9be4e1b1f1084c" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>$cur_act</b> = ''</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae68c67c422f1090027f6eb6ba01b62b2"></a><!-- doxytag: member="action/photo.php::$photo" ref="ae68c67c422f1090027f6eb6ba01b62b2" args="" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>$photo</b> = array()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d57fb0317e19ec798aa625381ebf342"></a><!-- doxytag: member="action/photo.php::$temp" ref="a0d57fb0317e19ec798aa625381ebf342" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$temp</b> = $<a class="el" href="classdb.html">db</a>-&gt;fetch_array(&quot;SELECT `file` , `category` FROM `photo` WHERE `id` = &quot; . $photo_id)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61fb0495912841571b0ee70646f79792"></a><!-- doxytag: member="action/photo.php::$main_tpl" ref="a61fb0495912841571b0ee70646f79792" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>$main_tpl</b> = 'photo_view.tpl'</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a260b5d39330466fad30be6038aab7cf5"></a><!-- doxytag: member="action/photo.php::$max_photo_w" ref="a260b5d39330466fad30be6038aab7cf5" args="" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>$max_photo_w</b> = $<a class="el" href="classwork.html">work</a>-&gt;config['max_photo_w']</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4aea0d418c7a591370b46a24d378cd21"></a><!-- doxytag: member="action/photo.php::$max_photo_h" ref="a4aea0d418c7a591370b46a24d378cd21" args="" -->
@@ -111,8 +115,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
 <div class="textblock"><p>Работа с фото. </p>
 <dl class="author"><dt><b>Автор:</b></dt><dd>Dark Dayver </dd></dl>
-<dl class="version"><dt><b>Версия:</b></dt><dd>0.1.1 </dd></dl>
-<dl class="date"><dt><b>Дата:</b></dt><dd>27/03-2012</dd></dl>
+<dl class="version"><dt><b>Версия:</b></dt><dd>0.2.0 </dd></dl>
+<dl class="date"><dt><b>Дата:</b></dt><dd>28/03-2012</dd></dl>
 <p>Вывод, редактировани, загрузка и обработка изображений, оценок. </p>
 
 <p>См. определение в файле <a class="el" href="action_2photo_8php_source.html">photo.php</a></p>
