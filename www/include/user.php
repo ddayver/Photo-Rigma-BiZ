@@ -27,38 +27,38 @@ class user
 	*/
 	function user()
 	{
-		global $db2;
+		global $db;
 
 		if (!isset($_SESSION['login_id']) || (isset($_SESSION['login_id']) && empty($_SESSION['login_id']))) $_SESSION['login_id'] = 0;
 
 		if ($_SESSION['login_id'] === 0)
 		{
-			if ($db2->select('*', TBL_GROUP, '`id` = 0'))
+			if ($db->select('*', TBL_GROUP, '`id` = 0'))
 			{
-				$this->user = $db2->res_row();
+				$this->user = $db->res_row();
 				if (!$this->user) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			if ($db2->select('*', TBL_USERS, '`id` = ' . $_SESSION['login_id']))
+			if ($db->select('*', TBL_USERS, '`id` = ' . $_SESSION['login_id']))
 			{
-				$this->user = $db2->res_row();
+				$this->user = $db->res_row();
 				if ($this->user)
 				{
-					if ($db2->select('*', TBL_GROUP, '`id` = ' . $this->user['group']))
+					if ($db->select('*', TBL_GROUP, '`id` = ' . $this->user['group']))
 					{
-						$temp = $db2->res_row();
+						$temp = $db->res_row();
 						if (!$temp)
 						{
 							$this->user['group'] = 0;
-							if ($db2->select('*', TBL_GROUP, '`id` = 0'))
+							if ($db->select('*', TBL_GROUP, '`id` = 0'))
 							{
-								$temp = $db2->res_row();
+								$temp = $db->res_row();
 								if (!$temp) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 						foreach ($temp as $key => $value)
 						{
@@ -73,22 +73,22 @@ class user
 								$this->user['group'] = $value;
 							}
 						}
-						if (!$db2->update(array('date_last_activ' => date('Y-m-d H:i:s')), TBL_USERS, '`id` = ' . $_SESSION['login_id'])) log_in_file($db2->error, DIE_IF_ERROR);
+						if (!$db->update(array('date_last_activ' => date('Y-m-d H:i:s')), TBL_USERS, '`id` = ' . $_SESSION['login_id'])) log_in_file($db->error, DIE_IF_ERROR);
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 				else
 				{
 					$_SESSION['login_id'] = 0;
-					if ($db2->select('*', TBL_GROUP, '`id` = 0'))
+					if ($db->select('*', TBL_GROUP, '`id` = 0'))
 					{
-						$this->user = $db2->res_row();
+						$this->user = $db->res_row();
 						if (!$this->user) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 }

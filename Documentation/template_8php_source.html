@@ -197,15 +197,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00141"></a>00141 
 <a name="l00147"></a><a class="code" href="classtemplate.html#adbe416bc83832ace861609647a79dc85">00147</a>     <span class="keyword">function</span> <a class="code" href="classtemplate.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню">create_menu</a>(<a class="code" href="index_8php.html#aa698a3e72116e8e778be0e95d908ee30" title="Действие, которое необходимо выполнить">$action</a> = <span class="stringliteral">&#39;main&#39;</span>, $menu = 0)
 <a name="l00148"></a>00148     {
-<a name="l00149"></a>00149         global $db2, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>;
+<a name="l00149"></a>00149         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>;
 <a name="l00150"></a>00150 
 <a name="l00151"></a>00151         $m[0] = <span class="stringliteral">&#39;short&#39;</span>;
 <a name="l00152"></a>00152         $m[1] = <span class="stringliteral">&#39;long&#39;</span>;
 <a name="l00153"></a>00153         $text_menu = <span class="stringliteral">&#39;&#39;</span>;
 <a name="l00154"></a>00154 
-<a name="l00155"></a>00155         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ac2a63bceb45e0feeb4a199844de50e41" title="Таблица с пунктами меню">TBL_MENU</a>, <span class="charliteral">&#39;`&#39;</span> . $m[$menu] . <span class="stringliteral">&#39;` = 1&#39;</span>, array(<span class="stringliteral">&#39;id&#39;</span> =&gt; <span class="stringliteral">&#39;up&#39;</span>)))
+<a name="l00155"></a>00155         <span class="keywordflow">if</span> ($db-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ac2a63bceb45e0feeb4a199844de50e41" title="Таблица с пунктами меню">TBL_MENU</a>, <span class="charliteral">&#39;`&#39;</span> . $m[$menu] . <span class="stringliteral">&#39;` = 1&#39;</span>, array(<span class="stringliteral">&#39;id&#39;</span> =&gt; <span class="stringliteral">&#39;up&#39;</span>)))
 <a name="l00156"></a>00156         {
-<a name="l00157"></a>00157             $temp_menu = $db2-&gt;res_arr();
+<a name="l00157"></a>00157             $temp_menu = $db-&gt;res_arr();
 <a name="l00158"></a>00158             <span class="keywordflow">if</span> ($temp_menu)
 <a name="l00159"></a>00159             {
 <a name="l00160"></a>00160                 <span class="keywordflow">foreach</span> ($temp_menu as $val)
@@ -235,7 +235,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00184"></a>00184             }
 <a name="l00185"></a>00185             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<span class="stringliteral">&#39;Unable to get the menu&#39;</span>, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00186"></a>00186         }
-<a name="l00187"></a>00187         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00187"></a>00187         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00188"></a>00188 
 <a name="l00189"></a>00189         $array_data = array();
 <a name="l00190"></a>00190 
@@ -252,7 +252,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00202"></a>00202 
 <a name="l00208"></a><a class="code" href="classtemplate.html#a252838ffaac4f1c3a73bc67391ec1ed6">00208</a>     <span class="keyword">function</span> <a class="code" href="classtemplate.html#a252838ffaac4f1c3a73bc67391ec1ed6" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения">create_foto</a>($type = <span class="stringliteral">&#39;top&#39;</span>, $id_photo = 0)
 <a name="l00209"></a>00209     {
-<a name="l00210"></a>00210         global $db2, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>;
+<a name="l00210"></a>00210         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, $lang, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>;
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212         <span class="keywordflow">if</span> ($user-&gt;user[<span class="stringliteral">&#39;pic_view&#39;</span>] == <span class="keyword">true</span>)
 <a name="l00213"></a>00213         {
@@ -276,8 +276,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00231"></a>00231                 $order = <span class="stringliteral">&#39;rand()&#39;</span>;
 <a name="l00232"></a>00232                 $limit = 1;
 <a name="l00233"></a>00233             }
-<a name="l00234"></a>00234             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, $where, $order, <span class="keyword">false</span>, $limit)) $temp_foto = $db2-&gt;res_row();
-<a name="l00235"></a>00235             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00234"></a>00234             <span class="keywordflow">if</span> ($db-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, $where, $order, <span class="keyword">false</span>, $limit)) $temp_foto = $db-&gt;res_row();
+<a name="l00235"></a>00235             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00236"></a>00236         }
 <a name="l00237"></a>00237         <span class="keywordflow">else</span>
 <a name="l00238"></a>00238         {
@@ -288,9 +288,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00243"></a>00243 
 <a name="l00244"></a>00244         <span class="keywordflow">if</span> ($temp_foto)
 <a name="l00245"></a>00245         {
-<a name="l00246"></a>00246             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324" title="Таблица с списком категорий на сервере">TBL_CATEGORY</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $temp_foto[<span class="stringliteral">&#39;category&#39;</span>]))
+<a name="l00246"></a>00246             <span class="keywordflow">if</span> ($db-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324" title="Таблица с списком категорий на сервере">TBL_CATEGORY</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $temp_foto[<span class="stringliteral">&#39;category&#39;</span>]))
 <a name="l00247"></a>00247             {
-<a name="l00248"></a>00248                 $temp_category = $db2-&gt;res_row();
+<a name="l00248"></a>00248                 $temp_category = $db-&gt;res_row();
 <a name="l00249"></a>00249                 <span class="keywordflow">if</span> ($temp_category)
 <a name="l00250"></a>00250                 {
 <a name="l00251"></a>00251                     $temp_path = $work-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . $work-&gt;config[<span class="stringliteral">&#39;gallery_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_category[<span class="stringliteral">&#39;folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;file&#39;</span>];
@@ -302,9 +302,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00257"></a>00257                     $foto[<span class="stringliteral">&#39;category_description&#39;</span>] = $temp_category[<span class="stringliteral">&#39;description&#39;</span>];
 <a name="l00258"></a>00258                     $foto[<span class="stringliteral">&#39;rate&#39;</span>] = $lang[<span class="stringliteral">&#39;main_rate&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $temp_foto[<span class="stringliteral">&#39;rate_user&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $temp_foto[<span class="stringliteral">&#39;rate_moder&#39;</span>];
 <a name="l00259"></a>00259 
-<a name="l00260"></a>00260                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $temp_foto[<span class="stringliteral">&#39;user_upload&#39;</span>]))
+<a name="l00260"></a>00260                     <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $temp_foto[<span class="stringliteral">&#39;user_upload&#39;</span>]))
 <a name="l00261"></a>00261                     {
-<a name="l00262"></a>00262                         $user_add = $db2-&gt;res_row();
+<a name="l00262"></a>00262                         $user_add = $db-&gt;res_row();
 <a name="l00263"></a>00263                         <span class="keywordflow">if</span> ($user_add) $foto[<span class="stringliteral">&#39;user&#39;</span>] = $lang[<span class="stringliteral">&#39;main_user_add&#39;</span>] . <span class="stringliteral">&#39;: &lt;a href=&quot;&#39;</span> . $work-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $temp_foto[<span class="stringliteral">&#39;user_upload&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>;
 <a name="l00264"></a>00264                         <span class="keywordflow">else</span>
 <a name="l00265"></a>00265                         {
@@ -312,7 +312,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00267"></a>00267                             $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] = $lang[<span class="stringliteral">&#39;main_no_user_add&#39;</span>];
 <a name="l00268"></a>00268                         }
 <a name="l00269"></a>00269                     }
-<a name="l00270"></a>00270                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00270"></a>00270                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00271"></a>00271                     <span class="keywordflow">if</span>($temp_category[<span class="stringliteral">&#39;id&#39;</span>] == 0)
 <a name="l00272"></a>00272                     {
 <a name="l00273"></a>00273                         $foto[<span class="stringliteral">&#39;category_name&#39;</span>] = $temp_category[<span class="stringliteral">&#39;name&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>];
@@ -336,7 +336,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00291"></a>00291                     $foto[<span class="stringliteral">&#39;category_url&#39;</span>] = $work-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>];
 <a name="l00292"></a>00292                 }
 <a name="l00293"></a>00293             }
-<a name="l00294"></a>00294             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00294"></a>00294             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00295"></a>00295         }
 <a name="l00296"></a>00296         <span class="keywordflow">else</span>
 <a name="l00297"></a>00297         {
@@ -460,19 +460,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00420"></a>00420 
 <a name="l00426"></a><a class="code" href="classtemplate.html#ae44dda987dcea9f5cd25523c34b980ee">00426</a>     <span class="keyword">function</span> <a class="code" href="classtemplate.html#ae44dda987dcea9f5cd25523c34b980ee" title="Функция формирует вывод новостей сайта">template_news</a>($news_data = 1, $act=<span class="stringliteral">&#39;last&#39;</span>)
 <a name="l00427"></a>00427     {
-<a name="l00428"></a>00428         global $db2, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>;
+<a name="l00428"></a>00428         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>, <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>;
 <a name="l00429"></a>00429 
 <a name="l00430"></a>00430         $news[<span class="stringliteral">&#39;IF_EDIT_LONG&#39;</span>] = <span class="keyword">false</span>;
 <a name="l00431"></a>00431 
 <a name="l00432"></a>00432         <span class="keywordflow">if</span>($act == <span class="stringliteral">&#39;id&#39;</span>)
 <a name="l00433"></a>00433         {
-<a name="l00434"></a>00434             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a4bb6d1a24b360e104b6b090496b48b62" title="Таблица с новостями">TBL_NEWS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $news_data)) $temp_news = $db2-&gt;res_arr();
-<a name="l00435"></a>00435             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00434"></a>00434             <span class="keywordflow">if</span> ($db-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a4bb6d1a24b360e104b6b090496b48b62" title="Таблица с новостями">TBL_NEWS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $news_data)) $temp_news = $db-&gt;res_arr();
+<a name="l00435"></a>00435             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00436"></a>00436         }
 <a name="l00437"></a>00437         <span class="keywordflow">else</span>
 <a name="l00438"></a>00438         {
-<a name="l00439"></a>00439             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a4bb6d1a24b360e104b6b090496b48b62" title="Таблица с новостями">TBL_NEWS</a>, <span class="keyword">false</span>, array(<span class="stringliteral">&#39;data_last_edit&#39;</span> =&gt; <span class="stringliteral">&#39;down&#39;</span>), <span class="keyword">false</span>, $news_data)) $temp_news = $db2-&gt;res_arr();
-<a name="l00440"></a>00440             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00439"></a>00439             <span class="keywordflow">if</span> ($db-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a4bb6d1a24b360e104b6b090496b48b62" title="Таблица с новостями">TBL_NEWS</a>, <span class="keyword">false</span>, array(<span class="stringliteral">&#39;data_last_edit&#39;</span> =&gt; <span class="stringliteral">&#39;down&#39;</span>), <span class="keyword">false</span>, $news_data)) $temp_news = $db-&gt;res_arr();
+<a name="l00440"></a>00440             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00441"></a>00441         }
 <a name="l00442"></a>00442 
 <a name="l00443"></a>00443         <span class="keywordflow">if</span> ($temp_news &amp;&amp; $user-&gt;user[<span class="stringliteral">&#39;news_view&#39;</span>] == <span class="keyword">true</span>)
@@ -483,12 +483,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00448"></a>00448                 $news[<span class="stringliteral">&#39;NAME_BLOCK&#39;</span>] = $lang[<span class="stringliteral">&#39;main_title_news&#39;</span>] . <span class="stringliteral">&#39; - &#39;</span> . $val[<span class="stringliteral">&#39;name_post&#39;</span>];
 <a name="l00449"></a>00449                 $news[<span class="stringliteral">&#39;L_NEWS_DATA&#39;</span>] = $lang[<span class="stringliteral">&#39;main_data_add&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $val[<span class="stringliteral">&#39;data_post&#39;</span>] . <span class="stringliteral">&#39; (&#39;</span> . $val[<span class="stringliteral">&#39;data_last_edit&#39;</span>] . <span class="stringliteral">&#39;).&#39;</span>;
 <a name="l00450"></a>00450                 $news[<span class="stringliteral">&#39;L_TEXT_POST&#39;</span>] = $val[<span class="stringliteral">&#39;text_post&#39;</span>];
-<a name="l00451"></a>00451                 <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $val[<span class="stringliteral">&#39;user_post&#39;</span>]))
+<a name="l00451"></a>00451                 <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $val[<span class="stringliteral">&#39;user_post&#39;</span>]))
 <a name="l00452"></a>00452                 {
-<a name="l00453"></a>00453                     $user_add = $db2-&gt;res_row();
+<a name="l00453"></a>00453                     $user_add = $db-&gt;res_row();
 <a name="l00454"></a>00454                     <span class="keywordflow">if</span> ($user_add) $news[<span class="stringliteral">&#39;L_NEWS_DATA&#39;</span>] .= <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span> . $lang[<span class="stringliteral">&#39;main_user_add&#39;</span>] . <span class="stringliteral">&#39;: &lt;a href=&quot;&#39;</span> . $work-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $val[<span class="stringliteral">&#39;user_post&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $user_add[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;.&#39;</span>;
 <a name="l00455"></a>00455                 }
-<a name="l00456"></a>00456                 <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00456"></a>00456                 <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00457"></a>00457                 $news[<span class="stringliteral">&#39;L_TEXT_POST&#39;</span>] = trim(nl2br($news[<span class="stringliteral">&#39;L_TEXT_POST&#39;</span>]));
 <a name="l00458"></a>00458 
 <a name="l00459"></a>00459                 <span class="keywordflow">if</span> ($user-&gt;user[<span class="stringliteral">&#39;news_moderate&#39;</span>] == <span class="keyword">true</span> || ($user-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] != 0 &amp;&amp; $user-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] == $val[<span class="stringliteral">&#39;user_post&#39;</span>]))
@@ -533,77 +533,77 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00499"></a>00499 
 <a name="l00503"></a><a class="code" href="classtemplate.html#a116ebcf799d07566a74e7e765aecc1b7">00503</a>     <span class="keyword">function</span> <a class="code" href="classtemplate.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта">template_stat</a>()
 <a name="l00504"></a>00504     {
-<a name="l00505"></a>00505         global $db2, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>;
+<a name="l00505"></a>00505         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>;
 <a name="l00506"></a>00506 
-<a name="l00507"></a>00507         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `regist_user`&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>))
+<a name="l00507"></a>00507         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `regist_user`&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>))
 <a name="l00508"></a>00508         {
-<a name="l00509"></a>00509             $temp = $db2-&gt;res_row();
+<a name="l00509"></a>00509             $temp = $db-&gt;res_row();
 <a name="l00510"></a>00510             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;regist&#39;</span>] = $temp[<span class="stringliteral">&#39;regist_user&#39;</span>];
 <a name="l00511"></a>00511             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;regist&#39;</span>] = 0;
 <a name="l00512"></a>00512         }
-<a name="l00513"></a>00513         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00513"></a>00513         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00514"></a>00514 
-<a name="l00515"></a>00515         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `photo_count`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>))
+<a name="l00515"></a>00515         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `photo_count`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>))
 <a name="l00516"></a>00516         {
-<a name="l00517"></a>00517             $temp = $db2-&gt;res_row();
+<a name="l00517"></a>00517             $temp = $db-&gt;res_row();
 <a name="l00518"></a>00518             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;photo&#39;</span>] = $temp[<span class="stringliteral">&#39;photo_count&#39;</span>];
 <a name="l00519"></a>00519             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;photo&#39;</span>] = 0;
 <a name="l00520"></a>00520         }
-<a name="l00521"></a>00521         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00521"></a>00521         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00522"></a>00522 
-<a name="l00523"></a>00523         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `category`&#39;</span>, <a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324" title="Таблица с списком категорий на сервере">TBL_CATEGORY</a>, <span class="stringliteral">&#39;`id` != 0&#39;</span>))
+<a name="l00523"></a>00523         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `category`&#39;</span>, <a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324" title="Таблица с списком категорий на сервере">TBL_CATEGORY</a>, <span class="stringliteral">&#39;`id` != 0&#39;</span>))
 <a name="l00524"></a>00524         {
-<a name="l00525"></a>00525             $temp = $db2-&gt;res_row();
+<a name="l00525"></a>00525             $temp = $db-&gt;res_row();
 <a name="l00526"></a>00526             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;category&#39;</span>] = $temp[<span class="stringliteral">&#39;category&#39;</span>];
 <a name="l00527"></a>00527             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;category&#39;</span>] = 0;
 <a name="l00528"></a>00528         }
-<a name="l00529"></a>00529         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00529"></a>00529         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00530"></a>00530 
-<a name="l00531"></a>00531         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(DISTINCT `user_upload`) AS `category_user`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, <span class="stringliteral">&#39;`category` = 0&#39;</span>))
+<a name="l00531"></a>00531         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(DISTINCT `user_upload`) AS `category_user`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, <span class="stringliteral">&#39;`category` = 0&#39;</span>))
 <a name="l00532"></a>00532         {
-<a name="l00533"></a>00533             $temp = $db2-&gt;res_row();
+<a name="l00533"></a>00533             $temp = $db-&gt;res_row();
 <a name="l00534"></a>00534             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;category_user&#39;</span>] = $temp[<span class="stringliteral">&#39;category_user&#39;</span>];
 <a name="l00535"></a>00535             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;category_user&#39;</span>] = 0;
 <a name="l00536"></a>00536         }
-<a name="l00537"></a>00537         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00537"></a>00537         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00538"></a>00538 
 <a name="l00539"></a>00539         $stat[<span class="stringliteral">&#39;category&#39;</span>] = $stat[<span class="stringliteral">&#39;category&#39;</span>] + $stat[<span class="stringliteral">&#39;category_user&#39;</span>];
 <a name="l00540"></a>00540 
-<a name="l00541"></a>00541         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `user_admin`&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`group` = 3&#39;</span>))
+<a name="l00541"></a>00541         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `user_admin`&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`group` = 3&#39;</span>))
 <a name="l00542"></a>00542         {
-<a name="l00543"></a>00543             $temp = $db2-&gt;res_row();
+<a name="l00543"></a>00543             $temp = $db-&gt;res_row();
 <a name="l00544"></a>00544             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;user_admin&#39;</span>] = $temp[<span class="stringliteral">&#39;user_admin&#39;</span>];
 <a name="l00545"></a>00545             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;user_admin&#39;</span>] = 0;
 <a name="l00546"></a>00546         }
-<a name="l00547"></a>00547         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00547"></a>00547         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00548"></a>00548 
-<a name="l00549"></a>00549         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `user_moder`&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`group` = 2&#39;</span>))
+<a name="l00549"></a>00549         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `user_moder`&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`group` = 2&#39;</span>))
 <a name="l00550"></a>00550         {
-<a name="l00551"></a>00551             $temp = $db2-&gt;res_row();
+<a name="l00551"></a>00551             $temp = $db-&gt;res_row();
 <a name="l00552"></a>00552             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;user_moder&#39;</span>] = $temp[<span class="stringliteral">&#39;user_moder&#39;</span>];
 <a name="l00553"></a>00553             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;user_moder&#39;</span>] = 0;
 <a name="l00554"></a>00554         }
-<a name="l00555"></a>00555         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00555"></a>00555         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00556"></a>00556 
-<a name="l00557"></a>00557         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `rate_user`&#39;</span>, <a class="code" href="common_8php.html#a52df2a93d890b1c0ac6f467ece1b0daa" title="Таблица с оценками фотографий от пользователей">TBL_RATE_USER</a>))
+<a name="l00557"></a>00557         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `rate_user`&#39;</span>, <a class="code" href="common_8php.html#a52df2a93d890b1c0ac6f467ece1b0daa" title="Таблица с оценками фотографий от пользователей">TBL_RATE_USER</a>))
 <a name="l00558"></a>00558         {
-<a name="l00559"></a>00559             $temp = $db2-&gt;res_row();
+<a name="l00559"></a>00559             $temp = $db-&gt;res_row();
 <a name="l00560"></a>00560             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;rate_user&#39;</span>] = $temp[<span class="stringliteral">&#39;rate_user&#39;</span>];
 <a name="l00561"></a>00561             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;rate_user&#39;</span>] = 0;
 <a name="l00562"></a>00562         }
-<a name="l00563"></a>00563         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00563"></a>00563         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00564"></a>00564 
-<a name="l00565"></a>00565         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `rate_moder`&#39;</span>, <a class="code" href="common_8php.html#abc852d793cdd27bfbd495f2c45f102a0" title="Таблица с оценками фотографий от модераторов">TBL_RATE_MODER</a>))
+<a name="l00565"></a>00565         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `rate_moder`&#39;</span>, <a class="code" href="common_8php.html#abc852d793cdd27bfbd495f2c45f102a0" title="Таблица с оценками фотографий от модераторов">TBL_RATE_MODER</a>))
 <a name="l00566"></a>00566         {
-<a name="l00567"></a>00567             $temp = $db2-&gt;res_row();
+<a name="l00567"></a>00567             $temp = $db-&gt;res_row();
 <a name="l00568"></a>00568             <span class="keywordflow">if</span> ($temp) $stat[<span class="stringliteral">&#39;rate_moder&#39;</span>] = $temp[<span class="stringliteral">&#39;rate_moder&#39;</span>];
 <a name="l00569"></a>00569             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;rate_moder&#39;</span>] = 0;
 <a name="l00570"></a>00570         }
-<a name="l00571"></a>00571         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00571"></a>00571         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00572"></a>00572 
-<a name="l00573"></a>00573         <span class="keywordflow">if</span> ($db2-&gt;select(array(<span class="stringliteral">&#39;id&#39;</span>, <span class="stringliteral">&#39;real_name&#39;</span>), <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`date_last_activ` &gt;= (CURRENT_TIMESTAMP - 900 )&#39;</span>))
+<a name="l00573"></a>00573         <span class="keywordflow">if</span> ($db-&gt;select(array(<span class="stringliteral">&#39;id&#39;</span>, <span class="stringliteral">&#39;real_name&#39;</span>), <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`date_last_activ` &gt;= (CURRENT_TIMESTAMP - 900 )&#39;</span>))
 <a name="l00574"></a>00574         {
-<a name="l00575"></a>00575             $temp = $db2-&gt;res_arr();
+<a name="l00575"></a>00575             $temp = $db-&gt;res_arr();
 <a name="l00576"></a>00576             <span class="keywordflow">if</span> ($temp)
 <a name="l00577"></a>00577             {
 <a name="l00578"></a>00578                 $stat[<span class="stringliteral">&#39;online&#39;</span>] =<span class="stringliteral">&#39;&#39;</span>;
@@ -615,7 +615,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00584"></a>00584             }
 <a name="l00585"></a>00585             <span class="keywordflow">else</span> $stat[<span class="stringliteral">&#39;online&#39;</span>] = $lang[<span class="stringliteral">&#39;main_stat_no_online&#39;</span>];
 <a name="l00586"></a>00586         }
-<a name="l00587"></a>00587         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00587"></a>00587         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00588"></a>00588 
 <a name="l00589"></a>00589         $array_data = array();
 <a name="l00590"></a>00590 
@@ -646,42 +646,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00616"></a>00616 
 <a name="l00621"></a><a class="code" href="classtemplate.html#a00a3456ccd4563d05fcf39781a911ee9">00621</a>     <span class="keyword">function</span> <a class="code" href="classtemplate.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол-во изображений">template_best_user</a>($best_user = 1)
 <a name="l00622"></a>00622     {
-<a name="l00623"></a>00623         global $db2, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>;
+<a name="l00623"></a>00623         global <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>, $lang, <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>;
 <a name="l00624"></a>00624 
 <a name="l00625"></a>00625         $name_block = $lang[<span class="stringliteral">&#39;main_best_user_1&#39;</span>] . $best_user . $lang[<span class="stringliteral">&#39;main_best_user_2&#39;</span>];
-<a name="l00626"></a>00626         <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;DISTINCT `user_upload`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>))
+<a name="l00626"></a>00626         <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;DISTINCT `user_upload`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>))
 <a name="l00627"></a>00627         {
-<a name="l00628"></a>00628             $temp = $db2-&gt;res_arr();
+<a name="l00628"></a>00628             $temp = $db-&gt;res_arr();
 <a name="l00629"></a>00629             <span class="keywordflow">if</span> ($temp)
 <a name="l00630"></a>00630             {
 <a name="l00631"></a>00631                 $best_user_array = array();
 <a name="l00632"></a>00632                 <span class="keywordflow">foreach</span> ($temp as $val)
 <a name="l00633"></a>00633                 {
-<a name="l00634"></a>00634                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $val[<span class="stringliteral">&#39;user_upload&#39;</span>]))
+<a name="l00634"></a>00634                     <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $val[<span class="stringliteral">&#39;user_upload&#39;</span>]))
 <a name="l00635"></a>00635                     {
-<a name="l00636"></a>00636                         $temp2 = $db2-&gt;res_row();
+<a name="l00636"></a>00636                         $temp2 = $db-&gt;res_row();
 <a name="l00637"></a>00637                         <span class="keywordflow">if</span> ($temp2)
 <a name="l00638"></a>00638                         {
-<a name="l00639"></a>00639                             <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `user_photo`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, <span class="stringliteral">&#39;`user_upload` = &#39;</span> . $val[<span class="stringliteral">&#39;user_upload&#39;</span>]))
+<a name="l00639"></a>00639                             <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;COUNT(*) AS `user_photo`&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, <span class="stringliteral">&#39;`user_upload` = &#39;</span> . $val[<span class="stringliteral">&#39;user_upload&#39;</span>]))
 <a name="l00640"></a>00640                             {
-<a name="l00641"></a>00641                                 $temp2 = $db2-&gt;res_row();
+<a name="l00641"></a>00641                                 $temp2 = $db-&gt;res_row();
 <a name="l00642"></a>00642                                 <span class="keywordflow">if</span> ($temp2) $val[<span class="stringliteral">&#39;user_photo&#39;</span>] = $temp2[<span class="stringliteral">&#39;user_photo&#39;</span>];
 <a name="l00643"></a>00643                                 <span class="keywordflow">else</span> $val[<span class="stringliteral">&#39;user_photo&#39;</span>] = 0;
 <a name="l00644"></a>00644                             }
-<a name="l00645"></a>00645                             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00645"></a>00645                             <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00646"></a>00646                         }
 <a name="l00647"></a>00647                         <span class="keywordflow">else</span> $val[<span class="stringliteral">&#39;user_photo&#39;</span>] = 0;
 <a name="l00648"></a>00648                     }
-<a name="l00649"></a>00649                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00649"></a>00649                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00650"></a>00650                     $best_user_array[$val[<span class="stringliteral">&#39;user_upload&#39;</span>]] = $val[<span class="stringliteral">&#39;user_photo&#39;</span>];
 <a name="l00651"></a>00651                 }
 <a name="l00652"></a>00652                 arsort($best_user_array);
 <a name="l00653"></a>00653                 $text_best_user = <span class="stringliteral">&#39;&#39;</span>;
 <a name="l00654"></a>00654                 <span class="keywordflow">foreach</span> ($best_user_array as $best_user_name =&gt; $best_user_photo)
 <a name="l00655"></a>00655                 {
-<a name="l00656"></a>00656                     <span class="keywordflow">if</span> ($db2-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $best_user_name))
+<a name="l00656"></a>00656                     <span class="keywordflow">if</span> ($db-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $best_user_name))
 <a name="l00657"></a>00657                     {
-<a name="l00658"></a>00658                         $temp2 = $db2-&gt;res_row();
+<a name="l00658"></a>00658                         $temp2 = $db-&gt;res_row();
 <a name="l00659"></a>00659                         $array_data = array();
 <a name="l00660"></a>00660                         $array_data = array(
 <a name="l00661"></a>00661                                 <span class="stringliteral">&#39;D_USER_NAME&#39;</span> =&gt; <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . $work-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $best_user_name . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $temp2[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $temp2[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>,
@@ -689,7 +689,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00663"></a>00663                         );
 <a name="l00664"></a>00664                     $text_best_user .= $this-&gt;<a class="code" href="classtemplate.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива...">create_template</a>(<span class="stringliteral">&#39;best_user.tpl&#39;</span>, $array_data);
 <a name="l00665"></a>00665                     }
-<a name="l00666"></a>00666                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00666"></a>00666                     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00667"></a>00667                 }
 <a name="l00668"></a>00668             }
 <a name="l00669"></a>00669             <span class="keywordflow">else</span>
@@ -702,7 +702,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <a name="l00676"></a>00676                 $text_best_user = $this-&gt;<a class="code" href="classtemplate.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива...">create_template</a>(<span class="stringliteral">&#39;best_user.tpl&#39;</span>, $array_data);
 <a name="l00677"></a>00677             }
 <a name="l00678"></a>00678         }
-<a name="l00679"></a>00679         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db2-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00679"></a>00679         <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($db-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
 <a name="l00680"></a>00680 
 <a name="l00681"></a>00681         $array_data = array();
 <a name="l00682"></a>00682         $array_data = array(

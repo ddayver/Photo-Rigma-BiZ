@@ -146,15 +146,15 @@ class template
 	*/
 	function create_menu($action = 'main', $menu = 0)
 	{
-		global $db2, $work, $lang, $user;
+		global $db, $work, $lang, $user;
 
 		$m[0] = 'short';
 		$m[1] = 'long';
 		$text_menu = '';
 
-		if ($db2->select('*', TBL_MENU, '`' . $m[$menu] . '` = 1', array('id' => 'up')))
+		if ($db->select('*', TBL_MENU, '`' . $m[$menu] . '` = 1', array('id' => 'up')))
 		{
-			$temp_menu = $db2->res_arr();
+			$temp_menu = $db->res_arr();
 			if ($temp_menu)
 			{
 				foreach ($temp_menu as $val)
@@ -184,7 +184,7 @@ class template
 			}
 			else log_in_file('Unable to get the menu', DIE_IF_ERROR);
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data = array();
 
@@ -207,7 +207,7 @@ class template
 	*/
 	function create_foto($type = 'top', $id_photo = 0)
 	{
-		global $db2, $work, $lang, $user;
+		global $db, $work, $lang, $user;
 
 		if ($user->user['pic_view'] == true)
 		{
@@ -231,8 +231,8 @@ class template
 				$order = 'rand()';
 				$limit = 1;
 			}
-			if ($db2->select('*', TBL_PHOTO, $where, $order, false, $limit)) $temp_foto = $db2->res_row();
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			if ($db->select('*', TBL_PHOTO, $where, $order, false, $limit)) $temp_foto = $db->res_row();
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
@@ -243,9 +243,9 @@ class template
 
 		if ($temp_foto)
 		{
-			if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
+			if ($db->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
 			{
-				$temp_category = $db2->res_row();
+				$temp_category = $db->res_row();
 				if ($temp_category)
 				{
 					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
@@ -257,9 +257,9 @@ class template
 					$foto['category_description'] = $temp_category['description'];
 					$foto['rate'] = $lang['main_rate'] . ': ' . $temp_foto['rate_user'] . '/' . $temp_foto['rate_moder'];
 
-					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
 					{
-						$user_add = $db2->res_row();
+						$user_add = $db->res_row();
 						if ($user_add) $foto['user'] = $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
 						else
 						{
@@ -267,7 +267,7 @@ class template
 							$user_add['real_name'] = $lang['main_no_user_add'];
 						}
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 					if($temp_category['id'] == 0)
 					{
 						$foto['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name'];
@@ -291,7 +291,7 @@ class template
 					$foto['category_url'] = $work->config['site_url'];
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
@@ -425,19 +425,19 @@ class template
 	*/
 	function template_news($news_data = 1, $act='last')
 	{
-		global $db2, $lang, $work, $user;
+		global $db, $lang, $work, $user;
 
 		$news['IF_EDIT_LONG'] = false;
 
 		if($act == 'id')
 		{
-			if ($db2->select('*', TBL_NEWS, '`id` = ' . $news_data)) $temp_news = $db2->res_arr();
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			if ($db->select('*', TBL_NEWS, '`id` = ' . $news_data)) $temp_news = $db->res_arr();
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			if ($db2->select('*', TBL_NEWS, false, array('data_last_edit' => 'down'), false, $news_data)) $temp_news = $db2->res_arr();
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			if ($db->select('*', TBL_NEWS, false, array('data_last_edit' => 'down'), false, $news_data)) $temp_news = $db->res_arr();
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
 		if ($temp_news && $user->user['news_view'] == true)
@@ -448,12 +448,12 @@ class template
 				$news['NAME_BLOCK'] = $lang['main_title_news'] . ' - ' . $val['name_post'];
 				$news['L_NEWS_DATA'] = $lang['main_data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').';
 				$news['L_TEXT_POST'] = $val['text_post'];
-				if ($db2->select('real_name', TBL_USERS, '`id` = ' . $val['user_post']))
+				if ($db->select('real_name', TBL_USERS, '`id` = ' . $val['user_post']))
 				{
-					$user_add = $db2->res_row();
+					$user_add = $db->res_row();
 					if ($user_add) $news['L_NEWS_DATA'] .= '<br />' . $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.';
 				}
-				else log_in_file($db2->error, DIE_IF_ERROR);
+				else log_in_file($db->error, DIE_IF_ERROR);
 				$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST']));
 
 				if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
@@ -502,77 +502,77 @@ class template
 	*/
 	function template_stat()
 	{
-		global $db2, $lang, $work;
+		global $db, $lang, $work;
 
-		if ($db2->select('COUNT(*) AS `regist_user`', TBL_USERS))
+		if ($db->select('COUNT(*) AS `regist_user`', TBL_USERS))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['regist'] = $temp['regist_user'];
 			else $stat['regist'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) AS `photo_count`', TBL_PHOTO))
+		if ($db->select('COUNT(*) AS `photo_count`', TBL_PHOTO))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['photo'] = $temp['photo_count'];
 			else $stat['photo'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) AS `category`', TBL_CATEGORY, '`id` != 0'))
+		if ($db->select('COUNT(*) AS `category`', TBL_CATEGORY, '`id` != 0'))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['category'] = $temp['category'];
 			else $stat['category'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(DISTINCT `user_upload`) AS `category_user`', TBL_PHOTO, '`category` = 0'))
+		if ($db->select('COUNT(DISTINCT `user_upload`) AS `category_user`', TBL_PHOTO, '`category` = 0'))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['category_user'] = $temp['category_user'];
 			else $stat['category_user'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$stat['category'] = $stat['category'] + $stat['category_user'];
 
-		if ($db2->select('COUNT(*) AS `user_admin`', TBL_USERS, '`group` = 3'))
+		if ($db->select('COUNT(*) AS `user_admin`', TBL_USERS, '`group` = 3'))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['user_admin'] = $temp['user_admin'];
 			else $stat['user_admin'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) AS `user_moder`', TBL_USERS, '`group` = 2'))
+		if ($db->select('COUNT(*) AS `user_moder`', TBL_USERS, '`group` = 2'))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['user_moder'] = $temp['user_moder'];
 			else $stat['user_moder'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) AS `rate_user`', TBL_RATE_USER))
+		if ($db->select('COUNT(*) AS `rate_user`', TBL_RATE_USER))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['rate_user'] = $temp['rate_user'];
 			else $stat['rate_user'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) AS `rate_moder`', TBL_RATE_MODER))
+		if ($db->select('COUNT(*) AS `rate_moder`', TBL_RATE_MODER))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if ($temp) $stat['rate_moder'] = $temp['rate_moder'];
 			else $stat['rate_moder'] = 0;
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select(array('id', 'real_name'), TBL_USERS, '`date_last_activ` >= (CURRENT_TIMESTAMP - 900 )'))
+		if ($db->select(array('id', 'real_name'), TBL_USERS, '`date_last_activ` >= (CURRENT_TIMESTAMP - 900 )'))
 		{
-			$temp = $db2->res_arr();
+			$temp = $db->res_arr();
 			if ($temp)
 			{
 				$stat['online'] ='';
@@ -584,7 +584,7 @@ class template
 			}
 			else $stat['online'] = $lang['main_stat_no_online'];
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data = array();
 
@@ -620,42 +620,42 @@ class template
 	*/
 	function template_best_user($best_user = 1)
 	{
-		global $db2, $lang, $work;
+		global $db, $lang, $work;
 
 		$name_block = $lang['main_best_user_1'] . $best_user . $lang['main_best_user_2'];
-		if ($db2->select('DISTINCT `user_upload`', TBL_PHOTO))
+		if ($db->select('DISTINCT `user_upload`', TBL_PHOTO))
 		{
-			$temp = $db2->res_arr();
+			$temp = $db->res_arr();
 			if ($temp)
 			{
 				$best_user_array = array();
 				foreach ($temp as $val)
 				{
-					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $val['user_upload']))
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $val['user_upload']))
 					{
-						$temp2 = $db2->res_row();
+						$temp2 = $db->res_row();
 						if ($temp2)
 						{
-							if ($db2->select('COUNT(*) AS `user_photo`', TBL_PHOTO, '`user_upload` = ' . $val['user_upload']))
+							if ($db->select('COUNT(*) AS `user_photo`', TBL_PHOTO, '`user_upload` = ' . $val['user_upload']))
 							{
-								$temp2 = $db2->res_row();
+								$temp2 = $db->res_row();
 								if ($temp2) $val['user_photo'] = $temp2['user_photo'];
 								else $val['user_photo'] = 0;
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 						else $val['user_photo'] = 0;
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 					$best_user_array[$val['user_upload']] = $val['user_photo'];
 				}
 				arsort($best_user_array);
 				$text_best_user = '';
 				foreach ($best_user_array as $best_user_name => $best_user_photo)
 				{
-					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $best_user_name))
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $best_user_name))
 					{
-						$temp2 = $db2->res_row();
+						$temp2 = $db->res_row();
 						$array_data = array();
 						$array_data = array(
 								'D_USER_NAME' => '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $best_user_name . '" title="' . $temp2['real_name'] . '">' . $temp2['real_name'] . '</a>',
@@ -663,7 +663,7 @@ class template
 						);
 					$text_best_user .= $this->create_template('best_user.tpl', $array_data);
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 			}
 			else
@@ -676,7 +676,7 @@ class template
 				$text_best_user = $this->create_template('best_user.tpl', $array_data);
 			}
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data = array();
 		$array_data = array(

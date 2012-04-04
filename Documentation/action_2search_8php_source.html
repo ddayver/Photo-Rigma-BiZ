@@ -88,184 +88,176 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </div>
 <div class="contents">
 <a href="action_2search_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00011"></a>00011 <span class="comment">// Проверка, что файл подключается из индексного, а не набран напрямую в адресной строке</span>
-<a name="l00012"></a>00012 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
-<a name="l00013"></a>00013 {
-<a name="l00014"></a>00014     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
-<a name="l00015"></a>00015 }
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>); <span class="comment">// подключаем языковый файл основной страницы</span>
-<a name="l00018"></a>00018 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>); <span class="comment">// подключаем языковый файл меню</span>
-<a name="l00019"></a>00019 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/search.php&#39;</span>); <span class="comment">// подключаем языковый файл поиска</span>
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="keywordflow">if</span>(isset($_POST[<span class="stringliteral">&#39;search_main_text&#39;</span>]) &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_main_text&#39;</span>]) &amp;&amp; empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) <span class="comment">// если запрос поступил с шапки сайта и нет данных с самой страницы поиска, то...</span>
-<a name="l00022"></a>00022 {
-<a name="l00023"></a>00023     $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] = $_POST[<span class="stringliteral">&#39;search_main_text&#39;</span>]; <span class="comment">// указываем текст для поиска</span>
-<a name="l00024"></a>00024     $_POST[<span class="stringliteral">&#39;search_user&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>; <span class="comment">// включаем поиск по пользователям</span>
-<a name="l00025"></a>00025     $_POST[<span class="stringliteral">&#39;search_category&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>; <span class="comment">// включаем поиск по разделам</span>
-<a name="l00026"></a>00026     $_POST[<span class="stringliteral">&#39;search_news&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>; <span class="comment">// включаем поиск по ноостям</span>
-<a name="l00027"></a>00027     $_POST[<span class="stringliteral">&#39;search_photo&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>; <span class="comment">// включаем поиск по изображениям</span>
-<a name="l00028"></a>00028 }
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="comment">// инициируем служебные переменные</span>
-<a name="l00031"></a>00031 $check = array(); <span class="comment">// данные о включенных чек-боксах</span>
-<a name="l00032"></a>00032 $search_user = <span class="keyword">false</span>; <span class="comment">// не искать в пользователях</span>
-<a name="l00033"></a>00033 $search_category = <span class="keyword">false</span>; <span class="comment">// не искать в разделах</span>
-<a name="l00034"></a>00034 $search_news = <span class="keyword">false</span>; <span class="comment">// не искать в новостях</span>
-<a name="l00035"></a>00035 $search_photo = <span class="keyword">false</span>; <span class="comment">// не искать в изображениях</span>
-<a name="l00036"></a>00036 $find_data = array(); <span class="comment">// найденные данные</span>
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_user&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_user&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) <span class="comment">// если есть отметка о поиске в пользователях и НЕ пустой текст поиска, то..</span>
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040     $search_user = <span class="keyword">true</span>; <span class="comment">// включаем поиск в пользователях</span>
-<a name="l00041"></a>00041     $check[<span class="stringliteral">&#39;user&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>; <span class="comment">// отмечаем это в массиве</span>
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_category&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_category&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) <span class="comment">// если есть отметка о поиске в разделах и НЕ пустой текст поиска, то..</span>
-<a name="l00045"></a>00045 {
-<a name="l00046"></a>00046     $search_category = <span class="keyword">true</span>; <span class="comment">// включаем поиск в разделах</span>
-<a name="l00047"></a>00047     $check[<span class="stringliteral">&#39;category&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>; <span class="comment">// отмечаем это в массиве</span>
-<a name="l00048"></a>00048 }
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_news&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_news&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) <span class="comment">// если есть отметка о поиске в новостях и НЕ пустой текст поиска, то..</span>
-<a name="l00051"></a>00051 {
-<a name="l00052"></a>00052     $search_news = <span class="keyword">true</span>; <span class="comment">// включаем поиск в новостях</span>
-<a name="l00053"></a>00053     $check[<span class="stringliteral">&#39;news&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>; <span class="comment">// отмечаем это в массиве</span>
-<a name="l00054"></a>00054 }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_photo&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_photo&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) <span class="comment">// если есть отметка о поиске в изображениях и НЕ пустой текст поиска, то..</span>
-<a name="l00057"></a>00057 {
-<a name="l00058"></a>00058     $search_photo = <span class="keyword">true</span>; <span class="comment">// включаем поиск в изображениях</span>
-<a name="l00059"></a>00059     $check[<span class="stringliteral">&#39;photo&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>; <span class="comment">// отмечаем это в массиве</span>
-<a name="l00060"></a>00060 }
+<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
+<a name="l00014"></a>00014 }
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>);
+<a name="l00017"></a>00017 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>);
+<a name="l00018"></a>00018 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/search.php&#39;</span>);
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="keywordflow">if</span>(isset($_POST[<span class="stringliteral">&#39;search_main_text&#39;</span>]) &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_main_text&#39;</span>]) &amp;&amp; empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]))
+<a name="l00021"></a>00021 {
+<a name="l00022"></a>00022     $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] = $_POST[<span class="stringliteral">&#39;search_main_text&#39;</span>];
+<a name="l00023"></a>00023     $_POST[<span class="stringliteral">&#39;search_user&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>;
+<a name="l00024"></a>00024     $_POST[<span class="stringliteral">&#39;search_category&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>;
+<a name="l00025"></a>00025     $_POST[<span class="stringliteral">&#39;search_news&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>;
+<a name="l00026"></a>00026     $_POST[<span class="stringliteral">&#39;search_photo&#39;</span>] = <span class="stringliteral">&#39;true&#39;</span>;
+<a name="l00027"></a>00027 }
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 $check = array();
+<a name="l00030"></a>00030 $search_user = <span class="keyword">false</span>;
+<a name="l00031"></a>00031 $search_category = <span class="keyword">false</span>;
+<a name="l00032"></a>00032 $search_news = <span class="keyword">false</span>;
+<a name="l00033"></a>00033 $search_photo = <span class="keyword">false</span>;
+<a name="l00034"></a>00034 $find_data = array();
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_user&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_user&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]))
+<a name="l00037"></a>00037 {
+<a name="l00038"></a>00038     $search_user = <span class="keyword">true</span>;
+<a name="l00039"></a>00039     $check[<span class="stringliteral">&#39;user&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>;
+<a name="l00040"></a>00040 }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_category&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_category&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]))
+<a name="l00043"></a>00043 {
+<a name="l00044"></a>00044     $search_category = <span class="keyword">true</span>;
+<a name="l00045"></a>00045     $check[<span class="stringliteral">&#39;category&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>;
+<a name="l00046"></a>00046 }
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_news&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_news&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]))
+<a name="l00049"></a>00049 {
+<a name="l00050"></a>00050     $search_news = <span class="keyword">true</span>;
+<a name="l00051"></a>00051     $check[<span class="stringliteral">&#39;news&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>;
+<a name="l00052"></a>00052 }
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054 <span class="keywordflow">if</span>(!empty($_POST[<span class="stringliteral">&#39;search_photo&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_photo&#39;</span>] == <span class="stringliteral">&#39;true&#39;</span> &amp;&amp; !empty($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]))
+<a name="l00055"></a>00055 {
+<a name="l00056"></a>00056     $search_photo = <span class="keyword">true</span>;
+<a name="l00057"></a>00057     $check[<span class="stringliteral">&#39;photo&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>;
+<a name="l00058"></a>00058 }
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="keywordflow">if</span> (!($search_user || $search_category || $search_news || $search_photo)) $check[<span class="stringliteral">&#39;photo&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>;
 <a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="keywordflow">if</span> (!($search_user || $search_category || $search_news || $search_photo)) $check[<span class="stringliteral">&#39;photo&#39;</span>] = <span class="stringliteral">&#39;checked&#39;</span>; <span class="comment">// если нет запроса на поиск (просто открыта изначально страница поиска), то указываем, что по-умолчанию поиск производить в изображениях</span>
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 $array_data = array(); <span class="comment">// инициируем массив</span>
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 <span class="keywordflow">if</span>($search_user) <span class="comment">// если включен поиск по пользователям, то...</span>
-<a name="l00067"></a>00067 {
-<a name="l00068"></a>00068     $find_data[<span class="stringliteral">&#39;l_search_user&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_user&#39;</span>]; <span class="comment">// формируем название блока результатов поиска по пользователям</span>
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070     $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT * FROM `user` WHERE `real_name` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39;&quot;</span>); <span class="comment">// делаем запрос на поиск пользователей, в отображаемом имени которых содержится искомая строка</span>
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072     <span class="keywordflow">if</span>($find &amp;&amp; $find[0] &gt; 0) <span class="comment">// если найдены такие пользователи, то...</span>
-<a name="l00073"></a>00073     {
-<a name="l00074"></a>00074         $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// инициируем мссив списка пользователей</span>
-<a name="l00075"></a>00075         <span class="keywordflow">for</span>($i = 1; $i &lt;= $find[0]; $i++) <span class="comment">// обрабатываем найденных пользователей по списку</span>
-<a name="l00076"></a>00076         {
-<a name="l00077"></a>00077             $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] .= <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $find[$i][<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $find[$i][<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $find[$i][<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>; <span class="comment">// формируем список, выводя на экран отображаемое имя пользователя ввиде ссылки на профиль</span>
-<a name="l00078"></a>00078             <span class="keywordflow">if</span> ($i &lt; $find[0]) $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] .= <span class="stringliteral">&#39;, &#39;</span>; <span class="comment">// если НЕ последний пользователь, ставим после него запятую</span>
-<a name="l00079"></a>00079             <span class="keywordflow">if</span> ($i == $find[0]) $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] .= <span class="charliteral">&#39;.&#39;</span>; <span class="comment">// если последний - точку</span>
-<a name="l00080"></a>00080         }
+<a name="l00062"></a>00062 $array_data = array();
+<a name="l00063"></a>00063 <span class="keywordflow">if</span> (isset($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] == <span class="charliteral">&#39;*&#39;</span>) $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] = <span class="charliteral">&#39;%&#39;</span>;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 <span class="keywordflow">if</span>($search_user)
+<a name="l00066"></a>00066 {
+<a name="l00067"></a>00067     $find_data[<span class="stringliteral">&#39;l_search_user&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_user&#39;</span>];
+<a name="l00068"></a>00068     <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ac811dbd70f62ce6f3f2a0681b7902df8" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`real_name` LIKE \&#39;%&#39;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39;&#39;</span>))
+<a name="l00069"></a>00069     {
+<a name="l00070"></a>00070         $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;res_arr();
+<a name="l00071"></a>00071         <span class="keywordflow">if</span> ($find)
+<a name="l00072"></a>00072         {
+<a name="l00073"></a>00073             $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00074"></a>00074             <span class="keywordflow">foreach</span> ($find as $val)
+<a name="l00075"></a>00075             {
+<a name="l00076"></a>00076                 $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] .= <span class="stringliteral">&#39;, &lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $val[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $val[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $val[<span class="stringliteral">&#39;real_name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>;
+<a name="l00077"></a>00077             }
+<a name="l00078"></a>00078             <span class="keywordflow">if</span> (!empty($find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>])) $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] = substr($find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>], 2) . <span class="charliteral">&#39;.&#39;</span>;
+<a name="l00079"></a>00079         }
+<a name="l00080"></a>00080         <span class="keywordflow">else</span> $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>];
 <a name="l00081"></a>00081     }
-<a name="l00082"></a>00082     <span class="keywordflow">else</span> <span class="comment">// иначе если пользователи не найдены, то...</span>
-<a name="l00083"></a>00083     {
-<a name="l00084"></a>00084         $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>]; <span class="comment">// сообщаем об этом пользователю</span>
-<a name="l00085"></a>00085     }
-<a name="l00086"></a>00086 }
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088 <span class="keywordflow">if</span>($search_category) <span class="comment">// если включен поиск по атегориям, то...</span>
-<a name="l00089"></a>00089 {
-<a name="l00090"></a>00090     $find_data[<span class="stringliteral">&#39;l_search_category&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_category&#39;</span>]; <span class="comment">// формируем название блока - результаты поиска по разделам</span>
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092     $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT * FROM `category` WHERE `id` !=0 AND (`name` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39; OR `description` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39;)&quot;</span>); <span class="comment">// поиск разделов, в названии или описании которых встречается искомая строка (кроме пользовательских)</span>
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094     <span class="keywordflow">if</span>($find &amp;&amp; $find[0] &gt; 0) <span class="comment">// если такие разделы найдены, то формируем из них список</span>
-<a name="l00095"></a>00095     {
-<a name="l00096"></a>00096         $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// инициируем список найденных разделов</span>
-<a name="l00097"></a>00097         <span class="keywordflow">for</span>($i = 1; $i &lt;= $find[0]; $i++) <span class="comment">// обрабатываем в цикле данный список</span>
-<a name="l00098"></a>00098         {
-<a name="l00099"></a>00099             $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] .= <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=category&amp;cat=&#39;</span> . $find[$i][<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $find[$i][<span class="stringliteral">&#39;description&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $find[$i][<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>; <span class="comment">// формируем ссылку типа &quot;Название раздела&quot; и всплывающей подсказкой - описание раздела</span>
-<a name="l00100"></a>00100             <span class="keywordflow">if</span> ($i &lt; $find[0]) $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] .= <span class="stringliteral">&#39;, &#39;</span>; <span class="comment">// если раздел не последний - ставим после него запятую</span>
-<a name="l00101"></a>00101             <span class="keywordflow">if</span> ($i == $find[0]) $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] .= <span class="charliteral">&#39;.&#39;</span>; <span class="comment">// если последний - точку</span>
-<a name="l00102"></a>00102         }
-<a name="l00103"></a>00103     }
-<a name="l00104"></a>00104     <span class="keywordflow">else</span> <span class="comment">// иначе если не надйен ни один раздел, то...</span>
-<a name="l00105"></a>00105     {
-<a name="l00106"></a>00106         $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>]; <span class="comment">// сообщаем об этом порльзователю</span>
-<a name="l00107"></a>00107     }
-<a name="l00108"></a>00108 }
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110 <span class="keywordflow">if</span>($search_news) <span class="comment">// если включен поиск по новостям</span>
-<a name="l00111"></a>00111 {
-<a name="l00112"></a>00112     $find_data[<span class="stringliteral">&#39;l_search_news&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_news&#39;</span>];  <span class="comment">// формируем заголовок блока - результаты поиска по новостям</span>
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114     $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT *  FROM `news` WHERE `name_post` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39; OR `text_post` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39;&quot;</span>); <span class="comment">// делаем поиск новостей, в названии которых или тексте встречается искомая строка</span>
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116     <span class="keywordflow">if</span>($find &amp;&amp; $find[0] &gt; 0) <span class="comment">// если найдены такие новости, то формируем список новостей</span>
-<a name="l00117"></a>00117     {
-<a name="l00118"></a>00118         $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// инициируем список новостей</span>
-<a name="l00119"></a>00119         <span class="keywordflow">for</span>($i = 1; $i &lt;= $find[0]; $i++) <span class="comment">// обрабатываем найденные новости по циклу</span>
-<a name="l00120"></a>00120         {
-<a name="l00121"></a>00121             $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] .= <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=news&amp;news=&#39;</span> . $find[$i][<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . substr($find[$i][<span class="stringliteral">&#39;text_post&#39;</span>], 0, 100) . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $find[$i][<span class="stringliteral">&#39;name_post&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>; <span class="comment">// формируем ссылку типа &quot;Название новости&quot; и во всплывающей подсказке - первые 100 символов новости</span>
-<a name="l00122"></a>00122             <span class="keywordflow">if</span> ($i &lt; $find[0]) $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] .= <span class="stringliteral">&#39;, &#39;</span>; <span class="comment">// если новость не последняя - ставим запятую</span>
-<a name="l00123"></a>00123             <span class="keywordflow">if</span> ($i == $find[0]) $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] .= <span class="charliteral">&#39;.&#39;</span>; <span class="comment">// если последняя - точка</span>
-<a name="l00124"></a>00124         }
-<a name="l00125"></a>00125     }
-<a name="l00126"></a>00126     <span class="keywordflow">else</span> <span class="comment">// иначе если не надйена ни одна новость, то...</span>
-<a name="l00127"></a>00127     {
-<a name="l00128"></a>00128         $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>]; <span class="comment">// сообщаем об этом пользователю</span>
-<a name="l00129"></a>00129     }
-<a name="l00130"></a>00130 }
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132 <span class="keywordflow">if</span>($search_photo) <span class="comment">// если включен поис по изображениям</span>
-<a name="l00133"></a>00133 {
-<a name="l00134"></a>00134     $find_data[<span class="stringliteral">&#39;l_search_photo&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_photo&#39;</span>]; <span class="comment">// формируем название блока - результаты поиска по изображениям</span>
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136     $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;fetch_big_array(<span class="stringliteral">&quot;SELECT `id` FROM `photo` WHERE `name` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39; OR `description` LIKE &#39;%&quot;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&quot;%&#39;&quot;</span>); <span class="comment">// производим поиск изображений в названии или описании которых встречается искомая строка</span>
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138     <span class="keywordflow">if</span>($find &amp;&amp; $find[0] &gt; 0) <span class="comment">// если есть такие изображения, то...</span>
-<a name="l00139"></a>00139     {
-<a name="l00140"></a>00140         $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>; <span class="comment">// инициируем строку результатов поиска по изорбражениям</span>
-<a name="l00141"></a>00141         <span class="keywordflow">for</span>($i = 1; $i &lt;= $find[0]; $i++) <span class="comment">// обрабатываем в цикле найденные изображения</span>
-<a name="l00142"></a>00142         {
-<a name="l00143"></a>00143             $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] .= <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_foto(<span class="stringliteral">&#39;cat&#39;</span>, $find[$i][<span class="stringliteral">&#39;id&#39;</span>]); <span class="comment">// формируем фрагменты каждого изображения в стиле вывода изображений в разделах</span>
-<a name="l00144"></a>00144         }
-<a name="l00145"></a>00145     }
-<a name="l00146"></a>00146     <span class="keywordflow">else</span> <span class="comment">// если не найдено ни одного изображения, то...</span>
-<a name="l00147"></a>00147     {
-<a name="l00148"></a>00148         $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>]; <span class="comment">// сообщим об этом пользователю</span>
-<a name="l00149"></a>00149     }
-<a name="l00150"></a>00150 }
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152 <span class="keywordflow">if</span> (isset($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] = htmlspecialchars($_POST[<span class="stringliteral">&#39;search_text&#39;</span>], ENT_QUOTES);
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154 $array_data = array(
-<a name="l00155"></a>00155             <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_search&#39;</span>],
-<a name="l00156"></a>00156             <span class="stringliteral">&#39;L_SEARCH&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_search&#39;</span>],
-<a name="l00157"></a>00157             <span class="stringliteral">&#39;L_SEARCH_TITLE&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_title&#39;</span>],
-<a name="l00158"></a>00158             <span class="stringliteral">&#39;L_NEED_USER&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_user&#39;</span>],
-<a name="l00159"></a>00159             <span class="stringliteral">&#39;L_NEED_CATEGORY&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_category&#39;</span>],
-<a name="l00160"></a>00160             <span class="stringliteral">&#39;L_NEED_NEWS&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_news&#39;</span>],
-<a name="l00161"></a>00161             <span class="stringliteral">&#39;L_NEED_PHOTO&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_photo&#39;</span>],
-<a name="l00162"></a>00162             <span class="stringliteral">&#39;L_FIND_USER&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_user&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_user&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00163"></a>00163             <span class="stringliteral">&#39;L_FIND_CATEGORY&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_category&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_category&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00164"></a>00164             <span class="stringliteral">&#39;L_FIND_NEWS&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_news&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_news&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00165"></a>00165             <span class="stringliteral">&#39;L_FIND_PHOTO&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_photo&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_photo&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167             <span class="stringliteral">&#39;D_SEARCH_TEXT&#39;</span> =&gt; isset($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]) ? $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00168"></a>00168             <span class="stringliteral">&#39;D_NEED_USER&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;user&#39;</span>]) ? $check[<span class="stringliteral">&#39;user&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00169"></a>00169             <span class="stringliteral">&#39;D_NEED_CATEGORY&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;category&#39;</span>]) ? $check[<span class="stringliteral">&#39;category&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00170"></a>00170             <span class="stringliteral">&#39;D_NEED_NEWS&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;news&#39;</span>]) ? $check[<span class="stringliteral">&#39;news&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00171"></a>00171             <span class="stringliteral">&#39;D_NEED_PHOTO&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;photo&#39;</span>]) ? $check[<span class="stringliteral">&#39;photo&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00172"></a>00172             <span class="stringliteral">&#39;D_FIND_USER&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00173"></a>00173             <span class="stringliteral">&#39;D_FIND_CATEGORY&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00174"></a>00174             <span class="stringliteral">&#39;D_FIND_NEWS&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00175"></a>00175             <span class="stringliteral">&#39;D_FIND_PHOTO&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177             <span class="stringliteral">&#39;IF_NEED_USER&#39;</span> =&gt; $search_user,
-<a name="l00178"></a>00178             <span class="stringliteral">&#39;IF_NEED_CATEGORY&#39;</span> =&gt; $search_category,
-<a name="l00179"></a>00179             <span class="stringliteral">&#39;IF_NEED_NEWS&#39;</span> =&gt; $search_news,
-<a name="l00180"></a>00180             <span class="stringliteral">&#39;IF_NEED_PHOTO&#39;</span> =&gt; $search_photo,
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182             <span class="stringliteral">&#39;U_SEARCH&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=search&#39;</span>
-<a name="l00183"></a>00183 ); <span class="comment">// наполняем массив данными для замены по шаблону, используя ранее полученные данные</span>
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186 echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template(<span class="stringliteral">&#39;search&#39;</span>, $lang[<span class="stringliteral">&#39;main_search&#39;</span>], <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;search.tpl&#39;</span>, $array_data)); <span class="comment">// выводим сформированную страницу</span>
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188 ?&gt;
+<a name="l00082"></a>00082     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085 <span class="keywordflow">if</span>($search_category)
+<a name="l00086"></a>00086 {
+<a name="l00087"></a>00087     $find_data[<span class="stringliteral">&#39;l_search_category&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_category&#39;</span>];
+<a name="l00088"></a>00088     <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#ae5c881fcbea289fdb9c3495f6f987324" title="Таблица с списком категорий на сервере">TBL_CATEGORY</a>, <span class="stringliteral">&#39;`id` != 0 AND (`name` LIKE \&#39;%&#39;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39; OR `description` LIKE \&#39;%&#39;</span>. $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39;)&#39;</span>))
+<a name="l00089"></a>00089     {
+<a name="l00090"></a>00090         $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;res_arr();
+<a name="l00091"></a>00091         <span class="keywordflow">if</span> ($find)
+<a name="l00092"></a>00092         {
+<a name="l00093"></a>00093             $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00094"></a>00094             <span class="keywordflow">foreach</span> ($find as $val)
+<a name="l00095"></a>00095             {
+<a name="l00096"></a>00096                 $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] .= <span class="stringliteral">&#39;, &lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=category&amp;cat=&#39;</span> . $val[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . $val[<span class="stringliteral">&#39;description&#39;</span>] . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $val[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>;
+<a name="l00097"></a>00097             }
+<a name="l00098"></a>00098             <span class="keywordflow">if</span> (!empty($find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>])) $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] = substr($find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>], 2) . <span class="charliteral">&#39;.&#39;</span>;
+<a name="l00099"></a>00099         }
+<a name="l00100"></a>00100         <span class="keywordflow">else</span> $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>];
+<a name="l00101"></a>00101     }
+<a name="l00102"></a>00102     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00103"></a>00103 }
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 <span class="keywordflow">if</span>($search_news)
+<a name="l00106"></a>00106 {
+<a name="l00107"></a>00107     $find_data[<span class="stringliteral">&#39;l_search_news&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_news&#39;</span>];
+<a name="l00108"></a>00108     <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;select(<span class="charliteral">&#39;*&#39;</span>, <a class="code" href="common_8php.html#a4bb6d1a24b360e104b6b090496b48b62" title="Таблица с новостями">TBL_NEWS</a>, <span class="stringliteral">&#39;`name_post` LIKE \&#39;%&#39;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39; OR `text_post` LIKE \&#39;%&#39;</span>. $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39;&#39;</span>))
+<a name="l00109"></a>00109     {
+<a name="l00110"></a>00110         $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;res_arr();
+<a name="l00111"></a>00111         <span class="keywordflow">if</span> ($find)
+<a name="l00112"></a>00112         {
+<a name="l00113"></a>00113             $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00114"></a>00114             <span class="keywordflow">foreach</span> ($find as $val)
+<a name="l00115"></a>00115             {
+<a name="l00116"></a>00116                 $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] .= <span class="stringliteral">&#39;, &lt;a href=&quot;&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=news&amp;news=&#39;</span> . $val[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&#39;&quot; title=&quot;&#39;</span> . substr(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;clean_field($val[<span class="stringliteral">&#39;text_post&#39;</span>]), 0, 100) . <span class="stringliteral">&#39;...&quot;&gt;&#39;</span> . $val[<span class="stringliteral">&#39;name_post&#39;</span>] . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>;
+<a name="l00117"></a>00117             }
+<a name="l00118"></a>00118             <span class="keywordflow">if</span> (!empty($find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>])) $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] = substr($find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>], 2) . <span class="charliteral">&#39;.&#39;</span>;
+<a name="l00119"></a>00119         }
+<a name="l00120"></a>00120         <span class="keywordflow">else</span> $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>];
+<a name="l00121"></a>00121     }
+<a name="l00122"></a>00122     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00123"></a>00123 }
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125 <span class="keywordflow">if</span>($search_photo)
+<a name="l00126"></a>00126 {
+<a name="l00127"></a>00127     $find_data[<span class="stringliteral">&#39;l_search_photo&#39;</span>] = $lang[<span class="stringliteral">&#39;search_find&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $lang[<span class="stringliteral">&#39;search_need_photo&#39;</span>];
+<a name="l00128"></a>00128     <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;select(<span class="stringliteral">&#39;id&#39;</span>, <a class="code" href="common_8php.html#a858e12513cad1cedad27b1fbf7219c6b" title="Таблица с списком фотографий на сервере">TBL_PHOTO</a>, <span class="stringliteral">&#39;`name` LIKE \&#39;%&#39;</span> . $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39; OR `description` LIKE \&#39;%&#39;</span>. $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] . <span class="stringliteral">&#39;%\&#39;&#39;</span>))
+<a name="l00129"></a>00129     {
+<a name="l00130"></a>00130         $find = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;res_arr();
+<a name="l00131"></a>00131         <span class="keywordflow">if</span> ($find)
+<a name="l00132"></a>00132         {
+<a name="l00133"></a>00133             $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] = <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00134"></a>00134             <span class="keywordflow">foreach</span> ($find as $val)
+<a name="l00135"></a>00135             {
+<a name="l00136"></a>00136                 $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] .= <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_foto(<span class="stringliteral">&#39;cat&#39;</span>, $val[<span class="stringliteral">&#39;id&#39;</span>]);
+<a name="l00137"></a>00137             }
+<a name="l00138"></a>00138             <span class="keywordflow">if</span> (empty($find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>])) $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>];
+<a name="l00139"></a>00139         }
+<a name="l00140"></a>00140         <span class="keywordflow">else</span> $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] = $lang[<span class="stringliteral">&#39;search_no_find&#39;</span>];
+<a name="l00141"></a>00141     }
+<a name="l00142"></a>00142     <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;error, <a class="code" href="common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);
+<a name="l00143"></a>00143 }
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 <span class="keywordflow">if</span> (isset($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]) &amp;&amp; $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] == <span class="charliteral">&#39;%&#39;</span>) $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] = <span class="charliteral">&#39;*&#39;</span>;
+<a name="l00146"></a>00146 <span class="keywordflow">if</span> (isset($_POST[<span class="stringliteral">&#39;search_text&#39;</span>])) $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] = htmlspecialchars($_POST[<span class="stringliteral">&#39;search_text&#39;</span>], ENT_QUOTES);
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148 $array_data = array(
+<a name="l00149"></a>00149             <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_search&#39;</span>],
+<a name="l00150"></a>00150             <span class="stringliteral">&#39;L_SEARCH&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_search&#39;</span>],
+<a name="l00151"></a>00151             <span class="stringliteral">&#39;L_SEARCH_TITLE&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_title&#39;</span>],
+<a name="l00152"></a>00152             <span class="stringliteral">&#39;L_NEED_USER&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_user&#39;</span>],
+<a name="l00153"></a>00153             <span class="stringliteral">&#39;L_NEED_CATEGORY&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_category&#39;</span>],
+<a name="l00154"></a>00154             <span class="stringliteral">&#39;L_NEED_NEWS&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_news&#39;</span>],
+<a name="l00155"></a>00155             <span class="stringliteral">&#39;L_NEED_PHOTO&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;search_need_photo&#39;</span>],
+<a name="l00156"></a>00156             <span class="stringliteral">&#39;L_FIND_USER&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_user&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_user&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00157"></a>00157             <span class="stringliteral">&#39;L_FIND_CATEGORY&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_category&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_category&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00158"></a>00158             <span class="stringliteral">&#39;L_FIND_NEWS&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_news&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_news&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00159"></a>00159             <span class="stringliteral">&#39;L_FIND_PHOTO&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;l_search_photo&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;l_search_photo&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161             <span class="stringliteral">&#39;D_SEARCH_TEXT&#39;</span> =&gt; isset($_POST[<span class="stringliteral">&#39;search_text&#39;</span>]) ? $_POST[<span class="stringliteral">&#39;search_text&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00162"></a>00162             <span class="stringliteral">&#39;D_NEED_USER&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;user&#39;</span>]) ? $check[<span class="stringliteral">&#39;user&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00163"></a>00163             <span class="stringliteral">&#39;D_NEED_CATEGORY&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;category&#39;</span>]) ? $check[<span class="stringliteral">&#39;category&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00164"></a>00164             <span class="stringliteral">&#39;D_NEED_NEWS&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;news&#39;</span>]) ? $check[<span class="stringliteral">&#39;news&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00165"></a>00165             <span class="stringliteral">&#39;D_NEED_PHOTO&#39;</span> =&gt; isset($check[<span class="stringliteral">&#39;photo&#39;</span>]) ? $check[<span class="stringliteral">&#39;photo&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00166"></a>00166             <span class="stringliteral">&#39;D_FIND_USER&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_user&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00167"></a>00167             <span class="stringliteral">&#39;D_FIND_CATEGORY&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_category&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00168"></a>00168             <span class="stringliteral">&#39;D_FIND_NEWS&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_news&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00169"></a>00169             <span class="stringliteral">&#39;D_FIND_PHOTO&#39;</span> =&gt; isset($find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>]) ? $find_data[<span class="stringliteral">&#39;d_search_photo&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>,
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171             <span class="stringliteral">&#39;IF_NEED_USER&#39;</span> =&gt; $search_user,
+<a name="l00172"></a>00172             <span class="stringliteral">&#39;IF_NEED_CATEGORY&#39;</span> =&gt; $search_category,
+<a name="l00173"></a>00173             <span class="stringliteral">&#39;IF_NEED_NEWS&#39;</span> =&gt; $search_news,
+<a name="l00174"></a>00174             <span class="stringliteral">&#39;IF_NEED_PHOTO&#39;</span> =&gt; $search_photo,
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176             <span class="stringliteral">&#39;U_SEARCH&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=search&#39;</span>
+<a name="l00177"></a>00177 );
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179 echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template(<span class="stringliteral">&#39;search&#39;</span>, $lang[<span class="stringliteral">&#39;main_search&#39;</span>], <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;search.tpl&#39;</span>, $array_data));
+<a name="l00180"></a>00180 ?&gt;
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->

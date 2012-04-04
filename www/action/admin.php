@@ -68,8 +68,8 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 			{
 				if ($work->config[$name] !== $value)
 				{
-					if ($db2->update(array('value' => $value), TBL_CONFIG, '`name` = \'' . $name . '\'')) $work->config[$name] = $value;
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					if ($db->update(array('value' => $value), TBL_CONFIG, '`name` = \'' . $name . '\'')) $work->config[$name] = $value;
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 			}
 		}
@@ -206,9 +206,9 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 
 		if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && mb_ereg('^[0-9]+$', $_REQUEST['uid'])) // если был передан идентификатор пользователя для редактирования, то...
 		{
-			if ($db2->select('*', TBL_USERS, '`id` = ' . $_REQUEST['uid']))
+			if ($db->select('*', TBL_USERS, '`id` = ' . $_REQUEST['uid']))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']))
@@ -217,9 +217,9 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						{
 							$query['group'] = $_POST['group'];
 							$new_temp = $temp;
-							if ($db2->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
+							if ($db->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
 							{
-								$temp_group = $db2->res_row();
+								$temp_group = $db->res_row();
 								if ($temp_group)
 								{
 									foreach ($temp_group as $key => $value)
@@ -230,12 +230,12 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 											$new_temp[$key] = $value;
 										}
 									}
-									if ($db2->update($query, TBL_USERS, '`id` = ' . $_REQUEST['uid'])) $temp = $new_temp;
-									else log_in_file($db2->error, DIE_IF_ERROR);
+									if ($db->update($query, TBL_USERS, '`id` = ' . $_REQUEST['uid'])) $temp = $new_temp;
+									else log_in_file($db->error, DIE_IF_ERROR);
 								}
 								else log_in_file('Unable to get the group', DIE_IF_ERROR);
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 						else
 						{
@@ -247,17 +247,17 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 									else $_POST[$key] = '0';
 									if ($_POST[$key] != $value)
 									{
-										if ($db2->update(array($key => $_POST[$key]), TBL_USERS, '`id` = ' . $_REQUEST['uid'])) $temp[$key] = $_POST[$key];
-										else log_in_file($db2->error, DIE_IF_ERROR);
+										if ($db->update(array($key => $_POST[$key]), TBL_USERS, '`id` = ' . $_REQUEST['uid'])) $temp[$key] = $_POST[$key];
+										else log_in_file($db->error, DIE_IF_ERROR);
 									}
 								}
 							}
 						}
 					}
 
-					if ($db2->select('*', TBL_GROUP, '`id` !=0'))
+					if ($db->select('*', TBL_GROUP, '`id` !=0'))
 					{
-						$group = $db2->res_arr();
+						$group = $db->res_arr();
 						if ($group)
 						{
 							$select_group = '<select name="group">';
@@ -298,11 +298,11 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						}
 						else log_in_file('Unable to get the group', DIE_IF_ERROR);
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 				else log_in_file('Unable to get the user', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
@@ -310,9 +310,9 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 			{
 				if ($_POST['search_user'] == '*') $_POST['search_user'] = '%';
 
-				if ($db2->select('*', TBL_USERS, '`real_name` LIKE \'%' . $_POST['search_user'] . '%\''))
+				if ($db->select('*', TBL_USERS, '`real_name` LIKE \'%' . $_POST['search_user'] . '%\''))
 				{
-					$find = $db2->res_arr();
+					$find = $db->res_arr();
 					if ($find)
 					{
 						$find_data = '';
@@ -324,7 +324,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 					}
 					else $find_data = $lang['admin_no_find_user'];
 				}
-				else log_in_file($db2->error, DIE_IF_ERROR);
+				else log_in_file($db->error, DIE_IF_ERROR);
 
 				$array_data = array_merge ($array_data, array (
 							'D_FIND_USER' => $find_data,
@@ -360,15 +360,15 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 
 		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group'])))
 		{
-			if ($db2->select('*', TBL_GROUP, '`id` = ' . $_POST['id_group']))
+			if ($db->select('*', TBL_GROUP, '`id` = ' . $_POST['id_group']))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					if(isset($_POST['name_group']) && !empty($_POST['name_group']) && $_POST['name_group'] != $temp['name'])
 					{
-						if ($db2->update(array('name' => $_POST['name_group']), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp['name'] = $_POST['name_group'];
-						else log_in_file($db2->error, DIE_IF_ERROR);
+						if ($db->update(array('name' => $_POST['name_group']), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp['name'] = $_POST['name_group'];
+						else log_in_file($db->error, DIE_IF_ERROR);
 					}
 					foreach ($temp as $key => $value)
 					{
@@ -378,8 +378,8 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 							else $_POST[$key] = '0';
 							if ($_POST[$key] != $value)
 							{
-								if ($db2->update(array($key => $_POST[$key]), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp[$key] = $_POST[$key];
-								else log_in_file($db2->error, DIE_IF_ERROR);
+								if ($db->update(array($key => $_POST[$key]), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp[$key] = $_POST[$key];
+								else log_in_file($db->error, DIE_IF_ERROR);
 							}
 						}
 					}
@@ -387,14 +387,14 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 				}
 				else log_in_file('Unable to get the group', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
 		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && mb_ereg('^[0-9]+$', $_POST['group']))
 		{
-			if ($db2->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
+			if ($db->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					foreach ($temp as $key => $value)
@@ -418,13 +418,13 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 				}
 				else log_in_file('Unable to get the group', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			if ($db2->select('*', TBL_GROUP))
+			if ($db->select('*', TBL_GROUP))
 			{
-				$group = $db2->res_arr();
+				$group = $db->res_arr();
 				if ($group)
 				{
 					$select_group = '<select name="group">';
@@ -443,7 +443,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 				}
 				else log_in_file('Unable to get the group', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
 		$act = '';

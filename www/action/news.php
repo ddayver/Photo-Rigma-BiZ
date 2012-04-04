@@ -24,12 +24,12 @@ if(!isset($_REQUEST['news']) || empty($_REQUEST['news']) || !(mb_ereg('^[0-9]+$'
 else
 {
 	$news = $_REQUEST['news'];
-	if ($db2->select('*', TBL_NEWS, '`id` = ' . $news))
+	if ($db->select('*', TBL_NEWS, '`id` = ' . $news))
 	{
-		$temp = $db2->res_row();
+		$temp = $db->res_row();
 		if (!$temp) $news = false;
 	}
-	else log_in_file($db2->error, DIE_IF_ERROR);
+	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
 if(isset($_REQUEST['subact']) && !empty($_REQUEST['subact'])) $subact = $_REQUEST['subact'];
@@ -51,11 +51,8 @@ if ($subact == 'save')
 			$query_news['user_post'] = $user->user['id'];
 			$query_news['name_post'] = $_POST['name_post'];
 			$query_news['text_post'] = trim($_POST['text_post']);
-			if ($db2->insert($query_news, TBL_NEWS))
-			{
-				$news = $db2->insert_id;
-			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			if ($db->insert($query_news, TBL_NEWS)) $news = $db->insert_id;
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 	elseif ($news !== false && $user->user['news_moderate'] == true)
@@ -88,7 +85,7 @@ if ($subact == 'save')
 			$query_news['data_last_edit'] = date('Y-m-d H:m:s');
 			$query_news['name_post'] = $name_post;
 			$query_news['text_post'] = $text_post;
-			if (!$db2->update($query_news, TBL_NEWS, '`id` = ' . $news)) log_in_file($db2->error, DIE_IF_ERROR);
+			if (!$db->update($query_news, TBL_NEWS, '`id` = ' . $news)) log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 	else $news = false;
@@ -98,18 +95,18 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
 {
 	$title = $lang['main_edit_news'];
 
-	if ($db2->select('*', TBL_NEWS, '`id` = ' . $news))
+	if ($db->select('*', TBL_NEWS, '`id` = ' . $news))
 	{
-		$temp = $db2->res_row();
+		$temp = $db->res_row();
 		if ($temp)
 		{
-			if ($db2->select('real_name', TBL_USERS, '`id` = ' . $temp['user_post']))
+			if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp['user_post']))
 			{
-				$user_add = $db2->res_row();
+				$user_add = $db->res_row();
 				if ($user_add) $name_user = '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
 				else $name_user = $lang['main_no_user_add'];
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 			$array_data = array();
 			$array_data = array(
 						'NAME_BLOCK' => $lang['main_edit_news'] . ' - ' . $temp['name_post'],
@@ -130,7 +127,7 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
 		}
 		else log_in_file('Unable to get the news', DIE_IF_ERROR);
 	}
-	else log_in_file($db2->error, DIE_IF_ERROR);
+	else log_in_file($db->error, DIE_IF_ERROR);
 }
 elseif ($subact == 'delete' && $news !== false && ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $temp['user_post'])))
 {
@@ -138,7 +135,7 @@ elseif ($subact == 'delete' && $news !== false && ($user->user['news_moderate'] 
 	else $redirect_url = $work->config['site_url'];
 	$redirect_time = 5;
 	$redirect_message = $lang['news_title'] . ' ' . $temp['name_post'] . ' ' . $lang['news_del_post'];
-	if (!$db2->delete(TBL_NEWS, '`id` = ' . $news)) log_in_file($db2->error, DIE_IF_ERROR);
+	if (!$db->delete(TBL_NEWS, '`id` = ' . $news)) log_in_file($db->error, DIE_IF_ERROR);
 }
 elseif ($subact == 'add' && $news === false && $user->user['news_add'] == true)
 {
@@ -175,22 +172,22 @@ else
 		if (!isset($_REQUEST['y']) || empty($_REQUEST['y']) || !mb_ereg('^[0-9]{4}$', $_REQUEST['y']))
 		{
 			$act = 'news';
-			if ($db2->select('DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`', TBL_NEWS, false, array('data_last_edit' => 'up')))
+			if ($db->select('DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`', TBL_NEWS, false, array('data_last_edit' => 'up')))
 			{
-				$temp = $db2->res_arr();
+				$temp = $db->res_arr();
 				if (!$temp) $main_block = $template->template_news($work->config['last_news']);
 				else
 				{
 					$spisok = '<br />';
 					foreach ($temp as $val)
 					{
-						if ($db2->select('COUNT(*) as `count_news`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $val['year'] . '\''))
+						if ($db->select('COUNT(*) as `count_news`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $val['year'] . '\''))
 						{
-							$temp2 = $db2->res_row();
+							$temp2 = $db->res_row();
 							if (isset($temp2['count_news'])) $temp2 = $temp2['count_news'];
 							else $temp2 = 0;
 						}
-						else log_in_file($db2->error, DIE_IF_ERROR);
+						else log_in_file($db->error, DIE_IF_ERROR);
 						$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&y=' . $val['year'] . '" title="' . $val['year'] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $val['year'] . ' (' . $temp2 . ')</a><br /><br />';
 					}
 					$array_data = array();
@@ -206,7 +203,7 @@ else
 					$title = $lang['news_news'] . ' ' . $lang['news_on_years'];
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
@@ -214,22 +211,22 @@ else
 			if (!isset($_REQUEST['m']) || empty($_REQUEST['m']) || !mb_ereg('^[0-9]{2}$', $_REQUEST['m']))
 			{
 				$act = '';
-				if ($db2->select('DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\'', array('data_last_edit' => 'up')))
+				if ($db->select('DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\'', array('data_last_edit' => 'up')))
 				{
-					$temp = $db2->res_arr();
+					$temp = $db->res_arr();
 					if (!$temp) $main_block = $template->template_news($work->config['last_news']);
 					else
 					{
 						$spisok = '<br />';
 						foreach ($temp as $val)
 						{
-							if ($db2->select('COUNT(*) as `count_news`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\' AND DATE_FORMAT(`data_last_edit`, \'%m\') = \'' . $val['month'] . '\''))
+							if ($db->select('COUNT(*) as `count_news`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\' AND DATE_FORMAT(`data_last_edit`, \'%m\') = \'' . $val['month'] . '\''))
 							{
-								$temp2 = $db2->res_row();
+								$temp2 = $db->res_row();
 								if (isset($temp2['count_news'])) $temp2 = $temp2['count_news'];
 								else $temp2 = 0;
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 							$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&y=' . $year . '&m=' . $val['month'] . '" title="' . $lang['news'][$val['month']] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $lang['news'][$val['month']] . ' (' . $temp2 . ')</a><br />';
 						}
 						$array_data = array();
@@ -245,15 +242,15 @@ else
 						$title = $lang['news_news'] . ' ' . $lang['news_on'] . ' ' . $year. ' ' . $lang['news_on_month'];
 					}
 				}
-				else log_in_file($db2->error, DIE_IF_ERROR);
+				else log_in_file($db->error, DIE_IF_ERROR);
 			}
 			else
 			{
 				$month = $_REQUEST['m'];
 				$act = '';
-				if ($db2->select('*', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\' AND DATE_FORMAT(`data_last_edit`, \'%m\') = \'' . $month . '\'', array('data_last_edit' => 'up')))
+				if ($db->select('*', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\' AND DATE_FORMAT(`data_last_edit`, \'%m\') = \'' . $month . '\'', array('data_last_edit' => 'up')))
 				{
-					$temp = $db2->res_arr();
+					$temp = $db->res_arr();
 					if (!$temp) $main_block = $template->template_news($work->config['last_news']);
 					else
 					{
@@ -275,7 +272,7 @@ else
 						$title = $lang['news_news'] . ' ' . $lang['news_on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news_years'];
 					}
 				}
-				else log_in_file($db2->error, DIE_IF_ERROR);
+				else log_in_file($db->error, DIE_IF_ERROR);
 			}
 		}
 	}

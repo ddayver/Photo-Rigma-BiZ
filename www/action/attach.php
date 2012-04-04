@@ -21,14 +21,14 @@ if (!isset($_REQUEST['foto']) || empty($_REQUEST['foto']) || $user->user['pic_vi
 }
 else
 {
-	if ($db2->select('*', TBL_PHOTO, '`id` = ' . $_REQUEST['foto']))
+	if ($db->select('*', TBL_PHOTO, '`id` = ' . $_REQUEST['foto']))
 	{
-		$temp_foto = $db2->res_row();
+		$temp_foto = $db->res_row();
 		if ($temp_foto)
 		{
-			if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
+			if ($db->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
 			{
-				$temp_category = $db2->res_row();
+				$temp_category = $db->res_row();
 				if ($temp_category)
 				{
 					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
@@ -41,7 +41,7 @@ else
 					$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_foto['file'];
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
@@ -50,7 +50,7 @@ else
 			$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_foto['file'];
 		}
 	}
-	else log_in_file($db2->error, DIE_IF_ERROR);
+	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
 if(!@fopen($temp_path, 'r')) // проверяем доступность файла с изображением, если файл недоступен, то...

@@ -21,8 +21,7 @@ include_once ($config['inc_dir'] . 'db.php');
 * @brief Создание объекта класса db для работы с основной БД
 * @see ::$config, db
 */
-$db = new db_old($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
-$db2 = new db($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
+$db = new db($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
 
 include_once ($config['inc_dir'] . 'common.php');
 

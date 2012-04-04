@@ -29,15 +29,15 @@ class work
 	*/
 	function work()
 	{
-		global $db2, $config;
+		global $db, $config;
 		unset($config['dbpass']);
 		$this->config = $config;
 
 		$this->array_rules = array('http_', '_server', 'delete%20', 'delete ', 'delete-', 'delete(', '(delete',  'drop%20', 'drop ', 'create%20', 'update-', 'update(', '(update', 'insert-', 'insert(', '(insert', 'create ', 'create(', 'create-', '(create', 'update%20', 'update ', 'insert%20', 'insert ', 'select%20', 'select ', 'bulk%20', 'bulk ', 'union%20', 'union ', 'select-', 'select(', '(select', 'union-', '(union', 'union(', 'or%20', 'or ', 'and%20', 'and ', 'exec', '@@', '%22', '"', 'openquery', 'openrowset', 'msdasql', 'sqloledb', 'sysobjects', 'syscolums',  'syslogins', 'sysxlogins', 'char%20', 'char ', 'into%20', 'into ', 'load%20', 'load ', 'msys', 'alert%20', 'alert ', 'eval%20', 'eval ', 'onkeyup', 'x5cx', 'fromcharcode', 'javascript:', 'javascript.', 'vbscript:', 'vbscript.', 'http-equiv', '->', 'expression%20', 'expression ', 'url%20', 'url ', 'innerhtml', 'document.', 'dynsrc', 'jsessionid', 'style%20', 'style ', 'phpsessid', '<applet', '<div', '<emded', '<iframe', '<img', '<meta', '<object', '<script', '<textarea', 'onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'ondragdrop', 'onerror',  'onfocus', 'onkeydown', 'onkeypress', 'onload', 'onmouse', 'onmove', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload', 'onreadystatechange', 'xmlhttp', 'uname%20', 'uname ',  '%2C', 'union+', 'select+', 'delete+', 'create+', 'bulk+', 'or+', 'and+', 'into+', 'kill+', '+echr', '+chr', 'cmd+', '+1', 'user_password', 'id%20', 'id ', 'ls%20', 'ls ', 'cat%20', 'cat ', 'rm%20', 'rm ', 'kill%20', 'kill ', 'mail%20', 'mail ', 'wget%20', 'wget ', 'wget(', 'pwd%20', 'pwd ', 'objectclass', 'objectcategory', '<!-%20', '<!- ', 'total%20', 'total ', 'http%20request', 'http request', 'phpb8b4f2a0', 'phpinfo', 'php:', 'globals', '%2527', '%27', '\'', 'chr(', 'chr=', 'chr%20', 'chr ', '%20chr', ' chr', 'cmd=', 'cmd%20', 'cmd', '%20cmd', ' cmd', 'rush=', '%20rush', ' rush', 'rush%20', 'rush ', 'union%20', 'union ', '%20union', ' union', 'union(', 'union=', '%20echr', ' echr', 'esystem', 'cp%20', 'cp ', 'cp(', '%20cp', ' cp', 'mdir%20', 'mdir ', '%20mdir', ' mdir', 'mdir(', 'mcd%20', 'mcd ', 'mrd%20', 'mrd ', 'rm%20', 'rm ', '%20mcd', ' mcd', '%20mrd', ' mrd', '%20rm', ' rm', 'mcd(', 'mrd(', 'rm(', 'mcd=', 'mrd=', 'mv%20', 'mv ', 'rmdir%20', 'rmdir ', 'mv(', 'rmdir(', 'chmod(', 'chmod%20', 'chmod ', 'cc%20', 'cc ', '%20chmod', ' chmod', 'chmod(', 'chmod=', 'chown%20', 'chown ', 'chgrp%20', 'chgrp ', 'chown(', 'chgrp(', 'locate%20', 'locate ', 'grep%20', 'grep ', 'locate(', 'grep(', 'diff%20', 'diff ', 'kill%20', 'kill ', 'kill(', 'killall', 'passwd%20', 'passwd ', '%20passwd', ' passwd', 'passwd(', 'telnet%20', 'telnet ', 'vi(', 'vi%20', 'vi ', 'nigga(', '%20nigga', ' nigga', 'nigga%20', 'nigga ', 'fopen', 'fwrite', '%20like', ' like', 'like%20', 'like ', '$_', '$get', '.system', 'http_php', '%20getenv', ' getenv', 'getenv%20', 'getenv ', 'new_password', '/password', 'etc/', '/groups', '/gshadow', 'http_user_agent', 'http_host', 'bin/', 'wget%20', 'wget ', 'uname%5c', 'uname', 'usr', '/chgrp', '=chown', 'usr/bin', 'g%5c', 'g\\', 'bin/python', 'bin/tclsh', 'bin/nasm', 'perl%20', 'perl ', '.pl', 'traceroute%20', 'traceroute ', 'tracert%20', 'tracert ', 'ping%20', 'ping ', '/usr/x11r6/bin/xterm', 'lsof%20', 'lsof ', '/mail', '.conf', 'motd%20', 'motd ', 'http/1.', '.inc.php', 'config.php', 'cgi-', '.eml', 'file%5c://', 'file\:', 'file://', 'window.open', 'img src', 'img%20src', 'img src', '.jsp', 'ftp.', 'xp_enumdsn', 'xp_availablemedia', 'xp_filelist', 'nc.exe', '.htpasswd', 'servlet', '/etc/passwd', '/etc/shadow', 'wwwacl', '~root', '~ftp', '.js', '.jsp', '.history', 'bash_history', '~nobody', 'server-info', 'server-status', '%20reboot', ' reboot', '%20halt', ' halt', '%20powerdown', ' powerdown', '/home/ftp', '=reboot', 'www/', 'init%20', 'init ','=halt', '=powerdown', 'ereg(', 'secure_site', 'chunked', 'org.apache', '/servlet/con', '/robot', 'mod_gzip_status', '.inc', '.system', 'getenv', 'http_', '_php', 'php_', 'phpinfo()', '<?php', '?>', '%3C%3Fphp', '%3F>', 'sql=', '_global', 'global_', 'global[', '_server', 'server_', 'server[', '/modules', 'modules/', 'phpadmin', 'root_path', '_globals', 'globals_', 'globals[', 'iso-8859-1', '?hl=', '%3fhl=', '.exe', '.sh', '%00', rawurldecode('%00'), '_env', '/*', '\\*');
 
-		if ($db2->select('*', TBL_CONFIG))
+		if ($db->select('*', TBL_CONFIG))
 		{
-			$result = $db2->res_arr();
+			$result = $db->res_arr();
 			if ($result)
 			{
 				foreach ($result as $tmp)
@@ -50,7 +50,7 @@ class work
 				log_in_file('Unable to get the settings', DIE_IF_ERROR);
 			}
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 		mb_regex_encoding ('UTF-8');
 	}
 
@@ -338,20 +338,20 @@ class work
 	*/
 	function category($cat_id = 0, $user_flag = 0)
 	{
-		global $db2, $lang, $user, $template;
+		global $db, $lang, $user, $template;
 
 		$photo = array();
 
 		if($user_flag == 1)
 		{
-			if ($db2->select(array('id', 'name'), TBL_CATEGORY, '`id` = 0'))
+			if ($db->select(array('id', 'name'), TBL_CATEGORY, '`id` = 0'))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
-					if ($db2->select('real_name', TBL_USERS, '`id` = ' . $cat_id))
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $cat_id))
 					{
-						$temp2 = $db2->res_row();
+						$temp2 = $db->res_row();
 						if ($temp2)
 						{
 							$add_query = ' AND `user_upload` = ' . $cat_id;
@@ -360,33 +360,33 @@ class work
 						}
 						else log_in_file('Unable to get the user', DIE_IF_ERROR);
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 				else log_in_file('Unable to get the category', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			if ($db2->select(array('id', 'name', 'description'), TBL_CATEGORY, '`id` = ' . $cat_id))
+			if ($db->select(array('id', 'name', 'description'), TBL_CATEGORY, '`id` = ' . $cat_id))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp) $add_query = '';
 				else log_in_file('Unable to get the category', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		$array_data = array(); // инициируем массив
 
-		if ($db2->select('COUNT(*) AS `num_photo`', TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query))
+		if ($db->select('COUNT(*) AS `num_photo`', TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query))
 		{
-			$temp_photo = $db2->res_row();
+			$temp_photo = $db->res_row();
 			if ($temp_photo)
 			{
-				if ($db2->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query, array('date_upload' => 'down'), false, 1)) $temp_last = $db2->res_row();
-				else log_in_file($db2->error, DIE_IF_ERROR);
-				if ($db2->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query . ' AND `rate_user` != 0', array('rate_user' => 'down'), false, 1)) $temp_top = $db2->res_row();
-				else log_in_file($db2->error, DIE_IF_ERROR);
+				if ($db->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query, array('date_upload' => 'down'), false, 1)) $temp_last = $db->res_row();
+				else log_in_file($db->error, DIE_IF_ERROR);
+				if ($db->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query . ' AND `rate_user` != 0', array('rate_user' => 'down'), false, 1)) $temp_top = $db->res_row();
+				else log_in_file($db->error, DIE_IF_ERROR);
 				$photo['count'] = $temp_photo['num_photo'];
 			}
 			else
@@ -397,7 +397,7 @@ class work
 				$photo['count'] = 0;
 			}
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$photo['last_name'] = $lang['main_no_foto'];
 		$photo['last_url'] = $this->config['site_url'] . '?action=photo&id=0';
@@ -419,14 +419,14 @@ class work
 
 		if($cat_id == 0)
 		{
-			if ($db2->select('COUNT(DISTINCT `user_upload`) AS `num_user_upload`', TBL_PHOTO, '`category` = 0'))
+			if ($db->select('COUNT(DISTINCT `user_upload`) AS `num_user_upload`', TBL_PHOTO, '`category` = 0'))
 			{
-				$temp_user = $db2->res_row();
+				$temp_user = $db->res_row();
 				$temp['id'] = 'user';
 				if ($temp_user) $temp['name'] .= ' (' . $lang['category_count_user_category'] . ': ' . $temp_user['num_user_upload'] . ')';
 				else $temp['name'] .= '<br />(' . $lang['category_no_user_category'] . ')';
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
 		if($user_flag == 1) $temp['id'] = 'user&id=' . $cat_id;
@@ -454,40 +454,40 @@ class work
 	*/
 	function del_photo($photo_id)
 	{
-		global $db2;
+		global $db;
 
 		if (mb_ereg('^[0-9]+$', $photo_id))
 		{
-			if ($db2->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
+			if ($db->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
 			{
-				$temp_photo = $db2->res_row();
+				$temp_photo = $db->res_row();
 				if ($temp_photo)
 				{
-					if ($db2->select('*', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
+					if ($db->select('*', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
 					{
-						$temp_category = $db2->res_row();
+						$temp_category = $db->res_row();
 						if ($temp_category)
 						{
 							$path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
 							$path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
-							if ($db2->delete(TBL_PHOTO, '`id` = ' . $photo_id))
+							if ($db->delete(TBL_PHOTO, '`id` = ' . $photo_id))
 							{
-								if ($db2->aff_rows == 1)
+								if ($db->aff_rows == 1)
 								{
 									@unlink($path_thumbnail);
 									@unlink($path_photo);
-									if (!$db2->delete(TBL_RATE_USER, '`id_foto` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
-									if (!$db2->delete(TBL_RATE_MODER, '`id_foto` = ' . $photo_id)) log_in_file($db2->error, DIE_IF_ERROR);
+									if (!$db->delete(TBL_RATE_USER, '`id_foto` = ' . $photo_id)) log_in_file($db->error, DIE_IF_ERROR);
+									if (!$db->delete(TBL_RATE_MODER, '`id_foto` = ' . $photo_id)) log_in_file($db->error, DIE_IF_ERROR);
 									return true;
 								}
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		return false;
 	}

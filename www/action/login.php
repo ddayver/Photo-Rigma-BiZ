@@ -44,9 +44,9 @@ if($subact == 'saveprofile') // если поступила команда со�
 
 		if($uid == $_SESSION['login_id'] || $user->user['admin'] == true)
 		{
-			if ($db2->select('*', TBL_USERS, '`id` = ' . $uid))
+			if ($db->select('*', TBL_USERS, '`id` = ' . $uid))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					$max_size_php = $work->return_bytes(ini_get('post_max_size'));
@@ -62,23 +62,23 @@ if($subact == 'saveprofile') // если поступила команда со�
 							else $new_pass = md5($_REQUEST['re_password']);
 						}
 
-						if ($db2->select('COUNT(*) as `email_count`', TBL_USERS, '`id` != ' . $uid . ' AND `email` = \'' . $_REQUEST['email'] . '\''))
+						if ($db->select('COUNT(*) as `email_count`', TBL_USERS, '`id` != ' . $uid . ' AND `email` = \'' . $_REQUEST['email'] . '\''))
 						{
-							$email_count = $db2->res_row();
+							$email_count = $db->res_row();
 							if (isset($email_count['email_count']) && $email_count['email_count'] > 0) $email_count = true;
 							else $email_count = false;
 						}
-						else log_in_file($db2->error, DIE_IF_ERROR);
+						else log_in_file($db->error, DIE_IF_ERROR);
 						if (!isset($_REQUEST['email']) || empty($_REQUEST['email']) || !mb_eregi(REG_EMAIL, $_REQUEST['email']) || $email_count) $new_email = $temp['email'];
 						else $new_email = $_REQUEST['email'];
 
-						if ($db2->select('COUNT(*) as `real_count`', TBL_USERS, '`id` != ' . $uid . ' AND `real_name` = \'' . $_REQUEST['real_name'] . '\''))
+						if ($db->select('COUNT(*) as `real_count`', TBL_USERS, '`id` != ' . $uid . ' AND `real_name` = \'' . $_REQUEST['real_name'] . '\''))
 						{
-							$real_count = $db2->res_row();
+							$real_count = $db->res_row();
 							if (isset($real_count['real_count']) && $real_count['real_count'] > 0) $real_count = true;
 							else $real_count = false;
 						}
-						else log_in_file($db2->error, DIE_IF_ERROR);
+						else log_in_file($db->error, DIE_IF_ERROR);
 						if (!isset($_REQUEST['real_name']) || empty($_REQUEST['real_name']) || !mb_eregi(REG_NAME, $_REQUEST['real_name']) || $real_count) $new_real_name = $temp['real_name'];
 						else $new_real_name = $_REQUEST['real_name'];
 
@@ -108,13 +108,13 @@ if($subact == 'saveprofile') // если поступила команда со�
 							if($temp['avatar'] != 'no_avatar.jpg') @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $temp['avatar']);
 							$new_avatar = 'no_avatar.jpg';
 						}
-						if ($db2->update(array('password' => $new_pass, 'real_name' => $new_real_name, 'email' => $new_email, 'avatar' => $new_avatar), TBL_USERS, '`id` = ' . $uid)) $user = new user();
-						else log_in_file($db2->error, DIE_IF_ERROR);
+						if ($db->update(array('password' => $new_pass, 'real_name' => $new_real_name, 'email' => $new_email, 'avatar' => $new_avatar), TBL_USERS, '`id` = ' . $uid)) $user = new user();
+						else log_in_file($db->error, DIE_IF_ERROR);
 					}
 				}
 				else log_in_file('Unable to get the user', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 }
@@ -130,7 +130,7 @@ if ($subact == 'logout')
 	{
 		$redirect_time = 5;
 		$redirect_message = $user->user['real_name'] . $lang['main_logout_ok'];
-		if (!$db2->update(array('date_last_activ' => NULL, 'date_last_logout' => date('Y-m-d H:m:s')), TBL_USERS, '`id` = ' . $_SESSION['login_id'])) log_in_file($db2->error, DIE_IF_ERROR);
+		if (!$db->update(array('date_last_activ' => NULL, 'date_last_logout' => date('Y-m-d H:m:s')), TBL_USERS, '`id` = ' . $_SESSION['login_id'])) log_in_file($db->error, DIE_IF_ERROR);
 		$_SESSION['login_id'] = 0;
 		$_SESSION['admin_on'] = false;
 		$user = new user();
@@ -218,38 +218,38 @@ elseif ($subact == 'register')
 		}
 		else $register['real_name'] = $_REQUEST['real_name'];
 
-		if ($db2->select('COUNT(*) as `login_count`', TBL_USERS, '`login` = \'' . $register['login'] . '\''))
+		if ($db->select('COUNT(*) as `login_count`', TBL_USERS, '`login` = \'' . $register['login'] . '\''))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if (isset($temp['login_count']) && $temp['login_count'] > 0)
 			{
 				$error = true;
 				$text_error .= '-&nbsp;' . $lang['login_error_login_exists'] . '<br />';
 			}
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) as `email_count`', TBL_USERS, '`email` = \'' . $register['email'] . '\''))
+		if ($db->select('COUNT(*) as `email_count`', TBL_USERS, '`email` = \'' . $register['email'] . '\''))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if (isset($temp['email_count']) && $temp['email_count'] > 0)
 			{
 				$error = true;
 				$text_error .= '-&nbsp;' . $lang['login_error_email_exists'] . '<br />';
 			}
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if ($db2->select('COUNT(*) as `real_count`', TBL_USERS, '`real_name` = \'' . $register['real_name'] . '\''))
+		if ($db->select('COUNT(*) as `real_count`', TBL_USERS, '`real_name` = \'' . $register['real_name'] . '\''))
 		{
-			$temp = $db2->res_row();
+			$temp = $db->res_row();
 			if (isset($temp['real_count']) && $temp['real_count'] > 0)
 			{
 				$error = true;
 				$text_error .= '-&nbsp;' . $lang['login_error_real_name_exists'] . '<br />';
 			}
 		}
-		else log_in_file($db2->error, DIE_IF_ERROR);
+		else log_in_file($db->error, DIE_IF_ERROR);
 
 		if ($error)
 		{
@@ -265,18 +265,18 @@ elseif ($subact == 'register')
 			$query['email'] = $register['email'];
 			$query['group'] = DEFAULT_GROUP;
 
-			if ($db2->select('*', TBL_GROUP, '`id` = ' . DEFAULT_GROUP))
+			if ($db->select('*', TBL_GROUP, '`id` = ' . DEFAULT_GROUP))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					foreach ($temp as $key => $value)
 					{
 						if ($key != 'id' && $key != 'name') $query[$key] = $value;
 					}
-					if ($db2->insert($query, TBL_USERS))
+					if ($db->insert($query, TBL_USERS))
 					{
-						$new_user = $db2->insert_id;
+						$new_user = $db->insert_id;
 						if($new_user != 0)
 						{
 							$_SESSION['login_id'] = $new_user;
@@ -290,11 +290,11 @@ elseif ($subact == 'register')
 							$redirect_message = $lang['login_error'];
 						}
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 				}
 				else log_in_file('Unable to get the default group', DIE_IF_ERROR);
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 }
@@ -310,9 +310,9 @@ elseif ($subact == 'login')
 		if(isset($_POST['login']) && !empty($_POST['login']) && isset($_POST['password']) && !empty($_POST['password']))
 		{
 			$redirect_time = 5;
-			if ($db2->select(array('id', 'login', 'password', 'real_name'), TBL_USERS, '`login` = \'' . $_POST['login'] . '\''))
+			if ($db->select(array('id', 'login', 'password', 'real_name'), TBL_USERS, '`login` = \'' . $_POST['login'] . '\''))
 			{
-				$temp_user = $db2->res_row();
+				$temp_user = $db->res_row();
 				if ($temp_user)
 				{
 					if(md5($_POST['password']) == $temp_user['password'])
@@ -333,7 +333,7 @@ elseif ($subact == 'login')
 					$redirect_message = $lang['main_login_error'];
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
@@ -358,9 +358,9 @@ elseif($subact == 'profile')
 
 		if($uid == $_SESSION['login_id'] || $user->user['admin'] == true)
 		{
-			if ($db2->select('*', TBL_USERS, '`id` = ' . $uid))
+			if ($db->select('*', TBL_USERS, '`id` = ' . $uid))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					$name_block = $lang['login_edit_profile'] . ' ' . $temp['real_name'];
@@ -371,21 +371,21 @@ elseif($subact == 'profile')
 					if ($uid == $_SESSION['login_id']) $confirm_password = true;
 					else $confirm_password = false;
 
-					if ($db2->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
+					if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
 					{
-						$temp2 = $db2->res_row();
+						$temp2 = $db->res_row();
 						if (!$temp2)
 						{
 							$temp['group'] = 0;
-							if ($db2->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
+							if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
 							{
-								$temp2 = $db2->res_row();
+								$temp2 = $db->res_row();
 								if (!$temp2) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 					$array_data = array();
 					$array_data = array(
 									'NAME_BLOCK' => $name_block,
@@ -421,33 +421,33 @@ elseif($subact == 'profile')
 					$subact = 'logout';
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			if ($db2->select('*', TBL_USERS, '`id` = ' . $uid))
+			if ($db->select('*', TBL_USERS, '`id` = ' . $uid))
 			{
-				$temp = $db2->res_row();
+				$temp = $db->res_row();
 				if ($temp)
 				{
 					$name_block = $lang['login_profile'] . ' ' . $temp['real_name'];
 					$menu_act = '';
 
-					if ($db2->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
+					if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
 					{
-						$temp2 = $db2->res_row();
+						$temp2 = $db->res_row();
 						if (!$temp2)
 						{
 							$temp['group'] = 0;
-							if ($db2->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
+							if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group']))
 							{
-								$temp2 = $db2->res_row();
+								$temp2 = $db->res_row();
 								if (!$temp2) log_in_file('Unable to get the guest group', DIE_IF_ERROR);
 							}
-							else log_in_file($db2->error, DIE_IF_ERROR);
+							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 					}
-					else log_in_file($db2->error, DIE_IF_ERROR);
+					else log_in_file($db->error, DIE_IF_ERROR);
 					$array_data = array();
 					$array_data = array(
 									'NAME_BLOCK' => $name_block,
@@ -471,7 +471,7 @@ elseif($subact == 'profile')
 					$subact = 'logout';
 				}
 			}
-			else log_in_file($db2->error, DIE_IF_ERROR);
+			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 }
