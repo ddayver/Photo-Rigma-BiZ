@@ -19,6 +19,14 @@ if (IN_GALLERY)
 */
 class template
 {
+	var $ins_header = ''; ///< Данные, вставляемые в заголовок
+	var $ins_body = ''; ///< Данные, вставляемые в тег body
+	var $content; ///< Содержимое для вывода
+	var $mod_rewrite = false; ///< Включение читаемых URL
+	private $template_file = 'main.html'; ///< Файл шаблона
+	private $block_string = array(); ///< Блок строковых данных для замены
+	private $block_if = array(); ///< Блок условий для обработки
+	private $block_object = array(); ///< Блок массивов объектов для обработки
 	private $themes_path; ///< Путь к корню темы
 	private $themes_url; ///< Ссылка на корень темы
 	private $site_url; ///< Ссылка корня сайта
@@ -33,6 +41,369 @@ class template
 	* @see $themes_path, $themes_url
 	*/
 	function template($site_url, $site_dir, $theme)
+	{
+		$this->site_url = $site_url;
+		$this->site_dir = $site_dir;
+		$this->theme = $theme;
+		$this->themes_path = $this->site_dir . 'themes/' . $this->theme . '/';
+		$this->themes_url = $this->site_url . 'themes/' . $this->theme . '/';
+	}
+
+	/// Поиск файла-шаблона
+	/**
+	* Находит файл-шаблон и помещает его путь в $template_file.
+	* @see $template_file, $themes_path
+	*/
+	private function find_template_file()
+	{
+		if (file_exists($this->themes_path . $this->template_file))
+		{
+			$this->template_file = $this->themes_path . $this->template_file;
+			return true;
+		}
+		else
+		{
+			log_in_file('Not found template file: ' . $this->themes_path . $this->template_file, DIE_IF_ERROR);
+			return false;
+		}
+	}
+
+	/// Создание и обработка шаблона
+	/**
+	* Создает шаблон из файла, указанного в $template_file, обрабатывает его согласно заполненных данных и размещает обработанный результат в $content
+	* @see $template_file, $themes_path, $themes_url, $content, pars_template
+	*/
+	function create_template()
+	{
+		$this->find_template_file();
+		$this->content = file_get_contents($this->template_file);
+		if (!$this->content) log_in_file('Error template file: ' . $this->template_file, DIE_IF_ERROR);
+
+		$this->pars_template();
+
+		$this->content = str_replace('{SITE_URL}', $this->site_url, $this->content);
+		$this->content = str_replace('{THEME_URL}', $this->themes_url, $this->content);
+
+		if (get_magic_quotes_gpc()) $this->content = stripslashes($this->content);
+	}
+
+	/// Добавление строковой данной для замены в шаблоне
+	/**
+	* Добавляет строковую переменную для замены по шаблону как в основе шаблона, так и в рекурсивных массивах
+	* @param $name содержит название пемеренной
+	* @param $value содержит значение переменной
+	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
+	* @see $block_string, $block_object, test_is_object
+	*/
+	function add_string($name, $value, $path_array = false)
+	{
+		if ($path_array == false)
+		{
+			$this->block_string[strtoupper($name)] = $value;
+		}
+		else
+		{
+			$temp_result = $this->test_is_object($path_array);
+			$this->block_object[$temp_result['current']][$temp_result['index']]->add_string($name, $value, $temp_result['next_path']);
+		}
+	}
+
+	/// Добавление массива строковых данных для замены в шаблоне
+	/**
+	* Добавляет массив строковых переменных для замены по шаблону как в основе шаблона, так и в рекурсивных массивах
+	* @param $array_data содержит массив строковых данных в стиле: 'название_переменной' => 'значение'
+	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
+	* @see add_string
+	*/
+	function add_string_ar($array_data, $path_array = false)
+	{
+		if (is_array($array_data))
+		{
+			foreach ($array_data as $key=>$value)
+			{
+				$this->add_string($key, $value, $path_array);
+			}
+		}
+	}
+
+	/// Добавление данных об условиях вывода фрагментов шаблона
+	/**
+	* Добавляет данные об условиях вывода фрагментов шаблона как в основе шаблона, так и в рекурсивных массивах
+	* @param $name содержит название пемеренной условия
+	* @param $value содержит значение переменной (True или False)
+	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
+	* @see $block_if, $block_object, test_is_object
+	*/
+	function add_if($name, $value, $path_array = false)
+	{
+		if ($path_array == false)
+		{
+			if ($value != false) $value = true;
+			else $value = false;
+			$this->block_if['IF_' . strtoupper($name)] = $value;
+		}
+		else
+		{
+			$temp_result = $this->test_is_object($path_array);
+			$this->block_object[$temp_result['current']][$temp_result['index']]->add_if($name, $value, $temp_result['next_path']);
+		}
+	}
+
+	/// Добавление массива данных об условиях вывода фрагментов шаблона
+	/**
+	* Добавляет массив данных об условиях вывода фрагментов шаблона как в основе шаблона, так и в рекурсивных массивах
+	* @param $array_data содержит массив данных об условиях вывода фрагментов шаблона в стиле: 'название_условия' => 'значение'
+	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
+	* @see add_if
+	*/
+	function add_if_ar($array_data, $path_array = false)
+	{
+		if (is_array($array_data))
+		{
+			foreach ($array_data as $key=>$value)
+			{
+				$this->add_if($key, $value, $path_array);
+			}
+		}
+	}
+
+	/// Создание рекурсивного блока массивов-объектов
+	/**
+	* Создание рекурсивного блока массивов-объектов с предварительной проверкой их существования и извлечением структуры из полученного аргумента
+	* @param $path_array содержит путь, по которому рекурсивно необходимо создать объект-массив в виде: Массив1[0]->Массив1.0[0]
+	* @return полученный элемент (имя объекта), порядковый номер в массиве, остаток пути (если путь полностью разобран, то возвращает вместо него False)
+	*/
+	private function test_is_object($path_array)
+	{
+		$tmp_path = explode('->', $path_array);
+		$tmp_p = $tmp_path[0];
+		$tmp_p = strtoupper($tmp_p);
+		$tmp = explode('[', $tmp_p);
+		if (mb_ereg('^[A-Z_]+$', $tmp[0]) && isset($tmp[1]) && !empty($tmp[1]))
+		{
+			$tmp[1] = str_replace(']', '', $tmp[1]);
+			if (!mb_ereg('^[0-9]+$', $tmp[1])) log_in_file('Error in Path OBJ::' . $path_array, DIE_IF_ERROR);
+		}
+		else
+		{
+			log_in_file('Error in Path OBJ::' . $path_array, DIE_IF_ERROR);
+		}
+		if (!isset($this->block_object[$tmp[0]][$tmp[1]]) || !is_object($this->block_object[$tmp[0]][$tmp[1]]))
+		{
+			$temp = new template($this->site_url, $this->site_dir, $this->theme);
+			$this->block_object[$tmp[0]][$tmp[1]] = $temp;
+		}
+		$result['current'] = $tmp[0];
+		$result['index'] = $tmp[1];
+		if (count($tmp_path) > 1)
+		{
+			unset($tmp_path[0]);
+			$result['next_path'] = implode('->', $tmp_path);
+		}
+		else
+		{
+			$result['next_path'] = false;
+		}
+		return $result;
+	}
+
+	/// Функция обработки шаблона
+	/**
+	* Обрабатывает шаблон, наполняя его данными. Последовательно делает "прогонку" блока объектных элементов для рекурсивного наполнения, обработка условий вывода шаблонов, замена строковых переменных
+	* @see $block_object, $block_if, $block_string, $content
+	*/
+	function pars_template()
+	{
+		foreach ($this->block_object as $key=>$val)
+		{
+			$this->template_object($key, $val);
+		}
+		foreach ($this->block_if as $key=>$val)
+		{
+			$this->template_if($key, $val);
+		}
+		foreach ($this->block_string as $key=>$val)
+		{
+			$this->content = str_replace('{' . $key . '}', $val, $this->content);
+		}
+		$this->content = $this->url_mod_rewrite($this->content);
+		$this->content = str_replace(chr(13) . chr(10), '{BR}', $this->content);
+		$this->content = str_replace(chr(13), '{BR}', $this->content);
+		$this->content = str_replace(chr(10), '{BR}', $this->content);
+		while (strpos($this->content, '{BR}{BR}'))
+		{
+			$this->content = str_replace('{BR}{BR}', '{BR}', $this->content);
+		}
+		$this->content = str_replace('{BR}', PHP_EOL, $this->content);
+	}
+
+	/// Обработка рекурсивного блока массивов-объектов
+	/**
+	* Рекурсивная обработка блока массивов-объектов с их постобработкой и заменой в шаблоне. В шаблоне данные эелемнты заключены между <!-- ARRAY_НАЗВАНИЕ_BEGIN --> и <!-- ARRAY_НАЗВАНИЕ_END -->
+	* @param $key ключ-название фрагмента заменемого блока
+	* @param $index индекс-блок элементов дл рекурсивной замены
+	* @see $content, pars_template
+	*/
+	private function template_object($key, $index)
+	{
+		while (strpos($this->content, '<!-- ARRAY_' . $key . '_BEGIN -->') !== false)
+		{
+			$begin_start = strpos($this->content, '<!-- ARRAY_' . $key . '_BEGIN -->');
+			$begin_end = $begin_start + strlen('<!-- ARRAY_' . $key . '_BEGIN -->');
+			$end_start = strpos($this->content, '<!-- ARRAY_' . $key . '_END -->', $begin_end);
+			$end_end = $end_start + strlen('<!-- ARRAY_' . $key . '_END -->');
+			if ($end_start !== false)
+			{
+				$block_content = '';
+				$temp_content = substr($this->content, $begin_end, $end_start - $begin_end);
+				foreach($index as $id=>$value)
+				{
+					$value->content = $temp_content;
+					$value->pars_template();
+					$block_content .= $value->content;
+				}
+				$tmp = substr($this->content, $begin_start, $end_end - $begin_start);
+				$this->content = str_replace($tmp, $block_content, $this->content);
+			}
+			else
+			{
+				log_in_file('Error template OBJ::' . $key, DIE_IF_ERROR);
+			}
+		}
+	}
+
+	/// Обработка блока условий вывода фрагментов шаблона
+	/**
+	* Обработка блока условий вывода фрагментов шаблона. В шаблоне данные эелемнты заключены между <!-- IF_НАЗВАНИЕ_BEGIN --> и <!-- IF_НАЗВАНИЕ_END --> (между началом и концом как разделитель вывода можно расположить <!-- IF_НАЗВАНИЕ_ELSE -->)
+	* @param $key ключ-название условия
+	* @param $val значение ключа
+	* @see $content
+	*/
+	private function template_if($key, $val)
+	{
+		while (strpos($this->content, '<!-- ' . $key . '_BEGIN -->') !== false)
+		{
+			$begin_start = strpos($this->content, '<!-- ' . $key . '_BEGIN -->');
+			$begin_end = $begin_start + strlen('<!-- ' . $key . '_BEGIN -->');
+			$else_start = strpos($this->content, '<!-- ' . $key . '_ELSE -->', $begin_end);
+			$else_end = $else_start + strlen('<!-- ' . $key . '_ELSE -->');
+			$end_start = strpos($this->content, '<!-- ' . $key . '_END -->', $begin_end);
+			$end_end = $end_start + strlen('<!-- ' . $key . '_END -->');
+
+			if ($else_start !== false && $end_start !== false && $else_start < $end_start)
+			{
+				$temp_content = substr($this->content, $begin_start, $end_end - $begin_start);
+				if ($val) $tmp = substr($this->content, $begin_end, $else_start - $begin_end);
+				else $tmp = substr($this->content, $else_end, $end_start - $else_end);
+				$this->content = str_replace($temp_content, $tmp, $this->content);
+			}
+			elseif ($end_start !== false)
+			{
+				$temp_content = substr($this->content, $begin_start, $end_end - $begin_start);
+				if ($val) $tmp = substr($this->content, $begin_end, $end_start - $begin_end);
+				else $tmp = '';
+				$this->content = str_replace($temp_content, $tmp, $this->content);
+			}
+			else
+			{
+				log_in_file('Error template IF: ' . $key, DIE_IF_ERROR);
+			}
+		}
+	}
+
+	/// Формирование заголовка страницы
+	/**
+	* Формирует заголовок HTML-страницы с пунктами меню и возможностью вставки дополнительных полей. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'header.html'
+	* @param $title название страницы для тега Title
+	* @param $menu массив пунктов основного меню
+	* @see $ins_body, $ins_header, $content, add_string, add_string_ar, add_if
+	*/
+	function page_header($title, $menu = false)
+	{
+		global $lang;
+
+		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
+		$temp_template->add_string('TITLE', $title);
+		$temp_template->add_string('INSERT_HEADER', $this->ins_header);
+		if ($this->ins_body != '') $this->ins_body = ' ' . $this->ins_body;
+		$temp_template->add_string('INSERT_BODY', $this->ins_body);
+		if ($menu && is_array($menu))
+		{
+			$temp_template->add_if('SHORT_MENU', true);
+			foreach($menu as $id=>$value)
+			{
+				$temp_template->add_string_ar($value, 'SHORT_MENU[' . $id . ']');
+			}
+		}
+		else $temp_template->add_if('SHORT_MENU', false);
+		$temp_template->template_file = 'header.html';
+		$temp_template->create_template();
+		$this->content = $temp_template->content . $this->content;
+		unset($temp_template);
+	}
+
+	/// Формирование "подвала" страницы
+	/**
+	* Формирует "подвал" HTML-страницы с выводом копирайта. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'footer.html'
+	* @param $debug передает отладочную информацию дл вывода на экран
+	* @see $content, add_string
+	*/
+	function page_footer($copyright_year, $copyright_url, $copyright_text)
+	{
+		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
+		$temp_template->add_string('COPYRIGHT_YEAR', $copyright_year);
+		$temp_template->add_string('COPYRIGHT_URL', $copyright_url);
+		$temp_template->add_string('COPYRIGHT_TEXT', $copyright_text);
+		$temp_template->template_file = 'footer.html';
+		$temp_template->create_template();
+		$this->content = $this->content . $temp_template->content;
+		unset($temp_template);
+	}
+
+	/// Замена ссылок на более читаемый вид
+	/**
+	* Производит замену ссылок по всему полученному тексту в читаемый вид, при условии, что $mod_rewrite = true
+	* @param $content содержимое, по которому необходимо произвестю замену ссылок
+	* @param $txt указывает на то, что полученное содержимое является текстовым (True) или считать его как HTML (False, значение по-умолчанию)
+	* @return Обработанное содержимое
+	* @see $mod_rewrite
+	*/
+	function url_mod_rewrite($content, $txt = false)
+	{
+		if ($this->mod_rewrite)
+		{
+			$end = '()';
+			if (!$txt) $end = '("|\')';
+			$content = mb_ereg_replace('\?action=([A-Za-z0-9]+)(\&amp;|\&)id=([0-9]+)' . $end, '\\1/id_\\3.html\\4', $content);
+			$content = mb_ereg_replace('\?action=([A-Za-z0-9]+)(\&amp;|\&)login=([^"?]+)(\&amp;|\&)email=([^"?]+)(\&amp;|\&)resend=true' . $end, '\\1/login=\\3/email=\\5/resend.html\\7', $content);
+			$content = mb_ereg_replace('\?action=([A-Za-z0-9]+)(\&amp;|\&)login=([^"?]+)(\&amp;|\&)email=([^"?]+)(\&amp;|\&)activated_code=([A-Za-z0-9]+)' . $end, '\\1/login=\\3/email=\\5/activated_code_\\6.html\\7', $content);
+			$content = mb_ereg_replace('\?action=([A-Za-z0-9]+)(\&amp;|\&)login=([^"?]+)(\&amp;|\&)email=([^"?]+)' . $end, '\\1/login=\\3/email=\\5/\\6', $content);
+			$content = mb_ereg_replace('\?action=([A-Za-z0-9]+)' . $end, '\\1/\\2', $content);
+		}
+		return $content;
+	}
+}
+
+/// Класс работы с шаблонами.
+/**
+* Данный класс содержит функции по работе с шаблонами (наполнение данными, обработка).
+*/
+class template_old
+{
+	private $themes_path; ///< Путь к корню темы
+	private $themes_url; ///< Ссылка на корень темы
+	private $site_url; ///< Ссылка корня сайта
+	private $site_dir; ///< Путь к корню сайта
+	private $theme; ///< Тема пользователя
+
+	/// Конструктор класса, формирует массив данных об используемой теме
+	/**
+	* @param $site_url содержит ссылку на корень сайта
+	* @param $site_dir содержит путь к корню сайта
+	* @param $theme содержит название используемой темы
+	* @see $themes_path, $themes_url
+	*/
+	function template_old($site_url, $site_dir, $theme)
 	{
 		$this->site_url = $site_url;
 		$this->site_dir = $site_dir;

@@ -39,7 +39,8 @@ include_once ($config['inc_dir'] . 'template.php');
 * @brief Создание объекта класса template
 * @see template, work::$config
 */
-$template = new template($config['site_url'], $config['site_dir'], $work->config['themes']);
+$template = new template_old($config['site_url'], $config['site_dir'], $work->config['themes']);
+$template_new = new template($config['site_url'], $config['site_dir'], $work->config['themes']);
 
 include_once ($config['inc_dir'] . 'user.php');
 /**

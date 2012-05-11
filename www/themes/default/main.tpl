@@ -64,7 +64,8 @@
 {TEXT_LAST_FOTO}
 						</td>
 						<td width="5px" class="td_spacer">&nbsp;</td>
-						<td class="polja">{MAIN_BLOCK}
+						<td class="polja">
+{MAIN_BLOCK}
 						</td>
 						<td width="5px" class="td_spacer">&nbsp;</td>
 						<td class="polja">

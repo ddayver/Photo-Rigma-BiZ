@@ -1,16 +1,23 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$classtemplate.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива..." alt="" coords="136,208,307,235"/>
-<area shape="rect" id="node7" href="$classtemplate.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню" alt="" coords="374,5,527,32"/>
-<area shape="rect" id="node10" href="$classtemplate.html#a252838ffaac4f1c3a73bc67391ec1ed6" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения" alt="" coords="379,56,522,83"/>
-<area shape="rect" id="node16" href="$classtemplate.html#ae44dda987dcea9f5cd25523c34b980ee" title="Функция формирует вывод новостей сайта" alt="" coords="369,360,533,387"/>
-<area shape="rect" id="node18" href="$classtemplate.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта" alt="" coords="374,259,527,285"/>
-<area shape="rect" id="node21" href="$classtemplate.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол&#45;во изображений" alt="" coords="355,309,546,336"/>
-<area shape="rect" id="node31" href="$classuser.html#ae8a275690ff1b618e1947378b0ed73ae" title="Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе..." alt="" coords="182,411,261,437"/>
-<area shape="rect" id="node33" href="$classwork.html#a1c69e4c5de965a3854ac85f38db024f4" title="Конструктор класса, выполняет ряд ключевых задач." alt="" coords="180,461,263,488"/>
-<area shape="rect" id="node35" href="$classwork.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Функция проверки полученного сервером URL на содержание вредоносного кода." alt="" coords="166,512,277,539"/>
-<area shape="rect" id="node37" href="$classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6" title="Функция формирует информационную строку по конктретному разделу" alt="" coords="168,563,275,589"/>
-<area shape="rect" id="node39" href="$classwork.html#a60353d13b64ee02fe027d3727d07bc4b" title="Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении..." alt="" coords="165,613,278,640"/>
-<area shape="rect" id="node5" href="$classtemplate.html#aa102d3d51cacf3586b3df8fb66a135c9" title="Функция формирует главную страницу сайта испрользуя как полученные переменные, так и внутренние функц..." alt="" coords="595,157,800,184"/>
-<area shape="rect" id="node13" href="$classtemplate.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Функция формирует блок для входа пользователя (если в режиме &quot;Гость&quot;) или краткий вид информации о по..." alt="" coords="371,208,530,235"/>
-<area shape="rect" id="node24" href="$classtemplate.html#a8a4f24977049eb5420d6efc112d72d15" title="Функция формирует фрагмент оценки" alt="" coords="373,157,528,184"/>
+<area shape="rect" id="node3" href="$classtemplate.html#aeb30656300264153e8655b016d3a4278" title="Поиск файла&#45;шаблона" alt="" coords="403,153,581,180"/>
+<area shape="rect" id="node5" href="$classtemplate.html#a1ef5df918700c21dc94152e4a8329770" title="Создание и обработка шаблона" alt="" coords="629,103,800,129"/>
+<area shape="rect" id="node8" href="$classtemplate.html#aaecfbc774dfa04efa0a25723a461d877" title="Создание рекурсивного блока массивов&#45;объектов" alt="" coords="167,229,324,256"/>
+<area shape="rect" id="node18" href="$classtemplate.html#acd334c8ab27fcd3d00d8ba5508686ad7" title="Обработка рекурсивного блока массивов&#45;объектов" alt="" coords="161,77,330,104"/>
+<area shape="rect" id="node23" href="$classtemplate.html#a3de3365a95ff83f90a9240bd22937c2a" title="Обработка блока условий вывода фрагментов шаблона" alt="" coords="176,128,315,155"/>
+<area shape="rect" id="node26" href="$classtemplate__old.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива..." alt="" coords="147,280,343,307"/>
+<area shape="rect" id="node28" href="$classtemplate__old.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню" alt="" coords="156,331,335,357"/>
+<area shape="rect" id="node30" href="$classtemplate__old.html#a252838ffaac4f1c3a73bc67391ec1ed6" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения" alt="" coords="161,381,329,408"/>
+<area shape="rect" id="node32" href="$classtemplate__old.html#ae44dda987dcea9f5cd25523c34b980ee" title="Функция формирует вывод новостей сайта" alt="" coords="150,432,341,459"/>
+<area shape="rect" id="node34" href="$classtemplate__old.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта" alt="" coords="156,483,335,509"/>
+<area shape="rect" id="node36" href="$classtemplate__old.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол&#45;во изображений" alt="" coords="137,533,354,560"/>
+<area shape="rect" id="node38" href="$classuser.html#ae8a275690ff1b618e1947378b0ed73ae" title="Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе..." alt="" coords="206,584,285,611"/>
+<area shape="rect" id="node40" href="$classwork.html#a1c69e4c5de965a3854ac85f38db024f4" title="Конструктор класса, выполняет ряд ключевых задач." alt="" coords="204,635,287,661"/>
+<area shape="rect" id="node42" href="$classwork.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Функция проверки полученного сервером URL на содержание вредоносного кода." alt="" coords="190,685,301,712"/>
+<area shape="rect" id="node44" href="$classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6" title="Функция формирует информационную строку по конктретному разделу" alt="" coords="192,736,299,763"/>
+<area shape="rect" id="node46" href="$classwork.html#a60353d13b64ee02fe027d3727d07bc4b" title="Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении..." alt="" coords="189,787,302,813"/>
+<area shape="rect" id="node10" href="$classtemplate.html#aaabe60e829407d9f1e18c4f7ca1cc1e6" title="Добавление строковой данной для замены в шаблоне" alt="" coords="423,255,561,281"/>
+<area shape="rect" id="node14" href="$classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона" alt="" coords="436,204,548,231"/>
+<area shape="rect" id="node12" href="$classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f" title="Добавление массива строковых данных для замены в шаблоне" alt="" coords="637,255,793,281"/>
+<area shape="rect" id="node16" href="$classtemplate.html#a651c64c60dd969c2d8162bc5da7cb855" title="Добавление массива данных об условиях вывода фрагментов шаблона" alt="" coords="649,204,780,231"/>
+<area shape="rect" id="node20" href="$classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Функция обработки шаблона" alt="" coords="413,103,571,129"/>
 </map>

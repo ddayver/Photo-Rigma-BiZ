@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classtemplate.html#aaabe60e829407d9f1e18c4f7ca1cc1e6" title="Добавление строковой данной для замены в шаблоне" alt="" coords="158,5,242,32"/>
+<area shape="rect" id="node7" href="$classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона" alt="" coords="171,56,229,83"/>
+<area shape="rect" id="node5" href="$classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f" title="Добавление массива строковых данных для замены в шаблоне" alt="" coords="291,5,394,32"/>
+<area shape="rect" id="node9" href="$classtemplate.html#a651c64c60dd969c2d8162bc5da7cb855" title="Добавление массива данных об условиях вывода фрагментов шаблона" alt="" coords="305,56,381,83"/>
+</map>
