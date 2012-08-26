@@ -2,55 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Photo-RigmaBiZ: Исходный файл www/install/install.php</title>
-
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
    &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Создано системой Doxygen 1.7.5 -->
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.1.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
-<script type="text/javascript" src="dynsections.js"></script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
-      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -75,56 +65,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
       <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
     </ul>
   </div>
-  <div id="nav-path" class="navpath">
-    <ul>
-      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
-      <li class="navelem"><a class="el" href="dir_aea6014565de1ab3e6f1d1a70b0d6dde.html">install</a>      </li>
-    </ul>
-  </div>
-</div>
-<div class="header">
-  <div class="headertitle">
-<div class="title">install.php</div>  </div>
-</div>
-<div class="contents">
-<a href="install_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 define (<span class="stringliteral">&#39;IN_GALLERY&#39;</span>, FALSE); <span class="comment">// Константа, используемая в подключаемых файлах для определения, что они вызываются из индексного файла, а не прямым набором с целью взлома</span>
-<a name="l00012"></a>00012 
-<a name="l00013"></a>00013 include_once (<span class="stringliteral">&#39;../include/rev.php&#39;</span>);
-<a name="l00014"></a>00014 $cur_rev = $rev;
-<a name="l00015"></a>00015 include_once (<span class="stringliteral">&#39;../sql/rev.php&#39;</span>);
-<a name="l00016"></a>00016 $new_rev = $rev;
-<a name="l00017"></a>00017 include_once (<span class="stringliteral">&#39;../config.php&#39;</span>);
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 $link = @mysql_connect(<a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbhost&#39;</span>], <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbuser&#39;</span>], <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbpass&#39;</span>]);
-<a name="l00020"></a>00020 <span class="keywordflow">if</span>($link)
-<a name="l00021"></a>00021 {
-<a name="l00022"></a>00022     @mysql_select_db(<a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbname&#39;</span>], $link);
-<a name="l00023"></a>00023     @mysql_query(<span class="stringliteral">&quot;SET CHARSET utf8&quot;</span>);
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025     $version = @mysql_query(<span class="stringliteral">&#39;SELECT `rev` FROM `db_version`&#39;</span>, $link);
-<a name="l00026"></a>00026     $ver = @mysql_fetch_assoc($version);
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028     $db_rev = $ver[<span class="stringliteral">&#39;rev&#39;</span>];
-<a name="l00029"></a>00029     echo <span class="stringliteral">&#39;Cur. revision = &#39;</span> . $cur_rev . <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>;
-<a name="l00030"></a>00030     echo <span class="stringliteral">&#39;New revision = &#39;</span> . $new_rev . <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>;
-<a name="l00031"></a>00031     echo <span class="stringliteral">&#39;DB revision = &#39;</span> . $db_rev . <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>;
-<a name="l00032"></a>00032 }
-<a name="l00033"></a>00033 <span class="keywordflow">else</span>
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035     <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a> = file(<span class="stringliteral">&#39;../config.php&#39;</span>);
-<a name="l00036"></a>00036     print_r(<a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>);
-<a name="l00037"></a>00037 }
-<a name="l00039"></a>00039 ?&gt;
-</pre></div></div>
-</div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -133,13 +79,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </iframe>
 </div>
 
-
-
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5b91fe896655279d6afeb67d8a39e692.html">www</a></li><li class="navelem"><a class="el" href="dir_b466af88d9b6f2011f042072840c07b8.html">install</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">install.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="install_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;define (<span class="stringliteral">&#39;IN_GALLERY&#39;</span>, FALSE); <span class="comment">// Константа, используемая в подключаемых файлах для определения, что они вызываются из индексного файла, а не прямым набором с целью взлома</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;include_once (<span class="stringliteral">&#39;../include/rev.php&#39;</span>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;$cur_rev = $rev;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;include_once (<span class="stringliteral">&#39;../sql/rev.php&#39;</span>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;$new_rev = $rev;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;include_once (<span class="stringliteral">&#39;../config.php&#39;</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;$link = @mysql_connect(<a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbhost&#39;</span>], <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbuser&#39;</span>], <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbpass&#39;</span>]);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordflow">if</span>($link)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    @mysql_select_db(<a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>[<span class="stringliteral">&#39;dbname&#39;</span>], $link);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    @mysql_query(<span class="stringliteral">&quot;SET CHARSET utf8&quot;</span>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    $version = @mysql_query(<span class="stringliteral">&#39;SELECT `rev` FROM `db_version`&#39;</span>, $link);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    $ver = @mysql_fetch_assoc($version);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    $db_rev = $ver[<span class="stringliteral">&#39;rev&#39;</span>];</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    echo <span class="stringliteral">&#39;Cur. revision = &#39;</span> . $cur_rev . <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    echo <span class="stringliteral">&#39;New revision = &#39;</span> . $new_rev . <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    echo <span class="stringliteral">&#39;DB revision = &#39;</span> . $db_rev . <span class="stringliteral">&#39;&lt;br /&gt;&#39;</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordflow">else</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a> = file(<span class="stringliteral">&#39;../config.php&#39;</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    print_r(<a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;?&gt;</div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Создано системой &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.5
+</a> 1.8.1.1
 </small></address>
-
 </body>
 </html>

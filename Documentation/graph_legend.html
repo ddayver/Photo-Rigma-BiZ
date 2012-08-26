@@ -2,55 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Photo-RigmaBiZ: Легенда</title>
-
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
    &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Создано системой Doxygen 1.7.5 -->
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.1.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
-<script type="text/javascript" src="dynsections.js"></script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li><a href="files.html"><span>Файлы</span></a></li>
-      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -69,51 +59,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
       </li>
     </ul>
   </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
 </div>
+
 <div class="header">
   <div class="headertitle">
 <div class="title">Легенда</div>  </div>
-</div>
+</div><!--header-->
 <div class="contents">
 <p>Обозначения, используемые в графах.</p>
 <p>Рассмотрим следующий пример: </p>
-<div class="fragment"><pre class="fragment"><span class="comment">/*! Невидимый класс из-за усечения */</span>
-<span class="keyword">class </span>Invisible { };
-<span class="comment"></span>
-<span class="comment">/*! Усеченный класс, отношение наследования скрыто */</span>
-<span class="keyword">class </span>Truncated : <span class="keyword">public</span> Invisible { };
-
-<span class="comment">/* Недокументированный класс */</span>
-<span class="keyword">class </span>Undocumented { };
-<span class="comment"></span>
-<span class="comment">/*! Открытое наследование */</span>
-<span class="keyword">class </span>PublicBase : <span class="keyword">public</span> Truncated { };
-<span class="comment"></span>
-<span class="comment">/*! Шаблон класса */</span>
-<span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">class </span>Templ {};
-<span class="comment"></span>
-<span class="comment">/*! Защищенное наследование */</span>
-<span class="keyword">class </span>ProtectedBase { };
-<span class="comment"></span>
-<span class="comment">/*! Закрытое наследование */</span>
-<span class="keyword">class </span>PrivateBase { };
-<span class="comment"></span>
-<span class="comment">/*! Класс, используемый классом Inherited */</span>
-<span class="keyword">class </span>Used { };
-<span class="comment"></span>
-<span class="comment">/*! Класс, порожденный от других классов */</span>
-<span class="keyword">class </span>Inherited : <span class="keyword">public</span> PublicBase,
-                  <span class="keyword">protected</span> ProtectedBase,
-                  <span class="keyword">private</span> PrivateBase,
-                  <span class="keyword">public</span> Undocumented,
-                  <span class="keyword">public</span> Templ&lt;int&gt;
-{
-  <span class="keyword">private</span>:
-    Used *m_usedClass;
-};
-</pre></div><p> Если <code>MAX_DOT_GRAPH_HEIGHT</code> в конфигурационном файле установлен в 240, получится следующий граф:</p>
+<div class="fragment"><div class="line"><span class="comment">/*! Невидимый класс из-за усечения */</span></div>
+<div class="line"><span class="keyword">class </span>Invisible { };</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Усеченный класс, отношение наследования скрыто */</span></div>
+<div class="line"><span class="keyword">class </span>Truncated : <span class="keyword">public</span> Invisible { };</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Недокументированный класс */</span></div>
+<div class="line"><span class="keyword">class </span>Undocumented { };</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Открытое наследование */</span></div>
+<div class="line"><span class="keyword">class </span>PublicBase : <span class="keyword">public</span> Truncated { };</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Шаблон класса */</span></div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">class </span>Templ {};</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Защищенное наследование */</span></div>
+<div class="line"><span class="keyword">class </span>ProtectedBase { };</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Закрытое наследование */</span></div>
+<div class="line"><span class="keyword">class </span>PrivateBase { };</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Класс, используемый классом Inherited */</span></div>
+<div class="line"><span class="keyword">class </span>Used { };</div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">/*! Класс, порожденный от других классов */</span></div>
+<div class="line"><span class="keyword">class </span>Inherited : <span class="keyword">public</span> PublicBase,</div>
+<div class="line">                  <span class="keyword">protected</span> ProtectedBase,</div>
+<div class="line">                  <span class="keyword">private</span> PrivateBase,</div>
+<div class="line">                  <span class="keyword">public</span> Undocumented,</div>
+<div class="line">                  <span class="keyword">public</span> Templ&lt;int&gt;</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">private</span>:</div>
+<div class="line">    Used *m_usedClass;</div>
+<div class="line">};</div>
+</div><!-- fragment --><p> Если <code>MAX_DOT_GRAPH_HEIGHT</code> в конфигурационном файле установлен в 240, получится следующий граф:</p>
 <center><div class="image">
-<img src="graph_legend.png" alt="graph_legend.png"/>
+<img src="graph_legend.png" />
 </div>
 </center> <p>Прямоугольники в этом графе имеют следующее значение: </p>
 <ul>
@@ -139,28 +143,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <li>
 Желтая стрелка используется для связи подстановки шаблона и шаблона, на основе которого эта подстановка выполнена. С шаблономуказывается параметр подстановки. </li>
 </ul>
-</div>
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
-
-
+</div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Создано системой &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.5
+</a> 1.8.1.1
 </small></address>
-
 </body>
 </html>

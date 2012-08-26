@@ -2,49 +2,16 @@
 <html><head><title></title>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <link rel="stylesheet" type="text/css" href="search.css"/>
+<script type="text/javascript" src="all_64.js"></script>
 <script type="text/javascript" src="search.js"></script>
 </head>
 <body class="SRPage">
 <div id="SRIndex">
 <div class="SRStatus" id="Loading">Загрузка...</div>
-<div class="SRResult" id="SR_db">
- <div class="SREntry">
-  <a id="Item0" onkeydown="return searchResults.Nav(event,0)" onkeypress="return searchResults.Nav(event,0)" onkeyup="return searchResults.Nav(event,0)" class="SRSymbol" href="javascript:searchResults.Toggle('SR_db')">db</a>
-  <div class="SRChildren">
-    <a id="Item0_c0" onkeydown="return searchResults.NavChild(event,0,0)" onkeypress="return searchResults.NavChild(event,0,0)" onkeyup="return searchResults.NavChild(event,0,0)" class="SRScope" href="../classdb.html" target="_parent">db</a>
-    <a id="Item0_c1" onkeydown="return searchResults.NavChild(event,0,1)" onkeypress="return searchResults.NavChild(event,0,1)" onkeyup="return searchResults.NavChild(event,0,1)" class="SRScope" href="../classdb.html#a03e9ab6d80aeae541df9e4282bc580ea" target="_parent">db\db()</a>
-  </div>
- </div>
-</div>
-<div class="SRResult" id="SR_db_2ephp">
- <div class="SREntry">
-  <a id="Item1" onkeydown="return searchResults.Nav(event,1)" onkeypress="return searchResults.Nav(event,1)" onkeyup="return searchResults.Nav(event,1)" class="SRSymbol" href="../db_8php.html" target="_parent">db.php</a>
- </div>
-</div>
-<div class="SRResult" id="SR_default_5fgroup">
- <div class="SREntry">
-  <a id="Item2" onkeydown="return searchResults.Nav(event,2)" onkeypress="return searchResults.Nav(event,2)" onkeyup="return searchResults.Nav(event,2)" class="SRSymbol" href="../common_8php.html#ae7ce15e5c67102972fc0cb924f406a93" target="_parent">DEFAULT_GROUP</a>
-  <span class="SRScope">common.php</span>
- </div>
-</div>
-<div class="SRResult" id="SR_del_5fphoto">
- <div class="SREntry">
-  <a id="Item3" onkeydown="return searchResults.Nav(event,3)" onkeypress="return searchResults.Nav(event,3)" onkeyup="return searchResults.Nav(event,3)" class="SRSymbol" href="../classwork.html#a60353d13b64ee02fe027d3727d07bc4b" target="_parent">del_photo</a>
-  <span class="SRScope">work</span>
- </div>
-</div>
-<div class="SRResult" id="SR_delete">
- <div class="SREntry">
-  <a id="Item4" onkeydown="return searchResults.Nav(event,4)" onkeypress="return searchResults.Nav(event,4)" onkeyup="return searchResults.Nav(event,4)" class="SRSymbol" href="../classdb.html#a8ee189e21457bf7b0c5e518d80b53834" target="_parent">delete</a>
-  <span class="SRScope">db</span>
- </div>
-</div>
-<div class="SRResult" id="SR_die_5fif_5ferror">
- <div class="SREntry">
-  <a id="Item5" onkeydown="return searchResults.Nav(event,5)" onkeypress="return searchResults.Nav(event,5)" onkeyup="return searchResults.Nav(event,5)" class="SRSymbol" href="../common_8php.html#a46c0de50dd4efc4b8a07f02c4f867ab4" target="_parent">DIE_IF_ERROR</a>
-  <span class="SRScope">common.php</span>
- </div>
-</div>
+<div id="SRResults"></div>
+<script type="text/javascript"><!--
+createResults();
+--></script>
 <div class="SRStatus" id="Searching">Поиск...</div>
 <div class="SRStatus" id="NoMatches">Не найдено</div>
 <script type="text/javascript"><!--

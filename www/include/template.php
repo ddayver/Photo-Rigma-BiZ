@@ -3,8 +3,8 @@
 * @file		include/template.php
 * @brief	Работа с шаблонами
 * @author	Dark Dayver
-* @version	0.2.0
-* @date		28/03-2012
+* @version	0.3.0
+* @date		15/07-2012
 * @details	Содержит класс работы с шаблонами на сервере
 */
 
@@ -13,9 +13,10 @@ if (IN_GALLERY)
 	die('HACK!');
 }
 
-/// Класс работы с шаблонами.
+/// Новый класс работы с шаблонами.
 /**
-* Данный класс содержит функции по работе с шаблонами (наполнение данными, обработка).
+* Данный класс содержит функции по работе с шаблонами (наполнение данными, обработка). Внедряется взамен старого.
+* @see template_old
 */
 class template
 {
@@ -23,9 +24,10 @@ class template
 	var $ins_body = ''; ///< Данные, вставляемые в тег body
 	var $content; ///< Содержимое для вывода
 	var $mod_rewrite = false; ///< Включение читаемых URL
-	private $template_file = 'main.html'; ///< Файл шаблона
+	var $template_file = 'main.html'; ///< Файл шаблона
 	private $block_string = array(); ///< Блок строковых данных для замены
 	private $block_if = array(); ///< Блок условий для обработки
+	private $block_case = array(); ///< Блок массивов выбора блока для обработки
 	private $block_object = array(); ///< Блок массивов объектов для обработки
 	private $themes_path; ///< Путь к корню темы
 	private $themes_url; ///< Ссылка на корень темы
@@ -167,6 +169,47 @@ class template
 		}
 	}
 
+	/// Добавление данных о выборе блока для вывода фрагментов шаблона
+	/**
+	* Добавляет данные о выборе блока для вывода фрагментов шаблона как в основе шаблона, так и в рекурсивных массивах
+	* @param $name содержит название пемеренной условия
+	* @param $value содержит значение переменной (наименование или номер блока)
+	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
+	* @see $block_case, $block_object, test_is_object
+	*/
+	function add_case($name, $value, $path_array = false)
+	{
+		if ($path_array == false)
+		{
+			if ($value != false) $value = true;
+			else $value = false;
+			$this->block_case['SELECT_' . strtoupper($name)] = strtoupper($value);
+		}
+		else
+		{
+			$temp_result = $this->test_is_object($path_array);
+			$this->block_object[$temp_result['current']][$temp_result['index']]->add_case($name, $value, $temp_result['next_path']);
+		}
+	}
+
+	/// Добавление массива данных о выборе блока для вывода фрагментов шаблона
+	/**
+	* Добавляет массив данных о выборе блока для вывода фрагментов шаблона как в основе шаблона, так и в рекурсивных массивах
+	* @param $array_data содержит массив данных о выборе блока для вывода фрагментов шаблона в стиле: 'название_условия' => 'значение'
+	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
+	* @see add_if
+	*/
+	function add_case_ar($array_data, $path_array = false)
+	{
+		if (is_array($array_data))
+		{
+			foreach ($array_data as $key=>$value)
+			{
+				$this->add_case($key, $value, $path_array);
+			}
+		}
+	}
+
 	/// Создание рекурсивного блока массивов-объектов
 	/**
 	* Создание рекурсивного блока массивов-объектов с предварительной проверкой их существования и извлечением структуры из полученного аргумента
@@ -214,26 +257,15 @@ class template
 	*/
 	function pars_template()
 	{
-		foreach ($this->block_object as $key=>$val)
-		{
-			$this->template_object($key, $val);
-		}
-		foreach ($this->block_if as $key=>$val)
-		{
-			$this->template_if($key, $val);
-		}
-		foreach ($this->block_string as $key=>$val)
-		{
-			$this->content = str_replace('{' . $key . '}', $val, $this->content);
-		}
+		foreach ($this->block_object as $key=>$val) $this->template_object($key, $val);
+		foreach ($this->block_if as $key=>$val) $this->template_if($key, $val);
+		foreach ($this->block_case as $key=>$val) $this->template_case($key, $val);
+		foreach ($this->block_string as $key=>$val) $this->content = str_replace('{' . $key . '}', $val, $this->content);
 		$this->content = $this->url_mod_rewrite($this->content);
 		$this->content = str_replace(chr(13) . chr(10), '{BR}', $this->content);
 		$this->content = str_replace(chr(13), '{BR}', $this->content);
 		$this->content = str_replace(chr(10), '{BR}', $this->content);
-		while (strpos($this->content, '{BR}{BR}'))
-		{
-			$this->content = str_replace('{BR}{BR}', '{BR}', $this->content);
-		}
+		while (strpos($this->content, '{BR}{BR}')) $this->content = str_replace('{BR}{BR}', '{BR}', $this->content);
 		$this->content = str_replace('{BR}', PHP_EOL, $this->content);
 	}
 
@@ -265,10 +297,7 @@ class template
 				$tmp = substr($this->content, $begin_start, $end_end - $begin_start);
 				$this->content = str_replace($tmp, $block_content, $this->content);
 			}
-			else
-			{
-				log_in_file('Error template OBJ::' . $key, DIE_IF_ERROR);
-			}
+			else log_in_file('Error template OBJ::' . $key, DIE_IF_ERROR);
 		}
 	}
 
@@ -304,10 +333,47 @@ class template
 				else $tmp = '';
 				$this->content = str_replace($temp_content, $tmp, $this->content);
 			}
-			else
+			else log_in_file('Error template IF: ' . $key, DIE_IF_ERROR);
+		}
+	}
+
+	/// Обработка блока выбора фрагмента для вывода в шаблон
+	/**
+	* Обработка блока выбора фрагмента для вывода в шаблон. В шаблоне данные эелемнты заключены между <!-- SELECT_НАЗВАНИЕ_BEGIN --> и <!-- SELECT_НАЗВАНИЕ_END -->, необходимый блок заключается между <!-- CASE_ЗНАЧЕНИЕ --> и <!-- BREAK_ЗНАЧЕНИЕ -->
+	* @param $key ключ-название условия
+	* @param $val значение ключа
+	* @see $content
+	*/
+	private function template_case($key, $val)
+	{
+		while (strpos($this->content, '<!-- ' . $key . '_BEGIN -->') !== false)
+		{
+			$begin_start = strpos($this->content, '<!-- ' . $key . '_BEGIN -->');
+			$begin_end = $begin_start + strlen('<!-- ' . $key . '_BEGIN -->');
+			$end_start = strpos($this->content, '<!-- ' . $key . '_END -->', $begin_end);
+			$end_end = $end_start + strlen('<!-- ' . $key . '_END -->');
+
+			if ($end_start !== false)
 			{
-				log_in_file('Error template IF: ' . $key, DIE_IF_ERROR);
+				$temp_content = substr($this->content, $begin_start, $end_end - $begin_start);
+				$tmp = '';
+				$case_start = strpos($this->content, '<!-- CASE_' . $val . ' -->', $begin_end);
+				$case_end = $case_start + strlen('<!-- CASE_' . $val . ' -->');
+				$break_start = strpos($this->content, '<!-- BREAK_' . $val . ' -->', $case_end);
+				$break_end = $end_start + strlen('<!-- BREAK_' . $val . ' -->');
+				if ($break_start !== false && $case_start < $end_start && $break_start < $end_start) $tmp = substr($this->content, $case_end, $break_start - $case_end);
+				else
+				{
+					$case_start = strpos($this->content, '<!-- CASE_DEFAULT -->', $begin_end);
+					$case_end = $case_start + strlen('<!-- CASE_DEFAULT -->');
+					$break_start = strpos($this->content, '<!-- BREAK_DEFAULT -->', $case_end);
+					$break_end = $end_start + strlen('<!-- BREAK_DEFAULT -->');
+					if ($break_start !== false && $case_start < $end_start && $break_start < $end_start) $tmp = substr($this->content, $case_end, $break_start - $case_end);
+					else $tmp = '';
+				}
+				$this->content = str_replace($temp_content, $tmp, $this->content);
 			}
+			else log_in_file('Error template SELECT-CASE: ' . $key . '-' . $val, DIE_IF_ERROR);
 		}
 	}
 
@@ -330,10 +396,7 @@ class template
 		if ($menu && is_array($menu))
 		{
 			$temp_template->add_if('SHORT_MENU', true);
-			foreach($menu as $id=>$value)
-			{
-				$temp_template->add_string_ar($value, 'SHORT_MENU[' . $id . ']');
-			}
+			foreach($menu as $id=>$value) $temp_template->add_string_ar($value, 'SHORT_MENU[' . $id . ']');
 		}
 		else $temp_template->add_if('SHORT_MENU', false);
 		$temp_template->template_file = 'header.html';
@@ -384,9 +447,10 @@ class template
 	}
 }
 
-/// Класс работы с шаблонами.
+/// Устаревший класс работы с шаблонами.
 /**
-* Данный класс содержит функции по работе с шаблонами (наполнение данными, обработка).
+* Данный класс содержит устаревшие функции по работе с шаблонами (наполнение данными, обработка). Будет заменен на новый.
+* @see template
 */
 class template_old
 {

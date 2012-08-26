@@ -2,55 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Photo-RigmaBiZ: Исходный файл www/action/main.php</title>
-
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
    &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Создано системой Doxygen 1.7.5 -->
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.1.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
-<script type="text/javascript" src="dynsections.js"></script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
-      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -75,37 +65,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
       <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
     </ul>
   </div>
-  <div id="nav-path" class="navpath">
-    <ul>
-      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
-      <li class="navelem"><a class="el" href="dir_c3145d3cdbce35b5443e4e08db970cbc.html">action</a>      </li>
-    </ul>
-  </div>
-</div>
-<div class="header">
-  <div class="headertitle">
-<div class="title">main.php</div>  </div>
-</div>
-<div class="contents">
-<a href="action_2main_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
-<a name="l00012"></a>00012 {
-<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
-<a name="l00014"></a>00014 }
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>);
-<a name="l00017"></a>00017 include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>);
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template(<span class="stringliteral">&#39;main&#39;</span>, $lang[<span class="stringliteral">&#39;main_main&#39;</span>], <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>]));
-<a name="l00020"></a>00020 ?&gt;
-</pre></div></div>
-</div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -114,13 +79,93 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </iframe>
 </div>
 
-
-
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5b91fe896655279d6afeb67d8a39e692.html">www</a></li><li class="navelem"><a class="el" href="dir_ce9fe531a02ce49085e286b6a4ed25d0.html">action</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">main.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="action_2main_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordflow">if</span> (IN_GALLERY)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    die(<span class="stringliteral">&#39;HACK!&#39;</span>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/main.php&#39;</span>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;include_once(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;language/&#39;</span> . <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;language&#39;</span>] . <span class="stringliteral">&#39;/menu.php&#39;</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;$news = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>], <span class="stringliteral">&#39;last&#39;</span>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordflow">if</span> ($news &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_view&#39;</span>] == <span class="keyword">true</span>)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">foreach</span> ($news as $key =&gt; $val)</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        $template_new-&gt;add_string_ar(array(</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="stringliteral">&#39;L_TITLE_NEWS_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_title_news&#39;</span>] . <span class="stringliteral">&#39; - &#39;</span> . $val[<span class="stringliteral">&#39;name_post&#39;</span>],</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="stringliteral">&#39;L_NEWS_DATA&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_data_add&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $val[<span class="stringliteral">&#39;data_post&#39;</span>] . <span class="stringliteral">&#39; (&#39;</span> . $val[<span class="stringliteral">&#39;data_last_edit&#39;</span>] . <span class="stringliteral">&#39;).&#39;</span>,</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; trim(nl2br($val[<span class="stringliteral">&#39;text_post&#39;</span>]))</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        ), <span class="stringliteral">&#39;LAST_NEWS[&#39;</span> . $key . <span class="charliteral">&#39;]&#39;</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        $template_new-&gt;add_if_ar(array(</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="stringliteral">&#39;USER_EXISTS&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="stringliteral">&#39;EDIT_SHORT&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="stringliteral">&#39;EDIT_LONG&#39;</span> =&gt; <span class="keyword">false</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        ), <span class="stringliteral">&#39;LAST_NEWS[&#39;</span> . $key . <span class="charliteral">&#39;]&#39;</span>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;select(<span class="stringliteral">&#39;real_name&#39;</span>, <a class="code" href="common_8php.html#a2a3024d0b4853a913d3baa522a035f91" title="Таблица пользователей">TBL_USERS</a>, <span class="stringliteral">&#39;`id` = &#39;</span> . $val[<span class="stringliteral">&#39;user_post&#39;</span>]))</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            $user_add = <a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;res_row();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">if</span> ($user_add)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                $template_new-&gt;add_if(<span class="stringliteral">&#39;USER_EXISTS&#39;</span>, <span class="keyword">true</span>, <span class="stringliteral">&#39;LAST_NEWS[&#39;</span> . $key . <span class="charliteral">&#39;]&#39;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                $template_new-&gt;add_string_ar(array(</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                    <span class="stringliteral">&#39;L_USER_ADD&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_user_add&#39;</span>],</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                    <span class="stringliteral">&#39;U_PROFILE_USER_POST&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]  . <span class="stringliteral">&#39;?action=login&amp;subact=profile&amp;uid=&#39;</span> . $val[<span class="stringliteral">&#39;user_post&#39;</span>],</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                    <span class="stringliteral">&#39;D_REAL_NAME_USER_POST&#39;</span> =&gt; $user_add[<span class="stringliteral">&#39;real_name&#39;</span>]</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                ), <span class="stringliteral">&#39;LAST_NEWS[&#39;</span> . $key . <span class="charliteral">&#39;]&#39;</span>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;error, <a class="code" href="common_8php.html#a3ab0628e8862cd0c51f8503bc96535bc" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_moderate&#39;</span>] == <span class="keyword">true</span> || (<a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] != 0 &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] == $val[<span class="stringliteral">&#39;user_post&#39;</span>]))</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            $template_new-&gt;add_if_ar(array(</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                <span class="stringliteral">&#39;EDIT_SHORT&#39;</span> =&gt; <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                <span class="stringliteral">&#39;EDIT_LONG&#39;</span> =&gt; <span class="keyword">true</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            ), <span class="stringliteral">&#39;LAST_NEWS[&#39;</span> . $key . <span class="charliteral">&#39;]&#39;</span>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            $template_new-&gt;add_string_ar(array(</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                <span class="stringliteral">&#39;L_EDIT_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_edit_news&#39;</span>],</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                <span class="stringliteral">&#39;L_DELETE_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_delete_news&#39;</span>],</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="stringliteral">&#39;L_CONFIRM_DELETE_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_confirm_delete_news&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . $val[<span class="stringliteral">&#39;name_post&#39;</span>] . <span class="charliteral">&#39;?&#39;</span>,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="stringliteral">&#39;U_EDIT_BLOCK&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;subact=edit&amp;news=&#39;</span> . $val[<span class="stringliteral">&#39;id&#39;</span>],</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="stringliteral">&#39;U_DELETE_BLOCK&#39;</span> =&gt; <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . <span class="stringliteral">&#39;?action=news&amp;subact=delete&amp;news=&#39;</span> . $val[<span class="stringliteral">&#39;id&#39;</span>]</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            ), <span class="stringliteral">&#39;LAST_NEWS[&#39;</span> . $key . <span class="charliteral">&#39;]&#39;</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordflow">else</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    $template_new-&gt;add_if_ar(array(</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="stringliteral">&#39;USER_EXISTS&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="stringliteral">&#39;EDIT_SHORT&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="stringliteral">&#39;EDIT_LONG&#39;</span> =&gt; <span class="keyword">false</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    ), <span class="stringliteral">&#39;LAST_NEWS[0]&#39;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    $template_new-&gt;add_string_ar(array(</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="stringliteral">&#39;L_TITLE_NEWS_BLOCK&#39;</span> =&gt; $lang[<span class="stringliteral">&#39;main_no_news&#39;</span>],</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="stringliteral">&#39;L_NEWS_DATA&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="stringliteral">&#39;L_TEXT_POST&#39;</span> =&gt; trim(nl2br($news[<span class="stringliteral">&#39;L_TEXT_POST&#39;</span>]))</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    ), <span class="stringliteral">&#39;LAST_NEWS[0]&#39;</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template(<span class="stringliteral">&#39;main&#39;</span>, $lang[<span class="stringliteral">&#39;main_main&#39;</span>], <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news(<a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;last_news&#39;</span>]));</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;?&gt;</div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Создано системой &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.5
+</a> 1.8.1.1
 </small></address>
-
 </body>
 </html>

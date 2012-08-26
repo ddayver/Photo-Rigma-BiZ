@@ -55,13 +55,42 @@ $user = new user();
 * @brief Действие, которое необходимо выполнить
 */
 $action = 'main';
+if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check() && file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = $_GET['action'];
+
+$header_footer = true;
+$template_output = true;
+$template_TMP = false; // Заглушка
+$action = 'main';
 /// @cond
 if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check())
 {
 	$action = $_GET['action'];
 	if (!file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = 'main';
 }
-/// @endcond
 
-include_once($config['site_dir'] . 'action/' . $action . '.php'); // подключаем запрошенный модуль
+include_once($config['site_dir'] . 'action/' . $action . '.php');
+
+if ($template_TMP)
+{
+
+$template_new->create_template();
+
+if ($header_footer) // Заглушка
+{
+	$template_new->page_header($title, $local_menu);
+	$template_new->page_footer($debug);
+}
+if ($template_output) echo $template_new->content;
+} // Заглушка
+/// @endcond
+// Документация для описани директорий (для DoxyGen)
+/** @dir action
+* Содержит подключаемые модули
+*/
+/** @dir include
+* Содержит подключаемые классы
+*/
+/** @dir language
+* Содержит папки с языковыми файлами
+*/
 ?>

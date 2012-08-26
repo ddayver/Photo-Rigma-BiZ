@@ -547,5 +547,29 @@ class work
 
 		return $string;
 	}
+
+	/// Функция формирует вывод новостей сайта
+	/**
+	* @param $news_data сожержит идентификатор новости (если $act = 'id') или количество выводимых новостей (если $act = 'last')
+	* @param $act если $act = 'last', то выводим последнии новости сайта, иначе если $act = 'id', то выводим новость с указанным идентификатором
+	* @return Подготовленный блок новостей
+	* @see db
+	*/
+	function news($news_data = 1, $act='last')
+	{
+		global $db;
+
+		if($act == 'id')
+		{
+			if ($db->select('*', TBL_NEWS, '`id` = ' . $news_data)) $temp_news = $db->res_arr();
+			else log_in_file($db->error, DIE_IF_ERROR);
+		}
+		else
+		{
+			if ($db->select('*', TBL_NEWS, false, array('data_last_edit' => 'down'), false, $news_data)) $temp_news = $db->res_arr();
+			else log_in_file($db->error, DIE_IF_ERROR);
+		}
+		return $temp_news;
+	}
 }
 ?>

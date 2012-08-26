@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="114,5,169,32"/>
-<area shape="rect" id="node5" href="$classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием" alt="" coords="112,56,171,83"/>
-<area shape="rect" id="node7" href="$classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой" alt="" coords="114,107,169,133"/>
-<area shape="rect" id="node9" href="$classdb.html#a3c29f28d3f15af12cb6378aadd1dd67d" title="Функция дополнения запроса группировкой" alt="" coords="113,157,169,184"/>
-<area shape="rect" id="node11" href="$classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов" alt="" coords="119,208,164,235"/>
-<area shape="rect" id="node13" href="$classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="113,259,169,285"/>
+<area shape="rect" id="node3" href="$classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="113,5,167,32"/>
+<area shape="rect" id="node5" href="$classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием" alt="" coords="112,56,168,83"/>
+<area shape="rect" id="node7" href="$classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой" alt="" coords="115,107,165,133"/>
+<area shape="rect" id="node9" href="$classdb.html#a3c29f28d3f15af12cb6378aadd1dd67d" title="Функция дополнения запроса группировкой" alt="" coords="113,157,167,184"/>
+<area shape="rect" id="node11" href="$classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов" alt="" coords="117,208,163,235"/>
+<area shape="rect" id="node13" href="$classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="113,259,167,285"/>
 </map>

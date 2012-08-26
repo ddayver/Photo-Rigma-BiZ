@@ -2,55 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Photo-RigmaBiZ: Файл www/action/search.php</title>
-
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
    &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Создано системой Doxygen 1.7.5 -->
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.1.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
-<script type="text/javascript" src="dynsections.js"></script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
-      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -75,60 +65,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
       <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
     </ul>
   </div>
-  <div id="nav-path" class="navpath">
-    <ul>
-      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
-      <li class="navelem"><a class="el" href="dir_c3145d3cdbce35b5443e4e08db970cbc.html">action</a>      </li>
-    </ul>
-  </div>
-</div>
-<div class="header">
-  <div class="summary">
-<a href="#var-members">Переменные</a>  </div>
-  <div class="headertitle">
-<div class="title">Файл search.php</div>  </div>
-</div>
-<div class="contents">
-
-<p>Поиск по сайту.  
-<a href="#details">Подробнее...</a></p>
-
-<p><a href="action_2search_8php_source.html">См. исходные тексты.</a></p>
-<table class="memberdecls">
-<tr><td colspan="2"><h2><a name="var-members"></a>
-Переменные</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50b867397071a95fbfd1d69911b92a0b"></a><!-- doxytag: member="action/search.php::if" ref="a50b867397071a95fbfd1d69911b92a0b" args="(IN_GALLERY)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (<a class="el" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494">IN_GALLERY</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa53cf56ddd9cbef392a95719c24a59aa"></a><!-- doxytag: member="action/search.php::$check" ref="aa53cf56ddd9cbef392a95719c24a59aa" args="" -->
-if(isset($_POST['search_main_text'])&amp;&amp;!empty($_POST['search_main_text'])&amp;&amp;empty($_POST['search_text']))&#160;</td><td class="memItemRight" valign="bottom"><b>$check</b> = array()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a165073dc9387e30deb537808b82807b0"></a><!-- doxytag: member="action/search.php::$search_user" ref="a165073dc9387e30deb537808b82807b0" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$search_user</b> = false</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b008e3dc9e1c2d3eecb36f913f0ad28"></a><!-- doxytag: member="action/search.php::$search_category" ref="a2b008e3dc9e1c2d3eecb36f913f0ad28" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$search_category</b> = false</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec4bfb69f20587c5abb52b0940202905"></a><!-- doxytag: member="action/search.php::$search_news" ref="aec4bfb69f20587c5abb52b0940202905" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$search_news</b> = false</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27c11914c450d45411adfa065dcb001b"></a><!-- doxytag: member="action/search.php::$search_photo" ref="a27c11914c450d45411adfa065dcb001b" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$search_photo</b> = false</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9c58f8f4cb90a5031f5480aa96ea54b"></a><!-- doxytag: member="action/search.php::$find_data" ref="af9c58f8f4cb90a5031f5480aa96ea54b" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$find_data</b> = array()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71a2962a38d36bd815c6d53c781b311c"></a><!-- doxytag: member="action/search.php::$array_data" ref="a71a2962a38d36bd815c6d53c781b311c" args="" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>$array_data</b> = array()</td></tr>
-</table>
-<hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
-<div class="textblock"><p>Поиск по сайту. </p>
-<dl class="author"><dt><b>Автор:</b></dt><dd>Dark Dayver </dd></dl>
-<dl class="version"><dt><b>Версия:</b></dt><dd>0.2.0 </dd></dl>
-<dl class="date"><dt><b>Дата:</b></dt><dd>28/03-2012</dd></dl>
-<p>Обработка поисковых запросов. </p>
-
-<p>См. определение в файле <a class="el" href="action_2search_8php_source.html">search.php</a></p>
-</div></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -137,13 +79,57 @@ if(isset($_POST['search_main_text'])&amp;&amp;!empty($_POST['search_main_text'])
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5b91fe896655279d6afeb67d8a39e692.html">www</a></li><li class="navelem"><a class="el" href="dir_ce9fe531a02ce49085e286b6a4ed25d0.html">action</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#var-members">Переменные</a>  </div>
+  <div class="headertitle">
+<div class="title">Файл search.php</div>  </div>
+</div><!--header-->
+<div class="contents">
 
+<p>Поиск по сайту.  
+<a href="#details">Подробнее...</a></p>
 
+<p><a href="action_2search_8php_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="var-members"></a>
+Переменные</h2></td></tr>
+<tr class="memitem:a50b867397071a95fbfd1d69911b92a0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50b867397071a95fbfd1d69911b92a0b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY)</td></tr>
+<tr class="memitem:aa53cf56ddd9cbef392a95719c24a59aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa53cf56ddd9cbef392a95719c24a59aa"></a>
+if(isset($_POST['search_main_text'])&amp;&amp;!empty($_POST['search_main_text'])&amp;&amp;empty($_POST['search_text']))&#160;</td><td class="memItemRight" valign="bottom"><b>$check</b> = array()</td></tr>
+<tr class="memitem:a165073dc9387e30deb537808b82807b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a165073dc9387e30deb537808b82807b0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$search_user</b> = false</td></tr>
+<tr class="memitem:a2b008e3dc9e1c2d3eecb36f913f0ad28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b008e3dc9e1c2d3eecb36f913f0ad28"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$search_category</b> = false</td></tr>
+<tr class="memitem:aec4bfb69f20587c5abb52b0940202905"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec4bfb69f20587c5abb52b0940202905"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$search_news</b> = false</td></tr>
+<tr class="memitem:a27c11914c450d45411adfa065dcb001b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27c11914c450d45411adfa065dcb001b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$search_photo</b> = false</td></tr>
+<tr class="memitem:af9c58f8f4cb90a5031f5480aa96ea54b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9c58f8f4cb90a5031f5480aa96ea54b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$find_data</b> = array()</td></tr>
+<tr class="memitem:a71a2962a38d36bd815c6d53c781b311c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71a2962a38d36bd815c6d53c781b311c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$array_data</b> = array()</td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
+<div class="textblock"><p>Поиск по сайту. </p>
+<dl class="section author"><dt>Автор:</dt><dd>Dark Dayver </dd></dl>
+<dl class="section version"><dt>Версия:</dt><dd>0.2.0 </dd></dl>
+<dl class="section date"><dt>Дата:</dt><dd>28/03-2012</dd></dl>
+<p>Обработка поисковых запросов. </p>
+
+<p>См. определение в файле <a class="el" href="action_2search_8php_source.html">search.php</a></p>
+</div></div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Создано системой &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.5
+</a> 1.8.1.1
 </small></address>
-
 </body>
 </html>

@@ -2,55 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Photo-RigmaBiZ: Исходный файл www/language/russian/menu.php</title>
-
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
-
-<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="top"><!-- do not remove this div! -->
-
-
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  
-  
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-RigmaBiZ
    &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
   </td>
-  
-  
-  
  </tr>
  </tbody>
 </table>
 </div>
-
-<!-- Создано системой Doxygen 1.7.5 -->
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.1.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
-<script type="text/javascript" src="dynsections.js"></script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
-      <li><a href="dirs.html"><span>Алфавитный&#160;указатель&#160;директорий</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -75,50 +65,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
       <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
     </ul>
   </div>
-  <div id="nav-path" class="navpath">
-    <ul>
-      <li class="navelem"><a class="el" href="dir_29633b3494f03c59f20c07113c6f782a.html">www</a>      </li>
-      <li class="navelem"><a class="el" href="dir_a87cfc1b0b904e6285c3cb5db73f1748.html">language</a>      </li>
-      <li class="navelem"><a class="el" href="dir_a36965c7cf0ddb5d9afb1f7d680904ee.html">russian</a>      </li>
-    </ul>
-  </div>
-</div>
-<div class="header">
-  <div class="headertitle">
-<div class="title">menu.php</div>  </div>
-</div>
-<div class="contents">
-<a href="menu_8php.html">См. документацию.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="keywordflow">if</span> (<a class="code" href="index_8php.html#ace53bd37bdf1b3fa7c2fe6d4b8aec494" title="Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.">IN_GALLERY</a>)
-<a name="l00012"></a>00012 {
-<a name="l00013"></a>00013     die(<span class="stringliteral">&#39;HACK!&#39;</span>);
-<a name="l00014"></a>00014 }
-<a name="l00016"></a>00016 
-<a name="l00021"></a>00021 
-<a name="l00026"></a>00026 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;name_block&#39;</span>] = <span class="stringliteral">&#39;Панель навигации&#39;</span>;
-<a name="l00027"></a>00027 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;home&#39;</span>] = <span class="stringliteral">&#39;Главная&#39;</span>;
-<a name="l00028"></a>00028 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;regist&#39;</span>] = <span class="stringliteral">&#39;Регистрация&#39;</span>;
-<a name="l00029"></a>00029 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;category&#39;</span>] = <span class="stringliteral">&#39;Разделы&#39;</span>;
-<a name="l00030"></a>00030 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;user_category&#39;</span>] = <span class="stringliteral">&#39;Пользовательские альбомы&#39;</span>;
-<a name="l00031"></a>00031 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;you_category&#39;</span>] = <span class="stringliteral">&#39;Ваш альбом&#39;</span>;
-<a name="l00032"></a>00032 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;upload&#39;</span>] = <span class="stringliteral">&#39;Загрузить изображение&#39;</span>;
-<a name="l00033"></a>00033 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;add_category&#39;</span>] = <span class="stringliteral">&#39;Добавить раздел&#39;</span>;
-<a name="l00034"></a>00034 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;search&#39;</span>] = <span class="stringliteral">&#39;Поиск&#39;</span>;
-<a name="l00035"></a>00035 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;news&#39;</span>] = <span class="stringliteral">&#39;Архив новостей&#39;</span>;
-<a name="l00036"></a>00036 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;news_add&#39;</span>] = <span class="stringliteral">&#39;Добавить новость&#39;</span>;
-<a name="l00037"></a>00037 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;profile&#39;</span>] = <span class="stringliteral">&#39;Профиль&#39;</span>;
-<a name="l00038"></a>00038 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;admin&#39;</span>] = <span class="stringliteral">&#39;Администрирование&#39;</span>;
-<a name="l00039"></a>00039 $lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;logout&#39;</span>] = <span class="stringliteral">&#39;Выйти&#39;</span>;
-<a name="l00042"></a>00042 ?&gt;
-</pre></div></div>
-</div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Перечисления</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -127,13 +79,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </iframe>
 </div>
 
-
-
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5b91fe896655279d6afeb67d8a39e692.html">www</a></li><li class="navelem"><a class="el" href="dir_c6db17df7a9dcf72ae2f953e1fb91501.html">language</a></li><li class="navelem"><a class="el" href="dir_730d96b674af06db266ad8f23530faef.html">russian</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">menu.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="menu_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordflow">if</span> (IN_GALLERY)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    die(<span class="stringliteral">&#39;HACK!&#39;</span>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;name_block&#39;</span>] = <span class="stringliteral">&#39;Панель навигации&#39;</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;home&#39;</span>] = <span class="stringliteral">&#39;Главная&#39;</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;regist&#39;</span>] = <span class="stringliteral">&#39;Регистрация&#39;</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;category&#39;</span>] = <span class="stringliteral">&#39;Разделы&#39;</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;user_category&#39;</span>] = <span class="stringliteral">&#39;Пользовательские альбомы&#39;</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;you_category&#39;</span>] = <span class="stringliteral">&#39;Ваш альбом&#39;</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;upload&#39;</span>] = <span class="stringliteral">&#39;Загрузить изображение&#39;</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;add_category&#39;</span>] = <span class="stringliteral">&#39;Добавить раздел&#39;</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;search&#39;</span>] = <span class="stringliteral">&#39;Поиск&#39;</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;news&#39;</span>] = <span class="stringliteral">&#39;Архив новостей&#39;</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;news_add&#39;</span>] = <span class="stringliteral">&#39;Добавить новость&#39;</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;profile&#39;</span>] = <span class="stringliteral">&#39;Профиль&#39;</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;admin&#39;</span>] = <span class="stringliteral">&#39;Администрирование&#39;</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;$lang[<span class="stringliteral">&#39;menu&#39;</span>][<span class="stringliteral">&#39;logout&#39;</span>] = <span class="stringliteral">&#39;Выйти&#39;</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;?&gt;</div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Создано системой &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.7.5
+</a> 1.8.1.1
 </small></address>
-
 </body>
 </html>
