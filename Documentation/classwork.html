@@ -155,6 +155,12 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 <tr class="memdesc:a0d7eeafb547e659cc55e017c9282c082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения  <a href="#a0d7eeafb547e659cc55e017c9282c082"></a><br/></td></tr>
 <tr class="memitem:a3d003fba794baa1940d917645adf9c78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a3d003fba794baa1940d917645adf9c78">size_image</a> ($path_image)</td></tr>
 <tr class="memdesc:a3d003fba794baa1940d917645adf9c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция вычисляет необходимый размер для вывода эскиза изображения  <a href="#a3d003fba794baa1940d917645adf9c78"></a><br/></td></tr>
+<tr class="memitem:a1f3df8874c79377e6a8b4398ea6ad774"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a1f3df8874c79377e6a8b4398ea6ad774">template_user</a> ()</td></tr>
+<tr class="memdesc:a1f3df8874c79377e6a8b4398ea6ad774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе  <a href="#a1f3df8874c79377e6a8b4398ea6ad774"></a><br/></td></tr>
+<tr class="memitem:a116ebcf799d07566a74e7e765aecc1b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a116ebcf799d07566a74e7e765aecc1b7">template_stat</a> ()</td></tr>
+<tr class="memdesc:a116ebcf799d07566a74e7e765aecc1b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирует блок статистики для сайта  <a href="#a116ebcf799d07566a74e7e765aecc1b7"></a><br/></td></tr>
+<tr class="memitem:a00a3456ccd4563d05fcf39781a911ee9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a00a3456ccd4563d05fcf39781a911ee9">template_best_user</a> ($best_user=1)</td></tr>
+<tr class="memdesc:a00a3456ccd4563d05fcf39781a911ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирует список из пользователей, заливших максимальное кол-во изображений  <a href="#a00a3456ccd4563d05fcf39781a911ee9"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-attribs"></a>
 Поля данных</h2></td></tr>
@@ -890,6 +896,98 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 </div>
 </div>
+<a class="anchor" id="a00a3456ccd4563d05fcf39781a911ee9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template_best_user </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$best_user</em> = <code>1</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция формирует список из пользователей, заливших максимальное кол-во изображений </p>
+<dl class="params"><dt>Аргументы:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$best_user</td><td>сожержит указатель, сколько выводить лучших пользователей </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает:</dt><dd>Сформированный массив блока лучших пользователей </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a>, $lang </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00956">956</a></p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classwork_a00a3456ccd4563d05fcf39781a911ee9_cgraph.png" border="0" usemap="#classwork_a00a3456ccd4563d05fcf39781a911ee9_cgraph" alt=""/></div>
+<map name="classwork_a00a3456ccd4563d05fcf39781a911ee9_cgraph" id="classwork_a00a3456ccd4563d05fcf39781a911ee9_cgraph">
+<area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="190,5,269,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a116ebcf799d07566a74e7e765aecc1b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template_stat </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция формирует блок статистики для сайта </p>
+<dl class="section return"><dt>Возвращает:</dt><dd>Сформированный массив блока статистики </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a>, $lang </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00838">838</a></p>
+
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classwork_a116ebcf799d07566a74e7e765aecc1b7_cgraph.png" border="0" usemap="#classwork_a116ebcf799d07566a74e7e765aecc1b7_cgraph" alt=""/></div>
+<map name="classwork_a116ebcf799d07566a74e7e765aecc1b7_cgraph" id="classwork_a116ebcf799d07566a74e7e765aecc1b7_cgraph">
+<area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="155,5,234,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f3df8874c79377e6a8b4398ea6ad774"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template_user </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе </p>
+<dl class="section return"><dt>Возвращает:</dt><dd>Сформированный массив блока пользователя </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a>, $lang </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00800">800</a></p>
+
+</div>
+</div>
 <a class="anchor" id="a1e1a4ab6b213ada0d89c77a24d8ffe32"></a>
 <div class="memitem">
 <div class="memproto">
@@ -908,11 +1006,11 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00061">61</a></p>
 
-<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph.png" border="0" usemap="#classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" alt=""/></div>
 <map name="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" id="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="134,5,213,32"/></map>
@@ -988,11 +1086,11 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00030">30</a></p>
 
-<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph.png" border="0" usemap="#classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph" alt=""/></div>
 <map name="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph" id="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="105,5,183,32"/></map>

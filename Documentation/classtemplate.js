@@ -8,7 +8,7 @@ var classtemplate =
     [ "add_string_ar", "classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f", null ],
     [ "create_template", "classtemplate.html#a1ef5df918700c21dc94152e4a8329770", null ],
     [ "find_template_file", "classtemplate.html#aeb30656300264153e8655b016d3a4278", null ],
-    [ "page_footer", "classtemplate.html#a7867c9d16b05792c8b51541f076d773a", null ],
+    [ "page_footer", "classtemplate.html#a4cf5319d46e7245820ccece1c6475c24", null ],
     [ "page_header", "classtemplate.html#adfa6b5a8b7db70da694466e1607b5261", null ],
     [ "pars_template", "classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4", null ],
     [ "template", "classtemplate.html#aad92cc1c9f8851dcc0ca87bb457af9bc", null ],

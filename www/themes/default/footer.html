@@ -1,10 +1,193 @@
 						</td>
 						<td width="5px" class="td_spacer">&nbsp;</td>
 						<td class="polja">
-{TEXT_USER_INFO}
-{TEXT_STATISTIC}
-{TEXT_BEST_USER}
-{TEXT_RANDOM_FOTO}
+<!-- ARRAY_RIGHT_PANEL_BEGIN -->
+<!-- SELECT_RIGHT_BLOCK_BEGIN -->
+<!-- CASE_USER_INFO -->
+<!-- IF_USER_NOT_LOGIN_BEGIN -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="login_user"></td>
+									<td class="login_user" align="center">
+										<form name="login_user" action="{U_LOGIN}" method="post">
+											<table cellpadding="0" cellspacing="1" border="0">
+												<tr>
+													<td style="text-align:left;">{L_LOGIN}:</td>
+													<td style="text-align:left;"><input class="form" type="text" name="login" maxlength="32" /></td>
+												</tr>
+												<tr>
+													<td style="text-align:left;">{L_PASSWORD}:</td>
+													<td style="text-align:left;"><input class="form" type="password" name="password" autocomplete="off" /></td>
+												</tr>
+												<tr>
+													<td colspan="2"><input name="submit" type="image" value="{L_ENTER}" title="{L_ENTER}" alt="{L_ENTER}" src="{THEME_URL}img/submit_small_vojti.gif" align="absmiddle" /></td>
+												</tr>
+											</table>
+										</form>
+									</td>
+									<td class="login_user"></td>
+								</tr>
+								<tr>
+									<td class="login_user"></td>
+									<td class="login_user" align="center">
+										<!-- <a href="{U_FORGOT_PASSWORD}" title="{L_FORGOT_PASSWORD}">{L_FORGOT_PASSWORD}</a><br /> -->
+										<a href="{U_REGISTRATION}" title="{L_REGISTRATION}">{L_REGISTRATION}</a>
+									</td>
+									<td class="login_user"></td>
+								</tr>
+							</table>
+<!-- IF_USER_NOT_LOGIN_ELSE -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="3" class="login_user">
+										<br />{L_HI_USER}<br /><br />
+										<img src="{U_AVATAR}" title="{L_HI_USER}" alt="{L_HI_USER}" border="0" class="image" /><br /><br />
+										{L_GROUP}<br /><br />
+									</td>
+								</tr>
+							</table>
+<!-- IF_USER_NOT_LOGIN_END -->
+<!-- BREAK_USER_INFO -->
+<!-- CASE_STATISTIC -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="polya"></td>
+                                    <td class="polya">
+										<table cellpadding="0" cellspacing="0" border="0" width="95%" class="stat">
+											<tr>
+												<td>{L_STAT_REGIST}:</td>
+												<td class="stat_data">{D_STAT_REGIST}</td>
+											</tr>
+											<tr>
+												<td>{L_STAT_PHOTO}:</td>
+												<td class="stat_data">{D_STAT_PHOTO}</td>
+											</tr>
+											<tr>
+												<td>{L_STAT_CATEGORY}:</td>
+												<td class="stat_data">{D_STAT_CATEGORY}</td>
+											</tr>
+											<tr>
+												<td>{L_STAT_USER_ADMIN}:</td>
+												<td class="stat_data">{D_STAT_USER_ADMIN}</td>
+											</tr>
+											<tr>
+												<td>{L_STAT_USER_MODER}:</td>
+												<td class="stat_data">{D_STAT_USER_MODER}</td>
+											</tr>
+											<tr>
+												<td>{L_STAT_RATE_USER}:</td>
+												<td class="stat_data">{D_STAT_RATE_USER}</td>
+											</tr>
+											<tr>
+												<td>{L_STAT_RATE_MODER}:</td>
+												<td class="stat_data">{D_STAT_RATE_MODER}</td>
+											</tr>
+										</table>
+										<table cellpadding="0" cellspacing="0" border="0" width="95%" class="stat">
+											<tr>
+												<td class="news_data">{L_STAT_ONLINE}: {D_STAT_ONLINE}</td>
+											</tr>
+										</table>
+									</td>
+                                    <td class="polya"></td>
+								</tr>
+							</table>
+<!-- BREAK_STATISTIC -->
+<!-- CASE_BEST_USER -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="polya"></td>
+                                    <td class="polya">
+										<table cellpadding="0" cellspacing="0" border="0" width="95%" class="stat">
+											<tr>
+												<td class="stat_data">{L_USER_NAME}</td>
+												<td class="stat_data">{L_USER_PHOTO}</td>
+											</tr>
+<!-- ARRAY_BEST_USER_BEGIN -->
+											<tr>
+												<td class="news_data">
+<!-- IF_USER_EXIST_BEGIN -->
+												<a href="{U_BEST_USER_PROFILE}" title="{D_USER_NAME}">{D_USER_NAME}</a>
+<!-- IF_USER_EXIST_ELSE -->
+												{D_USER_NAME}
+<!-- IF_USER_EXIST_END -->
+												</td>
+												<td class="stat_data">{D_USER_PHOTO}</td>
+											</tr>
+<!-- ARRAY_BEST_USER_END -->
+											</table>
+									</td>
+                                    <td class="polya"></td>
+								</tr>
+							</table>
+
+<!-- BREAK_BEST_USER -->
+<!-- CASE_RANDOM_PHOTO -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
+                                    <td class="mini_foto"></td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
+                                    <td class="mini_foto"></td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto">
+<!-- IF_USER_EXISTS_BEGIN -->
+										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
+<!-- IF_USER_EXISTS_ELSE -->
+										{D_REAL_NAME_USER_ADD}
+<!-- IF_USER_EXISTS_END -->
+									</td>
+                                    <td class="mini_foto"></td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto">{PHOTO_RATE}</td>
+                                    <td class="mini_foto"></td>
+								</tr>
+							</table>
+<!-- BREAK_RANDOM_PHOTO -->
+<!-- CASE_DEFAULT -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">ERROR_CASE_BLOCK</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+							</table>
+<!-- BREAK_DEFAULT -->
+<!-- SELECT_RIGHT_BLOCK_END -->
+<!-- ARRAY_RIGHT_PANEL_END -->
 						</td>
 					</tr>
 				</table>

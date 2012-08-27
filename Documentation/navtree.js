@@ -25,7 +25,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "action_2admin_8php.html",
-"language_2russian_2admin_8php.html#ga8f9b6648a8efd2e36ae089a1d80d03a6",
+"language_2russian_2admin_8php.html#ga847f1081b47f014fe9609c6fe4a0b661",
 ];
 
 var navTreeSubIndices = new Array();

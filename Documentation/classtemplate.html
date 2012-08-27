@@ -136,8 +136,8 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <tr class="memdesc:adb3b69ac7b01b40a43410bad7576b9f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция обработки шаблона  <a href="#adb3b69ac7b01b40a43410bad7576b9f4"></a><br/></td></tr>
 <tr class="memitem:adfa6b5a8b7db70da694466e1607b5261"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplate.html#adfa6b5a8b7db70da694466e1607b5261">page_header</a> ($title, $config, $s_menu=false, $l_menu=false, $photo_top, $photo_last)</td></tr>
 <tr class="memdesc:adfa6b5a8b7db70da694466e1607b5261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирование заголовка страницы  <a href="#adfa6b5a8b7db70da694466e1607b5261"></a><br/></td></tr>
-<tr class="memitem:a7867c9d16b05792c8b51541f076d773a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplate.html#a7867c9d16b05792c8b51541f076d773a">page_footer</a> ($copyright)</td></tr>
-<tr class="memdesc:a7867c9d16b05792c8b51541f076d773a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирование "подвала" страницы  <a href="#a7867c9d16b05792c8b51541f076d773a"></a><br/></td></tr>
+<tr class="memitem:a4cf5319d46e7245820ccece1c6475c24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplate.html#a4cf5319d46e7245820ccece1c6475c24">page_footer</a> ($config, $<a class="el" href="classuser.html">user</a>, $stat, $best_user, $rand_photo)</td></tr>
+<tr class="memdesc:a4cf5319d46e7245820ccece1c6475c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирование "подвала" страницы  <a href="#a4cf5319d46e7245820ccece1c6475c24"></a><br/></td></tr>
 <tr class="memitem:a697532490a0a9cd5c168737087fe871f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtemplate.html#a697532490a0a9cd5c168737087fe871f">url_mod_rewrite</a> ($content, $txt=false)</td></tr>
 <tr class="memdesc:a697532490a0a9cd5c168737087fe871f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Замена ссылок на более читаемый вид  <a href="#a697532490a0a9cd5c168737087fe871f"></a><br/></td></tr>
 </table><table class="memberdecls">
@@ -646,7 +646,7 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 
 </div>
 </div>
-<a class="anchor" id="a7867c9d16b05792c8b51541f076d773a"></a>
+<a class="anchor" id="a4cf5319d46e7245820ccece1c6475c24"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -654,8 +654,36 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
           <td class="memname">page_footer </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$copyright</em></td><td>)</td>
+          <td class="paramname"><em>$config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$stat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$best_user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$rand_photo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -664,13 +692,17 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <p>Формирует "подвал" HTML-страницы с выводом копирайта. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'footer.html' </p>
 <dl class="params"><dt>Аргументы:</dt><dd>
   <table class="params">
-    <tr><td class="paramname">$copyright</td><td>передает информацию о копирайте </td></tr>
+    <tr><td class="paramname">$config</td><td>передает настройки сайта </td></tr>
+    <tr><td class="paramname">$user</td><td>передает информацию о пользователе </td></tr>
+    <tr><td class="paramname">$stat</td><td>передает статистику сайта </td></tr>
+    <tr><td class="paramname">$best_user</td><td>передает список лучших пользователей </td></tr>
+    <tr><td class="paramname">$rand_photo</td><td>передает случайное изображение </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a>, <a class="el" href="classtemplate.html#aaabe60e829407d9f1e18c4f7ca1cc1e6" title="Добавление строковой данной для замены в шаблоне">add_string</a> </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd>$lang, <a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a>, <a class="el" href="classtemplate.html#a81a0f5ac832f9296d427080af9383791" title="Файл шаблона">$template_file</a>, <a class="el" href="classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f" title="Добавление массива строковых данных для замены в шаблоне">add_string_ar</a>, <a class="el" href="classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона">add_if</a>, <a class="el" href="classtemplate.html#ac472efb4d43bafda24293efc44584a26" title="Добавление данных о выборе блока для вывода фрагментов шаблона">add_case</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00492">492</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00496">496</a></p>
 
 </div>
 </div>
@@ -1130,7 +1162,7 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <dl class="section return"><dt>Возвращает:</dt><dd>Обработанное содержимое </dd></dl>
 <dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classtemplate.html#af063a54cbc33b112254b0087948861ca" title="Включение читаемых URL.">$mod_rewrite</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00512">512</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00561">561</a></p>
 
 <p><div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>

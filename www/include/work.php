@@ -791,5 +791,234 @@ class work
 		}
 		return $size_photo;
 	}
+
+	/// Функция формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе
+	/**
+	* @return Сформированный массив блока пользователя
+	* @see user, $lang
+	*/
+	function template_user()
+	{
+		global $lang, $user;
+
+		$array_data = array();
+
+		if ($_SESSION['login_id'] == 0)
+		{
+			$array_data = array(
+					'NAME_BLOCK' => $lang['main_user_block'],
+					'L_LOGIN' => $lang['main_login'],
+					'L_PASSWORD' => $lang['main_pass'],
+					'L_ENTER' => $lang['main_enter'],
+					'L_FORGOT_PASSWORD' => $lang['main_forgot_password'],
+					'L_REGISTRATION' => $lang['main_registration'],
+					'U_LOGIN' => $this->config['site_url'] . '?action=login&subact=login',
+					'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=login&subact=forgot',
+					'U_REGISTRATION' => $this->config['site_url'] . '?action=login&subact=regist'
+			);
+			return $array_data;
+		}
+		else
+		{
+			$array_data = array(
+					'NAME_BLOCK' => $lang['main_user_block'],
+					'L_HI_USER' => $lang['main_hi_user'] . ', ' . $user->user['real_name'],
+					'L_GROUP' => $lang['main_group'] . ': ' . $user->user['group'],
+					'U_AVATAR' => $this->config['site_url'] . $this->config['avatar_folder'] . '/' . $user->user['avatar']
+			);
+			return $array_data;
+		}
+	}
+
+	/// Функция формирует блок статистики для сайта
+	/**
+	* @return Сформированный массив блока статистики
+	* @see db, $lang
+	*/
+	function template_stat()
+	{
+		global $db, $lang;
+
+		if ($db->select('COUNT(*) AS `regist_user`', TBL_USERS))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['regist'] = $temp['regist_user'];
+			else $stat['regist'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select('COUNT(*) AS `photo_count`', TBL_PHOTO))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['photo'] = $temp['photo_count'];
+			else $stat['photo'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select('COUNT(*) AS `category`', TBL_CATEGORY, '`id` != 0'))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['category'] = $temp['category'];
+			else $stat['category'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select('COUNT(DISTINCT `user_upload`) AS `category_user`', TBL_PHOTO, '`category` = 0'))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['category_user'] = $temp['category_user'];
+			else $stat['category_user'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		$stat['category'] = $stat['category'] + $stat['category_user'];
+
+		if ($db->select('COUNT(*) AS `user_admin`', TBL_USERS, '`group` = 3'))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['user_admin'] = $temp['user_admin'];
+			else $stat['user_admin'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select('COUNT(*) AS `user_moder`', TBL_USERS, '`group` = 2'))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['user_moder'] = $temp['user_moder'];
+			else $stat['user_moder'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select('COUNT(*) AS `rate_user`', TBL_RATE_USER))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['rate_user'] = $temp['rate_user'];
+			else $stat['rate_user'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select('COUNT(*) AS `rate_moder`', TBL_RATE_MODER))
+		{
+			$temp = $db->res_row();
+			if ($temp) $stat['rate_moder'] = $temp['rate_moder'];
+			else $stat['rate_moder'] = 0;
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		if ($db->select(array('id', 'real_name'), TBL_USERS, '`date_last_activ` >= (CURRENT_TIMESTAMP - 900 )'))
+		{
+			$temp = $db->res_arr();
+			if ($temp)
+			{
+				$stat['online'] ='';
+				foreach ($temp as $val)
+				{
+					$stat['online'] .= ', <a href="' . $this->config['site_url']  . '?action=login&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+				}
+				$stat['online'] = substr($stat['online'], 2) . '.';
+			}
+			else $stat['online'] = $lang['main_stat_no_online'];
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		$array_data = array();
+
+		$array_data = array(
+				'NAME_BLOCK' => $lang['main_stat_title'],
+				'L_STAT_REGIST' => $lang['main_stat_regist'],
+				'L_STAT_PHOTO' => $lang['main_stat_photo'],
+				'L_STAT_CATEGORY' => $lang['main_stat_category'],
+				'L_STAT_USER_ADMIN' => $lang['main_stat_user_admin'],
+				'L_STAT_USER_MODER' => $lang['main_stat_user_moder'],
+				'L_STAT_RATE_USER' => $lang['main_stat_rate_user'],
+				'L_STAT_RATE_MODER' => $lang['main_stat_rate_moder'],
+				'L_STAT_ONLINE' => $lang['main_stat_online'],
+
+				'D_STAT_REGIST' => $stat['regist'],
+				'D_STAT_PHOTO' => $stat['photo'],
+				'D_STAT_CATEGORY' => $stat['category'] . '(' . $stat['category_user'] . ')',
+				'D_STAT_USER_ADMIN' => $stat['user_admin'],
+				'D_STAT_USER_MODER' => $stat['user_moder'],
+				'D_STAT_RATE_USER' => $stat['rate_user'],
+				'D_STAT_RATE_MODER' => $stat['rate_moder'],
+				'D_STAT_ONLINE' => $stat['online']
+		);
+
+		return $array_data;
+	}
+
+	/// Функция формирует список из пользователей, заливших максимальное кол-во изображений
+	/**
+	* @param $best_user сожержит указатель, сколько выводить лучших пользователей
+	* @return Сформированный массив блока лучших пользователей
+	* @see db, $lang
+	*/
+	function template_best_user($best_user = 1)
+	{
+		global $db, $lang;
+
+		$array_data = array();
+		if ($db->select('DISTINCT `user_upload`', TBL_PHOTO))
+		{
+			$temp = $db->res_arr();
+			if ($temp)
+			{
+				$best_user_array = array();
+				foreach ($temp as $val)
+				{
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $val['user_upload']))
+					{
+						$temp2 = $db->res_row();
+						if ($temp2)
+						{
+							if ($db->select('COUNT(*) AS `user_photo`', TBL_PHOTO, '`user_upload` = ' . $val['user_upload']))
+							{
+								$temp2 = $db->res_row();
+								if ($temp2) $val['user_photo'] = $temp2['user_photo'];
+								else $val['user_photo'] = 0;
+							}
+							else log_in_file($db->error, DIE_IF_ERROR);
+						}
+						else $val['user_photo'] = 0;
+					}
+					else log_in_file($db->error, DIE_IF_ERROR);
+					$best_user_array[$val['user_upload']] = $val['user_photo'];
+				}
+				arsort($best_user_array);
+				$idx = 1;
+				foreach ($best_user_array as $best_user_name => $best_user_photo)
+				{
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $best_user_name))
+					{
+						$temp2 = $db->res_row();
+						$array_data[$idx] = array(
+								'user_url' => $this->config['site_url']  . '?action=login&subact=profile&uid=' . $best_user_name,
+								'user_name' => $temp2['real_name'],
+								'user_photo' => $best_user_photo
+						);
+						$idx++;
+					}
+					else log_in_file($db->error, DIE_IF_ERROR);
+				}
+			}
+			else
+			{
+				$array_data[1] = array(
+					'user_url' => NULL,
+					'user_name' => '---',
+					'user_photo' => '-'
+				);
+			}
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		$array_data[0] = array(
+				'NAME_BLOCK' => $lang['main_best_user_1'] . $best_user . $lang['main_best_user_2'],
+				'L_USER_NAME' => $lang['main_user_name'],
+				'L_USER_PHOTO' => $lang['main_best_user_photo'],
+		);
+
+		return $array_data;
+	}
 }
 ?>

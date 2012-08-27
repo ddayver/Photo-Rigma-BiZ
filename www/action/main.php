@@ -17,7 +17,7 @@ include_once($work->config['site_dir'] . 'language/' . $work->config['language']
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
 $title = $lang['main_main'];
 
-// $template_TMP = true;
+$template_TMP = true;
 
 $news = $work->news($work->config['last_news'], 'last');
 if ($news && $user->user['news_view'] == true)
@@ -78,6 +78,4 @@ else
 		'L_TEXT_POST' => trim(nl2br($news['L_TEXT_POST']))
 	), 'LAST_NEWS[0]');
 }
-
-if (!$template_TMP) echo $template->create_main_template('main', $lang['main_main'], $template->template_news($work->config['last_news']));
 ?>

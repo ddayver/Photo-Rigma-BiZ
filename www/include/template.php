@@ -486,15 +486,64 @@ class template
 	/// Формирование "подвала" страницы
 	/**
 	* Формирует "подвал" HTML-страницы с выводом копирайта. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'footer.html'
-	* @param $copyright передает информацию о копирайте
-	* @see $content, add_string
+	* @param $config передает настройки сайта
+	* @param $user передает информацию о пользователе
+	* @param $stat передает статистику сайта
+	* @param $best_user передает список лучших пользователей
+	* @param $rand_photo передает случайное изображение
+	* @see $lang, $content, $template_file, add_string_ar, add_if, add_case
 	*/
-	function page_footer($copyright)
+	function page_footer($config, $user, $stat, $best_user, $rand_photo)
 	{
+		global $lang;
+
 		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
-		$temp_template->add_string('COPYRIGHT_YEAR', $copyright['copyright_year']);
-		$temp_template->add_string('COPYRIGHT_URL', $copyright['copyright_url']);
-		$temp_template->add_string('COPYRIGHT_TEXT', $copyright['copyright_text']);
+		$temp_template->add_string_ar(array(
+			'COPYRIGHT_YEAR' => $config['copyright_year'],
+			'COPYRIGHT_URL' => $config['copyright_url'],
+			'COPYRIGHT_TEXT' => $config['copyright_text']
+		));
+
+		$temp_template->add_case('RIGHT_BLOCK', 'USER_INFO', 'RIGHT_PANEL[0]');
+		$temp_template->add_string_ar($user, 'RIGHT_PANEL[0]');
+		$temp_template->add_if('USER_NOT_LOGIN', ($_SESSION['login_id'] == 0 ? true : false), 'RIGHT_PANEL[0]');
+
+		$temp_template->add_case('RIGHT_BLOCK', 'STATISTIC', 'RIGHT_PANEL[1]');
+		$temp_template->add_string_ar($stat, 'RIGHT_PANEL[1]');
+
+		$temp_template->add_case('RIGHT_BLOCK', 'BEST_USER', 'RIGHT_PANEL[2]');
+		$temp_template->add_string_ar($best_user[0], 'RIGHT_PANEL[2]');
+		unset($best_user[0]);
+		foreach ($best_user as $key => $val)
+		{
+			$temp_template->add_string_ar(array(
+				'U_BEST_USER_PROFILE' => $val['user_url'],
+				'D_USER_NAME' => $val['user_name'],
+				'D_USER_PHOTO' => $val['user_photo']
+			), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
+			$temp_template->add_if('USER_EXIST', (empty($val['user_url']) ? false : true), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
+		}
+
+		$temp_template->add_case('RIGHT_BLOCK', 'RANDOM_PHOTO', 'RIGHT_PANEL[3]');
+		$temp_template->add_string_ar(array(
+			'NAME_BLOCK' => $rand_photo['name_block'],
+			'PHOTO_WIDTH' => $rand_photo['width'],
+			'PHOTO_HEIGHT' => $rand_photo['height'],
+			'MAX_FOTO_HEIGHT' => $config['temp_photo_h'] + 10,
+			'D_NAME_PHOTO' => $rand_photo['name'],
+			'D_DESCRIPTION_PHOTO' => $rand_photo['description'],
+			'D_NAME_CATEGORY' => $rand_photo['category_name'],
+			'D_DESCRIPTION_CATEGORY' => $rand_photo['category_description'],
+			'PHOTO_RATE' => $rand_photo['rate'],
+			'L_USER_ADD' => $lang['main_user_add'],
+			'U_PROFILE_USER_ADD' => $rand_photo['url_user'],
+			'D_REAL_NAME_USER_ADD' => $rand_photo['real_name'],
+			'U_PHOTO' => $rand_photo['url'],
+			'U_THUMBNAIL_PHOTO' => $rand_photo['thumbnail_url'],
+			'U_CATEGORY' => $rand_photo['category_url']
+		), 'RIGHT_PANEL[3]');
+		$temp_template->add_if('USER_EXISTS', (empty($rand_photo['url_user']) ? false : true), 'RIGHT_PANEL[3]');
+
 		$temp_template->template_file = 'footer.html';
 		$temp_template->create_template();
 		$this->content = $this->content . $temp_template->content;

@@ -7,11 +7,12 @@
 * @date		27/03-2012
 * @details	Используется для подключения как классов, так и вызываемых модулей.
 */
+
 /**
 * @enum IN_GALLERY
 * @brief Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.
 */
-define ('IN_GALLERY', FALSE);
+define('IN_GALLERY', FALSE);
 
 include_once ('config.php'); // Подключаем файл редактируемых пользователем настроек
 
@@ -81,7 +82,7 @@ $template_new->create_template();
 if ($header_footer)
 {
 	$template_new->page_header($title, $work->config, $work->create_menu($action, 0), $work->create_menu($action, 1), $work->create_photo('top'), $work->create_photo('last'));
-	$template_new->page_footer($work->config);
+	$template_new->page_footer($work->config, $work->template_user(), $work->template_stat(), $work->template_best_user($work->config['best_user']), $work->create_photo('rand'));
 }
 if ($template_output) echo $template_new->content;
 } // Заглушка
