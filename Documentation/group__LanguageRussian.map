@@ -1,7 +1,10 @@
 <map id="structs" name="structs">
 <area shape="rect" id="node1" href="$group__LanguageRussianMain.html" title="Основные языковые\l переменные" alt="" coords="218,5,363,46"/>
-<area shape="rect" id="node2" href="$group__LanguageRussianAdmin.html" title="Переменные\l для Админки" alt="" coords="239,70,343,111"/>
-<area shape="rect" id="node4" href="$group__LanguageRussianPhoto.html" title="Переменные\l для процедур\l вывода, обработки,\l оценки изображений" alt="" coords="215,135,367,206"/>
-<area shape="rect" id="node5" href="$group__LanguageRussianCategory.html" title="Переменные\l для процедур\l обзора и управления\l разделами" alt="" coords="214,230,367,301"/>
-<area shape="rect" id="node6" href="$group__LanguageRussianLogin.html" title="Переменные\l для процедур\l регистрации\l и восстановления\l пароля" alt="" coords="223,325,358,411"/>
+<area shape="rect" id="node2" href="$group__LanguageRussianNews.html" title="Переменные\l для новостей\l сайта" alt="" coords="237,69,344,125"/>
+<area shape="rect" id="node3" href="$group__LanguageRussianSearch.html" title="Переменные\l для страницы\l поиска" alt="" coords="235,149,346,205"/>
+<area shape="rect" id="node4" href="$group__LanguageRussianAdmin.html" title="Переменные\l для Админки" alt="" coords="239,229,343,270"/>
+<area shape="rect" id="node6" href="$group__LanguageRussianMenu.html" title="Переменные\l для пунктов\l меню сайта" alt="" coords="241,293,340,349"/>
+<area shape="rect" id="node7" href="$group__LanguageRussianPhoto.html" title="Переменные\l для процедур\l вывода, обработки,\l оценки изображений" alt="" coords="215,374,367,445"/>
+<area shape="rect" id="node8" href="$group__LanguageRussianCategory.html" title="Переменные\l для процедур\l обзора и управления\l разделами" alt="" coords="214,469,367,539"/>
+<area shape="rect" id="node9" href="$group__LanguageRussianLogin.html" title="Переменные\l для процедур\l регистрации\l и восстановления\l пароля" alt="" coords="223,564,358,649"/>
 </map>

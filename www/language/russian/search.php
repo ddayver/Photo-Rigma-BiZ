@@ -20,7 +20,7 @@ if (IN_GALLERY)
 /*@{*/
 
 /**
-* @defgroup LanguageRussianAdmin Переменные для страницы поиска
+* @defgroup LanguageRussianSearch Переменные для страницы поиска
 */
 /*@{*/
 $lang['search_title'] = 'Введите строку для поиска и выберите диапазон';

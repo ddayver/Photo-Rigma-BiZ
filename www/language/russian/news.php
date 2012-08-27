@@ -20,7 +20,7 @@ if (IN_GALLERY)
 /*@{*/
 
 /**
-* @defgroup LanguageRussianAdmin Переменные для новостей сайта
+* @defgroup LanguageRussianNews Переменные для новостей сайта
 */
 /*@{*/
 $lang['news_news'] = 'Архив новостей';

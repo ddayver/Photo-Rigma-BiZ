@@ -1,0 +1,27 @@
+var language_2russian_2category_8php =
+[
+    [ "$lang", "language_2russian_2category_8php.html#ga7688fefde0aa3ff19285a649c968cfde", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga0552cb2a3cd3b1b1c77c1c946ae40b98", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga5da2240a083cfb0ac1857cd73d54eabf", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga932bd2163cb5729de62d77f502584009", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga420ffe041ea2c1ac87b424a6063a79e3", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gabd774124f25e1e853fac3e1ff56d8694", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga6a4cf5ac2b5effbff8177f46e97ba902", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga72b4b941d2f6696c06eed0f30870340f", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga8bda27e5047d3fc949fef5c098d4ac87", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gafecd7cc3c143adcadc4ac60c1c81bc3f", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gac6a1633fc1562d603a2796f57c546904", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga888769e783bd6b1ed6f79bb6bcf1516e", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gad11101686d4e74ade5ee7c76e6f75677", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga9836a7d733b6dfc5f2ad762a81944fc1", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga917af46a7226302554ac900e6c61d214", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gad6fd67a36e7aabb6b986ecd228a6e576", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga2a0497a5218fcca4065db15550036211", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gae1d667da38d278c0ecca1707b189266f", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gab9f77a46edca0afa56228ca4685566b6", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga970ec251284bdde8f3a73bee1f7c9b2a", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga07a8935de83c00a54eec8fb83674c5ca", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gab22e719ac4624d26a45928639935aad8", null ],
+    [ "$lang", "language_2russian_2category_8php.html#gaaaf89fafa2bf0ea5fd05c8696eb6ff55", null ],
+    [ "$lang", "language_2russian_2category_8php.html#ga90afd8101999828a9a064110d92de653", null ]
+];

@@ -3,10 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Photo-RigmaBiZ: Языковые переменные русского языка</title>
+<title>Photo-Rigma-BiZ: Языковые переменные русского языка</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
@@ -21,10 +27,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Photo-RigmaBiZ
+   <div id="projectname">Photo-Rigma-BiZ
    &#160;<span id="projectnumber">0.2.0</span>
    </div>
-   <div id="projectbrief">Gallery_Photo-RigmaBiZ</div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
  </tr>
  </tbody>
@@ -60,6 +66,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group__LanguageRussian.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -88,7 +107,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <center><table><tr><td><img src="group__LanguageRussian.png" border="0" alt="" usemap="#group____LanguageRussian"/>
 <map name="group____LanguageRussian" id="group____LanguageRussian">
-<area shape="rect" id="node1" href="group__LanguageRussianMain.html" title="Основные языковые\l переменные" alt="" coords="218,5,363,46"/><area shape="rect" id="node2" href="group__LanguageRussianAdmin.html" title="Переменные\l для Админки" alt="" coords="239,70,343,111"/><area shape="rect" id="node4" href="group__LanguageRussianPhoto.html" title="Переменные\l для процедур\l вывода, обработки,\l оценки изображений" alt="" coords="215,135,367,206"/><area shape="rect" id="node5" href="group__LanguageRussianCategory.html" title="Переменные\l для процедур\l обзора и управления\l разделами" alt="" coords="214,230,367,301"/><area shape="rect" id="node6" href="group__LanguageRussianLogin.html" title="Переменные\l для процедур\l регистрации\l и восстановления\l пароля" alt="" coords="223,325,358,411"/></map>
+<area shape="rect" id="node1" href="group__LanguageRussianMain.html" title="Основные языковые\l переменные" alt="" coords="218,5,363,46"/><area shape="rect" id="node2" href="group__LanguageRussianNews.html" title="Переменные\l для новостей\l сайта" alt="" coords="237,69,344,125"/><area shape="rect" id="node3" href="group__LanguageRussianSearch.html" title="Переменные\l для страницы\l поиска" alt="" coords="235,149,346,205"/><area shape="rect" id="node4" href="group__LanguageRussianAdmin.html" title="Переменные\l для Админки" alt="" coords="239,229,343,270"/><area shape="rect" id="node6" href="group__LanguageRussianMenu.html" title="Переменные\l для пунктов\l меню сайта" alt="" coords="241,293,340,349"/><area shape="rect" id="node7" href="group__LanguageRussianPhoto.html" title="Переменные\l для процедур\l вывода, обработки,\l оценки изображений" alt="" coords="215,374,367,445"/><area shape="rect" id="node8" href="group__LanguageRussianCategory.html" title="Переменные\l для процедур\l обзора и управления\l разделами" alt="" coords="214,469,367,539"/><area shape="rect" id="node9" href="group__LanguageRussianLogin.html" title="Переменные\l для процедур\l регистрации\l и восстановления\l пароля" alt="" coords="223,564,358,649"/></map>
 </td></tr></table></center>
 </div>
 <table class="memberdecls">
@@ -98,15 +117,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <tr class="memitem:group__LanguageRussianCategory"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianCategory.html">Переменные для процедур обзора и управления разделами</a></td></tr>
 <tr class="memitem:group__LanguageRussianLogin"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianLogin.html">Переменные для процедур регистрации и восстановления пароля</a></td></tr>
 <tr class="memitem:group__LanguageRussianMain"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianMain.html">Основные языковые переменные</a></td></tr>
+<tr class="memitem:group__LanguageRussianMenu"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianMenu.html">Переменные для пунктов меню сайта</a></td></tr>
+<tr class="memitem:group__LanguageRussianNews"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianNews.html">Переменные для новостей сайта</a></td></tr>
 <tr class="memitem:group__LanguageRussianPhoto"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianPhoto.html">Переменные для процедур вывода, обработки, оценки изображений</a></td></tr>
+<tr class="memitem:group__LanguageRussianSearch"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LanguageRussianSearch.html">Переменные для страницы поиска</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Создано системой &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.1.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.1.1 </li>
+  </ul>
+</div>
 </body>
 </html>

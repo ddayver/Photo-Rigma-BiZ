@@ -20,7 +20,7 @@ if (IN_GALLERY)
 /*@{*/
 
 /**
-* @defgroup LanguageRussianAdmin Переменные для пунктов меню сайта
+* @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
 */
 /*@{*/
 $lang['menu']['name_block'] = 'Панель навигации';

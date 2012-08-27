@@ -1,0 +1,25 @@
+var language_2russian_2photo_8php =
+[
+    [ "$lang", "language_2russian_2photo_8php.html#ga24d78e05aba19ae6ef946067210796cc", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga9cf1e4228c1694cf8c388977947ff9b6", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gae43dcf9c9d332f7bad2f0fbb2ca1e3ca", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga572b09f8912e61b948b1224d685b9b7e", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga726f602b2f1219f839da3894917cb857", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gaaaee6f848092a5afd43eb6c9d825ccd1", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gad238462cec567e8760867863a38f167e", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga8269873fe225391c1c9dfc377d98f2fb", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga575daa5ceefb9d114bb0bd2f25b3fa3c", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga8819bf09cac8323a4815e68e504bf208", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gab26529a5b3feec1200e5cd1cd24330e3", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga87a0545fcb1475841059b90c5e289a95", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga2e5a698343d86c688b04d1f798ebb5cc", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gae558388a36914ece2959e1526ea25de4", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga02eb4d012594cbece9bce982f6489533", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga64fa23f0a4f28ca629b974a435181c30", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga5eb573eaa5f2ecfc039b3d0ed7e67ccc", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gaca4f26dc7bf48da5c3627bfcdfcaf45f", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gae72a348d6b3581487fd12579fa19c476", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga4a7e81c4746acc6c3a2e6b9b61ad90b2", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#gaf7357f694fa64b9816e2bcde8f476a84", null ],
+    [ "$lang", "language_2russian_2photo_8php.html#ga12c8c6aa092da2322b6c28fe93c6f4ee", null ]
+];
