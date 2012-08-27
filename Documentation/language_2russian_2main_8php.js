@@ -47,5 +47,6 @@ var language_2russian_2main_8php =
     [ "$lang", "language_2russian_2main_8php.html#ga0ef39b447c8d029508aa26c9f790cca2", null ],
     [ "$lang", "language_2russian_2main_8php.html#ga67bff96c7164112772e34538a94d8cd5", null ],
     [ "$lang", "language_2russian_2main_8php.html#gae4cd9591050cb1fbe566daa741e4e966", null ],
-    [ "$lang", "language_2russian_2main_8php.html#ga6e8ec7d26229823813d92e7ce0fbf72b", null ]
+    [ "$lang", "language_2russian_2main_8php.html#ga6e8ec7d26229823813d92e7ce0fbf72b", null ],
+    [ "$lang_name", "language_2russian_2main_8php.html#af2c7295c203b165809c85ced7b224e9e", null ]
 ];

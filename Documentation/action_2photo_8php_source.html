@@ -834,16 +834,16 @@ $(document).ready(function(){initNavTree('action_2photo_8php.html','');});
 <div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;                <span class="stringliteral">&#39;REDIRECT_TIME&#39;</span> =&gt; $redirect_time,</div>
 <div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;                <span class="stringliteral">&#39;IF_NEED_REDIRECT&#39;</span> =&gt; <span class="keyword">true</span></div>
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;    );</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;    $title = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;title_name&#39;</span>] . <span class="stringliteral">&#39; - &#39;</span> . $lang[<span class="stringliteral">&#39;main_redirect_title&#39;</span>];</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;    <a class="code" href="index_8php.html#ada57e7bb7c152edad18fe2f166188691" title="По-умолчанию к заголовку ничего не добавляется">$title</a> = <a class="code" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48" title="Создание объекта класса work.">$work</a>-&gt;config[<span class="stringliteral">&#39;title_name&#39;</span>] . <span class="stringliteral">&#39; - &#39;</span> . $lang[<span class="stringliteral">&#39;main_redirect_title&#39;</span>];</div>
 <div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;    $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template(<span class="stringliteral">&#39;redirect.tpl&#39;</span>, $array_data);</div>
 <div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;}</div>
 <div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;<span class="keywordflow">else</span></div>
 <div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;{</div>
 <div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;    $redirect = array();</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    $title = $lang[<span class="stringliteral">&#39;photo_title&#39;</span>];</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    <a class="code" href="index_8php.html#ada57e7bb7c152edad18fe2f166188691" title="По-умолчанию к заголовку ничего не добавляется">$title</a> = $lang[<span class="stringliteral">&#39;photo_title&#39;</span>];</div>
 <div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;    $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_template($main_tpl, $array_data);</div>
 <div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;}</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template($cur_act, $title, $main_block, $redirect);</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;create_main_template($cur_act, <a class="code" href="index_8php.html#ada57e7bb7c152edad18fe2f166188691" title="По-умолчанию к заголовку ничего не добавляется">$title</a>, $main_block, $redirect);</div>
 <div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;?&gt;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

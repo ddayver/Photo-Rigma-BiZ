@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['page_5ffooter',['page_footer',['../classtemplate.html#ac0696c8f0ea80351e1b475276c735825',1,'template']]],
-  ['page_5fheader',['page_header',['../classtemplate.html#ab2d3a66cf38dbcdef889e12e3a16ea50',1,'template']]],
+  ['page_5ffooter',['page_footer',['../classtemplate.html#a7867c9d16b05792c8b51541f076d773a',1,'template']]],
+  ['page_5fheader',['page_header',['../classtemplate.html#adfa6b5a8b7db70da694466e1607b5261',1,'template']]],
   ['pars_5ftemplate',['pars_template',['../classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4',1,'template']]]
 ];

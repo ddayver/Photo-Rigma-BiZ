@@ -1,5 +1,11 @@
 var NAVTREEINDEX1 =
 {
+"language_2russian_2admin_8php.html#ga8f9b6648a8efd2e36ae089a1d80d03a6":[2,0,0,3,0,0,61],
+"language_2russian_2admin_8php.html#ga91a9eeb9907ca91e64ec5d123869f7bb":[2,0,0,3,0,0,47],
+"language_2russian_2admin_8php.html#ga92c8b386741c5df6702627bdbca0d6d1":[2,0,0,3,0,0,45],
+"language_2russian_2admin_8php.html#ga9325f05150d45c988d6a5c95c73b303a":[2,0,0,3,0,0,33],
+"language_2russian_2admin_8php.html#ga9a27697e12efad15a9868e1569f38345":[2,0,0,3,0,0,56],
+"language_2russian_2admin_8php.html#ga9c43eb94d404bc1223163bcb6b757e06":[2,0,0,3,0,0,50],
 "language_2russian_2admin_8php.html#ga9dec539c686799006ba87918fc4e2434":[2,0,0,3,0,0,3],
 "language_2russian_2admin_8php.html#gaa5cd054d807e4f420d69bdba8d26fea2":[2,0,0,3,0,0,59],
 "language_2russian_2admin_8php.html#gaad48832584c4cb12b7412ea64766b452":[2,0,0,3,0,0,34],
@@ -82,6 +88,7 @@ var NAVTREEINDEX1 =
 "language_2russian_2login_8php.html#gaec10009319ff5497ff825573c3607195":[2,0,0,3,0,2,5],
 "language_2russian_2login_8php.html#gaf2c8c532d125ba1671e87294b0f5c9a6":[2,0,0,3,0,2,0],
 "language_2russian_2main_8php.html":[2,0,0,3,0,3],
+"language_2russian_2main_8php.html#af2c7295c203b165809c85ced7b224e9e":[2,0,0,3,0,3,48],
 "language_2russian_2main_8php.html#ga039240318a25db7a8c15a934724a0fec":[2,0,0,3,0,3,6],
 "language_2russian_2main_8php.html#ga03d1e11e71ae4cee96c966bc0dbd0acd":[2,0,0,3,0,3,37],
 "language_2russian_2main_8php.html#ga0ef39b447c8d029508aa26c9f790cca2":[2,0,0,3,0,3,44],

@@ -57,10 +57,13 @@ $user = new user();
 $action = 'main';
 if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check() && file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = $_GET['action'];
 
+/// Выводить ли заголовок и подвал страницы
 $header_footer = true;
+/// Выводить ли обработанный шаблон
 $template_output = true;
+/// По-умолчанию к заголовку ничего не добавляется
+$title = NULL;
 $template_TMP = false; // Заглушка
-$action = 'main';
 /// @cond
 if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check())
 {
@@ -70,15 +73,15 @@ if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'ind
 
 include_once($config['site_dir'] . 'action/' . $action . '.php');
 
-if ($template_TMP)
+if ($template_TMP) // Заглушка
 {
 
 $template_new->create_template();
 
-if ($header_footer) // Заглушка
+if ($header_footer)
 {
-	$template_new->page_header($title, $local_menu);
-	$template_new->page_footer($debug);
+	$template_new->page_header($title, $work->config, $work->create_menu($action, 0), $work->create_menu($action, 1), $work->create_photo('top'), $work->create_photo('last'));
+	$template_new->page_footer($work->config);
 }
 if ($template_output) echo $template_new->content;
 } // Заглушка

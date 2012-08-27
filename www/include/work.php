@@ -25,7 +25,7 @@ class work
 	/**
 	* -# Формирует массив, хранящий конфигурацию;
 	* -# Формирует массив, хранящий правила защиты.
-	* @see ::$config, ::$db
+	* @see ::$config, db
 	*/
 	function work()
 	{
@@ -334,7 +334,7 @@ class work
 	* @param $cat_id содержит идентификатор раздела или, если $user_flag = 1,то идентификатор пользователя
 	* @param $user_flag флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1)
 	* @return Информационная строка по конктретному разделу.
-	* @see ::$db
+	* @see db, $lang, user
 	*/
 	function category($cat_id = 0, $user_flag = 0)
 	{
@@ -450,7 +450,7 @@ class work
 	/**
 	* @param $photo_id содержит идентификатор удаляемого изображения (обязательное поле).
 	* @return True если удалось удалить, иначе False.
-	* @see ::$db
+	* @see db
 	*/
 	function del_photo($photo_id)
 	{
@@ -570,6 +570,226 @@ class work
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		return $temp_news;
+	}
+
+	/// Функция генерирует меню
+	/**
+	* @param $action содержит пункт меню, который является активным
+	* @param $menu если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню
+	* @return Сформированный массив меню
+	* @see db, $lang, user
+	*/
+	function create_menu($action = 'main', $menu = 0)
+	{
+		global $db, $lang, $user;
+
+		$m[0] = 'short';
+		$m[1] = 'long';
+		$array_menu = array();
+
+		if ($db->select('*', TBL_MENU, '`' . $m[$menu] . '` = 1', array('id' => 'up')))
+		{
+			$temp_menu = $db->res_arr();
+			if ($temp_menu)
+			{
+				foreach ($temp_menu as $key => $val)
+				{
+					$visible = true;
+
+					if($val['user_login'] != '')
+					{
+						if ($val['user_login'] == 0 && $user->user['id'] > 0) $visible = false;
+						if ($val['user_login'] == 1 && $user->user['id'] == 0) $visible = false;
+					}
+					if ($val['user_access'] != '') if($user->user[$val['user_access']] != 1) $visible = false;
+
+					if($visible)
+					{
+						$array_menu[$key] = array(
+								'url' => ($val['action'] == $action ? NULL : $this->config['site_url'] . $val['url_action']),
+								'name' => $lang['menu'][$val['name_action']]
+						);
+					}
+				}
+			}
+			else log_in_file('Unable to get the ' . $m[$menu] . ' menu', DIE_IF_ERROR);
+		}
+		else log_in_file($db->error, DIE_IF_ERROR);
+
+		return $array_menu;
+	}
+
+	/// Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения
+	/**
+	* @param $type если значение равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение
+	* @param $id_photo если $type равно 'cat' - выводит фото с указанным идентификатором
+	* @return Сформированный массив для вывода изображения
+	* @see db, $lang, user, work::size_image
+	*/
+	function create_photo($type = 'top', $id_photo = 0)
+	{
+		global $db, $lang, $user;
+
+		if ($user->user['pic_view'] == true)
+		{
+			$where = false;
+			$order = false;
+			$limit = false;
+			if ($type == 'top')
+			{
+				$where = '`rate_user` != 0';
+				$order = array('rate_user' => 'down');
+				$limit = 1;
+			}
+			elseif ($type == 'last')
+			{
+				$order = array('date_upload' => 'down');
+				$limit = 1;
+			}
+			elseif ($type == 'cat') $where = '`id` = ' . $id_photo;
+			else
+			{
+				$order = 'rand()';
+				$limit = 1;
+			}
+			if ($db->select('*', TBL_PHOTO, $where, $order, false, $limit)) $temp_photo = $db->res_row();
+			else log_in_file($db->error, DIE_IF_ERROR);
+		}
+		else
+		{
+			$temp_photo = false;
+		}
+
+		$photo['name_block'] = $lang['main_' . $type . '_foto'];
+
+		if ($temp_photo)
+		{
+			if ($db->select('*', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
+			{
+				$temp_category = $db->res_row();
+				if ($temp_category)
+				{
+					$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
+					$photo['url'] = $this->config['site_url'] . '?action=photo&id=' . $temp_photo['id'];
+					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=' . $temp_photo['id'] . '&thumbnail=1';
+					$photo['name'] = $temp_photo['name'];
+					$photo['category_name'] = $temp_category['name'];
+					$photo['description'] = $temp_photo['description'];
+					$photo['category_description'] = $temp_category['description'];
+					$photo['rate'] = $lang['main_rate'] . ': ' . $temp_photo['rate_user'] . '/' . $temp_photo['rate_moder'];
+
+					if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp_photo['user_upload']))
+					{
+						$user_add = $db->res_row();
+						if ($user_add)
+						{
+							$photo['url_user'] = $this->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_photo['user_upload'];
+							$photo['real_name'] = $user_add['real_name'];
+						}
+						else
+						{
+							$photo['url_user'] = NULL;
+							$photo['real_name'] = $lang['main_no_user_add'];
+						}
+					}
+					else log_in_file($db->error, DIE_IF_ERROR);
+					if($temp_category['id'] == 0)
+					{
+						$photo['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name'];
+						$photo['category_description'] = $photo['category_name'];
+						$photo['category_url'] = $this->config['site_url'] . '?action=category&cat=user&id=' . $temp_photo['user_upload'];
+					}
+					else $photo['category_url'] = $this->config['site_url'] . '?action=category&cat=' . $temp_category['id'];
+				}
+				else
+				{
+					$temp_photo['file'] = 'no_foto.png';
+					$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
+					$photo['url'] = $this->config['site_url'] . '?action=photo&id=0';
+					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+					$photo['name'] = $lang['main_no_foto'];
+					$photo['description'] = $lang['main_no_foto'];
+					$photo['category_name'] = $lang['main_no_category'];
+					$photo['category_description'] = $lang['main_no_category'];
+					$photo['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+					$photo['url_user'] = NULL;
+					$photo['real_name'] = $lang['main_no_user_add'];
+					$photo['category_url'] = $this->config['site_url'];
+				}
+			}
+			else log_in_file($db->error, DIE_IF_ERROR);
+		}
+		else
+		{
+			$temp_photo['file'] = 'no_foto.png';
+			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
+			$photo['url'] = $this->config['site_url'] . '?action=photo&id=0';
+			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+			$photo['name'] = $lang['main_no_foto'];
+			$photo['description'] = $lang['main_no_foto'];
+			$photo['category_name'] = $lang['main_no_category'];
+			$photo['category_description'] = $lang['main_no_category'];
+			$photo['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+			$photo['url_user'] = NULL;
+			$photo['real_name'] = $lang['main_no_user_add'];
+			$photo['category_url'] = $this->config['site_url'];
+		}
+
+		if(!@fopen($temp_path, 'r'))
+		{
+			$temp_photo['file'] = 'no_foto.png';
+			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
+			$photo['url'] = $this->config['site_url'] . '?action=photo&id=0';
+			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+			$photo['name'] = $lang['main_no_foto'];
+			$photo['description'] = $lang['main_no_foto'];
+			$photo['category_name'] = $lang['main_no_category'];
+			$photo['category_description'] = $lang['main_no_category'];
+			$photo['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+			$photo['url_user'] = NULL;
+			$photo['real_name'] = $lang['main_no_user_add'];
+			$photo['category_url'] = $this->config['site_url'];
+		}
+
+		$size = $this->size_image($temp_path);
+		$photo['width'] = $size['width'];
+		$photo['height'] = $size['height'];
+		return $photo;
+	}
+
+	/// Функция вычисляет необходимый размер для вывода эскиза изображения
+	/**
+	* @param $path_image содержит путь к файлу изображения
+	* @return Массив с шириной и высотой изображения для вывода
+	* @see db, $lang, user, work::create_photo
+	*/
+	function size_image($path_image)
+	{
+		$size = getimagesize($path_image);
+		if ($this->config['temp_photo_w'] == '0') $ratio_width = 1;
+		else $ratio_width = $size[0]/$this->config['temp_photo_w'];
+		if ($this->config['temp_photo_h'] == '0') $ratio_height = 1;
+		else $ratio_height = $size[1]/$this->config['temp_photo_h'];
+
+		if($size[0] < $this->config['temp_photo_w'] && $size[1] < $this->config['temp_photo_h'] && $this->config['temp_photo_w'] != '0' && $this->config['temp_photo_h'] != '0')
+		{
+			$size_photo['width'] = $size[0];
+			$size_photo['height'] = $size[1];
+		}
+		else
+		{
+			if($ratio_width < $ratio_height)
+			{
+				$size_photo['width'] = $size[0]/$ratio_height;
+				$size_photo['height'] = $size[1]/$ratio_height;
+			}
+			else
+			{
+				$size_photo['width'] = $size[0]/$ratio_width;
+				$size_photo['height'] = $size[1]/$ratio_width;
+			}
+		}
+		return $size_photo;
 	}
 }
 ?>

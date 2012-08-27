@@ -15,6 +15,9 @@ if (IN_GALLERY)
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
+$title = $lang['main_main'];
+
+// $template_TMP = true;
 
 $news = $work->news($work->config['last_news'], 'last');
 if ($news && $user->user['news_view'] == true)
@@ -76,5 +79,5 @@ else
 	), 'LAST_NEWS[0]');
 }
 
-echo $template->create_main_template('main', $lang['main_main'], $template->template_news($work->config['last_news']));
+if (!$template_TMP) echo $template->create_main_template('main', $lang['main_main'], $template->template_news($work->config['last_news']));
 ?>

@@ -28,7 +28,7 @@ class template
 	private $block_string = array(); ///< Блок строковых данных для замены
 	private $block_if = array(); ///< Блок условий для обработки
 	private $block_case = array(); ///< Блок массивов выбора блока для обработки
-	private $block_object = array(); ///< Блок массивов объектов для обработки
+	var $block_object = array(); ///< Блок массивов объектов для обработки
 	private $themes_path; ///< Путь к корню темы
 	private $themes_url; ///< Ссылка на корень темы
 	private $site_url; ///< Ссылка корня сайта
@@ -181,8 +181,6 @@ class template
 	{
 		if ($path_array == false)
 		{
-			if ($value != false) $value = true;
-			else $value = false;
 			$this->block_case['SELECT_' . strtoupper($name)] = strtoupper($value);
 		}
 		else
@@ -369,7 +367,6 @@ class template
 					$break_start = strpos($this->content, '<!-- BREAK_DEFAULT -->', $case_end);
 					$break_end = $end_start + strlen('<!-- BREAK_DEFAULT -->');
 					if ($break_start !== false && $case_start < $end_start && $break_start < $end_start) $tmp = substr($this->content, $case_end, $break_start - $case_end);
-					else $tmp = '';
 				}
 				$this->content = str_replace($temp_content, $tmp, $this->content);
 			}
@@ -380,25 +377,106 @@ class template
 	/// Формирование заголовка страницы
 	/**
 	* Формирует заголовок HTML-страницы с пунктами меню и возможностью вставки дополнительных полей. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'header.html'
-	* @param $title название страницы для тега Title
-	* @param $menu массив пунктов основного меню
-	* @see $ins_body, $ins_header, $content, add_string, add_string_ar, add_if
+	* @param $title дополнительное название страницы для тега Title
+	* @param $config массив конфигурации сайта
+	* @param $s_menu массив пунктов короткого (горизонтального) меню
+	* @param $l_menu массив пунктов основного (вертикального) меню
+	* @param $photo_top массив для вывода блока лучшего изображения
+	* @param $photo_last массив для вывода блока последнего загруженного изображения
+	* @see $ins_body, $ins_header, $content, $template_file, add_string, add_string_ar, add_if, add_case, create_template
 	*/
-	function page_header($title, $menu = false)
+	function page_header($title, $config, $s_menu = false, $l_menu = false, $photo_top, $photo_last)
 	{
 		global $lang;
 
 		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
-		$temp_template->add_string('TITLE', $title);
-		$temp_template->add_string('INSERT_HEADER', $this->ins_header);
 		if ($this->ins_body != '') $this->ins_body = ' ' . $this->ins_body;
-		$temp_template->add_string('INSERT_BODY', $this->ins_body);
-		if ($menu && is_array($menu))
+		$temp_template->add_string_ar(array(
+			'TITLE' => (empty($title) ? $config['title_name'] : $config['title_name'] . ' - ' . $title),
+			'INSERT_HEADER' => $this->ins_header,
+			'INSERT_BODY' => $this->ins_body,
+			'META_DESRIPTION' => $config['meta_description'],
+			'META_KEYWORDS' => $config['meta_keywords'],
+			'GALLERY_WIDHT' => $config['gal_width'],
+			'SITE_NAME' => $config['title_name'],
+			'SITE_DESCRIPTION' => $config['title_description'],
+			'U_SEARCH' => $config['site_url'] . '?action=search',
+			'L_SEARCH' => $lang['main_search'],
+			'LEFT_PANEL_WIDHT' => $config['left_panel'],
+			'RIGHT_PANEL_WIDHT' => $config['right_panel']
+		));
+
+		$temp_template->add_if('NEED_REDIRECT', false);
+		$temp_template->add_if('SHORT_MENU', false);
+		if ($s_menu && is_array($s_menu))
 		{
 			$temp_template->add_if('SHORT_MENU', true);
-			foreach($menu as $id=>$value) $temp_template->add_string_ar($value, 'SHORT_MENU[' . $id . ']');
+			foreach($s_menu as $id => $value)
+			{
+				$temp_template->add_string_ar(array(
+					'U_SHORT_MENU' => $value['url'],
+					'L_SHORT_MENU' => $value['name']
+				), 'SHORT_MENU[' . $id . ']');
+				$temp_template->add_if('SHORT_MENU_URL', (empty($value['url']) ? false : true), 'SHORT_MENU[' . $id . ']');
+			}
 		}
-		else $temp_template->add_if('SHORT_MENU', false);
+
+		$temp_template->add_case('LEFT_BLOCK', 'MENU', 'LEFT_PANEL[0]');
+		$temp_template->add_if('LONG_MENU', false, 'LEFT_PANEL[0]');
+		if ($l_menu && is_array($l_menu))
+		{
+			$temp_template->add_if('LONG_MENU', true, 'LEFT_PANEL[0]');
+			$temp_template->add_string('LONG_MENU_NAME_BLOCK', $lang['menu']['name_block'], 'LEFT_PANEL[0]');
+			foreach($l_menu as $id => $value)
+			{
+				$temp_template->add_string_ar(array(
+					'U_LONG_MENU' => $value['url'],
+					'L_LONG_MENU' => $value['name']
+				), 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
+				$temp_template->add_if('LONG_MENU_URL', (empty($value['url']) ? false : true), 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
+			}
+		}
+
+		$temp_template->add_case('LEFT_BLOCK', 'TOP_LAST_PHOTO', 'LEFT_PANEL[1]');
+		$temp_template->add_string_ar(array(
+			'NAME_BLOCK' => $photo_top['name_block'],
+			'PHOTO_WIDTH' => $photo_top['width'],
+			'PHOTO_HEIGHT' => $photo_top['height'],
+			'MAX_FOTO_HEIGHT' => $config['temp_photo_h'] + 10,
+			'D_NAME_PHOTO' => $photo_top['name'],
+			'D_DESCRIPTION_PHOTO' => $photo_top['description'],
+			'D_NAME_CATEGORY' => $photo_top['category_name'],
+			'D_DESCRIPTION_CATEGORY' => $photo_top['category_description'],
+			'PHOTO_RATE' => $photo_top['rate'],
+			'L_USER_ADD' => $lang['main_user_add'],
+			'U_PROFILE_USER_ADD' => $photo_top['url_user'],
+			'D_REAL_NAME_USER_ADD' => $photo_top['real_name'],
+			'U_PHOTO' => $photo_top['url'],
+			'U_THUMBNAIL_PHOTO' => $photo_top['thumbnail_url'],
+			'U_CATEGORY' => $photo_top['category_url']
+		), 'LEFT_PANEL[1]');
+		$temp_template->add_if('USER_EXISTS', (empty($photo_top['url_user']) ? false : true), 'LEFT_PANEL[1]');
+
+		$temp_template->add_case('LEFT_BLOCK', 'TOP_LAST_PHOTO', 'LEFT_PANEL[2]');
+		$temp_template->add_string_ar(array(
+			'NAME_BLOCK' => $photo_last['name_block'],
+			'PHOTO_WIDTH' => $photo_last['width'],
+			'PHOTO_HEIGHT' => $photo_last['height'],
+			'MAX_FOTO_HEIGHT' => $config['temp_photo_h'] + 10,
+			'D_NAME_PHOTO' => $photo_last['name'],
+			'D_DESCRIPTION_PHOTO' => $photo_last['description'],
+			'D_NAME_CATEGORY' => $photo_last['category_name'],
+			'D_DESCRIPTION_CATEGORY' => $photo_last['category_description'],
+			'PHOTO_RATE' => $photo_last['rate'],
+			'L_USER_ADD' => $lang['main_user_add'],
+			'U_PROFILE_USER_ADD' => $photo_last['url_user'],
+			'D_REAL_NAME_USER_ADD' => $photo_last['real_name'],
+			'U_PHOTO' => $photo_last['url'],
+			'U_THUMBNAIL_PHOTO' => $photo_last['thumbnail_url'],
+			'U_CATEGORY' => $photo_last['category_url']
+		), 'LEFT_PANEL[2]');
+		$temp_template->add_if('USER_EXISTS', (empty($photo_last['url_user']) ? false : true), 'LEFT_PANEL[2]');
+
 		$temp_template->template_file = 'header.html';
 		$temp_template->create_template();
 		$this->content = $temp_template->content . $this->content;
@@ -408,15 +486,15 @@ class template
 	/// Формирование "подвала" страницы
 	/**
 	* Формирует "подвал" HTML-страницы с выводом копирайта. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'footer.html'
-	* @param $debug передает отладочную информацию дл вывода на экран
+	* @param $copyright передает информацию о копирайте
 	* @see $content, add_string
 	*/
-	function page_footer($copyright_year, $copyright_url, $copyright_text)
+	function page_footer($copyright)
 	{
 		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
-		$temp_template->add_string('COPYRIGHT_YEAR', $copyright_year);
-		$temp_template->add_string('COPYRIGHT_URL', $copyright_url);
-		$temp_template->add_string('COPYRIGHT_TEXT', $copyright_text);
+		$temp_template->add_string('COPYRIGHT_YEAR', $copyright['copyright_year']);
+		$temp_template->add_string('COPYRIGHT_URL', $copyright['copyright_url']);
+		$temp_template->add_string('COPYRIGHT_TEXT', $copyright['copyright_text']);
 		$temp_template->template_file = 'footer.html';
 		$temp_template->create_template();
 		$this->content = $this->content . $temp_template->content;

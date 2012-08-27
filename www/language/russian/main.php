@@ -14,6 +14,8 @@ if (IN_GALLERY)
 }
 /// @endcond
 
+/// Название языка
+$lang_name = 'Русский';
 /**
 * @defgroup LanguageRussian Языковые переменные русского языка
 */

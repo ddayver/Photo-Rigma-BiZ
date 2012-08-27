@@ -149,6 +149,12 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 <tr class="memdesc:abd4ee05da4428a5b4941fe29d2fa71aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания)  <a href="#abd4ee05da4428a5b4941fe29d2fa71aa"></a><br/></td></tr>
 <tr class="memitem:a60997ff72d6d54e304af61e9de423dc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a60997ff72d6d54e304af61e9de423dc0">news</a> ($news_data=1, $act='last')</td></tr>
 <tr class="memdesc:a60997ff72d6d54e304af61e9de423dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирует вывод новостей сайта  <a href="#a60997ff72d6d54e304af61e9de423dc0"></a><br/></td></tr>
+<tr class="memitem:adbe416bc83832ace861609647a79dc85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#adbe416bc83832ace861609647a79dc85">create_menu</a> ($action= 'main', $menu=0)</td></tr>
+<tr class="memdesc:adbe416bc83832ace861609647a79dc85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция генерирует меню  <a href="#adbe416bc83832ace861609647a79dc85"></a><br/></td></tr>
+<tr class="memitem:a0d7eeafb547e659cc55e017c9282c082"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a0d7eeafb547e659cc55e017c9282c082">create_photo</a> ($type= 'top', $id_photo=0)</td></tr>
+<tr class="memdesc:a0d7eeafb547e659cc55e017c9282c082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения  <a href="#a0d7eeafb547e659cc55e017c9282c082"></a><br/></td></tr>
+<tr class="memitem:a3d003fba794baa1940d917645adf9c78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwork.html#a3d003fba794baa1940d917645adf9c78">size_image</a> ($path_image)</td></tr>
+<tr class="memdesc:a3d003fba794baa1940d917645adf9c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция вычисляет необходимый размер для вывода эскиза изображения  <a href="#a3d003fba794baa1940d917645adf9c78"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-attribs"></a>
 Поля данных</h2></td></tr>
@@ -201,7 +207,7 @@ $(document).ready(function(){initNavTree('classwork.html','');});
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает:</dt><dd>Информационная строка по конктретному разделу. </dd></dl>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a> </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a>, $lang, <a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a> </dd></dl>
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00339">339</a></p>
 
@@ -515,6 +521,106 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 </div>
 </div>
+<a class="anchor" id="adbe416bc83832ace861609647a79dc85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">create_menu </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$action</em> = <code>'main'</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$menu</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция генерирует меню </p>
+<dl class="params"><dt>Аргументы:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$action</td><td>содержит пункт меню, который является активным </td></tr>
+    <tr><td class="paramname">$menu</td><td>если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает:</dt><dd>Сформированный массив меню </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a>, $lang, <a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00582">582</a></p>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classwork_adbe416bc83832ace861609647a79dc85_cgraph.png" border="0" usemap="#classwork_adbe416bc83832ace861609647a79dc85_cgraph" alt=""/></div>
+<map name="classwork_adbe416bc83832ace861609647a79dc85_cgraph" id="classwork_adbe416bc83832ace861609647a79dc85_cgraph">
+<area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="153,5,231,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0d7eeafb547e659cc55e017c9282c082"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">create_photo </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$type</em> = <code>'top'</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$id_photo</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения </p>
+<dl class="params"><dt>Аргументы:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$type</td><td>если значение равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение </td></tr>
+    <tr><td class="paramname">$id_photo</td><td>если $type равно 'cat' - выводит фото с указанным идентификатором </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает:</dt><dd>Сформированный массив для вывода изображения </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a>, $lang, <a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a>, <a class="el" href="classwork.html#a3d003fba794baa1940d917645adf9c78" title="Функция вычисляет необходимый размер для вывода эскиза изображения">work::size_image</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00629">629</a></p>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classwork_a0d7eeafb547e659cc55e017c9282c082_cgraph.png" border="0" usemap="#classwork_a0d7eeafb547e659cc55e017c9282c082_cgraph" alt=""/></div>
+<map name="classwork_a0d7eeafb547e659cc55e017c9282c082_cgraph" id="classwork_a0d7eeafb547e659cc55e017c9282c082_cgraph">
+<area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="157,5,235,32"/><area shape="rect" id="node5" href="classwork.html#a3d003fba794baa1940d917645adf9c78" title="Функция вычисляет необходимый размер для вывода эскиза изображения" alt="" coords="152,56,240,83"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a60353d13b64ee02fe027d3727d07bc4b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -537,15 +643,15 @@ $(document).ready(function(){initNavTree('classwork.html','');});
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает:</dt><dd>True если удалось удалить, иначе False. </dd></dl>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a> </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a> </dd></dl>
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00455">455</a></p>
 
-<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph.png" border="0" usemap="#classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph" alt=""/></div>
 <map name="classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph" id="classwork_a60353d13b64ee02fe027d3727d07bc4b_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="134,5,213,32"/></map>
@@ -705,11 +811,11 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00558">558</a></p>
 
-<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a60997ff72d6d54e304af61e9de423dc0_cgraph.png" border="0" usemap="#classwork_a60997ff72d6d54e304af61e9de423dc0_cgraph" alt=""/></div>
 <map name="classwork_a60997ff72d6d54e304af61e9de423dc0_cgraph" id="classwork_a60997ff72d6d54e304af61e9de423dc0_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="107,5,186,32"/></map>
@@ -745,6 +851,45 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 </div>
 </div>
+<a class="anchor" id="a3d003fba794baa1940d917645adf9c78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_image </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$path_image</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция вычисляет необходимый размер для вывода эскиза изображения </p>
+<dl class="params"><dt>Аргументы:</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$path_image</td><td>содержит путь к файлу изображения </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает:</dt><dd>Массив с шириной и высотой изображения для вывода </dd></dl>
+<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a>, $lang, <a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a>, <a class="el" href="classwork.html#a0d7eeafb547e659cc55e017c9282c082" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения">work::create_photo</a> </dd></dl>
+
+<p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00766">766</a></p>
+
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classwork_a3d003fba794baa1940d917645adf9c78_icgraph.png" border="0" usemap="#classwork_a3d003fba794baa1940d917645adf9c78_icgraph" alt=""/></div>
+<map name="classwork_a3d003fba794baa1940d917645adf9c78_icgraph" id="classwork_a3d003fba794baa1940d917645adf9c78_icgraph">
+<area shape="rect" id="node3" href="classwork.html#a0d7eeafb547e659cc55e017c9282c082" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения" alt="" coords="142,5,239,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a1e1a4ab6b213ada0d89c77a24d8ffe32"></a>
 <div class="memitem">
 <div class="memproto">
@@ -763,11 +908,11 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00061">61</a></p>
 
-<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph.png" border="0" usemap="#classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" alt=""/></div>
 <map name="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" id="classwork_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="134,5,213,32"/></map>
@@ -837,17 +982,17 @@ $(document).ready(function(){initNavTree('classwork.html','');});
 <p>Конструктор класса, выполняет ряд ключевых задач. </p>
 <ol type="1">
 <li>Формирует массив, хранящий конфигурацию;</li>
-<li>Формирует массив, хранящий правила защиты. <dl class="section see"><dt>См. также:</dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a>, <a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a> </dd></dl>
+<li>Формирует массив, хранящий правила защиты. <dl class="section see"><dt>См. также:</dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a>, <a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a> </dd></dl>
 </li>
 </ol>
 
 <p>См. определение в файле <a class="el" href="work_8php_source.html">work.php</a> строка <a class="el" href="work_8php_source.html#l00030">30</a></p>
 
-<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph.png" border="0" usemap="#classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph" alt=""/></div>
 <map name="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph" id="classwork_a1c69e4c5de965a3854ac85f38db024f4_cgraph">
 <area shape="rect" id="node3" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="105,5,183,32"/></map>

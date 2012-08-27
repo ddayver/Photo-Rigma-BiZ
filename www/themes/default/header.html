@@ -11,7 +11,7 @@
 	<meta http-equiv="refresh" content="{REDIRECT_TIME}; URL={U_REDIRECT_URL}" />
 <!-- IF_NEED_REDIRECT_END -->
 	{INSERT_HEADER}
-	<link href="{THEMES_PATH}style.css" rel="stylesheet" type="text/css" />
+	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body bgcolor="#141519;"{INSERT_BODY}>
@@ -19,7 +19,7 @@
 	<table class="my" width="{GALLERY_WIDHT}" cellspacing="0" cellpadding="0">
 		<tr>
            	<td class="shapko">
-				<img src="{THEMES_PATH}img/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}"/>
+				<img src="{THEME_URL}img/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}"/>
 			</td>
 		</tr>
 		<tr>
@@ -28,21 +28,21 @@
 					<tr>
 						<td>
 <!-- IF_SHORT_MENU_BEGIN -->
-<!-- ARRAY_SHORT_MENU_BEGIN -->
 							<table cellpadding="0" cellspacing="0" border="0">
 								<tr>
+<!-- ARRAY_SHORT_MENU_BEGIN -->
 <!-- IF_SHORT_MENU_URL_BEGIN -->
 									<td class="short_menu_left" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">&nbsp;</td>
-									<td class="short_menu" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}"><a href="{U_SHORT_MENU}" title="{L_SHORT_MENU}">{L_MENU}</a></td>
+									<td class="short_menu" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}"><a href="{U_SHORT_MENU}" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a></td>
 									<td class="short_menu_right" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">&nbsp;</td>
 <!-- IF_SHORT_MENU_URL_ELSE -->
 									<td class="short_menu_push_left">&nbsp;</td>
 									<td class="short_menu_push">{L_SHORT_MENU}</td>
 									<td class="short_menu_push_right">&nbsp;</td>
 <!-- IF_SHORT_MENU_URL_END -->
+<!-- ARRAY_SHORT_MENU_END -->
 								</tr>
 							</table>
-<!-- ARRAY_SHORT_MENU_END -->
 <!-- IF_SHORT_MENU_ELSE -->
 						&nbsp;
 <!-- IF_SHORT_MENU_END -->
@@ -52,7 +52,7 @@
 								<table align="right" border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input class="form" size="50" type="text" name="search_main_text" /></td>
-										<td><input name="poisk" type="image" value="search_main_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEMES_PATH}img/submit_small_poisk.gif" align="absmiddle" /></td>
+										<td><input name="poisk" type="image" value="search_main_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEME_URL}img/submit_small_poisk.gif" align="absmiddle" /></td>
 									</tr>
 								</table>
 							</form>
@@ -70,14 +70,17 @@
                         <col />
                         <col width="{RIGHT_PANEL_WIDHT}"  />
                 	<tr class="td_spacer">
-						<td class="td_spacer" width="{LEFT_PANEL_WIDHT}"><img src="{THEMES_PATH}img/spacer.gif" height="1" border="0" alt="" width="{LEFT_PANEL_WIDHT}" /></td>
-						<td class="td_spacer"><img src="{THEMES_PATH}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer"><img src="{THEMES_PATH}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer"><img src="{THEMES_PATH}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer" width="{RIGHT_PANEL_WIDHT}"><img src="{THEMES_PATH}img/spacer.gif" height="1" border="0" alt="" width="{RIGHT_PANEL_WIDHT}" /></td>
+						<td class="td_spacer" width="{LEFT_PANEL_WIDHT}"><img src="{THEMES_URL}img/spacer.gif" height="1" border="0" alt="" width="{LEFT_PANEL_WIDHT}" /></td>
+						<td class="td_spacer"><img src="{THEMES_URL}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
+						<td class="td_spacer"><img src="{THEMES_URL}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
+						<td class="td_spacer"><img src="{THEMES_URL}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
+						<td class="td_spacer" width="{RIGHT_PANEL_WIDHT}"><img src="{THEMES_URL}img/spacer.gif" height="1" border="0" alt="" width="{RIGHT_PANEL_WIDHT}" /></td>
 					</tr>
 					<tr>
 						<td class="polja">
+<!-- ARRAY_LEFT_PANEL_BEGIN -->
+<!-- SELECT_LEFT_BLOCK_BEGIN -->
+<!-- CASE_MENU -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
@@ -89,21 +92,66 @@
 <!-- IF_LONG_MENU_URL_BEGIN -->
 								<tr>
 									<td class="menu_left" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">&nbsp;</td>
-									<td class="menu" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}"><a href="{U_LONG_MENU}" title="{L_LONG_MENU}"><img src="{THEMES_PATH}img/menu_mark.gif" alt=" " border="0" height="7" />&nbsp;&nbsp;{L_LONG_MENU}</a></td>
+									<td class="menu" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}"><a href="{U_LONG_MENU}" title="{L_LONG_MENU}"><img src="{THEMES_URL}img/menu_mark.gif" alt=" " border="0" height="7" />&nbsp;&nbsp;{L_LONG_MENU}</a></td>
 									<td class="menu_right" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">&nbsp;</td>
 								</tr>
 <!-- IF_LONG_MENU_URL_ELSE -->
 								<tr>
 									<td class="menu_push_left">&nbsp;</td>
-									<td class="menu_push"><img src="{THEMES_PATH}img/menu_push_mark.gif" alt=" " border="0" height="7" />&nbsp;&nbsp;{L_LONG_MENU}</td>
+									<td class="menu_push"><img src="{THEMES_URL}img/menu_push_mark.gif" alt=" " border="0" height="7" />&nbsp;&nbsp;{L_LONG_MENU}</td>
 									<td class="menu_push_right">&nbsp;</td>
 								</tr>
 <!-- IF_LONG_MENU_URL_END -->
 <!-- ARRAY_LONG_MENU_END -->
 <!-- IF_LONG_MENU_END -->
 							</table>
-{TEXT_TOP_FOTO}
-{TEXT_LAST_FOTO}
+<!-- BREAK_MENU -->
+<!-- CASE_TOP_LAST_PHOTO -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
+                                    <td class="mini_foto"></td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
+                                    <td class="mini_foto"></td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto">
+<!-- IF_USER_EXISTS_BEGIN -->
+										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
+<!-- IF_USER_EXISTS_ELSE -->
+										{D_REAL_NAME_USER_ADD}
+<!-- IF_USER_EXISTS_END -->
+									</td>
+                                    <td class="mini_foto"></td>
+								</tr>
+								<tr>
+                                	<td class="mini_foto"></td>
+									<td class="mini_foto">{PHOTO_RATE}</td>
+                                    <td class="mini_foto"></td>
+								</tr>
+							</table>
+<!-- BREAK_TOP_LAST_PHOTO -->
+<!-- CASE_DEFAULT -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">ERROR_CASE_BLOCK</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+							</table>
+<!-- BREAK_DEFAULT -->
+<!-- SELECT_LEFT_BLOCK_END -->
+<!-- ARRAY_LEFT_PANEL_END -->
 						</td>
 						<td width="5px" class="td_spacer">&nbsp;</td>
 						<td class="polja">
