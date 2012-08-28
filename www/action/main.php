@@ -42,7 +42,7 @@ if ($news && $user->user['news_view'] == true)
 				$template_new->add_if('USER_EXISTS', true, 'LAST_NEWS[' . $key . ']');
 				$template_new->add_string_ar(array(
 					'L_USER_ADD' => $lang['main_user_add'],
-					'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['user_post'],
+					'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $val['user_post'],
 					'D_REAL_NAME_USER_POST' => $user_add['real_name']
 				), 'LAST_NEWS[' . $key . ']');
 			}
@@ -51,16 +51,13 @@ if ($news && $user->user['news_view'] == true)
 
 		if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
 		{
-			$template_new->add_if_ar(array(
-				'EDIT_SHORT' => true,
-				'EDIT_LONG' => true
-			), 'LAST_NEWS[' . $key . ']');
+			$template_new->add_if('EDIT_SHORT', true, 'LAST_NEWS[' . $key . ']');
 			$template_new->add_string_ar(array(
 				'L_EDIT_BLOCK' => $lang['main_edit_news'],
 				'L_DELETE_BLOCK' => $lang['main_delete_news'],
 				'L_CONFIRM_DELETE_BLOCK' => $lang['main_confirm_delete_news'] . ' ' . $val['name_post'] . '?',
-				'U_EDIT_BLOCK' => $work->config['site_url'] . '?action=news&subact=edit&news=' . $val['id'],
-				'U_DELETE_BLOCK' => $work->config['site_url'] . '?action=news&subact=delete&news=' . $val['id']
+				'U_EDIT_BLOCK' => $work->config['site_url'] . '?action=news&amp;subact=edit&amp;news=' . $val['id'],
+				'U_DELETE_BLOCK' => $work->config['site_url'] . '?action=news&amp;subact=delete&amp;news=' . $val['id']
 			), 'LAST_NEWS[' . $key . ']');
 		}
 	}

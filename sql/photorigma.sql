@@ -90,18 +90,18 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 INSERT INTO `menu` (`id`, `action`, `url_action`, `name_action`, `short`, `long`, `user_login`, `user_access`) VALUES
 (1, 'main', './', 'home', 1, 1, NULL, NULL),
-(2, 'regist', '?action=login&subact=regist', 'regist', 1, 1, 0, NULL),
+(2, 'regist', '?action=login&amp;subact=regist', 'regist', 1, 1, 0, NULL),
 (3, 'category', '?action=category', 'category', 1, 1, NULL, NULL),
-(4, 'user_category', '?action=category&cat=user', 'user_category', 0, 1, NULL, NULL),
-(5, 'you_category', '?action=category&cat=user&id=curent', 'you_category', 0, 1, 1, 'cat_user'),
-(6, 'upload', '?action=photo&subact=upload', 'upload', 0, 1, 1, 'pic_upload'),
-(7, 'add_category', '?action=category&subact=add', 'add_category', 0, 1, 1, 'cat_moderate'),
+(4, 'user_category', '?action=category&amp;cat=user', 'user_category', 0, 1, NULL, NULL),
+(5, 'you_category', '?action=category&amp;cat=user&amp;id=curent', 'you_category', 0, 1, 1, 'cat_user'),
+(6, 'upload', '?action=photo&amp;subact=upload', 'upload', 0, 1, 1, 'pic_upload'),
+(7, 'add_category', '?action=category&amp;subact=add', 'add_category', 0, 1, 1, 'cat_moderate'),
 (8, 'search', '?action=search', 'search', 1, 1, NULL, NULL),
 (9, 'news', '?action=news', 'news', 1, 1, NULL, 'news_view'),
-(10, 'news_add', '?action=news&subact=add', 'news_add', 0, 1, 1, 'news_add'),
-(11, 'profile', '?action=login&subact=profile', 'profile', 1, 1, 1, NULL),
+(10, 'news_add', '?action=news&amp;subact=add', 'news_add', 0, 1, 1, 'news_add'),
+(11, 'profile', '?action=login&amp;subact=profile', 'profile', 1, 1, 1, NULL),
 (12, 'admin', '?action=admin', 'admin', 1, 1, 1, 'admin'),
-(13, 'logout', '?action=login&subact=logout', 'logout', 1, 1, 1, NULL);
+(13, 'logout', '?action=login&amp;subact=logout', 'logout', 1, 1, 1, NULL);
 
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE IF NOT EXISTS `news` (

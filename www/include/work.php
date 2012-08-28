@@ -670,8 +670,8 @@ class work
 				if ($temp_category)
 				{
 					$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
-					$photo['url'] = $this->config['site_url'] . '?action=photo&id=' . $temp_photo['id'];
-					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=' . $temp_photo['id'] . '&thumbnail=1';
+					$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=' . $temp_photo['id'];
+					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=' . $temp_photo['id'] . '&amp;thumbnail=1';
 					$photo['name'] = $temp_photo['name'];
 					$photo['category_name'] = $temp_category['name'];
 					$photo['description'] = $temp_photo['description'];
@@ -683,7 +683,7 @@ class work
 						$user_add = $db->res_row();
 						if ($user_add)
 						{
-							$photo['url_user'] = $this->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_photo['user_upload'];
+							$photo['url_user'] = $this->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $temp_photo['user_upload'];
 							$photo['real_name'] = $user_add['real_name'];
 						}
 						else
@@ -697,16 +697,16 @@ class work
 					{
 						$photo['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name'];
 						$photo['category_description'] = $photo['category_name'];
-						$photo['category_url'] = $this->config['site_url'] . '?action=category&cat=user&id=' . $temp_photo['user_upload'];
+						$photo['category_url'] = $this->config['site_url'] . '?action=category&amp;cat=user&amp;id=' . $temp_photo['user_upload'];
 					}
-					else $photo['category_url'] = $this->config['site_url'] . '?action=category&cat=' . $temp_category['id'];
+					else $photo['category_url'] = $this->config['site_url'] . '?action=category&amp;cat=' . $temp_category['id'];
 				}
 				else
 				{
 					$temp_photo['file'] = 'no_foto.png';
 					$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
-					$photo['url'] = $this->config['site_url'] . '?action=photo&id=0';
-					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+					$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
+					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=0&amp;thumbnail=1';
 					$photo['name'] = $lang['main_no_foto'];
 					$photo['description'] = $lang['main_no_foto'];
 					$photo['category_name'] = $lang['main_no_category'];
@@ -723,8 +723,8 @@ class work
 		{
 			$temp_photo['file'] = 'no_foto.png';
 			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
-			$photo['url'] = $this->config['site_url'] . '?action=photo&id=0';
-			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+			$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
+			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=0&amp;thumbnail=1';
 			$photo['name'] = $lang['main_no_foto'];
 			$photo['description'] = $lang['main_no_foto'];
 			$photo['category_name'] = $lang['main_no_category'];
@@ -739,8 +739,8 @@ class work
 		{
 			$temp_photo['file'] = 'no_foto.png';
 			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
-			$photo['url'] = $this->config['site_url'] . '?action=photo&id=0';
-			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
+			$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
+			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=0&amp;thumbnail=1';
 			$photo['name'] = $lang['main_no_foto'];
 			$photo['description'] = $lang['main_no_foto'];
 			$photo['category_name'] = $lang['main_no_category'];
@@ -812,9 +812,9 @@ class work
 					'L_ENTER' => $lang['main_enter'],
 					'L_FORGOT_PASSWORD' => $lang['main_forgot_password'],
 					'L_REGISTRATION' => $lang['main_registration'],
-					'U_LOGIN' => $this->config['site_url'] . '?action=login&subact=login',
-					'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=login&subact=forgot',
-					'U_REGISTRATION' => $this->config['site_url'] . '?action=login&subact=regist'
+					'U_LOGIN' => $this->config['site_url'] . '?action=login&amp;subact=login',
+					'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=login&amp;subact=forgot',
+					'U_REGISTRATION' => $this->config['site_url'] . '?action=login&amp;subact=regist'
 			);
 			return $array_data;
 		}
@@ -913,7 +913,7 @@ class work
 				$stat['online'] ='';
 				foreach ($temp as $val)
 				{
-					$stat['online'] .= ', <a href="' . $this->config['site_url']  . '?action=login&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+					$stat['online'] .= ', <a href="' . $this->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
 				}
 				$stat['online'] = substr($stat['online'], 2) . '.';
 			}
@@ -992,7 +992,7 @@ class work
 					{
 						$temp2 = $db->res_row();
 						$array_data[$idx] = array(
-								'user_url' => $this->config['site_url']  . '?action=login&subact=profile&uid=' . $best_user_name,
+								'user_url' => $this->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $best_user_name,
 								'user_name' => $temp2['real_name'],
 								'user_photo' => $best_user_photo
 						);

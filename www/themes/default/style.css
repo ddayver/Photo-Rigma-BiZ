@@ -1,13 +1,4 @@
-
 @charset "utf-8";
-
-
-
-
-
-
-
-
 
 
 body {
@@ -19,9 +10,9 @@ body {
 
 
 .my {
-    background-color:#141519;
-    padding:5;
-    text-align:left;
+    background-color: #141519;
+    padding : 5px;
+    text-align : left;
     border-color : #414b57;
     border-style : ridge;
     border-width : 2px;
@@ -457,15 +448,3 @@ body {
 .description {
     font-size : 10px;
   }
-
-.image {
-opacity: 0.7;
-moz-opacity: 0.7;
-filter: alpha(opacity=70);
-}
-
-.image:hover {
-opacity: 1.0;
-moz-opacity: 1.0;
-filter: alpha(opacity=100);
-}
