@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="124,5,177,32"/>
-<area shape="rect" id="node5" href="$classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="123,56,178,83"/>
+<map id="truncate" name="truncate">
+<area shape="rect" id="node2" href="$classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="123,5,176,32"/>
+<area shape="rect" id="node3" href="$classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="123,56,176,83"/>
 </map>

@@ -8,14 +8,13 @@
 * @details	Вывод и обработка главной страницы сайта.
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
-$title = $lang['main_main'];
+$title = $lang['main']['main'];
 
 $template_TMP = true;
 
@@ -25,9 +24,9 @@ if ($news && $user->user['news_view'] == true)
 	foreach ($news as $key => $val)
 	{
 		$template_new->add_string_ar(array(
-			'L_TITLE_NEWS_BLOCK' => $lang['main_title_news'] . ' - ' . $val['name_post'],
-			'L_NEWS_DATA' => $lang['main_data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
-			'L_TEXT_POST' => trim(nl2br($val['text_post']))
+			'L_TITLE_NEWS_BLOCK' => $lang['main']['title_news'] . ' - ' . $val['name_post'],
+			'L_NEWS_DATA' => $lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
+			'L_TEXT_POST' => trim(nl2br($work->ubb($val['text_post'])))
 		), 'LAST_NEWS[' . $key . ']');
 		$template_new->add_if_ar(array(
 			'USER_EXISTS' => false,
@@ -41,8 +40,8 @@ if ($news && $user->user['news_view'] == true)
 			{
 				$template_new->add_if('USER_EXISTS', true, 'LAST_NEWS[' . $key . ']');
 				$template_new->add_string_ar(array(
-					'L_USER_ADD' => $lang['main_user_add'],
-					'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $val['user_post'],
+					'L_USER_ADD' => $lang['main']['user_add'],
+					'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $val['user_post'],
 					'D_REAL_NAME_USER_POST' => $user_add['real_name']
 				), 'LAST_NEWS[' . $key . ']');
 			}
@@ -53,9 +52,9 @@ if ($news && $user->user['news_view'] == true)
 		{
 			$template_new->add_if('EDIT_SHORT', true, 'LAST_NEWS[' . $key . ']');
 			$template_new->add_string_ar(array(
-				'L_EDIT_BLOCK' => $lang['main_edit_news'],
-				'L_DELETE_BLOCK' => $lang['main_delete_news'],
-				'L_CONFIRM_DELETE_BLOCK' => $lang['main_confirm_delete_news'] . ' ' . $val['name_post'] . '?',
+				'L_EDIT_BLOCK' => $lang['main']['edit_news'],
+				'L_DELETE_BLOCK' => $lang['main']['delete_news'],
+				'L_CONFIRM_DELETE_BLOCK' => $lang['main']['confirm_delete_news'] . ' ' . $val['name_post'] . '?',
 				'U_EDIT_BLOCK' => $work->config['site_url'] . '?action=news&amp;subact=edit&amp;news=' . $val['id'],
 				'U_DELETE_BLOCK' => $work->config['site_url'] . '?action=news&amp;subact=delete&amp;news=' . $val['id']
 			), 'LAST_NEWS[' . $key . ']');
@@ -70,9 +69,9 @@ else
 		'EDIT_LONG' => false
 	), 'LAST_NEWS[0]');
 	$template_new->add_string_ar(array(
-		'L_TITLE_NEWS_BLOCK' => $lang['main_no_news'],
+		'L_TITLE_NEWS_BLOCK' => $lang['main']['no_news'],
 		'L_NEWS_DATA' => '',
-		'L_TEXT_POST' => trim(nl2br($news['L_TEXT_POST']))
+		'L_TEXT_POST' => $lang['main']['no_news']
 	), 'LAST_NEWS[0]');
 }
 ?>

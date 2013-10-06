@@ -12,7 +12,8 @@
 * @enum IN_GALLERY
 * @brief Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.
 */
-define('IN_GALLERY', FALSE);
+define('IN_GALLERY', true);
+$template_TMP = false; // Заглушка
 
 include_once ('config.php'); // Подключаем файл редактируемых пользователем настроек
 
@@ -64,7 +65,6 @@ $header_footer = true;
 $template_output = true;
 /// По-умолчанию к заголовку ничего не добавляется
 $title = NULL;
-$template_TMP = false; // Заглушка
 /// @cond
 if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check())
 {
@@ -75,50 +75,50 @@ if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'ind
 include_once($config['site_dir'] . 'action/' . $action . '.php');
 
 if ($template_TMP) // Заглушка
-{
+{ // Заглушка
 
 $template_new->create_template();
 
 if ($header_footer)
 {
-	$template_new->page_header($title, $work->config, $work->create_menu($action, 0), $work->create_menu($action, 1), $work->create_photo('top'), $work->create_photo('last'));
-	$template_new->page_footer($work->config, $work->template_user(), $work->template_stat(), $work->template_best_user($work->config['best_user']), $work->create_photo('rand'));
+	$template_new->page_header($title);
+	$template_new->page_footer();
 }
 if ($template_output) echo $template_new->content;
 } // Заглушка
 /// @endcond
 // Документация для описани директорий (для DoxyGen)
-/** @dir /www/action
+/** @dir www/action
 * Содержит подключаемые модули
 */
-/** @dir /www/avatar
+/** @dir www/avatar
 * Содержит аватары пользователей
 */
-/** @dir /www/gallery
+/** @dir www/gallery
 * Содержит папки с альбомами
 */
-/** @dir /www/gallery/user
+/** @dir www/gallery/user
 * Содержит пользовательские альбомы
 */
-/** @dir /www/include
+/** @dir www/include
 * Содержит подключаемые классы
 */
-/** @dir /www/install
+/** @dir www/install
 * Содержит установочный скрипт (пока в разработке)
 */
-/** @dir /www/language
+/** @dir www/language
 * Содержит папки с языковыми файлами
 */
-/** @dir /www/log
+/** @dir www/log
 * Содержит отчеты об ошибках
 */
-/** @dir /www/themes
+/** @dir www/themes
 * Содержит папки с шаблонами тем
 */
-/** @dir /www/thumbnail
+/** @dir www/thumbnail
 * Содержит папки с превью альбомов
 */
-/** @dir /www/thumbnail/user
+/** @dir www/thumbnail/user
 * Содержит превью пользовательских альбомов
 */
 ?>

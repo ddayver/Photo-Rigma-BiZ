@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="111,5,169,32"/>
-<area shape="rect" id="node5" href="$classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="111,56,169,83"/>
-<area shape="rect" id="node7" href="$classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="109,107,171,133"/>
+<map id="where" name="where">
+<area shape="rect" id="node2" href="$classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление" alt="" coords="111,5,169,32"/>
+<area shape="rect" id="node3" href="$classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT&#45;запроса" alt="" coords="112,56,168,83"/>
+<area shape="rect" id="node4" href="$classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление" alt="" coords="109,107,171,133"/>
 </map>

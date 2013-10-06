@@ -1,7 +1,7 @@
 var common_8php =
 [
     [ "log_in_file", "common_8php.html#a45275fa89766474ac6c781aad821d6d0", null ],
-    [ "$cookie_domain", "common_8php.html#a976e309afb8ffa39c26ba905067141b6", null ],
+    [ "$cookie_domain", "common_8php.html#a87729ab8f916b88888279b09f83f878c", null ],
     [ "$cur_cookie", "common_8php.html#adaa1882ba8ff3a56afbb18d186724f64", null ],
     [ "DEFAULT_GROUP", "common_8php.html#a2790a51795c400a411236e4651f1b3f1", null ],
     [ "DIE_IF_ERROR", "common_8php.html#a3ab0628e8862cd0c51f8503bc96535bc", null ],

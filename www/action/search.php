@@ -8,7 +8,7 @@
 * @details	Обработка поисковых запросов.
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
@@ -73,7 +73,7 @@ if($search_user)
 			$find_data['d_search_user'] = '';
 			foreach ($find as $val)
 			{
-				$find_data['d_search_user'] .= ', <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+				$find_data['d_search_user'] .= ', <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
 			}
 			if (!empty($find_data['d_search_user'])) $find_data['d_search_user'] = substr($find_data['d_search_user'], 2) . '.';
 		}

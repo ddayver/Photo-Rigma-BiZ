@@ -1,0 +1,160 @@
+<!DOCTYPE webproject>
+<webproject>
+  <project type="Local" name="Photo.Rigma.BiZ" encoding="utf8" enableEvents="true" >
+    <upload/>
+    <defaultDTD>-//w3c//dtd xhtml 1.0 transitional//en</defaultDTD>
+    <item url="action/" uploadstatus="1" />
+    <item modified_time="1380128218" url="action/admin.php" uploadstatus="1" />
+    <item modified_time="1380128237" url="action/attach.php" uploadstatus="1" />
+    <item modified_time="1380128241" url="action/category.php" uploadstatus="1" />
+    <item modified_time="1334255817" url="action/index.php" uploadstatus="1" />
+    <item modified_time="1380461656" url="action/main.php" uploadstatus="1" />
+    <item modified_time="1380461664" url="action/news.php" uploadstatus="1" />
+    <item modified_time="1380461680" url="action/photo.php" uploadstatus="1" />
+    <item modified_time="1380461688" url="action/search.php" uploadstatus="1" />
+    <item url="avatar/" uploadstatus="1" />
+    <item modified_time="1334255817" url="avatar/index.php" uploadstatus="1" />
+    <item modified_time="1332927412" url="avatar/no_avatar.jpg" uploadstatus="1" />
+    <item url="gallery/" uploadstatus="1" />
+    <item url="gallery/user/" uploadstatus="1" />
+    <item modified_time="1334255817" url="gallery/user/index.php" uploadstatus="1" />
+    <item modified_time="1334255817" url="gallery/index.php" uploadstatus="1" />
+    <item modified_time="1332950510" url="gallery/no_foto.png" uploadstatus="1" />
+    <item url="include/" uploadstatus="1" />
+    <item modified_time="1380128184" url="include/common.php" uploadstatus="1" />
+    <item modified_time="1380128190" url="include/db.php" uploadstatus="1" />
+    <item modified_time="1334255817" url="include/index.php" uploadstatus="1" />
+    <item modified_time="1346188744" url="include/rev.php" uploadstatus="1" />
+    <item modified_time="1380461788" url="include/template.php" uploadstatus="1" />
+    <item modified_time="1380128210" url="include/user.php" uploadstatus="1" />
+    <item modified_time="1380461733" url="include/work.php" uploadstatus="1" />
+    <item url="install/" uploadstatus="1" />
+    <item modified_time="1334255817" url="install/index.php" uploadstatus="1" />
+    <item modified_time="1380128290" url="install/install.php" uploadstatus="1" />
+    <item url="language/" uploadstatus="1" />
+    <item url="language/russian/" uploadstatus="1" />
+    <item modified_time="1380128325" url="language/russian/admin.php" uploadstatus="1" />
+    <item modified_time="1380128431" url="language/russian/category.php" uploadstatus="1" />
+    <item modified_time="1334255817" url="language/russian/index.php" uploadstatus="1" />
+    <item modified_time="1380128435" url="language/russian/login.php" uploadstatus="1" />
+    <item modified_time="1380128415" url="language/russian/main.php" uploadstatus="1" />
+    <item modified_time="1380128441" url="language/russian/menu.php" uploadstatus="1" />
+    <item modified_time="1380128446" url="language/russian/news.php" uploadstatus="1" />
+    <item modified_time="1380128449" url="language/russian/photo.php" uploadstatus="1" />
+    <item modified_time="1380128453" url="language/russian/search.php" uploadstatus="1" />
+    <item modified_time="1334255817" url="language/index.php" uploadstatus="1" />
+    <item url="log/" uploadstatus="1" />
+    <item url="themes/" uploadstatus="1" />
+    <item url="themes/default/" uploadstatus="1" />
+    <item url="themes/default/img/" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/b_drop.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/b_edit.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/gpadient_big.jpg" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/gpadient_copyr.jpg" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/gpadient_small.jpg" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/gpadient_sredni.jpg" uploadstatus="1" />
+    <item modified_time="1334255817" url="themes/default/img/index.php" uploadstatus="1" />
+    <item modified_time="1332950570" url="themes/default/img/logo-1.png" uploadstatus="1" />
+    <item modified_time="1332950570" url="themes/default/img/menu_left.png" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/menu_mark.gif" uploadstatus="1" />
+    <item modified_time="1332950570" url="themes/default/img/menu_mark.png" uploadstatus="1" />
+    <item modified_time="1332950570" url="themes/default/img/menu.png" uploadstatus="1" />
+    <item modified_time="1332950570" url="themes/default/img/menu_push_left.png" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/menu_push_mark.gif" uploadstatus="1" />
+    <item modified_time="1332950570" url="themes/default/img/menu_push_mark.png" uploadstatus="1" />
+    <item modified_time="1332950572" url="themes/default/img/menu_push.png" uploadstatus="1" />
+    <item modified_time="1332950572" url="themes/default/img/menu_push_right.png" uploadstatus="1" />
+    <item modified_time="1332950572" url="themes/default/img/menu_right.png" uploadstatus="1" />
+    <item modified_time="1332950572" url="themes/default/img/name_block_left.png" uploadstatus="1" />
+    <item modified_time="1332950572" url="themes/default/img/name_block.png" uploadstatus="1" />
+    <item modified_time="1332950572" url="themes/default/img/name_block_right.png" uploadstatus="1" />
+    <item modified_time="1332950614" url="themes/default/img/shapko2.png" uploadstatus="1" />
+    <item modified_time="1332950614" url="themes/default/img/short_menu_left.png" uploadstatus="1" />
+    <item modified_time="1332950614" url="themes/default/img/short_menu.png" uploadstatus="1" />
+    <item modified_time="1332950614" url="themes/default/img/short_menu_push_left.png" uploadstatus="1" />
+    <item modified_time="1332950614" url="themes/default/img/short_menu_push.png" uploadstatus="1" />
+    <item modified_time="1332950616" url="themes/default/img/short_menu_push_right.png" uploadstatus="1" />
+    <item modified_time="1332950616" url="themes/default/img/short_menu_right.png" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/spacer.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_edit.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_ocenit.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_poisk.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_register.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_save.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_udalit.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_undo.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_upload.gif" uploadstatus="1" />
+    <item modified_time="1332927410" url="themes/default/img/submit_small_vojti.gif" uploadstatus="1" />
+    <item modified_time="1336723292" url="themes/default/admin_group.tpl" uploadstatus="1" />
+    <item modified_time="1336723302" url="themes/default/admin_settings.tpl" uploadstatus="1" />
+    <item modified_time="1336723307" url="themes/default/admin_start.tpl" uploadstatus="1" />
+    <item modified_time="1336723314" url="themes/default/admin_user.tpl" uploadstatus="1" />
+    <item modified_time="1336723319" url="themes/default/best.tpl" uploadstatus="1" />
+    <item modified_time="1336723325" url="themes/default/best_user.tpl" uploadstatus="1" />
+    <item modified_time="1336723330" url="themes/default/category_add.tpl" uploadstatus="1" />
+    <item modified_time="1336723335" url="themes/default/category_dir.tpl" uploadstatus="1" />
+    <item modified_time="1336723340" url="themes/default/category_edit.tpl" uploadstatus="1" />
+    <item modified_time="1336723349" url="themes/default/category_view_pic.tpl" uploadstatus="1" />
+    <item modified_time="1336723345" url="themes/default/category_view.tpl" uploadstatus="1" />
+    <item modified_time="1346238843" url="themes/default/footer.html" uploadstatus="1" />
+    <item modified_time="1346419530" url="themes/default/header.html" uploadstatus="1" />
+    <item modified_time="1334255817" url="themes/default/index.php" uploadstatus="1" />
+    <item modified_time="1336723363" url="themes/default/login_user.tpl" uploadstatus="1" />
+    <item modified_time="1336723367" url="themes/default/long_menu.tpl" uploadstatus="1" />
+    <item modified_time="1336723372" url="themes/default/long_menu_txt.tpl" uploadstatus="1" />
+    <item modified_time="1336723376" url="themes/default/long_menu_url.tpl" uploadstatus="1" />
+    <item modified_time="1346187066" url="themes/default/main.html" uploadstatus="1" />
+    <item modified_time="1336723382" url="themes/default/main.tpl" uploadstatus="1" />
+    <item modified_time="1336723393" url="themes/default/mini_foto_category.tpl" uploadstatus="1" />
+    <item modified_time="1336723387" url="themes/default/mini_foto.tpl" uploadstatus="1" />
+    <item modified_time="1336723407" url="themes/default/news_save.tpl" uploadstatus="1" />
+    <item modified_time="1336723398" url="themes/default/news.tpl" uploadstatus="1" />
+    <item modified_time="1336723411" url="themes/default/photo_edit.tpl" uploadstatus="1" />
+    <item modified_time="1336723416" url="themes/default/photo_upload.tpl" uploadstatus="1" />
+    <item modified_time="1336723421" url="themes/default/photo_view.tpl" uploadstatus="1" />
+    <item modified_time="1336723426" url="themes/default/profile_edit.tpl" uploadstatus="1" />
+    <item modified_time="1336723431" url="themes/default/profile_user.tpl" uploadstatus="1" />
+    <item modified_time="1336723436" url="themes/default/profile_view.tpl" uploadstatus="1" />
+    <item modified_time="1336723441" url="themes/default/rate_blank.tpl" uploadstatus="1" />
+    <item modified_time="1336723445" url="themes/default/rate_form.tpl" uploadstatus="1" />
+    <item modified_time="1336723449" url="themes/default/redirect.tpl" uploadstatus="1" />
+    <item modified_time="1336723454" url="themes/default/register.tpl" uploadstatus="1" />
+    <item modified_time="1336723458" url="themes/default/search.tpl" uploadstatus="1" />
+    <item modified_time="1336723462" url="themes/default/short_menu.tpl" uploadstatus="1" />
+    <item modified_time="1336723467" url="themes/default/short_menu_txt.tpl" uploadstatus="1" />
+    <item modified_time="1336723471" url="themes/default/short_menu_url.tpl" uploadstatus="1" />
+    <item modified_time="1336723475" url="themes/default/stat.tpl" uploadstatus="1" />
+    <item modified_time="1346786481" url="themes/default/style.css" uploadstatus="1" />
+    <item modified_time="1335376998" url="themes/default/style-new.css" uploadstatus="1" />
+    <item modified_time="1334255817" url="themes/index.php" uploadstatus="1" />
+    <item url="thumbnail/" uploadstatus="1" />
+    <item url="thumbnail/user/" uploadstatus="1" />
+    <item modified_time="1334255817" url="thumbnail/user/index.php" uploadstatus="1" />
+    <item modified_time="1334255817" url="thumbnail/index.php" uploadstatus="1" />
+    <item modified_time="1332950522" url="thumbnail/no_foto.png" uploadstatus="1" />
+    <item modified_time="1380128520" url="config.php" uploadstatus="0" />
+    <item modified_time="1332927412" url="favicon.ico" uploadstatus="1" />
+    <item modified_time="1381081917" url="index.php" uploadstatus="1" />
+    <item url="" uploadstatus="1" />
+    <templates>themes/</templates>
+    <toolbars>themes/</toolbars>
+    <author>Dark_Dayver</author>
+    <email>admin@rigma.biz</email>
+    <debuggerclient persistentWatches="0" persistentBreakpoints="0" >Без отладчика</debuggerclient>
+    <exclude cvsignore="false" />
+    <teamdata>
+      <taskleaders/>
+      <subprojectleaders/>
+      <mailinglist address="" />
+    </teamdata>
+    <events/>
+    <annotations/>
+    <item modified_time="1381086007" url="action/profile.php" uploadstatus="1" />
+    <item modified_time="1336723264" url="gallery/.htaccess" uploadstatus="1" />
+    <item modified_time="1336723250" url="log/.htaccess" uploadstatus="1" />
+    <item modified_time="1346786177" url="themes/default/img/error.png" uploadstatus="1" />
+    <item modified_time="1381087832" url="themes/default/profile.html" uploadstatus="1" />
+    <item modified_time="1336723275" url="thumbnail/.htaccess" uploadstatus="1" />
+  </project>
+</webproject>

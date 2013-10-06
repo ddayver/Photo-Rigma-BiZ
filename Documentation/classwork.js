@@ -20,6 +20,7 @@ var classwork =
     [ "template_best_user", "classwork.html#a00a3456ccd4563d05fcf39781a911ee9", null ],
     [ "template_stat", "classwork.html#a116ebcf799d07566a74e7e765aecc1b7", null ],
     [ "template_user", "classwork.html#a1f3df8874c79377e6a8b4398ea6ad774", null ],
+    [ "ubb", "classwork.html#a1e65af654a4f2333ddbc9aab1bf11d70", null ],
     [ "url_check", "classwork.html#a1e1a4ab6b213ada0d89c77a24d8ffe32", null ],
     [ "utf8_wordwrap", "classwork.html#a6a58c39030bff2e7887005bde31e5563", null ],
     [ "work", "classwork.html#a1c69e4c5de965a3854ac85f38db024f4", null ],

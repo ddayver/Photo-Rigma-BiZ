@@ -8,7 +8,7 @@
 * @details	Вывод, редактировани, загрузка и обработка изображений, оценок.
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
@@ -217,7 +217,7 @@ if ($photo_id != 0)
 											if ($user_add)
 											{
 												$photo['user'] = $user_add['real_name'];
-												$photo['user_url'] = $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'];
+												$photo['user_url'] = $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp_foto['user_upload'];
 											}
 											else
 											{
@@ -369,7 +369,7 @@ if ($photo_id != 0)
 											if ($user_add)
 											{
 												$photo['user'] = $user_add['real_name'];
-												$photo['user_url'] = $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'];
+												$photo['user_url'] = $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp_foto['user_upload'];
 											}
 											else
 											{

@@ -3,7 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Photo-Rigma-BiZ: Файл www/index.php</title>
+<meta name="generator" content="Doxygen 1.8.3.1"/>
+<title>Photo-Rigma-BiZ: Файл index.php</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -12,6 +13,7 @@
 <script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript">
   $(document).ready(initResizable);
+  $(window).load(resizeHeight);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -37,7 +39,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.1.1 -->
+<!-- Создано системой Doxygen 1.8.3.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
@@ -75,6 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
     </div>
   </div>
   <div id="splitbar" style="-moz-user-select:none;" 
@@ -112,44 +115,55 @@ $(document).ready(function(){initNavTree('index_8php.html','');});
 
 <p><a href="index_8php_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
 <tr class="memitem:afc238d5007d9f82f9c59e7d33f7a75c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc238d5007d9f82f9c59e7d33f7a75c6"></a>
-const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> = FALSE</td></tr>
+const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> true</td></tr>
+<tr class="separator:afc238d5007d9f82f9c59e7d33f7a75c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$template_TMP</b> = false</td></tr>
+<tr class="separator:a97a719d0d4f389f6429eb37c97209620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="classdb.html">db</a>($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname'])</td></tr>
-<tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса db для работы с основной БД  <a href="#a1fa3127fc82f96b1436d871ef02be319"></a><br/></td></tr>
+<tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса db для работы с основной БД  <a href="#a1fa3127fc82f96b1436d871ef02be319">Подробнее...</a><br/></td></tr>
+<tr class="separator:a1fa3127fc82f96b1436d871ef02be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="classwork.html">work</a>()</td></tr>
-<tr class="memdesc:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса work.  <a href="#a2429001fb0fa404b4fe0ab42a91a9a48"></a><br/></td></tr>
+<tr class="memdesc:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса work.  <a href="#a2429001fb0fa404b4fe0ab42a91a9a48">Подробнее...</a><br/></td></tr>
+<tr class="separator:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3e9534005fd516d941f6a5569896e01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = new <a class="el" href="classtemplate__old.html">template_old</a>($config['site_url'], $config['site_dir'], $<a class="el" href="classwork.html">work</a>-&gt;config['themes'])</td></tr>
-<tr class="memdesc:aa3e9534005fd516d941f6a5569896e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса template.  <a href="#aa3e9534005fd516d941f6a5569896e01"></a><br/></td></tr>
+<tr class="memdesc:aa3e9534005fd516d941f6a5569896e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса template.  <a href="#aa3e9534005fd516d941f6a5569896e01">Подробнее...</a><br/></td></tr>
+<tr class="separator:aa3e9534005fd516d941f6a5569896e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7664aebfd7c8c2540b825c957e24fe9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7664aebfd7c8c2540b825c957e24fe9"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$template_new</b> = new <a class="el" href="classtemplate.html">template</a>($config['site_url'], $config['site_dir'], $<a class="el" href="classwork.html">work</a>-&gt;config['themes'])</td></tr>
+<tr class="separator:af7664aebfd7c8c2540b825c957e24fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a598ca4e71b15a1313ec95f0df1027ca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new <a class="el" href="classuser.html">user</a>()</td></tr>
-<tr class="memdesc:a598ca4e71b15a1313ec95f0df1027ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса user.  <a href="#a598ca4e71b15a1313ec95f0df1027ca5"></a><br/></td></tr>
+<tr class="memdesc:a598ca4e71b15a1313ec95f0df1027ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса user.  <a href="#a598ca4e71b15a1313ec95f0df1027ca5">Подробнее...</a><br/></td></tr>
+<tr class="separator:a598ca4e71b15a1313ec95f0df1027ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa698a3e72116e8e778be0e95d908ee30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa698a3e72116e8e778be0e95d908ee30"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#aa698a3e72116e8e778be0e95d908ee30">$action</a> = 'main'</td></tr>
 <tr class="memdesc:aa698a3e72116e8e778be0e95d908ee30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Действие, которое необходимо выполнить <br/></td></tr>
+<tr class="separator:aa698a3e72116e8e778be0e95d908ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6d626b28fccda802400c748c0d7a42e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6d626b28fccda802400c748c0d7a42e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#af6d626b28fccda802400c748c0d7a42e">$header_footer</a> = true</td></tr>
 <tr class="memdesc:af6d626b28fccda802400c748c0d7a42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выводить ли заголовок и подвал страницы <br/></td></tr>
+<tr class="separator:af6d626b28fccda802400c748c0d7a42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a565b8336923ef5ec8f122c2b41c5eef1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a565b8336923ef5ec8f122c2b41c5eef1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a565b8336923ef5ec8f122c2b41c5eef1">$template_output</a> = true</td></tr>
 <tr class="memdesc:a565b8336923ef5ec8f122c2b41c5eef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выводить ли обработанный шаблон <br/></td></tr>
+<tr class="separator:a565b8336923ef5ec8f122c2b41c5eef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada57e7bb7c152edad18fe2f166188691"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada57e7bb7c152edad18fe2f166188691"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#ada57e7bb7c152edad18fe2f166188691">$title</a> = NULL</td></tr>
 <tr class="memdesc:ada57e7bb7c152edad18fe2f166188691"><td class="mdescLeft">&#160;</td><td class="mdescRight">По-умолчанию к заголовку ничего не добавляется <br/></td></tr>
-<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$template_TMP</b> = false</td></tr>
+<tr class="separator:ada57e7bb7c152edad18fe2f166188691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Основной файл сервера. </p>
-<dl class="section author"><dt>Автор:</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия:</dt><dd>0.1.1 </dd></dl>
-<dl class="section date"><dt>Дата:</dt><dd>27/03-2012</dd></dl>
+<dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.1.1 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>27/03-2012</dd></dl>
 <p>Используется для подключения как классов, так и вызываемых модулей. </p>
 
 <p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a></p>
-</div><hr/><h2>Переменные</h2>
+</div><h2 class="groupheader">Переменные</h2>
 <a class="anchor" id="a1fa3127fc82f96b1436d871ef02be319"></a>
 <div class="memitem">
 <div class="memproto">
@@ -161,9 +175,11 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> = FAL
 </div><div class="memdoc">
 
 <p>Создание объекта класса db для работы с основной БД </p>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a>, <a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a> </dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a>, <a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00025">25</a></p>
+<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00026">26</a></p>
+
+<p>Используется в <a class="el" href="work_8php_source.html#l00339">work\category()</a>, <a class="el" href="template_8php_source.html#l00767">template_old\create_foto()</a>, <a class="el" href="work_8php_source.html#l00582">work\create_menu()</a>, <a class="el" href="template_8php_source.html#l00706">template_old\create_menu()</a>, <a class="el" href="work_8php_source.html#l00629">work\create_photo()</a>, <a class="el" href="work_8php_source.html#l00455">work\del_photo()</a>, <a class="el" href="work_8php_source.html#l00558">work\news()</a>, <a class="el" href="work_8php_source.html#l00956">work\template_best_user()</a>, <a class="el" href="template_8php_source.html#l01180">template_old\template_best_user()</a>, <a class="el" href="template_8php_source.html#l00985">template_old\template_news()</a>, <a class="el" href="work_8php_source.html#l00838">work\template_stat()</a>, <a class="el" href="template_8php_source.html#l01062">template_old\template_stat()</a>, <a class="el" href="user_8php_source.html#l00028">user\user()</a> и <a class="el" href="work_8php_source.html#l00030">work\work()</a>.</p>
 
 </div>
 </div>
@@ -178,9 +194,11 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> = FAL
 </div><div class="memdoc">
 
 <p>Создание объекта класса template. </p>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classtemplate.html" title="Новый класс работы с шаблонами.">template</a>, <a class="el" href="classwork.html#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив, хранящий конфигурацию.">work::$config</a> </dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html" title="Новый класс работы с шаблонами.">template</a>, <a class="el" href="classwork.html#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив, хранящий конфигурацию.">work::$config</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00043">43</a></p>
+<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00044">44</a></p>
+
+<p>Используется в <a class="el" href="work_8php_source.html#l00339">work\category()</a>.</p>
 
 </div>
 </div>
@@ -195,9 +213,11 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> = FAL
 </div><div class="memdoc">
 
 <p>Создание объекта класса user. </p>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a> </dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="classuser.html" title="Класс по работе с пользователями.">user</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00052">52</a></p>
+<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00053">53</a></p>
+
+<p>Используется в <a class="el" href="work_8php_source.html#l00339">work\category()</a>, <a class="el" href="template_8php_source.html#l00767">template_old\create_foto()</a>, <a class="el" href="work_8php_source.html#l00582">work\create_menu()</a>, <a class="el" href="template_8php_source.html#l00706">template_old\create_menu()</a>, <a class="el" href="work_8php_source.html#l00629">work\create_photo()</a>, <a class="el" href="template_8php_source.html#l00489">template\page_footer()</a>, <a class="el" href="template_8php_source.html#l00985">template_old\template_news()</a>, <a class="el" href="work_8php_source.html#l00800">work\template_user()</a> и <a class="el" href="template_8php_source.html#l00940">template_old\template_user()</a>.</p>
 
 </div>
 </div>
@@ -212,9 +232,11 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> = FAL
 </div><div class="memdoc">
 
 <p>Создание объекта класса work. </p>
-<dl class="section see"><dt>См. также:</dt><dd><a class="el" href="classwork.html" title="Общий класс (набор функций) + хранилище для данных о конфигурации.">work</a> </dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="classwork.html" title="Общий класс (набор функций) + хранилище для данных о конфигурации.">work</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00035">35</a></p>
+<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00036">36</a></p>
+
+<p>Используется в <a class="el" href="template_8php_source.html#l00767">template_old\create_foto()</a>, <a class="el" href="template_8php_source.html#l00612">template_old\create_main_template()</a>, <a class="el" href="template_8php_source.html#l00706">template_old\create_menu()</a>, <a class="el" href="template_8php_source.html#l01312">template_old\image_resize()</a>, <a class="el" href="template_8php_source.html#l00489">template\page_footer()</a>, <a class="el" href="template_8php_source.html#l00383">template\page_header()</a>, <a class="el" href="template_8php_source.html#l01180">template_old\template_best_user()</a>, <a class="el" href="template_8php_source.html#l00985">template_old\template_news()</a>, <a class="el" href="template_8php_source.html#l01259">template_old\template_rate()</a>, <a class="el" href="template_8php_source.html#l01062">template_old\template_stat()</a> и <a class="el" href="template_8php_source.html#l00940">template_old\template_user()</a>.</p>
 
 </div>
 </div>
@@ -223,10 +245,10 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> = FAL
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_5b91fe896655279d6afeb67d8a39e692.html">www</a></li><li class="navelem"><a class="el" href="index_8php.html">index.php</a></li>
+    <li class="navelem"><a class="el" href="index_8php.html">index.php</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.1.1 </li>
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
 </div>
 </body>

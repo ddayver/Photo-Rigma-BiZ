@@ -3,7 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Photo-Rigma-BiZ: Файл www/action/photo.php</title>
+<meta name="generator" content="Doxygen 1.8.3.1"/>
+<title>Photo-Rigma-BiZ: Файл action/photo.php</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -12,6 +13,7 @@
 <script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript">
   $(document).ready(initResizable);
+  $(window).load(resizeHeight);
 </script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -37,7 +39,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.1.1 -->
+<!-- Создано системой Doxygen 1.8.3.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
@@ -75,6 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
     </div>
   </div>
   <div id="splitbar" style="-moz-user-select:none;" 
@@ -112,32 +115,50 @@ $(document).ready(function(){initNavTree('action_2photo_8php.html','');});
 
 <p><a href="action_2photo_8php_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a50b867397071a95fbfd1d69911b92a0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50b867397071a95fbfd1d69911b92a0b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY)</td></tr>
+<tr class="memitem:ab81cbc75cced73efa9e7917bd2687fc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab81cbc75cced73efa9e7917bd2687fc0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
+<tr class="separator:ab81cbc75cced73efa9e7917bd2687fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2af8059a6b6b771828ffab1af60cee73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af8059a6b6b771828ffab1af60cee73"></a>
 else&#160;</td><td class="memItemRight" valign="bottom"><b>$photo_id</b> = $_REQUEST['id']</td></tr>
+<tr class="separator:a2af8059a6b6b771828ffab1af60cee73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa26df3247f7b5a00d9be4e1b1f1084c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa26df3247f7b5a00d9be4e1b1f1084c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$cur_act</b> = ''</td></tr>
+<tr class="separator:aaa26df3247f7b5a00d9be4e1b1f1084c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae68c67c422f1090027f6eb6ba01b62b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae68c67c422f1090027f6eb6ba01b62b2"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$photo</b> = array()</td></tr>
+<tr class="separator:ae68c67c422f1090027f6eb6ba01b62b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61fb0495912841571b0ee70646f79792"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61fb0495912841571b0ee70646f79792"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$main_tpl</b> = 'photo_view.tpl'</td></tr>
+<tr class="separator:a61fb0495912841571b0ee70646f79792"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a260b5d39330466fad30be6038aab7cf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a260b5d39330466fad30be6038aab7cf5"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$max_photo_w</b> = $<a class="el" href="classwork.html">work</a>-&gt;config['max_photo_w']</td></tr>
+<tr class="separator:a260b5d39330466fad30be6038aab7cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aea0d418c7a591370b46a24d378cd21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4aea0d418c7a591370b46a24d378cd21"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>$max_photo_h</b> = $<a class="el" href="classwork.html">work</a>-&gt;config['max_photo_h']</td></tr>
+<tr class="separator:a4aea0d418c7a591370b46a24d378cd21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a68171747d21829122145916ca9a000"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a68171747d21829122145916ca9a000"></a>
+if($photo_id!=0)&#160;</td><td class="memItemRight" valign="bottom"><b>else</b></td></tr>
+<tr class="separator:a4a68171747d21829122145916ca9a000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec050bff56b33cbe55761d4aa2532bd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec050bff56b33cbe55761d4aa2532bd8"></a>
 else&#160;</td><td class="memItemRight" valign="bottom"><b>$ratioWidth</b> = $size[0]/$max_photo_w</td></tr>
+<tr class="separator:aec050bff56b33cbe55761d4aa2532bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2de14f86b819efa55de4dfe4610611e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2de14f86b819efa55de4dfe4610611e"></a>
 else&#160;</td><td class="memItemRight" valign="bottom"><b>$ratioHeight</b> = $size[1]/$max_photo_h</td></tr>
+<tr class="separator:ad2de14f86b819efa55de4dfe4610611e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada57e7bb7c152edad18fe2f166188691"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada57e7bb7c152edad18fe2f166188691"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$title</b> = $lang['photo_title']</td></tr>
+<tr class="separator:ada57e7bb7c152edad18fe2f166188691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a94d4482b74da6213eb57abbb5e167e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a94d4482b74da6213eb57abbb5e167e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>$main_block</b> = $<a class="el" href="classtemplate.html">template</a>-&gt;create_template($main_tpl, $array_data)</td></tr>
+<tr class="separator:a5a94d4482b74da6213eb57abbb5e167e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><a name="details" id="details"></a><h2>Подробное описание</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Работа с фото. </p>
-<dl class="section author"><dt>Автор:</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия:</dt><dd>0.2.0 </dd></dl>
-<dl class="section date"><dt>Дата:</dt><dd>28/03-2012</dd></dl>
+<dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.2.0 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>28/03-2012</dd></dl>
 <p>Вывод, редактировани, загрузка и обработка изображений, оценок. </p>
 
 <p>См. определение в файле <a class="el" href="action_2photo_8php_source.html">photo.php</a></p>
@@ -146,10 +167,10 @@ else&#160;</td><td class="memItemRight" valign="bottom"><b>$ratioHeight</b> = $s
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_5b91fe896655279d6afeb67d8a39e692.html">www</a></li><li class="navelem"><a class="el" href="dir_ce9fe531a02ce49085e286b6a4ed25d0.html">action</a></li><li class="navelem"><a class="el" href="action_2photo_8php.html">photo.php</a></li>
+    <li class="navelem"><a class="el" href="dir_2e361893faae7e8ceea4950fc659485a.html">action</a></li><li class="navelem"><a class="el" href="action_2photo_8php.html">photo.php</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.1.1 </li>
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
 </div>
 </body>
