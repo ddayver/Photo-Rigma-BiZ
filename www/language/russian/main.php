@@ -201,6 +201,7 @@ $lang['profile']['error_real_name'] = 'Не верно указано отобр
 $lang['profile']['error_login_exists'] = 'Такое имя пользователя уже существует.';
 $lang['profile']['error_email_exists'] = 'Такой e-mail уже существует.';
 $lang['profile']['error_real_name_exists'] = 'Такое отображаемое имя уже существует.';
+$lang['profile']['error_captcha'] = 'Неверное решеие примера для защиты от ботов.';
 $lang['profile']['profile'] = 'Профиль';
 $lang['profile']['edit_profile'] = 'Редактирование профиля';
 $lang['profile']['confirm_password'] = 'Подтвердите изменения паролем';
@@ -208,6 +209,7 @@ $lang['profile']['save_profile'] = 'Сохранить профиль';
 $lang['profile']['help_edit'] = 'только если планируете изменить эти данные';
 $lang['profile']['avatar'] = 'Аватар пользователя';
 $lang['profile']['delete_avatar'] = 'Удалить аватар';
+$lang['profile']['captcha'] = 'Защита от ботов. Для регистрации решите следующий пример:';
 /*@}*/
 
 /**

@@ -68,7 +68,21 @@
 														</td>
 													</tr>
 													<tr>
-														<td class="regist" colspan="2">
+														<td colspan="3">{L_CAPTCHA}</td>
+													</tr>
+													<tr>
+														<td>{D_CAPTCHA_QUESTION}&nbsp;=</td>
+														<td><input type="text" name="captcha" size="40" maxlength="50" class="form" /></td>
+														<td class="error">
+<!-- IF_ERROR_CAPTCHA_BEGIN -->
+															<img src="{THEME_URL}img/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_CAPTCHA}" />
+<!-- IF_ERROR_CAPTCHA_ELSE -->
+															<img src="{THEME_URL}img/spaccer.gif" border="0" height="14" width="14" alt="" />
+<!-- IF_ERROR_CAPTCHA_END -->
+														</td>
+													</tr>
+													<tr>
+														<td class="regist" colspan="3">
 															<br />
                                                             <input type="image" name="submit" value="{L_REGISTER}" src="{THEME_URL}img/submit_small_register.gif" align="middle" />
 														</td>

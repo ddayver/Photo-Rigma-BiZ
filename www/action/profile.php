@@ -169,12 +169,15 @@ elseif ($subact == 'regist')
 		$template_new->add_case('PROFILE_BLOCK', 'REGIST');
 		$title = $lang['profile']['regist'];
 		$action = 'regist';
+		$captcha = $work->gen_captcha();
+		$_SESSION['captcha'] = $captcha['answer'];
 		$template_new->add_if_ar(array(
 			'ERROR_LOGIN' => false,
 			'ERROR_PASSWORD' => false,
 			'ERROR_RE_PASSWORD' => false,
 			'ERROR_EMAIL' => false,
-			'ERROR_REAL_NAME' => false
+			'ERROR_REAL_NAME' => false,
+			'ERROR_CAPTCHA' => false
 		));
 		$template_new->add_string_ar(array(
 			'NAME_BLOCK' => $lang['profile']['regist'],
@@ -184,7 +187,9 @@ elseif ($subact == 'regist')
 			'L_EMAIL' => $lang['profile']['email'],
 			'L_REAL_NAME' => $lang['profile']['real_name'],
 			'L_REGISTER' => $lang['profile']['register'],
+			'L_CAPTCHA' => $lang['profile']['captcha'],
 			'U_REGISTER' => $work->config['site_url'] . '?action=profile&amp;subact=register',
+			'D_CAPTCHA_QUESTION' => $captcha['question'],
 			'D_LOGIN' => '',
 			'D_EMAIL' => '',
 			'D_REAL_NAME' => ''
@@ -292,6 +297,20 @@ elseif ($subact == 'register')
 			$_SESSION['error']['real_name']['data'] = '';
 			$_SESSION['error']['real_name']['text'] = $lang['profile']['error_real_name'];
 		}
+
+		if ($work->check_post('captcha', true, true, '^[0-9]+\$') && $_POST['captcha'] == $_SESSION['captcha'])
+		{
+			$_SESSION['error']['captcha']['if'] = false;
+			$_SESSION['error']['captcha']['data'] = '';
+		}
+		else
+		{
+			$error = true;
+			$_SESSION['error']['captcha']['if'] = true;
+			$_SESSION['error']['captcha']['data'] = '';
+			$_SESSION['error']['captcha']['text'] = $lang['profile']['error_captcha'];
+		}
+		unset($_SESSION['captcha']);
 
 		if ($db->select('COUNT(*) as `login_count`', TBL_USERS, '`login` = \'' . $register['login'] . '\''))
 		{
