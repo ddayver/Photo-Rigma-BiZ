@@ -1,9 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"language_2russian_2photo_8php.html#gaaaee6f848092a5afd43eb6c9d825ccd1":[3,0,3,0,6,5],
-"language_2russian_2photo_8php.html#gab26529a5b3feec1200e5cd1cd24330e3":[3,0,3,0,6,10],
-"language_2russian_2photo_8php.html#gaca4f26dc7bf48da5c3627bfcdfcaf45f":[3,0,3,0,6,17],
-"language_2russian_2photo_8php.html#gad238462cec567e8760867863a38f167e":[3,0,3,0,6,6],
 "language_2russian_2photo_8php.html#gae43dcf9c9d332f7bad2f0fbb2ca1e3ca":[3,0,3,0,6,2],
 "language_2russian_2photo_8php.html#gae558388a36914ece2959e1526ea25de4":[3,0,3,0,6,13],
 "language_2russian_2photo_8php.html#gae72a348d6b3581487fd12579fa19c476":[3,0,3,0,6,18],

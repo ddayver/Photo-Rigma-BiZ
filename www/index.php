@@ -52,26 +52,20 @@ include_once ($config['inc_dir'] . 'user.php');
 */
 $user = new user();
 
-/**
-* @var $action
-* @brief Действие, которое необходимо выполнить
-*/
-$action = 'main';
-if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check() && file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = $_GET['action'];
-
 /// Выводить ли заголовок и подвал страницы
 $header_footer = true;
 /// Выводить ли обработанный шаблон
 $template_output = true;
 /// По-умолчанию к заголовку ничего не добавляется
 $title = NULL;
-/// @cond
-if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'index' && !$work->url_check())
-{
-	$action = $_GET['action'];
-	if (!file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = 'main';
-}
 
+/**
+* @var $action
+* @brief Действие, которое необходимо выполнить
+*/
+$action = 'main';
+/// @cond
+if ($work->check_get('action', true, true) && $_GET['action'] != 'index' && !$work->url_check() && file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = $_GET['action'];
 include_once($config['site_dir'] . 'action/' . $action . '.php');
 
 /// \todo Убрать заглушку после перехода на новый класс формирования шаблонов

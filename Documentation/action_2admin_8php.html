@@ -118,8 +118,7 @@ $(document).ready(function(){initNavTree('action_2admin_8php.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a763301683b83fabff766fc39bcaf9737"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a763301683b83fabff766fc39bcaf9737"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
+<tr class="memitem:a763301683b83fabff766fc39bcaf9737"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
 <tr class="separator:a763301683b83fabff766fc39bcaf9737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a369fda14f354525e2f2a3305184e4e00"><td class="memItemLeft" align="right" valign="top">if((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
 <a class="el" href="classuser.html">user</a>['admin']==true &amp;&amp;isset($_POST['admin_password'])&amp;&amp;!empty($_POST['admin_password'])&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
@@ -158,6 +157,34 @@ elseif((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<
 <div class="line">    $act = <span class="stringliteral">&#39;main&#39;</span></div>
 </div><!-- fragment -->
 <p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a> строка <a class="el" href="action_2admin_8php_source.html#l00495">495</a></p>
+
+</div>
+</div>
+<a class="anchor" id="a763301683b83fabff766fc39bcaf9737"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> ($ratioWidth &lt; $ratioHeight)</div>
+<div class="line">    {</div>
+<div class="line">        $photo[<span class="stringliteral">&#39;width&#39;</span>] = $size[0]/$ratioHeight;</div>
+<div class="line">        $photo[<span class="stringliteral">&#39;height&#39;</span>] = $size[1]/$ratioHeight;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        $photo[<span class="stringliteral">&#39;width&#39;</span>] = $size[0]/$ratioWidth;</div>
+<div class="line">        $photo[<span class="stringliteral">&#39;height&#39;</span>] = $size[1]/$ratioWidth;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">$array_data = array()</div>
+</div><!-- fragment -->
+<p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a> строка <a class="el" href="action_2admin_8php_source.html#l00011">11</a></p>
 
 </div>
 </div>

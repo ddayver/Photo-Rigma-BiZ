@@ -1,0 +1,112 @@
+<!-- SELECT_NEWS_BLOCK_BEGIN -->
+<!-- CASE_LAST_NEWS -->
+<!-- ARRAY_LAST_NEWS_BEGIN -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_big">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{L_TITLE_NEWS_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="news_data"></td>
+									<td class="news_data">
+										{L_NEWS_DATA}
+<!-- IF_USER_EXISTS_BEGIN -->
+										<br />{L_USER_ADD}: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
+<!-- IF_USER_EXISTS_END -->
+<!-- IF_EDIT_SHORT_BEGIN -->
+										<img border="0" src="{THEME_URL}img/b_edit.gif" title="{L_EDIT_BLOCK}" alt="{L_EDIT_BLOCK}" class="confirm_delete_photo" onclick="parent.location='{U_EDIT_BLOCK}';" />&nbsp;
+										<img border="0" src="{THEME_URL}img/b_drop.gif" class="confirm_delete_photo" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}?')) { parent.location='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}" alt="{L_DELETE_BLOCK}" />
+<!-- IF_EDIT_SHORT_END -->
+<!-- IF_EDIT_LONG_BEGIN -->
+										<br /><img border="0" src="{THEME_URL}img/submit_small_edit.gif" title="{L_EDIT_BLOCK}" alt="{L_EDIT_BLOCK}" class="confirm_delete_photo" onclick="parent.location='{U_EDIT_BLOCK}';" />&nbsp;
+										<img border="0" src="{THEME_URL}img/submit_small_udalit.gif" class="confirm_delete_photo" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { parent.location='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}" alt="{L_DELETE_BLOCK}" />
+<!-- IF_EDIT_LONG_END -->
+										<hr class="line" />
+									</td>
+									<td class="news_data"></td>
+								</tr>
+								<tr>
+									<td class="news"></td>
+									<td class="news">
+										{L_TEXT_POST}
+									</td>
+									<td class="news"></td>
+								</tr>
+							</table>
+<!-- ARRAY_LAST_NEWS_END -->
+<!-- BREAK_LAST_NEWS -->
+<!-- CASE_LIST_NEWS -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_big">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{L_TITLE_NEWS_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="news_data"></td>
+									<td class="news_data">{L_NEWS_DATA}<hr class="line" /></td>
+									<td class="news_data"></td>
+								</tr>
+								<tr>
+									<td class="news"></td>
+									<td class="news">
+<!-- ARRAY_LIST_NEWS_BEGIN -->
+										<br />&bull;&nbsp;<a href="{U_LIST_URL}" title="{L_LIST_TITLE}">{L_LIST_DATA}</a><br />
+<!-- ARRAY_LIST_NEWS_END -->
+										<br />
+									</td>
+									<td class="news"></td>
+								</tr>
+							</table>
+<!-- BREAK_LIST_NEWS -->
+<!-- CASE_NEWS_SAVE -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_big">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">{NAME_BLOCK}</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="news_data"></td>
+									<td class="category_center" align="center">
+										<form action="{U_SAVE_NEWS}" method="post" name="news">
+											<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<!-- IF_NEED_USER_BEGIN -->
+												<tr>
+													<td class="category_center">
+														{L_NAME_USER}
+<!-- IF_USER_EXISTS_BEGIN -->
+														: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
+<!-- IF_USER_EXISTS_END -->
+													</td>
+												</tr>
+<!-- IF_NEED_USER_END -->
+												<tr>
+													<td class="category_center">{L_NAME_POST}<br /><input class="form_textarea" name="name_post" type="text" size="50" maxlength="50" value="{D_NAME_POST}"/></td>
+												</tr>
+												<tr>
+													<td class="category_center">{L_TEXT_POST}<br /><textarea class="form_textarea" name="text_post" rows="30" cols="50">{D_TEXT_POST}</textarea></td>
+												</tr>
+												<tr>
+													<td class="category_center"><input name="submit" type="image" value="{L_SAVE_NEWS}" alt="{L_SAVE_NEWS}" title="{L_SAVE_NEWS}" src="{THEME_URL}img/submit_small_save.gif" align="middle" /></td>
+												</tr>
+											</table>
+										</form>
+									</td>
+									<td class="news_data"></td>
+								</tr>
+							</table>
+<!-- BREAK_NEWS_SAVE -->
+<!-- CASE_ -->
+<!-- BREAK_ -->
+<!-- CASE_DEFAULT -->
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_big">
+								<tr>
+									<td class="name_block_left">&nbsp;</td>
+									<td class="name_block">ERROR_CASE_BLOCK</td>
+									<td class="name_block_right">&nbsp;</td>
+								</tr>
+							</table>
+<!-- BREAK_DEFAULT -->
+<!-- SELECT_NEWS_BLOCK_END -->

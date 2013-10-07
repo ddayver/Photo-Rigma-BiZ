@@ -17,11 +17,7 @@ var NAVTREEINDEX0 =
 "action_2main_8php.html#a97a719d0d4f389f6429eb37c97209620":[3,0,0,3,0],
 "action_2main_8php_source.html":[3,0,0,3],
 "action_2news_8php.html":[3,0,0,4],
-"action_2news_8php.html#a056dfe6fb4f974d7283f5045d4c07210":[3,0,0,4,3],
-"action_2news_8php.html#aa202a23cc1afafdd8704c2f3466ab9e1":[3,0,0,4,4],
-"action_2news_8php.html#ad453a5474c6de0294ca553f969b133e4":[3,0,0,4,1],
-"action_2news_8php.html#ada57e7bb7c152edad18fe2f166188691":[3,0,0,4,2],
-"action_2news_8php.html#af62e3e027eb86d5735a6d57bd94f00cd":[3,0,0,4,0],
+"action_2news_8php.html#a97a719d0d4f389f6429eb37c97209620":[3,0,0,4,0],
 "action_2news_8php_source.html":[3,0,0,4],
 "action_2photo_8php.html":[3,0,0,5],
 "action_2photo_8php.html#a260b5d39330466fad30be6038aab7cf5":[3,0,0,5,4],
@@ -249,5 +245,9 @@ var NAVTREEINDEX0 =
 "group__LanguageRussianAdmin.html#ga8f9b6648a8efd2e36ae089a1d80d03a6":[1,0,0,61],
 "group__LanguageRussianAdmin.html#ga91a9eeb9907ca91e64ec5d123869f7bb":[1,0,0,47],
 "group__LanguageRussianAdmin.html#ga92c8b386741c5df6702627bdbca0d6d1":[1,0,0,45],
-"group__LanguageRussianAdmin.html#ga9325f05150d45c988d6a5c95c73b303a":[1,0,0,33]
+"group__LanguageRussianAdmin.html#ga9325f05150d45c988d6a5c95c73b303a":[1,0,0,33],
+"group__LanguageRussianAdmin.html#ga9a27697e12efad15a9868e1569f38345":[1,0,0,56],
+"group__LanguageRussianAdmin.html#ga9c43eb94d404bc1223163bcb6b757e06":[1,0,0,50],
+"group__LanguageRussianAdmin.html#ga9dec539c686799006ba87918fc4e2434":[1,0,0,3],
+"group__LanguageRussianAdmin.html#gaa5cd054d807e4f420d69bdba8d26fea2":[1,0,0,59]
 };

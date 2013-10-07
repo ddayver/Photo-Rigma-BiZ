@@ -7,23 +7,28 @@
 * @date		28/03-2012
 * @details	Вывод и обработка новостей сайта.
 */
-
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/news.php');
 
-$title = $lang['news_title'];
-$act = '';
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
+$template_TMP = true;
 
-if (!isset($_REQUEST['news']) || empty($_REQUEST['news']) || !(mb_ereg('^[0-9]+$', $_REQUEST['news']))) $news = false;
+/// @cond
+$template_new->template_file = 'news.html';
+
+$title = $lang['news']['title'];
+$action = '';
+
+if (!$work->check_get('news', true, true, '^[0-9]+\$', true)) $news = false;
 else
 {
-	$news = $_REQUEST['news'];
+	$news = $_GET['news'];
 	if ($db->select('*', TBL_NEWS, '`id` = ' . $news))
 	{
 		$temp = $db->res_row();
@@ -32,14 +37,14 @@ else
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if (isset($_REQUEST['subact']) && !empty($_REQUEST['subact'])) $subact = $_REQUEST['subact'];
+if ($work->check_get('subact', true, true)) $subact = $_GET['subact'];
 else $subact = '';
 
 if ($subact == 'save')
 {
 	if ($news === false && $user->user['news_add'] == true)
 	{
-		if (!isset($_POST['name_post']) || empty($_POST['name_post']) || !isset($_POST['text_post']) || empty($_POST['text_post']))
+		if (!$work->check_post('name_post', true, true) || !$work->check_post('text_post', true, true))
 		{
 			$subact = 'add';
 		}
@@ -49,33 +54,33 @@ if ($subact == 'save')
 			$query_news['data_post'] = date('Y-m-d');
 			$query_news['data_last_edit'] = date('Y-m-d H:m:s');
 			$query_news['user_post'] = $user->user['id'];
-			$query_news['name_post'] = $_POST['name_post'];
-			$query_news['text_post'] = trim($_POST['text_post']);
+			$query_news['name_post'] = trim($work->clean_field($_POST['name_post']));
+			$query_news['text_post'] = trim($work->clean_field($_POST['text_post']));
 			if ($db->insert($query_news, TBL_NEWS)) $news = $db->insert_id;
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 	}
 	elseif ($news !== false && $user->user['news_moderate'] == true)
 	{
-		if (!isset($_POST['name_post']) || empty($_POST['name_post']))
+		if (!$work->check_post('name_post', true, true))
 		{
 			$name_post = $temp['name_post'];
 			$ch_name = false;
 		}
 		else
 		{
-			$name_post = $_POST['name_post'];
+			$name_post = trim($work->clean_field($_POST['name_post']));
 			$ch_name = true;
 		}
 
-		if (!isset($_POST['text_post']) || empty($_POST['text_post']))
+		if (!$work->check_post('text_post', true, true))
 		{
-			$text_post = trim($temp['text_post']);
+			$text_post = $temp['text_post'];
 			$ch_text = false;
 		}
 		else
 		{
-			$text_post = trim($_POST['text_post']);
+			$text_post = trim($work->clean_field($_POST['text_post']));
 			$ch_text = true;
 		}
 
@@ -93,37 +98,46 @@ if ($subact == 'save')
 
 if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $temp['user_post'])))
 {
-	$title = $lang['main_edit_news'];
+	$title = $lang['main']['edit_news'];
 
 	if ($db->select('*', TBL_NEWS, '`id` = ' . $news))
 	{
 		$temp = $db->res_row();
 		if ($temp)
 		{
+			$template_new->add_if_ar(array(
+				'NEED_USER' => true,
+				'USER_EXISTS' => false
+			));
 			if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp['user_post']))
 			{
 				$user_add = $db->res_row();
-				if ($user_add) $name_user = '<a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
-				else $name_user = $lang['main_no_user_add'];
+				if ($user_add)
+				{
+					$template_new->add_if('USER_EXISTS', true);
+					$template_new->add_string_ar(array(
+						'D_REAL_NAME_USER_POST' => $user_add['real_name'],
+						'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $temp['user_post']
+					));
+					$user_add = $lang['main']['user_add'];
+				}
+				else $user_add = $lang['main']['user_add'] . ': ' . $lang['main']['no_user_add'];
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
-			$array_data = array();
-			$array_data = array(
-						'NAME_BLOCK' => $lang['main_edit_news'] . ' - ' . $temp['name_post'],
-						'L_NAME_USER' => $lang['main_user_add'],
-						'L_NAME_POST' => $lang['news_name_post'],
-						'L_TEXT_POST' => $lang['news_text_post'],
-						'L_SAVE_NEWS' => $lang['news_edit_post'],
 
-						'D_NAME_USER' => $name_user,
-						'D_NAME_POST' => $temp['name_post'],
-						'D_TEXT_POST' => $temp['text_post'],
+			$template_new->add_case('NEWS_BLOCK', 'NEWS_SAVE');
+			$template_new->add_string_ar(array(
+				'NAME_BLOCK' => $lang['main']['edit_news'] . ' - ' . $temp['name_post'],
+				'L_NAME_USER' => $user_add,
+				'L_NAME_POST' => $lang['news']['name_post'],
+				'L_TEXT_POST' => $lang['news']['text_post'],
+				'L_SAVE_NEWS' => $lang['news']['edit_post'],
 
-						'IF_NEED_USER' => true,
+				'D_NAME_POST' => $temp['name_post'],
+				'D_TEXT_POST' => $temp['text_post'],
 
-						'U_SAVE_NEWS' => $work->config['site_url'] . '?action=news&subact=save&news=' . $news
-			);
-			$main_block = $template->create_template('news_save.tpl', $array_data);
+				'U_SAVE_NEWS' => $work->config['site_url'] . '?action=news&amp;subact=save&amp;news=' . $news
+			));
 		}
 		else log_in_file('Unable to get the news', DIE_IF_ERROR);
 	}
@@ -133,53 +147,96 @@ elseif ($subact == 'delete' && $news !== false && ($user->user['news_moderate'] 
 {
 	if (!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'action=news') !== false) $redirect_url = $work->config['site_url'] . '?action=news';
 	else $redirect_url = $work->config['site_url'];
-	$redirect_time = 5;
-	$redirect_message = $lang['news_title'] . ' ' . $temp['name_post'] . ' ' . $lang['news_del_post'];
 	if (!$db->delete(TBL_NEWS, '`id` = ' . $news)) log_in_file($db->error, DIE_IF_ERROR);
+	header('Location: ' . $redirect_url);
+	log_in_file('Hack attempt!');
 }
 elseif ($subact == 'add' && $news === false && $user->user['news_add'] == true)
 {
-	$title = $lang['news_add_post'];
-	$act = 'news_add';
+	$title = $lang['news']['add_post'];
+	$action = 'news_add';
 
-	$array_data = array();
-	$array_data = array(
-				'NAME_BLOCK' => $lang['news_add_post'],
-				'L_NAME_USER' => '',
-				'L_NAME_POST' => $lang['news_name_post'],
-				'L_TEXT_POST' => $lang['news_text_post'],
-				'L_SAVE_NEWS' => $lang['news_edit_post'],
+	$template_new->add_case('NEWS_BLOCK', 'NEWS_SAVE');
+	$template_new->add_if('NEED_USER', false);
+	$template_new->add_string_ar(array(
+		'NAME_BLOCK' => $lang['news']['add_post'],
+		'L_NAME_USER' => '',
+		'L_NAME_POST' => $lang['news']['name_post'],
+		'L_TEXT_POST' => $lang['news']['text_post'],
+		'L_SAVE_NEWS' => $lang['news']['edit_post'],
 
-				'D_NAME_USER' => '',
-				'D_NAME_POST' => '',
-				'D_TEXT_POST' => '',
+		'D_NAME_USER' => '',
+		'D_NAME_POST' => '',
+		'D_TEXT_POST' => '',
 
-				'IF_NEED_USER' => false,
-
-				'U_SAVE_NEWS' => $work->config['site_url'] . '?action=news&subact=save'
-	);
-	$main_block = $template->create_template('news_save.tpl', $array_data);
+		'U_SAVE_NEWS' => $work->config['site_url'] . '?action=news&amp;subact=save'
+	));
 }
 else
 {
 	if ($news !== false)
 	{
-		$main_block = $template->template_news($news, 'id');
-		$act = '';
+		$news = $work->news($news, 'id');
+		foreach ($news as $key => $val)
+		{
+			$template_new->add_case('NEWS_BLOCK', 'LAST_NEWS');
+			$template_new->add_string_ar(array(
+				'L_TITLE_NEWS_BLOCK' => $lang['main']['title_news'] . ' - ' . $val['name_post'],
+				'L_NEWS_DATA' => $lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
+				'L_TEXT_POST' => trim(nl2br($work->ubb($val['text_post'])))
+			), 'LAST_NEWS[0]');
+			$template_new->add_if_ar(array(
+				'USER_EXISTS' => false,
+				'EDIT_SHORT' => false,
+				'EDIT_LONG' => false
+			), 'LAST_NEWS[0]');
+			if ($db->select('real_name', TBL_USERS, '`id` = ' . $val['user_post']))
+			{
+				$user_add = $db->res_row();
+				if ($user_add)
+				{
+					$template_new->add_if ('USER_EXISTS', true, 'LAST_NEWS[0]');
+					$template_new->add_string_ar(array(
+						'L_USER_ADD' => $lang['main']['user_add'],
+						'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $val['user_post'],
+						'D_REAL_NAME_USER_POST' => $user_add['real_name']
+					), 'LAST_NEWS[0]');
+				}
+			}
+			else log_in_file($db->error, DIE_IF_ERROR);
+
+			if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
+			{
+				$template_new->add_if ('EDIT_LONG', true, 'LAST_NEWS[0]');
+				$template_new->add_string_ar(array(
+					'L_EDIT_BLOCK' => $lang['main']['edit_news'],
+					'L_DELETE_BLOCK' => $lang['main']['delete_news'],
+					'L_CONFIRM_DELETE_BLOCK' => $lang['main']['confirm_delete_news'] . ' ' . $val['name_post'] . '?',
+					'U_EDIT_BLOCK' => $work->config['site_url'] . '?action=news&amp;subact=edit&amp;news=' . $val['id'],
+					'U_DELETE_BLOCK' => $work->config['site_url'] . '?action=news&amp;subact=delete&amp;news=' . $val['id']
+				), 'LAST_NEWS[0]');
+			}
+		}
+		$action = '';
+		$title = $lang['main']['title_news'] . ' - ' . $val['name_post'];
 	}
 	else
 	{
-		if (!isset($_REQUEST['y']) || empty($_REQUEST['y']) || !mb_ereg('^[0-9]{4}$', $_REQUEST['y']))
+		$template_new->add_case('NEWS_BLOCK', 'LIST_NEWS');
+		if (!$work->check_get('y', true, true, '^[0-9]{4}\$', true))
 		{
-			$act = 'news';
+			$action = 'news';
 			if ($db->select('DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`', TBL_NEWS, false, array('data_last_edit' => 'up')))
 			{
 				$temp = $db->res_arr();
-				if (!$temp) $main_block = $template->template_news($work->config['last_news']);
+				if (!$temp)
+				{
+					header('Location: ' . $work->config['site_url']);
+					log_in_file('Hack attempt!');
+				}
 				else
 				{
-					$spisok = '<br />';
-					foreach ($temp as $val)
+					foreach ($temp as $key => $val)
 					{
 						if ($db->select('COUNT(*) as `count_news`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $val['year'] . '\''))
 						{
@@ -188,37 +245,38 @@ else
 							else $temp2 = 0;
 						}
 						else log_in_file($db->error, DIE_IF_ERROR);
-						$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&y=' . $val['year'] . '" title="' . $val['year'] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $val['year'] . ' (' . $temp2 . ')</a><br /><br />';
+						$template_new->add_string_ar(array(
+							'L_LIST_DATA' => $val['year'] . ' (' . $temp2 . ')',
+							'L_LIST_TITLE' => $val['year'] . ' (' . $lang['news']['num_news'] . ': ' . $temp2 . ')',
+							'U_LIST_URL' => $work->config['site_url'] . '?action=news&amp;y=' . $val['year']
+						), 'LIST_NEWS[' . $key . ']');
 					}
-					$array_data = array();
-					$array_data = array(
-									'NAME_BLOCK' => $lang['news_news'],
-									'L_NEWS_DATA' => $lang['news_news'] . ' ' . $lang['news_on_years'],
-									'L_TEXT_POST' => $spisok,
-
-									'IF_EDIT_SHORT' => false,
-									'IF_EDIT_LONG' => false
-					);
-					$main_block = $template->create_template('news.tpl', $array_data);
-					$title = $lang['news_news'] . ' ' . $lang['news_on_years'];
+					$template_new->add_string_ar(array(
+						'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
+						'L_NEWS_DATA' => $lang['news']['news'] . ' ' . $lang['news']['on_years']
+					));
+					$title = $lang['news']['news'] . ' ' . $lang['news']['on_years'];
 				}
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			$year = $_REQUEST['y'];
-			if (!isset($_REQUEST['m']) || empty($_REQUEST['m']) || !mb_ereg('^[0-9]{2}$', $_REQUEST['m']))
+			$year = $_GET['y'];
+			if (!$work->check_get('m', true, true, '^[0-9]{2}\$', true))
 			{
-				$act = '';
+				$action = '';
 				if ($db->select('DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\'', array('data_last_edit' => 'up')))
 				{
 					$temp = $db->res_arr();
-					if (!$temp) $main_block = $template->template_news($work->config['last_news']);
+					if (!$temp)
+					{
+						header('Location: ' . $work->config['site_url']);
+						log_in_file('Hack attempt!');
+					}
 					else
 					{
-						$spisok = '<br />';
-						foreach ($temp as $val)
+						foreach ($temp as $key => $val)
 						{
 							if ($db->select('COUNT(*) as `count_news`', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\' AND DATE_FORMAT(`data_last_edit`, \'%m\') = \'' . $val['month'] . '\''))
 							{
@@ -227,49 +285,48 @@ else
 								else $temp2 = 0;
 							}
 							else log_in_file($db->error, DIE_IF_ERROR);
-							$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&y=' . $year . '&m=' . $val['month'] . '" title="' . $lang['news'][$val['month']] . ' (' . $lang['news_num_news'] . ': ' . $temp2 . ')">' . $lang['news'][$val['month']] . ' (' . $temp2 . ')</a><br />';
+							$template_new->add_string_ar(array(
+								'L_LIST_DATA' => $lang['news'][$val['month']] . ' (' . $temp2 . ')',
+								'L_LIST_TITLE' => $lang['news'][$val['month']] . ' (' . $lang['news']['num_news'] . ': ' . $temp2 . ')',
+								'U_LIST_URL' => $work->config['site_url'] . '?action=news&amp;y=' . $year . '&amp;m=' . $val['month']
+							), 'LIST_NEWS[' . $key . ']');
 						}
-						$array_data = array();
-						$array_data = array(
-									'NAME_BLOCK' => $lang['news_news'],
-									'L_NEWS_DATA' => $lang['news_news'] . ' ' . $lang['news_on'] . ' ' . $year . ' ' . $lang['news_on_month'],
-									'L_TEXT_POST' => $spisok,
-
-									'IF_EDIT_SHORT' => false,
-									'IF_EDIT_LONG' => false
-						);
-						$main_block = $template->create_template('news.tpl', $array_data);
-						$title = $lang['news_news'] . ' ' . $lang['news_on'] . ' ' . $year. ' ' . $lang['news_on_month'];
+						$template_new->add_string_ar(array(
+							'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
+							'L_NEWS_DATA' => $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $year . ' ' . $lang['news']['on_month']
+						));
+						$title = $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $year. ' ' . $lang['news']['on_month'];
 					}
 				}
 				else log_in_file($db->error, DIE_IF_ERROR);
 			}
 			else
 			{
-				$month = $_REQUEST['m'];
-				$act = '';
+				$month = $_GET['m'];
+				$action = '';
 				if ($db->select('*', TBL_NEWS, 'DATE_FORMAT(`data_last_edit`, \'%Y\') = \'' . $year . '\' AND DATE_FORMAT(`data_last_edit`, \'%m\') = \'' . $month . '\'', array('data_last_edit' => 'up')))
 				{
 					$temp = $db->res_arr();
-					if (!$temp) $main_block = $template->template_news($work->config['last_news']);
+					if (!$temp)
+					{
+						header('Location: ' . $work->config['site_url']);
+						log_in_file('Hack attempt!');
+					}
 					else
 					{
-						$spisok = '<br />';
-						foreach ($temp as $val)
+						foreach ($temp as $key => $val)
 						{
-							$spisok .= '&bull;&nbsp;<a href="' . $work->config['site_url'] . '?action=news&news=' . $val['id'] . '" title="' . substr($work->clean_field($val['text_post']), 0, 100) . '...">' . $val['name_post'] . '</a><br />';
+							$template_new->add_string_ar(array(
+								'L_LIST_DATA' => $val['name_post'],
+								'L_LIST_TITLE' => substr($work->clean_field($val['text_post']), 0, 100) . '...',
+								'U_LIST_URL' => $work->config['site_url'] . '?action=news&amp;news=' . $val['id']
+							), 'LIST_NEWS[' . $key . ']');
 						}
-						$array_data = array();
-						$array_data = array(
-										'NAME_BLOCK' => $lang['news_news'],
-										'L_NEWS_DATA' => $lang['news_news'] . ' ' . $lang['news_on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news_years'],
-										'L_TEXT_POST' => $spisok,
-
-										'IF_EDIT_SHORT' => false,
-										'IF_EDIT_LONG' => false
-						);
-						$main_block = $template->create_template('news.tpl', $array_data);
-						$title = $lang['news_news'] . ' ' . $lang['news_on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news_years'];
+						$template_new->add_string_ar(array(
+							'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
+							'L_NEWS_DATA' => $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news']['years']
+						));
+						$title = $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news']['years'];
 					}
 				}
 				else log_in_file($db->error, DIE_IF_ERROR);
@@ -277,28 +334,5 @@ else
 		}
 	}
 }
-
-$redirect = array();
-
-if (!empty($redirect_time))
-{
-	$array_data = array();
-
-	$array_data = array(
-				'L_REDIRECT_DESCRIPTION' => $lang['main_redirect_description'],
-				'L_REDIRECT_URL' => $lang['main_redirect_url'],
-
-				'L_REDIRECT_MASSAGE' => $redirect_message,
-				'U_REDIRECT_URL' => $redirect_url
-	);
-
-	$redirect = array(
-				'U_REDIRECT_URL' => $redirect_url,
-				'REDIRECT_TIME' => $redirect_time,
-				'IF_NEED_REDIRECT' => true
-	);
-	$title = $lang['main_redirect_title'];
-	$main_block = $template->create_template('redirect.tpl', $array_data);
-}
-echo $template->create_main_template($act, $title, $main_block, $redirect);
+/// @endcond
 ?>
