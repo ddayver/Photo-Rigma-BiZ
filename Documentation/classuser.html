@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li class="current"><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li><a href="files.html"><span>Файлы</span></a></li>
@@ -94,7 +95,7 @@ $(document).ready(function(){initNavTree('classuser.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -132,7 +133,7 @@ $(document).ready(function(){initNavTree('classuser.html','');});
 <div class="textblock"><p>Класс по работе с пользователями. </p>
 <p>Данный класс содержит набор функций для работы с пользователями, а так же используется для хранения всех данных о текущем пользователе. </p>
 
-<p>См. определение в файле <a class="el" href="user_8php_source.html">user.php</a> строка <a class="el" href="user_8php_source.html#l00020">20</a></p>
+<p>См. определение в файле <a class="el" href="user_8php_source.html">user.php</a> строка <a class="el" href="user_8php_source.html#l00021">21</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a class="anchor" id="ae8a275690ff1b618e1947378b0ed73ae"></a>
 <div class="memitem">
@@ -150,9 +151,9 @@ $(document).ready(function(){initNavTree('classuser.html','');});
 <p>Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе. </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="user_8php_source.html">user.php</a> строка <a class="el" href="user_8php_source.html#l00028">28</a></p>
+<p>См. определение в файле <a class="el" href="user_8php_source.html">user.php</a> строка <a class="el" href="user_8php_source.html#l00029">29</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="index_8php_source.html#l00026">$db</a>, <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a>, <a class="el" href="common_8php_source.html#l00028">log_in_file()</a>, <a class="el" href="common_8php_source.html#l00056">TBL_GROUP</a> и <a class="el" href="common_8php_source.html#l00054">TBL_USERS</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="index_8php_source.html#l00028">$db</a>, <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a>, <a class="el" href="common_8php_source.html#l00030">log_in_file()</a>, <a class="el" href="common_8php_source.html#l00058">TBL_GROUP</a> и <a class="el" href="common_8php_source.html#l00056">TBL_USERS</a>.</p>
 
 <p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>

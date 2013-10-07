@@ -17,7 +17,7 @@ include_once($work->config['site_dir'] . 'language/' . $work->config['language']
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/search.php');
 
-if(isset($_POST['search_main_text']) && !empty($_POST['search_main_text']) && empty($_POST['search_text']))
+if (isset($_POST['search_main_text']) && !empty($_POST['search_main_text']) && empty($_POST['search_text']))
 {
 	$_POST['search_text'] = $_POST['search_main_text'];
 	$_POST['search_user'] = 'true';
@@ -33,25 +33,25 @@ $search_news = false;
 $search_photo = false;
 $find_data = array();
 
-if(!empty($_POST['search_user']) && $_POST['search_user'] == 'true' && !empty($_POST['search_text']))
+if (!empty($_POST['search_user']) && $_POST['search_user'] == 'true' && !empty($_POST['search_text']))
 {
 	$search_user = true;
 	$check['user'] = 'checked';
 }
 
-if(!empty($_POST['search_category']) && $_POST['search_category'] == 'true' && !empty($_POST['search_text']))
+if (!empty($_POST['search_category']) && $_POST['search_category'] == 'true' && !empty($_POST['search_text']))
 {
 	$search_category = true;
 	$check['category'] = 'checked';
 }
 
-if(!empty($_POST['search_news']) && $_POST['search_news'] == 'true' && !empty($_POST['search_text']))
+if (!empty($_POST['search_news']) && $_POST['search_news'] == 'true' && !empty($_POST['search_text']))
 {
 	$search_news = true;
 	$check['news'] = 'checked';
 }
 
-if(!empty($_POST['search_photo']) && $_POST['search_photo'] == 'true' && !empty($_POST['search_text']))
+if (!empty($_POST['search_photo']) && $_POST['search_photo'] == 'true' && !empty($_POST['search_text']))
 {
 	$search_photo = true;
 	$check['photo'] = 'checked';
@@ -62,7 +62,7 @@ if (!($search_user || $search_category || $search_news || $search_photo)) $check
 $array_data = array();
 if (isset($_POST['search_text']) && $_POST['search_text'] == '*') $_POST['search_text'] = '%';
 
-if($search_user)
+if ($search_user)
 {
 	$find_data['l_search_user'] = $lang['search_find'] . ' ' . $lang['search_need_user'];
 	if ($db->select('*', TBL_USERS, '`real_name` LIKE \'%' . $_POST['search_text'] . '%\''))
@@ -82,7 +82,7 @@ if($search_user)
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if($search_category)
+if ($search_category)
 {
 	$find_data['l_search_category'] = $lang['search_find'] . ' ' . $lang['search_need_category'];
 	if ($db->select('*', TBL_CATEGORY, '`id` != 0 AND (`name` LIKE \'%' . $_POST['search_text'] . '%\' OR `description` LIKE \'%'. $_POST['search_text'] . '%\')'))
@@ -102,7 +102,7 @@ if($search_category)
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if($search_news)
+if ($search_news)
 {
 	$find_data['l_search_news'] = $lang['search_find'] . ' ' . $lang['search_need_news'];
 	if ($db->select('*', TBL_NEWS, '`name_post` LIKE \'%' . $_POST['search_text'] . '%\' OR `text_post` LIKE \'%'. $_POST['search_text'] . '%\''))
@@ -122,7 +122,7 @@ if($search_news)
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if($search_photo)
+if ($search_photo)
 {
 	$find_data['l_search_photo'] = $lang['search_find'] . ' ' . $lang['search_need_photo'];
 	if ($db->select('id', TBL_PHOTO, '`name` LIKE \'%' . $_POST['search_text'] . '%\' OR `description` LIKE \'%'. $_POST['search_text'] . '%\''))

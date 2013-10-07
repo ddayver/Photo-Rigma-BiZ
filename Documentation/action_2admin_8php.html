@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
@@ -93,7 +94,7 @@ $(document).ready(function(){initNavTree('action_2admin_8php.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,7 +118,8 @@ $(document).ready(function(){initNavTree('action_2admin_8php.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a763301683b83fabff766fc39bcaf9737"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
+<tr class="memitem:a763301683b83fabff766fc39bcaf9737"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a763301683b83fabff766fc39bcaf9737"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
 <tr class="separator:a763301683b83fabff766fc39bcaf9737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a369fda14f354525e2f2a3305184e4e00"><td class="memItemLeft" align="right" valign="top">if((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
 <a class="el" href="classuser.html">user</a>['admin']==true &amp;&amp;isset($_POST['admin_password'])&amp;&amp;!empty($_POST['admin_password'])&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
@@ -156,22 +158,6 @@ elseif((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<
 <div class="line">    $act = <span class="stringliteral">&#39;main&#39;</span></div>
 </div><!-- fragment -->
 <p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a> строка <a class="el" href="action_2admin_8php_source.html#l00495">495</a></p>
-
-</div>
-</div>
-<a class="anchor" id="a763301683b83fabff766fc39bcaf9737"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">if</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
-<div class="line">    echo <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;image_attach($temp_path, $temp_foto[<span class="stringliteral">&#39;file&#39;</span>])</div>
-</div><!-- fragment -->
-<p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a> строка <a class="el" href="action_2admin_8php_source.html#l00011">11</a></p>
 
 </div>
 </div>

@@ -7,72 +7,54 @@
 * @date		28/03-2012
 * @details	Используется для вывод фото из галлереи по идентификатору и скрытия настоящего пути к файлу.
 */
-
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
-if (!isset($_REQUEST['foto']) || empty($_REQUEST['foto']) || $user->user['pic_view'] == false) // проверка - указан ли в запросе идентификатор выводимого изображения и имеет ли пользователь право на просмотр изображения, если не указан, то...
-{
-	$temp_foto['file'] = 'no_foto.png'; // формируем вывод для отсустствующего изображения
-	$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file']; // включая полный путь
-	$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_foto['file']; // включая полный путь к эскизу
-}
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
+$template_TMP = true; // Заглушка
+
+/// Запретить вывод шапки страницы
+$header_footer = false;
+/// Запретить вывод подвала страницы
+$template_output = false;
+
+/// @cond
+if (!$work->check_get('foto', true, true, '^[0-9]+\$', true) || $user->user['pic_view'] == false) $temp_photo = $work->no_photo();
 else
 {
-	if ($db->select('*', TBL_PHOTO, '`id` = ' . $_REQUEST['foto']))
+	if ($db->select('*', TBL_PHOTO, '`id` = ' . $_GET['foto']))
 	{
-		$temp_foto = $db->res_row();
-		if ($temp_foto)
+		$temp_photo = $db->res_row();
+		if ($temp_photo)
 		{
-			if ($db->select('*', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
+			if ($db->select('*', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
 			{
 				$temp_category = $db->res_row();
 				if ($temp_category)
 				{
-					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
-					$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_foto['file'];
+					$temp_photo['full_path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
+					$temp_photo['thumbnail_path'] = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
 				}
-				else
-				{
-					$temp_foto['file'] = 'no_foto.png';
-					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
-					$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_foto['file'];
-				}
+				else $temp_photo = $work->no_photo();
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
-		else
-		{
-			$temp_foto['file'] = 'no_foto.png';
-			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
-			$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_foto['file'];
-		}
+		else $temp_photo = $work->no_photo();
 	}
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if(!@fopen($temp_path, 'r')) // проверяем доступность файла с изображением, если файл недоступен, то...
-{
-	$temp_foto['file'] = 'no_foto.png'; // формируем вывод для отсустствующего изображения
-	$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file']; // включая полный путь
-	$thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_foto['file']; // включая полный путь к эскизу
-}
+if (!@fopen($temp_photo['full_path'], 'r')) $temp_photo = $work->no_photo();
 
-if (isset($_REQUEST['thumbnail']) && $_REQUEST['thumbnail'] == 1) // если был запрошен эскиз, то...
+if ($work->check_get('thumbnail', true, true) && $_GET['thumbnail'] == 1)
 {
-	if($template->image_resize($temp_path, $thumbnail_path)) // создаем эскиз, если удалось создать эскиз, то...
-	{
-		echo $template->image_attach($thumbnail_path, $temp_foto['file']); // выводим полученное изображение
-	}
-	else // иначе выдадим сообщение об ошибке...
-	{
-		die('Error Image Resize'); // и остановим скрипт
-	}
+	if ($work->image_resize($temp_photo['full_path'], $temp_photo['thumbnail_path'])) echo $work->image_attach($temp_photo['thumbnail_path'], $temp_photo['file']);
+	else log_in_file('Error Image Resize: ' . $temp_photo['full_path'], DIE_IF_ERROR);
 }
-else // иначе если надо вывести полное изображение
-{
-	echo $template->image_attach($temp_path, $temp_foto['file']); // выводим полное изображение
-}
+else echo $work->image_attach($temp_photo['full_path'], $temp_photo['file']);
+/// @endcond
 ?>

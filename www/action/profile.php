@@ -7,15 +7,19 @@
 * @date		28/03-2012
 * @details	Обработка процедур входа/выхода/регистрации/изменения и просмотра профиля пользователя.
 */
-
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
 $template_TMP = true;
+
+/// @cond
 $template_new->template_file = 'profile.html';
 
 if (!$work->check_get('subact', true, true, '^[_A-Za-z0-9-]?\$'))
@@ -28,7 +32,7 @@ else $subact = $_GET['subact'];
 if (!empty($_SERVER['HTTP_REFERER'])) $redirect_url = $_SERVER['HTTP_REFERER'];
 else $redirect_url = $work->config['site_url'];
 
-if($subact == 'saveprofile')
+if ($subact == 'saveprofile')
 {
 	$subact = 'profile';
 
@@ -94,13 +98,13 @@ if($subact == 'saveprofile')
 								$avatar_size = getimagesize($_FILES['file_avatar']['tmp_name']);
 								$file_avatar = time() . '_' . $work->encodename(basename($_FILES['file_avatar']['name'])) . ($_FILES['file_avatar']['type'] == 'jpeg' ? '.jpg' : '.' . $_FILES['file_avatar']['type']);
 
-								if($avatar_size[0] <= $work->config['max_avatar_w'] && $avatar_size[1] <= $work->config['max_avatar_h'])
+								if ($avatar_size[0] <= $work->config['max_avatar_w'] && $avatar_size[1] <= $work->config['max_avatar_h'])
 								{
 									$path_avatar = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $file_avatar;
 									if (move_uploaded_file($_FILES['file_avatar']['tmp_name'], $path_avatar))
 									{
 										$new_data['avatar'] = $file_avatar;
-										if($temp['avatar'] != 'no_avatar.jpg') @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $temp['avatar']);
+										if ($temp['avatar'] != 'no_avatar.jpg') @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $temp['avatar']);
 									}
 									else $new_data['avatar'] = $temp['avatar'];
 								}
@@ -110,7 +114,7 @@ if($subact == 'saveprofile')
 						}
 						else
 						{
-							if($temp['avatar'] != 'no_avatar.jpg') @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $temp['avatar']);
+							if ($temp['avatar'] != 'no_avatar.jpg') @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $temp['avatar']);
 							$new_data['avatar'] = 'no_avatar.jpg';
 						}
 						if ($db->update($new_data, TBL_USERS, '`id` = ' . $uid))
@@ -189,7 +193,7 @@ elseif ($subact == 'regist')
 		{
 			foreach ($_SESSION['error'] as $key => $val)
 			{
-				$template_new->add_if('ERROR_' . strtoupper($key), $val['if']);
+				$template_new->add_if ('ERROR_' . strtoupper($key), $val['if']);
 				$template_new->add_string_ar(array(
 					'D_' . strtoupper($key) => $val['data'],
 					'D_ERROR_' . strtoupper($key) => (isset($val['text']) ? $val['text'] : '')
@@ -364,7 +368,7 @@ elseif ($subact == 'register')
 					if ($db->insert($query, TBL_USERS))
 					{
 						$new_user = $db->insert_id;
-						if($new_user != 0)
+						if ($new_user != 0)
 						{
 							$_SESSION['login_id'] = $new_user;
 							header('Location: ' . $work->config['site_url'] . '?action=profile&amp;subact=profile');
@@ -401,7 +405,7 @@ elseif ($subact == 'login')
 				$temp_user = $db->res_row();
 				if ($temp_user)
 				{
-					if(md5($_POST['password']) === $temp_user['password'])
+					if (md5($_POST['password']) === $temp_user['password'])
 					{
 						$_SESSION['login_id'] = $temp_user['id'];
 						$user = new user();
@@ -429,7 +433,7 @@ elseif ($subact == 'login')
 		}
 	}
 }
-elseif($subact == 'profile')
+elseif ($subact == 'profile')
 {
 	if (((isset($_SESSION['login_id']) && $_SESSION['login_id'] == 0) || !isset($_SESSION['login_id'])) && (!isset($_GET['uid']) || empty($_GET['uid'])))
 	{
@@ -442,7 +446,7 @@ elseif($subact == 'profile')
 		if ($work->check_get('uid', true, true, '^[0-9]+\$', true)) $uid = $_GET['uid'];
 		else $uid = $_SESSION['login_id'];
 
-		if($uid === $_SESSION['login_id'] || $user->user['admin'] == true)
+		if ($uid === $_SESSION['login_id'] || $user->user['admin'] == true)
 		{
 			if ($db->select('*', TBL_USERS, '`id` = ' . $uid))
 			{
@@ -475,7 +479,7 @@ elseif($subact == 'profile')
 
 					$template_new->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
 					$title = $name_block;
-					$template_new->add_if('NEED_PASSWORD', $confirm_password);
+					$template_new->add_if ('NEED_PASSWORD', $confirm_password);
 					$template_new->add_string_ar(array(
 							'NAME_BLOCK' => $name_block,
 							'L_LOGIN' => $lang['profile']['login'],
@@ -568,5 +572,5 @@ else
 	header('Location: ' . $work->config['site_url']);
 	log_in_file('Hack attempt!');
 }
-
+/// @endcond
 ?>

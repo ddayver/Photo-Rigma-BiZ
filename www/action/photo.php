@@ -34,7 +34,7 @@ if ($db->select(array('file', 'category'), TBL_PHOTO, '`id` = ' . $photo_id))
 			$temp2 = $db->res_row();
 			if ($temp2)
 			{
-				if(!@fopen($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp2['folder'] . '/' . $temp['file'], 'r')) $photo_id = 0;
+				if (!@fopen($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp2['folder'] . '/' . $temp['file'], 'r')) $photo_id = 0;
 			}
 			else $photo_id = 0;
 		}
@@ -60,7 +60,7 @@ if ($photo_id != 0)
 				$temp_category = $db->res_row();
 				if ($temp_category)
 				{
-					if(isset($_REQUEST['subact']) && $_REQUEST['subact'] == "rate" && ($user->user['pic_rate_user'] == true || $user->user['pic_rate_moder'] == true) && $temp_foto['user_upload'] != $user->user['id'])
+					if (isset($_REQUEST['subact']) && $_REQUEST['subact'] == "rate" && ($user->user['pic_rate_user'] == true || $user->user['pic_rate_moder'] == true) && $temp_foto['user_upload'] != $user->user['id'])
 					{
 						if ($db->select('rate', TBL_RATE_USER, '`id_foto` = ' . $photo_id . ' AND `id_user` = ' . $user->user['id']))
 						{
@@ -131,15 +131,15 @@ if ($photo_id != 0)
 							$temp_foto = $db->res_row();
 							if ($temp_foto)
 							{
-								if(!isset($_POST['name_photo']) || empty($_POST['name_photo'])) $photo['name'] = $temp_foto['name'];
+								if (!isset($_POST['name_photo']) || empty($_POST['name_photo'])) $photo['name'] = $temp_foto['name'];
 								else $photo['name'] = $_POST['name_photo'];
 
-								if(!isset($_POST['description_photo']) || empty($_POST['description_photo'])) $photo['description'] = $temp_foto['description'];
+								if (!isset($_POST['description_photo']) || empty($_POST['description_photo'])) $photo['description'] = $temp_foto['description'];
 								else $photo['description'] = $_POST['description_photo'];
 
     							$category = true;
 
-								if(!isset($_POST['name_category']) || !mb_ereg('^[0-9]+$', $_POST['name_category'])) $category = false;
+								if (!isset($_POST['name_category']) || !mb_ereg('^[0-9]+$', $_POST['name_category'])) $category = false;
 								else
 								{
 									if ($user->user['cat_user'] == true || $user->user['pic_moderate'] == true) $select_cat = '`id` = ' . $_POST['name_category'];
@@ -152,7 +152,7 @@ if ($photo_id != 0)
 									else log_in_file($db->error, DIE_IF_ERROR);
 								}
 
-								if($category && $temp_foto['category'] != $_POST['name_category'])
+								if ($category && $temp_foto['category'] != $_POST['name_category'])
 								{
 									if ($db->select('folder', TBL_CATEGORY, '`id` = ' . $temp_foto['category']))
 									{
@@ -173,13 +173,13 @@ if ($photo_id != 0)
 									if (!rename($path_old_photo, $path_new_photo)) $photo['category_name'] = $temp_foto['category'];
 									else
 									{
-										if(!rename($path_old_thumbnail, $path_new_thumbnail)) @unlink($path_old_thumbnail);
+										if (!rename($path_old_thumbnail, $path_new_thumbnail)) @unlink($path_old_thumbnail);
 										$photo['category_name'] = $_POST['name_category'];
 									}
 								}
 								else $photo['category_name'] = $temp_foto['category'];
 
-								if(!get_magic_quotes_gpc())
+								if (!get_magic_quotes_gpc())
 								{
 									$photo['name'] = addslashes($photo['name']);
 									$photo['description'] = addslashes($photo['description']);
@@ -238,8 +238,8 @@ if ($photo_id != 0)
 												$photo['category_name'] = '<select name="name_category">';
 												foreach ($temp_category as $val)
 												{
-            										if($val['id'] == $temp_foto['category']) $selected = ' selected'; else $selected = '';
-				        		    				if($val['id'] == 0) $val['name'] .= ' ' . $photo['user'];
+            										if ($val['id'] == $temp_foto['category']) $selected = ' selected'; else $selected = '';
+				        		    				if ($val['id'] == 0) $val['name'] .= ' ' . $photo['user'];
 													$photo['category_name'] .= '<option value="' . $val['id'] . '"' . $selected . '>' . $val['name'] . '</option>';
 												}
 												$photo['category_name'] .= '</select>';
@@ -263,7 +263,7 @@ if ($photo_id != 0)
 					elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == "delete" && (($temp_foto['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == true))
 					{
 						$photo['name'] = $temp_foto['name'];
-						if($temp_category['id'] == 0)
+						if ($temp_category['id'] == 0)
 						{
 							if ($db->select('COUNT(*) as `count_photo`', TBL_PHOTO, '`id` != ' . $photo_id . ' AND `category` = 0 AND `user_upload` = ' . $temp_foto['user_upload']))
 							{
@@ -311,7 +311,7 @@ if ($photo_id != 0)
 							else log_in_file($db->error, DIE_IF_ERROR);
 						}
 
-						if($work->del_photo($photo_id))
+						if ($work->del_photo($photo_id))
 						{
 							$redirect_url = $photo['category_url'];
 							$redirect_time = 5;
@@ -379,7 +379,7 @@ if ($photo_id != 0)
 										}
 										else log_in_file($db->error, DIE_IF_ERROR);
 
-										if($temp_category['id'] == 0)
+										if ($temp_category['id'] == 0)
 										{
 											$photo['category_name'] .= ' ' . $photo['user'];
 											$photo['category_description'] .=  ' ' . $photo['user'];
@@ -431,7 +431,7 @@ if ($photo_id != 0)
 										{
 											$array_data = array();
 
-											if($user_rate == 'false' && $moder_rate == 'false')
+											if ($user_rate == 'false' && $moder_rate == 'false')
 											{
 				        	    				$photo['rate_you_url'] = $work->config['site_url'] . '?action=photo&subact=rate&id=' . $photo_id;
             									$rate_this = true;
@@ -493,7 +493,7 @@ else
 		        $photo['category_name'] = '<select name="name_category">';
 		        foreach ($temp_category as $val)
 				{
-		            if($val['id'] == 0)
+		            if ($val['id'] == 0)
 					{
 						$temp_category[$i]['name'] .= ' ' . $user->user['real_name'];
 						$selected = ' selected';
@@ -517,16 +517,16 @@ else
 		$max_size = $work->return_bytes($work->config['max_file_size']);
 		if ($max_size > $max_size_php) $max_size = $max_size_php;
 
-		if(!isset($_POST['name_photo']) || empty($_POST['name_photo']))
+		if (!isset($_POST['name_photo']) || empty($_POST['name_photo']))
 		{
             $photo['name'] = $lang['photo_no_name'] . ' (' . $work->encodename(basename($_FILES['file_photo']['name'])) . ')';
 		}
 		else $photo['name'] = $_POST['name_photo'];
 
-		if(!isset($_POST['description_photo']) || empty($_POST['description_photo'])) $photo['description'] = $lang['photo_no_description'] . ' (' . $work->encodename(basename($_FILES['file_photo']['name'])) . ')';
+		if (!isset($_POST['description_photo']) || empty($_POST['description_photo'])) $photo['description'] = $lang['photo_no_description'] . ' (' . $work->encodename(basename($_FILES['file_photo']['name'])) . ')';
 		else $photo['description'] = $_POST['description_photo'];
 
-		if(!isset($_POST['name_category']) || !mb_ereg('^[0-9]+$', $_POST['name_category'])) $submit_upload = false;
+		if (!isset($_POST['name_category']) || !mb_ereg('^[0-9]+$', $_POST['name_category'])) $submit_upload = false;
 		else
 		{
 			if ($user->user['cat_user'] == true || $user->user['pic_moderate'] == true) $select_cat = '`id` = ' . $_POST['name_category'];
@@ -539,10 +539,10 @@ else
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
-		if($submit_upload)
+		if ($submit_upload)
 		{
 			$photo['category_name'] = $_POST['name_category'];
-			if(!get_magic_quotes_gpc())
+			if (!get_magic_quotes_gpc())
 			{
 				$photo['name'] = addslashes($photo['name']);
 				$photo['description'] = addslashes($photo['description']);
@@ -566,7 +566,7 @@ else
 			}
 			else $submit_upload = false;
 		}
-		if($submit_upload)
+		if ($submit_upload)
 		{
 			$query = array(
 						'file' => $file_name,
@@ -580,7 +580,7 @@ else
 			);
 			if ($db->insert($query, TBL_PHOTO, 'ignore')) $photo_id = $db->insert_id;
 			else log_in_file($db->error, DIE_IF_ERROR);
-			if($photo_id)
+			if ($photo_id)
 			{
 				$redirect_url = $work->config['site_url'] . '?action=photo&id=' . $photo_id;
 				$redirect_time = 5;
@@ -630,14 +630,14 @@ else $ratioWidth = $size[0]/$max_photo_w;
 if ($max_photo_h == '0') $ratioHeight = 1;
 else $ratioHeight = $size[1]/$max_photo_h;
 
-if($size[0] < $max_photo_w && $size[1] < $max_photo_h && $max_photo_w != '0' && $max_photo_h != '0')
+if ($size[0] < $max_photo_w && $size[1] < $max_photo_h && $max_photo_w != '0' && $max_photo_h != '0')
 {
 	$photo['width'] = $size[0];
 	$photo['height'] = $size[1];
 }
 else
 {
-	if($ratioWidth < $ratioHeight)
+	if ($ratioWidth < $ratioHeight)
 	{
 		$photo['width'] = $size[0]/$ratioHeight;
 		$photo['height'] = $size[1]/$ratioHeight;

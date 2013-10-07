@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
@@ -93,7 +94,7 @@ $(document).ready(function(){initNavTree('index_8php.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,11 +118,7 @@ $(document).ready(function(){initNavTree('index_8php.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:afc238d5007d9f82f9c59e7d33f7a75c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc238d5007d9f82f9c59e7d33f7a75c6"></a>
-const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> true</td></tr>
-<tr class="separator:afc238d5007d9f82f9c59e7d33f7a75c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$template_TMP</b> = false</td></tr>
+<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a97a719d0d4f389f6429eb37c97209620">$template_TMP</a> = false</td></tr>
 <tr class="separator:a97a719d0d4f389f6429eb37c97209620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="classdb.html">db</a>($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname'])</td></tr>
 <tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса db для работы с основной БД  <a href="#a1fa3127fc82f96b1436d871ef02be319">Подробнее...</a><br/></td></tr>
@@ -177,9 +174,9 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> true<
 <p>Создание объекта класса db для работы с основной БД </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a>, <a class="el" href="classdb.html" title="Класс по работе с БД MySQL.">db</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00026">26</a></p>
+<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00028">28</a></p>
 
-<p>Используется в <a class="el" href="work_8php_source.html#l00339">work\category()</a>, <a class="el" href="template_8php_source.html#l00767">template_old\create_foto()</a>, <a class="el" href="work_8php_source.html#l00582">work\create_menu()</a>, <a class="el" href="template_8php_source.html#l00706">template_old\create_menu()</a>, <a class="el" href="work_8php_source.html#l00629">work\create_photo()</a>, <a class="el" href="work_8php_source.html#l00455">work\del_photo()</a>, <a class="el" href="work_8php_source.html#l00558">work\news()</a>, <a class="el" href="work_8php_source.html#l00956">work\template_best_user()</a>, <a class="el" href="template_8php_source.html#l01180">template_old\template_best_user()</a>, <a class="el" href="template_8php_source.html#l00985">template_old\template_news()</a>, <a class="el" href="work_8php_source.html#l00838">work\template_stat()</a>, <a class="el" href="template_8php_source.html#l01062">template_old\template_stat()</a>, <a class="el" href="user_8php_source.html#l00028">user\user()</a> и <a class="el" href="work_8php_source.html#l00030">work\work()</a>.</p>
+<p>Используется в <a class="el" href="work_8php_source.html#l00341">work\category()</a>, <a class="el" href="template_8php_source.html#l00769">template_old\create_foto()</a>, <a class="el" href="work_8php_source.html#l00584">work\create_menu()</a>, <a class="el" href="template_8php_source.html#l00708">template_old\create_menu()</a>, <a class="el" href="work_8php_source.html#l00631">work\create_photo()</a>, <a class="el" href="work_8php_source.html#l00457">work\del_photo()</a>, <a class="el" href="work_8php_source.html#l00560">work\news()</a>, <a class="el" href="work_8php_source.html#l00958">work\template_best_user()</a>, <a class="el" href="template_8php_source.html#l01182">template_old\template_best_user()</a>, <a class="el" href="template_8php_source.html#l00987">template_old\template_news()</a>, <a class="el" href="work_8php_source.html#l00840">work\template_stat()</a>, <a class="el" href="template_8php_source.html#l01064">template_old\template_stat()</a>, <a class="el" href="user_8php_source.html#l00029">user\user()</a> и <a class="el" href="work_8php_source.html#l00032">work\work()</a>.</p>
 
 </div>
 </div>
@@ -198,7 +195,22 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> true<
 
 <p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00044">44</a></p>
 
-<p>Используется в <a class="el" href="work_8php_source.html#l00339">work\category()</a>.</p>
+<p>Используется в <a class="el" href="work_8php_source.html#l00341">work\category()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$template_TMP = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Необходимо сделать:</a></b></dt><dd>Убрать заглушку после перехода на новый класс формирования шаблонов </dd></dl>
+
+<p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00016">16</a></p>
 
 </div>
 </div>
@@ -217,7 +229,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> true<
 
 <p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00053">53</a></p>
 
-<p>Используется в <a class="el" href="work_8php_source.html#l00339">work\category()</a>, <a class="el" href="template_8php_source.html#l00767">template_old\create_foto()</a>, <a class="el" href="work_8php_source.html#l00582">work\create_menu()</a>, <a class="el" href="template_8php_source.html#l00706">template_old\create_menu()</a>, <a class="el" href="work_8php_source.html#l00629">work\create_photo()</a>, <a class="el" href="template_8php_source.html#l00489">template\page_footer()</a>, <a class="el" href="template_8php_source.html#l00985">template_old\template_news()</a>, <a class="el" href="work_8php_source.html#l00800">work\template_user()</a> и <a class="el" href="template_8php_source.html#l00940">template_old\template_user()</a>.</p>
+<p>Используется в <a class="el" href="work_8php_source.html#l00341">work\category()</a>, <a class="el" href="template_8php_source.html#l00769">template_old\create_foto()</a>, <a class="el" href="work_8php_source.html#l00584">work\create_menu()</a>, <a class="el" href="template_8php_source.html#l00708">template_old\create_menu()</a>, <a class="el" href="work_8php_source.html#l00631">work\create_photo()</a>, <a class="el" href="template_8php_source.html#l00490">template\page_footer()</a>, <a class="el" href="template_8php_source.html#l00987">template_old\template_news()</a>, <a class="el" href="work_8php_source.html#l00802">work\template_user()</a> и <a class="el" href="template_8php_source.html#l00942">template_old\template_user()</a>.</p>
 
 </div>
 </div>
@@ -236,7 +248,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>IN_GALLERY</b> true<
 
 <p>См. определение в файле <a class="el" href="index_8php_source.html">index.php</a> строка <a class="el" href="index_8php_source.html#l00036">36</a></p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00767">template_old\create_foto()</a>, <a class="el" href="template_8php_source.html#l00612">template_old\create_main_template()</a>, <a class="el" href="template_8php_source.html#l00706">template_old\create_menu()</a>, <a class="el" href="template_8php_source.html#l01312">template_old\image_resize()</a>, <a class="el" href="template_8php_source.html#l00489">template\page_footer()</a>, <a class="el" href="template_8php_source.html#l00383">template\page_header()</a>, <a class="el" href="template_8php_source.html#l01180">template_old\template_best_user()</a>, <a class="el" href="template_8php_source.html#l00985">template_old\template_news()</a>, <a class="el" href="template_8php_source.html#l01259">template_old\template_rate()</a>, <a class="el" href="template_8php_source.html#l01062">template_old\template_stat()</a> и <a class="el" href="template_8php_source.html#l00940">template_old\template_user()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00769">template_old\create_foto()</a>, <a class="el" href="template_8php_source.html#l00614">template_old\create_main_template()</a>, <a class="el" href="template_8php_source.html#l00708">template_old\create_menu()</a>, <a class="el" href="template_8php_source.html#l01314">template_old\image_resize()</a>, <a class="el" href="template_8php_source.html#l00490">template\page_footer()</a>, <a class="el" href="template_8php_source.html#l00384">template\page_header()</a>, <a class="el" href="template_8php_source.html#l01182">template_old\template_best_user()</a>, <a class="el" href="template_8php_source.html#l00987">template_old\template_news()</a>, <a class="el" href="template_8php_source.html#l01261">template_old\template_rate()</a>, <a class="el" href="template_8php_source.html#l01064">template_old\template_stat()</a> и <a class="el" href="template_8php_source.html#l00942">template_old\template_user()</a>.</p>
 
 </div>
 </div>

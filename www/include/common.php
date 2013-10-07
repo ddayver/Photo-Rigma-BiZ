@@ -7,6 +7,7 @@
 * @date		28/03-2012
 * @details	Содержит константы, создает функцию логирования и настраивает хранение куков
 */
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
@@ -17,6 +18,7 @@ $cookie_domain = GetEnv("HTTP_HOST");
 $cur_cookie = session_get_cookie_params();
 session_set_cookie_params($cur_cookie["lifetime"], $cur_cookie["path"], $cookie_domain, $cur_cookie["secure"], $cur_cookie["httponly"]);
 session_start();
+/// @endcond
 
 /// Функция сохранения ошибок в лог-файл
 /**

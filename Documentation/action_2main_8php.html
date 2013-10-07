@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
@@ -93,7 +94,7 @@ $(document).ready(function(){initNavTree('action_2main_8php.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,20 +118,8 @@ $(document).ready(function(){initNavTree('action_2main_8php.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:ab81cbc75cced73efa9e7917bd2687fc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab81cbc75cced73efa9e7917bd2687fc0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
-<tr class="separator:ab81cbc75cced73efa9e7917bd2687fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada57e7bb7c152edad18fe2f166188691"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada57e7bb7c152edad18fe2f166188691"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$title</b> = $lang['main']['main']</td></tr>
-<tr class="separator:ada57e7bb7c152edad18fe2f166188691"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$template_TMP</b> = true</td></tr>
+<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="action_2main_8php.html#a97a719d0d4f389f6429eb37c97209620">$template_TMP</a> = true</td></tr>
 <tr class="separator:a97a719d0d4f389f6429eb37c97209620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5859ed8a4fb4033790869e605c6a8854"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5859ed8a4fb4033790869e605c6a8854"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$news</b> = $<a class="el" href="classwork.html">work</a>-&gt;news($<a class="el" href="classwork.html">work</a>-&gt;config['last_news'], 'last')</td></tr>
-<tr class="separator:a5859ed8a4fb4033790869e605c6a8854"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf9eb23ce0457fa80b8dd4ec928cd304"><td class="memItemLeft" align="right" valign="top">if($news &amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['news_view']==true)&#160;</td><td class="memItemRight" valign="bottom"><b>else</b></td></tr>
-<tr class="separator:acf9eb23ce0457fa80b8dd4ec928cd304"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Главная страница. </p>
@@ -141,23 +130,18 @@ $(document).ready(function(){initNavTree('action_2main_8php.html','');});
 
 <p>См. определение в файле <a class="el" href="action_2main_8php_source.html">main.php</a></p>
 </div><h2 class="groupheader">Переменные</h2>
-<a class="anchor" id="acf9eb23ce0457fa80b8dd4ec928cd304"></a>
+<a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if ($news &amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['news_view']==true) else</td>
+          <td class="memname">$template_TMP = true</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
-<div class="line">    $template_new-&gt;add_if_ar(array(</div>
-<div class="line">        <span class="stringliteral">&#39;USER_EXISTS&#39;</span> =&gt; <span class="keyword">false</span>,</div>
-<div class="line">        <span class="stringliteral">&#39;EDIT_SHORT&#39;</span> =&gt; <span class="keyword">false</span>,</div>
-<div class="line">        <span class="stringliteral">&#39;EDIT_LONG&#39;</span> =&gt; <span class="keyword">false</span></div>
-<div class="line">    ), <span class="stringliteral">&#39;LAST_NEWS[0]&#39;</span>)</div>
-</div><!-- fragment -->
-<p>См. определение в файле <a class="el" href="action_2main_8php_source.html">main.php</a> строка <a class="el" href="action_2main_8php_source.html#l00065">65</a></p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Необходимо сделать:</a></b></dt><dd>Убрать заглушку после перехода на новый класс формирования шаблонов </dd></dl>
+
+<p>См. определение в файле <a class="el" href="action_2main_8php_source.html">main.php</a> строка <a class="el" href="action_2main_8php_source.html#l00020">20</a></p>
 
 </div>
 </div>

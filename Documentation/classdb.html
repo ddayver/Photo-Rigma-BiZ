@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li class="current"><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li><a href="files.html"><span>Файлы</span></a></li>
@@ -94,7 +95,7 @@ $(document).ready(function(){initNavTree('classdb.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -203,7 +204,7 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 <div class="textblock"><p>Класс по работе с БД MySQL. </p>
 <p>Данный класс содержит набор функций по работе с БД MySQL: установка соединения, формирование и отправка запросов, обработка результатов. </p>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00019">19</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00021">21</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a class="anchor" id="adb40b812890a8bc058bf6b7a0e1a54d9"></a>
 <div class="memitem">
@@ -230,9 +231,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 <p>Очищает переменные класса, возвращая им исходные значения, а именно: $txt_query, $res_query, $result, $aff_rows, $insert_id, $error </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a>, <a class="el" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f" title="Количество вставленных строк">$aff_rows</a>, <a class="el" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30" title="ID последней вставленной через INSERT строки">$insert_id</a>, <a class="el" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550" title="Номер и текст ошибки">$error</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00342">342</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00344">344</a></p>
 
-<p>Используется в <a class="el" href="db_8php_source.html#l00123">delete()</a>, <a class="el" href="db_8php_source.html#l00187">insert()</a>, <a class="el" href="db_8php_source.html#l00085">select()</a>, <a class="el" href="db_8php_source.html#l00139">truncate()</a> и <a class="el" href="db_8php_source.html#l00156">update()</a>.</p>
+<p>Используется в <a class="el" href="db_8php_source.html#l00125">delete()</a>, <a class="el" href="db_8php_source.html#l00189">insert()</a>, <a class="el" href="db_8php_source.html#l00087">select()</a>, <a class="el" href="db_8php_source.html#l00141">truncate()</a> и <a class="el" href="db_8php_source.html#l00158">update()</a>.</p>
 
 <p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
@@ -299,7 +300,7 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="config_8php.html#aa22cc194c4fdfded1534ffee7d626158" title="Имя папки для хранения аватар пользовтелей">$config</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00040">40</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00042">42</a></p>
 
 </div>
 </div>
@@ -352,9 +353,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>, <a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой">order</a>, <a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00123">123</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00125">125</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00342">clean()</a>, <a class="el" href="db_8php_source.html#l00280">limit()</a>, <a class="el" href="db_8php_source.html#l00234">order()</a>, <a class="el" href="db_8php_source.html#l00056">query()</a> и <a class="el" href="db_8php_source.html#l00219">where()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00344">clean()</a>, <a class="el" href="db_8php_source.html#l00282">limit()</a>, <a class="el" href="db_8php_source.html#l00236">order()</a>, <a class="el" href="db_8php_source.html#l00058">query()</a> и <a class="el" href="db_8php_source.html#l00221">where()</a>.</p>
 
 <p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -412,9 +413,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00256">256</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00258">258</a></p>
 
-<p>Используется в <a class="el" href="db_8php_source.html#l00085">select()</a>.</p>
+<p>Используется в <a class="el" href="db_8php_source.html#l00087">select()</a>.</p>
 
 <p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
@@ -471,9 +472,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00187">187</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00189">189</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00342">clean()</a> и <a class="el" href="db_8php_source.html#l00056">query()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00344">clean()</a> и <a class="el" href="db_8php_source.html#l00058">query()</a>.</p>
 
 <p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -531,9 +532,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00280">280</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00282">282</a></p>
 
-<p>Используется в <a class="el" href="db_8php_source.html#l00123">delete()</a>, <a class="el" href="db_8php_source.html#l00085">select()</a> и <a class="el" href="db_8php_source.html#l00156">update()</a>.</p>
+<p>Используется в <a class="el" href="db_8php_source.html#l00125">delete()</a>, <a class="el" href="db_8php_source.html#l00087">select()</a> и <a class="el" href="db_8php_source.html#l00158">update()</a>.</p>
 
 <p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
@@ -591,9 +592,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00234">234</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00236">236</a></p>
 
-<p>Используется в <a class="el" href="db_8php_source.html#l00123">delete()</a>, <a class="el" href="db_8php_source.html#l00085">select()</a> и <a class="el" href="db_8php_source.html#l00156">update()</a>.</p>
+<p>Используется в <a class="el" href="db_8php_source.html#l00125">delete()</a>, <a class="el" href="db_8php_source.html#l00087">select()</a> и <a class="el" href="db_8php_source.html#l00158">update()</a>.</p>
 
 <p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
@@ -638,11 +639,11 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </li>
 </ol>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00056">56</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00058">58</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00022">$txt_query</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00024">$txt_query</a>.</p>
 
-<p>Используется в <a class="el" href="db_8php_source.html#l00123">delete()</a>, <a class="el" href="db_8php_source.html#l00187">insert()</a>, <a class="el" href="db_8php_source.html#l00085">select()</a>, <a class="el" href="db_8php_source.html#l00139">truncate()</a> и <a class="el" href="db_8php_source.html#l00156">update()</a>.</p>
+<p>Используется в <a class="el" href="db_8php_source.html#l00125">delete()</a>, <a class="el" href="db_8php_source.html#l00189">insert()</a>, <a class="el" href="db_8php_source.html#l00087">select()</a>, <a class="el" href="db_8php_source.html#l00141">truncate()</a> и <a class="el" href="db_8php_source.html#l00158">update()</a>.</p>
 
 <p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>
@@ -675,9 +676,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 <dl class="section return"><dt>Возвращает</dt><dd>Массив результатов по ранее сформированному запросу. </dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00314">314</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00316">316</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00024">$result</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00026">$result</a>.</p>
 
 </div>
 </div>
@@ -699,9 +700,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 <dl class="section return"><dt>Возвращает</dt><dd>Строку результатов по ранее сформированному запросу </dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>, <a class="el" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00295">295</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00297">297</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00024">$result</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00026">$result</a>.</p>
 
 </div>
 </div>
@@ -768,9 +769,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>, <a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой">order</a>, <a class="el" href="classdb.html#a3c29f28d3f15af12cb6378aadd1dd67d" title="Функция дополнения запроса группировкой">group</a>, <a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00085">85</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00087">87</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00342">clean()</a>, <a class="el" href="db_8php_source.html#l00256">group()</a>, <a class="el" href="db_8php_source.html#l00280">limit()</a>, <a class="el" href="db_8php_source.html#l00234">order()</a>, <a class="el" href="db_8php_source.html#l00056">query()</a> и <a class="el" href="db_8php_source.html#l00219">where()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00344">clean()</a>, <a class="el" href="db_8php_source.html#l00258">group()</a>, <a class="el" href="db_8php_source.html#l00282">limit()</a>, <a class="el" href="db_8php_source.html#l00236">order()</a>, <a class="el" href="db_8php_source.html#l00058">query()</a> и <a class="el" href="db_8php_source.html#l00221">where()</a>.</p>
 
 <p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -809,9 +810,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00139">139</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00141">141</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00342">clean()</a> и <a class="el" href="db_8php_source.html#l00056">query()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00344">clean()</a> и <a class="el" href="db_8php_source.html#l00058">query()</a>.</p>
 
 <p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -882,9 +883,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>, <a class="el" href="classdb.html#ac8c5f016d7aa4e83ff4bda7192a53b87" title="Функция дополнения запроса сортировкой">order</a>, <a class="el" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>, <a class="el" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>, <a class="el" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00156">156</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00158">158</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00342">clean()</a>, <a class="el" href="db_8php_source.html#l00280">limit()</a>, <a class="el" href="db_8php_source.html#l00234">order()</a>, <a class="el" href="db_8php_source.html#l00056">query()</a> и <a class="el" href="db_8php_source.html#l00219">where()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="db_8php_source.html#l00344">clean()</a>, <a class="el" href="db_8php_source.html#l00282">limit()</a>, <a class="el" href="db_8php_source.html#l00236">order()</a>, <a class="el" href="db_8php_source.html#l00058">query()</a> и <a class="el" href="db_8php_source.html#l00221">where()</a>.</p>
 
 <p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -931,9 +932,9 @@ $(document).ready(function(){initNavTree('classdb.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>, <a class="el" href="classdb.html#ae783d934ff080ae4cd14b9cbc87a238a" title="Функция формирования SELECT-запроса">select</a>, <a class="el" href="classdb.html#a8ee189e21457bf7b0c5e518d80b53834" title="Функция формирования запроса на удаление">delete</a>, <a class="el" href="classdb.html#a512f62229ee3f1a8824ae3787e1a0059" title="Функция формирования простого запроса на обновление">update</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00219">219</a></p>
+<p>См. определение в файле <a class="el" href="db_8php_source.html">db.php</a> строка <a class="el" href="db_8php_source.html#l00221">221</a></p>
 
-<p>Используется в <a class="el" href="db_8php_source.html#l00123">delete()</a>, <a class="el" href="db_8php_source.html#l00085">select()</a> и <a class="el" href="db_8php_source.html#l00156">update()</a>.</p>
+<p>Используется в <a class="el" href="db_8php_source.html#l00125">delete()</a>, <a class="el" href="db_8php_source.html#l00087">select()</a> и <a class="el" href="db_8php_source.html#l00158">update()</a>.</p>
 
 <p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>

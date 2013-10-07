@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
@@ -93,7 +94,7 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -120,7 +121,7 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<a class="code" href="index_8php.html#ada57e7bb7c152edad18fe2f166188691" title="По-умолчанию к заголовку ничего не добавляется">$title</a> = <a class="code" href="group__LanguageRussianAdmin.html#ga0cb419e4f742b239df410f9862d98f61" title="Массив языковых переменных">$lang</a>[<span class="stringliteral">&#39;news_title&#39;</span>];</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;$act = <span class="stringliteral">&#39;&#39;</span>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordflow">if</span>(!isset($_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]) || empty($_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]) || !(mb_ereg(<span class="stringliteral">&#39;^[0-9]+$&#39;</span>, $_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]))) $news = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordflow">if</span> (!isset($_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]) || empty($_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]) || !(mb_ereg(<span class="stringliteral">&#39;^[0-9]+$&#39;</span>, $_REQUEST[<span class="stringliteral">&#39;news&#39;</span>]))) $news = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordflow">else</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    $news = $_REQUEST[<span class="stringliteral">&#39;news&#39;</span>];</div>
@@ -132,14 +133,14 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">else</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>(<a class="code" href="index_8php.html#a1fa3127fc82f96b1436d871ef02be319" title="Создание объекта класса db для работы с основной БД">$db</a>-&gt;error, <a class="code" href="common_8php.html#a3ab0628e8862cd0c51f8503bc96535bc" title="Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)">DIE_IF_ERROR</a>);</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordflow">if</span>(isset($_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>]) &amp;&amp; !empty($_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>])) $subact = $_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>];</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordflow">if</span> (isset($_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>]) &amp;&amp; !empty($_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>])) $subact = $_REQUEST[<span class="stringliteral">&#39;subact&#39;</span>];</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordflow">else</span> $subact = <span class="stringliteral">&#39;&#39;</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordflow">if</span> ($subact == <span class="stringliteral">&#39;save&#39;</span>)</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span>($news === <span class="keyword">false</span> &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_add&#39;</span>] == <span class="keyword">true</span>)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> ($news === <span class="keyword">false</span> &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_add&#39;</span>] == <span class="keyword">true</span>)</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span>(!isset($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || !isset($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]))</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">if</span> (!isset($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || !isset($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]))</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            $subact = <span class="stringliteral">&#39;add&#39;</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        }</div>
@@ -157,7 +158,7 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    elseif ($news !== <span class="keyword">false</span> &amp;&amp; <a class="code" href="index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5" title="Создание объекта класса user.">$user</a>-&gt;user[<span class="stringliteral">&#39;news_moderate&#39;</span>] == <span class="keyword">true</span>)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">if</span>(!isset($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]))</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">if</span> (!isset($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;name_post&#39;</span>]))</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            $name_post = $temp[<span class="stringliteral">&#39;name_post&#39;</span>];</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            $ch_name = <span class="keyword">false</span>;</div>
@@ -168,7 +169,7 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            $ch_name = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span>(!isset($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]))</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span> (!isset($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]) || empty($_POST[<span class="stringliteral">&#39;text_post&#39;</span>]))</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        {</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            $text_post = trim($temp[<span class="stringliteral">&#39;text_post&#39;</span>]);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            $ch_text = <span class="keyword">false</span>;</div>
@@ -179,7 +180,7 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            $ch_text = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span>($ch_name || $ch_text)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span> ($ch_name || $ch_text)</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        {</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            $query_news = array();</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            $query_news[<span class="stringliteral">&#39;data_last_edit&#39;</span>] = date(<span class="stringliteral">&#39;Y-m-d H:m:s&#39;</span>);</div>
@@ -262,7 +263,7 @@ $(document).ready(function(){initNavTree('action_2news_8php_source.html','');});
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="keywordflow">else</span></div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;{</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">if</span>($news !== <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">if</span> ($news !== <span class="keyword">false</span>)</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    {</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        $main_block = <a class="code" href="index_8php.html#aa3e9534005fd516d941f6a5569896e01" title="Создание объекта класса template.">$template</a>-&gt;template_news($news, <span class="stringliteral">&#39;id&#39;</span>);</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        $act = <span class="stringliteral">&#39;&#39;</span>;</div>

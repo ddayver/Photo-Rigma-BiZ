@@ -8,14 +8,16 @@
 * @details	Используется для подключения как классов, так и вызываемых модулей.
 */
 
-/**
-* @enum IN_GALLERY
-* @brief Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.
-*/
-define('IN_GALLERY', true);
+/// @cond
+define('IN_GALLERY', true); // Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.
+/// @endcond
+
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
 $template_TMP = false; // Заглушка
 
 include_once ('config.php'); // Подключаем файл редактируемых пользователем настроек
+
+include_once ($config['inc_dir'] . 'common.php');
 
 include_once ($config['inc_dir'] . 'db.php');
 /**
@@ -24,8 +26,6 @@ include_once ($config['inc_dir'] . 'db.php');
 * @see ::$config, db
 */
 $db = new db($config['dbhost'], $config['dbuser'], $config['dbpass'], $config['dbname']);
-
-include_once ($config['inc_dir'] . 'common.php');
 
 include_once ($config['inc_dir'] . 'work.php');
 /**
@@ -74,6 +74,7 @@ if (isset($_GET['action']) && !empty($_GET['action']) && $_GET['action'] != 'ind
 
 include_once($config['site_dir'] . 'action/' . $action . '.php');
 
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
 if ($template_TMP) // Заглушка
 { // Заглушка
 
@@ -88,37 +89,37 @@ if ($template_output) echo $template_new->content;
 } // Заглушка
 /// @endcond
 // Документация для описани директорий (для DoxyGen)
-/** @dir www/action
+/** @dir action
 * Содержит подключаемые модули
 */
-/** @dir www/avatar
+/** @dir avatar
 * Содержит аватары пользователей
 */
-/** @dir www/gallery
+/** @dir gallery
 * Содержит папки с альбомами
 */
-/** @dir www/gallery/user
+/** @dir gallery/user
 * Содержит пользовательские альбомы
 */
-/** @dir www/include
+/** @dir include
 * Содержит подключаемые классы
 */
-/** @dir www/install
+/** @dir install
 * Содержит установочный скрипт (пока в разработке)
 */
-/** @dir www/language
+/** @dir language
 * Содержит папки с языковыми файлами
 */
-/** @dir www/log
+/** @dir log
 * Содержит отчеты об ошибках
 */
-/** @dir www/themes
+/** @dir themes
 * Содержит папки с шаблонами тем
 */
-/** @dir www/thumbnail
+/** @dir thumbnail
 * Содержит папки с превью альбомов
 */
-/** @dir www/thumbnail/user
+/** @dir thumbnail/user
 * Содержит превью пользовательских альбомов
 */
 ?>

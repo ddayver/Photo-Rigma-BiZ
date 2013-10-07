@@ -7,17 +7,20 @@
 * @date		28/03-2012
 * @details	Вывод и обработка главной страницы сайта.
 */
-
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
+
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
+$template_TMP = true; //Заглушка
+
+/// @cond
 $title = $lang['main']['main'];
-
-$template_TMP = true;
-
 $news = $work->news($work->config['last_news'], 'last');
 if ($news && $user->user['news_view'] == true)
 {
@@ -38,7 +41,7 @@ if ($news && $user->user['news_view'] == true)
 			$user_add = $db->res_row();
 			if ($user_add)
 			{
-				$template_new->add_if('USER_EXISTS', true, 'LAST_NEWS[' . $key . ']');
+				$template_new->add_if ('USER_EXISTS', true, 'LAST_NEWS[' . $key . ']');
 				$template_new->add_string_ar(array(
 					'L_USER_ADD' => $lang['main']['user_add'],
 					'U_PROFILE_USER_POST' => $work->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $val['user_post'],
@@ -50,7 +53,7 @@ if ($news && $user->user['news_view'] == true)
 
 		if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
 		{
-			$template_new->add_if('EDIT_SHORT', true, 'LAST_NEWS[' . $key . ']');
+			$template_new->add_if ('EDIT_SHORT', true, 'LAST_NEWS[' . $key . ']');
 			$template_new->add_string_ar(array(
 				'L_EDIT_BLOCK' => $lang['main']['edit_news'],
 				'L_DELETE_BLOCK' => $lang['main']['delete_news'],
@@ -74,4 +77,5 @@ else
 		'L_TEXT_POST' => $lang['main']['no_news']
 	), 'LAST_NEWS[0]');
 }
+/// @endcond
 ?>

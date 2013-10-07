@@ -7,10 +7,12 @@
 * @date		28/03-2012
 * @details	Содержит класс по работе с БД MySQL.
 */
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 /// Класс по работе с БД MySQL.
 /**
@@ -86,7 +88,7 @@ class db
 	{
 		if (strlen($this->txt_query) > 0) $this->clean();
 		$this->txt_query = 'SELECT ';
-		if(!is_array($select))
+		if (!is_array($select))
 		{
 			$select = array($select);
 		}

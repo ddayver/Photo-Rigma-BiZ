@@ -9,6 +9,5 @@ var index_8php =
     [ "$template_TMP", "index_8php.html#a97a719d0d4f389f6429eb37c97209620", null ],
     [ "$title", "index_8php.html#ada57e7bb7c152edad18fe2f166188691", null ],
     [ "$user", "index_8php.html#a598ca4e71b15a1313ec95f0df1027ca5", null ],
-    [ "$work", "index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48", null ],
-    [ "IN_GALLERY", "index_8php.html#afc238d5007d9f82f9c59e7d33f7a75c6", null ]
+    [ "$work", "index_8php.html#a2429001fb0fa404b4fe0ab42a91a9a48", null ]
 ];

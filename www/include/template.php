@@ -7,11 +7,12 @@
 * @date		15/07-2012
 * @details	Содержит класс работы с шаблонами на сервере
 */
-
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 /// Новый класс работы с шаблонами.
 /**
@@ -136,7 +137,7 @@ class template
 	* @param $path_array содержит путь, по которому рекурсивно необходимо разместить переменную в виде: Массив1[0]->Массив1.0[0] (по-умолчанию False)
 	* @see $block_if, $block_object, test_is_object
 	*/
-	function add_if($name, $value, $path_array = false)
+	function add_if ($name, $value, $path_array = false)
 	{
 		if ($path_array == false)
 		{
@@ -147,7 +148,7 @@ class template
 		else
 		{
 			$temp_result = $this->test_is_object($path_array);
-			$this->block_object[$temp_result['current']][$temp_result['index']]->add_if($name, $value, $temp_result['next_path']);
+			$this->block_object[$temp_result['current']][$temp_result['index']]->add_if ($name, $value, $temp_result['next_path']);
 		}
 	}
 
@@ -164,7 +165,7 @@ class template
 		{
 			foreach ($array_data as $key=>$value)
 			{
-				$this->add_if($key, $value, $path_array);
+				$this->add_if ($key, $value, $path_array);
 			}
 		}
 	}
@@ -256,7 +257,7 @@ class template
 	function pars_template()
 	{
 		foreach ($this->block_object as $key=>$val) $this->template_object($key, $val);
-		foreach ($this->block_if as $key=>$val) $this->template_if($key, $val);
+		foreach ($this->block_if as $key=>$val) $this->template_if ($key, $val);
 		foreach ($this->block_case as $key=>$val) $this->template_case($key, $val);
 		foreach ($this->block_string as $key=>$val) $this->content = str_replace('{' . $key . '}', $val, $this->content);
 		$this->content = $this->url_mod_rewrite($this->content);
@@ -306,7 +307,7 @@ class template
 	* @param $val значение ключа
 	* @see $content
 	*/
-	private function template_if($key, $val)
+	private function template_if ($key, $val)
 	{
 		while (strpos($this->content, '<!-- ' . $key . '_BEGIN -->') !== false)
 		{
@@ -405,25 +406,25 @@ class template
 			'RIGHT_PANEL_WIDHT' => $work->config['right_panel']
 		));
 
-		$temp_template->add_if('SHORT_MENU', false);
+		$temp_template->add_if ('SHORT_MENU', false);
 		if ($s_menu && is_array($s_menu))
 		{
-			$temp_template->add_if('SHORT_MENU', true);
+			$temp_template->add_if ('SHORT_MENU', true);
 			foreach($s_menu as $id => $value)
 			{
 				$temp_template->add_string_ar(array(
 					'U_SHORT_MENU' => $value['url'],
 					'L_SHORT_MENU' => $value['name']
 				), 'SHORT_MENU[' . $id . ']');
-				$temp_template->add_if('SHORT_MENU_URL', (empty($value['url']) ? false : true), 'SHORT_MENU[' . $id . ']');
+				$temp_template->add_if ('SHORT_MENU_URL', (empty($value['url']) ? false : true), 'SHORT_MENU[' . $id . ']');
 			}
 		}
 
 		$temp_template->add_case('LEFT_BLOCK', 'MENU', 'LEFT_PANEL[0]');
-		$temp_template->add_if('LONG_MENU', false, 'LEFT_PANEL[0]');
+		$temp_template->add_if ('LONG_MENU', false, 'LEFT_PANEL[0]');
 		if ($l_menu && is_array($l_menu))
 		{
-			$temp_template->add_if('LONG_MENU', true, 'LEFT_PANEL[0]');
+			$temp_template->add_if ('LONG_MENU', true, 'LEFT_PANEL[0]');
 			$temp_template->add_string('LONG_MENU_NAME_BLOCK', $lang['menu']['name_block'], 'LEFT_PANEL[0]');
 			foreach($l_menu as $id => $value)
 			{
@@ -431,7 +432,7 @@ class template
 					'U_LONG_MENU' => $value['url'],
 					'L_LONG_MENU' => $value['name']
 				), 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
-				$temp_template->add_if('LONG_MENU_URL', (empty($value['url']) ? false : true), 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
+				$temp_template->add_if ('LONG_MENU_URL', (empty($value['url']) ? false : true), 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
 			}
 		}
 
@@ -453,7 +454,7 @@ class template
 			'U_THUMBNAIL_PHOTO' => $photo_top['thumbnail_url'],
 			'U_CATEGORY' => $photo_top['category_url']
 		), 'LEFT_PANEL[1]');
-		$temp_template->add_if('USER_EXISTS', (empty($photo_top['url_user']) ? false : true), 'LEFT_PANEL[1]');
+		$temp_template->add_if ('USER_EXISTS', (empty($photo_top['url_user']) ? false : true), 'LEFT_PANEL[1]');
 
 		$temp_template->add_case('LEFT_BLOCK', 'TOP_LAST_PHOTO', 'LEFT_PANEL[2]');
 		$temp_template->add_string_ar(array(
@@ -473,7 +474,7 @@ class template
 			'U_THUMBNAIL_PHOTO' => $photo_last['thumbnail_url'],
 			'U_CATEGORY' => $photo_last['category_url']
 		), 'LEFT_PANEL[2]');
-		$temp_template->add_if('USER_EXISTS', (empty($photo_last['url_user']) ? false : true), 'LEFT_PANEL[2]');
+		$temp_template->add_if ('USER_EXISTS', (empty($photo_last['url_user']) ? false : true), 'LEFT_PANEL[2]');
 
 		$temp_template->template_file = 'header.html';
 		$temp_template->create_template();
@@ -503,7 +504,7 @@ class template
 
 		$temp_template->add_case('RIGHT_BLOCK', 'USER_INFO', 'RIGHT_PANEL[0]');
 		$temp_template->add_string_ar($user, 'RIGHT_PANEL[0]');
-		$temp_template->add_if('USER_NOT_LOGIN', ($_SESSION['login_id'] == 0 ? true : false), 'RIGHT_PANEL[0]');
+		$temp_template->add_if ('USER_NOT_LOGIN', ($_SESSION['login_id'] == 0 ? true : false), 'RIGHT_PANEL[0]');
 
 		$temp_template->add_case('RIGHT_BLOCK', 'STATISTIC', 'RIGHT_PANEL[1]');
 		$temp_template->add_string_ar($stat, 'RIGHT_PANEL[1]');
@@ -518,7 +519,7 @@ class template
 				'D_USER_NAME' => $val['user_name'],
 				'D_USER_PHOTO' => $val['user_photo']
 			), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
-			$temp_template->add_if('USER_EXIST', (empty($val['user_url']) ? false : true), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
+			$temp_template->add_if ('USER_EXIST', (empty($val['user_url']) ? false : true), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
 		}
 
 		$temp_template->add_case('RIGHT_BLOCK', 'RANDOM_PHOTO', 'RIGHT_PANEL[3]');
@@ -539,7 +540,7 @@ class template
 			'U_THUMBNAIL_PHOTO' => $rand_photo['thumbnail_url'],
 			'U_CATEGORY' => $rand_photo['category_url']
 		), 'RIGHT_PANEL[3]');
-		$temp_template->add_if('USER_EXISTS', (empty($rand_photo['url_user']) ? false : true), 'RIGHT_PANEL[3]');
+		$temp_template->add_if ('USER_EXISTS', (empty($rand_photo['url_user']) ? false : true), 'RIGHT_PANEL[3]');
 
 		$temp_template->template_file = 'footer.html';
 		$temp_template->create_template();
@@ -574,6 +575,7 @@ class template
 /// Устаревший класс работы с шаблонами.
 /**
 * Данный класс содержит устаревшие функции по работе с шаблонами (наполнение данными, обработка). Будет заменен на новый.
+* \todo Удалить все следы использования старого класса формирования вывода страницы
 * @see template
 */
 class template_old
@@ -653,7 +655,7 @@ class template_old
 		$content = str_replace('{U_SEARCH}', $work->config['site_url'] . '?action=search', $content);
 		$content = str_replace('{L_SEARCH}', $lang['main_search'], $content);
 
-		if(get_magic_quotes_gpc())
+		if (get_magic_quotes_gpc())
 		{
 			$content = stripslashes($content);
 		}
@@ -720,14 +722,14 @@ class template_old
 				{
 					$visible = true;
 
-					if($val['user_login'] != '')
+					if ($val['user_login'] != '')
 					{
 						if ($val['user_login'] == 0 && $user->user['id'] > 0) $visible = false;
 						if ($val['user_login'] == 1 && $user->user['id'] == 0) $visible = false;
 					}
-					if ($val['user_access'] != '') if($user->user[$val['user_access']] != 1) $visible = false;
+					if ($val['user_access'] != '') if ($user->user[$val['user_access']] != 1) $visible = false;
 
-					if($visible)
+					if ($visible)
 					{
 						$array_data = array();
 
@@ -827,7 +829,7 @@ class template_old
 						}
 					}
 					else log_in_file($db->error, DIE_IF_ERROR);
-					if($temp_category['id'] == 0)
+					if ($temp_category['id'] == 0)
 					{
 						$foto['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name'];
 						$foto['category_description'] = $foto['category_name'];
@@ -867,7 +869,7 @@ class template_old
 			$foto['category_url'] = $work->config['site_url'];
 		}
 
-		if(!@fopen($temp_path, 'r'))
+		if (!@fopen($temp_path, 'r'))
 		{
 			$temp_foto['file'] = 'no_foto.png';
 			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
@@ -888,14 +890,14 @@ class template_old
 		if ($work->config['temp_photo_h'] == '0') $ratioHeight = 1;
 		else $ratioHeight = $size[1]/$work->config['temp_photo_h'];
 
-		if($size[0] < $work->config['temp_photo_w'] && $size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0')
+		if ($size[0] < $work->config['temp_photo_w'] && $size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0')
 		{
 			$foto['width'] = $size[0];
 			$foto['height'] = $size[1];
 		}
 		else
 		{
-			if($ratioWidth < $ratioHeight)
+			if ($ratioWidth < $ratioHeight)
 			{
 				$foto['width'] = $size[0]/$ratioHeight;
 				$foto['height'] = $size[1]/$ratioHeight;
@@ -988,7 +990,7 @@ class template_old
 
 		$news['IF_EDIT_LONG'] = false;
 
-		if($act == 'id')
+		if ($act == 'id')
 		{
 			if ($db->select('*', TBL_NEWS, '`id` = ' . $news_data)) $temp_news = $db->res_arr();
 			else log_in_file($db->error, DIE_IF_ERROR);
@@ -1265,12 +1267,12 @@ class template_old
 		$array_data = array();
 		$array_data['L_IF_RATE'] = $lang['photo_if_' . $if_who];
 
-		if($rate == 'false')
+		if ($rate == 'false')
 		{
             $array_data['D_IF_RATE'] = '<select name="rate_' . $if_who . '">';
             for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++)
             {
-				if($i == 0) $selected = ' selected'; else $selected = '';
+				if ($i == 0) $selected = ' selected'; else $selected = '';
 				$array_data['D_IF_RATE'] .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
 			$array_data['D_IF_RATE'] .= '</select>';
@@ -1322,14 +1324,14 @@ class template_old
 		if ($work->config['temp_photo_h'] == '0') $ratioHeight = 1;
 		else $ratioHeight = $full_size[1]/$work->config['temp_photo_h'];
 
-		if($full_size[0] < $work->config['temp_photo_w'] && $full_size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0')
+		if ($full_size[0] < $work->config['temp_photo_w'] && $full_size[1] < $work->config['temp_photo_h'] && $work->config['temp_photo_w'] != '0' && $work->config['temp_photo_h'] != '0')
 		{
 			$foto['width'] = $full_size[0];
 			$foto['height'] = $full_size[1];
 		}
 		else
 		{
-			if($ratioWidth < $ratioHeight)
+			if ($ratioWidth < $ratioHeight)
 			{
 				$foto['width'] = $full_size[0]/$ratioHeight;
 				$foto['height'] = $full_size[1]/$ratioHeight;
@@ -1346,7 +1348,7 @@ class template_old
 			switch($foto['type'])
 			{
 				case "1":
-					$imorig = imagecreatefromgif($full_path);
+					$imorig = imagecreatefromgif ($full_path);
 					break;
 				case "2":
 					$imorig = imagecreatefromjpeg($full_path);
@@ -1365,7 +1367,7 @@ class template_old
 				switch($foto['type'])
 				{
 					case "1":
-						imagegif($im, $thumbnail_path);
+						imagegif ($im, $thumbnail_path);
 						break;
 					case "2":
 						imagejpeg($im, $thumbnail_path);

@@ -7,10 +7,12 @@
 * @date		28/03-2012
 * @details	Содержит общий класс (набор функций) + хранилище для данных о конфигурации.
 */
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 /// Общий класс (набор функций) + хранилище для данных о конфигурации.
 /**
@@ -342,7 +344,7 @@ class work
 
 		$photo = array();
 
-		if($user_flag == 1)
+		if ($user_flag == 1)
 		{
 			if ($db->select(array('id', 'name'), TBL_CATEGORY, '`id` = 0'))
 			{
@@ -405,19 +407,19 @@ class work
 		$photo['top_url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
 		if ($user->user['pic_view'] == true)
 		{
-			if($temp_last)
+			if ($temp_last)
 			{
 				$photo['last_name'] = $temp_last['name'] . ' (' . $temp_last['description'] . ')';
 				$photo['last_url'] = $this->config['site_url'] . '?action=photo&amp;id=' . $temp_last['id'];
 			}
-			if($temp_top)
+			if ($temp_top)
 			{
 				$photo['top_name'] = $temp_top['name'] . ' (' . $temp_top['description'] . ')';
 				$photo['top_url'] = $this->config['site_url'] . '?action=photo&amp;id=' . $temp_top['id'];
 			}
 		}
 
-		if($cat_id == 0)
+		if ($cat_id == 0)
 		{
 			if ($db->select('COUNT(DISTINCT `user_upload`) AS `num_user_upload`', TBL_PHOTO, '`category` = 0'))
 			{
@@ -429,7 +431,7 @@ class work
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
-		if($user_flag == 1) $temp['id'] = 'user&amp;id=' . $cat_id;
+		if ($user_flag == 1) $temp['id'] = 'user&amp;id=' . $cat_id;
 
 		$array_data = array(
 					'D_NAME_CATEGORY' => $temp['name'],
@@ -559,7 +561,7 @@ class work
 	{
 		global $db;
 
-		if($act == 'id')
+		if ($act == 'id')
 		{
 			if ($db->select('*', TBL_NEWS, '`id` = ' . $news_data)) $temp_news = $db->res_arr();
 			else log_in_file($db->error, DIE_IF_ERROR);
@@ -596,14 +598,14 @@ class work
 				{
 					$visible = true;
 
-					if($val['user_login'] != '')
+					if ($val['user_login'] != '')
 					{
 						if ($val['user_login'] == 0 && $user->user['id'] > 0) $visible = false;
 						if ($val['user_login'] == 1 && $user->user['id'] == 0) $visible = false;
 					}
-					if ($val['user_access'] != '') if($user->user[$val['user_access']] != 1) $visible = false;
+					if ($val['user_access'] != '') if ($user->user[$val['user_access']] != 1) $visible = false;
 
-					if($visible)
+					if ($visible)
 					{
 						$array_menu[$key] = array(
 								'url' => ($val['action'] == $action ? NULL : $this->config['site_url'] . $this->clean_field($val['url_action'])),
@@ -693,7 +695,7 @@ class work
 						}
 					}
 					else log_in_file($db->error, DIE_IF_ERROR);
-					if($temp_category['id'] == 0)
+					if ($temp_category['id'] == 0)
 					{
 						$photo['category_name'] = $this->clean_field($temp_category['name'] . ' ' . $user_add['real_name']);
 						$photo['category_description'] = $this->clean_field($photo['category_name']);
@@ -735,7 +737,7 @@ class work
 			$photo['category_url'] = $this->config['site_url'];
 		}
 
-		if(!@fopen($temp_path, 'r'))
+		if (!@fopen($temp_path, 'r'))
 		{
 			$temp_photo['file'] = 'no_foto.png';
 			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
@@ -771,14 +773,14 @@ class work
 		if ($this->config['temp_photo_h'] == '0') $ratio_height = 1;
 		else $ratio_height = $size[1]/$this->config['temp_photo_h'];
 
-		if($size[0] < $this->config['temp_photo_w'] && $size[1] < $this->config['temp_photo_h'] && $this->config['temp_photo_w'] != '0' && $this->config['temp_photo_h'] != '0')
+		if ($size[0] < $this->config['temp_photo_w'] && $size[1] < $this->config['temp_photo_h'] && $this->config['temp_photo_w'] != '0' && $this->config['temp_photo_h'] != '0')
 		{
 			$size_photo['width'] = $size[0];
 			$size_photo['height'] = $size[1];
 		}
 		else
 		{
-			if($ratio_width < $ratio_height)
+			if ($ratio_width < $ratio_height)
 			{
 				$size_photo['width'] = $size[0]/$ratio_height;
 				$size_photo['height'] = $size[1]/$ratio_height;
@@ -1043,6 +1045,118 @@ class work
 		$text = preg_replace('#\[right\](.*?)\[/right\]#si', '<p align=right>\\1</p>', $text);
 		$text = preg_replace('#\[img\](.*?)\[/img\]#si', '<img src="\\1" alt="\\1" />', $text);
 		return $text;
+	}
+
+	/// Функция выводит массив данных для несуществующего фото
+	/**
+	* @return массив, содержащий наименование файла, полный путь к изображению и полный путь к эскизу
+	*/
+	function no_photo()
+	{
+		$temp['file'] = 'no_foto.png';
+		$temp['full_path'] = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp['file'];
+		$temp['thumbnail_path'] = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp['file'];
+		return $temp;
+	}
+	
+	/// Функция преобразует изображение в эскиз, при этом проводится проверка - если эскиз уже существует и его размеры соотвествуют нстройкам, указанным в конфигурации сайта, то просто возвращает уведомление о том, что изображение преобразовано - не выполняя никаких операций
+	/**
+	* @param $full_path системный путь к изображению
+	* @param $thumbnail_path системный путь к эскизу
+	* @return True если удалось создать эскиз, иначе False
+	*/
+	function image_resize($full_path, $thumbnail_path)
+	{
+		$thumbnail_size = @getimagesize($thumbnail_path);
+		$full_size = getimagesize($full_path);
+		$photo['type'] = $full_size[2];
+
+		if ($this->config['temp_photo_w'] == '0') $ratio_width = 1;
+		else $ratio_width = $full_size[0]/$this->config['temp_photo_w'];
+		if ($this->config['temp_photo_h'] == '0') $ratio_height = 1;
+		else $ratio_height = $full_size[1]/$this->config['temp_photo_h'];
+
+		if ($full_size[0] < $this->config['temp_photo_w'] && $full_size[1] < $this->config['temp_photo_h'] && $this->config['temp_photo_w'] != '0' && $this->config['temp_photo_h'] != '0')
+		{
+			$photo['width'] = $full_size[0];
+			$photo['height'] = $full_size[1];
+		}
+		else
+		{
+			if ($ratio_width < $ratio_height)
+			{
+				$photo['width'] = (int)$full_size[0]/$ratio_height;
+				$photo['height'] = (int)$full_size[1]/$ratio_height;
+			}
+			else
+			{
+				$photo['width'] = (int)$full_size[0]/$ratio_width;
+				$photo['height'] = (int)$full_size[1]/$ratio_width;
+			}
+		}
+
+		if ($thumbnail_size[0] != $photo['width'] || $thumbnail_size[1] != $photo['height'])
+		{
+			switch($photo['type'])
+			{
+				case "1":
+					$imorig = imagecreatefromgif ($full_path);
+					break;
+				case "2":
+					$imorig = imagecreatefromjpeg($full_path);
+					break;
+				case "3":
+					$imorig = imagecreatefrompng($full_path);
+					break;
+				default:
+					$imorig = imagecreatefromjpeg($full_path);
+			}
+			$im = imagecreatetruecolor($photo['width'], $photo['height']);
+			if (imagecopyresampled($im, $imorig , 0, 0, 0, 0, $photo['width'], $photo['height'], $full_size[0], $full_size[1]))
+			{
+				@unlink($thumbnail_path);
+
+				switch($photo['type'])
+				{
+					case "1":
+						imagegif ($im, $thumbnail_path);
+						break;
+					case "2":
+						imagejpeg($im, $thumbnail_path);
+						break;
+					case "3":
+						imagepng($im, $thumbnail_path);
+						break;
+					default:
+						imagejpeg($im, $thumbnail_path);
+				}
+				return true;
+			}
+			return false;
+		}
+		else return true;
+	}
+
+	/// Функция выводит изображение, скрывая путь к нему
+	/**
+	* @param $full_path системный путь к изображению
+	* @param $name_file имя файла
+	* @return Изображение
+	*/
+	function image_attach($full_path, $name_file)
+	{
+		$size = getimagesize($full_path);
+
+		header("Content-Type: " . $size['mime']);
+		header("Content-Disposition: inline; filename=\"" . $name_file . "\"");
+		header("Content-Length: " . (string)(filesize($full_path)));
+
+		flush();
+
+		$fh = fopen($full_path, 'rb');
+		fpassthru($fh);
+		fclose($fh);
+		exit();
 	}
 }
 ?>

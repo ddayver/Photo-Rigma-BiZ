@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li class="current"><a href="files.html"><span>Файлы</span></a></li>
@@ -93,7 +94,7 @@ $(document).ready(function(){initNavTree('attach_8php.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,10 +118,16 @@ $(document).ready(function(){initNavTree('attach_8php.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:ae311d20ada595b0021f5cc872b26e1d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae311d20ada595b0021f5cc872b26e1d6"></a>
-if(IN_GALLERY!==true) if(!isset($_REQUEST['foto'])||empty($_REQUEST['foto'])||$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
-<a class="el" href="classuser.html">user</a>['pic_view']==false)&#160;</td><td class="memItemRight" valign="bottom"><b>else</b></td></tr>
-<tr class="separator:ae311d20ada595b0021f5cc872b26e1d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a719d0d4f389f6429eb37c97209620"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="attach_8php.html#a97a719d0d4f389f6429eb37c97209620">$template_TMP</a> = true</td></tr>
+<tr class="separator:a97a719d0d4f389f6429eb37c97209620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d626b28fccda802400c748c0d7a42e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6d626b28fccda802400c748c0d7a42e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="attach_8php.html#af6d626b28fccda802400c748c0d7a42e">$header_footer</a> = false</td></tr>
+<tr class="memdesc:af6d626b28fccda802400c748c0d7a42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запретить вывод шапки страницы <br/></td></tr>
+<tr class="separator:af6d626b28fccda802400c748c0d7a42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a565b8336923ef5ec8f122c2b41c5eef1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a565b8336923ef5ec8f122c2b41c5eef1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="attach_8php.html#a565b8336923ef5ec8f122c2b41c5eef1">$template_output</a> = false</td></tr>
+<tr class="memdesc:a565b8336923ef5ec8f122c2b41c5eef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запретить вывод подвала страницы <br/></td></tr>
+<tr class="separator:a565b8336923ef5ec8f122c2b41c5eef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Вывод фото из галлереи по идентификатору. </p>
@@ -130,7 +137,23 @@ if(IN_GALLERY!==true) if(!isset($_REQUEST['foto'])||empty($_REQUEST['foto'])||$<
 <p>Используется для вывод фото из галлереи по идентификатору и скрытия настоящего пути к файлу. </p>
 
 <p>См. определение в файле <a class="el" href="attach_8php_source.html">attach.php</a></p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Переменные</h2>
+<a class="anchor" id="a97a719d0d4f389f6429eb37c97209620"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$template_TMP = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Необходимо сделать:</a></b></dt><dd>Убрать заглушку после перехода на новый класс формирования шаблонов </dd></dl>
+
+<p>См. определение в файле <a class="el" href="attach_8php_source.html">attach.php</a> строка <a class="el" href="attach_8php_source.html#l00018">18</a></p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

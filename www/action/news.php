@@ -20,7 +20,7 @@ include_once($work->config['site_dir'] . 'language/' . $work->config['language']
 $title = $lang['news_title'];
 $act = '';
 
-if(!isset($_REQUEST['news']) || empty($_REQUEST['news']) || !(mb_ereg('^[0-9]+$', $_REQUEST['news']))) $news = false;
+if (!isset($_REQUEST['news']) || empty($_REQUEST['news']) || !(mb_ereg('^[0-9]+$', $_REQUEST['news']))) $news = false;
 else
 {
 	$news = $_REQUEST['news'];
@@ -32,14 +32,14 @@ else
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if(isset($_REQUEST['subact']) && !empty($_REQUEST['subact'])) $subact = $_REQUEST['subact'];
+if (isset($_REQUEST['subact']) && !empty($_REQUEST['subact'])) $subact = $_REQUEST['subact'];
 else $subact = '';
 
 if ($subact == 'save')
 {
-	if($news === false && $user->user['news_add'] == true)
+	if ($news === false && $user->user['news_add'] == true)
 	{
-		if(!isset($_POST['name_post']) || empty($_POST['name_post']) || !isset($_POST['text_post']) || empty($_POST['text_post']))
+		if (!isset($_POST['name_post']) || empty($_POST['name_post']) || !isset($_POST['text_post']) || empty($_POST['text_post']))
 		{
 			$subact = 'add';
 		}
@@ -57,7 +57,7 @@ if ($subact == 'save')
 	}
 	elseif ($news !== false && $user->user['news_moderate'] == true)
 	{
-		if(!isset($_POST['name_post']) || empty($_POST['name_post']))
+		if (!isset($_POST['name_post']) || empty($_POST['name_post']))
 		{
 			$name_post = $temp['name_post'];
 			$ch_name = false;
@@ -68,7 +68,7 @@ if ($subact == 'save')
 			$ch_name = true;
 		}
 
-		if(!isset($_POST['text_post']) || empty($_POST['text_post']))
+		if (!isset($_POST['text_post']) || empty($_POST['text_post']))
 		{
 			$text_post = trim($temp['text_post']);
 			$ch_text = false;
@@ -79,7 +79,7 @@ if ($subact == 'save')
 			$ch_text = true;
 		}
 
-		if($ch_name || $ch_text)
+		if ($ch_name || $ch_text)
 		{
 			$query_news = array();
 			$query_news['data_last_edit'] = date('Y-m-d H:m:s');
@@ -162,7 +162,7 @@ elseif ($subact == 'add' && $news === false && $user->user['news_add'] == true)
 }
 else
 {
-	if($news !== false)
+	if ($news !== false)
 	{
 		$main_block = $template->template_news($news, 'id');
 		$act = '';

@@ -89,9 +89,9 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$language_dir = dir($work->config['site_dir'] . '/language'); // проверяем допустимые для выбора языки
 		while (false !== ($entry = $language_dir->read())) // до тех пор, пока существуют файлы в папке
 		{
-			if($entry != '.' && $entry !='..' && is_dir($language_dir->path . '/' . $entry))
+			if ($entry != '.' && $entry !='..' && is_dir($language_dir->path . '/' . $entry))
 			{
-				if($entry == $work->config['language']) $selected = ' selected'; else $selected = ''; // если очередной язык является текущим для сайта - помечаем его выбранным по-умолчанию
+				if ($entry == $work->config['language']) $selected = ' selected'; else $selected = ''; // если очередной язык является текущим для сайта - помечаем его выбранным по-умолчанию
 				$language .= '<option value="' . $entry . '"' . $selected . '>' . $entry . '</option>'; // наполняем список доступных языков
 			}
 		}
@@ -102,9 +102,9 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$themes_dir = dir($work->config['site_dir'] . '/themes'); // проверяем допустимые для выбора темы
 		while (false !== ($entry = $themes_dir->read())) // до тех пор, пока существуют файлы в папке
 		{
-			if($entry != '.' && $entry !='..' && is_dir($themes_dir->path . '/' . $entry))
+			if ($entry != '.' && $entry !='..' && is_dir($themes_dir->path . '/' . $entry))
 			{
-				if($entry == $work->config['themes']) $selected = ' selected'; else $selected = ''; // если очередная тема является текущей для сайта - помечаем его выбранным по-умолчанию
+				if ($entry == $work->config['themes']) $selected = ' selected'; else $selected = ''; // если очередная тема является текущей для сайта - помечаем его выбранным по-умолчанию
 				$themes .= '<option value="' . $entry . '"' . $selected . '>' . $entry . '</option>'; // наполняем список доступных тем
 			}
 		}
@@ -358,14 +358,14 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						'IF_EDIT_GROUP' => false
 		); // наполняем массив данными для замены по шаблону - по умолчанию все блоки отключены
 
-		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group'])))
+		if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group'])))
 		{
 			if ($db->select('*', TBL_GROUP, '`id` = ' . $_POST['id_group']))
 			{
 				$temp = $db->res_row();
 				if ($temp)
 				{
-					if(isset($_POST['name_group']) && !empty($_POST['name_group']) && $_POST['name_group'] != $temp['name'])
+					if (isset($_POST['name_group']) && !empty($_POST['name_group']) && $_POST['name_group'] != $temp['name'])
 					{
 						if ($db->update(array('name' => $_POST['name_group']), TBL_GROUP, '`id` = ' . $_POST['id_group'])) $temp['name'] = $_POST['name_group'];
 						else log_in_file($db->error, DIE_IF_ERROR);
@@ -390,7 +390,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
-		if(isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && mb_ereg('^[0-9]+$', $_POST['group']))
+		if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && mb_ereg('^[0-9]+$', $_POST['group']))
 		{
 			if ($db->select('*', TBL_GROUP, '`id` = ' . $_POST['group']))
 			{

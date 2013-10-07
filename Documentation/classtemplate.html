@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
       <li><a href="modules.html"><span>Группы</span></a></li>
       <li class="current"><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
       <li><a href="files.html"><span>Файлы</span></a></li>
@@ -94,7 +95,7 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -241,7 +242,7 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <p>Данный класс содержит функции по работе с шаблонами (наполнение данными, обработка). Внедряется взамен старого. </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate__old.html" title="Устаревший класс работы с шаблонами.">template_old</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00021">21</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00022">22</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a class="anchor" id="ac472efb4d43bafda24293efc44584a26"></a>
 <div class="memitem">
@@ -285,11 +286,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#ab15e3ff7c32479b1b3e06a7b00d7a32d" title="Блок массивов выбора блока для обработки">$block_case</a>, <a class="el" href="classtemplate.html#a68da12b52b53344fc2eb5ac49bf70e50" title="Блок массивов объектов для обработки">$block_object</a>, <a class="el" href="classtemplate.html#aaecfbc774dfa04efa0a25723a461d877" title="Создание рекурсивного блока массивов-объектов">test_is_object</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00180">180</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00181">181</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00217">test_is_object()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00218">test_is_object()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00200">add_case_ar()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00201">add_case_ar()</a>.</p>
 
 <p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -350,9 +351,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона">add_if</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00200">200</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00201">201</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00180">add_case()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00181">add_case()</a>.</p>
 
 <p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -409,11 +410,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#aa984e113df21983a78f9e00bfcfdabaa" title="Блок условий для обработки">$block_if</a>, <a class="el" href="classtemplate.html#a68da12b52b53344fc2eb5ac49bf70e50" title="Блок массивов объектов для обработки">$block_object</a>, <a class="el" href="classtemplate.html#aaecfbc774dfa04efa0a25723a461d877" title="Создание рекурсивного блока массивов-объектов">test_is_object</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00139">139</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00140">140</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00217">test_is_object()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00218">test_is_object()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00161">add_if_ar()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00162">add_if_ar()</a>.</p>
 
 <p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -474,9 +475,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона">add_if</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00161">161</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00162">162</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00139">add_if()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00140">add_if()</a>.</p>
 
 <p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -533,11 +534,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a72aee24d639c009b873e84d9b1e198ac" title="Блок строковых данных для замены">$block_string</a>, <a class="el" href="classtemplate.html#a68da12b52b53344fc2eb5ac49bf70e50" title="Блок массивов объектов для обработки">$block_object</a>, <a class="el" href="classtemplate.html#aaecfbc774dfa04efa0a25723a461d877" title="Создание рекурсивного блока массивов-объектов">test_is_object</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00100">100</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00101">101</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00217">test_is_object()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00218">test_is_object()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00120">add_string_ar()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00121">add_string_ar()</a>.</p>
 
 <p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -598,9 +599,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#aaabe60e829407d9f1e18c4f7ca1cc1e6" title="Добавление строковой данной для замены в шаблоне">add_string</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00120">120</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00121">121</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00100">add_string()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00101">add_string()</a>.</p>
 
 <p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -632,9 +633,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <p>Создает шаблон из файла, указанного в $template_file, обрабатывает его согласно заполненных данных и размещает обработанный результат в $content </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a81a0f5ac832f9296d427080af9383791" title="Файл шаблона">$template_file</a>, <a class="el" href="classtemplate.html#abfeed269a36ce198747215e37a71c3f7" title="Путь к корню темы">$themes_path</a>, <a class="el" href="classtemplate.html#ab06577e2243234d36022d3f8bc243a87" title="Ссылка на корень темы">$themes_url</a>, <a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a>, <a class="el" href="classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Функция обработки шаблона">pars_template</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00078">78</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00079">79</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a>, <a class="el" href="template_8php_source.html#l00059">find_template_file()</a>, <a class="el" href="common_8php_source.html#l00028">log_in_file()</a> и <a class="el" href="template_8php_source.html#l00256">pars_template()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a>, <a class="el" href="template_8php_source.html#l00060">find_template_file()</a>, <a class="el" href="common_8php_source.html#l00030">log_in_file()</a> и <a class="el" href="template_8php_source.html#l00257">pars_template()</a>.</p>
 
 <p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -674,11 +675,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <p>Находит файл-шаблон и помещает его путь в $template_file. </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a81a0f5ac832f9296d427080af9383791" title="Файл шаблона">$template_file</a>, <a class="el" href="classtemplate.html#abfeed269a36ce198747215e37a71c3f7" title="Путь к корню темы">$themes_path</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00059">59</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00060">60</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00027">$template_file</a>, <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00028">log_in_file()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00028">$template_file</a>, <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00030">log_in_file()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00078">create_template()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00079">create_template()</a>.</p>
 
 <p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -721,9 +722,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <p>Формирует "подвал" HTML-страницы с выводом копирайта. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'footer.html' </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="group__LanguageRussianAdmin.html#ga384a76e4976e643b15718d32a2bd4c1a" title="Массив языковых переменных">$lang</a>, <a class="el" href="classwork.html" title="Общий класс (набор функций) + хранилище для данных о конфигурации.">work</a>, <a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a>, <a class="el" href="classtemplate.html#a81a0f5ac832f9296d427080af9383791" title="Файл шаблона">$template_file</a>, <a class="el" href="classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f" title="Добавление массива строковых данных для замены в шаблоне">add_string_ar</a>, <a class="el" href="classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона">add_if</a>, <a class="el" href="classtemplate.html#ac472efb4d43bafda24293efc44584a26" title="Добавление данных о выборе блока для вывода фрагментов шаблона">add_case</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00489">489</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00490">490</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="language_2russian_2admin_8php_source.html#l00026">$lang</a>, <a class="el" href="template_8php_source.html#l00035">$site_dir</a>, <a class="el" href="template_8php_source.html#l00034">$site_url</a>, <a class="el" href="template_8php_source.html#l00036">$theme</a>, <a class="el" href="index_8php_source.html#l00053">$user</a> и <a class="el" href="index_8php_source.html#l00036">$work</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="language_2russian_2admin_8php_source.html#l00026">$lang</a>, <a class="el" href="template_8php_source.html#l00036">$site_dir</a>, <a class="el" href="template_8php_source.html#l00035">$site_url</a>, <a class="el" href="template_8php_source.html#l00037">$theme</a>, <a class="el" href="index_8php_source.html#l00053">$user</a> и <a class="el" href="index_8php_source.html#l00036">$work</a>.</p>
 
 </div>
 </div>
@@ -751,9 +752,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="group__LanguageRussianAdmin.html#ga384a76e4976e643b15718d32a2bd4c1a" title="Массив языковых переменных">$lang</a>, <a class="el" href="classwork.html" title="Общий класс (набор функций) + хранилище для данных о конфигурации.">work</a>, <a class="el" href="classtemplate.html#a3dac25461e2b49e42da848ecda53768a" title="Данные, вставляемые в тег body.">$ins_body</a>, <a class="el" href="classtemplate.html#ad2b20ab88568b61e75d743028463175f" title="Данные, вставляемые в заголовок">$ins_header</a>, <a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a>, <a class="el" href="classtemplate.html#a81a0f5ac832f9296d427080af9383791" title="Файл шаблона">$template_file</a>, <a class="el" href="classtemplate.html#aaabe60e829407d9f1e18c4f7ca1cc1e6" title="Добавление строковой данной для замены в шаблоне">add_string</a>, <a class="el" href="classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f" title="Добавление массива строковых данных для замены в шаблоне">add_string_ar</a>, <a class="el" href="classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона">add_if</a>, <a class="el" href="classtemplate.html#ac472efb4d43bafda24293efc44584a26" title="Добавление данных о выборе блока для вывода фрагментов шаблона">add_case</a>, <a class="el" href="classtemplate.html#a1ef5df918700c21dc94152e4a8329770" title="Создание и обработка шаблона">create_template</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00383">383</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00384">384</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="index_8php_source.html#l00059">$action</a>, <a class="el" href="template_8php_source.html#l00025">$content</a>, <a class="el" href="template_8php_source.html#l00024">$ins_body</a>, <a class="el" href="language_2russian_2admin_8php_source.html#l00026">$lang</a>, <a class="el" href="template_8php_source.html#l00035">$site_dir</a>, <a class="el" href="template_8php_source.html#l00034">$site_url</a>, <a class="el" href="template_8php_source.html#l00036">$theme</a>, <a class="el" href="index_8php_source.html#l00067">$title</a> и <a class="el" href="index_8php_source.html#l00036">$work</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="index_8php_source.html#l00059">$action</a>, <a class="el" href="template_8php_source.html#l00026">$content</a>, <a class="el" href="template_8php_source.html#l00025">$ins_body</a>, <a class="el" href="language_2russian_2admin_8php_source.html#l00026">$lang</a>, <a class="el" href="template_8php_source.html#l00036">$site_dir</a>, <a class="el" href="template_8php_source.html#l00035">$site_url</a>, <a class="el" href="template_8php_source.html#l00037">$theme</a>, <a class="el" href="index_8php_source.html#l00067">$title</a> и <a class="el" href="index_8php_source.html#l00036">$work</a>.</p>
 
 </div>
 </div>
@@ -774,11 +775,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <p>Обрабатывает шаблон, наполняя его данными. Последовательно делает "прогонку" блока объектных элементов для рекурсивного наполнения, обработка условий вывода шаблонов, замена строковых переменных </p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a68da12b52b53344fc2eb5ac49bf70e50" title="Блок массивов объектов для обработки">$block_object</a>, <a class="el" href="classtemplate.html#aa984e113df21983a78f9e00bfcfdabaa" title="Блок условий для обработки">$block_if</a>, <a class="el" href="classtemplate.html#a72aee24d639c009b873e84d9b1e198ac" title="Блок строковых данных для замены">$block_string</a>, <a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00256">256</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00257">257</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00345">template_case()</a>, <a class="el" href="template_8php_source.html#l00309">template_if()</a>, <a class="el" href="template_8php_source.html#l00277">template_object()</a> и <a class="el" href="template_8php_source.html#l00558">url_mod_rewrite()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00346">template_case()</a>, <a class="el" href="template_8php_source.html#l00310">template_if()</a>, <a class="el" href="template_8php_source.html#l00278">template_object()</a> и <a class="el" href="template_8php_source.html#l00559">url_mod_rewrite()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00078">create_template()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00079">create_template()</a>.</p>
 
 <p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -845,9 +846,9 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#abfeed269a36ce198747215e37a71c3f7" title="Путь к корню темы">$themes_path</a>, <a class="el" href="classtemplate.html#ab06577e2243234d36022d3f8bc243a87" title="Ссылка на корень темы">$themes_url</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00045">45</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00046">46</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00035">$site_dir</a>, <a class="el" href="template_8php_source.html#l00034">$site_url</a> и <a class="el" href="template_8php_source.html#l00036">$theme</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00036">$site_dir</a>, <a class="el" href="template_8php_source.html#l00035">$site_url</a> и <a class="el" href="template_8php_source.html#l00037">$theme</a>.</p>
 
 </div>
 </div>
@@ -894,11 +895,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00345">345</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00346">346</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00028">log_in_file()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00030">log_in_file()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00256">pars_template()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00257">pars_template()</a>.</p>
 
 <p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -967,11 +968,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00309">309</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00310">310</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00028">log_in_file()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00030">log_in_file()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00256">pars_template()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00257">pars_template()</a>.</p>
 
 <p><div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-16-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -1040,11 +1041,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#a57b284fe00866494b33afa80ba729bed" title="Содержимое для вывода">$content</a>, <a class="el" href="classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Функция обработки шаблона">pars_template</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00277">277</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00278">278</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00028">log_in_file()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00030">log_in_file()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00256">pars_template()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00257">pars_template()</a>.</p>
 
 <p><div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-18-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -1102,11 +1103,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>полученный элемент (имя объекта), порядковый номер в массиве, остаток пути (если путь полностью разобран, то возвращает вместо него False) </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00217">217</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00218">218</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00035">$site_dir</a>, <a class="el" href="template_8php_source.html#l00034">$site_url</a>, <a class="el" href="template_8php_source.html#l00036">$theme</a>, <a class="el" href="common_8php_source.html#l00062">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00028">log_in_file()</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00036">$site_dir</a>, <a class="el" href="template_8php_source.html#l00035">$site_url</a>, <a class="el" href="template_8php_source.html#l00037">$theme</a>, <a class="el" href="common_8php_source.html#l00064">DIE_IF_ERROR</a> и <a class="el" href="common_8php_source.html#l00030">log_in_file()</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00180">add_case()</a>, <a class="el" href="template_8php_source.html#l00139">add_if()</a> и <a class="el" href="template_8php_source.html#l00100">add_string()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00181">add_case()</a>, <a class="el" href="template_8php_source.html#l00140">add_if()</a> и <a class="el" href="template_8php_source.html#l00101">add_string()</a>.</p>
 
 <p><div id="dynsection-20" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-20-trigger" src="closed.png" alt="+"/> Граф вызовов:</div>
@@ -1168,11 +1169,11 @@ $(document).ready(function(){initNavTree('classtemplate.html','');});
 <dl class="section return"><dt>Возвращает</dt><dd>Обработанное содержимое </dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="classtemplate.html#af063a54cbc33b112254b0087948861ca" title="Включение читаемых URL.">$mod_rewrite</a> </dd></dl>
 
-<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00558">558</a></p>
+<p>См. определение в файле <a class="el" href="template_8php_source.html">template.php</a> строка <a class="el" href="template_8php_source.html#l00559">559</a></p>
 
-<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00025">$content</a>.</p>
+<p>Перекрестные ссылки <a class="el" href="template_8php_source.html#l00026">$content</a>.</p>
 
-<p>Используется в <a class="el" href="template_8php_source.html#l00256">pars_template()</a>.</p>
+<p>Используется в <a class="el" href="template_8php_source.html#l00257">pars_template()</a>.</p>
 
 <p><div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Граф вызова функции:</div>

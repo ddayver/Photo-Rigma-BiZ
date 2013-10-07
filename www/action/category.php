@@ -161,10 +161,10 @@ elseif (mb_ereg('^[0-9]+$', $cat))
 			$temp = $db->res_row();
 			if ($temp)
 			{
-				if(!isset($_POST['name_category']) || empty($_POST['name_category'])) $name_category = $temp['name'];
+				if (!isset($_POST['name_category']) || empty($_POST['name_category'])) $name_category = $temp['name'];
 				else $name_category = $_POST['name_category'];
 
-				if(!isset($_POST['description_category']) || empty($_POST['description_category'])) $description_category = $temp['description'];
+				if (!isset($_POST['description_category']) || empty($_POST['description_category'])) $description_category = $temp['description'];
 				else $description_category = $_POST['description_category'];
 
 				if (!$db->update(array('name' => $name_category, 'description' => $description_category), TBL_CATEGORY, '`id` = ' . $cat)) log_in_file($db->error, DIE_IF_ERROR);
@@ -242,14 +242,14 @@ elseif (mb_ereg('^[0-9]+$', $cat))
 				$cat_dir = dir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp['folder']);
 				while (false !== ($entry = $cat_dir->read()))
 				{
-					if($entry != '.' && $entry !='..') unlink($cat_dir->path . '/' . $entry);
+					if ($entry != '.' && $entry !='..') unlink($cat_dir->path . '/' . $entry);
 				}
 				$cat_dir->close();
 
 				$cat_dir = dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp['folder']);
 				while (false !== ($entry = $cat_dir->read()))
 				{
-					if($entry != '.' && $entry !='..') unlink($cat_dir->path . '/' . $entry);
+					if ($entry != '.' && $entry !='..') unlink($cat_dir->path . '/' . $entry);
 				}
 				$cat_dir->close();
 
@@ -360,7 +360,7 @@ elseif (mb_ereg('^[0-9]+$', $cat))
 }
 else
 {
-	if(isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'add' && $user->user['cat_moderate'] == true)
+	if (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'add' && $user->user['cat_moderate'] == true)
 	{
 		$act = 'add_category';
 
@@ -382,7 +382,7 @@ else
 	}
 	elseif (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'saveadd' && $user->user['cat_moderate'] == true)
 	{
-		if(!isset($_POST['name_dir']) || empty($_POST['name_dir'])) $name_dir = time();
+		if (!isset($_POST['name_dir']) || empty($_POST['name_dir'])) $name_dir = time();
 		else $name_dir = $work->encodename($_POST['name_dir']);
 
 		if ($db->select('COUNT(*) AS `count_dir`', TBL_CATEGORY, '`folder` = \'' . $name_dir . '\''))
@@ -392,13 +392,13 @@ else
 		}
 		else log_in_file($db->error, DIE_IF_ERROR);
 
-		if(!isset($_POST['name_category']) || empty($_POST['name_category'])) $name_category = $lang['category_no_name'] . ' (' . $name_dir . ')';
+		if (!isset($_POST['name_category']) || empty($_POST['name_category'])) $name_category = $lang['category_no_name'] . ' (' . $name_dir . ')';
 		else $name_category = $_POST['name_category'];
 
-		if(!isset($_POST['description_category']) || empty($_POST['description_category'])) $description_category = $lang['category_no_description'] . ' (' . $name_dir . ')';
+		if (!isset($_POST['description_category']) || empty($_POST['description_category'])) $description_category = $lang['category_no_description'] . ' (' . $name_dir . ')';
 		else $description_category = $_POST['description_category'];
 
-		if(mkdir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $name_dir, 0777) && mkdir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $name_dir, 0777))
+		if (mkdir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $name_dir, 0777) && mkdir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $name_dir, 0777))
 		{
 			$index_in_gallery = @file_get_contents($work->config['site_dir'] . $work->config['gallery_folder'] . '/index.php');
 			if ($index_in_gallery !== false && !empty($index_in_gallery))
@@ -423,7 +423,7 @@ else
 			if ($db->insert(array('folder' => $name_dir, 'name' => $name_category, 'description' => $description_category), TBL_CATEGORY))
 			{
 				$new_cat = $db->insert_id;
-				if($new_cat != 0)
+				if ($new_cat != 0)
 				{
 					$redirect_url = $work->config['site_url'] . '?action=category&cat=' . $new_cat;
 					$redirect_message = $lang['category_category'] . ' ' . $name_category . ' ' . $lang['category_added_sucesful'];

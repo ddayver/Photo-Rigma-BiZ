@@ -17,7 +17,7 @@ $new_rev = $rev;
 include_once ('../config.php');
 
 $link = @mysql_connect($config['dbhost'], $config['dbuser'], $config['dbpass']);
-if($link)
+if ($link)
 {
 	@mysql_select_db($config['dbname'], $link);
 	@mysql_query("SET CHARSET utf8");
