@@ -1,0 +1,159 @@
+<!DOCTYPE webprojectsession>
+<webprojectsession>
+  <session usePreviewPrefix="0" previewPrefix="" usePersistentBookmarks="0" >
+    <itemcursorpositions>
+      <item line="149" column="183" url="themes/default/profile.html" />
+    </itemcursorpositions>
+    <uploadprofiles showtreeviews="true" defaultProfile="localhost" >
+      <profile remote_host="localhost" remote_port="" remote_path="/home/www/html/photo" remote_protocol="ftp" user="www" name="localhost" >
+        <uploadeditem upload_time="0" url="action/" />
+        <uploadeditem upload_time="1380128218" url="action/admin.php" />
+        <uploadeditem upload_time="1380128237" url="action/attach.php" />
+        <uploadeditem upload_time="1380128241" url="action/category.php" />
+        <uploadeditem upload_time="1334255817" url="action/index.php" />
+        <uploadeditem upload_time="1380128246" url="action/login.php" />
+        <uploadeditem upload_time="1380461656" url="action/main.php" />
+        <uploadeditem upload_time="1380461664" url="action/news.php" />
+        <uploadeditem upload_time="1380461680" url="action/photo.php" />
+        <uploadeditem upload_time="1381086007" url="action/profile.php" />
+        <uploadeditem upload_time="1380461688" url="action/search.php" />
+        <uploadeditem upload_time="0" url="avatar/" />
+        <uploadeditem upload_time="1334255817" url="avatar/index.php" />
+        <uploadeditem upload_time="1332927412" url="avatar/no_avatar.jpg" />
+        <uploadeditem upload_time="1379778456" url="config.php" />
+        <uploadeditem upload_time="1332927412" url="favicon.ico" />
+        <uploadeditem upload_time="0" url="gallery/" />
+        <uploadeditem upload_time="1336723264" url="gallery/.htaccess" />
+        <uploadeditem upload_time="1334255817" url="gallery/index.php" />
+        <uploadeditem upload_time="1332950510" url="gallery/no_foto.png" />
+        <uploadeditem upload_time="0" url="gallery/user/" />
+        <uploadeditem upload_time="1334255817" url="gallery/user/index.php" />
+        <uploadeditem upload_time="0" url="include/" />
+        <uploadeditem upload_time="1380128184" url="include/common.php" />
+        <uploadeditem upload_time="1380128190" url="include/db.php" />
+        <uploadeditem upload_time="1334255817" url="include/index.php" />
+        <uploadeditem upload_time="1346188744" url="include/rev.php" />
+        <uploadeditem upload_time="1380461788" url="include/template.php" />
+        <uploadeditem upload_time="1380128210" url="include/user.php" />
+        <uploadeditem upload_time="1380461733" url="include/work.php" />
+        <uploadeditem upload_time="1381081917" url="index.php" />
+        <uploadeditem upload_time="0" url="install/" />
+        <uploadeditem upload_time="1334255817" url="install/index.php" />
+        <uploadeditem upload_time="1380128290" url="install/install.php" />
+        <uploadeditem upload_time="0" url="language/" />
+        <uploadeditem upload_time="1334255817" url="language/index.php" />
+        <uploadeditem upload_time="0" url="language/russian/" />
+        <uploadeditem upload_time="1380128325" url="language/russian/admin.php" />
+        <uploadeditem upload_time="1380128431" url="language/russian/category.php" />
+        <uploadeditem upload_time="1334255817" url="language/russian/index.php" />
+        <uploadeditem upload_time="1380128435" url="language/russian/login.php" />
+        <uploadeditem upload_time="1380128415" url="language/russian/main.php" />
+        <uploadeditem upload_time="1380128441" url="language/russian/menu.php" />
+        <uploadeditem upload_time="1380128446" url="language/russian/news.php" />
+        <uploadeditem upload_time="1380128449" url="language/russian/photo.php" />
+        <uploadeditem upload_time="1380128453" url="language/russian/search.php" />
+        <uploadeditem upload_time="0" url="log/" />
+        <uploadeditem upload_time="1336723250" url="log/.htaccess" />
+        <uploadeditem upload_time="0" url="themes/" />
+        <uploadeditem upload_time="0" url="themes/default/" />
+        <uploadeditem upload_time="1336723292" url="themes/default/admin_group.tpl" />
+        <uploadeditem upload_time="1336723302" url="themes/default/admin_settings.tpl" />
+        <uploadeditem upload_time="1336723307" url="themes/default/admin_start.tpl" />
+        <uploadeditem upload_time="1336723314" url="themes/default/admin_user.tpl" />
+        <uploadeditem upload_time="1336723319" url="themes/default/best.tpl" />
+        <uploadeditem upload_time="1336723325" url="themes/default/best_user.tpl" />
+        <uploadeditem upload_time="1336723330" url="themes/default/category_add.tpl" />
+        <uploadeditem upload_time="1336723335" url="themes/default/category_dir.tpl" />
+        <uploadeditem upload_time="1336723340" url="themes/default/category_edit.tpl" />
+        <uploadeditem upload_time="1336723345" url="themes/default/category_view.tpl" />
+        <uploadeditem upload_time="1336723349" url="themes/default/category_view_pic.tpl" />
+        <uploadeditem upload_time="1346238843" url="themes/default/footer.html" />
+        <uploadeditem upload_time="1346419530" url="themes/default/header.html" />
+        <uploadeditem upload_time="0" url="themes/default/img/" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/b_drop.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/b_edit.gif" />
+        <uploadeditem upload_time="1346786177" url="themes/default/img/error.png" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/gpadient_big.jpg" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/gpadient_copyr.jpg" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/gpadient_small.jpg" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/gpadient_sredni.jpg" />
+        <uploadeditem upload_time="1334255817" url="themes/default/img/index.php" />
+        <uploadeditem upload_time="1332950570" url="themes/default/img/logo-1.png" />
+        <uploadeditem upload_time="1332950570" url="themes/default/img/menu.png" />
+        <uploadeditem upload_time="1332950570" url="themes/default/img/menu_left.png" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/menu_mark.gif" />
+        <uploadeditem upload_time="1332950570" url="themes/default/img/menu_mark.png" />
+        <uploadeditem upload_time="1332950572" url="themes/default/img/menu_push.png" />
+        <uploadeditem upload_time="1332950570" url="themes/default/img/menu_push_left.png" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/menu_push_mark.gif" />
+        <uploadeditem upload_time="1332950570" url="themes/default/img/menu_push_mark.png" />
+        <uploadeditem upload_time="1332950572" url="themes/default/img/menu_push_right.png" />
+        <uploadeditem upload_time="1332950572" url="themes/default/img/menu_right.png" />
+        <uploadeditem upload_time="1332950572" url="themes/default/img/name_block.png" />
+        <uploadeditem upload_time="1332950572" url="themes/default/img/name_block_left.png" />
+        <uploadeditem upload_time="1332950572" url="themes/default/img/name_block_right.png" />
+        <uploadeditem upload_time="1332950614" url="themes/default/img/shapko2.png" />
+        <uploadeditem upload_time="1332950614" url="themes/default/img/short_menu.png" />
+        <uploadeditem upload_time="1332950614" url="themes/default/img/short_menu_left.png" />
+        <uploadeditem upload_time="1332950614" url="themes/default/img/short_menu_push.png" />
+        <uploadeditem upload_time="1332950614" url="themes/default/img/short_menu_push_left.png" />
+        <uploadeditem upload_time="1332950616" url="themes/default/img/short_menu_push_right.png" />
+        <uploadeditem upload_time="1332950616" url="themes/default/img/short_menu_right.png" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/spacer.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_edit.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_ocenit.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_poisk.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_register.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_save.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_udalit.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_undo.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_upload.gif" />
+        <uploadeditem upload_time="1332927410" url="themes/default/img/submit_small_vojti.gif" />
+        <uploadeditem upload_time="1334255817" url="themes/default/index.php" />
+        <uploadeditem upload_time="1336723363" url="themes/default/login_user.tpl" />
+        <uploadeditem upload_time="1336723367" url="themes/default/long_menu.tpl" />
+        <uploadeditem upload_time="1336723372" url="themes/default/long_menu_txt.tpl" />
+        <uploadeditem upload_time="1336723376" url="themes/default/long_menu_url.tpl" />
+        <uploadeditem upload_time="1346187066" url="themes/default/main.html" />
+        <uploadeditem upload_time="1336723382" url="themes/default/main.tpl" />
+        <uploadeditem upload_time="1336723387" url="themes/default/mini_foto.tpl" />
+        <uploadeditem upload_time="1336723393" url="themes/default/mini_foto_category.tpl" />
+        <uploadeditem upload_time="1336723398" url="themes/default/news.tpl" />
+        <uploadeditem upload_time="1336723407" url="themes/default/news_save.tpl" />
+        <uploadeditem upload_time="1336723411" url="themes/default/photo_edit.tpl" />
+        <uploadeditem upload_time="1336723416" url="themes/default/photo_upload.tpl" />
+        <uploadeditem upload_time="1336723421" url="themes/default/photo_view.tpl" />
+        <uploadeditem upload_time="1381087832" url="themes/default/profile.html" />
+        <uploadeditem upload_time="1336723426" url="themes/default/profile_edit.tpl" />
+        <uploadeditem upload_time="1336723431" url="themes/default/profile_user.tpl" />
+        <uploadeditem upload_time="1336723436" url="themes/default/profile_view.tpl" />
+        <uploadeditem upload_time="1336723441" url="themes/default/rate_blank.tpl" />
+        <uploadeditem upload_time="1336723445" url="themes/default/rate_form.tpl" />
+        <uploadeditem upload_time="1336723449" url="themes/default/redirect.tpl" />
+        <uploadeditem upload_time="1336723454" url="themes/default/register.tpl" />
+        <uploadeditem upload_time="1336723458" url="themes/default/search.tpl" />
+        <uploadeditem upload_time="1336723462" url="themes/default/short_menu.tpl" />
+        <uploadeditem upload_time="1336723467" url="themes/default/short_menu_txt.tpl" />
+        <uploadeditem upload_time="1336723471" url="themes/default/short_menu_url.tpl" />
+        <uploadeditem upload_time="1336723475" url="themes/default/stat.tpl" />
+        <uploadeditem upload_time="1335376998" url="themes/default/style-new.css" />
+        <uploadeditem upload_time="1346786481" url="themes/default/style.css" />
+        <uploadeditem upload_time="1334255817" url="themes/index.php" />
+        <uploadeditem upload_time="0" url="thumbnail/" />
+        <uploadeditem upload_time="1336723275" url="thumbnail/.htaccess" />
+        <uploadeditem upload_time="1334255817" url="thumbnail/index.php" />
+        <uploadeditem upload_time="1332950522" url="thumbnail/no_foto.png" />
+        <uploadeditem upload_time="0" url="thumbnail/user/" />
+        <uploadeditem upload_time="1334255817" url="thumbnail/user/index.php" />
+      </profile>
+    </uploadprofiles>
+    <treestatus>
+      <openfolder url="action" />
+      <openfolder url="include" />
+      <openfolder url="themes" />
+      <openfolder url="themes/default" />
+    </treestatus>
+  </session>
+  <teamdata yourself="" />
+</webprojectsession>
