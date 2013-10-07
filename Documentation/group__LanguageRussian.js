@@ -1,6 +1,6 @@
 var group__LanguageRussian =
 [
-    [ "Переменные для Админки", "group__LanguageRussianAdmin.html", null ],
+    [ "Переменные для Админки", "group__LanguageRussianAdmin.html", "group__LanguageRussianAdmin" ],
     [ "Переменные для процедур обзора и управления разделами", "group__LanguageRussianCategory.html", null ],
     [ "Переменные для процедур регистрации и восстановления пароля", "group__LanguageRussianLogin.html", null ],
     [ "Основные языковые переменные", "group__LanguageRussianMain.html", null ],

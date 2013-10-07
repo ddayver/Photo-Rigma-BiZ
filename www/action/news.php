@@ -8,7 +8,7 @@
 * @details	Вывод и обработка новостей сайта.
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
@@ -103,7 +103,7 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
 			if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp['user_post']))
 			{
 				$user_add = $db->res_row();
-				if ($user_add) $name_user = '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
+				if ($user_add) $name_user = '<a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
 				else $name_user = $lang['main_no_user_add'];
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);

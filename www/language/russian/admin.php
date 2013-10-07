@@ -8,7 +8,7 @@
 * @details	Содержит переменные языка для Админки (русский). Более подробная информация в группе @ref LanguageRussian
 */
 /// @cond
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }

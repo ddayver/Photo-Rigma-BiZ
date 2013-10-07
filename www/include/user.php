@@ -8,7 +8,7 @@
 * @details	Класс работы с пользователем.
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }

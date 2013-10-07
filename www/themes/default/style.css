@@ -1,26 +1,21 @@
 @charset "utf-8";
 
-
 body {
-    background-color : #141519;
+    background : #141519;
+    font : 12px Helvetica, sans-serif;
     color : #CCCCCC;
-    font-size : 12px;
-    font-family: Helvetica, sans-serif;
   }
 
 
 .my {
-    background-color: #141519;
+    background : #141519;
+    font : 12px Helvetica, sans-serif;
     padding : 5px;
-    text-align : left;
-    border-color : #414b57;
-    border-style : ridge;
-    border-width : 2px;
-    vertical-align : top;
     margin : 0px;
-    font-size : 12px;
-    font-family: Helvetica, sans-serif;
+    border : #414b57 ridge 2px;
     color : #CCCCCC;
+    text-align : left;
+    vertical-align : top;
   }
 
 
@@ -30,243 +25,213 @@ body {
 
 
 .polja_small, .polja_sredni, .polja_big, .polja_copyright, .shapko, .polja_small_center {
-    border-color : #414b57;
-    border-style : ridge;
-    border-width : 3px;
+    border : #414b57 ridge 3px;
     vertical-align : top;
   }
 
 
 .polja_small {
-    background-image : url(img/gpadient_small.jpg);
-    background-position : bottom;
-    background-repeat : repeat-x;
+    background : url(img/gpadient_small.jpg) repeat-x bottom;
   }
 
 
 .polja_small_center {
-    background-image : url(img/gpadient_small.jpg);
-    background-position : bottom;
-    background-repeat : repeat-x;
-    text-align: center;
+    background : url(img/gpadient_small.jpg) repeat-x bottom;
+    text-align : center;
   }
 
 
 .polja_small_left {
-    background-image : url(img/gpadient_small.jpg);
-    background-position : bottom;
-    background-repeat : repeat-x;
-    text-align: left;
+    background : url(img/gpadient_small.jpg) repeat-x bottom;
+    text-align : left;
   }
 
 
 .polja_sredni, .shapko {
-    background-image : url(img/gpadient_sredni.jpg);
-    background-position : bottom;
-    background-repeat : repeat-x;
+    background : url(img/gpadient_sredni.jpg) repeat-x bottom;
   }
 
 
 .shapko {
-    background-image: url(img/shapko2.png);
-    background-position: right;
-    background-repeat: no-repeat;
+    background : url(img/shapko2.png) no-repeat right;
   }
 
 
 .polja_big {
-    background-image : url(img/gpadient_big.jpg);
-    background-position : top;
-    background-repeat : repeat-x;
-    margin : 0px;
+    background : url(img/gpadient_big.jpg) repeat-x top;
     padding : 0px;
+    margin : 0px;
   }
 
 
 .polja_copyright {
-    vertical-align : middle;
+    font : 10px serif;
     text-align : center;
-    font-size: 10px;
+    vertical-align : middle;
   }
 
 
 .polja_copyright a, .polja_copyright  a:visited {
-    text-decoration : none;
     color : #CCCCCC;
+    text-decoration : none;
   }
 
 
 .polja_copyright a:hover {
-    text-decoration : none;
     color : #FFFFFF;
+    text-decoration : none;
   }
 
 
 .polja_copyright a:active {
-    text-decoration : none;
     color : #FF0000;
+    text-decoration : none;
   }
 
 
 .td_spacer {
+    padding : 0px;
+    margin : 0px;
     border-width : 0px;
     height : 1px;
-    margin : 0px;
     max-height : 1px;
     min-height : 1px;
-    padding : 0px;
   }
 
 
 .menu, .menu_left, .menu_right, .menu_push, .menu_push_left, .menu_push_right, .short_menu, .short_menu_left, .short_menu_right, .short_menu_push, .short_menu_push_left, .short_menu_push_right {
-    border-width : 0px;
-    margin : 0px;
     padding : 0px;
+    margin : 0px;
+    border-width : 0px;
     height : 24px;
     vertical-align : middle;
   }
 
 
 .menu_left {
-    background-image : url(img/menu_left.png);
-    background-repeat : no-repeat;
+    background : url(img/menu_left.png) no-repeat;
+    font : 1px serif;
     width : 7px;
-    font-size : 1px;
   }
 
 
 .short_menu_left {
-    background-image: url(img/short_menu_left.png);
-    background-repeat: no-repeat;
-    width: 7px;
-    font-size: 1px;
+    background : url(img/short_menu_left.png) no-repeat;
+    font : 1px serif;
+    width : 7px;
   }
 
 
 .menu_right {
-    background-image : url(img/menu_right.png);
-    background-repeat : no-repeat;
+    background : url(img/menu_right.png) no-repeat;
+    font : 1px serif;
     width : 7px;
-    font-size : 1px;
   }
 
 
 .short_menu_right {
-    background-image: url(img/short_menu_right.png);
-    background-repeat: no-repeat;
-    width: 7px;
-    font-size: 1px;
+    background : url(img/short_menu_right.png) no-repeat;
+    font : 1px serif;
+    width : 7px;
   }
 
 
 .menu {
-    background-image : url(img/menu.png);
-    background-repeat : repeat-x;
+    background : url(img/menu.png) repeat-x;
   }
 
 
 .short_menu {
-    background-image:url(img/short_menu.png);
-    background-repeat:repeat-x;
+    background : url(img/short_menu.png) repeat-x;
   }
 
 
 .menu_push {
-    background-image : url(img/menu_push.png);
-    background-repeat : repeat-x;
-    color: #cccccc;
+    background : url(img/menu_push.png) repeat-x;
+    color : #cccccc;
   }
 
 
 .short_menu_push {
-    background-image: url(img/short_menu_push.png);
-    background-repeat: repeat-x;
-    color: #cccccc;
+    background : url(img/short_menu_push.png) repeat-x;
+    color : #cccccc;
   }
 
 
 .menu_push_left {
-    background-image : url(img/menu_push_left.png);
-    background-repeat : repeat-x;
+    background : url(img/menu_push_left.png) repeat-x;
+    font : 1px serif;
     width : 7px;
-    font-size : 1px;
   }
 
 
 .short_menu_push_left {
-    background-image: url(img/short_menu_push_left.png);
-    background-repeat: no-repeat;
-    width: 7px;
-    font-size: 1px;
+    background : url(img/short_menu_push_left.png) no-repeat;
+    font : 1px serif;
+    width : 7px;
   }
 
 
 .menu_push_right {
-    background-image : url(img/menu_push_right.png);
-    background-repeat : no-repeat;
+    background : url(img/menu_push_right.png) no-repeat;
+    font : 1px serif;
     width : 7px;
-    font-size : 1px;
   }
 
 
 .short_menu_push_right {
-    background-image: url(img/short_menu_push_right.png);
-    background-repeat: no-repeat;
-    width: 7px;
-    font-size: 1px;
+    background : url(img/short_menu_push_right.png) no-repeat;
+    font : 1px serif;
+    width : 7px;
   }
 
 
 .menu a, .menu  a:visited, .short_menu a, .short_menu a:visited {
-    text-decoration : none;
     color : #aaaaaa;
+    text-decoration : none;
   }
 
 
 .menu a:hover, .short_menu a:hover {
-    text-decoration : none;
     color : #FFFFFF;
+    text-decoration : none;
   }
 
 
 .menu a:active, .short_menu a:active {
-    text-decoration : none;
     color : #FF0000;
+    text-decoration : none;
   }
 
 
 .name_block, .name_block_left, .name_block_right {
-    color : #CCCCCC;
-    border-width : 0px;
-    margin : 0px;
+    font : bold 14px serif;
     padding : 0px;
+    margin : 0px;
+    border-width : 0px;
+    color : #CCCCCC;
     height : 26px;
-    vertical-align : middle;
-    font-weight : bold;
-    font-size : 14px;
     text-align : center;
+    vertical-align : middle;
   }
 
 
 .name_block_left {
-    background-image : url(img/name_block_left.png);
-    background-repeat : no-repeat;
+    background : url(img/name_block_left.png) no-repeat;
+    font : 3px serif;
     width : 7px;
-    font-size : 3px;
   }
 
 
 .name_block_right {
-    background-image : url(img/name_block_right.png);
-    background-repeat : no-repeat;
+    background : url(img/name_block_right.png) no-repeat;
+    font : 1px serif;
     width : 7px;
-    font-size : 1px;
   }
 
 
 .name_block {
-    background-image : url(img/name_block.png);
-    background-repeat : repeat-x;
+    background : url(img/name_block.png) repeat-x;
   }
 
 
@@ -279,16 +244,15 @@ body {
 
 
 .mini_foto a, .mini_foto a:visited, .mini_foto a:hover, .mini_foto a:active {
-    border-style : hidden;
-    border-width : 0px;
+    border : hidden 0px;
   }
 
 
 .news {
     border-width : 0px;
     text-align : left;
+    text-indent : 10px;
     vertical-align : top;
-    text-indent: 10px;
   }
 
 
@@ -308,36 +272,36 @@ body {
 
 
 .login_user a, .login_user  a:visited, .mini_foto a, .mini_foto  a:visited, .news_data a, .news_data  a:visited, .news a, .news  a:visited {
-    text-decoration : none;
     color : #CCCCCC;
+    text-decoration : none;
   }
 
 
 .login_user a:hover, .mini_foto a:hover, .news_data a:hover, .news a:hover {
-    text-decoration : none;
     color : #FFFFFF;
+    text-decoration : none;
   }
 
 
 .login_user a:active, .mini_foto a:active, .news_data a:active, .news a:active {
-    text-decoration : none;
     color : #FF0000;
+    text-decoration : none;
   }
 
 
 .stat {
+    padding : 5px;
+    margin : 0px;
     border-width : 0px;
     text-align : left;
     vertical-align : top;
-    margin : 0px;
-    padding :5px;
   }
 
 
 .stat_data {
+    color : #999999;
     text-align : center;
     vertical-align : bottom;
-    color:#999999;
   }
 
 
@@ -345,19 +309,18 @@ body {
     border-width : 0px;
     color : #999999;
     text-align : center;
+    text-indent : 10px;
     vertical-align : top;
-    text-indent: 10px;
   }
 
 
 .regist_data {
+    margin : 0 50px;
     border-width : 0px;
     color : #999999;
     text-align : left;
+    text-indent : 10px;
     vertical-align : top;
-    text-indent: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
   }
 
 
@@ -367,23 +330,22 @@ body {
 
 
 .form {
-    font-family:"Courier New", Courier, monospace;
-    font-size:10px;
+    font : 10px "Courier New",Courier,monospace;
+    height : 14px;
   }
 
 
 .form_textarea {
-    font-family:"Courier New", Courier, monospace;
-    font-size:12px;
+    font : 12px "Courier New", Courier, monospace;
   }
 
 
 .category, .category_center {
-    border-width : 0px;
-    vertical-align : middle;
-    text-align : center;
+    padding : 0 0 5px;
     margin : 0px;
-    padding-bottom :5px;
+    border-width : 0px;
+    text-align : center;
+    vertical-align : middle;
   }
 
 
@@ -398,32 +360,32 @@ body {
 
 
 .category {
+    border-style : none none ridge;
+    border-width : medium medium 2px;
     border-bottom-color : #414b57;
-    border-bottom-style : ridge;
-    border-bottom-width : 2px;
   }
 
 
 .category a, .category  a:visited, .category_center a, .category_center  a:visited, .category_left a, .category_left a:visited {
-    text-decoration : none;
     color : #CCCCCC;
+    text-decoration : none;
   }
 
 
 .category a:hover, .category_center a:hover, .category_left a:hover {
-    text-decoration : none;
     color : #FFFFFF;
+    text-decoration : none;
   }
 
 
 .category a:active, .category_center a:active, .category_left a:active {
-    text-decoration : none;
     color : #FF0000;
+    text-decoration : none;
   }
 
 
 .line {
-    color:#999999;
+    color : #999999;
   }
 
 
@@ -435,16 +397,24 @@ body {
 
 
 .confirm_delete_photo {
-    cursor: pointer;
+    cursor : pointer;
   }
 
 
 .confirm_delete_photo:hover {
-    cursor: pointer;
     color : #FFFFFF;
+    cursor : pointer;
   }
 
 
 .description {
-    font-size : 10px;
+    font : 10px serif;
+  }
+
+
+.error {
+    height : 14px;
+    text-align : center;
+    vertical-align : middle;
+    width : 14px;
   }

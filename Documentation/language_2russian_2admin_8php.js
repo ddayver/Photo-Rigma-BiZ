@@ -1,6 +1,6 @@
 var language_2russian_2admin_8php =
 [
-    [ "$lang", "language_2russian_2admin_8php.html#gae1ba0fd565f94cdd2b921d5d6f66a7d7", null ],
+    [ "$lang", "language_2russian_2admin_8php.html#ga0cb419e4f742b239df410f9862d98f61", null ],
     [ "$lang", "language_2russian_2admin_8php.html#ga42bbe88295fa90f506e262b72f669a96", null ],
     [ "$lang", "language_2russian_2admin_8php.html#ga1e904637f95bdebe7c0f685f8aa37492", null ],
     [ "$lang", "language_2russian_2admin_8php.html#ga9dec539c686799006ba87918fc4e2434", null ],

@@ -7,7 +7,7 @@
 * @date		28/03-2012
 * @details	Содержит класс по работе с БД MySQL.
 */
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }

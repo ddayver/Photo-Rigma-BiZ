@@ -8,7 +8,7 @@
 * @details	Обзор, редактирование, удаление и добавление разделов в галерею.
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }

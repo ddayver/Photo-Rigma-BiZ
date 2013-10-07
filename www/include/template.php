@@ -8,7 +8,7 @@
 * @details	Содержит класс работы с шаблонами на сервере
 */
 
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
@@ -378,35 +378,33 @@ class template
 	/**
 	* Формирует заголовок HTML-страницы с пунктами меню и возможностью вставки дополнительных полей. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'header.html'
 	* @param $title дополнительное название страницы для тега Title
-	* @param $config массив конфигурации сайта
-	* @param $s_menu массив пунктов короткого (горизонтального) меню
-	* @param $l_menu массив пунктов основного (вертикального) меню
-	* @param $photo_top массив для вывода блока лучшего изображения
-	* @param $photo_last массив для вывода блока последнего загруженного изображения
-	* @see $ins_body, $ins_header, $content, $template_file, add_string, add_string_ar, add_if, add_case, create_template
+	* @see $lang, work, $ins_body, $ins_header, $content, $template_file, add_string, add_string_ar, add_if, add_case, create_template
 	*/
-	function page_header($title, $config, $s_menu = false, $l_menu = false, $photo_top, $photo_last)
+	function page_header($title)
 	{
-		global $lang;
+		global $lang, $work, $action;
 
+		$s_menu = $work->create_menu($action, 0);
+		$l_menu = $work->create_menu($action, 1);
+		$photo_top = $work->create_photo('top');
+		$photo_last = $work->create_photo('last');
 		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
 		if ($this->ins_body != '') $this->ins_body = ' ' . $this->ins_body;
 		$temp_template->add_string_ar(array(
-			'TITLE' => (empty($title) ? $config['title_name'] : $config['title_name'] . ' - ' . $title),
+			'TITLE' => (empty($title) ? $work->config['title_name'] : $work->clean_field($work->config['title_name']) . ' - ' . $work->clean_field($title)),
 			'INSERT_HEADER' => $this->ins_header,
 			'INSERT_BODY' => $this->ins_body,
-			'META_DESRIPTION' => $config['meta_description'],
-			'META_KEYWORDS' => $config['meta_keywords'],
-			'GALLERY_WIDHT' => $config['gal_width'],
-			'SITE_NAME' => $config['title_name'],
-			'SITE_DESCRIPTION' => $config['title_description'],
-			'U_SEARCH' => $config['site_url'] . '?action=search',
-			'L_SEARCH' => $lang['main_search'],
-			'LEFT_PANEL_WIDHT' => $config['left_panel'],
-			'RIGHT_PANEL_WIDHT' => $config['right_panel']
+			'META_DESRIPTION' => $work->clean_field($work->config['meta_description']),
+			'META_KEYWORDS' => $work->clean_field($work->config['meta_keywords']),
+			'GALLERY_WIDHT' => $work->config['gal_width'],
+			'SITE_NAME' => $work->clean_field($work->config['title_name']),
+			'SITE_DESCRIPTION' => $work->clean_field($work->config['title_description']),
+			'U_SEARCH' => $work->config['site_url'] . '?action=search',
+			'L_SEARCH' => $lang['main']['search'],
+			'LEFT_PANEL_WIDHT' => $work->config['left_panel'],
+			'RIGHT_PANEL_WIDHT' => $work->config['right_panel']
 		));
 
-		$temp_template->add_if('NEED_REDIRECT', false);
 		$temp_template->add_if('SHORT_MENU', false);
 		if ($s_menu && is_array($s_menu))
 		{
@@ -442,13 +440,13 @@ class template
 			'NAME_BLOCK' => $photo_top['name_block'],
 			'PHOTO_WIDTH' => $photo_top['width'],
 			'PHOTO_HEIGHT' => $photo_top['height'],
-			'MAX_FOTO_HEIGHT' => $config['temp_photo_h'] + 10,
+			'MAX_FOTO_HEIGHT' => $work->config['temp_photo_h'] + 10,
 			'D_NAME_PHOTO' => $photo_top['name'],
 			'D_DESCRIPTION_PHOTO' => $photo_top['description'],
 			'D_NAME_CATEGORY' => $photo_top['category_name'],
 			'D_DESCRIPTION_CATEGORY' => $photo_top['category_description'],
 			'PHOTO_RATE' => $photo_top['rate'],
-			'L_USER_ADD' => $lang['main_user_add'],
+			'L_USER_ADD' => $lang['main']['user_add'],
 			'U_PROFILE_USER_ADD' => $photo_top['url_user'],
 			'D_REAL_NAME_USER_ADD' => $photo_top['real_name'],
 			'U_PHOTO' => $photo_top['url'],
@@ -462,13 +460,13 @@ class template
 			'NAME_BLOCK' => $photo_last['name_block'],
 			'PHOTO_WIDTH' => $photo_last['width'],
 			'PHOTO_HEIGHT' => $photo_last['height'],
-			'MAX_FOTO_HEIGHT' => $config['temp_photo_h'] + 10,
+			'MAX_FOTO_HEIGHT' => $work->config['temp_photo_h'] + 10,
 			'D_NAME_PHOTO' => $photo_last['name'],
 			'D_DESCRIPTION_PHOTO' => $photo_last['description'],
 			'D_NAME_CATEGORY' => $photo_last['category_name'],
 			'D_DESCRIPTION_CATEGORY' => $photo_last['category_description'],
 			'PHOTO_RATE' => $photo_last['rate'],
-			'L_USER_ADD' => $lang['main_user_add'],
+			'L_USER_ADD' => $lang['main']['user_add'],
 			'U_PROFILE_USER_ADD' => $photo_last['url_user'],
 			'D_REAL_NAME_USER_ADD' => $photo_last['real_name'],
 			'U_PHOTO' => $photo_last['url'],
@@ -486,22 +484,21 @@ class template
 	/// Формирование "подвала" страницы
 	/**
 	* Формирует "подвал" HTML-страницы с выводом копирайта. Использует рекурсивный вызов класса обработки шаблонов с передачей в качестве имени файла 'footer.html'
-	* @param $config передает настройки сайта
-	* @param $user передает информацию о пользователе
-	* @param $stat передает статистику сайта
-	* @param $best_user передает список лучших пользователей
-	* @param $rand_photo передает случайное изображение
-	* @see $lang, $content, $template_file, add_string_ar, add_if, add_case
+	* @see $lang, work, $content, $template_file, add_string_ar, add_if, add_case
 	*/
-	function page_footer($config, $user, $stat, $best_user, $rand_photo)
+	function page_footer()
 	{
-		global $lang;
+		global $lang, $work;
 
+		$user = $work->template_user();
+		$stat = $work->template_stat();
+		$best_user = $work->template_best_user($work->config['best_user']);
+		$rand_photo = $work->create_photo('rand');
 		$temp_template = new template($this->site_url, $this->site_dir, $this->theme);
 		$temp_template->add_string_ar(array(
-			'COPYRIGHT_YEAR' => $config['copyright_year'],
-			'COPYRIGHT_URL' => $config['copyright_url'],
-			'COPYRIGHT_TEXT' => $config['copyright_text']
+			'COPYRIGHT_YEAR' => $work->clean_field($work->config['copyright_year']),
+			'COPYRIGHT_URL' => $work->clean_field($work->config['copyright_url']),
+			'COPYRIGHT_TEXT' => $work->clean_field($work->config['copyright_text'])
 		));
 
 		$temp_template->add_case('RIGHT_BLOCK', 'USER_INFO', 'RIGHT_PANEL[0]');
@@ -529,13 +526,13 @@ class template
 			'NAME_BLOCK' => $rand_photo['name_block'],
 			'PHOTO_WIDTH' => $rand_photo['width'],
 			'PHOTO_HEIGHT' => $rand_photo['height'],
-			'MAX_FOTO_HEIGHT' => $config['temp_photo_h'] + 10,
+			'MAX_FOTO_HEIGHT' => $work->config['temp_photo_h'] + 10,
 			'D_NAME_PHOTO' => $rand_photo['name'],
 			'D_DESCRIPTION_PHOTO' => $rand_photo['description'],
 			'D_NAME_CATEGORY' => $rand_photo['category_name'],
 			'D_DESCRIPTION_CATEGORY' => $rand_photo['category_description'],
 			'PHOTO_RATE' => $rand_photo['rate'],
-			'L_USER_ADD' => $lang['main_user_add'],
+			'L_USER_ADD' => $lang['main']['user_add'],
 			'U_PROFILE_USER_ADD' => $rand_photo['url_user'],
 			'D_REAL_NAME_USER_ADD' => $rand_photo['real_name'],
 			'U_PHOTO' => $rand_photo['url'],
@@ -822,7 +819,7 @@ class template_old
 					if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
 					{
 						$user_add = $db->res_row();
-						if ($user_add) $foto['user'] = $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
+						if ($user_add) $foto['user'] = $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
 						else
 						{
 							$foto['user'] = $lang['main_no_user_add'];
@@ -956,9 +953,9 @@ class template_old
 					'L_FORGOT_PASSWORD' => $lang['main_forgot_password'],
 					'L_REGISTRATION' => $lang['main_registration'],
 
-					'U_LOGIN' => $work->config['site_url'] . '?action=login&subact=login',
-					'U_FORGOT_PASSWORD' => $work->config['site_url'] . '?action=login&subact=forgot',
-					'U_REGISTRATION' => $work->config['site_url'] . '?action=login&subact=regist'
+					'U_LOGIN' => $work->config['site_url'] . '?action=profile&subact=login',
+					'U_FORGOT_PASSWORD' => $work->config['site_url'] . '?action=profile&subact=forgot',
+					'U_REGISTRATION' => $work->config['site_url'] . '?action=profile&subact=regist'
 			);
 
 			return $this->create_template('login_user.tpl', $array_data);
@@ -1013,7 +1010,7 @@ class template_old
 				if ($db->select('real_name', TBL_USERS, '`id` = ' . $val['user_post']))
 				{
 					$user_add = $db->res_row();
-					if ($user_add) $news['L_NEWS_DATA'] .= '<br />' . $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.';
+					if ($user_add) $news['L_NEWS_DATA'] .= '<br />' . $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $val['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.';
 				}
 				else log_in_file($db->error, DIE_IF_ERROR);
 				$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST']));
@@ -1140,7 +1137,7 @@ class template_old
 				$stat['online'] ='';
 				foreach ($temp as $val)
 				{
-					$stat['online'] .= ', <a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+					$stat['online'] .= ', <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
 				}
 				$stat['online'] = substr($stat['online'], 2) . '.';
 			}
@@ -1220,7 +1217,7 @@ class template_old
 						$temp2 = $db->res_row();
 						$array_data = array();
 						$array_data = array(
-								'D_USER_NAME' => '<a href="' . $work->config['site_url']  . '?action=login&subact=profile&uid=' . $best_user_name . '" title="' . $temp2['real_name'] . '">' . $temp2['real_name'] . '</a>',
+								'D_USER_NAME' => '<a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $best_user_name . '" title="' . $temp2['real_name'] . '">' . $temp2['real_name'] . '</a>',
 								'D_USER_PHOTO' => $best_user_photo
 						);
 					$text_best_user .= $this->create_template('best_user.tpl', $array_data);

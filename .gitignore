@@ -1,5 +1,4 @@
-/www/photo-rigmabiz.webprj
-/www/photo-rigmabiz.session
+/www/*.webprj
+/www/*.session
 /doc_gen.sh
-/www/photo-rigmabiz.komodoproject
-/www/.komodotools
+/doxygen_error.log

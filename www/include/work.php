@@ -7,7 +7,7 @@
 * @date		28/03-2012
 * @details	Содержит общий класс (набор функций) + хранилище для данных о конфигурации.
 */
-if (IN_GALLERY)
+if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
@@ -399,21 +399,21 @@ class work
 		}
 		else log_in_file($db->error, DIE_IF_ERROR);
 
-		$photo['last_name'] = $lang['main_no_foto'];
-		$photo['last_url'] = $this->config['site_url'] . '?action=photo&id=0';
-		$photo['top_name'] = $lang['main_no_foto'];
-		$photo['top_url'] = $this->config['site_url'] . '?action=photo&id=0';
+		$photo['last_name'] = $lang['main']['no_foto'];
+		$photo['last_url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
+		$photo['top_name'] = $lang['main']['no_foto'];
+		$photo['top_url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
 		if ($user->user['pic_view'] == true)
 		{
 			if($temp_last)
 			{
 				$photo['last_name'] = $temp_last['name'] . ' (' . $temp_last['description'] . ')';
-				$photo['last_url'] = $this->config['site_url'] . '?action=photo&id=' . $temp_last['id'];
+				$photo['last_url'] = $this->config['site_url'] . '?action=photo&amp;id=' . $temp_last['id'];
 			}
 			if($temp_top)
 			{
 				$photo['top_name'] = $temp_top['name'] . ' (' . $temp_top['description'] . ')';
-				$photo['top_url'] = $this->config['site_url'] . '?action=photo&id=' . $temp_top['id'];
+				$photo['top_url'] = $this->config['site_url'] . '?action=photo&amp;id=' . $temp_top['id'];
 			}
 		}
 
@@ -423,13 +423,13 @@ class work
 			{
 				$temp_user = $db->res_row();
 				$temp['id'] = 'user';
-				if ($temp_user) $temp['name'] .= ' (' . $lang['category_count_user_category'] . ': ' . $temp_user['num_user_upload'] . ')';
-				else $temp['name'] .= '<br />(' . $lang['category_no_user_category'] . ')';
+				if ($temp_user) $temp['name'] .= ' (' . $lang['category']['count_user_category'] . ': ' . $temp_user['num_user_upload'] . ')';
+				else $temp['name'] .= '<br />(' . $lang['category']['no_user_category'] . ')';
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
-		if($user_flag == 1) $temp['id'] = 'user&id=' . $cat_id;
+		if($user_flag == 1) $temp['id'] = 'user&amp;id=' . $cat_id;
 
 		$array_data = array(
 					'D_NAME_CATEGORY' => $temp['name'],
@@ -438,7 +438,7 @@ class work
 					'D_LAST_PHOTO' => $photo['last_name'],
 					'D_TOP_PHOTO' => $photo['top_name'],
 
-					'U_CATEGORY' => $this->config['site_url'] . '?action=category&cat=' . $temp['id'],
+					'U_CATEGORY' => $this->config['site_url'] . '?action=category&amp;cat=' . $temp['id'],
 					'U_LAST_PHOTO' => $photo['last_url'],
 					'U_TOP_PHOTO' => $photo['top_url']
 		);
@@ -577,7 +577,7 @@ class work
 	* @param $action содержит пункт меню, который является активным
 	* @param $menu если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню
 	* @return Сформированный массив меню
-	* @see db, $lang, user
+	* @see db, $lang, user, work::clean_field
 	*/
 	function create_menu($action = 'main', $menu = 0)
 	{
@@ -606,8 +606,8 @@ class work
 					if($visible)
 					{
 						$array_menu[$key] = array(
-								'url' => ($val['action'] == $action ? NULL : $this->config['site_url'] . $val['url_action']),
-								'name' => $lang['menu'][$val['name_action']]
+								'url' => ($val['action'] == $action ? NULL : $this->config['site_url'] . $this->clean_field($val['url_action'])),
+								'name' => (isset($lang['menu'][$this->clean_field($val['name_action'])]) ? $lang['menu'][$this->clean_field($val['name_action'])] : ucfirst($this->clean_field($val['name_action'])))
 						);
 					}
 				}
@@ -624,7 +624,7 @@ class work
 	* @param $type если значение равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение
 	* @param $id_photo если $type равно 'cat' - выводит фото с указанным идентификатором
 	* @return Сформированный массив для вывода изображения
-	* @see db, $lang, user, work::size_image
+	* @see db, $lang, user, work::size_image, work::clean_field
 	*/
 	function create_photo($type = 'top', $id_photo = 0)
 	{
@@ -660,7 +660,7 @@ class work
 			$temp_photo = false;
 		}
 
-		$photo['name_block'] = $lang['main_' . $type . '_foto'];
+		$photo['name_block'] = $lang['main'][$type . '_foto'];
 
 		if ($temp_photo)
 		{
@@ -672,31 +672,31 @@ class work
 					$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $temp_photo['file'];
 					$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=' . $temp_photo['id'];
 					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=' . $temp_photo['id'] . '&amp;thumbnail=1';
-					$photo['name'] = $temp_photo['name'];
-					$photo['category_name'] = $temp_category['name'];
-					$photo['description'] = $temp_photo['description'];
-					$photo['category_description'] = $temp_category['description'];
-					$photo['rate'] = $lang['main_rate'] . ': ' . $temp_photo['rate_user'] . '/' . $temp_photo['rate_moder'];
+					$photo['name'] = $this->clean_field($temp_photo['name']);
+					$photo['category_name'] = $this->clean_field($temp_category['name']);
+					$photo['description'] = $this->clean_field($temp_photo['description']);
+					$photo['category_description'] = $this->clean_field($temp_category['description']);
+					$photo['rate'] = $lang['main']['rate'] . ': ' . $temp_photo['rate_user'] . '/' . $temp_photo['rate_moder'];
 
 					if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp_photo['user_upload']))
 					{
 						$user_add = $db->res_row();
 						if ($user_add)
 						{
-							$photo['url_user'] = $this->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $temp_photo['user_upload'];
-							$photo['real_name'] = $user_add['real_name'];
+							$photo['url_user'] = $this->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $temp_photo['user_upload'];
+							$photo['real_name'] = $this->clean_field($user_add['real_name']);
 						}
 						else
 						{
 							$photo['url_user'] = NULL;
-							$photo['real_name'] = $lang['main_no_user_add'];
+							$photo['real_name'] = $lang['main']['no_user_add'];
 						}
 					}
 					else log_in_file($db->error, DIE_IF_ERROR);
 					if($temp_category['id'] == 0)
 					{
-						$photo['category_name'] = $temp_category['name'] . ' ' . $user_add['real_name'];
-						$photo['category_description'] = $photo['category_name'];
+						$photo['category_name'] = $this->clean_field($temp_category['name'] . ' ' . $user_add['real_name']);
+						$photo['category_description'] = $this->clean_field($photo['category_name']);
 						$photo['category_url'] = $this->config['site_url'] . '?action=category&amp;cat=user&amp;id=' . $temp_photo['user_upload'];
 					}
 					else $photo['category_url'] = $this->config['site_url'] . '?action=category&amp;cat=' . $temp_category['id'];
@@ -707,13 +707,13 @@ class work
 					$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
 					$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
 					$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=0&amp;thumbnail=1';
-					$photo['name'] = $lang['main_no_foto'];
-					$photo['description'] = $lang['main_no_foto'];
-					$photo['category_name'] = $lang['main_no_category'];
-					$photo['category_description'] = $lang['main_no_category'];
-					$photo['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+					$photo['name'] = $lang['main']['no_foto'];
+					$photo['description'] = $lang['main']['no_foto'];
+					$photo['category_name'] = $lang['main']['no_category'];
+					$photo['category_description'] = $lang['main']['no_category'];
+					$photo['rate'] = $lang['main']['rate'] . ': ' . $lang['main']['no_foto'];
 					$photo['url_user'] = NULL;
-					$photo['real_name'] = $lang['main_no_user_add'];
+					$photo['real_name'] = $lang['main']['no_user_add'];
 					$photo['category_url'] = $this->config['site_url'];
 				}
 			}
@@ -725,13 +725,13 @@ class work
 			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
 			$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
 			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=0&amp;thumbnail=1';
-			$photo['name'] = $lang['main_no_foto'];
-			$photo['description'] = $lang['main_no_foto'];
-			$photo['category_name'] = $lang['main_no_category'];
-			$photo['category_description'] = $lang['main_no_category'];
-			$photo['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+			$photo['name'] = $lang['main']['no_foto'];
+			$photo['description'] = $lang['main']['no_foto'];
+			$photo['category_name'] = $lang['main']['no_category'];
+			$photo['category_description'] = $lang['main']['no_category'];
+			$photo['rate'] = $lang['main']['rate'] . ': ' . $lang['main']['no_foto'];
 			$photo['url_user'] = NULL;
-			$photo['real_name'] = $lang['main_no_user_add'];
+			$photo['real_name'] = $lang['main']['no_user_add'];
 			$photo['category_url'] = $this->config['site_url'];
 		}
 
@@ -741,13 +741,13 @@ class work
 			$temp_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_photo['file'];
 			$photo['url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
 			$photo['thumbnail_url'] = $this->config['site_url'] . '?action=attach&amp;foto=0&amp;thumbnail=1';
-			$photo['name'] = $lang['main_no_foto'];
-			$photo['description'] = $lang['main_no_foto'];
-			$photo['category_name'] = $lang['main_no_category'];
-			$photo['category_description'] = $lang['main_no_category'];
-			$photo['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
+			$photo['name'] = $lang['main']['no_foto'];
+			$photo['description'] = $lang['main']['no_foto'];
+			$photo['category_name'] = $lang['main']['no_category'];
+			$photo['category_description'] = $lang['main']['no_category'];
+			$photo['rate'] = $lang['main']['rate'] . ': ' . $lang['main']['no_foto'];
 			$photo['url_user'] = NULL;
-			$photo['real_name'] = $lang['main_no_user_add'];
+			$photo['real_name'] = $lang['main']['no_user_add'];
 			$photo['category_url'] = $this->config['site_url'];
 		}
 
@@ -795,7 +795,7 @@ class work
 	/// Функция формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе
 	/**
 	* @return Сформированный массив блока пользователя
-	* @see user, $lang
+	* @see user, $lang, work::clean_field
 	*/
 	function template_user()
 	{
@@ -806,24 +806,24 @@ class work
 		if ($_SESSION['login_id'] == 0)
 		{
 			$array_data = array(
-					'NAME_BLOCK' => $lang['main_user_block'],
-					'L_LOGIN' => $lang['main_login'],
-					'L_PASSWORD' => $lang['main_pass'],
-					'L_ENTER' => $lang['main_enter'],
-					'L_FORGOT_PASSWORD' => $lang['main_forgot_password'],
-					'L_REGISTRATION' => $lang['main_registration'],
-					'U_LOGIN' => $this->config['site_url'] . '?action=login&amp;subact=login',
-					'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=login&amp;subact=forgot',
-					'U_REGISTRATION' => $this->config['site_url'] . '?action=login&amp;subact=regist'
+					'NAME_BLOCK' => $lang['main']['user_block'],
+					'L_LOGIN' => $lang['main']['login'],
+					'L_PASSWORD' => $lang['main']['pass'],
+					'L_ENTER' => $lang['main']['enter'],
+					'L_FORGOT_PASSWORD' => $lang['main']['forgot_password'],
+					'L_REGISTRATION' => $lang['main']['registration'],
+					'U_LOGIN' => $this->config['site_url'] . '?action=profile&amp;subact=login',
+					'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=profile&amp;subact=forgot',
+					'U_REGISTRATION' => $this->config['site_url'] . '?action=profile&amp;subact=regist'
 			);
 			return $array_data;
 		}
 		else
 		{
 			$array_data = array(
-					'NAME_BLOCK' => $lang['main_user_block'],
-					'L_HI_USER' => $lang['main_hi_user'] . ', ' . $user->user['real_name'],
-					'L_GROUP' => $lang['main_group'] . ': ' . $user->user['group'],
+					'NAME_BLOCK' => $lang['main']['user_block'],
+					'L_HI_USER' => $lang['main']['hi_user'] . ', ' . $this->clean_field($user->user['real_name']),
+					'L_GROUP' => $lang['main']['group'] . ': ' . $user->user['group'],
 					'U_AVATAR' => $this->config['site_url'] . $this->config['avatar_folder'] . '/' . $user->user['avatar']
 			);
 			return $array_data;
@@ -833,7 +833,7 @@ class work
 	/// Функция формирует блок статистики для сайта
 	/**
 	* @return Сформированный массив блока статистики
-	* @see db, $lang
+	* @see db, $lang, work::clean_field
 	*/
 	function template_stat()
 	{
@@ -913,26 +913,26 @@ class work
 				$stat['online'] ='';
 				foreach ($temp as $val)
 				{
-					$stat['online'] .= ', <a href="' . $this->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+					$stat['online'] .= ', <a href="' . $this->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $val['id'] . '" title="' . $this->clean_field($val['real_name']) . '">' . $this->clean_field($val['real_name']) . '</a>';
 				}
 				$stat['online'] = substr($stat['online'], 2) . '.';
 			}
-			else $stat['online'] = $lang['main_stat_no_online'];
+			else $stat['online'] = $lang['main']['stat_no_online'];
 		}
 		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data = array();
 
 		$array_data = array(
-				'NAME_BLOCK' => $lang['main_stat_title'],
-				'L_STAT_REGIST' => $lang['main_stat_regist'],
-				'L_STAT_PHOTO' => $lang['main_stat_photo'],
-				'L_STAT_CATEGORY' => $lang['main_stat_category'],
-				'L_STAT_USER_ADMIN' => $lang['main_stat_user_admin'],
-				'L_STAT_USER_MODER' => $lang['main_stat_user_moder'],
-				'L_STAT_RATE_USER' => $lang['main_stat_rate_user'],
-				'L_STAT_RATE_MODER' => $lang['main_stat_rate_moder'],
-				'L_STAT_ONLINE' => $lang['main_stat_online'],
+				'NAME_BLOCK' => $lang['main']['stat_title'],
+				'L_STAT_REGIST' => $lang['main']['stat_regist'],
+				'L_STAT_PHOTO' => $lang['main']['stat_photo'],
+				'L_STAT_CATEGORY' => $lang['main']['stat_category'],
+				'L_STAT_USER_ADMIN' => $lang['main']['stat_user_admin'],
+				'L_STAT_USER_MODER' => $lang['main']['stat_user_moder'],
+				'L_STAT_RATE_USER' => $lang['main']['stat_rate_user'],
+				'L_STAT_RATE_MODER' => $lang['main']['stat_rate_moder'],
+				'L_STAT_ONLINE' => $lang['main']['stat_online'],
 
 				'D_STAT_REGIST' => $stat['regist'],
 				'D_STAT_PHOTO' => $stat['photo'],
@@ -951,7 +951,7 @@ class work
 	/**
 	* @param $best_user сожержит указатель, сколько выводить лучших пользователей
 	* @return Сформированный массив блока лучших пользователей
-	* @see db, $lang
+	* @see db, $lang, work::clean_field
 	*/
 	function template_best_user($best_user = 1)
 	{
@@ -992,8 +992,8 @@ class work
 					{
 						$temp2 = $db->res_row();
 						$array_data[$idx] = array(
-								'user_url' => $this->config['site_url']  . '?action=login&amp;subact=profile&amp;uid=' . $best_user_name,
-								'user_name' => $temp2['real_name'],
+								'user_url' => $this->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $best_user_name,
+								'user_name' => $this->clean_field($temp2['real_name']),
 								'user_photo' => $best_user_photo
 						);
 						$idx++;
@@ -1013,12 +1013,36 @@ class work
 		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data[0] = array(
-				'NAME_BLOCK' => $lang['main_best_user_1'] . $best_user . $lang['main_best_user_2'],
-				'L_USER_NAME' => $lang['main_user_name'],
-				'L_USER_PHOTO' => $lang['main_best_user_photo'],
+				'NAME_BLOCK' => sprintf($lang['main']['best_user'], $best_user),
+				'L_USER_NAME' => $lang['main']['user_name'],
+				'L_USER_PHOTO' => $lang['main']['best_user_photo'],
 		);
 
 		return $array_data;
+	}
+
+	/// Функция преобразует BBCode в HTML-код (например в тексте новостей)
+	/**
+	* @param $text сожержит текст, в котором необходимо произвести парсинг BBCode
+	* @return текст, где BBCode заменены на соотвествующие HTML-теги
+	* @see work::clean_field
+	*/
+	function ubb($text)
+	{
+		$text = $this->clean_field($text);
+		$text = preg_replace('#\[b\](.*?)\[/b\]#si', '<strong>\\1</strong>', $text);
+		$text = preg_replace('#\[u\](.*?)\[/u\]#si', '<u>\\1</u>', $text);
+		$text = preg_replace('#\[i\](.*?)\[/i\]#si', '<em>\\1</em>', $text);
+		$text = preg_replace('#\[url\](.*?)\[/url\]#si', '<a href="\\1" target="_blank" title="\\1">\\1</a>', $text);
+		$text = preg_replace('#\[url=(.*?)\](.*?)\[/url\]#si', '<a href="\\1" target="_blank" title="\\2">\\2</a>', $text);
+		$text = preg_replace('#\[color=(.*?)\](.*?)\[/color\]#si', '<font color="\\1">\\2</font>', $text);
+		$text = str_replace('[hr]', '<hr />', $text);
+		$text = str_replace('[br]', '<br />', $text);
+		$text = preg_replace('#\[left\](.*?)\[/left\]#si', '<p align="left">\\1</p>', $text);
+		$text = preg_replace('#\[center\](.*?)\[/center\]#si', '<p align="center">\\1</p>', $text);
+		$text = preg_replace('#\[right\](.*?)\[/right\]#si', '<p align=right>\\1</p>', $text);
+		$text = preg_replace('#\[img\](.*?)\[/img\]#si', '<img src="\\1" alt="\\1" />', $text);
+		return $text;
 	}
 }
 ?>
