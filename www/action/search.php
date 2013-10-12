@@ -7,17 +7,23 @@
 * @date		28/03-2012
 * @details	Обработка поисковых запросов.
 */
-
+/// @cond
 if (IN_GALLERY !== true)
 {
 	die('HACK!');
 }
+/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/menu.php');
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/search.php');
 
-if (isset($_POST['search_main_text']) && !empty($_POST['search_main_text']) && empty($_POST['search_text']))
+/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
+$template_TMP = true;
+
+/// @cond
+$title = $lang['search']['title'];
+$template_new->template_file = 'search.html';
+
+if ($work->check_post('search_main_text', true, true) && !$work->check_post('search_text', true, true))
 {
 	$_POST['search_text'] = $_POST['search_main_text'];
 	$_POST['search_user'] = 'true';
@@ -27,117 +33,147 @@ if (isset($_POST['search_main_text']) && !empty($_POST['search_main_text']) && e
 }
 
 $check = array();
-$search_user = false;
-$search_category = false;
-$search_news = false;
-$search_photo = false;
+$search['user'] = false;
+$search['category'] = false;
+$search['news'] = false;
+$search['photo'] = false;
 $find_data = array();
 
-if (!empty($_POST['search_user']) && $_POST['search_user'] == 'true' && !empty($_POST['search_text']))
+if ($work->check_post('search_user', true, true) && $_POST['search_user'] == 'true' && $work->check_post('search_text', true, true))
 {
-	$search_user = true;
+	$search['user'] = true;
 	$check['user'] = 'checked';
 }
 
-if (!empty($_POST['search_category']) && $_POST['search_category'] == 'true' && !empty($_POST['search_text']))
+if ($work->check_post('search_category', true, true) && $_POST['search_category'] == 'true' && $work->check_post('search_text', true, true))
 {
-	$search_category = true;
+	$search['category'] = true;
 	$check['category'] = 'checked';
 }
 
-if (!empty($_POST['search_news']) && $_POST['search_news'] == 'true' && !empty($_POST['search_text']))
+if ($work->check_post('search_news', true, true) && $_POST['search_news'] == 'true' && $work->check_post('search_text', true, true))
 {
-	$search_news = true;
+	$search['news'] = true;
 	$check['news'] = 'checked';
 }
 
-if (!empty($_POST['search_photo']) && $_POST['search_photo'] == 'true' && !empty($_POST['search_text']))
+if ($work->check_post('search_photo', true, true) && $_POST['search_photo'] == 'true' && $work->check_post('search_text', true, true))
 {
-	$search_photo = true;
+	$search['photo'] = true;
 	$check['photo'] = 'checked';
 }
 
-if (!($search_user || $search_category || $search_news || $search_photo)) $check['photo'] = 'checked';
+if (!($search['user'] || $search['category'] || $search['news'] || $search['photo'])) $check['photo'] = 'checked';
 
-$array_data = array();
-if (isset($_POST['search_text']) && $_POST['search_text'] == '*') $_POST['search_text'] = '%';
+if ($work->check_post('search_text', true, true) && $_POST['search_text'] == '*') $_POST['search_text'] = '%';
 
-if ($search_user)
+$template_new->add_if_ar(array(
+	'NEED_USER' => false,
+	'NEED_CATEGORY' => false,
+	'NEED_NEWS' => false,
+	'NEED_PHOTO' => false,
+	'USER_FIND' => false,
+	'CATEGORY_FIND' => false,
+	'NEWS_FIND' => false,
+	'PHOTO_FIND' => false
+));
+
+if ($search['user'])
 {
-	$find_data['l_search_user'] = $lang['search_find'] . ' ' . $lang['search_need_user'];
+	$template_new->add_if('NEED_USER', true);
+	$template_new->add_string('L_FIND_USER', $lang['search']['find'] . ' ' . $lang['search']['need_user']);
 	if ($db->select('*', TBL_USERS, '`real_name` LIKE \'%' . $_POST['search_text'] . '%\''))
 	{
 		$find = $db->res_arr();
 		if ($find)
 		{
-			$find_data['d_search_user'] = '';
-			foreach ($find as $val)
+			$template_new->add_if('USER_FIND', true);
+			foreach ($find as $key => $val)
 			{
-				$find_data['d_search_user'] .= ', <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+				$template_new->add_string_ar(array(
+					'D_USER_FIND' => $val['real_name'],
+					'U_USER_FIND' => $work->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $val['id']
+				), 'SEARCH_USER[' . $key . ']');
 			}
-			if (!empty($find_data['d_search_user'])) $find_data['d_search_user'] = substr($find_data['d_search_user'], 2) . '.';
 		}
-		else $find_data['d_search_user'] = $lang['search_no_find'];
+		else $template_new->add_string('D_USER_FIND', $lang['search']['no_find'], 'SEARCH_USER[0]');
 	}
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if ($search_category)
+if ($search['category'])
 {
-	$find_data['l_search_category'] = $lang['search_find'] . ' ' . $lang['search_need_category'];
+	$template_new->add_if('NEED_CATEGORY', true);
+	$template_new->add_string('L_FIND_CATEGORY', $lang['search']['find'] . ' ' . $lang['search']['need_category']);
 	if ($db->select('*', TBL_CATEGORY, '`id` != 0 AND (`name` LIKE \'%' . $_POST['search_text'] . '%\' OR `description` LIKE \'%'. $_POST['search_text'] . '%\')'))
 	{
 		$find = $db->res_arr();
 		if ($find)
 		{
-			$find_data['d_search_category'] = '';
-			foreach ($find as $val)
+			$template_new->add_if('CATEGORY_FIND', true);
+			foreach ($find as $key => $val)
 			{
-				$find_data['d_search_category'] .= ', <a href="' . $work->config['site_url']  . '?action=category&cat=' . $val['id'] . '" title="' . $val['description'] . '">' . $val['name'] . '</a>';
+				$template_new->add_string_ar(array(
+					'D_CATEGORY_FIND_NAME' => $val['name'],
+					'D_CATEGORY_FIND_DESC' => $val['description'],
+					'U_CATEGORY_FIND' => $work->config['site_url']  . '?action=category&amp;cat=' . $val['id']
+				), 'SEARCH_CATEGORY[' . $key . ']');
 			}
-			if (!empty($find_data['d_search_category'])) $find_data['d_search_category'] = substr($find_data['d_search_category'], 2) . '.';
 		}
-		else $find_data['d_search_category'] = $lang['search_no_find'];
+		else $template_new->add_string('D_CATEGORY_FIND', $lang['search']['no_find'], 'SEARCH_CATEGORY[0]');
 	}
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if ($search_news)
+if ($search['news'])
 {
-	$find_data['l_search_news'] = $lang['search_find'] . ' ' . $lang['search_need_news'];
+	$template_new->add_if('NEED_NEWS', true);
+	$template_new->add_string('L_FIND_NEWS', $lang['search']['find'] . ' ' . $lang['search']['need_news']);
 	if ($db->select('*', TBL_NEWS, '`name_post` LIKE \'%' . $_POST['search_text'] . '%\' OR `text_post` LIKE \'%'. $_POST['search_text'] . '%\''))
 	{
 		$find = $db->res_arr();
 		if ($find)
 		{
-			$find_data['d_search_news'] = '';
-			foreach ($find as $val)
+			$template_new->add_if('CATEGORY_FIND', true);
+			foreach ($find as $key => $val)
 			{
-				$find_data['d_search_news'] .= ', <a href="' . $work->config['site_url']  . '?action=news&news=' . $val['id'] . '" title="' . substr($work->clean_field($val['text_post']), 0, 100) . '...">' . $val['name_post'] . '</a>';
+				$template_new->add_string_ar(array(
+					'D_NEWS_FIND_NAME' => $val['name_post'],
+					'D_NEWS_FIND_DESC' => substr($work->clean_field($val['text_post']), 0, 100) . '...',
+					'U_NEWS_FIND' => $work->config['site_url']  . '?action=news&amp;news=' . $val['id']
+				), 'SEARCH_NEWS[' . $key . ']');
 			}
-			if (!empty($find_data['d_search_news'])) $find_data['d_search_news'] = substr($find_data['d_search_news'], 2) . '.';
 		}
-		else $find_data['d_search_news'] = $lang['search_no_find'];
+		else $template_new->add_string('D_NEWS_FIND', $lang['search']['no_find'], 'SEARCH_NEWS[0]');
 	}
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
 
-if ($search_photo)
+if ($search['photo'])
 {
-	$find_data['l_search_photo'] = $lang['search_find'] . ' ' . $lang['search_need_photo'];
+	$template_new->add_if('NEED_PHOTO', true);
+	$template_new->add_string('L_FIND_PHOTO', $lang['search']['find'] . ' ' . $lang['search']['need_photo']);
 	if ($db->select('id', TBL_PHOTO, '`name` LIKE \'%' . $_POST['search_text'] . '%\' OR `description` LIKE \'%'. $_POST['search_text'] . '%\''))
 	{
 		$find = $db->res_arr();
 		if ($find)
 		{
-			$find_data['d_search_photo'] = '';
-			foreach ($find as $val)
+			$template_new->add_if('PHOTO_FIND', true);
+			foreach ($find as $key => $val)
 			{
-				$find_data['d_search_photo'] .= $template->create_foto('cat', $val['id']);
+				$find_photo = $work->create_photo('cat', $val['id']);
+				$template_new->add_string_ar(array(
+					'MAX_PHOTO_HEIGHT' => $work->config['temp_photo_h'] + 10,
+					'PHOTO_WIDTH' => $find_photo['width'],
+					'PHOTO_HEIGHT' => $find_photo['height'],
+					'D_DESCRIPTION_PHOTO' => $find_photo['description'],
+					'D_NAME_PHOTO' => $find_photo['name'],
+					'U_THUMBNAIL_PHOTO' => $find_photo['thumbnail_url'],
+					'U_PHOTO' => $find_photo['url']
+				), 'SEARCH_PHOTO[' . $key . ']');
 			}
-			if (empty($find_data['d_search_photo'])) $find_data['d_search_photo'] = $lang['search_no_find'];
 		}
-		else $find_data['d_search_photo'] = $lang['search_no_find'];
+		else $template_new->add_string('D_PHOTO_FIND', $lang['search']['no_find'], 'SEARCH_PHOTO[0]');
 	}
 	else log_in_file($db->error, DIE_IF_ERROR);
 }
@@ -145,36 +181,20 @@ if ($search_photo)
 if (isset($_POST['search_text']) && $_POST['search_text'] == '%') $_POST['search_text'] = '*';
 if (isset($_POST['search_text'])) $_POST['search_text'] = htmlspecialchars($_POST['search_text'], ENT_QUOTES);
 
-$array_data = array(
-			'NAME_BLOCK' => $lang['main_search'],
-			'L_SEARCH' => $lang['main_search'],
-			'L_SEARCH_TITLE' => $lang['search_title'],
-			'L_NEED_USER' => $lang['search_need_user'],
-			'L_NEED_CATEGORY' => $lang['search_need_category'],
-			'L_NEED_NEWS' => $lang['search_need_news'],
-			'L_NEED_PHOTO' => $lang['search_need_photo'],
-			'L_FIND_USER' => isset($find_data['l_search_user']) ? $find_data['l_search_user'] : '',
-			'L_FIND_CATEGORY' => isset($find_data['l_search_category']) ? $find_data['l_search_category'] : '',
-			'L_FIND_NEWS' => isset($find_data['l_search_news']) ? $find_data['l_search_news'] : '',
-			'L_FIND_PHOTO' => isset($find_data['l_search_photo']) ? $find_data['l_search_photo'] : '',
-
+$template_new->add_string_ar(array(
+			'NAME_BLOCK' => $lang['main']['search'],
+			'L_SEARCH' => $lang['main']['search'],
+			'L_SEARCH_TITLE' => $lang['search']['title'],
+			'L_NEED_USER' => $lang['search']['need_user'],
+			'L_NEED_CATEGORY' => $lang['search']['need_category'],
+			'L_NEED_NEWS' => $lang['search']['need_news'],
+			'L_NEED_PHOTO' => $lang['search']['need_photo'],
 			'D_SEARCH_TEXT' => isset($_POST['search_text']) ? $_POST['search_text'] : '',
-			'D_NEED_USER' => isset($check['user']) ? $check['user'] : '',
-			'D_NEED_CATEGORY' => isset($check['category']) ? $check['category'] : '',
-			'D_NEED_NEWS' => isset($check['news']) ? $check['news'] : '',
-			'D_NEED_PHOTO' => isset($check['photo']) ? $check['photo'] : '',
-			'D_FIND_USER' => isset($find_data['d_search_user']) ? $find_data['d_search_user'] : '',
-			'D_FIND_CATEGORY' => isset($find_data['d_search_category']) ? $find_data['d_search_category'] : '',
-			'D_FIND_NEWS' => isset($find_data['d_search_news']) ? $find_data['d_search_news'] : '',
-			'D_FIND_PHOTO' => isset($find_data['d_search_photo']) ? $find_data['d_search_photo'] : '',
-
-			'IF_NEED_USER' => $search_user,
-			'IF_NEED_CATEGORY' => $search_category,
-			'IF_NEED_NEWS' => $search_news,
-			'IF_NEED_PHOTO' => $search_photo,
-
+			'D_NEED_USER' => isset($check['user']) ? 'checked="checked"' : '',
+			'D_NEED_CATEGORY' => isset($check['category']) ? 'checked="checked"' : '',
+			'D_NEED_NEWS' => isset($check['news']) ? 'checked="checked"' : '',
+			'D_NEED_PHOTO' => isset($check['photo']) ? 'checked="checked"' : '',
 			'U_SEARCH' => $work->config['site_url'] . '?action=search'
-);
-
-echo $template->create_main_template('search', $lang['main_search'], $template->create_template('search.tpl', $array_data));
+));
+/// @endcond
 ?>

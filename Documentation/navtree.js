@@ -26,9 +26,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "action_2admin_8php.html",
-"group__LanguageRussianAdmin.html#gaad48832584c4cb12b7412ea64766b452",
-"language_2russian_2main_8php.html#ga51283fcce5154243c3d0608d3cac84aa",
-"language_2russian_2photo_8php.html#gae43dcf9c9d332f7bad2f0fbb2ca1e3ca"
+"group__LanguageRussianAdmin.html#gac56b4a239a073e0b6a6a6882cab12efc",
+"language_2russian_2main_8php.html#ga56b8b9fa5cf0dadd3fe5280db5ec7fd5",
+"language_2russian_2search_8php.html#ga575614c045433b1413cc075f4a6cd231"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

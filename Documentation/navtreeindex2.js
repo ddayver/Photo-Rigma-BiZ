@@ -1,12 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"language_2russian_2main_8php.html#ga51283fcce5154243c3d0608d3cac84aa":[3,0,3,0,3,140],
-"language_2russian_2main_8php.html#ga515081246ca16bb735f767e8688076e4":[3,0,3,0,3,282],
-"language_2russian_2main_8php.html#ga520e71dfe0e277e1a2ec271a6ca6b127":[3,0,3,0,3,72],
-"language_2russian_2main_8php.html#ga52c486b9c87e139b16073093c9080451":[3,0,3,0,3,42],
-"language_2russian_2main_8php.html#ga5334bcebbb0e5023a3a36d821930077a":[3,0,3,0,3,175],
-"language_2russian_2main_8php.html#ga55ea3c99ab10d5924b6f6dd63bbf5d5a":[3,0,3,0,3,196],
-"language_2russian_2main_8php.html#ga568d50b01ea29a1068b41ebaf3b3169a":[3,0,3,0,3,22],
 "language_2russian_2main_8php.html#ga56b8b9fa5cf0dadd3fe5280db5ec7fd5":[3,0,3,0,3,11],
 "language_2russian_2main_8php.html#ga56f330bfe833b40afe95b99e24d6ec97":[3,0,3,0,3,100],
 "language_2russian_2main_8php.html#ga586e54c0700ef4562be435e2b45b8cab":[3,0,3,0,3,136],
@@ -249,5 +242,12 @@ var NAVTREEINDEX2 =
 "language_2russian_2photo_8php.html#gaaaee6f848092a5afd43eb6c9d825ccd1":[3,0,3,0,6,5],
 "language_2russian_2photo_8php.html#gab26529a5b3feec1200e5cd1cd24330e3":[3,0,3,0,6,10],
 "language_2russian_2photo_8php.html#gaca4f26dc7bf48da5c3627bfcdfcaf45f":[3,0,3,0,6,17],
-"language_2russian_2photo_8php.html#gad238462cec567e8760867863a38f167e":[3,0,3,0,6,6]
+"language_2russian_2photo_8php.html#gad238462cec567e8760867863a38f167e":[3,0,3,0,6,6],
+"language_2russian_2photo_8php.html#gae43dcf9c9d332f7bad2f0fbb2ca1e3ca":[3,0,3,0,6,2],
+"language_2russian_2photo_8php.html#gae558388a36914ece2959e1526ea25de4":[3,0,3,0,6,13],
+"language_2russian_2photo_8php.html#gae72a348d6b3581487fd12579fa19c476":[3,0,3,0,6,18],
+"language_2russian_2photo_8php.html#gaf7357f694fa64b9816e2bcde8f476a84":[3,0,3,0,6,20],
+"language_2russian_2photo_8php_source.html":[3,0,3,0,6],
+"language_2russian_2search_8php.html":[3,0,3,0,7],
+"language_2russian_2search_8php.html#ga32d9179a8ac85bd5886ba4531c4844b7":[3,0,3,0,7,2]
 };
