@@ -378,7 +378,6 @@ class work
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
-		$array_data = array(); // инициируем массив
 
 		if ($db->select('COUNT(*) AS `num_photo`', TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query))
 		{
@@ -432,20 +431,18 @@ class work
 		}
 
 		if ($user_flag == 1) $temp['id'] = 'user&amp;id=' . $cat_id;
-
-		$array_data = array(
-					'D_NAME_CATEGORY' => $temp['name'],
-					'D_DESCRIPTION_CATEGORY' => $temp['description'],
-					'D_COUNT_PHOTO' => $photo['count'],
-					'D_LAST_PHOTO' => $photo['last_name'],
-					'D_TOP_PHOTO' => $photo['top_name'],
-
-					'U_CATEGORY' => $this->config['site_url'] . '?action=category&amp;cat=' . $temp['id'],
-					'U_LAST_PHOTO' => $photo['last_url'],
-					'U_TOP_PHOTO' => $photo['top_url']
+		
+		$category = array(
+			'name' => $temp['name'],
+			'description' => $temp['description'],
+			'count_photo' => $photo['count'],
+			'last_photo' => $photo['last_name'],
+			'top_photo' => $photo['top_name'],
+			'url_cat' => $this->config['site_url'] . '?action=category&amp;cat=' . $temp['id'],
+			'url_last_photo' => $photo['last_url'],
+			'url_top_photo' => $photo['top_url']
 		);
-
-		return $template->create_template('category_dir.tpl', $array_data);
+		return $category;
 	}
 
 	/// Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов
