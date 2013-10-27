@@ -155,7 +155,7 @@ if ($subact == 'logout')
 /* elseif ($subact == 'forgot') // Восстановление пароля будет готово после реализации работы с почтой
 {
 	$redirect_time = 3;
-	$redirect_message = $lang['main_redirect_title'];
+	$redirect_message = $lang['main']['redirect_title'];
 } */
 elseif ($subact == 'regist')
 {
@@ -510,7 +510,7 @@ elseif ($subact == 'profile')
 							'L_SAVE_PROFILE' => $lang['profile']['save_profile'],
 							'L_HELP_EDIT' => $lang['profile']['help_edit'],
 							'L_AVATAR' => $lang['profile']['avatar'],
-							'L_GROUP' => $lang['main_group'],
+							'L_GROUP' => $lang['main']['group'],
 							'L_DELETE_AVATAR' => $lang['profile']['delete_avatar'],
 
 							'D_LOGIN' => $temp['login'],
@@ -563,7 +563,7 @@ elseif ($subact == 'profile')
 							'L_EMAIL' => $lang['profile']['email'],
 							'L_REAL_NAME' => $lang['profile']['real_name'],
 	    					'L_AVATAR' => $lang['profile']['avatar'],
-		   					'L_GROUP' => $lang['main_group'],
+		   					'L_GROUP' => $lang['main']['group'],
 
 							'D_EMAIL' => $work->filt_email($temp['email']),
 							'D_REAL_NAME' => $temp['real_name'],

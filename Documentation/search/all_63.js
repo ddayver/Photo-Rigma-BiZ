@@ -1,8 +1,7 @@
 var searchData=
 [
   ['category',['category',['../classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6',1,'work']]],
-  ['category_2ephp',['category.php',['../action_2category_8php.html',1,'']]],
-  ['category_2ephp',['category.php',['../language_2russian_2category_8php.html',1,'']]],
+  ['category_2ephp',['category.php',['../category_8php.html',1,'']]],
   ['check_5ffield',['check_field',['../classwork.html#a7db71b93c4e36c32a7a8082d80c8428a',1,'work']]],
   ['check_5fget',['check_get',['../classwork.html#a99d3e24aeb01e2a579563a62bf61676e',1,'work']]],
   ['check_5fpost',['check_post',['../classwork.html#acd6ad2a4ff726bb59bf6224d302ce092',1,'work']]],

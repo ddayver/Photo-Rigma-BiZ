@@ -653,7 +653,7 @@ class template_old
 		$content = str_replace('{COPYRIGHT_URL}', $work->config['copyright_url'], $content);
 		$content = str_replace('{COPYRIGHT_TEXT}', $work->config['copyright_text'], $content);
 		$content = str_replace('{U_SEARCH}', $work->config['site_url'] . '?action=search', $content);
-		$content = str_replace('{L_SEARCH}', $lang['main_search'], $content);
+		$content = str_replace('{L_SEARCH}', $lang['main']['search'], $content);
 
 		if (get_magic_quotes_gpc())
 		{
@@ -800,7 +800,7 @@ class template_old
 			$temp_foto = false;
 		}
 
-		$name_block = $lang['main_' . $type . '_foto'];
+		$name_block = $lang['main'][$type . '_foto'];
 
 		if ($temp_foto)
 		{
@@ -816,16 +816,16 @@ class template_old
 					$foto['category_name'] = $temp_category['name'];
 					$foto['description'] = $temp_foto['description'];
 					$foto['category_description'] = $temp_category['description'];
-					$foto['rate'] = $lang['main_rate'] . ': ' . $temp_foto['rate_user'] . '/' . $temp_foto['rate_moder'];
+					$foto['rate'] = $lang['main']['rate'] . ': ' . $temp_foto['rate_user'] . '/' . $temp_foto['rate_moder'];
 
 					if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp_foto['user_upload']))
 					{
 						$user_add = $db->res_row();
-						if ($user_add) $foto['user'] = $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
+						if ($user_add) $foto['user'] = $lang['main']['user_add'] . ': <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $temp_foto['user_upload'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>';
 						else
 						{
-							$foto['user'] = $lang['main_no_user_add'];
-							$user_add['real_name'] = $lang['main_no_user_add'];
+							$foto['user'] = $lang['main']['no_user_add'];
+							$user_add['real_name'] = $lang['main']['no_user_add'];
 						}
 					}
 					else log_in_file($db->error, DIE_IF_ERROR);
@@ -843,12 +843,12 @@ class template_old
 					$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
 					$foto['url'] = $work->config['site_url'] . '?action=photo&id=0';
 					$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
-					$foto['name'] = $lang['main_no_foto'];
-					$foto['description'] = $lang['main_no_foto'];
-					$foto['category_name'] = $lang['main_no_category'];
-					$foto['category_description'] = $lang['main_no_category'];
-					$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
-					$foto['user'] = $lang['main_no_user_add'];
+					$foto['name'] = $lang['main']['no_foto'];
+					$foto['description'] = $lang['main']['no_foto'];
+					$foto['category_name'] = $lang['main']['no_category'];
+					$foto['category_description'] = $lang['main']['no_category'];
+					$foto['rate'] = $lang['main']['rate'] . ': ' . $lang['main']['no_foto'];
+					$foto['user'] = $lang['main']['no_user_add'];
 					$foto['category_url'] = $work->config['site_url'];
 				}
 			}
@@ -860,12 +860,12 @@ class template_old
 			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
 			$foto['url'] = $work->config['site_url'] . '?action=photo&id=0';
 			$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
-			$foto['name'] = $lang['main_no_foto'];
-			$foto['description'] = $lang['main_no_foto'];
-			$foto['category_name'] = $lang['main_no_category'];
-			$foto['category_description'] = $lang['main_no_category'];
-			$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
-			$foto['user'] = $lang['main_no_user_add'];
+			$foto['name'] = $lang['main']['no_foto'];
+			$foto['description'] = $lang['main']['no_foto'];
+			$foto['category_name'] = $lang['main']['no_category'];
+			$foto['category_description'] = $lang['main']['no_category'];
+			$foto['rate'] = $lang['main']['rate'] . ': ' . $lang['main']['no_foto'];
+			$foto['user'] = $lang['main']['no_user_add'];
 			$foto['category_url'] = $work->config['site_url'];
 		}
 
@@ -875,12 +875,12 @@ class template_old
 			$temp_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_foto['file'];
 			$foto['url'] = $work->config['site_url'] . '?action=photo&id=0';
 			$foto['thumbnail_url'] = $work->config['site_url'] . '?action=attach&foto=0&thumbnail=1';
-			$foto['name'] = $lang['main_no_foto'];
-			$foto['description'] = $lang['main_no_foto'];
-			$foto['category_name'] = $lang['main_no_category'];
-			$foto['category_description'] = $lang['main_no_category'];
-			$foto['rate'] = $lang['main_rate'] . ': ' . $lang['main_no_foto'];
-			$foto['user'] = $lang['main_no_user_add'];
+			$foto['name'] = $lang['main']['no_foto'];
+			$foto['description'] = $lang['main']['no_foto'];
+			$foto['category_name'] = $lang['main']['no_category'];
+			$foto['category_description'] = $lang['main']['no_category'];
+			$foto['rate'] = $lang['main']['rate'] . ': ' . $lang['main']['no_foto'];
+			$foto['user'] = $lang['main']['no_user_add'];
 			$foto['category_url'] = $work->config['site_url'];
 		}
 
@@ -948,12 +948,12 @@ class template_old
 			$array_data = array();
 
 			$array_data = array(
-					'NAME_BLOCK' => $lang['main_user_block'],
-					'L_LOGIN' => $lang['main_login'],
-					'L_PASSWORD' => $lang['main_pass'],
-					'L_ENTER' => $lang['main_enter'],
-					'L_FORGOT_PASSWORD' => $lang['main_forgot_password'],
-					'L_REGISTRATION' => $lang['main_registration'],
+					'NAME_BLOCK' => $lang['main']['user_block'],
+					'L_LOGIN' => $lang['main']['login'],
+					'L_PASSWORD' => $lang['main']['pass'],
+					'L_ENTER' => $lang['main']['enter'],
+					'L_FORGOT_PASSWORD' => $lang['main']['forgot_password'],
+					'L_REGISTRATION' => $lang['main']['registration'],
 
 					'U_LOGIN' => $work->config['site_url'] . '?action=profile&subact=login',
 					'U_FORGOT_PASSWORD' => $work->config['site_url'] . '?action=profile&subact=forgot',
@@ -967,9 +967,9 @@ class template_old
 			$array_data = array();
 
 			$array_data = array(
-					'NAME_BLOCK' => $lang['main_user_block'],
-					'L_HI_USER' => $lang['main_hi_user'] . ', ' . $user->user['real_name'],
-					'L_GROUP' => $lang['main_group'] . ': ' . $user->user['group'],
+					'NAME_BLOCK' => $lang['main']['user_block'],
+					'L_HI_USER' => $lang['main']['hi_user'] . ', ' . $user->user['real_name'],
+					'L_GROUP' => $lang['main']['group'] . ': ' . $user->user['group'],
 					'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user->user['avatar']
 			);
 
@@ -1006,22 +1006,22 @@ class template_old
 			$result = '';
 			foreach ($temp_news as $val)
 			{
-				$news['NAME_BLOCK'] = $lang['main_title_news'] . ' - ' . $val['name_post'];
-				$news['L_NEWS_DATA'] = $lang['main_data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').';
+				$news['NAME_BLOCK'] = $lang['main']['title_news'] . ' - ' . $val['name_post'];
+				$news['L_NEWS_DATA'] = $lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').';
 				$news['L_TEXT_POST'] = $val['text_post'];
 				if ($db->select('real_name', TBL_USERS, '`id` = ' . $val['user_post']))
 				{
 					$user_add = $db->res_row();
-					if ($user_add) $news['L_NEWS_DATA'] .= '<br />' . $lang['main_user_add'] . ': <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $val['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.';
+					if ($user_add) $news['L_NEWS_DATA'] .= '<br />' . $lang['main']['user_add'] . ': <a href="' . $work->config['site_url']  . '?action=profile&subact=profile&uid=' . $val['user_post'] . '" title="' . $user_add['real_name'] . '">' . $user_add['real_name'] . '</a>.';
 				}
 				else log_in_file($db->error, DIE_IF_ERROR);
 				$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST']));
 
 				if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
 				{
-					$news['L_EDIT_BLOCK'] = $lang['main_edit_news'];
-					$news['L_DELETE_BLOCK'] = $lang['main_delete_news'];
-					$news['L_CONFIRM_DELETE_BLOCK'] = $lang['main_confirm_delete_news'] . ' ' . $val['name_post'] . '?';
+					$news['L_EDIT_BLOCK'] = $lang['main']['edit_news'];
+					$news['L_DELETE_BLOCK'] = $lang['main']['delete_news'];
+					$news['L_CONFIRM_DELETE_BLOCK'] = $lang['main']['confirm_delete_news'] . ' ' . $val['name_post'] . '?';
 					$news['U_EDIT_BLOCK'] = $work->config['site_url'] . '?action=news&subact=edit&news=' . $val['id'];
 					$news['U_DELETE_BLOCK'] = $work->config['site_url'] . '?action=news&subact=delete&news=' . $val['id'];
 					$news['IF_EDIT_SHORT'] = true;
@@ -1040,9 +1040,9 @@ class template_old
 		}
 		else
 		{
-			$news['NAME_BLOCK'] = $lang['main_no_news'];
+			$news['NAME_BLOCK'] = $lang['main']['no_news'];
 			$news['L_NEWS_DATA'] = '';
-			$news['L_TEXT_POST'] = $lang['main_no_news'];
+			$news['L_TEXT_POST'] = $lang['main']['no_news'];
 			$news['L_TEXT_POST'] = trim(nl2br($news['L_TEXT_POST']));
 			$news['L_EDIT_BLOCK'] = '';
 			$news['L_DELETE_BLOCK'] = '';
@@ -1143,22 +1143,22 @@ class template_old
 				}
 				$stat['online'] = substr($stat['online'], 2) . '.';
 			}
-			else $stat['online'] = $lang['main_stat_no_online'];
+			else $stat['online'] = $lang['main']['stat_no_online'];
 		}
 		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data = array();
 
 		$array_data = array(
-				'NAME_BLOCK' => $lang['main_stat_title'],
-				'L_STAT_REGIST' => $lang['main_stat_regist'],
-				'L_STAT_PHOTO' => $lang['main_stat_photo'],
-				'L_STAT_CATEGORY' => $lang['main_stat_category'],
-				'L_STAT_USER_ADMIN' => $lang['main_stat_user_admin'],
-				'L_STAT_USER_MODER' => $lang['main_stat_user_moder'],
-				'L_STAT_RATE_USER' => $lang['main_stat_rate_user'],
-				'L_STAT_RATE_MODER' => $lang['main_stat_rate_moder'],
-				'L_STAT_ONLINE' => $lang['main_stat_online'],
+				'NAME_BLOCK' => $lang['main']['stat_title'],
+				'L_STAT_REGIST' => $lang['main']['stat_regist'],
+				'L_STAT_PHOTO' => $lang['main']['stat_photo'],
+				'L_STAT_CATEGORY' => $lang['main']['stat_category'],
+				'L_STAT_USER_ADMIN' => $lang['main']['stat_user_admin'],
+				'L_STAT_USER_MODER' => $lang['main']['stat_user_moder'],
+				'L_STAT_RATE_USER' => $lang['main']['stat_rate_user'],
+				'L_STAT_RATE_MODER' => $lang['main']['stat_rate_moder'],
+				'L_STAT_ONLINE' => $lang['main']['stat_online'],
 
 				'D_STAT_REGIST' => $stat['regist'],
 				'D_STAT_PHOTO' => $stat['photo'],
@@ -1183,7 +1183,7 @@ class template_old
 	{
 		global $db, $lang, $work;
 
-		$name_block = $lang['main_best_user_1'] . $best_user . $lang['main_best_user_2'];
+		$name_block = $lang['main']['best_user_1'] . $best_user . $lang['main']['best_user_2'];
 		if ($db->select('DISTINCT `user_upload`', TBL_PHOTO))
 		{
 			$temp = $db->res_arr();
@@ -1242,8 +1242,8 @@ class template_old
 		$array_data = array();
 		$array_data = array(
 				'NAME_BLOCK' => $name_block,
-				'L_USER_NAME' => $lang['main_user_name'],
-				'L_USER_PHOTO' => $lang['main_best_user_photo'],
+				'L_USER_NAME' => $lang['main']['user_name'],
+				'L_USER_PHOTO' => $lang['main']['best_user_photo'],
 
 				'TEXT_BEST_USER' => $text_best_user
 		);
@@ -1265,7 +1265,7 @@ class template_old
 		if ($rate == '') $rate = 'false';
 
 		$array_data = array();
-		$array_data['L_IF_RATE'] = $lang['photo_if_' . $if_who];
+		$array_data['L_IF_RATE'] = $lang['photo']['if_' . $if_who];
 
 		if ($rate == 'false')
 		{

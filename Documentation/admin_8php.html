@@ -86,7 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('action_2admin_8php.html','');});
+$(document).ready(function(){initNavTree('admin_8php.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -104,8 +104,6 @@ $(document).ready(function(){initNavTree('action_2admin_8php.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#var-members">Переменные</a>  </div>
   <div class="headertitle">
 <div class="title">Файл admin.php</div>  </div>
 </div><!--header-->
@@ -114,27 +112,7 @@ $(document).ready(function(){initNavTree('action_2admin_8php.html','');});
 <p>Администрирование сайта.  
 <a href="#details">Подробнее...</a></p>
 
-<p><a href="action_2admin_8php_source.html">См. исходные тексты.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Переменные</h2></td></tr>
-<tr class="memitem:a763301683b83fabff766fc39bcaf9737"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (IN_GALLERY!==true)</td></tr>
-<tr class="separator:a763301683b83fabff766fc39bcaf9737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a369fda14f354525e2f2a3305184e4e00"><td class="memItemLeft" align="right" valign="top">if((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
-<a class="el" href="classuser.html">user</a>['admin']==true &amp;&amp;isset($_POST['admin_password'])&amp;&amp;!empty($_POST['admin_password'])&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
-<a class="el" href="classuser.html">user</a>['password']==md5($_POST['admin_password'])) <br class="typebreak"/>
-if(isset($_SESSION['admin_on'])&amp;&amp;$_SESSION['admin_on']===true <br class="typebreak"/>
-&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['admin']==true) <br class="typebreak"/>
-elseif((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<br class="typebreak"/>
-<a class="el" href="classuser.html">user</a>['admin']==true)&#160;</td><td class="memItemRight" valign="bottom"><b>else</b></td></tr>
-<tr class="separator:a369fda14f354525e2f2a3305184e4e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada57e7bb7c152edad18fe2f166188691"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada57e7bb7c152edad18fe2f166188691"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$title</b> = $lang['main_main']</td></tr>
-<tr class="separator:ada57e7bb7c152edad18fe2f166188691"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a94d4482b74da6213eb57abbb5e167e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a94d4482b74da6213eb57abbb5e167e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>$main_block</b> = $<a class="el" href="classtemplate.html">template</a>-&gt;template_news($<a class="el" href="classwork.html">work</a>-&gt;config['last_news'])</td></tr>
-<tr class="separator:a5a94d4482b74da6213eb57abbb5e167e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<p><a href="admin_8php_source.html">См. исходные тексты.</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Администрирование сайта. </p>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
@@ -142,58 +120,13 @@ elseif((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<
 <dl class="section date"><dt>Дата</dt><dd>28/03-2012</dd></dl>
 <p>Используется для управления настройками и пользователями галереи. </p>
 
-<p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a></p>
-</div><h2 class="groupheader">Переменные</h2>
-<a class="anchor" id="a369fda14f354525e2f2a3305184e4e00"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">if ((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['admin']==true &amp;&amp;isset($_POST['admin_password'])&amp;&amp;!empty($_POST['admin_password'])&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['password']==md5($_POST['admin_password'])) if (isset($_SESSION['admin_on'])&amp;&amp;$_SESSION['admin_on']===true &amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['admin']==true) elseif ((!isset($_SESSION['admin_on'])||$_SESSION['admin_on']!==true)&amp;&amp;$<a class="el" href="classuser.html">user</a>-&gt;<a class="el" href="classuser.html">user</a>['admin']==true) else</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
-<div class="line">    $act = <span class="stringliteral">&#39;main&#39;</span></div>
-</div><!-- fragment -->
-<p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a> строка <a class="el" href="action_2admin_8php_source.html#l00495">495</a></p>
-
-</div>
-</div>
-<a class="anchor" id="a763301683b83fabff766fc39bcaf9737"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">if</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> ($ratioWidth &lt; $ratioHeight)</div>
-<div class="line">    {</div>
-<div class="line">        $photo[<span class="stringliteral">&#39;width&#39;</span>] = $size[0]/$ratioHeight;</div>
-<div class="line">        $photo[<span class="stringliteral">&#39;height&#39;</span>] = $size[1]/$ratioHeight;</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">    {</div>
-<div class="line">        $photo[<span class="stringliteral">&#39;width&#39;</span>] = $size[0]/$ratioWidth;</div>
-<div class="line">        $photo[<span class="stringliteral">&#39;height&#39;</span>] = $size[1]/$ratioWidth;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">$array_data = array()</div>
-</div><!-- fragment -->
-<p>См. определение в файле <a class="el" href="action_2admin_8php_source.html">admin.php</a> строка <a class="el" href="action_2admin_8php_source.html#l00011">11</a></p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>См. определение в файле <a class="el" href="admin_8php_source.html">admin.php</a></p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_2e361893faae7e8ceea4950fc659485a.html">action</a></li><li class="navelem"><a class="el" href="action_2admin_8php.html">admin.php</a></li>
+    <li class="navelem"><a class="el" href="dir_2e361893faae7e8ceea4950fc659485a.html">action</a></li><li class="navelem"><a class="el" href="admin_8php.html">admin.php</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
