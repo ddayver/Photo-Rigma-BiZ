@@ -1,10 +1,10 @@
 var classwork =
 [
     [ "category", "classwork.html#a9662afa35a1b3f0206ffa7830f5b69e6", null ],
-    [ "check_field", "classwork.html#a7db71b93c4e36c32a7a8082d80c8428a", null ],
-    [ "check_get", "classwork.html#a99d3e24aeb01e2a579563a62bf61676e", null ],
-    [ "check_post", "classwork.html#acd6ad2a4ff726bb59bf6224d302ce092", null ],
-    [ "check_session", "classwork.html#a6de84ee24deba0a9e3e1d9788c7ca5d6", null ],
+    [ "check_field", "classwork.html#af71701b1fdf27a06a0b5e612bb58de9b", null ],
+    [ "check_get", "classwork.html#a7e142dbebbe1a7cf49bb74b98febf423", null ],
+    [ "check_post", "classwork.html#a46d155badfc084f1858e702900c55239", null ],
+    [ "check_session", "classwork.html#a94bf8eaf5d8aa15534aba24dbf882698", null ],
     [ "clean_field", "classwork.html#a161d942e85bec692f8011f8fdacf9025", null ],
     [ "create_menu", "classwork.html#adbe416bc83832ace861609647a79dc85", null ],
     [ "create_photo", "classwork.html#a0d7eeafb547e659cc55e017c9282c082", null ],
@@ -16,7 +16,7 @@ var classwork =
     [ "get_themes", "classwork.html#a8d2f43c00af0c9574caa0455df82c613", null ],
     [ "image_attach", "classwork.html#a3a00a56cbe47aadbac0fe537e16e5e16", null ],
     [ "image_resize", "classwork.html#a70600ce649f70d7c2fbbdedcf6a20d5c", null ],
-    [ "news", "classwork.html#a60997ff72d6d54e304af61e9de423dc0", null ],
+    [ "news", "classwork.html#a71354058c7a66f42cec75bbf8070e096", null ],
     [ "no_photo", "classwork.html#adfcd1cb7963a860013ca9ca1898f54f1", null ],
     [ "return_bytes", "classwork.html#a0137c58d47b0c6d6ffe81b51fa9ae13b", null ],
     [ "size_image", "classwork.html#a3d003fba794baa1940d917645adf9c78", null ],

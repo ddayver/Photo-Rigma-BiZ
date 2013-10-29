@@ -1,20 +1,20 @@
 <?php
 /**
-* @file		install/install.php
-* @brief	Разработка установочного скрипта с возможностью обновления.
-* @author	Dark Dayver
-* @version	0.1.1
-* @date		27/03-2012
-* @details	Разработка установочного скрипта с возможностью обновления. На текущий момент отложена.
-*/
+ * @file        install/install.php
+ * @brief       Разработка установочного скрипта с возможностью обновления.
+ * @author      Dark Dayver
+ * @version     0.1.1
+ * @date        27/03-2012
+ * @details     Разработка установочного скрипта с возможностью обновления. На текущий момент отложена.
+ */
 /// @cond
-define('IN_GALLERY', true); // Константа, используемая в подключаемых файлах для определения, что они вызываются из индексного файла, а не прямым набором с целью взлома
+define('IN_GALLERY', TRUE); // Константа, используемая в подключаемых файлах для определения, что они вызываются из индексного файла, а не прямым набором с целью взлома
 
-include_once ('../include/rev.php');
+include_once('../include/rev.php');
 $cur_rev = $rev;
-include_once ('../sql/rev.php');
+include_once('../sql/rev.php');
 $new_rev = $rev;
-include_once ('../config.php');
+include_once('../config.php');
 
 $link = @mysql_connect($config['dbhost'], $config['dbuser'], $config['dbpass']);
 if ($link)

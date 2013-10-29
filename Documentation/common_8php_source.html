@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.3.1"/>
+<meta name="generator" content="Doxygen 1.8.5"/>
 <title>Photo-Rigma-BiZ: Исходный файл include/common.php</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -28,6 +28,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo-1.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-Rigma-BiZ
    &#160;<span id="projectnumber">0.2.0</span>
@@ -39,7 +40,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.3.1 -->
+<!-- Создано системой Doxygen 1.8.5 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
@@ -109,8 +110,7 @@ $(document).ready(function(){initNavTree('common_8php_source.html','');});
 </div><!--header-->
 <div class="contents">
 <a href="common_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordflow">if</span> (IN_GALLERY !== <span class="keyword">true</span>)</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordflow">if</span> (IN_GALLERY !== TRUE)</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    die(<span class="stringliteral">&#39;HACK!&#39;</span>);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
@@ -122,9 +122,9 @@ $(document).ready(function(){initNavTree('common_8php_source.html','');});
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;session_start();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0">   30</a></span>&#160;<span class="keyword">function</span> <a class="code" href="common_8php.html#a45275fa89766474ac6c781aad821d6d0" title="Функция сохранения ошибок в лог-файл">log_in_file</a>($txt, $die = <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="common_8php.html#a4ab65308b1a35d90782207614ca1d2fc">   30</a></span>&#160;<span class="keyword">function</span> <a class="code" href="common_8php.html#a4ab65308b1a35d90782207614ca1d2fc">log_in_file</a>($txt, $die = FALSE)</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    global <a class="code" href="config_8php.html#a77fa2d1c95bc0fbba9854fc734ef885f" title="Содержит массив конфигурации сервера.">$config</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    global <a class="code" href="config_8php.html#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    $log_file = $config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;log/&#39;</span> . date(<span class="stringliteral">&#39;Y_m_d&#39;</span>) . <span class="stringliteral">&#39;_log.txt&#39;</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    $write_txt = date(<span class="stringliteral">&#39;H:i:s&#39;</span>) . <span class="stringliteral">&#39; | &#39;</span> . $_SERVER[<span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>] . <span class="stringliteral">&#39; | &#39;</span> . $txt . PHP_EOL;</div>
@@ -133,28 +133,30 @@ $(document).ready(function(){initNavTree('common_8php_source.html','');});
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// Общие таблицы для серверов</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="common_8php.html#aa22231582be76bf50eff714a234f485c">   42</a></span>&#160;<span class="comment"></span>define (<span class="stringliteral">&#39;TBL_CONFIG&#39;</span>, <span class="stringliteral">&#39;config&#39;</span>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="common_8php.html#ada271cee9d3954ad84aa243510683da6">   44</a></span>&#160;define (<span class="stringliteral">&#39;TBL_MENU&#39;</span>, <span class="stringliteral">&#39;menu&#39;</span>);</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="common_8php.html#a26ebc544afff0aad8a2ae5ca6005ed08">   46</a></span>&#160;define (<span class="stringliteral">&#39;TBL_NEWS&#39;</span>, <span class="stringliteral">&#39;news&#39;</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="common_8php.html#af7d24f8d6208f91370d570179ecc7588">   48</a></span>&#160;define (<span class="stringliteral">&#39;TBL_CATEGORY&#39;</span>, <span class="stringliteral">&#39;category&#39;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="common_8php.html#ad9e6d56867d93f4ff111db359d732510">   50</a></span>&#160;define (<span class="stringliteral">&#39;TBL_PHOTO&#39;</span>, <span class="stringliteral">&#39;photo&#39;</span>);</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="common_8php.html#a1ece13b85e14fdb7d1a6b62a6933fe89">   52</a></span>&#160;define (<span class="stringliteral">&#39;TBL_RATE_USER&#39;</span>, <span class="stringliteral">&#39;rate_user&#39;</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="code" href="common_8php.html#a1872acdf0e01ae25ad823ea5e2e59d57">   54</a></span>&#160;define (<span class="stringliteral">&#39;TBL_RATE_MODER&#39;</span>, <span class="stringliteral">&#39;rate_moder&#39;</span>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="common_8php.html#a2a3024d0b4853a913d3baa522a035f91">   56</a></span>&#160;define (<span class="stringliteral">&#39;TBL_USERS&#39;</span>, <span class="stringliteral">&#39;user&#39;</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="common_8php.html#a9d321afcd9daf1261fb27494a9dd07cf">   58</a></span>&#160;define (<span class="stringliteral">&#39;TBL_GROUP&#39;</span>, <span class="stringliteral">&#39;group&#39;</span>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="common_8php.html#aa22231582be76bf50eff714a234f485c">   42</a></span>&#160;<span class="comment"></span>define (<span class="stringliteral">&#39;TBL_CONFIG&#39;</span>, <span class="stringliteral">&#39;config&#39;</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="common_8php.html#ada271cee9d3954ad84aa243510683da6">   44</a></span>&#160;define (<span class="stringliteral">&#39;TBL_MENU&#39;</span>, <span class="stringliteral">&#39;menu&#39;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="common_8php.html#a26ebc544afff0aad8a2ae5ca6005ed08">   46</a></span>&#160;define (<span class="stringliteral">&#39;TBL_NEWS&#39;</span>, <span class="stringliteral">&#39;news&#39;</span>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="common_8php.html#af7d24f8d6208f91370d570179ecc7588">   48</a></span>&#160;define (<span class="stringliteral">&#39;TBL_CATEGORY&#39;</span>, <span class="stringliteral">&#39;category&#39;</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="common_8php.html#ad9e6d56867d93f4ff111db359d732510">   50</a></span>&#160;define (<span class="stringliteral">&#39;TBL_PHOTO&#39;</span>, <span class="stringliteral">&#39;photo&#39;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="common_8php.html#a1ece13b85e14fdb7d1a6b62a6933fe89">   52</a></span>&#160;define (<span class="stringliteral">&#39;TBL_RATE_USER&#39;</span>, <span class="stringliteral">&#39;rate_user&#39;</span>);</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="common_8php.html#a1872acdf0e01ae25ad823ea5e2e59d57">   54</a></span>&#160;define (<span class="stringliteral">&#39;TBL_RATE_MODER&#39;</span>, <span class="stringliteral">&#39;rate_moder&#39;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="common_8php.html#a2a3024d0b4853a913d3baa522a035f91">   56</a></span>&#160;define (<span class="stringliteral">&#39;TBL_USERS&#39;</span>, <span class="stringliteral">&#39;user&#39;</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="common_8php.html#a9d321afcd9daf1261fb27494a9dd07cf">   58</a></span>&#160;define (<span class="stringliteral">&#39;TBL_GROUP&#39;</span>, <span class="stringliteral">&#39;group&#39;</span>);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="code" href="common_8php.html#a2790a51795c400a411236e4651f1b3f1">   61</a></span>&#160;define (<span class="stringliteral">&#39;DEFAULT_GROUP&#39;</span>, 1);</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="common_8php.html#a2790a51795c400a411236e4651f1b3f1">   61</a></span>&#160;define (<span class="stringliteral">&#39;DEFAULT_GROUP&#39;</span>, 1);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="common_8php.html#a3ab0628e8862cd0c51f8503bc96535bc">   64</a></span>&#160;define (<span class="stringliteral">&#39;DIE_IF_ERROR&#39;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="common_8php.html#a3ab0628e8862cd0c51f8503bc96535bc">   64</a></span>&#160;define (<span class="stringliteral">&#39;DIE_IF_ERROR&#39;</span>, TRUE);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">//Что использовать как конец строки (для Win-серверов)</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;PHP_EOL&#39;</span>)) define (<span class="stringliteral">&#39;PHP_EOL&#39;</span>, strtoupper(substr(PHP_OS, 0, 3) == <span class="stringliteral">&#39;WIN&#39;</span>) ? chr(13) . chr(10) : chr(10));</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="common_8php.html#abcaad3156cca5ada2c3a8df418291208">   70</a></span>&#160;define(<span class="stringliteral">&#39;REG_LOGIN&#39;</span>, <span class="stringliteral">&#39;^[\u0030-\u0039\u0041-\u005A\u0061-\u007A]{1}[\u0020\u0030-\u0039\u0041-\u005A\u005F\u0061-\u007A]*[\u0030-\u0039\u0041-\u005A\u0061-\u007A]?\$&#39;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="common_8php.html#a328f2af671059a9d73b0cfef6c3a644f">   72</a></span>&#160;define(<span class="stringliteral">&#39;REG_NAME&#39;</span>, <span class="stringliteral">&#39;^[\u0021-\u10FFFF]{1}[\u0020-\u10FFFF]*[\u0021-\u10FFFF]?\$&#39;</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="common_8php.html#ae61eeb74d6e738c902452868f3b3ca32">   74</a></span>&#160;define(<span class="stringliteral">&#39;REG_EMAIL&#39;</span>, <span class="stringliteral">&#39;^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\$&#39;</span>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="common_8php.html#abcaad3156cca5ada2c3a8df418291208">   70</a></span>&#160;define(<span class="stringliteral">&#39;REG_LOGIN&#39;</span>, <span class="stringliteral">&#39;^[\u0030-\u0039\u0041-\u005A\u0061-\u007A]{1}[\u0020\u0030-\u0039\u0041-\u005A\u005F\u0061-\u007A]*[\u0030-\u0039\u0041-\u005A\u0061-\u007A]?\$&#39;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="common_8php.html#a328f2af671059a9d73b0cfef6c3a644f">   72</a></span>&#160;define(<span class="stringliteral">&#39;REG_NAME&#39;</span>, <span class="stringliteral">&#39;^[\u0021-\u10FFFF]{1}[\u0020-\u10FFFF]*[\u0021-\u10FFFF]?\$&#39;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="common_8php.html#ae61eeb74d6e738c902452868f3b3ca32">   74</a></span>&#160;define(<span class="stringliteral">&#39;REG_EMAIL&#39;</span>, <span class="stringliteral">&#39;^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\$&#39;</span>);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;?&gt;</div>
+<div class="ttc" id="common_8php_html_a4ab65308b1a35d90782207614ca1d2fc"><div class="ttname"><a href="common_8php.html#a4ab65308b1a35d90782207614ca1d2fc">log_in_file</a></div><div class="ttdeci">log_in_file($txt, $die=FALSE)</div><div class="ttdoc">Функция сохранения ошибок в лог-файл </div><div class="ttdef"><b>Definition:</b> <a href="common_8php_source.html#l00030">common.php:30</a></div></div>
+<div class="ttc" id="config_8php_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="config_8php.html#a49c7011be9c979d9174c52a8b83e5d8e">$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Содержит массив конфигурации сервера. </div><div class="ttdef"><b>Definition:</b> <a href="config_8php_source.html#l00022">config.php:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
@@ -163,7 +165,7 @@ $(document).ready(function(){initNavTree('common_8php_source.html','');});
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="common_8php.html">common.php</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
   </ul>
 </div>
 </body>

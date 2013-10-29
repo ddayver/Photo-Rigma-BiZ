@@ -1,14 +1,14 @@
 <?php
 /**
-* @file		language/russian/main.php
-* @brief	Переменные языка для основной страницы сайта (русский)
-* @author	Dark Dayver
-* @version	0.1.1
-* @date		27/03-2012
-* @details	Содержит переменные языка для основной страницы сайта (русский). Более подробная информация в группе @ref LanguageRussian
-*/
+ * @file        language/russian/main.php
+ * @brief       Переменные языка для основной страницы сайта (русский)
+ * @author      Dark Dayver
+ * @version     0.1.1
+ * @date        27/03-2012
+ * @details     Содержит переменные языка для основной страницы сайта (русский). Более подробная информация в группе @ref LanguageRussian
+ */
 /// @cond
-if (IN_GALLERY !== true)
+if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
@@ -17,18 +17,18 @@ if (IN_GALLERY !== true)
 /// Название языка
 $lang_name = 'Русский';
 /**
-* @defgroup LanguageRussian Языковые переменные русского языка
-*/
+ * @defgroup LanguageRussian Языковые переменные русского языка
+ */
 /*@{*/
 
 /**
-* @var $lang
-* @brief Массив языковых переменных
-*/
+ * @var $lang
+ * @brief Массив языковых переменных
+ */
 $lang = array();
 /**
-* @defgroup LanguageRussianMain Основные языковые переменные
-*/
+ * @defgroup LanguageRussianMain Основные языковые переменные
+ */
 /*@{*/
 $lang['main']['main'] = 'Главная';
 $lang['main']['search'] = 'Поиск';
@@ -81,8 +81,8 @@ $lang['main']['confirm_delete_news'] = 'Вы уверены, что хотите
 /*@}*/
 
 /**
-* @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
-*/
+ * @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
+ */
 /*@{*/
 $lang['menu']['name_block'] = 'Панель навигации';
 $lang['menu']['home'] = 'Главная';
@@ -101,8 +101,8 @@ $lang['menu']['logout'] = 'Выйти';
 /*@}*/
 
 /**
-* @defgroup LanguageRussianCategory Переменные для процедур обзора и управления разделами
-*/
+ * @defgroup LanguageRussianCategory Переменные для процедур обзора и управления разделами
+ */
 /*@{*/
 $lang['category']['category'] = 'Раздел';
 $lang['category']['name_block'] = 'Разделы';
@@ -131,8 +131,8 @@ $lang['category']['no_description'] = 'Без описания';
 /*@}*/
 
 /**
-* @defgroup LanguageRussianLogin Переменные для процедур регистрации и восстановления пароля
-*/
+ * @defgroup LanguageRussianLogin Переменные для процедур регистрации и восстановления пароля
+ */
 /*@{*/
 $lang['profile']['regist'] = 'Регистрация';
 $lang['profile']['login'] = 'Имя пользователя';
@@ -164,8 +164,8 @@ $lang['profile']['captcha'] = 'Защита от ботов. Для регист
 /*@}*/
 
 /**
-* @defgroup LanguageRussianNews Переменные для новостей сайта
-*/
+ * @defgroup LanguageRussianNews Переменные для новостей сайта
+ */
 /*@{*/
 $lang['news']['news'] = 'Архив новостей';
 $lang['news']['title'] = 'Новость';
@@ -195,8 +195,8 @@ $lang['news']['12'] = 'декабрь';
 /*@}*/
 
 /**
-* @defgroup LanguageRussianPhoto Переменные для процедур вывода, обработки, оценки изображений
-*/
+ * @defgroup LanguageRussianPhoto Переменные для процедур вывода, обработки, оценки изображений
+ */
 /*@{*/
 $lang['photo']['title'] = 'Изображение';
 $lang['photo']['of_photo'] = ' изображения';
@@ -223,8 +223,8 @@ $lang['photo']['complite_delete'] = 'успешно удалено!';
 /*@}*/
 
 /**
-* @defgroup LanguageRussianSearch Переменные для страницы поиска
-*/
+ * @defgroup LanguageRussianSearch Переменные для страницы поиска
+ */
 /*@{*/
 $lang['search']['title'] = 'Введите строку для поиска и выберите диапазон';
 $lang['search']['need_user'] = 'пользователи';
@@ -236,8 +236,8 @@ $lang['search']['no_find'] = 'Ничего не найдено';
 /*@}*/
 
 /**
-* @defgroup LanguageRussianAdmin Переменные для Админки
-*/
+ * @defgroup LanguageRussianAdmin Переменные для Админки
+ */
 /*@{*/
 $lang['admin']['title'] = 'Администрирование';
 $lang['admin']['admin_pass'] = 'Введите пароль для входа в Админку';

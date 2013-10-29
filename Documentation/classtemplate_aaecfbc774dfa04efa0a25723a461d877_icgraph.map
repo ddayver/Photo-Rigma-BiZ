@@ -1,8 +1,8 @@
 <map id="test_is_object" name="test_is_object">
-<area shape="rect" id="node2" href="$classtemplate.html#ac472efb4d43bafda24293efc44584a26" title="Добавление данных о выборе блока для вывода фрагментов шаблона" alt="" coords="157,5,235,32"/>
-<area shape="rect" id="node4" href="$classtemplate.html#a5533423e2f7caee21e16a870f890f2e3" title="Добавление данных об условиях вывода фрагментов шаблона" alt="" coords="167,56,225,83"/>
-<area shape="rect" id="node6" href="$classtemplate.html#aaabe60e829407d9f1e18c4f7ca1cc1e6" title="Добавление строковой данной для замены в шаблоне" alt="" coords="155,107,237,133"/>
-<area shape="rect" id="node3" href="$classtemplate.html#ab3ffe88fe05dfc0bd68b5945a0d85547" title="Добавление массива данных о выборе блока для вывода фрагментов шаблона" alt="" coords="287,5,382,32"/>
-<area shape="rect" id="node5" href="$classtemplate.html#a651c64c60dd969c2d8162bc5da7cb855" title="Добавление массива данных об условиях вывода фрагментов шаблона" alt="" coords="297,56,372,83"/>
-<area shape="rect" id="node7" href="$classtemplate.html#a3783b6437f9d0a89f9a97f7b42b23a1f" title="Добавление массива строковых данных для замены в шаблоне" alt="" coords="285,107,384,133"/>
+<area shape="rect" id="node2" href="$classtemplate.html#a668c3011b6e8cc5691f14e8c68daee57" title="Добавление данных о выборе блока для вывода фрагментов шаблона " alt="" coords="158,5,234,32"/>
+<area shape="rect" id="node4" href="$classtemplate.html#a11196fa0cfe56b145c8cff7cab990aec" title="Добавление данных об условиях вывода фрагментов шаблона " alt="" coords="167,56,225,83"/>
+<area shape="rect" id="node6" href="$classtemplate.html#a56c8979c923274f3942e3688472ef6e0" title="Добавление строковой данной для замены в шаблоне " alt="" coords="155,107,237,133"/>
+<area shape="rect" id="node3" href="$classtemplate.html#ac9228ac3f84040473f06568a329939c8" title="Добавление массива данных о выборе блока для вывода фрагментов шаблона " alt="" coords="289,5,383,32"/>
+<area shape="rect" id="node5" href="$classtemplate.html#a863c0cfc3bdbe6a50c7585c5020faa8d" title="Добавление массива данных об условиях вывода фрагментов шаблона " alt="" coords="298,56,374,83"/>
+<area shape="rect" id="node7" href="$classtemplate.html#a77c29569ea87b7ad408c73cdc5ae22bf" title="Добавление массива строковых данных для замены в шаблоне " alt="" coords="285,107,387,133"/>
 </map>

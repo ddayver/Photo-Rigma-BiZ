@@ -1,14 +1,14 @@
 <?php
 /**
-* @file		include/work.php
-* @brief	Общий класс (набор функций)
-* @author	Dark Dayver
-* @version	0.2.0
-* @date		28/03-2012
-* @details	Содержит общий класс (набор функций) + хранилище для данных о конфигурации.
-*/
+ * @file        include/work.php
+ * @brief       Общий класс (набор функций)
+ * @author      Dark Dayver
+ * @version     0.2.0
+ * @date        28/03-2012
+ * @details     Содержит общий класс (набор функций) + хранилище для данных о конфигурации.
+ */
 /// @cond
-if (IN_GALLERY !== true)
+if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
@@ -16,8 +16,8 @@ if (IN_GALLERY !== true)
 
 /// Общий класс (набор функций) + хранилище для данных о конфигурации.
 /**
-* Данный класс содержит набор общих для всей галереи функций, а так же используется для хранения данных о конфигурации.
-*/
+ * Данный класс содержит набор общих для всей галереи функций, а так же используется для хранения данных о конфигурации.
+ */
 class work
 {
 	var $config = array(); ///< Массив, хранящий конфигурацию.
@@ -25,17 +25,17 @@ class work
 
 	/// Конструктор класса, выполняет ряд ключевых задач.
 	/**
-	* -# Формирует массив, хранящий конфигурацию;
-	* -# Формирует массив, хранящий правила защиты.
-	* @see ::$config, db
-	*/
+	 * -# Формирует массив, хранящий конфигурацию;
+	 * -# Формирует массив, хранящий правила защиты.
+	 * @see ::$config, db
+	 */
 	function work()
 	{
 		global $db, $config;
 		unset($config['dbpass']);
 		$this->config = $config;
 
-		$this->array_rules = array('http_', '_server', 'delete%20', 'delete ', 'delete-', 'delete(', '(delete',  'drop%20', 'drop ', 'create%20', 'update-', 'update(', '(update', 'insert-', 'insert(', '(insert', 'create ', 'create(', 'create-', '(create', 'update%20', 'update ', 'insert%20', 'insert ', 'select%20', 'select ', 'bulk%20', 'bulk ', 'union%20', 'union ', 'select-', 'select(', '(select', 'union-', '(union', 'union(', 'or%20', 'or ', 'and%20', 'and ', 'exec', '@@', '%22', '"', 'openquery', 'openrowset', 'msdasql', 'sqloledb', 'sysobjects', 'syscolums',  'syslogins', 'sysxlogins', 'char%20', 'char ', 'into%20', 'into ', 'load%20', 'load ', 'msys', 'alert%20', 'alert ', 'eval%20', 'eval ', 'onkeyup', 'x5cx', 'fromcharcode', 'javascript:', 'javascript.', 'vbscript:', 'vbscript.', 'http-equiv', '->', 'expression%20', 'expression ', 'url%20', 'url ', 'innerhtml', 'document.', 'dynsrc', 'jsessionid', 'style%20', 'style ', 'phpsessid', '<applet', '<div', '<emded', '<iframe', '<img', '<meta', '<object', '<script', '<textarea', 'onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'ondragdrop', 'onerror',  'onfocus', 'onkeydown', 'onkeypress', 'onload', 'onmouse', 'onmove', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload', 'onreadystatechange', 'xmlhttp', 'uname%20', 'uname ',  '%2C', 'union+', 'select+', 'delete+', 'create+', 'bulk+', 'or+', 'and+', 'into+', 'kill+', '+echr', '+chr', 'cmd+', '+1', 'user_password', 'id%20', 'id ', 'ls%20', 'ls ', 'cat%20', 'cat ', 'rm%20', 'rm ', 'kill%20', 'kill ', 'mail%20', 'mail ', 'wget%20', 'wget ', 'wget(', 'pwd%20', 'pwd ', 'objectclass', 'objectcategory', '<!-%20', '<!- ', 'total%20', 'total ', 'http%20request', 'http request', 'phpb8b4f2a0', 'phpinfo', 'php:', 'globals', '%2527', '%27', '\'', 'chr(', 'chr=', 'chr%20', 'chr ', '%20chr', ' chr', 'cmd=', 'cmd%20', 'cmd', '%20cmd', ' cmd', 'rush=', '%20rush', ' rush', 'rush%20', 'rush ', 'union%20', 'union ', '%20union', ' union', 'union(', 'union=', '%20echr', ' echr', 'esystem', 'cp%20', 'cp ', 'cp(', '%20cp', ' cp', 'mdir%20', 'mdir ', '%20mdir', ' mdir', 'mdir(', 'mcd%20', 'mcd ', 'mrd%20', 'mrd ', 'rm%20', 'rm ', '%20mcd', ' mcd', '%20mrd', ' mrd', '%20rm', ' rm', 'mcd(', 'mrd(', 'rm(', 'mcd=', 'mrd=', 'mv%20', 'mv ', 'rmdir%20', 'rmdir ', 'mv(', 'rmdir(', 'chmod(', 'chmod%20', 'chmod ', 'cc%20', 'cc ', '%20chmod', ' chmod', 'chmod(', 'chmod=', 'chown%20', 'chown ', 'chgrp%20', 'chgrp ', 'chown(', 'chgrp(', 'locate%20', 'locate ', 'grep%20', 'grep ', 'locate(', 'grep(', 'diff%20', 'diff ', 'kill%20', 'kill ', 'kill(', 'killall', 'passwd%20', 'passwd ', '%20passwd', ' passwd', 'passwd(', 'telnet%20', 'telnet ', 'vi(', 'vi%20', 'vi ', 'nigga(', '%20nigga', ' nigga', 'nigga%20', 'nigga ', 'fopen', 'fwrite', '%20like', ' like', 'like%20', 'like ', '$_', '$get', '.system', 'http_php', '%20getenv', ' getenv', 'getenv%20', 'getenv ', 'new_password', '/password', 'etc/', '/groups', '/gshadow', 'http_user_agent', 'http_host', 'bin/', 'wget%20', 'wget ', 'uname%5c', 'uname', 'usr', '/chgrp', '=chown', 'usr/bin', 'g%5c', 'g\\', 'bin/python', 'bin/tclsh', 'bin/nasm', 'perl%20', 'perl ', '.pl', 'traceroute%20', 'traceroute ', 'tracert%20', 'tracert ', 'ping%20', 'ping ', '/usr/x11r6/bin/xterm', 'lsof%20', 'lsof ', '/mail', '.conf', 'motd%20', 'motd ', 'http/1.', '.inc.php', 'config.php', 'cgi-', '.eml', 'file%5c://', 'file\:', 'file://', 'window.open', 'img src', 'img%20src', 'img src', '.jsp', 'ftp.', 'xp_enumdsn', 'xp_availablemedia', 'xp_filelist', 'nc.exe', '.htpasswd', 'servlet', '/etc/passwd', '/etc/shadow', 'wwwacl', '~root', '~ftp', '.js', '.jsp', '.history', 'bash_history', '~nobody', 'server-info', 'server-status', '%20reboot', ' reboot', '%20halt', ' halt', '%20powerdown', ' powerdown', '/home/ftp', '=reboot', 'www/', 'init%20', 'init ','=halt', '=powerdown', 'ereg(', 'secure_site', 'chunked', 'org.apache', '/servlet/con', '/robot', 'mod_gzip_status', '.inc', '.system', 'getenv', 'http_', '_php', 'php_', 'phpinfo()', '<?php', '?>', '%3C%3Fphp', '%3F>', 'sql=', '_global', 'global_', 'global[', '_server', 'server_', 'server[', '/modules', 'modules/', 'phpadmin', 'root_path', '_globals', 'globals_', 'globals[', 'iso-8859-1', '?hl=', '%3fhl=', '.exe', '.sh', '%00', rawurldecode('%00'), '_env', '/*', '\\*');
+		$this->array_rules = array('http_', '_server', 'delete%20', 'delete ', 'delete-', 'delete(', '(delete', 'drop%20', 'drop ', 'create%20', 'update-', 'update(', '(update', 'insert-', 'insert(', '(insert', 'create ', 'create(', 'create-', '(create', 'update%20', 'update ', 'insert%20', 'insert ', 'select%20', 'select ', 'bulk%20', 'bulk ', 'union%20', 'union ', 'select-', 'select(', '(select', 'union-', '(union', 'union(', 'or%20', 'or ', 'and%20', 'and ', 'exec', '@@', '%22', '"', 'openquery', 'openrowset', 'msdasql', 'sqloledb', 'sysobjects', 'syscolums', 'syslogins', 'sysxlogins', 'char%20', 'char ', 'into%20', 'into ', 'load%20', 'load ', 'msys', 'alert%20', 'alert ', 'eval%20', 'eval ', 'onkeyup', 'x5cx', 'fromcharcode', 'javascript:', 'javascript.', 'vbscript:', 'vbscript.', 'http-equiv', '->', 'expression%20', 'expression ', 'url%20', 'url ', 'innerhtml', 'document.', 'dynsrc', 'jsessionid', 'style%20', 'style ', 'phpsessid', '<applet', '<div', '<emded', '<iframe', '<img', '<meta', '<object', '<script', '<textarea', 'onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'ondragdrop', 'onerror', 'onfocus', 'onkeydown', 'onkeypress', 'onload', 'onmouse', 'onmove', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload', 'onreadystatechange', 'xmlhttp', 'uname%20', 'uname ', '%2C', 'union+', 'select+', 'delete+', 'create+', 'bulk+', 'or+', 'and+', 'into+', 'kill+', '+echr', '+chr', 'cmd+', '+1', 'user_password', 'id%20', 'id ', 'ls%20', 'ls ', 'cat%20', 'cat ', 'rm%20', 'rm ', 'kill%20', 'kill ', 'mail%20', 'mail ', 'wget%20', 'wget ', 'wget(', 'pwd%20', 'pwd ', 'objectclass', 'objectcategory', '<!-%20', '<!- ', 'total%20', 'total ', 'http%20request', 'http request', 'phpb8b4f2a0', 'phpinfo', 'php:', 'globals', '%2527', '%27', '\'', 'chr(', 'chr=', 'chr%20', 'chr ', '%20chr', ' chr', 'cmd=', 'cmd%20', 'cmd', '%20cmd', ' cmd', 'rush=', '%20rush', ' rush', 'rush%20', 'rush ', 'union%20', 'union ', '%20union', ' union', 'union(', 'union=', '%20echr', ' echr', 'esystem', 'cp%20', 'cp ', 'cp(', '%20cp', ' cp', 'mdir%20', 'mdir ', '%20mdir', ' mdir', 'mdir(', 'mcd%20', 'mcd ', 'mrd%20', 'mrd ', 'rm%20', 'rm ', '%20mcd', ' mcd', '%20mrd', ' mrd', '%20rm', ' rm', 'mcd(', 'mrd(', 'rm(', 'mcd=', 'mrd=', 'mv%20', 'mv ', 'rmdir%20', 'rmdir ', 'mv(', 'rmdir(', 'chmod(', 'chmod%20', 'chmod ', 'cc%20', 'cc ', '%20chmod', ' chmod', 'chmod(', 'chmod=', 'chown%20', 'chown ', 'chgrp%20', 'chgrp ', 'chown(', 'chgrp(', 'locate%20', 'locate ', 'grep%20', 'grep ', 'locate(', 'grep(', 'diff%20', 'diff ', 'kill%20', 'kill ', 'kill(', 'killall', 'passwd%20', 'passwd ', '%20passwd', ' passwd', 'passwd(', 'telnet%20', 'telnet ', 'vi(', 'vi%20', 'vi ', 'nigga(', '%20nigga', ' nigga', 'nigga%20', 'nigga ', 'fopen', 'fwrite', '%20like', ' like', 'like%20', 'like ', '$_', '$get', '.system', 'http_php', '%20getenv', ' getenv', 'getenv%20', 'getenv ', 'new_password', '/password', 'etc/', '/groups', '/gshadow', 'http_user_agent', 'http_host', 'bin/', 'wget%20', 'wget ', 'uname%5c', 'uname', 'usr', '/chgrp', '=chown', 'usr/bin', 'g%5c', 'g\\', 'bin/python', 'bin/tclsh', 'bin/nasm', 'perl%20', 'perl ', '.pl', 'traceroute%20', 'traceroute ', 'tracert%20', 'tracert ', 'ping%20', 'ping ', '/usr/x11r6/bin/xterm', 'lsof%20', 'lsof ', '/mail', '.conf', 'motd%20', 'motd ', 'http/1.', '.inc.php', 'config.php', 'cgi-', '.eml', 'file%5c://', 'file\:', 'file://', 'window.open', 'img src', 'img%20src', 'img src', '.jsp', 'ftp.', 'xp_enumdsn', 'xp_availablemedia', 'xp_filelist', 'nc.exe', '.htpasswd', 'servlet', '/etc/passwd', '/etc/shadow', 'wwwacl', '~root', '~ftp', '.js', '.jsp', '.history', 'bash_history', '~nobody', 'server-info', 'server-status', '%20reboot', ' reboot', '%20halt', ' halt', '%20powerdown', ' powerdown', '/home/ftp', '=reboot', 'www/', 'init%20', 'init ', '=halt', '=powerdown', 'ereg(', 'secure_site', 'chunked', 'org.apache', '/servlet/con', '/robot', 'mod_gzip_status', '.inc', '.system', 'getenv', 'http_', '_php', 'php_', 'phpinfo()', '<?php', '?>', '%3C%3Fphp', '%3F>', 'sql=', '_global', 'global_', 'global[', '_server', 'server_', 'server[', '/modules', 'modules/', 'phpadmin', 'root_path', '_globals', 'globals_', 'globals[', 'iso-8859-1', '?hl=', '%3fhl=', '.exe', '.sh', '%00', rawurldecode('%00'), '_env', '/*', '\\*');
 
 		if ($db->select('*', TBL_CONFIG))
 		{
@@ -53,18 +53,18 @@ class work
 			}
 		}
 		else log_in_file($db->error, DIE_IF_ERROR);
-		mb_regex_encoding ('UTF-8');
+		mb_regex_encoding('UTF-8');
 	}
 
 	/// Функция проверки полученного сервером URL на содержание вредоносного кода.
 	/**
-	* @return True, если строка содержала вредоносный код, иначе возвращает False.
-	*/
+	 * @return True, если строка содержала вредоносный код, иначе возвращает False.
+	 */
 	function url_check()
 	{
 		$query_string = strtolower($_SERVER['QUERY_STRING']);
 
-		$hack = false;
+		$hack = FALSE;
 
 		foreach ($this->array_rules as $rules)
 		{
@@ -74,7 +74,7 @@ class work
 			{
 				$_SERVER['QUERY_STRING'] = '';
 				log_in_file('Hack attempt: "' . $rules . '" in query string: "' . $query_string . '"!');
-				$hack = true;
+				$hack = TRUE;
 			}
 		}
 		return $hack;
@@ -82,70 +82,70 @@ class work
 
 	/// Функция проверки данных, переданных через $_POST[]
 	/**
-	* @param $field является текстовой переменной и указывает на имя элемента массива $_POST[] (обязательное поле)
-	* @param $isset указывает, проверять ли функции наличие $_POST[$field] через isset() (по-умолчанию False - не проверять)
-	* @param $empty указывает, проверять ли функции, что $_POST[$field] не является пустым (по-умолчанию False - не проверять)
-	* @param $regexp указывает, проверять ли функции, что $_POST[$field] соответствует регулярному выражению (по-умолчанию False - не проверять)
-	* @param $not_zero указывает, проверять ли функции, что $_POST[$field] не равно нулю (по-умолчанию False - не проверять)
-	* @return False, если $_POST[$field] не соотвествует заданному набору параметров, иначе True.
-	* @see work::check_field
-	*/
-	function check_post($field, $isset = false, $empty = false, $regexp = false, $not_zero = false)
+	 * @param $field    является текстовой переменной и указывает на имя элемента массива $_POST[] (обязательное поле)
+	 * @param $isset    указывает, проверять ли функции наличие $_POST[$field] через isset() (по-умолчанию False - не проверять)
+	 * @param $empty    указывает, проверять ли функции, что $_POST[$field] не является пустым (по-умолчанию False - не проверять)
+	 * @param $regexp   указывает, проверять ли функции, что $_POST[$field] соответствует регулярному выражению (по-умолчанию False - не проверять)
+	 * @param $not_zero указывает, проверять ли функции, что $_POST[$field] не равно нулю (по-умолчанию False - не проверять)
+	 * @return False, если $_POST[$field] не соотвествует заданному набору параметров, иначе True.
+	 * @see work::check_field
+	 */
+	function check_post($field, $isset = FALSE, $empty = FALSE, $regexp = FALSE, $not_zero = FALSE)
 	{
-		if ($isset && !isset($_POST[$field])) return false;
-		else if ($empty && empty($_POST[$field])) return false;
+		if ($isset && !isset($_POST[$field])) return FALSE;
+		else if ($empty && empty($_POST[$field])) return FALSE;
 		else return $this->check_field($_POST[$field], $regexp, $not_zero);
 	}
 
 	/// Функция проверки данных, переданных через $_GET[]
 	/**
-	* @param $field является текстовой переменной и указывает на имя элемента массива $_GET[] (обязательное поле)
-	* @param $isset указывает, проверять ли функции наличие $_GET[$field] через isset() (по-умолчанию False - не проверять)
-	* @param $empty указывает, проверять ли функции, что $_GET[$field] не является пустым (по-умолчанию False - не проверять)
-	* @param $regexp указывает, проверять ли функции, что $_GET[$field] соответствует регулярному выражению (по-умолчанию False - не проверять)
-	* @param $not_zero указывает, проверять ли функции, что $_GET[$field] не равно нулю (по-умолчанию False - не проверять)
-	* @return False, если $_GET[$field] не соотвествует заданному набору параметров, иначе True.
-	* @see work::check_field
-	*/
-	function check_get($field, $isset = false, $empty = false, $regexp = false, $not_zero = false)
+	 * @param $field    является текстовой переменной и указывает на имя элемента массива $_GET[] (обязательное поле)
+	 * @param $isset    указывает, проверять ли функции наличие $_GET[$field] через isset() (по-умолчанию False - не проверять)
+	 * @param $empty    указывает, проверять ли функции, что $_GET[$field] не является пустым (по-умолчанию False - не проверять)
+	 * @param $regexp   указывает, проверять ли функции, что $_GET[$field] соответствует регулярному выражению (по-умолчанию False - не проверять)
+	 * @param $not_zero указывает, проверять ли функции, что $_GET[$field] не равно нулю (по-умолчанию False - не проверять)
+	 * @return False, если $_GET[$field] не соотвествует заданному набору параметров, иначе True.
+	 * @see work::check_field
+	 */
+	function check_get($field, $isset = FALSE, $empty = FALSE, $regexp = FALSE, $not_zero = FALSE)
 	{
-		if ($isset && !isset($_GET[$field])) return false;
-		else if ($empty && empty($_GET[$field])) return false;
+		if ($isset && !isset($_GET[$field])) return FALSE;
+		else if ($empty && empty($_GET[$field])) return FALSE;
 		else return $this->check_field($_GET[$field], $regexp, $not_zero);
 	}
 
 	/// Функция проверки данных, переданных через $_SESSION[]
 	/**
-	* @param $field является текстовой переменной и указывает на имя элемента массива $_SESSION[] (обязательное поле)
-	* @param $isset указывает, проверять ли функции наличие $_SESSION[$field] через isset() (по-умолчанию False - не проверять)
-	* @param $empty указывает, проверять ли функции, что $_SESSION[$field] не является пустым (по-умолчанию False - не проверять)
-	* @param $regexp указывает, проверять ли функции, что $_SESSION[$field] соответствует регулярному выражению (по-умолчанию False - не проверять)
-	* @param $not_zero указывает, проверять ли функции, что $_SESSION[$field] не равно нулю (по-умолчанию False - не проверять)
-	* @return False, если $_SESSION[$field] не соотвествует заданному набору параметров, иначе True.
-	* @see work::check_field
-	*/
-	function check_session($field, $isset = false, $empty = false, $regexp = false, $not_zero = false)
+	 * @param $field    является текстовой переменной и указывает на имя элемента массива $_SESSION[] (обязательное поле)
+	 * @param $isset    указывает, проверять ли функции наличие $_SESSION[$field] через isset() (по-умолчанию False - не проверять)
+	 * @param $empty    указывает, проверять ли функции, что $_SESSION[$field] не является пустым (по-умолчанию False - не проверять)
+	 * @param $regexp   указывает, проверять ли функции, что $_SESSION[$field] соответствует регулярному выражению (по-умолчанию False - не проверять)
+	 * @param $not_zero указывает, проверять ли функции, что $_SESSION[$field] не равно нулю (по-умолчанию False - не проверять)
+	 * @return False, если $_SESSION[$field] не соотвествует заданному набору параметров, иначе True.
+	 * @see work::check_field
+	 */
+	function check_session($field, $isset = FALSE, $empty = FALSE, $regexp = FALSE, $not_zero = FALSE)
 	{
-		if ($isset && !isset($_SESSION[$field])) return false;
-		else if ($empty && empty($_SESSION[$field])) return false;
+		if ($isset && !isset($_SESSION[$field])) return FALSE;
+		else if ($empty && empty($_SESSION[$field])) return FALSE;
 		else return $this->check_field($_SESSION[$field], $regexp, $not_zero);
 	}
 
 	/// Функция проверки содержимого на соотвествие регулярному выражению
 	/**
-	* @param $field содержит значение, которое надо проверить (обязательное поле)
-	* @param $regexp указывает, проверять ли функции, что $field соответствует регулярному выражению (по-умолчанию False - не проверять)
-	* @param $not_zero указывает, проверять ли функции, что $field не равно нулю (по-умолчанию False - не проверять)
-	* @return False, если $field не соотвествует заданному набору параметров, иначе True.
-	* @see work::check_get, work::check_post, work::check_session
-	*/
-	function check_field($field, $regexp = false, $not_zero = false)
+	 * @param $field    содержит значение, которое надо проверить (обязательное поле)
+	 * @param $regexp   указывает, проверять ли функции, что $field соответствует регулярному выражению (по-умолчанию False - не проверять)
+	 * @param $not_zero указывает, проверять ли функции, что $field не равно нулю (по-умолчанию False - не проверять)
+	 * @return False, если $field не соотвествует заданному набору параметров, иначе True.
+	 * @see work::check_get, work::check_post, work::check_session
+	 */
+	function check_field($field, $regexp = FALSE, $not_zero = FALSE)
 	{
-		if (empty($field) && $regexp === false)
+		if (empty($field) && $regexp === FALSE)
 		{
-			return true;
+			return TRUE;
 		}
-		$test = true;
+		$test = TRUE;
 		$field_lower = strtolower($field);
 		foreach ($this->array_rules as $rules)
 		{
@@ -153,23 +153,23 @@ class work
 			$field_lower = mb_convert_encoding($field_lower, 'UTF-8', 'auto');
 			if (mb_ereg(quotemeta($rules), $field_lower))
 			{
-				$test = false;
+				$test = FALSE;
 			}
 		}
 		if ($regexp)
 		{
 			$field = mb_convert_encoding($field, 'UTF-8', 'auto');
-			if (mb_ereg($regexp, $field)) $test = false;
+			if (mb_ereg($regexp, $field)) $test = FALSE;
 		}
-		if ($not_zero && $field === 0) $test = false;
+		if ($not_zero && $field === 0) $test = FALSE;
 		return $test;
 	}
 
 	/// Функция очистки строки от HTML-тегов и замены специальных символов HTML
 	/**
-	* @param $field содержит значение, которое надо обработать (обязательное поле).
-	* @return Строку, обработанную функциями strip_tags и htmlspecialchars.
-	*/
+	 * @param $field содержит значение, которое надо обработать (обязательное поле).
+	 * @return Строку, обработанную функциями strip_tags и htmlspecialchars.
+	 */
 	function clean_field($field)
 	{
 		$field = strip_tags($field);
@@ -179,19 +179,19 @@ class work
 
 	/// Функция разбивки строки на несколько строк ограниченной длины (на практике пока не проверил)
 	/**
-	* @param $str содержит строку, которую надо обработать (обязательное поле)
-	* @param $width содержит максимально допустимую длину строки на выходе (по-умолчанию 70 символов)
-	* @param $break содержит символ, используемый как разделитель строк (по-умолчанию PHP_EOL)
-	* @return Строку, разбитую на несколько с указанной максимальной длиной и указанным разделителем.
-	*/
+	 * @param $str   содержит строку, которую надо обработать (обязательное поле)
+	 * @param $width содержит максимально допустимую длину строки на выходе (по-умолчанию 70 символов)
+	 * @param $break содержит символ, используемый как разделитель строк (по-умолчанию PHP_EOL)
+	 * @return Строку, разбитую на несколько с указанной максимальной длиной и указанным разделителем.
+	 */
 	function utf8_wordwrap($str, $width = 70, $break = PHP_EOL)
 	{
 		if (empty($str) || mb_strlen($str, 'UTF-8') <= $width)
-		return $str;
+			return $str;
 		$br_width = mb_strlen($break, 'UTF-8');
 		$str_width = mb_strlen($str, 'UTF-8');
 		$return = '';
-		$last_space = false;
+		$last_space = FALSE;
 		for ($i = 0, $count = 0; $i < $str_width; $i++, $count++)
 		{
 			if (mb_substr($str, $i, $br_width, 'UTF-8') == $break)
@@ -221,7 +221,7 @@ class work
 					}
 					$return .= $break;
 					$i = $last_space + ($br_width - 1);
-					$last_space = false;
+					$last_space = FALSE;
 					$count = 0;
 				}
 			}
@@ -232,15 +232,15 @@ class work
 
 	/// Функция получения списка доступных языков на сервере
 	/**
-	* @return Массив, содержащий данные о доступных на сервере языках, с локализованным выводом названий языков.
-	*/
+	 * @return Массив, содержащий данные о доступных на сервере языках, с локализованным выводом названий языков.
+	 */
 	function get_languages()
 	{
 		$list_languages = array();
 		$i = 0;
 		if ($dh = opendir($this->config['site_dir'] . 'language/'))
 		{
-			while (($file = readdir($dh)) !== false)
+			while (($file = readdir($dh)) !== FALSE)
 			{
 				if (is_dir($this->config['site_dir'] . 'language/' . $file) && $file != '..' && $file != '.')
 				{
@@ -257,15 +257,15 @@ class work
 
 	/// Функция получения списка доступных тем оформления на сервере
 	/**
-	* @return Массив, содержащий данные о доступных на сервере темах оформления.
-	*/
+	 * @return Массив, содержащий данные о доступных на сервере темах оформления.
+	 */
 	function get_themes()
 	{
 		$list_themes = array();
 		$i = 0;
 		if ($dh = opendir($this->config['site_dir'] . 'themes/'))
 		{
-			while (($file = readdir($dh)) !== false)
+			while (($file = readdir($dh)) !== FALSE)
 			{
 				if (is_dir($this->config['site_dir'] . 'themes/' . $file) && $file != '..' && $file != '.' && !preg_match("/^s([0-9]+)$/i", $file))
 				{
@@ -280,8 +280,8 @@ class work
 
 	/// Функция, генерирующая анти-спам-бот вопрос и ответ
 	/**
-	* @return Массив, содержащий в элементе question сам вопрос и в элементе answer - ответ на него.
-	*/
+	 * @return Массив, содержащий в элементе question сам вопрос и в элементе answer - ответ на него.
+	 */
 	function gen_captcha()
 	{
 		$captcha = array();
@@ -321,9 +321,9 @@ class work
 
 	/// Функция обработки email-адреса
 	/**
-	* @param $email содержит email-адрес для обработки (обязательный параметр)
-	* @return Email-адрес, в котором '@' заменено на '[at]' и '.' - на '[dot]'.
-	*/
+	 * @param $email содержит email-адрес для обработки (обязательный параметр)
+	 * @return Email-адрес, в котором '@' заменено на '[at]' и '.' - на '[dot]'.
+	 */
 	function filt_email($email)
 	{
 		$email = str_replace('@', '[at]', $email);
@@ -333,11 +333,11 @@ class work
 
 	/// Функция формирует информационную строку по конктретному разделу
 	/**
-	* @param $cat_id содержит идентификатор раздела или, если $user_flag = 1,то идентификатор пользователя
-	* @param $user_flag флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1)
-	* @return Информационная строка по конктретному разделу.
-	* @see db, $lang, user
-	*/
+	 * @param $cat_id    содержит идентификатор раздела или, если $user_flag = 1,то идентификатор пользователя
+	 * @param $user_flag флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1)
+	 * @return Информационная строка по конктретному разделу.
+	 * @see    db, $lang, user
+	 */
 	function category($cat_id = 0, $user_flag = 0)
 	{
 		global $db, $lang, $user, $template;
@@ -384,17 +384,17 @@ class work
 			$temp_photo = $db->res_row();
 			if ($temp_photo)
 			{
-				if ($db->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query, array('date_upload' => 'down'), false, 1)) $temp_last = $db->res_row();
+				if ($db->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query, array('date_upload' => 'down'), FALSE, 1)) $temp_last = $db->res_row();
 				else log_in_file($db->error, DIE_IF_ERROR);
-				if ($db->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query . ' AND `rate_user` != 0', array('rate_user' => 'down'), false, 1)) $temp_top = $db->res_row();
+				if ($db->select(array('id', 'name', 'description'), TBL_PHOTO, '`category` = ' . $temp['id'] . $add_query . ' AND `rate_user` != 0', array('rate_user' => 'down'), FALSE, 1)) $temp_top = $db->res_row();
 				else log_in_file($db->error, DIE_IF_ERROR);
 				$photo['count'] = $temp_photo['num_photo'];
 			}
 			else
 			{
-				$temp_photo = false;
-				$temp_last = false;
-				$temp_top = false;
+				$temp_photo = FALSE;
+				$temp_last = FALSE;
+				$temp_top = FALSE;
 				$photo['count'] = 0;
 			}
 		}
@@ -404,7 +404,7 @@ class work
 		$photo['last_url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
 		$photo['top_name'] = $lang['main']['no_foto'];
 		$photo['top_url'] = $this->config['site_url'] . '?action=photo&amp;id=0';
-		if ($user->user['pic_view'] == true)
+		if ($user->user['pic_view'] == TRUE)
 		{
 			if ($temp_last)
 			{
@@ -431,26 +431,26 @@ class work
 		}
 
 		if ($user_flag == 1) $temp['id'] = 'user&amp;id=' . $cat_id;
-		
+
 		$category = array(
-			'name' => $temp['name'],
-			'description' => $temp['description'],
-			'count_photo' => $photo['count'],
-			'last_photo' => $photo['last_name'],
-			'top_photo' => $photo['top_name'],
-			'url_cat' => $this->config['site_url'] . '?action=category&amp;cat=' . $temp['id'],
+			'name'           => $temp['name'],
+			'description'    => $temp['description'],
+			'count_photo'    => $photo['count'],
+			'last_photo'     => $photo['last_name'],
+			'top_photo'      => $photo['top_name'],
+			'url_cat'        => $this->config['site_url'] . '?action=category&amp;cat=' . $temp['id'],
 			'url_last_photo' => $photo['last_url'],
-			'url_top_photo' => $photo['top_url']
+			'url_top_photo'  => $photo['top_url']
 		);
 		return $category;
 	}
 
 	/// Функция удаляет изображение с полученным идентификатором, а так же все упоминания об этом изображении в таблицах сайта, удаляет файл в каталогах как полноразмерных изображений, так и в каталогах эскизов
 	/**
-	* @param $photo_id содержит идентификатор удаляемого изображения (обязательное поле).
-	* @return True если удалось удалить, иначе False.
-	* @see db
-	*/
+	 * @param $photo_id содержит идентификатор удаляемого изображения (обязательное поле).
+	 * @return True если удалось удалить, иначе False.
+	 * @see db
+	 */
 	function del_photo($photo_id)
 	{
 		global $db;
@@ -477,7 +477,7 @@ class work
 									@unlink($path_photo);
 									if (!$db->delete(TBL_RATE_USER, '`id_foto` = ' . $photo_id)) log_in_file($db->error, DIE_IF_ERROR);
 									if (!$db->delete(TBL_RATE_MODER, '`id_foto` = ' . $photo_id)) log_in_file($db->error, DIE_IF_ERROR);
-									return true;
+									return TRUE;
 								}
 							}
 							else log_in_file($db->error, DIE_IF_ERROR);
@@ -488,19 +488,19 @@ class work
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
-		return false;
+		return FALSE;
 	}
 
 	/// Функция преобразует полученное значение в байты - используется для преобразования значений типа 2M(егабайта) в размер в байтах
 	/**
-	* @param $val текстовое значение размера, например 2M (обязательное поле).
-	* @return Полученное значение в байтах.
-	*/
+	 * @param $val текстовое значение размера, например 2M (обязательное поле).
+	 * @return Полученное значение в байтах.
+	 */
 	function return_bytes($val)
 	{
 		$val = trim($val);
-		$last = strtolower($val[strlen($val)-1]);
-		switch($last)
+		$last = strtolower($val[strlen($val) - 1]);
+		switch ($last)
 		{
 			case 'g':
 				$val *= 1024;
@@ -514,47 +514,47 @@ class work
 
 	/// Функция преобразует полученную строку в транслит (в случае использования русских букв) и заменяет все использованный знаки пунктуации - символом "_" (подчеркивания)
 	/**
-	* @param $string строка для перекодировки (обязательное поле).
-	* @return Перекодированная строка.
-	*/
+	 * @param $string строка для перекодировки (обязательное поле).
+	 * @return Перекодированная строка.
+	 */
 	function encodename($string)
 	{
 		$table = array(
-				'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G',
-				'Д' => 'D', 'Е' => 'E', 'Ё' => 'YO', 'Ж' => 'ZH',
-				'З' => 'Z', 'И' => 'I', 'Й' => 'J', 'К' => 'K',
-				'Л' => 'L', 'М' => 'M', 'Н' => 'N', 'О' => 'O',
-				'П' => 'P', 'Р' => 'R', 'С' => 'S', 'Т' => 'T',
-				'У' => 'U', 'Ф' => 'F', 'Х' => 'H', 'Ц' => 'C',
-				'Ч' => 'CH', 'Ш' => 'SH', 'Щ' => 'CSH', 'Ь' => '',
-				'Ы' => 'Y', 'Ъ' => '', 'Э' => 'E', 'Ю' => 'YU',
-				'Я' => 'YA', 'а' => 'a', 'б' => 'b', 'в' => 'v',
-				'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo',
-				'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'j',
-				'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n',
-				'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's',
-				'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h',
-				'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'csh',
-				'ь' => '', 'ы' => 'y', 'ъ' => '', 'э' => 'e',
-				'ю' => 'yu', 'я' => 'ya'
+			'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G',
+			'Д' => 'D', 'Е' => 'E', 'Ё' => 'YO', 'Ж' => 'ZH',
+			'З' => 'Z', 'И' => 'I', 'Й' => 'J', 'К' => 'K',
+			'Л' => 'L', 'М' => 'M', 'Н' => 'N', 'О' => 'O',
+			'П' => 'P', 'Р' => 'R', 'С' => 'S', 'Т' => 'T',
+			'У' => 'U', 'Ф' => 'F', 'Х' => 'H', 'Ц' => 'C',
+			'Ч' => 'CH', 'Ш' => 'SH', 'Щ' => 'CSH', 'Ь' => '',
+			'Ы' => 'Y', 'Ъ' => '', 'Э' => 'E', 'Ю' => 'YU',
+			'Я' => 'YA', 'а' => 'a', 'б' => 'b', 'в' => 'v',
+			'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo',
+			'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'j',
+			'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n',
+			'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's',
+			'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h',
+			'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'csh',
+			'ь' => '', 'ы' => 'y', 'ъ' => '', 'э' => 'e',
+			'ю' => 'yu', 'я' => 'ya'
 		);
 
 		$string = str_replace(array_keys($table), array_values($table), $string);
 
-		$string=strtr($string,'"', '_');
-		$string=strtr($string,"-!#$%&'()*+,./:;<=>?@[\]`{|}~", "_____________________________");
+		$string = strtr($string, '"', '_');
+		$string = strtr($string, "-!#$%&'()*+,./:;<=>?@[\]`{|}~", "_____________________________");
 
 		return $string;
 	}
 
 	/// Функция формирует вывод новостей сайта
 	/**
-	* @param $news_data сожержит идентификатор новости (если $act = 'id') или количество выводимых новостей (если $act = 'last')
-	* @param $act если $act = 'last', то выводим последнии новости сайта, иначе если $act = 'id', то выводим новость с указанным идентификатором
-	* @return Подготовленный блок новостей
-	* @see db
-	*/
-	function news($news_data = 1, $act='last')
+	 * @param $news_data сожержит идентификатор новости (если $act = 'id') или количество выводимых новостей (если $act = 'last')
+	 * @param $act       если $act = 'last', то выводим последнии новости сайта, иначе если $act = 'id', то выводим новость с указанным идентификатором
+	 * @return Подготовленный блок новостей
+	 * @see    db
+	 */
+	function news($news_data = 1, $act = 'last')
 	{
 		global $db;
 
@@ -565,7 +565,7 @@ class work
 		}
 		else
 		{
-			if ($db->select('*', TBL_NEWS, false, array('data_last_edit' => 'down'), false, $news_data)) $temp_news = $db->res_arr();
+			if ($db->select('*', TBL_NEWS, FALSE, array('data_last_edit' => 'down'), FALSE, $news_data)) $temp_news = $db->res_arr();
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		return $temp_news;
@@ -573,11 +573,11 @@ class work
 
 	/// Функция генерирует меню
 	/**
-	* @param $action содержит пункт меню, который является активным
-	* @param $menu если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню
-	* @return Сформированный массив меню
-	* @see db, $lang, user, work::clean_field
-	*/
+	 * @param $action содержит пункт меню, который является активным
+	 * @param $menu   если равно 0 - создает горизонтальное краткое меню, если 1- вертикальное боковое меню
+	 * @return Сформированный массив меню
+	 * @see    db, $lang, user, work::clean_field
+	 */
 	function create_menu($action = 'main', $menu = 0)
 	{
 		global $db, $lang, $user;
@@ -593,20 +593,20 @@ class work
 			{
 				foreach ($temp_menu as $key => $val)
 				{
-					$visible = true;
+					$visible = TRUE;
 
 					if ($val['user_login'] != '')
 					{
-						if ($val['user_login'] == 0 && $user->user['id'] > 0) $visible = false;
-						if ($val['user_login'] == 1 && $user->user['id'] == 0) $visible = false;
+						if ($val['user_login'] == 0 && $user->user['id'] > 0) $visible = FALSE;
+						if ($val['user_login'] == 1 && $user->user['id'] == 0) $visible = FALSE;
 					}
-					if ($val['user_access'] != '') if ($user->user[$val['user_access']] != 1) $visible = false;
+					if ($val['user_access'] != '') if ($user->user[$val['user_access']] != 1) $visible = FALSE;
 
 					if ($visible)
 					{
 						$array_menu[$key] = array(
-								'url' => ($val['action'] == $action ? NULL : $this->config['site_url'] . $this->clean_field($val['url_action'])),
-								'name' => (isset($lang['menu'][$this->clean_field($val['name_action'])]) ? $lang['menu'][$this->clean_field($val['name_action'])] : ucfirst($this->clean_field($val['name_action'])))
+							'url'  => ($val['action'] == $action ? NULL : $this->config['site_url'] . $this->clean_field($val['url_action'])),
+							'name' => (isset($lang['menu'][$this->clean_field($val['name_action'])]) ? $lang['menu'][$this->clean_field($val['name_action'])] : ucfirst($this->clean_field($val['name_action'])))
 						);
 					}
 				}
@@ -620,20 +620,20 @@ class work
 
 	/// Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения
 	/**
-	* @param $type если значение равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение
-	* @param $id_photo если $type равно 'cat' - выводит фото с указанным идентификатором
-	* @return Сформированный массив для вывода изображения
-	* @see db, $lang, user, work::size_image, work::clean_field
-	*/
+	 * @param $type     если значение равно 'top' - вывести лучшее фото по оценкам пользователя, если 'last' - последнее добавленое фото, если 'cat' - вывести фото, указанное в $id_photo, если не равно пустому - вывести случайное изображение
+	 * @param $id_photo если $type равно 'cat' - выводит фото с указанным идентификатором
+	 * @return Сформированный массив для вывода изображения
+	 * @see    db, $lang, user, work::size_image, work::clean_field
+	 */
 	function create_photo($type = 'top', $id_photo = 0)
 	{
 		global $db, $lang, $user;
 
-		if ($user->user['pic_view'] == true)
+		if ($user->user['pic_view'] == TRUE)
 		{
-			$where = false;
-			$order = false;
-			$limit = false;
+			$where = FALSE;
+			$order = FALSE;
+			$limit = FALSE;
 			if ($type == 'top')
 			{
 				$where = '`rate_user` != 0';
@@ -651,12 +651,12 @@ class work
 				$order = 'rand()';
 				$limit = 1;
 			}
-			if ($db->select('*', TBL_PHOTO, $where, $order, false, $limit)) $temp_photo = $db->res_row();
+			if ($db->select('*', TBL_PHOTO, $where, $order, FALSE, $limit)) $temp_photo = $db->res_row();
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 		else
 		{
-			$temp_photo = false;
+			$temp_photo = FALSE;
 		}
 
 		$photo['name_block'] = $lang['main'][$type . '_foto'];
@@ -682,7 +682,7 @@ class work
 						$user_add = $db->res_row();
 						if ($user_add)
 						{
-							$photo['url_user'] = $this->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $temp_photo['user_upload'];
+							$photo['url_user'] = $this->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $temp_photo['user_upload'];
 							$photo['real_name'] = $this->clean_field($user_add['real_name']);
 						}
 						else
@@ -758,17 +758,17 @@ class work
 
 	/// Функция вычисляет необходимый размер для вывода эскиза изображения
 	/**
-	* @param $path_image содержит путь к файлу изображения
-	* @return Массив с шириной и высотой изображения для вывода
-	* @see db, $lang, user, work::create_photo
-	*/
+	 * @param $path_image содержит путь к файлу изображения
+	 * @return Массив с шириной и высотой изображения для вывода
+	 * @see    db, $lang, user, work::create_photo
+	 */
 	function size_image($path_image)
 	{
 		$size = getimagesize($path_image);
 		if ($this->config['temp_photo_w'] == '0') $ratio_width = 1;
-		else $ratio_width = $size[0]/$this->config['temp_photo_w'];
+		else $ratio_width = $size[0] / $this->config['temp_photo_w'];
 		if ($this->config['temp_photo_h'] == '0') $ratio_height = 1;
-		else $ratio_height = $size[1]/$this->config['temp_photo_h'];
+		else $ratio_height = $size[1] / $this->config['temp_photo_h'];
 
 		if ($size[0] < $this->config['temp_photo_w'] && $size[1] < $this->config['temp_photo_h'] && $this->config['temp_photo_w'] != '0' && $this->config['temp_photo_h'] != '0')
 		{
@@ -779,13 +779,13 @@ class work
 		{
 			if ($ratio_width < $ratio_height)
 			{
-				$size_photo['width'] = $size[0]/$ratio_height;
-				$size_photo['height'] = $size[1]/$ratio_height;
+				$size_photo['width'] = $size[0] / $ratio_height;
+				$size_photo['height'] = $size[1] / $ratio_height;
 			}
 			else
 			{
-				$size_photo['width'] = $size[0]/$ratio_width;
-				$size_photo['height'] = $size[1]/$ratio_width;
+				$size_photo['width'] = $size[0] / $ratio_width;
+				$size_photo['height'] = $size[1] / $ratio_width;
 			}
 		}
 		return $size_photo;
@@ -793,9 +793,9 @@ class work
 
 	/// Функция формирует блок для входа пользователя (если в режиме "Гость") или краткий вид информации о пользователе
 	/**
-	* @return Сформированный массив блока пользователя
-	* @see user, $lang, work::clean_field
-	*/
+	 * @return Сформированный массив блока пользователя
+	 * @see    user, $lang, work::clean_field
+	 */
 	function template_user()
 	{
 		global $lang, $user;
@@ -805,25 +805,25 @@ class work
 		if ($_SESSION['login_id'] == 0)
 		{
 			$array_data = array(
-					'NAME_BLOCK' => $lang['main']['user_block'],
-					'L_LOGIN' => $lang['main']['login'],
-					'L_PASSWORD' => $lang['main']['pass'],
-					'L_ENTER' => $lang['main']['enter'],
-					'L_FORGOT_PASSWORD' => $lang['main']['forgot_password'],
-					'L_REGISTRATION' => $lang['main']['registration'],
-					'U_LOGIN' => $this->config['site_url'] . '?action=profile&amp;subact=login',
-					'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=profile&amp;subact=forgot',
-					'U_REGISTRATION' => $this->config['site_url'] . '?action=profile&amp;subact=regist'
+				'NAME_BLOCK'        => $lang['main']['user_block'],
+				'L_LOGIN'           => $lang['main']['login'],
+				'L_PASSWORD'        => $lang['main']['pass'],
+				'L_ENTER'           => $lang['main']['enter'],
+				'L_FORGOT_PASSWORD' => $lang['main']['forgot_password'],
+				'L_REGISTRATION'    => $lang['main']['registration'],
+				'U_LOGIN'           => $this->config['site_url'] . '?action=profile&amp;subact=login',
+				'U_FORGOT_PASSWORD' => $this->config['site_url'] . '?action=profile&amp;subact=forgot',
+				'U_REGISTRATION'    => $this->config['site_url'] . '?action=profile&amp;subact=regist'
 			);
 			return $array_data;
 		}
 		else
 		{
 			$array_data = array(
-					'NAME_BLOCK' => $lang['main']['user_block'],
-					'L_HI_USER' => $lang['main']['hi_user'] . ', ' . $this->clean_field($user->user['real_name']),
-					'L_GROUP' => $lang['main']['group'] . ': ' . $user->user['group'],
-					'U_AVATAR' => $this->config['site_url'] . $this->config['avatar_folder'] . '/' . $user->user['avatar']
+				'NAME_BLOCK' => $lang['main']['user_block'],
+				'L_HI_USER'  => $lang['main']['hi_user'] . ', ' . $this->clean_field($user->user['real_name']),
+				'L_GROUP'    => $lang['main']['group'] . ': ' . $user->user['group'],
+				'U_AVATAR'   => $this->config['site_url'] . $this->config['avatar_folder'] . '/' . $user->user['avatar']
 			);
 			return $array_data;
 		}
@@ -831,9 +831,9 @@ class work
 
 	/// Функция формирует блок статистики для сайта
 	/**
-	* @return Сформированный массив блока статистики
-	* @see db, $lang, work::clean_field
-	*/
+	 * @return Сформированный массив блока статистики
+	 * @see    db, $lang, work::clean_field
+	 */
 	function template_stat()
 	{
 		global $db, $lang;
@@ -909,10 +909,10 @@ class work
 			$temp = $db->res_arr();
 			if ($temp)
 			{
-				$stat['online'] ='';
+				$stat['online'] = '';
 				foreach ($temp as $val)
 				{
-					$stat['online'] .= ', <a href="' . $this->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $val['id'] . '" title="' . $this->clean_field($val['real_name']) . '">' . $this->clean_field($val['real_name']) . '</a>';
+					$stat['online'] .= ', <a href="' . $this->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $val['id'] . '" title="' . $this->clean_field($val['real_name']) . '">' . $this->clean_field($val['real_name']) . '</a>';
 				}
 				$stat['online'] = substr($stat['online'], 2) . '.';
 			}
@@ -923,24 +923,24 @@ class work
 		$array_data = array();
 
 		$array_data = array(
-				'NAME_BLOCK' => $lang['main']['stat_title'],
-				'L_STAT_REGIST' => $lang['main']['stat_regist'],
-				'L_STAT_PHOTO' => $lang['main']['stat_photo'],
-				'L_STAT_CATEGORY' => $lang['main']['stat_category'],
-				'L_STAT_USER_ADMIN' => $lang['main']['stat_user_admin'],
-				'L_STAT_USER_MODER' => $lang['main']['stat_user_moder'],
-				'L_STAT_RATE_USER' => $lang['main']['stat_rate_user'],
-				'L_STAT_RATE_MODER' => $lang['main']['stat_rate_moder'],
-				'L_STAT_ONLINE' => $lang['main']['stat_online'],
+			'NAME_BLOCK'        => $lang['main']['stat_title'],
+			'L_STAT_REGIST'     => $lang['main']['stat_regist'],
+			'L_STAT_PHOTO'      => $lang['main']['stat_photo'],
+			'L_STAT_CATEGORY'   => $lang['main']['stat_category'],
+			'L_STAT_USER_ADMIN' => $lang['main']['stat_user_admin'],
+			'L_STAT_USER_MODER' => $lang['main']['stat_user_moder'],
+			'L_STAT_RATE_USER'  => $lang['main']['stat_rate_user'],
+			'L_STAT_RATE_MODER' => $lang['main']['stat_rate_moder'],
+			'L_STAT_ONLINE'     => $lang['main']['stat_online'],
 
-				'D_STAT_REGIST' => $stat['regist'],
-				'D_STAT_PHOTO' => $stat['photo'],
-				'D_STAT_CATEGORY' => $stat['category'] . '(' . $stat['category_user'] . ')',
-				'D_STAT_USER_ADMIN' => $stat['user_admin'],
-				'D_STAT_USER_MODER' => $stat['user_moder'],
-				'D_STAT_RATE_USER' => $stat['rate_user'],
-				'D_STAT_RATE_MODER' => $stat['rate_moder'],
-				'D_STAT_ONLINE' => $stat['online']
+			'D_STAT_REGIST'     => $stat['regist'],
+			'D_STAT_PHOTO'      => $stat['photo'],
+			'D_STAT_CATEGORY'   => $stat['category'] . '(' . $stat['category_user'] . ')',
+			'D_STAT_USER_ADMIN' => $stat['user_admin'],
+			'D_STAT_USER_MODER' => $stat['user_moder'],
+			'D_STAT_RATE_USER'  => $stat['rate_user'],
+			'D_STAT_RATE_MODER' => $stat['rate_moder'],
+			'D_STAT_ONLINE'     => $stat['online']
 		);
 
 		return $array_data;
@@ -948,10 +948,10 @@ class work
 
 	/// Функция формирует список из пользователей, заливших максимальное кол-во изображений
 	/**
-	* @param $best_user сожержит указатель, сколько выводить лучших пользователей
-	* @return Сформированный массив блока лучших пользователей
-	* @see db, $lang, work::clean_field
-	*/
+	 * @param $best_user сожержит указатель, сколько выводить лучших пользователей
+	 * @return Сформированный массив блока лучших пользователей
+	 * @see    db, $lang, work::clean_field
+	 */
 	function template_best_user($best_user = 1)
 	{
 		global $db, $lang;
@@ -991,9 +991,9 @@ class work
 					{
 						$temp2 = $db->res_row();
 						$array_data[$idx] = array(
-								'user_url' => $this->config['site_url']  . '?action=profile&amp;subact=profile&amp;uid=' . $best_user_name,
-								'user_name' => $this->clean_field($temp2['real_name']),
-								'user_photo' => $best_user_photo
+							'user_url'   => $this->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $best_user_name,
+							'user_name'  => $this->clean_field($temp2['real_name']),
+							'user_photo' => $best_user_photo
 						);
 						$idx++;
 					}
@@ -1003,8 +1003,8 @@ class work
 			else
 			{
 				$array_data[1] = array(
-					'user_url' => NULL,
-					'user_name' => '---',
+					'user_url'   => NULL,
+					'user_name'  => '---',
 					'user_photo' => '-'
 				);
 			}
@@ -1012,9 +1012,9 @@ class work
 		else log_in_file($db->error, DIE_IF_ERROR);
 
 		$array_data[0] = array(
-				'NAME_BLOCK' => sprintf($lang['main']['best_user'], $best_user),
-				'L_USER_NAME' => $lang['main']['user_name'],
-				'L_USER_PHOTO' => $lang['main']['best_user_photo'],
+			'NAME_BLOCK'   => sprintf($lang['main']['best_user'], $best_user),
+			'L_USER_NAME'  => $lang['main']['user_name'],
+			'L_USER_PHOTO' => $lang['main']['best_user_photo'],
 		);
 
 		return $array_data;
@@ -1022,10 +1022,10 @@ class work
 
 	/// Функция преобразует BBCode в HTML-код (например в тексте новостей)
 	/**
-	* @param $text сожержит текст, в котором необходимо произвести парсинг BBCode
-	* @return текст, где BBCode заменены на соотвествующие HTML-теги
-	* @see work::clean_field
-	*/
+	 * @param $text сожержит текст, в котором необходимо произвести парсинг BBCode
+	 * @return текст, где BBCode заменены на соотвествующие HTML-теги
+	 * @see    work::clean_field
+	 */
 	function ubb($text)
 	{
 		$text = $this->clean_field($text);
@@ -1046,8 +1046,8 @@ class work
 
 	/// Функция выводит массив данных для несуществующего фото
 	/**
-	* @return массив, содержащий наименование файла, полный путь к изображению и полный путь к эскизу
-	*/
+	 * @return массив, содержащий наименование файла, полный путь к изображению и полный путь к эскизу
+	 */
 	function no_photo()
 	{
 		$temp['file'] = 'no_foto.png';
@@ -1055,13 +1055,13 @@ class work
 		$temp['thumbnail_path'] = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp['file'];
 		return $temp;
 	}
-	
+
 	/// Функция преобразует изображение в эскиз, при этом проводится проверка - если эскиз уже существует и его размеры соотвествуют нстройкам, указанным в конфигурации сайта, то просто возвращает уведомление о том, что изображение преобразовано - не выполняя никаких операций
 	/**
-	* @param $full_path системный путь к изображению
-	* @param $thumbnail_path системный путь к эскизу
-	* @return True если удалось создать эскиз, иначе False
-	*/
+	 * @param $full_path      системный путь к изображению
+	 * @param $thumbnail_path системный путь к эскизу
+	 * @return True если удалось создать эскиз, иначе False
+	 */
 	function image_resize($full_path, $thumbnail_path)
 	{
 		$thumbnail_size = @getimagesize($thumbnail_path);
@@ -1069,9 +1069,9 @@ class work
 		$photo['type'] = $full_size[2];
 
 		if ($this->config['temp_photo_w'] == '0') $ratio_width = 1;
-		else $ratio_width = $full_size[0]/$this->config['temp_photo_w'];
+		else $ratio_width = $full_size[0] / $this->config['temp_photo_w'];
 		if ($this->config['temp_photo_h'] == '0') $ratio_height = 1;
-		else $ratio_height = $full_size[1]/$this->config['temp_photo_h'];
+		else $ratio_height = $full_size[1] / $this->config['temp_photo_h'];
 
 		if ($full_size[0] < $this->config['temp_photo_w'] && $full_size[1] < $this->config['temp_photo_h'] && $this->config['temp_photo_w'] != '0' && $this->config['temp_photo_h'] != '0')
 		{
@@ -1082,22 +1082,22 @@ class work
 		{
 			if ($ratio_width < $ratio_height)
 			{
-				$photo['width'] = (int)$full_size[0]/$ratio_height;
-				$photo['height'] = (int)$full_size[1]/$ratio_height;
+				$photo['width'] = (int)$full_size[0] / $ratio_height;
+				$photo['height'] = (int)$full_size[1] / $ratio_height;
 			}
 			else
 			{
-				$photo['width'] = (int)$full_size[0]/$ratio_width;
-				$photo['height'] = (int)$full_size[1]/$ratio_width;
+				$photo['width'] = (int)$full_size[0] / $ratio_width;
+				$photo['height'] = (int)$full_size[1] / $ratio_width;
 			}
 		}
 
 		if ($thumbnail_size[0] != $photo['width'] || $thumbnail_size[1] != $photo['height'])
 		{
-			switch($photo['type'])
+			switch ($photo['type'])
 			{
 				case "1":
-					$imorig = imagecreatefromgif ($full_path);
+					$imorig = imagecreatefromgif($full_path);
 					break;
 				case "2":
 					$imorig = imagecreatefromjpeg($full_path);
@@ -1109,14 +1109,14 @@ class work
 					$imorig = imagecreatefromjpeg($full_path);
 			}
 			$im = imagecreatetruecolor($photo['width'], $photo['height']);
-			if (imagecopyresampled($im, $imorig , 0, 0, 0, 0, $photo['width'], $photo['height'], $full_size[0], $full_size[1]))
+			if (imagecopyresampled($im, $imorig, 0, 0, 0, 0, $photo['width'], $photo['height'], $full_size[0], $full_size[1]))
 			{
 				@unlink($thumbnail_path);
 
-				switch($photo['type'])
+				switch ($photo['type'])
 				{
 					case "1":
-						imagegif ($im, $thumbnail_path);
+						imagegif($im, $thumbnail_path);
 						break;
 					case "2":
 						imagejpeg($im, $thumbnail_path);
@@ -1127,19 +1127,19 @@ class work
 					default:
 						imagejpeg($im, $thumbnail_path);
 				}
-				return true;
+				return TRUE;
 			}
-			return false;
+			return FALSE;
 		}
-		else return true;
+		else return TRUE;
 	}
 
 	/// Функция выводит изображение, скрывая путь к нему
 	/**
-	* @param $full_path системный путь к изображению
-	* @param $name_file имя файла
-	* @return Изображение
-	*/
+	 * @param $full_path системный путь к изображению
+	 * @param $name_file имя файла
+	 * @return Изображение
+	 */
 	function image_attach($full_path, $name_file)
 	{
 		$size = getimagesize($full_path);
@@ -1156,4 +1156,5 @@ class work
 		exit();
 	}
 }
+
 ?>

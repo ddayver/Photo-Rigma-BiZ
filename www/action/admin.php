@@ -1,14 +1,14 @@
 <?php
 /**
-* @file		action/admin.php
-* @brief	Администрирование сайта.
-* @author	Dark Dayver
-* @version	0.2.0
-* @date		28/03-2012
-* @details	Используется для управления настройками и пользователями галереи.
-*/
+ * @file        action/admin.php
+ * @brief       Администрирование сайта.
+ * @author      Dark Dayver
+ * @version     0.2.0
+ * @date        28/03-2012
+ * @details     Используется для управления настройками и пользователями галереи.
+ */
 /// @cond
-if (IN_GALLERY !== true)
+if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
@@ -20,12 +20,12 @@ if (IN_GALLERY !== true)
 /// @cond
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
-if ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== true) && $user->user['admin'] == true && isset($_POST['admin_password']) && !empty($_POST['admin_password']) && $user->user['password'] == md5($_POST['admin_password'])) // если не открыта сессия для Админа, пользователь имеет право на вход в Админку, был передан пароль для входа и пароль совпадает с паролем пользователя, то...
+if ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== TRUE) && $user->user['admin'] == TRUE && isset($_POST['admin_password']) && !empty($_POST['admin_password']) && $user->user['password'] == md5($_POST['admin_password'])) // если не открыта сессия для Админа, пользователь имеет право на вход в Админку, был передан пароль для входа и пароль совпадает с паролем пользователя, то...
 {
-	$_SESSION['admin_on'] = true; // открываем сессию для Админа
+	$_SESSION['admin_on'] = TRUE; // открываем сессию для Админа
 }
 
-if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->user['admin'] == true) // если открыта сессия для Админа и пользователь имеет права Админа, то...
+if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === TRUE && $user->user['admin'] == TRUE) // если открыта сессия для Админа и пользователь имеет права Админа, то...
 {
 	if (isset($_REQUEST['subact']) && $_REQUEST['subact'] == 'settings') // если была команда на общие настройки, то...
 	{
@@ -78,10 +78,10 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		}
 
 		$max_file_size = trim($work->config['max_file_size']); // удаляем пробельные символы в начале и конце строки
-		$max_file_size_letter = strtolower($max_file_size[strlen($max_file_size)-1]); // получаем последний символ строки и переводим его в нижний регистр
+		$max_file_size_letter = strtolower($max_file_size[strlen($max_file_size) - 1]); // получаем последний символ строки и переводим его в нижний регистр
 		if ($max_file_size_letter == 'k' || $max_file_size_letter == 'm' || $max_file_size_letter == 'g') // если последний символ является указателем на кило-, мега- или гиго-байты
 		{
-			$max_file_size = substr($max_file_size, 0, strlen($max_file_size)-1); // получаем все, кроме последнего символа строки
+			$max_file_size = substr($max_file_size, 0, strlen($max_file_size) - 1); // получаем все, кроме последнего символа строки
 		}
 		else // иначе
 		{
@@ -90,11 +90,12 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 
 		$language = '<select name="language">'; // открываем список доступных языков
 		$language_dir = dir($work->config['site_dir'] . '/language'); // проверяем допустимые для выбора языки
-		while (false !== ($entry = $language_dir->read())) // до тех пор, пока существуют файлы в папке
+		while (FALSE !== ($entry = $language_dir->read())) // до тех пор, пока существуют файлы в папке
 		{
-			if ($entry != '.' && $entry !='..' && is_dir($language_dir->path . '/' . $entry))
+			if ($entry != '.' && $entry != '..' && is_dir($language_dir->path . '/' . $entry))
 			{
-				if ($entry == $work->config['language']) $selected = ' selected'; else $selected = ''; // если очередной язык является текущим для сайта - помечаем его выбранным по-умолчанию
+				if ($entry == $work->config['language']) $selected = ' selected';
+				else $selected = ''; // если очередной язык является текущим для сайта - помечаем его выбранным по-умолчанию
 				$language .= '<option value="' . $entry . '"' . $selected . '>' . $entry . '</option>'; // наполняем список доступных языков
 			}
 		}
@@ -103,11 +104,12 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 
 		$themes = '<select name="themes">'; // открываем список доступных тем
 		$themes_dir = dir($work->config['site_dir'] . '/themes'); // проверяем допустимые для выбора темы
-		while (false !== ($entry = $themes_dir->read())) // до тех пор, пока существуют файлы в папке
+		while (FALSE !== ($entry = $themes_dir->read())) // до тех пор, пока существуют файлы в папке
 		{
-			if ($entry != '.' && $entry !='..' && is_dir($themes_dir->path . '/' . $entry))
+			if ($entry != '.' && $entry != '..' && is_dir($themes_dir->path . '/' . $entry))
 			{
-				if ($entry == $work->config['themes']) $selected = ' selected'; else $selected = ''; // если очередная тема является текущей для сайта - помечаем его выбранным по-умолчанию
+				if ($entry == $work->config['themes']) $selected = ' selected';
+				else $selected = ''; // если очередная тема является текущей для сайта - помечаем его выбранным по-умолчанию
 				$themes .= '<option value="' . $entry . '"' . $selected . '>' . $entry . '</option>'; // наполняем список доступных тем
 			}
 		}
@@ -117,78 +119,78 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$array_data = array(); // инициируем массив
 
 		$array_data = array(
-					'NAME_BLOCK' => $lang['admin']['title'] . ' - ' . $lang['admin']['settings'],
-					'L_MAIN_SETTINGS' => $lang['admin']['main_settings'],
-					'L_TITLE_NAME' => $lang['admin']['title_name'],
-					'L_TITLE_NAME_DESCRIPTION' => $lang['admin']['title_name_description'],
-					'L_TITLE_DESCRIPTION' => $lang['admin']['title_description'],
-					'L_TITLE_DESCRIPTION_DESCRIPTION' => $lang['admin']['title_description_description'],
-					'L_META_DESCRIPTION' => $lang['admin']['meta_description'],
-					'L_META_DESCRIPTION_DESCRIPTION' => $lang['admin']['meta_description_description'],
-					'L_META_KEYWORDS' => $lang['admin']['meta_keywords'],
-					'L_META_KEYWORDS_DESCRIPTION' => $lang['admin']['meta_keywords_description'],
-					'L_APPEARANCE_SETTINGS' => $lang['admin']['appearance_settings'],
-					'L_GAL_WIDTH' => $lang['admin']['gal_width'],
-					'L_GAL_WIDTH_DESCRIPTION' => $lang['admin']['gal_width_description'],
-					'L_LEFT_PANEL' => $lang['admin']['left_panel'],
-					'L_LEFT_PANEL_DESCRIPTION' => $lang['admin']['left_panel_description'],
-					'L_RIGHT_PANEL' => $lang['admin']['right_panel'],
-					'L_RIGHT_PANEL_DESCRIPTION' => $lang['admin']['right_panel_description'],
-					'L_LANGUAGE' => $lang['admin']['language'],
-					'L_LANGUAGE_DESCRIPTION' => $lang['admin']['language_description'],
-					'L_THEMES' => $lang['admin']['themes'],
-					'L_THEMES_DESCRIPTION' => $lang['admin']['themes_description'],
-					'L_SIZE_SETTINGS' => $lang['admin']['size_settings'],
-					'L_MAX_FILE_SIZE' => $lang['admin']['max_file_size'],
-					'L_MAX_FILE_SIZE_DESCRIPTION' => $lang['admin']['max_file_size_description'],
-					'L_MAX_PHOTO' => $lang['admin']['max_photo'],
-					'L_MAX_PHOTO_DESCRIPTION' => $lang['admin']['max_photo_description'],
-					'L_TEMP_PHOTO' => $lang['admin']['temp_photo'],
-					'L_TEMP_PHOTO_DESCRIPTION' => $lang['admin']['temp_photo_description'],
-					'L_MAX_AVATAR' => $lang['admin']['max_avatar'],
-					'L_MAX_AVATAR_DESCRIPTION' => $lang['admin']['max_avatar_description'],
-					'L_COPYRIGHT_SETTINGS' => $lang['admin']['copyright_settings'],
-					'L_COPYRIGHT_YEAR' => $lang['admin']['copyright_year'],
-					'L_COPYRIGHT_YEAR_DESCRIPTION' => $lang['admin']['copyright_year_description'],
-					'L_COPYRIGHT_TEXT' => $lang['admin']['copyright_text'],
-					'L_COPYRIGHT_TEXT_DESCRIPTION' => $lang['admin']['copyright_text_description'],
-					'L_COPYRIGHT_URL' => $lang['admin']['copyright_url'],
-					'L_COPYRIGHT_URL_DESCRIPTION' => $lang['admin']['copyright_url_description'],
-					'L_ADDITIONAL_SETTINGS' => $lang['admin']['additional_settings'],
-					'L_LAST_NEWS' => $lang['admin']['last_news'],
-					'L_LAST_NEWS_DESCRIPTION' => $lang['admin']['last_news_description'],
-					'L_BEST_USER' => $lang['admin']['best_user'],
-					'L_BEST_USER_DESCRIPTION' => $lang['admin']['best_user_description'],
-					'L_MAX_RATE' => $lang['admin']['max_rate'],
-					'L_MAX_RATE_DESCRIPTION' => $lang['admin']['max_rate_description'],
-					'L_SAVE_SETTINGS' => $lang['admin']['save_settings'],
+			'NAME_BLOCK'                      => $lang['admin']['title'] . ' - ' . $lang['admin']['settings'],
+			'L_MAIN_SETTINGS'                 => $lang['admin']['main_settings'],
+			'L_TITLE_NAME'                    => $lang['admin']['title_name'],
+			'L_TITLE_NAME_DESCRIPTION'        => $lang['admin']['title_name_description'],
+			'L_TITLE_DESCRIPTION'             => $lang['admin']['title_description'],
+			'L_TITLE_DESCRIPTION_DESCRIPTION' => $lang['admin']['title_description_description'],
+			'L_META_DESCRIPTION'              => $lang['admin']['meta_description'],
+			'L_META_DESCRIPTION_DESCRIPTION'  => $lang['admin']['meta_description_description'],
+			'L_META_KEYWORDS'                 => $lang['admin']['meta_keywords'],
+			'L_META_KEYWORDS_DESCRIPTION'     => $lang['admin']['meta_keywords_description'],
+			'L_APPEARANCE_SETTINGS'           => $lang['admin']['appearance_settings'],
+			'L_GAL_WIDTH'                     => $lang['admin']['gal_width'],
+			'L_GAL_WIDTH_DESCRIPTION'         => $lang['admin']['gal_width_description'],
+			'L_LEFT_PANEL'                    => $lang['admin']['left_panel'],
+			'L_LEFT_PANEL_DESCRIPTION'        => $lang['admin']['left_panel_description'],
+			'L_RIGHT_PANEL'                   => $lang['admin']['right_panel'],
+			'L_RIGHT_PANEL_DESCRIPTION'       => $lang['admin']['right_panel_description'],
+			'L_LANGUAGE'                      => $lang['admin']['language'],
+			'L_LANGUAGE_DESCRIPTION'          => $lang['admin']['language_description'],
+			'L_THEMES'                        => $lang['admin']['themes'],
+			'L_THEMES_DESCRIPTION'            => $lang['admin']['themes_description'],
+			'L_SIZE_SETTINGS'                 => $lang['admin']['size_settings'],
+			'L_MAX_FILE_SIZE'                 => $lang['admin']['max_file_size'],
+			'L_MAX_FILE_SIZE_DESCRIPTION'     => $lang['admin']['max_file_size_description'],
+			'L_MAX_PHOTO'                     => $lang['admin']['max_photo'],
+			'L_MAX_PHOTO_DESCRIPTION'         => $lang['admin']['max_photo_description'],
+			'L_TEMP_PHOTO'                    => $lang['admin']['temp_photo'],
+			'L_TEMP_PHOTO_DESCRIPTION'        => $lang['admin']['temp_photo_description'],
+			'L_MAX_AVATAR'                    => $lang['admin']['max_avatar'],
+			'L_MAX_AVATAR_DESCRIPTION'        => $lang['admin']['max_avatar_description'],
+			'L_COPYRIGHT_SETTINGS'            => $lang['admin']['copyright_settings'],
+			'L_COPYRIGHT_YEAR'                => $lang['admin']['copyright_year'],
+			'L_COPYRIGHT_YEAR_DESCRIPTION'    => $lang['admin']['copyright_year_description'],
+			'L_COPYRIGHT_TEXT'                => $lang['admin']['copyright_text'],
+			'L_COPYRIGHT_TEXT_DESCRIPTION'    => $lang['admin']['copyright_text_description'],
+			'L_COPYRIGHT_URL'                 => $lang['admin']['copyright_url'],
+			'L_COPYRIGHT_URL_DESCRIPTION'     => $lang['admin']['copyright_url_description'],
+			'L_ADDITIONAL_SETTINGS'           => $lang['admin']['additional_settings'],
+			'L_LAST_NEWS'                     => $lang['admin']['last_news'],
+			'L_LAST_NEWS_DESCRIPTION'         => $lang['admin']['last_news_description'],
+			'L_BEST_USER'                     => $lang['admin']['best_user'],
+			'L_BEST_USER_DESCRIPTION'         => $lang['admin']['best_user_description'],
+			'L_MAX_RATE'                      => $lang['admin']['max_rate'],
+			'L_MAX_RATE_DESCRIPTION'          => $lang['admin']['max_rate_description'],
+			'L_SAVE_SETTINGS'                 => $lang['admin']['save_settings'],
 
-					'D_TITLE_NAME' => $work->config['title_name'],
-					'D_TITLE_DESCRIPTION' => $work->config['title_description'],
-					'D_META_DESCRIPTION' => $work->config['meta_description'],
-					'D_META_KEYWORDS' => $work->config['meta_keywords'],
-					'D_GAL_WIDTH' => $work->config['gal_width'],
-					'D_LEFT_PANEL' => $work->config['left_panel'],
-					'D_RIGHT_PANEL' => $work->config['right_panel'],
-					'D_LANGUAGE' => $language,
-					'D_THEMES' => $themes,
-					'D_MAX_FILE_SIZE' => $max_file_size,
-					'D_SEL_B' => $max_file_size_letter == 'b' ? ' selected' : '',
-					'D_SEL_K' => $max_file_size_letter == 'k' ? ' selected' : '',
-					'D_SEL_M' => $max_file_size_letter == 'm' ? ' selected' : '',
-					'D_SEL_G' => $max_file_size_letter == 'g' ? ' selected' : '',
-					'D_MAX_PHOTO_W' => $work->config['max_photo_w'],
-					'D_MAX_PHOTO_H' => $work->config['max_photo_h'],
-					'D_TEMP_PHOTO_W' => $work->config['temp_photo_w'],
-					'D_TEMP_PHOTO_H' => $work->config['temp_photo_h'],
-					'D_MAX_AVATAR_W' => $work->config['max_avatar_w'],
-					'D_MAX_AVATAR_H' => $work->config['max_avatar_h'],
-					'D_COPYRIGHT_YEAR' => $work->config['copyright_year'],
-					'D_COPYRIGHT_TEXT' => $work->config['copyright_text'],
-					'D_COPYRIGHT_URL' => $work->config['copyright_url'],
-					'D_LAST_NEWS' => $work->config['last_news'],
-					'D_BEST_USER' => $work->config['best_user'],
-					'D_MAX_RATE' => $work->config['max_rate']
+			'D_TITLE_NAME'                    => $work->config['title_name'],
+			'D_TITLE_DESCRIPTION'             => $work->config['title_description'],
+			'D_META_DESCRIPTION'              => $work->config['meta_description'],
+			'D_META_KEYWORDS'                 => $work->config['meta_keywords'],
+			'D_GAL_WIDTH'                     => $work->config['gal_width'],
+			'D_LEFT_PANEL'                    => $work->config['left_panel'],
+			'D_RIGHT_PANEL'                   => $work->config['right_panel'],
+			'D_LANGUAGE'                      => $language,
+			'D_THEMES'                        => $themes,
+			'D_MAX_FILE_SIZE'                 => $max_file_size,
+			'D_SEL_B'                         => $max_file_size_letter == 'b' ? ' selected' : '',
+			'D_SEL_K'                         => $max_file_size_letter == 'k' ? ' selected' : '',
+			'D_SEL_M'                         => $max_file_size_letter == 'm' ? ' selected' : '',
+			'D_SEL_G'                         => $max_file_size_letter == 'g' ? ' selected' : '',
+			'D_MAX_PHOTO_W'                   => $work->config['max_photo_w'],
+			'D_MAX_PHOTO_H'                   => $work->config['max_photo_h'],
+			'D_TEMP_PHOTO_W'                  => $work->config['temp_photo_w'],
+			'D_TEMP_PHOTO_H'                  => $work->config['temp_photo_h'],
+			'D_MAX_AVATAR_W'                  => $work->config['max_avatar_w'],
+			'D_MAX_AVATAR_H'                  => $work->config['max_avatar_h'],
+			'D_COPYRIGHT_YEAR'                => $work->config['copyright_year'],
+			'D_COPYRIGHT_TEXT'                => $work->config['copyright_text'],
+			'D_COPYRIGHT_URL'                 => $work->config['copyright_url'],
+			'D_LAST_NEWS'                     => $work->config['last_news'],
+			'D_BEST_USER'                     => $work->config['best_user'],
+			'D_MAX_RATE'                      => $work->config['max_rate']
 		); // наполняем массив данными для замены по шаблону
 
 		$act = ''; // активного пункта меню - нет
@@ -200,11 +202,11 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$array_data = array(); // инициируем массив
 
 		$array_data = array(
-						'NAME_BLOCK' => $lang['admin']['title'] . ' - ' . $lang['admin']['admin_user'],
+			'NAME_BLOCK'   => $lang['admin']['title'] . ' - ' . $lang['admin']['admin_user'],
 
-						'IF_NEED_FIND' => false,
-						'IF_NEED_USER' => false,
-						'IF_FIND_USER' => false
+			'IF_NEED_FIND' => FALSE,
+			'IF_NEED_USER' => FALSE,
+			'IF_FIND_USER' => FALSE
 		); // наполняем массив данными для замены по шаблону - по умолчанию все блоки кода - отключены
 
 		if (isset($_REQUEST['uid']) && !empty($_REQUEST['uid']) && mb_ereg('^[0-9]+$', $_REQUEST['uid'])) // если был передан идентификатор пользователя для редактирования, то...
@@ -246,7 +248,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 							{
 								if ($key != 'id' && $key != 'login' && $key != 'password' && $key != 'real_name' && $key != 'email' && $key != 'avatar' && $key != 'date_regist' && $key != 'date_last_activ' && $key != 'date_last_logout' && $key != 'group')
 								{
-									if (isset($_POST[$key]) && ($_POST[$key] == 'on' || $_POST[$key] === true)) $_POST[$key] = '1';
+									if (isset($_POST[$key]) && ($_POST[$key] == 'on' || $_POST[$key] === TRUE)) $_POST[$key] = '1';
 									else $_POST[$key] = '0';
 									if ($_POST[$key] != $value)
 									{
@@ -266,7 +268,8 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 							$select_group = '<select name="group">';
 							foreach ($group as $val)
 							{
-								if ($val['id'] == $temp['group']) $selected = ' selected'; else $selected = '';
+								if ($val['id'] == $temp['group']) $selected = ' selected';
+								else $selected = '';
 								$select_group .= '<option value="' . $val['id'] . '"' . $selected . '>' . $val['name'] . '</option>';
 							}
 							$select_group .= '</select>';
@@ -276,27 +279,28 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 								if ($key != 'id' && $key != 'login' && $key != 'password' && $key != 'real_name' && $key != 'email' && $key != 'avatar' && $key != 'date_regist' && $key != 'date_last_activ' && $key != 'date_last_logout' && $key != 'group')
 								{
 									$array_data['L_' . strtoupper($key)] = $lang['admin'][$key];
-									if ($value == 1 || $value == '1' || $value === true) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = '';
+									if ($value == 1 || $value == '1' || $value === TRUE) $array_data['D_' . strtoupper($key)] = ' checked';
+									else $array_data['D_' . strtoupper($key)] = '';
 								}
 							}
 
-							$array_data = array_merge ($array_data, array (
-											'IF_FIND_USER' => true,
-											'L_LOGIN' => $lang['admin']['login'],
-											'L_EMAIL' => $lang['admin']['email'],
-											'L_REAL_NAME' => $lang['admin']['real_name'],
-											'L_AVATAR' => $lang['admin']['avatar'],
-											'L_GROUP' => $lang['main']['group'],
-											'L_USER_RIGHTS' => $lang['admin']['user_rights'],
-											'L_HELP_EDIT' => $lang['admin']['help_edit_user'],
-											'L_SAVE_USER' => $lang['admin']['save_user'],
+							$array_data = array_merge($array_data, array(
+								'IF_FIND_USER'  => TRUE,
+								'L_LOGIN'       => $lang['admin']['login'],
+								'L_EMAIL'       => $lang['admin']['email'],
+								'L_REAL_NAME'   => $lang['admin']['real_name'],
+								'L_AVATAR'      => $lang['admin']['avatar'],
+								'L_GROUP'       => $lang['main']['group'],
+								'L_USER_RIGHTS' => $lang['admin']['user_rights'],
+								'L_HELP_EDIT'   => $lang['admin']['help_edit_user'],
+								'L_SAVE_USER'   => $lang['admin']['save_user'],
 
-											'D_LOGIN' => $temp['login'],
-											'D_EMAIL' => $temp['email'],
-											'D_REAL_NAME' => $temp['real_name'],
-											'D_GROUP' => $select_group,
+								'D_LOGIN'       => $temp['login'],
+								'D_EMAIL'       => $temp['email'],
+								'D_REAL_NAME'   => $temp['real_name'],
+								'D_GROUP'       => $select_group,
 
-											'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
+								'U_AVATAR'      => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
 							));
 						}
 						else log_in_file('Unable to get the group', DIE_IF_ERROR);
@@ -321,7 +325,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						$find_data = '';
 						foreach ($find as $val)
 						{
-							$find_data .= ', <a href="' . $work->config['site_url']  . '?action=admin&subact=admin_user&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
+							$find_data .= ', <a href="' . $work->config['site_url'] . '?action=admin&subact=admin_user&uid=' . $val['id'] . '" title="' . $val['real_name'] . '">' . $val['real_name'] . '</a>';
 						}
 						$find_data = $lang['admin']['find_user'] . ': ' . substr($find_data, 2) . '.';
 					}
@@ -329,20 +333,20 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 				}
 				else log_in_file($db->error, DIE_IF_ERROR);
 
-				$array_data = array_merge ($array_data, array (
-							'D_FIND_USER' => $find_data,
+				$array_data = array_merge($array_data, array(
+					'D_FIND_USER'  => $find_data,
 
-							'IF_NEED_USER' => true
+					'IF_NEED_USER' => TRUE
 				));
 				if ($_POST['search_user'] == '%') $_POST['search_user'] = '*';
 			}
 
-			$array_data = array_merge ($array_data, array (
-							'L_SEARCH_USER' => $lang['admin']['search_user'],
-							'L_HELP_SEARCH' => $lang['admin']['help_search_user'],
+			$array_data = array_merge($array_data, array(
+				'L_SEARCH_USER' => $lang['admin']['search_user'],
+				'L_HELP_SEARCH' => $lang['admin']['help_search_user'],
 
-							'D_SEARCH_USER' => isset($_POST['search_user']) ? $_POST['search_user'] : '',
-							'IF_NEED_FIND' => true
+				'D_SEARCH_USER' => isset($_POST['search_user']) ? $_POST['search_user'] : '',
+				'IF_NEED_FIND'  => TRUE
 			));
 		}
 
@@ -355,10 +359,10 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$array_data = array(); // инициируем массив
 
 		$array_data = array(
-						'NAME_BLOCK' => $lang['admin']['title'] . ' - ' . $lang['admin']['admin_group'],
+			'NAME_BLOCK'      => $lang['admin']['title'] . ' - ' . $lang['admin']['admin_group'],
 
-						'IF_SELECT_GROUP' => false,
-						'IF_EDIT_GROUP' => false
+			'IF_SELECT_GROUP' => FALSE,
+			'IF_EDIT_GROUP'   => FALSE
 		); // наполняем массив данными для замены по шаблону - по умолчанию все блоки отключены
 
 		if (isset($_POST['submit_x']) && !empty($_POST['submit_x']) && isset($_POST['submit_y']) && !empty($_POST['submit_y']) && (isset($_POST['id_group']) && mb_ereg('^[0-9]+$', $_POST['id_group'])))
@@ -377,7 +381,7 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 					{
 						if ($key != 'id' && $key != 'name')
 						{
-							if (isset($_POST[$key]) && ($_POST[$key] == 'on' || $_POST[$key] === true)) $_POST[$key] = '1';
+							if (isset($_POST[$key]) && ($_POST[$key] == 'on' || $_POST[$key] === TRUE)) $_POST[$key] = '1';
 							else $_POST[$key] = '0';
 							if ($_POST[$key] != $value)
 							{
@@ -405,18 +409,19 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						if ($key != 'id' && $key != 'name')
 						{
 							$array_data['L_' . strtoupper($key)] = $lang['admin'][$key];
-							if ($value == 1) $array_data['D_' . strtoupper($key)] = ' checked'; else $array_data['D_' . strtoupper($key)] = '';
+							if ($value == 1) $array_data['D_' . strtoupper($key)] = ' checked';
+							else $array_data['D_' . strtoupper($key)] = '';
 						}
 					}
 
-					$array_data = array_merge ($array_data, array (
-									'L_NAME_GROUP' => $lang['main']['group'],
-									'L_GROUP_RIGHTS' => $lang['admin']['group_rights'],
-									'L_SAVE_GROUP' => $lang['admin']['save_group'],
+					$array_data = array_merge($array_data, array(
+						'L_NAME_GROUP'   => $lang['main']['group'],
+						'L_GROUP_RIGHTS' => $lang['admin']['group_rights'],
+						'L_SAVE_GROUP'   => $lang['admin']['save_group'],
 
-									'D_ID_GROUP' => $temp['id'],
-									'D_NAME_GROUP' => $temp['name'],
-									'IF_EDIT_GROUP' => true
+						'D_ID_GROUP'     => $temp['id'],
+						'D_NAME_GROUP'   => $temp['name'],
+						'IF_EDIT_GROUP'  => TRUE
 					));
 				}
 				else log_in_file('Unable to get the group', DIE_IF_ERROR);
@@ -436,12 +441,12 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 						$select_group .= '<option value="' . $val['id'] . '">' . $val['name'] . '</option>';
 					}
 					$select_group .= '</select>';
-					$array_data = array_merge ($array_data, array (
-									'L_SELECT_GROUP' => $lang['admin']['select_group'],
-									'L_EDIT' => $lang['admin']['edit_group'],
+					$array_data = array_merge($array_data, array(
+						'L_SELECT_GROUP'  => $lang['admin']['select_group'],
+						'L_EDIT'          => $lang['admin']['edit_group'],
 
-									'D_GROUP' => $select_group,
-									'IF_SELECT_GROUP' => true
+						'D_GROUP'         => $select_group,
+						'IF_SELECT_GROUP' => TRUE
 					));
 				}
 				else log_in_file('Unable to get the group', DIE_IF_ERROR);
@@ -463,13 +468,13 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$array_data = array(); // инициируем массив
 
 		$array_data = array(
-					'NAME_BLOCK' => $lang['admin']['title'],
-					'L_SELECT_SUBACT' => $lang['admin']['select_subact'],
+			'NAME_BLOCK'           => $lang['admin']['title'],
+			'L_SELECT_SUBACT'      => $lang['admin']['select_subact'],
 
-					'D_SELECT_SUBACT' => $select_subact,
+			'D_SELECT_SUBACT'      => $select_subact,
 
-					'IF_SESSION_ADMIN_ON' => true,
-					'IF_SESSION_ADMIN_OFF' => false
+			'IF_SESSION_ADMIN_ON'  => TRUE,
+			'IF_SESSION_ADMIN_OFF' => FALSE
 		); // наполняем массив данными для замены по шаблону
 
 		$act = 'admin'; // активный пункт меню - admin
@@ -477,17 +482,17 @@ if (isset($_SESSION['admin_on']) && $_SESSION['admin_on'] === true && $user->use
 		$main_block = $template->create_template('admin_start.tpl', $array_data); // формируем центральный блок - список выбора пунктов Админки
 	}
 }
-elseif ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== true) && $user->user['admin'] == true) // иначе если сессия для Админа не открыта, но пользователь имеет право её открыть, то...
+elseif ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== TRUE) && $user->user['admin'] == TRUE) // иначе если сессия для Админа не открыта, но пользователь имеет право её открыть, то...
 {
 	$array_data = array(); // инициируем массив
 
 	$array_data = array(
-				'NAME_BLOCK' => $lang['admin']['title'],
-				'L_ENTER_ADMIN_PASS' => $lang['admin']['admin_pass'],
-				'L_ENTER' => $lang['main']['enter'],
+		'NAME_BLOCK'           => $lang['admin']['title'],
+		'L_ENTER_ADMIN_PASS'   => $lang['admin']['admin_pass'],
+		'L_ENTER'              => $lang['main']['enter'],
 
-				'IF_SESSION_ADMIN_ON' => false,
-				'IF_SESSION_ADMIN_OFF' => true
+		'IF_SESSION_ADMIN_ON'  => FALSE,
+		'IF_SESSION_ADMIN_OFF' => TRUE
 	); // наполняем массив данными для замены по шаблону
 
 	$act = 'admin'; // активный пункт меню - admin

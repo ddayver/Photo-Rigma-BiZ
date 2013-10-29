@@ -7,7 +7,7 @@ var classtemplate__old =
     [ "image_attach", "classtemplate__old.html#a3a00a56cbe47aadbac0fe537e16e5e16", null ],
     [ "image_resize", "classtemplate__old.html#a70600ce649f70d7c2fbbdedcf6a20d5c", null ],
     [ "template_best_user", "classtemplate__old.html#a00a3456ccd4563d05fcf39781a911ee9", null ],
-    [ "template_news", "classtemplate__old.html#ae44dda987dcea9f5cd25523c34b980ee", null ],
+    [ "template_news", "classtemplate__old.html#aa4b1900b68275c726c06b523a34b61d0", null ],
     [ "template_old", "classtemplate__old.html#a4439efb3f5c7035d14fb4976b22e7efa", null ],
     [ "template_rate", "classtemplate__old.html#a8a4f24977049eb5420d6efc112d72d15", null ],
     [ "template_stat", "classtemplate__old.html#a116ebcf799d07566a74e7e765aecc1b7", null ],

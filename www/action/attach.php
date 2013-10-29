@@ -1,29 +1,29 @@
 <?php
 /**
-* @file		action/attach.php
-* @brief	Вывод фото из галлереи по идентификатору.
-* @author	Dark Dayver
-* @version	0.2.0
-* @date		28/03-2012
-* @details	Используется для вывод фото из галлереи по идентификатору и скрытия настоящего пути к файлу.
-*/
+ * @file        action/attach.php
+ * @brief       Вывод фото из галлереи по идентификатору.
+ * @author      Dark Dayver
+ * @version     0.2.0
+ * @date        28/03-2012
+ * @details     Используется для вывод фото из галлереи по идентификатору и скрытия настоящего пути к файлу.
+ */
 /// @cond
-if (IN_GALLERY !== true)
+if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
 /// @endcond
 
 /// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-$template_TMP = true; // Заглушка
+$template_TMP = TRUE; // Заглушка
 
 /// Запретить вывод шапки страницы
-$header_footer = false;
+$header_footer = FALSE;
 /// Запретить вывод подвала страницы
-$template_output = false;
+$template_output = FALSE;
 
 /// @cond
-if (!$work->check_get('foto', true, true, '^[0-9]+\$', true) || $user->user['pic_view'] == false) $temp_photo = $work->no_photo();
+if (!$work->check_get('foto', TRUE, TRUE, '^[0-9]+\$', TRUE) || $user->user['pic_view'] == FALSE) $temp_photo = $work->no_photo();
 else
 {
 	if ($db->select('*', TBL_PHOTO, '`id` = ' . $_GET['foto']))
@@ -50,7 +50,7 @@ else
 
 if (!@fopen($temp_photo['full_path'], 'r')) $temp_photo = $work->no_photo();
 
-if ($work->check_get('thumbnail', true, true) && $_GET['thumbnail'] == 1)
+if ($work->check_get('thumbnail', TRUE, TRUE) && $_GET['thumbnail'] == 1)
 {
 	if ($work->image_resize($temp_photo['full_path'], $temp_photo['thumbnail_path'])) echo $work->image_attach($temp_photo['thumbnail_path'], $temp_photo['file']);
 	else log_in_file('Error Image Resize: ' . $temp_photo['full_path'], DIE_IF_ERROR);

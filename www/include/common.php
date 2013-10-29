@@ -1,14 +1,14 @@
 <?php
 /**
-* @file		include/common.php
-* @brief	Константы и функция ведения логов
-* @author	Dark Dayver
-* @version	0.2.0
-* @date		28/03-2012
-* @details	Содержит константы, создает функцию логирования и настраивает хранение куков
-*/
+ * @file        include/common.php
+ * @brief       Константы и функция ведения логов
+ * @author      Dark Dayver
+ * @version     0.2.0
+ * @date        28/03-2012
+ * @details     Содержит константы, создает функцию логирования и настраивает хранение куков
+ */
 /// @cond
-if (IN_GALLERY !== true)
+if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
@@ -22,12 +22,12 @@ session_start();
 
 /// Функция сохранения ошибок в лог-файл
 /**
-* @param $txt содержит текст, необходимый для сохранения в лог-файл (обязательный параметр)
-* @param $die указывает, что необходимо завершить работу скрипта и вывести сообщение об ошибке (по-умолчанию не завершать)
-* @return True, если запись успешна, иначе False.
-* @see ::$config
-*/
-function log_in_file($txt, $die = false)
+ * @param $txt содержит текст, необходимый для сохранения в лог-файл (обязательный параметр)
+ * @param $die указывает, что необходимо завершить работу скрипта и вывести сообщение об ошибке (по-умолчанию не завершать)
+ * @return True, если запись успешна, иначе False.
+ * @see ::$config
+ */
+function log_in_file($txt, $die = FALSE)
 {
 	global $config;
 
@@ -61,7 +61,7 @@ define ('TBL_GROUP', 'group');
 define ('DEFAULT_GROUP', 1);
 
 /// Останавливать ли скрипт во время серьезных ошибок? (True - останавливать) @see ::log_in_file
-define ('DIE_IF_ERROR', true);
+define ('DIE_IF_ERROR', TRUE);
 
 //Что использовать как конец строки (для Win-серверов)
 if (!defined('PHP_EOL')) define ('PHP_EOL', strtoupper(substr(PHP_OS, 0, 3) == 'WIN') ? chr(13) . chr(10) : chr(10));

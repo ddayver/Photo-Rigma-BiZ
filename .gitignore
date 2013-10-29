@@ -2,3 +2,4 @@
 /www/*.session
 /doc_gen.sh
 /doxygen_error.log
+doc_gen.bat

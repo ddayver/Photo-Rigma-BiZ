@@ -1,0 +1,5 @@
+<map id="check_field" name="check_field">
+<area shape="rect" id="node2" href="$classwork.html#a7e142dbebbe1a7cf49bb74b98febf423" title="Функция проверки данных, переданных через $_GET[]. " alt="" coords="151,5,230,32"/>
+<area shape="rect" id="node3" href="$classwork.html#a46d155badfc084f1858e702900c55239" title="Функция проверки данных, переданных через $_POST[]. " alt="" coords="148,56,233,83"/>
+<area shape="rect" id="node4" href="$classwork.html#a94bf8eaf5d8aa15534aba24dbf882698" title="Функция проверки данных, переданных через $_SESSION[]. " alt="" coords="139,107,242,133"/>
+</map>

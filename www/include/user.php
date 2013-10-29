@@ -1,14 +1,14 @@
 <?php
 /**
-* @file		include/user.php
-* @brief	Класс работы с пользователем.
-* @author	Dark Dayver
-* @version	0.2.0
-* @date		28/03-2012
-* @details	Класс работы с пользователем.
-*/
+ * @file        include/user.php
+ * @brief       Класс работы с пользователем.
+ * @author      Dark Dayver
+ * @version     0.2.0
+ * @date        28/03-2012
+ * @details     Класс работы с пользователем.
+ */
 /// @cond
-if (IN_GALLERY !== true)
+if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
@@ -16,16 +16,16 @@ if (IN_GALLERY !== true)
 
 /// Класс по работе с пользователями.
 /**
-* Данный класс содержит набор функций для работы с пользователями, а так же используется для хранения всех данных о текущем пользователе.
-*/
+ * Данный класс содержит набор функций для работы с пользователями, а так же используется для хранения всех данных о текущем пользователе.
+ */
 class user
 {
 	var $user = array(); ///< Массив, содержащий все данные о текущем пользователе.
 
 	/// Конструктор класса, заполняет данные при создании объекта класса данными о текущем пользователе.
 	/**
-	* @see ::$db
-	*/
+	 * @see ::$db
+	 */
 	function user()
 	{
 		global $db;
@@ -65,8 +65,8 @@ class user
 						{
 							if ($key != 'id' && $key != 'name')
 							{
-								if ($this->user[$key] == 0 && $value == 0) $this->user[$key] = false;
-								else $this->user[$key] = true;
+								if ($this->user[$key] == 0 && $value == 0) $this->user[$key] = FALSE;
+								else $this->user[$key] = TRUE;
 							}
 							elseif ($key == 'name')
 							{
@@ -93,4 +93,5 @@ class user
 		}
 	}
 }
+
 ?>
