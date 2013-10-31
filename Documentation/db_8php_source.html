@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.5"/>
+<meta name="generator" content="Doxygen 1.8.3.1"/>
 <title>Photo-Rigma-BiZ: Исходный файл include/db.php</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -28,7 +28,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="logo-1.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Photo-Rigma-BiZ
    &#160;<span id="projectnumber">0.2.0</span>
@@ -40,7 +39,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.5 -->
+<!-- Создано системой Doxygen 1.8.3.1 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 </script>
@@ -110,24 +109,25 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 </div><!--header-->
 <div class="contents">
 <a href="db_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordflow">if</span> (IN_GALLERY !== TRUE)</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordflow">if</span> (IN_GALLERY !== TRUE)</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    die(<span class="stringliteral">&#39;HACK!&#39;</span>);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classdb.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classdb.html">db</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="classdb.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classdb.html" title="Класс по работе с БД MySQL.">db</a></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classdb.html#a5d346e31b75d916e3bac9cb193bfc97f">   23</a></span>&#160;    <span class="keyword">private</span> <a class="code" href="classdb.html#a5d346e31b75d916e3bac9cb193bfc97f">$link</a>; </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20">   24</a></span>&#160;    var <a class="code" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20">$txt_query</a>; </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29">   25</a></span>&#160;    var <a class="code" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29">$res_query</a>; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">   26</a></span>&#160;    var <a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">$result</a> = FALSE; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f">   27</a></span>&#160;    var <a class="code" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f">$aff_rows</a> = FALSE; </div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30">   28</a></span>&#160;    var <a class="code" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30">$insert_id</a> = FALSE; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550">   29</a></span>&#160;    var <a class="code" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550">$error</a>; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="classdb.html#a5d346e31b75d916e3bac9cb193bfc97f">   23</a></span>&#160;    <span class="keyword">private</span> <a class="code" href="classdb.html#a5d346e31b75d916e3bac9cb193bfc97f" title="Ссылка на подключенную базу данных">$link</a>; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20">   24</a></span>&#160;    var <a class="code" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$txt_query</a>; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29">   25</a></span>&#160;    var <a class="code" href="classdb.html#a4e0fa9799781410b983bb2581c2ace29" title="Ссылка на полученный результат">$res_query</a>; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">   26</a></span>&#160;    var <a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$result</a> = FALSE; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f">   27</a></span>&#160;    var <a class="code" href="classdb.html#adac4bb14b3d809b245c89d5e7388096f" title="Количество вставленных строк">$aff_rows</a> = FALSE; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30">   28</a></span>&#160;    var <a class="code" href="classdb.html#a7d5870c89e950451ed8a204c07c66a30" title="ID последней вставленной через INSERT строки">$insert_id</a> = FALSE; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550">   29</a></span>&#160;    var <a class="code" href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550" title="Номер и текст ошибки">$error</a>; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classdb.html#a03e9ab6d80aeae541df9e4282bc580ea">   42</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a03e9ab6d80aeae541df9e4282bc580ea">db</a>($dbhost, $dbuser, $dbpass, $dbname)</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="classdb.html#a03e9ab6d80aeae541df9e4282bc580ea">   42</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a03e9ab6d80aeae541df9e4282bc580ea" title="Конструктор класса, выполняет ряд ключевых задач.">db</a>($dbhost, $dbuser, $dbpass, $dbname)</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        $this-&gt;link = @mysql_connect($dbhost, $dbuser, $dbpass) or die (<span class="stringliteral">&#39;Error connect DB: &#39;</span> . mysql_errno($this-&gt;link) . <span class="stringliteral">&#39; - &#39;</span> . mysql_error($this-&gt;link));</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        @mysql_select_db($dbname, $this-&gt;link) or die (<span class="stringliteral">&#39;Error select DB: &#39;</span> . mysql_errno($this-&gt;link) . <span class="stringliteral">&#39; - &#39;</span> . mysql_error($this-&gt;link));</div>
@@ -136,14 +136,14 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">   58</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a>()</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">   58</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>()</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        $this-&gt;aff_rows = FALSE;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        $this-&gt;insert_id = FALSE;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        $this-&gt;res_query = @mysql_query($this-&gt;txt_query, $this-&gt;link);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">if</span> ($this-&gt;res_query === FALSE)</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            $this-&gt;error = <span class="stringliteral">&#39;Error DB: &#39;</span> . mysql_errno($this-&gt;link) . <span class="stringliteral">&#39; - &#39;</span> . mysql_error($this-&gt;link) . <span class="stringliteral">&#39; - SQL: &#39;</span> . <a class="code" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20">$this-&gt;txt_query</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            $this-&gt;error = <span class="stringliteral">&#39;Error DB: &#39;</span> . mysql_errno($this-&gt;link) . <span class="stringliteral">&#39; - &#39;</span> . mysql_error($this-&gt;link) . <span class="stringliteral">&#39; - SQL: &#39;</span> . <a class="code" href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20" title="Сформированный запрос">$this-&gt;txt_query</a>;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> FALSE;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">else</span></div>
@@ -155,9 +155,9 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="classdb.html#a04b44c7043dd13112a7d98aea299deaa">   87</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a04b44c7043dd13112a7d98aea299deaa">select</a>($select, $from_tbl, $where = FALSE, $order = FALSE, $group = FALSE, $limit = FALSE)</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="classdb.html#a04b44c7043dd13112a7d98aea299deaa">   87</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a04b44c7043dd13112a7d98aea299deaa" title="Функция формирования SELECT-запроса">select</a>($select, $from_tbl, $where = FALSE, $order = FALSE, $group = FALSE, $limit = FALSE)</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a>();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a>();</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        $this-&gt;txt_query = <span class="stringliteral">&#39;SELECT &#39;</span>;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">if</span> (!is_array($select))</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        {</div>
@@ -177,36 +177,36 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        }</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        $selects = substr($selects, 2);</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        $this-&gt;txt_query .= $selects . <span class="stringliteral">&#39; FROM `&#39;</span> . $from_tbl . <span class="charliteral">&#39;`&#39;</span>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">if</span> ($where != FALSE) $this-&gt;<a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">where</a>($where);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">if</span> ($order != FALSE) $this-&gt;<a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed">order</a>($order);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">if</span> ($group != FALSE) $this-&gt;<a class="code" href="classdb.html#ac34168a28ab2726e05aad5d141907d9d">group</a>($group);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">if</span> ($limit != FALSE) $this-&gt;<a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">limit</a>($limit);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a>();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">if</span> ($where != FALSE) $this-&gt;<a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>($where);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">if</span> ($order != FALSE) $this-&gt;<a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed" title="Функция дополнения запроса сортировкой">order</a>($order);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">if</span> ($group != FALSE) $this-&gt;<a class="code" href="classdb.html#ac34168a28ab2726e05aad5d141907d9d" title="Функция дополнения запроса группировкой">group</a>($group);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">if</span> ($limit != FALSE) $this-&gt;<a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>($limit);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>();</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classdb.html#a64e06aa1e935928274a6d3a5b309ae19">  125</a></span>&#160;    <span class="keyword">function</span> <span class="keyword">delete</span>($from_tbl, $where = FALSE, $order = FALSE, $limit = FALSE)</div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="code" href="classdb.html#a64e06aa1e935928274a6d3a5b309ae19">  125</a></span>&#160;    <span class="keyword">function</span> <span class="keyword">delete</span>($from_tbl, $where = FALSE, $order = FALSE, $limit = FALSE)</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a>();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a>();</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        $this-&gt;txt_query = <span class="stringliteral">&#39;DELETE FROM `&#39;</span> . $from_tbl . <span class="charliteral">&#39;`&#39;</span>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">if</span> ($where != FALSE) $this-&gt;<a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">where</a>($where);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">if</span> ($order != FALSE) $this-&gt;<a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed">order</a>($order);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">if</span> ($limit != FALSE) $this-&gt;<a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">limit</a>($limit);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a>();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">if</span> ($where != FALSE) $this-&gt;<a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>($where);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">if</span> ($order != FALSE) $this-&gt;<a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed" title="Функция дополнения запроса сортировкой">order</a>($order);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">if</span> ($limit != FALSE) $this-&gt;<a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>($limit);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>();</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb">  141</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb">truncate</a>($tbl)</div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="code" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb">  141</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb" title="Функция формирования запроса на очистку таблицы">truncate</a>($tbl)</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    {</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a>();</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a>();</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        $this-&gt;txt_query = <span class="stringliteral">&#39;TRUNCATE TABLE `&#39;</span> . $tbl . <span class="charliteral">&#39;`&#39;</span>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a>();</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>();</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    }</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="classdb.html#af17f89b3edaf07600abb19d2ee7a138b">  158</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#af17f89b3edaf07600abb19d2ee7a138b">update</a>($update, $to_tbl, $where = FALSE, $order = FALSE, $limit = FALSE)</div>
+<div class="line"><a name="l00158"></a><span class="lineno"><a class="code" href="classdb.html#af17f89b3edaf07600abb19d2ee7a138b">  158</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#af17f89b3edaf07600abb19d2ee7a138b" title="Функция формирования простого запроса на обновление">update</a>($update, $to_tbl, $where = FALSE, $order = FALSE, $limit = FALSE)</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a>();</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a>();</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        $this-&gt;txt_query = <span class="stringliteral">&#39;UPDATE `&#39;</span> . $to_tbl . <span class="stringliteral">&#39;` SET &#39;</span>;</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        $updates = <span class="stringliteral">&#39;&#39;</span>;</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">foreach</span> ($update as $key =&gt; $value)</div>
@@ -221,16 +221,16 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            }</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        }</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        $this-&gt;txt_query .= substr($updates, 2);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">if</span> ($where != FALSE) $this-&gt;<a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">where</a>($where);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">if</span> ($order != FALSE) $this-&gt;<a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed">order</a>($order);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">if</span> ($limit != FALSE) $this-&gt;<a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">limit</a>($limit);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a>();</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">if</span> ($where != FALSE) $this-&gt;<a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>($where);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">if</span> ($order != FALSE) $this-&gt;<a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed" title="Функция дополнения запроса сортировкой">order</a>($order);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">if</span> ($limit != FALSE) $this-&gt;<a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>($limit);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>();</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="classdb.html#ae4539ccb2baeefb7e924b73125017b35">  189</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#ae4539ccb2baeefb7e924b73125017b35">insert</a>($insert, $to_tbl, $type = FALSE)</div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="code" href="classdb.html#ae4539ccb2baeefb7e924b73125017b35">  189</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#ae4539ccb2baeefb7e924b73125017b35" title="Функция формирования запроса на вставку строк">insert</a>($insert, $to_tbl, $type = FALSE)</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    {</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a>();</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0) $this-&gt;<a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a>();</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordflow">if</span> ($type == <span class="stringliteral">&#39;ignore&#39;</span>)</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        {</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            $this-&gt;txt_query = <span class="stringliteral">&#39;INSERT IGNORE INTO &#39;</span>;</div>
@@ -251,11 +251,11 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            $values .= <span class="stringliteral">&quot;, &#39;&quot;</span> . $value . <span class="stringliteral">&quot;&#39;&quot;</span>;</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        }</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        $this-&gt;txt_query .= <span class="charliteral">&#39;`&#39;</span> . $to_tbl . <span class="stringliteral">&#39;` (&#39;</span> . substr($keys, 2) . <span class="stringliteral">&#39;) VALUES (&#39;</span> . substr($values, 2) . <span class="charliteral">&#39;)&#39;</span>;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">query</a>();</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keywordflow">return</span> $this-&gt;<a class="code" href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов">query</a>();</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    }</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
-<div class="line"><a name="l00221"></a><span class="lineno"><a class="line" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">  221</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">where</a>($where)</div>
+<div class="line"><a name="l00221"></a><span class="lineno"><a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">  221</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием">where</a>($where)</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    {</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0)</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        {</div>
@@ -264,7 +264,7 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    }</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00236"></a><span class="lineno"><a class="line" href="classdb.html#ae12310cf5ed1925167ba654e52390eed">  236</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed">order</a>($order, $sort = FALSE)</div>
+<div class="line"><a name="l00236"></a><span class="lineno"><a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed">  236</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#ae12310cf5ed1925167ba654e52390eed" title="Функция дополнения запроса сортировкой">order</a>($order, $sort = FALSE)</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    {</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="keywordflow">if</span> (is_array($order)) list($order, $sort) = each($order);</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0)</div>
@@ -280,7 +280,7 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
-<div class="line"><a name="l00258"></a><span class="lineno"><a class="line" href="classdb.html#ac34168a28ab2726e05aad5d141907d9d">  258</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#ac34168a28ab2726e05aad5d141907d9d">group</a>($group, $sort = FALSE)</div>
+<div class="line"><a name="l00258"></a><span class="lineno"><a class="code" href="classdb.html#ac34168a28ab2726e05aad5d141907d9d">  258</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#ac34168a28ab2726e05aad5d141907d9d" title="Функция дополнения запроса группировкой">group</a>($group, $sort = FALSE)</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    {</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="keywordflow">if</span> (is_array($group)) list($group, $sort) = each($group);</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0)</div>
@@ -298,7 +298,7 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    }</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00282"></a><span class="lineno"><a class="line" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">  282</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">limit</a>($limit, $start = 0)</div>
+<div class="line"><a name="l00282"></a><span class="lineno"><a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">  282</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов">limit</a>($limit, $start = 0)</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    {</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keywordflow">if</span> (is_array($limit)) list($limit, $start) = each($limit);</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordflow">if</span> (strlen($this-&gt;txt_query) &gt; 0 &amp;&amp; $limit &gt; 0)</div>
@@ -308,7 +308,7 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    }</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00297"></a><span class="lineno"><a class="line" href="classdb.html#a974af553ef190897a8849c77166ea32d">  297</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a974af553ef190897a8849c77166ea32d">res_row</a>()</div>
+<div class="line"><a name="l00297"></a><span class="lineno"><a class="code" href="classdb.html#a974af553ef190897a8849c77166ea32d">  297</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a974af553ef190897a8849c77166ea32d" title="Функция получения строки результатов">res_row</a>()</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    {</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keywordflow">if</span> ($this-&gt;res_query)</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        {</div>
@@ -318,11 +318,11 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        {</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            $this-&gt;result = FALSE;</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        }</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">$this-&gt;result</a>;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$this-&gt;result</a>;</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    }</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="classdb.html#a0bfd8e43ae69ed64120dd984b9e288a4">  316</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a>()</div>
+<div class="line"><a name="l00316"></a><span class="lineno"><a class="code" href="classdb.html#a0bfd8e43ae69ed64120dd984b9e288a4">  316</a></span>&#160;    <span class="keyword">function</span> <a class="code" href="classdb.html#a0bfd8e43ae69ed64120dd984b9e288a4" title="Функция получения массива результатов">res_arr</a>()</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    {</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <span class="keywordflow">if</span> ($this-&gt;res_query)</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        {</div>
@@ -342,11 +342,11 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        {</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;            $this-&gt;result = FALSE;</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        }</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">$this-&gt;result</a>;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07" title="Результат выполнения запроса">$this-&gt;result</a>;</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    }</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno"><a class="line" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">  344</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">clean</a>()</div>
+<div class="line"><a name="l00344"></a><span class="lineno"><a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">  344</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code" href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса">clean</a>()</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    {</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        $this-&gt;txt_query = <span class="stringliteral">&#39;&#39;</span>;</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        $this-&gt;res_query = FALSE;</div>
@@ -358,27 +358,6 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;}</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;?&gt;</div>
-<div class="ttc" id="classdb_html_a8296b3c656f04ac84c5bc427d095dfdb"><div class="ttname"><a href="classdb.html#a8296b3c656f04ac84c5bc427d095dfdb">db\truncate</a></div><div class="ttdeci">truncate($tbl)</div><div class="ttdoc">Функция формирования запроса на очистку таблицы </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00141">db.php:141</a></div></div>
-<div class="ttc" id="classdb_html_ac34168a28ab2726e05aad5d141907d9d"><div class="ttname"><a href="classdb.html#ac34168a28ab2726e05aad5d141907d9d">db\group</a></div><div class="ttdeci">group($group, $sort=FALSE)</div><div class="ttdoc">Функция дополнения запроса группировкой </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00258">db.php:258</a></div></div>
-<div class="ttc" id="classdb_html_a4e0fa9799781410b983bb2581c2ace29"><div class="ttname"><a href="classdb.html#a4e0fa9799781410b983bb2581c2ace29">db\$res_query</a></div><div class="ttdeci">$res_query</div><div class="ttdoc">Ссылка на полученный результат </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00025">db.php:25</a></div></div>
-<div class="ttc" id="classdb_html_a3d91c73d66310744d20c15945cd0ccb4"><div class="ttname"><a href="classdb.html#a3d91c73d66310744d20c15945cd0ccb4">db\where</a></div><div class="ttdeci">where($where)</div><div class="ttdoc">Функция дополнения запроса условием </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00221">db.php:221</a></div></div>
-<div class="ttc" id="classdb_html_af17f89b3edaf07600abb19d2ee7a138b"><div class="ttname"><a href="classdb.html#af17f89b3edaf07600abb19d2ee7a138b">db\update</a></div><div class="ttdeci">update($update, $to_tbl, $where=FALSE, $order=FALSE, $limit=FALSE)</div><div class="ttdoc">Функция формирования простого запроса на обновление </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00158">db.php:158</a></div></div>
-<div class="ttc" id="classdb_html_ae12310cf5ed1925167ba654e52390eed"><div class="ttname"><a href="classdb.html#ae12310cf5ed1925167ba654e52390eed">db\order</a></div><div class="ttdeci">order($order, $sort=FALSE)</div><div class="ttdoc">Функция дополнения запроса сортировкой </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00236">db.php:236</a></div></div>
-<div class="ttc" id="classdb_html_a5d346e31b75d916e3bac9cb193bfc97f"><div class="ttname"><a href="classdb.html#a5d346e31b75d916e3bac9cb193bfc97f">db\$link</a></div><div class="ttdeci">$link</div><div class="ttdoc">Ссылка на подключенную базу данных </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00023">db.php:23</a></div></div>
-<div class="ttc" id="classdb_html_a03e9ab6d80aeae541df9e4282bc580ea"><div class="ttname"><a href="classdb.html#a03e9ab6d80aeae541df9e4282bc580ea">db\db</a></div><div class="ttdeci">db($dbhost, $dbuser, $dbpass, $dbname)</div><div class="ttdoc">Конструктор класса, выполняет ряд ключевых задач. </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00042">db.php:42</a></div></div>
-<div class="ttc" id="classdb_html"><div class="ttname"><a href="classdb.html">db</a></div><div class="ttdoc">Класс по работе с БД MySQL. </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00021">db.php:21</a></div></div>
-<div class="ttc" id="classdb_html_a7d5870c89e950451ed8a204c07c66a30"><div class="ttname"><a href="classdb.html#a7d5870c89e950451ed8a204c07c66a30">db\$insert_id</a></div><div class="ttdeci">$insert_id</div><div class="ttdoc">ID последней вставленной через INSERT строки </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00028">db.php:28</a></div></div>
-<div class="ttc" id="classdb_html_a112ef069ddc0454086e3d1e6d8d55d07"><div class="ttname"><a href="classdb.html#a112ef069ddc0454086e3d1e6d8d55d07">db\$result</a></div><div class="ttdeci">$result</div><div class="ttdoc">Результат выполнения запроса </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00026">db.php:26</a></div></div>
-<div class="ttc" id="classdb_html_a04b44c7043dd13112a7d98aea299deaa"><div class="ttname"><a href="classdb.html#a04b44c7043dd13112a7d98aea299deaa">db\select</a></div><div class="ttdeci">select($select, $from_tbl, $where=FALSE, $order=FALSE, $group=FALSE, $limit=FALSE)</div><div class="ttdoc">Функция формирования SELECT-запроса </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00087">db.php:87</a></div></div>
-<div class="ttc" id="classdb_html_ae4539ccb2baeefb7e924b73125017b35"><div class="ttname"><a href="classdb.html#ae4539ccb2baeefb7e924b73125017b35">db\insert</a></div><div class="ttdeci">insert($insert, $to_tbl, $type=FALSE)</div><div class="ttdoc">Функция формирования запроса на вставку строк </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00189">db.php:189</a></div></div>
-<div class="ttc" id="classdb_html_a0bfd8e43ae69ed64120dd984b9e288a4"><div class="ttname"><a href="classdb.html#a0bfd8e43ae69ed64120dd984b9e288a4">db\res_arr</a></div><div class="ttdeci">res_arr()</div><div class="ttdoc">Функция получения массива результатов </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00316">db.php:316</a></div></div>
-<div class="ttc" id="classdb_html_adac4bb14b3d809b245c89d5e7388096f"><div class="ttname"><a href="classdb.html#adac4bb14b3d809b245c89d5e7388096f">db\$aff_rows</a></div><div class="ttdeci">$aff_rows</div><div class="ttdoc">Количество вставленных строк </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00027">db.php:27</a></div></div>
-<div class="ttc" id="classdb_html_a8dbd35d765e8ff0d1c34461ef67c5abf"><div class="ttname"><a href="classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf">db\query</a></div><div class="ttdeci">query()</div><div class="ttdoc">Функция обработки запроса с получением предварительных результатов </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00058">db.php:58</a></div></div>
-<div class="ttc" id="classdb_html_aeba2ab722cedda53dbb7ec1a59f45550"><div class="ttname"><a href="classdb.html#aeba2ab722cedda53dbb7ec1a59f45550">db\$error</a></div><div class="ttdeci">$error</div><div class="ttdoc">Номер и текст ошибки </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00029">db.php:29</a></div></div>
-<div class="ttc" id="classdb_html_a974af553ef190897a8849c77166ea32d"><div class="ttname"><a href="classdb.html#a974af553ef190897a8849c77166ea32d">db\res_row</a></div><div class="ttdeci">res_row()</div><div class="ttdoc">Функция получения строки результатов </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00297">db.php:297</a></div></div>
-<div class="ttc" id="classdb_html_a65de01e83d8d1ba5764f39f89823ec13"><div class="ttname"><a href="classdb.html#a65de01e83d8d1ba5764f39f89823ec13">db\limit</a></div><div class="ttdeci">limit($limit, $start=0)</div><div class="ttdoc">Функция дополнения запроса ограничением на число результатов </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00282">db.php:282</a></div></div>
-<div class="ttc" id="classdb_html_adb40b812890a8bc058bf6b7a0e1a54d9"><div class="ttname"><a href="classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9">db\clean</a></div><div class="ttdeci">clean()</div><div class="ttdoc">Функция очистки переменных класса </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00344">db.php:344</a></div></div>
-<div class="ttc" id="classdb_html_ad8a3d0085346dd9a4d7bfa9500faae20"><div class="ttname"><a href="classdb.html#ad8a3d0085346dd9a4d7bfa9500faae20">db\$txt_query</a></div><div class="ttdeci">$txt_query</div><div class="ttdoc">Сформированный запрос </div><div class="ttdef"><b>Definition:</b> <a href="db_8php_source.html#l00024">db.php:24</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
@@ -387,7 +366,7 @@ $(document).ready(function(){initNavTree('db_8php_source.html','');});
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="db_8php.html">db.php</a></li>
     <li class="footer">Создано системой
     <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
 </div>
 </body>

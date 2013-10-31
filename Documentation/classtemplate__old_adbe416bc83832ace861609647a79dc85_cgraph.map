@@ -1,4 +1,4 @@
 <map id="create_menu" name="create_menu">
-<area shape="rect" id="node2" href="$classtemplate__old.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива ..." alt="" coords="152,5,267,32"/>
-<area shape="rect" id="node3" href="$common_8php.html#a4ab65308b1a35d90782207614ca1d2fc" title="Функция сохранения ошибок в лог&#45;файл " alt="" coords="315,31,395,57"/>
+<area shape="rect" id="node2" href="$classtemplate__old.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива..." alt="" coords="152,5,267,32"/>
+<area shape="rect" id="node3" href="$common_8php.html#a4ab65308b1a35d90782207614ca1d2fc" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="315,31,394,57"/>
 </map>

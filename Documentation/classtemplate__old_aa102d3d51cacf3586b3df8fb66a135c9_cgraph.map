@@ -1,9 +1,9 @@
 <map id="create_main_template" name="create_main_template">
-<area shape="rect" id="node2" href="$classtemplate__old.html#a252838ffaac4f1c3a73bc67391ec1ed6" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения ..." alt="" coords="230,5,317,32"/>
-<area shape="rect" id="node3" href="$classtemplate__old.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива ..." alt="" coords="389,107,504,133"/>
-<area shape="rect" id="node5" href="$classtemplate__old.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню " alt="" coords="225,157,322,184"/>
-<area shape="rect" id="node6" href="$classtemplate__old.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол&#45;во изображений ..." alt="" coords="206,208,341,235"/>
-<area shape="rect" id="node7" href="$classtemplate__old.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта " alt="" coords="223,259,323,285"/>
-<area shape="rect" id="node8" href="$classtemplate__old.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Функция формирует блок для входа пользователя (если в режиме &quot;Гость&quot;) или краткий вид информации о по..." alt="" coords="221,107,325,133"/>
-<area shape="rect" id="node4" href="$common_8php.html#a4ab65308b1a35d90782207614ca1d2fc" title="Функция сохранения ошибок в лог&#45;файл " alt="" coords="552,157,632,184"/>
+<area shape="rect" id="node2" href="$classtemplate__old.html#a252838ffaac4f1c3a73bc67391ec1ed6" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения" alt="" coords="230,5,317,32"/>
+<area shape="rect" id="node5" href="$classtemplate__old.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню" alt="" coords="225,157,322,184"/>
+<area shape="rect" id="node3" href="$classtemplate__old.html#a46df6eb5c7cece0f0b5dd2f5f627350b" title="Функция обрабатывает шаблон из указанного файла, заменяя в данными из полученного массива..." alt="" coords="389,107,504,133"/>
+<area shape="rect" id="node6" href="$classtemplate__old.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол&#45;во изображений" alt="" coords="206,208,341,235"/>
+<area shape="rect" id="node7" href="$classtemplate__old.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта" alt="" coords="223,259,323,285"/>
+<area shape="rect" id="node8" href="$classtemplate__old.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Функция формирует блок для входа пользователя (если в режиме &quot;Гость&quot;) или краткий вид информации о по..." alt="" coords="222,107,325,133"/>
+<area shape="rect" id="node4" href="$common_8php.html#a4ab65308b1a35d90782207614ca1d2fc" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="553,157,631,184"/>
 </map>

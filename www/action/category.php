@@ -34,7 +34,7 @@ $template_new->add_if_ar(array(
 
 if ($cat == 'user' || $cat === 0)
 {
-	if (!$work->check_get('id', TRUE, TRUE, '^[0-9]+\$') || $_GET['id'] != 'curent')
+	if (!$work->check_get('id', TRUE, TRUE, '^[0-9|curent]+\$'))
 	{
 		$action = 'user_category';
 		if ($db->select('DISTINCT `user_upload`', TBL_PHOTO, '`category` = 0', array('user_upload' => 'up')))

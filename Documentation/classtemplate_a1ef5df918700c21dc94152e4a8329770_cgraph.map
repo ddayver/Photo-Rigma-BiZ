@@ -1,9 +1,9 @@
 <map id="create_template" name="create_template">
-<area shape="rect" id="node2" href="$classtemplate.html#aeb30656300264153e8655b016d3a4278" title="Поиск файла&#45;шаблона " alt="" coords="169,5,293,32"/>
-<area shape="rect" id="node3" href="$common_8php.html#a4ab65308b1a35d90782207614ca1d2fc" title="Функция сохранения ошибок в лог&#45;файл " alt="" coords="507,107,587,133"/>
-<area shape="rect" id="node4" href="$classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Функция обработки шаблона " alt="" coords="179,157,283,184"/>
-<area shape="rect" id="node5" href="$classtemplate.html#acd334c8ab27fcd3d00d8ba5508686ad7" title="Обработка рекурсивного блока массивов&#45;объектов " alt="" coords="343,107,457,133"/>
-<area shape="rect" id="node6" href="$classtemplate.html#a3de3365a95ff83f90a9240bd22937c2a" title="Обработка блока условий вывода фрагментов шаблона " alt="" coords="357,157,443,184"/>
-<area shape="rect" id="node7" href="$classtemplate.html#a7d3049a37e00dc8ec0367256ba3a712d" title="Обработка блока выбора фрагмента для вывода в шаблон " alt="" coords="347,208,453,235"/>
-<area shape="rect" id="node8" href="$classtemplate.html#ae15268c9b3b621eda2bac241d3ecf408" title="Замена ссылок на более читаемый вид " alt="" coords="341,259,459,285"/>
+<area shape="rect" id="node2" href="$classtemplate.html#aeb30656300264153e8655b016d3a4278" title="Поиск файла&#45;шаблона" alt="" coords="168,5,291,32"/>
+<area shape="rect" id="node3" href="$common_8php.html#a4ab65308b1a35d90782207614ca1d2fc" title="Функция сохранения ошибок в лог&#45;файл" alt="" coords="502,107,581,133"/>
+<area shape="rect" id="node4" href="$classtemplate.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Функция обработки шаблона" alt="" coords="178,157,281,184"/>
+<area shape="rect" id="node5" href="$classtemplate.html#acd334c8ab27fcd3d00d8ba5508686ad7" title="Обработка рекурсивного блока массивов&#45;объектов" alt="" coords="339,107,453,133"/>
+<area shape="rect" id="node6" href="$classtemplate.html#a3de3365a95ff83f90a9240bd22937c2a" title="Обработка блока условий вывода фрагментов шаблона" alt="" coords="353,157,439,184"/>
+<area shape="rect" id="node7" href="$classtemplate.html#a7d3049a37e00dc8ec0367256ba3a712d" title="Обработка блока выбора фрагмента для вывода в шаблон" alt="" coords="343,208,449,235"/>
+<area shape="rect" id="node8" href="$classtemplate.html#ae15268c9b3b621eda2bac241d3ecf408" title="Замена ссылок на более читаемый вид" alt="" coords="339,259,453,285"/>
 </map>

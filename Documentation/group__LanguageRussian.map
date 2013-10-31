@@ -1,10 +1,10 @@
 <map id="Языковые переменные русского языка" name="Языковые переменные русского языка">
-<area shape="rect" id="node1" href="$group__LanguageRussianMain.html" title="Основные языковые\l переменные" alt="" coords="218,5,361,46"/>
-<area shape="rect" id="node2" href="$group__LanguageRussianNews.html" title="Переменные\l для новостей\l сайта" alt="" coords="237,71,342,127"/>
-<area shape="rect" id="node3" href="$group__LanguageRussianSearch.html" title="Переменные\l для страницы\l поиска" alt="" coords="236,151,343,207"/>
-<area shape="rect" id="node4" href="$group__LanguageRussianAdmin.html" title="Переменные\l для Админки" alt="" coords="239,231,340,273"/>
-<area shape="rect" id="node6" href="$group__LanguageRussianMenu.html" title="Переменные\l для пунктов\l меню сайта" alt="" coords="241,297,338,353"/>
-<area shape="rect" id="node7" href="$group__LanguageRussianPhoto.html" title="Переменные\l для процедур\l вывода, обработки,\l оценки изображений" alt="" coords="214,378,365,449"/>
-<area shape="rect" id="node8" href="$group__LanguageRussianCategory.html" title="Переменные\l для процедур\l обзора и управления\l разделами" alt="" coords="214,473,365,543"/>
-<area shape="rect" id="node9" href="$group__LanguageRussianLogin.html" title="Переменные\l для процедур\l регистрации\l и восстановления\l пароля" alt="" coords="223,568,355,653"/>
+<area shape="rect" id="node1" href="$group__LanguageRussianMain.html" title="Основные языковые\l переменные" alt="" coords="214,5,357,46"/>
+<area shape="rect" id="node2" href="$group__LanguageRussianNews.html" title="Переменные\l для новостей\l сайта" alt="" coords="234,356,337,412"/>
+<area shape="rect" id="node3" href="$group__LanguageRussianSearch.html" title="Переменные\l для страницы\l поиска" alt="" coords="233,532,338,588"/>
+<area shape="rect" id="node4" href="$group__LanguageRussianAdmin.html" title="Переменные\l для Админки" alt="" coords="235,613,336,654"/>
+<area shape="rect" id="node6" href="$group__LanguageRussianMenu.html" title="Переменные\l для пунктов\l меню сайта" alt="" coords="237,71,334,127"/>
+<area shape="rect" id="node8" href="$group__LanguageRussianCategory.html" title="Переменные\l для процедур\l обзора и управления\l разделами" alt="" coords="212,151,359,222"/>
+<area shape="rect" id="node9" href="$group__LanguageRussianLogin.html" title="Переменные\l для процедур\l регистрации\l и восстановления\l пароля" alt="" coords="221,247,349,332"/>
+<area shape="rect" id="node7" href="$group__LanguageRussianPhoto.html" title="Переменные\l для процедур\l вывода, обработки,\l оценки изображений" alt="" coords="211,437,359,507"/>
 </map>

@@ -1,8 +1,8 @@
 <map id="clean_field" name="clean_field">
-<area shape="rect" id="node2" href="$classwork.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню " alt="" coords="155,5,253,32"/>
-<area shape="rect" id="node3" href="$classwork.html#a0d7eeafb547e659cc55e017c9282c082" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения ..." alt="" coords="155,56,253,83"/>
-<area shape="rect" id="node4" href="$classwork.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол&#45;во изображений ..." alt="" coords="137,107,271,133"/>
-<area shape="rect" id="node5" href="$classwork.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта " alt="" coords="154,157,254,184"/>
-<area shape="rect" id="node6" href="$classwork.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Функция формирует блок для входа пользователя (если в режиме &quot;Гость&quot;) или краткий вид информации о по..." alt="" coords="152,208,256,235"/>
-<area shape="rect" id="node7" href="$classwork.html#a1e65af654a4f2333ddbc9aab1bf11d70" title="Функция преобразует BBCode в HTML&#45;код (например в тексте новостей) " alt="" coords="183,259,225,285"/>
+<area shape="rect" id="node2" href="$classwork.html#adbe416bc83832ace861609647a79dc85" title="Функция генерирует меню" alt="" coords="155,5,253,32"/>
+<area shape="rect" id="node3" href="$classwork.html#a0d7eeafb547e659cc55e017c9282c082" title="Функция генерирует блок вывода последнего, лучшего, случайного или указанного изображения" alt="" coords="155,56,253,83"/>
+<area shape="rect" id="node4" href="$classwork.html#a00a3456ccd4563d05fcf39781a911ee9" title="Функция формирует список из пользователей, заливших максимальное кол&#45;во изображений" alt="" coords="137,107,271,133"/>
+<area shape="rect" id="node5" href="$classwork.html#a116ebcf799d07566a74e7e765aecc1b7" title="Функция формирует блок статистики для сайта" alt="" coords="154,157,254,184"/>
+<area shape="rect" id="node6" href="$classwork.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Функция формирует блок для входа пользователя (если в режиме &quot;Гость&quot;) или краткий вид информации о по..." alt="" coords="153,208,255,235"/>
+<area shape="rect" id="node7" href="$classwork.html#a1e65af654a4f2333ddbc9aab1bf11d70" title="Функция преобразует BBCode в HTML&#45;код (например в тексте новостей)" alt="" coords="183,259,225,285"/>
 </map>

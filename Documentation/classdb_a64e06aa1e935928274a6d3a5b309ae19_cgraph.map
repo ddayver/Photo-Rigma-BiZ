@@ -1,7 +1,7 @@
 <map id="delete" name="delete">
-<area shape="rect" id="node2" href="$classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса " alt="" coords="115,5,167,32"/>
-<area shape="rect" id="node3" href="$classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов " alt="" coords="118,56,165,83"/>
-<area shape="rect" id="node4" href="$classdb.html#ae12310cf5ed1925167ba654e52390eed" title="Функция дополнения запроса сортировкой " alt="" coords="115,107,168,133"/>
-<area shape="rect" id="node5" href="$classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов " alt="" coords="114,157,169,184"/>
-<area shape="rect" id="node6" href="$classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием " alt="" coords="112,208,171,235"/>
+<area shape="rect" id="node2" href="$classdb.html#adb40b812890a8bc058bf6b7a0e1a54d9" title="Функция очистки переменных класса" alt="" coords="113,5,167,32"/>
+<area shape="rect" id="node3" href="$classdb.html#a65de01e83d8d1ba5764f39f89823ec13" title="Функция дополнения запроса ограничением на число результатов" alt="" coords="117,56,163,83"/>
+<area shape="rect" id="node4" href="$classdb.html#ae12310cf5ed1925167ba654e52390eed" title="Функция дополнения запроса сортировкой" alt="" coords="115,107,165,133"/>
+<area shape="rect" id="node5" href="$classdb.html#a8dbd35d765e8ff0d1c34461ef67c5abf" title="Функция обработки запроса с получением предварительных результатов" alt="" coords="113,157,167,184"/>
+<area shape="rect" id="node6" href="$classdb.html#a3d91c73d66310744d20c15945cd0ccb4" title="Функция дополнения запроса условием" alt="" coords="112,208,168,235"/>
 </map>
