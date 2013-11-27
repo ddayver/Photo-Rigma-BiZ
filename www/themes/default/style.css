@@ -31,34 +31,34 @@ body {
 
 
 .polja_small {
-    background : url(img/gpadient_small.jpg) repeat-x bottom;
+    background : url(images/gpadient_small.jpg) repeat-x bottom;
   }
 
 
 .polja_small_center {
-    background : url(img/gpadient_small.jpg) repeat-x bottom;
+    background : url(images/gpadient_small.jpg) repeat-x bottom;
     text-align : center;
   }
 
 
 .polja_small_left {
-    background : url(img/gpadient_small.jpg) repeat-x bottom;
+    background : url(images/gpadient_small.jpg) repeat-x bottom;
     text-align : left;
   }
 
 
 .polja_sredni, .shapko {
-    background : url(img/gpadient_sredni.jpg) repeat-x bottom;
+    background : url(images/gpadient_sredni.jpg) repeat-x bottom;
   }
 
 
 .shapko {
-    background : url(img/shapko2.png) no-repeat right;
+    background : url(images/shapko2.png) no-repeat right;
   }
 
 
 .polja_big {
-    background : url(img/gpadient_big.jpg) repeat-x top;
+    background : url(images/gpadient_big.jpg) repeat-x top;
     padding : 0px;
     margin : 0px;
   }
@@ -99,111 +99,6 @@ body {
   }
 
 
-.menu, .menu_left, .menu_right, .menu_push, .menu_push_left, .menu_push_right, .short_menu, .short_menu_left, .short_menu_right, .short_menu_push, .short_menu_push_left, .short_menu_push_right {
-    padding : 0px;
-    margin : 0px;
-    border-width : 0px;
-    height : 24px;
-    vertical-align : middle;
-  }
-
-
-.menu_left {
-    background : url(img/menu_left.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.short_menu_left {
-    background : url(img/short_menu_left.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.menu_right {
-    background : url(img/menu_right.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.short_menu_right {
-    background : url(img/short_menu_right.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.menu {
-    background : url(img/menu.png) repeat-x;
-  }
-
-
-.short_menu {
-    background : url(img/short_menu.png) repeat-x;
-  }
-
-
-.menu_push {
-    background : url(img/menu_push.png) repeat-x;
-    color : #cccccc;
-  }
-
-
-.short_menu_push {
-    background : url(img/short_menu_push.png) repeat-x;
-    color : #cccccc;
-  }
-
-
-.menu_push_left {
-    background : url(img/menu_push_left.png) repeat-x;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.short_menu_push_left {
-    background : url(img/short_menu_push_left.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.menu_push_right {
-    background : url(img/menu_push_right.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.short_menu_push_right {
-    background : url(img/short_menu_push_right.png) no-repeat;
-    font : 1px serif;
-    width : 7px;
-  }
-
-
-.menu a, .menu  a:visited, .short_menu a, .short_menu a:visited {
-    color : #aaaaaa;
-    text-decoration : none;
-  }
-
-
-.menu a:hover, .short_menu a:hover {
-    color : #FFFFFF;
-    text-decoration : none;
-  }
-
-
-.menu a:active, .short_menu a:active {
-    color : #FF0000;
-    text-decoration : none;
-  }
-
-
 .name_block, .name_block_left, .name_block_right {
     font : bold 14px serif;
     padding : 0px;
@@ -217,21 +112,21 @@ body {
 
 
 .name_block_left {
-    background : url(img/name_block_left.png) no-repeat;
+    background : url(images/name_block_left.png) no-repeat;
     font : 3px serif;
     width : 7px;
   }
 
 
 .name_block_right {
-    background : url(img/name_block_right.png) no-repeat;
+    background : url(images/name_block_right.png) no-repeat;
     font : 1px serif;
     width : 7px;
   }
 
 
 .name_block {
-    background : url(img/name_block.png) repeat-x;
+    background : url(images/name_block.png) repeat-x;
   }
 
 

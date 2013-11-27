@@ -9,6 +9,30 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	{INSERT_HEADER}
 	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
+	<link href="{THEME_URL}jquery-ui.min.css" rel="stylesheet" type="text/css" />
+	<script src="{THEME_URL}js/jquery.min.js"></script>
+	<script src="{THEME_URL}js/jquery-ui.min.js"></script>
+ <script>
+$(function () {
+	$("button")
+		.button()
+		.click(function (event) {
+			event.preventDefault();
+		});
+	$("#set").buttonset();
+	$(".button_long")
+		.removeClass("ui-corner-all")
+		.filter(":first")
+			.addClass("ui-corner-top")
+		.end()
+		.filter(":last")
+			.addClass("ui-corner-bottom")
+		.end()
+		.button("option", "icons", {primary: "ui-icon-radio-on"});
+	$("#select").button({ disabled: true });
+	$("#vselect").button({ disabled: true }).button("option", "icons", {primary: "ui-icon-bullet"});
+});
+</script>
 </head>
 
 <body bgcolor="#141519;"{INSERT_BODY}>
@@ -16,7 +40,7 @@
 	<table class="my" width="{GALLERY_WIDHT}" cellspacing="0" cellpadding="0">
 		<tr>
            	<td class="shapko">
-				<img src="{THEME_URL}img/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}" />
+				<img src="{THEME_URL}images/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}" />
 			</td>
 		</tr>
 		<tr>
@@ -27,17 +51,18 @@
 <!-- IF_SHORT_MENU_BEGIN -->
 							<table cellpadding="0" cellspacing="0" border="0">
 								<tr>
+									<td>
+										<div id="set">
 <!-- ARRAY_SHORT_MENU_BEGIN -->
 <!-- IF_SHORT_MENU_URL_BEGIN -->
-									<td class="short_menu_left" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">&nbsp;</td>
-									<td class="short_menu" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}"><a href="{U_SHORT_MENU}" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a></td>
-									<td class="short_menu_right" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">&nbsp;</td>
+											<button onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
 <!-- IF_SHORT_MENU_URL_ELSE -->
-									<td class="short_menu_push_left">&nbsp;</td>
-									<td class="short_menu_push">{L_SHORT_MENU}</td>
-									<td class="short_menu_push_right">&nbsp;</td>
+											
+											<button id="select" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
 <!-- IF_SHORT_MENU_URL_END -->
 <!-- ARRAY_SHORT_MENU_END -->
+										</div>
+									</td>
 								</tr>
 							</table>
 <!-- IF_SHORT_MENU_ELSE -->
@@ -49,7 +74,7 @@
 								<table align="right" border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input class="form" size="50" type="text" name="search_main_text" /></td>
-										<td><input name="poisk" type="image" value="search_main_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEME_URL}img/submit_small_poisk.gif" align="middle" /></td>
+										<td><input name="poisk" type="image" value="search_main_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEME_URL}images/submit_small_poisk.gif" align="middle" /></td>
 									</tr>
 								</table>
 							</form>
@@ -67,11 +92,11 @@
                         <col />
                         <col width="{RIGHT_PANEL_WIDHT}"  />
                 	<tr class="td_spacer">
-						<td class="td_spacer" width="{LEFT_PANEL_WIDHT}"><img src="{THEME_URL}img/spacer.gif" height="1" border="0" alt="" width="{LEFT_PANEL_WIDHT}" /></td>
-						<td class="td_spacer"><img src="{THEME_URL}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer"><img src="{THEME_URL}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer"><img src="{THEME_URL}img/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer" width="{RIGHT_PANEL_WIDHT}"><img src="{THEME_URL}img/spacer.gif" height="1" border="0" alt="" width="{RIGHT_PANEL_WIDHT}" /></td>
+						<td class="td_spacer" width="{LEFT_PANEL_WIDHT}"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="{LEFT_PANEL_WIDHT}" /></td>
+						<td class="td_spacer"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="1" /></td>
+						<td class="td_spacer"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="1" /></td>
+						<td class="td_spacer"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="1" /></td>
+						<td class="td_spacer" width="{RIGHT_PANEL_WIDHT}"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="{RIGHT_PANEL_WIDHT}" /></td>
 					</tr>
 					<tr>
 						<td class="polja">
@@ -85,21 +110,19 @@
 									<td class="name_block_right">&nbsp;</td>
 								</tr>
 <!-- IF_LONG_MENU_BEGIN -->
+								<tr>
+									<td colspan="3">
+										<div id="vset">
 <!-- ARRAY_LONG_MENU_BEGIN -->
 <!-- IF_LONG_MENU_URL_BEGIN -->
-								<tr>
-									<td class="menu_left" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">&nbsp;</td>
-									<td class="menu" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}"><a href="{U_LONG_MENU}" title="{L_LONG_MENU}"><img src="{THEME_URL}img/menu_mark.gif" alt=" " border="0" height="7" />&nbsp;&nbsp;{L_LONG_MENU}</a></td>
-									<td class="menu_right" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">&nbsp;</td>
-								</tr>
+											<button style="width:100%; text-align: left;" class="button_long" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
 <!-- IF_LONG_MENU_URL_ELSE -->
-								<tr>
-									<td class="menu_push_left">&nbsp;</td>
-									<td class="menu_push"><img src="{THEME_URL}img/menu_push_mark.gif" alt=" " border="0" height="7" />&nbsp;&nbsp;{L_LONG_MENU}</td>
-									<td class="menu_push_right">&nbsp;</td>
-								</tr>
+											<button style="width:100%; text-align: left;" class="button_long" id="vselect" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
 <!-- IF_LONG_MENU_URL_END -->
 <!-- ARRAY_LONG_MENU_END -->
+										</div>
+									</td>
+								</tr>
 <!-- IF_LONG_MENU_END -->
 							</table>
 <!-- BREAK_MENU -->

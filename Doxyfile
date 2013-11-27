@@ -45,7 +45,7 @@ PROJECT_BRIEF          = Gallery_Photo-Rigma-BiZ
 # exceed 55 pixels and the maximum width should not exceed 200 pixels.
 # Doxygen will copy the logo to the output directory.
 
-PROJECT_LOGO           = ./www/themes/default/img/logo-1.png
+PROJECT_LOGO           = ./www/themes/default/images/logo-1.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute)
 # base path where the generated documentation will be put.
@@ -754,7 +754,8 @@ EXCLUDE                = www/photo-rigmabiz.webprj \
                          www/thumbnail/user/index.php \
                          www/themes/index.php \
                          www/themes/default/index.php \
-                         www/themes/default/img/index.php \
+                         www/themes/default/images/index.php \
+                         www/themes/default/js/index.php \
                          www/install/index.php
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
@@ -803,7 +804,7 @@ EXAMPLE_RECURSIVE      = NO
 # directories that contain image that are included in the documentation (see
 # the \image command).
 
-IMAGE_PATH             = www/themes/default/img \
+IMAGE_PATH             = www/themes/default/images \
                          www/gallery \
                          www/gallery/user \
                          www/thumbnail \
