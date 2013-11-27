@@ -12,15 +12,10 @@ if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
-/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
-/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-$template_TMP = TRUE;
-
-/// @cond
-$template_new->template_file = 'profile.html';
+$template->template_file = 'profile.html';
 
 if (!$work->check_get('subact', TRUE, TRUE, '^[_A-Za-z0-9-]?\$'))
 {
@@ -166,12 +161,12 @@ elseif ($subact == 'regist')
 	}
 	else
 	{
-		$template_new->add_case('PROFILE_BLOCK', 'REGIST');
+		$template->add_case('PROFILE_BLOCK', 'REGIST');
 		$title = $lang['profile']['regist'];
 		$action = 'regist';
 		$captcha = $work->gen_captcha();
 		$_SESSION['captcha'] = $captcha['answer'];
-		$template_new->add_if_ar(array(
+		$template->add_if_ar(array(
 			'ERROR_LOGIN'       => FALSE,
 			'ERROR_PASSWORD'    => FALSE,
 			'ERROR_RE_PASSWORD' => FALSE,
@@ -179,7 +174,7 @@ elseif ($subact == 'regist')
 			'ERROR_REAL_NAME'   => FALSE,
 			'ERROR_CAPTCHA'     => FALSE
 		));
-		$template_new->add_string_ar(array(
+		$template->add_string_ar(array(
 			'NAME_BLOCK'         => $lang['profile']['regist'],
 			'L_LOGIN'            => $lang['profile']['login'],
 			'L_PASSWORD'         => $lang['profile']['password'],
@@ -198,8 +193,8 @@ elseif ($subact == 'regist')
 		{
 			foreach ($_SESSION['error'] as $key => $val)
 			{
-				$template_new->add_if('ERROR_' . strtoupper($key), $val['if']);
-				$template_new->add_string_ar(array(
+				$template->add_if('ERROR_' . strtoupper($key), $val['if']);
+				$template->add_string_ar(array(
 					'D_' . strtoupper($key)       => $val['data'],
 					'D_ERROR_' . strtoupper($key) => (isset($val['text']) ? $val['text'] : '')
 				));
@@ -496,10 +491,10 @@ elseif ($subact == 'profile')
 					}
 					else log_in_file($db->error, DIE_IF_ERROR);
 
-					$template_new->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
+					$template->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
 					$title = $name_block;
-					$template_new->add_if('NEED_PASSWORD', $confirm_password);
-					$template_new->add_string_ar(array(
+					$template->add_if('NEED_PASSWORD', $confirm_password);
+					$template->add_string_ar(array(
 						'NAME_BLOCK'      => $name_block,
 						'L_LOGIN'         => $lang['profile']['login'],
 						'L_EDIT_PASSWORD' => $lang['profile']['password'],
@@ -556,9 +551,9 @@ elseif ($subact == 'profile')
 						}
 					}
 					else log_in_file($db->error, DIE_IF_ERROR);
-					$template_new->add_case('PROFILE_BLOCK', 'PROFILE_VIEW');
+					$template->add_case('PROFILE_BLOCK', 'PROFILE_VIEW');
 					$title = $name_block;
-					$template_new->add_string_ar(array(
+					$template->add_string_ar(array(
 						'NAME_BLOCK'  => $name_block,
 						'L_EMAIL'     => $lang['profile']['email'],
 						'L_REAL_NAME' => $lang['profile']['real_name'],

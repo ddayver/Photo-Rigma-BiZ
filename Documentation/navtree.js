@@ -1,7 +1,6 @@
 var NAVTREE =
 [
   [ "Photo-Rigma-BiZ", "index.html", [
-    [ "Список задач", "todo.html", null ],
     [ "Группы", "modules.html", "modules" ],
     [ "Структуры данных", null, [
       [ "Структуры данных", "annotated.html", "annotated" ],
@@ -26,7 +25,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "action_2main_8php.html",
-"language_2russian_2main_8php.html#ga422e12785b140ede32f59180de3d20c8"
+"language_2russian_2main_8php.html#ga586e54c0700ef4562be435e2b45b8cab"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

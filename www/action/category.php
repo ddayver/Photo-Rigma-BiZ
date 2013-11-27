@@ -12,19 +12,14 @@ if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
-/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
-/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-$template_TMP = TRUE;
-
-/// @cond
-$template_new->template_file = 'category.html';
+$template->template_file = 'category.html';
 
 if (!$work->check_get('cat', TRUE, TRUE)) $cat = FALSE;
 else $cat = $_GET['cat'];
-$template_new->add_if_ar(array(
+$template->add_if_ar(array(
 	'ISSET_CATEGORY' => FALSE,
 	'EDIT_BLOCK'     => FALSE,
 	'ISSET_PIC'      => FALSE,
@@ -40,7 +35,7 @@ if ($cat == 'user' || $cat === 0)
 		if ($db->select('DISTINCT `user_upload`', TBL_PHOTO, '`category` = 0', array('user_upload' => 'up')))
 		{
 			$temp = $db->res_arr();
-			$template_new->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
+			$template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 			if ($temp)
 			{
 				foreach ($temp as $key => $val)
@@ -51,7 +46,7 @@ if ($cat == 'user' || $cat === 0)
 						if ($temp2)
 						{
 							$temp_category = $work->category($val['user_upload'], 1);
-							$template_new->add_string_ar(array(
+							$template->add_string_ar(array(
 									'D_NAME_CATEGORY'        => $temp_category['name'],
 									'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
 									'D_COUNT_PHOTO'          => $temp_category['count_photo'],
@@ -72,8 +67,8 @@ if ($cat == 'user' || $cat === 0)
 					$temp2 = $db->res_row();
 					if ($temp2)
 					{
-						$template_new->add_if('ISSET_CATEGORY', TRUE);
-						$template_new->add_string_ar(array(
+						$template->add_if('ISSET_CATEGORY', TRUE);
+						$template->add_string_ar(array(
 							'NAME_BLOCK'             => $lang['category']['users_album'],
 							'L_NAME_CATEGORY'        => $temp2['name'],
 							'L_DESCRIPTION_CATEGORY' => $temp2['description'],
@@ -88,7 +83,7 @@ if ($cat == 'user' || $cat === 0)
 			}
 			else
 			{
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 					'NAME_BLOCK'             => $lang['category']['users_album'],
 					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . $lang['category']['of_category'],
 					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . $lang['category']['of_category'],
@@ -110,14 +105,14 @@ if ($cat == 'user' || $cat === 0)
 		if ($db->select('id', TBL_PHOTO, '`category` = 0 AND `user_upload` = ' . $cat_id, array('date_upload' => 'down')))
 		{
 			$temp = $db->res_arr();
-			$template_new->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
+			$template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 			if ($temp && $user->user['pic_view'] == TRUE)
 			{
-				$template_new->add_if('ISSET_PIC', TRUE);
+				$template->add_if('ISSET_PIC', TRUE);
 				foreach ($temp as $key => $val)
 				{
 					$temp_category = $work->create_photo('cat', $val['id']);
-					$template_new->add_string_ar(array(
+					$template->add_string_ar(array(
 							'L_USER_ADD'           => $lang['main']['user_add'],
 							'MAX_PHOTO_HEIGHT'     => $work->config['temp_photo_h'] + 10,
 							'PHOTO_WIDTH'          => $temp_category['width'],
@@ -130,7 +125,7 @@ if ($cat == 'user' || $cat === 0)
 							'U_PHOTO'              => $temp_category['url'],
 							'U_PROFILE_USER_ADD'   => $temp_category['url_user']
 						), 'LIST_PIC[' . $key . ']');
-					if ($temp_category['url_user'] !== NULL) $template_new->add_if('USER_EXISTS', TRUE, 'LIST_PIC[' . $key . ']');
+					if ($temp_category['url_user'] !== NULL) $template->add_if('USER_EXISTS', TRUE, 'LIST_PIC[' . $key . ']');
 				}
 				if ($db->select('real_name', TBL_USERS, '`id` = ' . $cat_id))
 				{
@@ -142,7 +137,7 @@ if ($cat == 'user' || $cat === 0)
 							$temp2 = $db->res_row();
 							if ($temp2)
 							{
-								$template_new->add_string_ar(array(
+								$template->add_string_ar(array(
 									'L_NAME_BLOCK'        => $lang['category']['category'] . ' - ' . $temp2['name'] . ' ' . $temp_user['real_name'],
 									'L_DESCRIPTION_BLOCK' => $temp2['description'] . ' ' . $temp_user['real_name']
 								));
@@ -157,7 +152,7 @@ if ($cat == 'user' || $cat === 0)
 			}
 			else
 			{
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 					'L_NAME_BLOCK'        => $lang['category']['name_block'],
 					'L_DESCRIPTION_BLOCK' => $lang['category']['error_no_category'],
 					'L_NO_PHOTO'          => $lang['category']['error_no_photo']
@@ -196,14 +191,14 @@ elseif ($work->check_get('cat', TRUE, TRUE, '^[0-9]+\$'))
 		if ($db->select('*', TBL_CATEGORY, '`id` = ' . $cat))
 		{
 			$temp = $db->res_row();
-			$template_new->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
+			$template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
 			if ($temp)
 			{
-				$template_new->add_if_ar(array(
+				$template->add_if_ar(array(
 					'ISSET_CATEGORY' => TRUE,
 					'CATEGORY_EDIT'  => TRUE
 				));
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 					'L_NAME_BLOCK'           => $lang['category']['edit'] . ' - ' . $temp['name'],
 					'L_NAME_DIR'             => $lang['category']['cat_dir'],
 					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . ' ' . $lang['category']['of_category'],
@@ -217,7 +212,7 @@ elseif ($work->check_get('cat', TRUE, TRUE, '^[0-9]+\$'))
 			}
 			else
 			{
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 					'L_NAME_BLOCK'  => $lang['category']['error_no_category'],
 					'L_NO_CATEGORY' => $lang['category']['error_no_category']
 				));
@@ -281,14 +276,14 @@ elseif ($work->check_get('cat', TRUE, TRUE, '^[0-9]+\$'))
 		if ($db->select('id', TBL_PHOTO, '`category` = ' . $cat, array('date_upload' => 'down')))
 		{
 			$temp = $db->res_arr();
-			$template_new->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
+			$template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 			if ($temp && $user->user['pic_view'] == TRUE)
 			{
-				$template_new->add_if('ISSET_PIC', TRUE);
+				$template->add_if('ISSET_PIC', TRUE);
 				foreach ($temp as $key => $val)
 				{
 					$temp_category = $work->create_photo('cat', $val['id']);
-					$template_new->add_string_ar(array(
+					$template->add_string_ar(array(
 							'L_USER_ADD'           => $lang['main']['user_add'],
 							'MAX_PHOTO_HEIGHT'     => $work->config['temp_photo_h'] + 10,
 							'PHOTO_WIDTH'          => $temp_category['width'],
@@ -301,15 +296,15 @@ elseif ($work->check_get('cat', TRUE, TRUE, '^[0-9]+\$'))
 							'U_PHOTO'              => $temp_category['url'],
 							'U_PROFILE_USER_ADD'   => $temp_category['url_user']
 						), 'LIST_PIC[' . $key . ']');
-					if ($temp_category['url_user'] !== NULL) $template_new->add_if('USER_EXISTS', TRUE, 'LIST_PIC[' . $key . ']');
+					if ($temp_category['url_user'] !== NULL) $template->add_if('USER_EXISTS', TRUE, 'LIST_PIC[' . $key . ']');
 				}
 				if ($db->select(array('name', 'description'), TBL_CATEGORY, '`id` = ' . $cat))
 				{
 					$temp2 = $db->res_row();
 					if ($temp2)
 					{
-						$template_new->add_if('EDIT_BLOCK', $user->user['cat_moderate']);
-						$template_new->add_string_ar(array(
+						$template->add_if('EDIT_BLOCK', $user->user['cat_moderate']);
+						$template->add_string_ar(array(
 							'L_NAME_BLOCK'           => $lang['category']['category'] . ' - ' . $temp2['name'],
 							'L_DESCRIPTION_BLOCK'    => $temp2['description'],
 							'L_EDIT_BLOCK'           => $lang['category']['edit'],
@@ -344,8 +339,8 @@ elseif ($work->check_get('cat', TRUE, TRUE, '^[0-9]+\$'))
 					}
 				}
 				else log_in_file($db->error, DIE_IF_ERROR);
-				$template_new->add_if('EDIT_BLOCK', $if_edit);
-				$template_new->add_string_ar(array(
+				$template->add_if('EDIT_BLOCK', $if_edit);
+				$template->add_string_ar(array(
 					'L_NAME_BLOCK'           => $category_name,
 					'L_DESCRIPTION_BLOCK'    => $category_description,
 					'L_EDIT_BLOCK'           => $lang['category']['edit'],
@@ -365,9 +360,9 @@ else
 	if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'add' && $user->user['cat_moderate'] == TRUE)
 	{
 		$action = 'add_category';
-		$template_new->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
-		$template_new->add_if('ISSET_CATEGORY', TRUE);
-		$template_new->add_string_ar(array(
+		$template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
+		$template->add_if('ISSET_CATEGORY', TRUE);
+		$template->add_string_ar(array(
 			'L_NAME_BLOCK'           => $lang['category']['add'],
 			'L_NAME_DIR'             => $lang['category']['cat_dir'],
 			'L_NAME_CATEGORY'        => $lang['main']['name_of'] . ' ' . $lang['category']['of_category'],
@@ -446,13 +441,13 @@ else
 		if ($db->select('id', TBL_CATEGORY, '`id` != 0'))
 		{
 			$temp = $db->res_arr();
-			$template_new->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
+			$template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 			if ($temp)
 			{
 				foreach ($temp as $key => $val)
 				{
 					$temp_category = $work->category($val['id'], 0);
-					$template_new->add_string_ar(array(
+					$template->add_string_ar(array(
 							'D_NAME_CATEGORY'        => $temp_category['name'],
 							'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
 							'D_COUNT_PHOTO'          => $temp_category['count_photo'],
@@ -464,7 +459,7 @@ else
 						), 'LIST_CATEGORY[' . $key . ']');
 				}
 				$temp_category = $work->category(0, 0);
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 						'D_NAME_CATEGORY'        => $temp_category['name'],
 						'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
 						'D_COUNT_PHOTO'          => $temp_category['count_photo'],
@@ -475,8 +470,8 @@ else
 						'U_TOP_PHOTO'            => $temp_category['url_top_photo']
 					), 'LIST_CATEGORY[' . ++$key . ']');
 
-				$template_new->add_if('ISSET_CATEGORY', TRUE);
-				$template_new->add_string_ar(array(
+				$template->add_if('ISSET_CATEGORY', TRUE);
+				$template->add_string_ar(array(
 					'NAME_BLOCK'             => $lang['category']['name_block'],
 					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . $lang['category']['of_category'],
 					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . $lang['category']['of_category'],
@@ -487,7 +482,7 @@ else
 			}
 			else
 			{
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 					'NAME_BLOCK'             => $lang['category']['name_block'],
 					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . $lang['category']['of_category'],
 					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . $lang['category']['of_category'],

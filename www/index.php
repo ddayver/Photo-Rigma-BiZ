@@ -3,7 +3,7 @@
  * @file        index.php
  * @brief       Основной файл сервера.
  * @author      Dark Dayver
- * @version     0.1.1
+ * @version     0.2.0
  * @date        27/03-2012
  * @details     Используется для подключения как классов, так и вызываемых модулей.
  */
@@ -11,9 +11,6 @@
 /// @cond
 define('IN_GALLERY', TRUE); // Используется для дальнейшей проверки в файлах, что они подключены через index.php, а не вызваны напрямую.
 /// @endcond
-
-/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-$template_TMP = FALSE; // Заглушка
 
 include_once('config.php'); // Подключаем файл редактируемых пользователем настроек
 
@@ -41,8 +38,7 @@ include_once($config['inc_dir'] . 'template.php');
  * @brief Создание объекта класса template
  * @see   template, work::$config
  */
-$template = new template_old($config['site_url'], $config['site_dir'], $work->config['themes']);
-$template_new = new template($config['site_url'], $config['site_dir'], $work->config['themes']);
+$template = new template($config['site_url'], $config['site_dir'], $work->config['themes']);
 
 include_once($config['inc_dir'] . 'user.php');
 /**
@@ -68,19 +64,13 @@ $action = 'main';
 if ($work->check_get('action', TRUE, TRUE) && $_GET['action'] != 'index' && !$work->url_check() && file_exists($work->config['site_dir'] . 'action/' . $action . '.php')) $action = $_GET['action'];
 include_once($config['site_dir'] . 'action/' . $action . '.php');
 
-/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-if ($template_TMP) // Заглушка
-{ // Заглушка
-
-	$template_new->create_template();
-
-	if ($header_footer)
-	{
-		$template_new->page_header($title);
-		$template_new->page_footer();
-	}
-	if ($template_output) echo $template_new->content;
-} // Заглушка
+$template->create_template();
+if ($header_footer)
+{
+	$template->page_header($title);
+	$template->page_footer();
+}
+if ($template_output) echo $template->content;
 /// @endcond
 // Документация для описани директорий (для DoxyGen)
 /** @dir action

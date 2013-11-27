@@ -12,14 +12,9 @@ if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
-/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
-/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-$template_TMP = TRUE;
-
-/// @cond
 if (!$work->check_get('id', TRUE, TRUE, '^[0-9]+\$') || $user->user['pic_view'] != TRUE) $photo_id = 0;
 else $photo_id = $_GET['id'];
 
@@ -45,10 +40,10 @@ if ($db->select(array('file', 'category'), TBL_PHOTO, '`id` = ' . $photo_id))
 }
 else log_in_file($db->error, DIE_IF_ERROR);
 
-$template_new->template_file = 'photo.html';
+$template->template_file = 'photo.html';
 $max_photo_w = $work->config['max_photo_w'];
 $max_photo_h = $work->config['max_photo_h'];
-$template_new->add_if_ar(array(
+$template->add_if_ar(array(
 	'EDIT_BLOCK' => FALSE,
 	'RATE_PHOTO' => FALSE,
 	'RATE_USER'  => FALSE,
@@ -201,7 +196,7 @@ if ($photo_id != 0)
 
 					if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == "edit" && (($temp_photo['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == TRUE))
 					{
-						$template_new->add_case('PHOTO_BLOCK', 'EDIT_PHOTO');
+						$template->add_case('PHOTO_BLOCK', 'EDIT_PHOTO');
 						if ($db->select('*', TBL_PHOTO, '`id` = ' . $photo_id))
 						{
 							$temp_photo = $db->res_row();
@@ -242,7 +237,7 @@ if ($photo_id != 0)
 													if ($val['id'] == $temp_photo['category']) $selected = ' selected="selected"';
 													else $selected = '';
 													if ($val['id'] == 0) $val['name'] .= ' ' . $photo['user'];
-													$template_new->add_string_ar(array(
+													$template->add_string_ar(array(
 															'D_ID_CATEGORY'   => $val['id'],
 															'D_NAME_CATEGORY' => $val['name'],
 															'D_SELECTED'      => $selected
@@ -250,7 +245,7 @@ if ($photo_id != 0)
 												}
 												$max_photo_w = $work->config['temp_photo_w'];
 												$max_photo_h = $work->config['temp_photo_h'];
-												$template_new->add_string_ar(array(
+												$template->add_string_ar(array(
 													'L_NAME_BLOCK'        => $lang['photo']['edit'] . ' - ' . $temp_photo['name'],
 													'L_NAME_PHOTO'        => $lang['main']['name_of'] . ' ' . $lang['photo']['of_photo'],
 													'L_DESCRIPTION_PHOTO' => $lang['main']['description_of'] . ' ' . $lang['photo']['of_photo'],
@@ -350,8 +345,8 @@ if ($photo_id != 0)
 									$temp_category = $db->res_row();
 									if ($temp_category)
 									{
-										$template_new->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
-										$template_new->add_string_ar(array(
+										$template->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
+										$template->add_string_ar(array(
 											'L_NAME_BLOCK'           => $lang['photo']['title'] . ' - ' . $temp_photo['name'],
 											'L_DESCRIPTION_BLOCK'    => $temp_photo['description'],
 											'L_USER_ADD'             => $lang['main']['user_add'],
@@ -365,28 +360,28 @@ if ($photo_id != 0)
 
 										if (($temp_photo['user_upload'] == $user->user['id'] && $user->user['id'] != 0) || $user->user['pic_moderate'] == TRUE)
 										{
-											$template_new->add_string_ar(array(
+											$template->add_string_ar(array(
 												'L_EDIT_BLOCK'           => $lang['photo']['edit'],
 												'L_CONFIRM_DELETE_BLOCK' => $lang['photo']['confirm_delete'] . ' ' . $temp_photo['name'],
 												'L_DELETE_BLOCK'         => $lang['photo']['delete'],
 												'U_EDIT_BLOCK'           => $work->config['site_url'] . '?action=photo&amp;subact=edit&amp;id=' . $temp_photo['id'],
 												'U_DELETE_BLOCK'         => $work->config['site_url'] . '?action=photo&amp;subact=delete&amp;id=' . $temp_photo['id']
 											));
-											$template_new->add_if('EDIT_BLOCK', TRUE);
+											$template->add_if('EDIT_BLOCK', TRUE);
 										}
 										if ($db->select('real_name', TBL_USERS, '`id` = ' . $temp_photo['user_upload']))
 										{
 											$user_add = $db->res_row();
 											if ($user_add)
 											{
-												$template_new->add_string_ar(array(
+												$template->add_string_ar(array(
 													'D_USER_ADD' => $user_add['real_name'],
 													'U_USER_ADD' => $work->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $temp_photo['user_upload']
 												));
 											}
 											else
 											{
-												$template_new->add_string_ar(array(
+												$template->add_string_ar(array(
 													'D_USER_ADD' => $lang['main']['no_user_add'],
 													'U_USER_ADD' => ''
 												));
@@ -395,7 +390,7 @@ if ($photo_id != 0)
 										else log_in_file($db->error, DIE_IF_ERROR);
 										if ($temp_category['id'] == 0)
 										{
-											$template_new->add_string_ar(array(
+											$template->add_string_ar(array(
 												'D_NAME_CATEGORY'        => $temp_category['name'] . ' ' . $user_add['real_name'],
 												'D_DESCRIPTION_CATEGORY' => $temp_category['description'] . ' ' . $user_add['real_name'],
 												'U_CATEGORY'             => $work->config['site_url'] . '?action=category&amp;cat=user&amp;id=' . $temp_photo['user_upload']
@@ -403,13 +398,13 @@ if ($photo_id != 0)
 										}
 										else
 										{
-											$template_new->add_string_ar(array(
+											$template->add_string_ar(array(
 												'D_NAME_CATEGORY'        => $temp_category['name'],
 												'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
 												'U_CATEGORY'             => $work->config['site_url'] . '?action=category&amp;cat=' . $temp_category['id']
 											));
 										}
-										$template_new->add_string_ar(array(
+										$template->add_string_ar(array(
 											'D_RATE_USER'  => $lang['photo']['rate_user'] . ': ' . $temp_photo['rate_user'],
 											'D_RATE_MODER' => $lang['photo']['rate_moder'] . ': ' . $temp_photo['rate_moder']
 										));
@@ -424,13 +419,13 @@ if ($photo_id != 0)
 											else log_in_file($db->error, DIE_IF_ERROR);
 											if ($user_rate !== FALSE)
 											{
-												$template_new->add_if('RATE_USER', TRUE);
+												$template->add_if('RATE_USER', TRUE);
 												$key = 0;
 												for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++)
 												{
 													if ($i == 0) $selected = ' selected="selected"';
 													else $selected = '';
-													$template_new->add_string_ar(array(
+													$template->add_string_ar(array(
 															'D_LVL_RATE' => $i,
 															'D_SELECTED' => $selected
 														), 'SELECT_USER_RATE[' . $key . ']');
@@ -454,13 +449,13 @@ if ($photo_id != 0)
 											else log_in_file($db->error, DIE_IF_ERROR);
 											if ($moder_rate !== FALSE)
 											{
-												$template_new->add_if('RATE_MODER', TRUE);
+												$template->add_if('RATE_MODER', TRUE);
 												$key = 0;
 												for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++)
 												{
 													if ($i == 0) $selected = ' selected="selected"';
 													else $selected = '';
-													$template_new->add_string_ar(array(
+													$template->add_string_ar(array(
 															'D_LVL_RATE' => $i,
 															'D_SELECTED' => $selected
 														), 'SELECT_MODER_RATE[' . $key . ']');
@@ -475,8 +470,8 @@ if ($photo_id != 0)
 
 										if ((($user->user['pic_rate_user'] == TRUE || $user->user['pic_rate_moder'] == TRUE) && $temp_photo['user_upload'] != $user->user['id']) && ($user_rate !== FALSE || $moder_rate !== FALSE))
 										{
-											$template_new->add_if('RATE_PHOTO', TRUE);
-											$template_new->add_string_ar(array(
+											$template->add_if('RATE_PHOTO', TRUE);
+											$template->add_string_ar(array(
 												'L_RATE'       => $lang['photo']['rate_you'],
 												'L_USER_RATE'  => $lang['photo']['if_user'],
 												'L_MODER_RATE' => $lang['photo']['if_moder'],
@@ -506,7 +501,7 @@ else
 {
 	if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == "upload" && $user->user['id'] != 0 && $user->user['pic_upload'] == TRUE)
 	{
-		$template_new->add_case('PHOTO_BLOCK', 'UPLOAD_PHOTO');
+		$template->add_case('PHOTO_BLOCK', 'UPLOAD_PHOTO');
 		$max_size_php = $work->return_bytes(ini_get('post_max_size'));
 		$max_size = $work->return_bytes($work->config['max_file_size']);
 		if ($max_size > $max_size_php) $max_size = $max_size_php;
@@ -526,13 +521,13 @@ else
 						$selected = ' selected="selected"';
 					}
 					else $selected = '';
-					$template_new->add_string_ar(array(
+					$template->add_string_ar(array(
 							'D_ID_CATEGORY'   => $val['id'],
 							'D_NAME_CATEGORY' => $val['name'],
 							'D_SELECTED'      => $selected
 						), 'UPLOAD_CATEGORY[' . $key . ']');
 				}
-				$template_new->add_string_ar(array(
+				$template->add_string_ar(array(
 					'L_NAME_BLOCK'        => $lang['photo']['title'] . ' - ' . $lang['photo']['upload'],
 					'L_NAME_PHOTO'        => $lang['main']['name_of'] . ' ' . $lang['photo']['of_photo'],
 					'L_DESCRIPTION_PHOTO' => $lang['main']['description_of'] . ' ' . $lang['photo']['of_photo'],
@@ -592,7 +587,7 @@ else
 					{
 						$photo['path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_category['folder'] . '/' . $file_name;
 						$photo['thumbnail_path'] = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_category['folder'] . '/' . $file_name;
-						if (move_uploaded_file($_FILES['file_photo']['tmp_name'], $photo['path'])) $template->image_resize($photo['path'], $photo['thumbnail_path']);
+						if (move_uploaded_file($_FILES['file_photo']['tmp_name'], $photo['path'])) $work->image_resize($photo['path'], $photo['thumbnail_path']);
 						else $submit_upload = FALSE;
 					}
 					else $submit_upload = FALSE;
@@ -633,9 +628,9 @@ else
 	}
 	else
 	{
-		$template_new->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
+		$template->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
 		$temp_photo['file'] = 'no_foto.png';
-		$template_new->add_string_ar(array(
+		$template->add_string_ar(array(
 			'L_NAME_BLOCK'           => $lang['photo']['title'] . ' - ' . $lang['main']['no_foto'],
 			'L_DESCRIPTION_BLOCK'    => $lang['main']['no_foto'],
 			'L_USER_ADD'             => $lang['main']['user_add'],
@@ -684,7 +679,7 @@ if (!$work->check_get('subact', TRUE, TRUE, '^[upload|uploaded]\$'))
 			$photo['height'] = $size[1] / $ratioWidth;
 		}
 	}
-	$template_new->add_string_ar(array(
+	$template->add_string_ar(array(
 		'D_FOTO_WIDTH'  => $photo['width'],
 		'D_FOTO_HEIGHT' => $photo['height']
 	));

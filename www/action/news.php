@@ -12,15 +12,10 @@ if (IN_GALLERY !== TRUE)
 {
 	die('HACK!');
 }
-/// @endcond
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
-/// \todo Убрать заглушку после перехода на новый класс формирования шаблонов
-$template_TMP = TRUE;
-
-/// @cond
-$template_new->template_file = 'news.html';
+$template->template_file = 'news.html';
 
 $title = $lang['news']['title'];
 $action = '';
@@ -105,7 +100,7 @@ if ($subact == 'edit' && $news !== FALSE && ($user->user['news_moderate'] == TRU
 		$temp = $db->res_row();
 		if ($temp)
 		{
-			$template_new->add_if_ar(array(
+			$template->add_if_ar(array(
 				'NEED_USER'   => TRUE,
 				'USER_EXISTS' => FALSE
 			));
@@ -114,8 +109,8 @@ if ($subact == 'edit' && $news !== FALSE && ($user->user['news_moderate'] == TRU
 				$user_add = $db->res_row();
 				if ($user_add)
 				{
-					$template_new->add_if('USER_EXISTS', TRUE);
-					$template_new->add_string_ar(array(
+					$template->add_if('USER_EXISTS', TRUE);
+					$template->add_string_ar(array(
 						'D_REAL_NAME_USER_POST' => $user_add['real_name'],
 						'U_PROFILE_USER_POST'   => $work->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $temp['user_post']
 					));
@@ -125,8 +120,8 @@ if ($subact == 'edit' && $news !== FALSE && ($user->user['news_moderate'] == TRU
 			}
 			else log_in_file($db->error, DIE_IF_ERROR);
 
-			$template_new->add_case('NEWS_BLOCK', 'NEWS_SAVE');
-			$template_new->add_string_ar(array(
+			$template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
+			$template->add_string_ar(array(
 				'NAME_BLOCK'  => $lang['main']['edit_news'] . ' - ' . $temp['name_post'],
 				'L_NAME_USER' => $user_add,
 				'L_NAME_POST' => $lang['news']['name_post'],
@@ -156,9 +151,9 @@ elseif ($subact == 'add' && $news === FALSE && $user->user['news_add'] == TRUE)
 	$title = $lang['news']['add_post'];
 	$action = 'news_add';
 
-	$template_new->add_case('NEWS_BLOCK', 'NEWS_SAVE');
-	$template_new->add_if('NEED_USER', FALSE);
-	$template_new->add_string_ar(array(
+	$template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
+	$template->add_if('NEED_USER', FALSE);
+	$template->add_string_ar(array(
 		'NAME_BLOCK'  => $lang['news']['add_post'],
 		'L_NAME_USER' => '',
 		'L_NAME_POST' => $lang['news']['name_post'],
@@ -179,13 +174,13 @@ else
 		$news = $work->news($news, 'id');
 		foreach ($news as $key => $val)
 		{
-			$template_new->add_case('NEWS_BLOCK', 'LAST_NEWS');
-			$template_new->add_string_ar(array(
+			$template->add_case('NEWS_BLOCK', 'LAST_NEWS');
+			$template->add_string_ar(array(
 				'L_TITLE_NEWS_BLOCK' => $lang['main']['title_news'] . ' - ' . $val['name_post'],
 				'L_NEWS_DATA'        => $lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
 				'L_TEXT_POST'        => trim(nl2br($work->ubb($val['text_post'])))
 			), 'LAST_NEWS[0]');
-			$template_new->add_if_ar(array(
+			$template->add_if_ar(array(
 				'USER_EXISTS' => FALSE,
 				'EDIT_SHORT'  => FALSE,
 				'EDIT_LONG'   => FALSE
@@ -195,8 +190,8 @@ else
 				$user_add = $db->res_row();
 				if ($user_add)
 				{
-					$template_new->add_if('USER_EXISTS', TRUE, 'LAST_NEWS[0]');
-					$template_new->add_string_ar(array(
+					$template->add_if('USER_EXISTS', TRUE, 'LAST_NEWS[0]');
+					$template->add_string_ar(array(
 						'L_USER_ADD'            => $lang['main']['user_add'],
 						'U_PROFILE_USER_POST'   => $work->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $val['user_post'],
 						'D_REAL_NAME_USER_POST' => $user_add['real_name']
@@ -207,8 +202,8 @@ else
 
 			if ($user->user['news_moderate'] == TRUE || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post']))
 			{
-				$template_new->add_if('EDIT_LONG', TRUE, 'LAST_NEWS[0]');
-				$template_new->add_string_ar(array(
+				$template->add_if('EDIT_LONG', TRUE, 'LAST_NEWS[0]');
+				$template->add_string_ar(array(
 					'L_EDIT_BLOCK'           => $lang['main']['edit_news'],
 					'L_DELETE_BLOCK'         => $lang['main']['delete_news'],
 					'L_CONFIRM_DELETE_BLOCK' => $lang['main']['confirm_delete_news'] . ' ' . $val['name_post'] . '?',
@@ -222,7 +217,7 @@ else
 	}
 	else
 	{
-		$template_new->add_case('NEWS_BLOCK', 'LIST_NEWS');
+		$template->add_case('NEWS_BLOCK', 'LIST_NEWS');
 		if (!$work->check_get('y', TRUE, TRUE, '^[0-9]{4}\$', TRUE))
 		{
 			$action = 'news';
@@ -245,13 +240,13 @@ else
 							else $temp2 = 0;
 						}
 						else log_in_file($db->error, DIE_IF_ERROR);
-						$template_new->add_string_ar(array(
+						$template->add_string_ar(array(
 								'L_LIST_DATA'  => $val['year'] . ' (' . $temp2 . ')',
 								'L_LIST_TITLE' => $val['year'] . ' (' . $lang['news']['num_news'] . ': ' . $temp2 . ')',
 								'U_LIST_URL'   => $work->config['site_url'] . '?action=news&amp;y=' . $val['year']
 							), 'LIST_NEWS[' . $key . ']');
 					}
-					$template_new->add_string_ar(array(
+					$template->add_string_ar(array(
 						'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
 						'L_NEWS_DATA'        => $lang['news']['news'] . ' ' . $lang['news']['on_years']
 					));
@@ -285,13 +280,13 @@ else
 								else $temp2 = 0;
 							}
 							else log_in_file($db->error, DIE_IF_ERROR);
-							$template_new->add_string_ar(array(
+							$template->add_string_ar(array(
 									'L_LIST_DATA'  => $lang['news'][$val['month']] . ' (' . $temp2 . ')',
 									'L_LIST_TITLE' => $lang['news'][$val['month']] . ' (' . $lang['news']['num_news'] . ': ' . $temp2 . ')',
 									'U_LIST_URL'   => $work->config['site_url'] . '?action=news&amp;y=' . $year . '&amp;m=' . $val['month']
 								), 'LIST_NEWS[' . $key . ']');
 						}
-						$template_new->add_string_ar(array(
+						$template->add_string_ar(array(
 							'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
 							'L_NEWS_DATA'        => $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $year . ' ' . $lang['news']['on_month']
 						));
@@ -316,13 +311,13 @@ else
 					{
 						foreach ($temp as $key => $val)
 						{
-							$template_new->add_string_ar(array(
+							$template->add_string_ar(array(
 									'L_LIST_DATA'  => $val['name_post'],
 									'L_LIST_TITLE' => substr($work->clean_field($val['text_post']), 0, 100) . '...',
 									'U_LIST_URL'   => $work->config['site_url'] . '?action=news&amp;news=' . $val['id']
 								), 'LIST_NEWS[' . $key . ']');
 						}
-						$template_new->add_string_ar(array(
+						$template->add_string_ar(array(
 							'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
 							'L_NEWS_DATA'        => $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news']['years']
 						));

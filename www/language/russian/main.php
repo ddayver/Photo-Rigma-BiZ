@@ -3,7 +3,7 @@
  * @file        language/russian/main.php
  * @brief       Переменные языка для основной страницы сайта (русский)
  * @author      Dark Dayver
- * @version     0.1.1
+ * @version     0.2.0
  * @date        27/03-2012
  * @details     Содержит переменные языка для основной страницы сайта (русский). Более подробная информация в группе @ref LanguageRussian
  */
