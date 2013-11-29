@@ -1,4 +1,14 @@
+
 @charset "utf-8";
+
+
+
+
+
+
+
+
+
 
 body {
     background : #141519;
@@ -313,3 +323,31 @@ body {
     vertical-align : middle;
     width : 14px;
   }
+
+
+button {
+    background : #1f2329;
+    border : solid 1px;
+    color : #cccccc;
+  }
+
+
+.select, .vselect {
+    color : #999999;
+  }
+
+
+.edit_delete {
+    float : right;
+  }
+
+
+.edit {
+    background : url('images/b_edit.gif') no-repeat center center;
+  }
+
+
+.delete {
+    background : url('images/b_drop.gif') no-repeat center center;
+  }
+

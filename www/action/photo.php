@@ -133,6 +133,14 @@ if ($photo_id != 0)
 							$temp_photo = $db->res_row();
 							if ($temp_photo)
 							{
+								if ($db->select('folder', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
+								{
+									$temp_old = $db->res_row();
+									if (!$temp_old) log_in_file('Unable to get the category', DIE_IF_ERROR);
+								}
+								else log_in_file($db->error, DIE_IF_ERROR);
+
+								$photo['path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_old['folder'] . '/' . $temp_photo['file'];
 								if (!$work->check_post('name_photo', TRUE, TRUE)) $photo['name'] = $temp_photo['name'];
 								else $photo['name'] = trim(htmlentities($_POST['name_photo']));
 
@@ -156,12 +164,6 @@ if ($photo_id != 0)
 
 								if ($category && $temp_photo['category'] != $_POST['name_category'])
 								{
-									if ($db->select('folder', TBL_CATEGORY, '`id` = ' . $temp_photo['category']))
-									{
-										$temp_old = $db->res_row();
-										if (!$temp_old) log_in_file('Unable to get the category', DIE_IF_ERROR);
-									}
-									else log_in_file($db->error, DIE_IF_ERROR);
 									if ($db->select('folder', TBL_CATEGORY, '`id` = ' . $_POST['name_category']))
 									{
 										$temp_new = $db->res_row();
@@ -172,11 +174,16 @@ if ($photo_id != 0)
 									$path_new_photo = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp_new['folder'] . '/' . $temp_photo['file'];
 									$path_old_thumbnail = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_old['folder'] . '/' . $temp_photo['file'];
 									$path_new_thumbnail = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp_new['folder'] . '/' . $temp_photo['file'];
-									if (!rename($path_old_photo, $path_new_photo)) $photo['category_name'] = $temp_photo['category'];
+									if (!rename($path_old_photo, $path_new_photo))
+									{
+										$photo['category_name'] = $temp_photo['category'];
+										$photo['path'] = $path_old_photo;
+									}
 									else
 									{
 										if (!rename($path_old_thumbnail, $path_new_thumbnail)) @unlink($path_old_thumbnail);
 										$photo['category_name'] = $_POST['name_category'];
+										$photo['path'] = $path_new_photo;
 									}
 								}
 								else $photo['category_name'] = $temp_photo['category'];
@@ -652,7 +659,7 @@ else
 	}
 }
 
-if (!$work->check_get('subact', TRUE, TRUE, '^[upload|uploaded]\$'))
+if (isset($photo['path']) && !empty($photo['path']))
 {
 	$size = getimagesize($photo['path']);
 

@@ -29,8 +29,12 @@ $(function () {
 			.addClass("ui-corner-bottom")
 		.end()
 		.button("option", "icons", {primary: "ui-icon-radio-on"});
-	$("#select").button({ disabled: true });
-	$("#vselect").button({ disabled: true }).button("option", "icons", {primary: "ui-icon-bullet"});
+	$(".select").button({ disabled: true });
+	$(".vselect").button({ disabled: true }).button("option", "icons", {primary: "ui-icon-bullet"});
+	$(".edit").button({icons: {primary: "ui-icon-pencil"}, text: false});
+	$(".delete").button("option", "icons", {primary: "ui-icon-trash"}).button("option", "text", false);
+	$(".edit_delete").buttonset();
+	$(".long_edit_delete").buttonset();
 });
 </script>
 </head>
@@ -58,7 +62,7 @@ $(function () {
 											<button onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
 <!-- IF_SHORT_MENU_URL_ELSE -->
 											
-											<button id="select" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+											<button class="select" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
 <!-- IF_SHORT_MENU_URL_END -->
 <!-- ARRAY_SHORT_MENU_END -->
 										</div>
@@ -117,7 +121,7 @@ $(function () {
 <!-- IF_LONG_MENU_URL_BEGIN -->
 											<button style="width:100%; text-align: left;" class="button_long" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
 <!-- IF_LONG_MENU_URL_ELSE -->
-											<button style="width:100%; text-align: left;" class="button_long" id="vselect" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
+											<button style="width:100%; text-align: left;" class="vselect button_long" id="vselect" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
 <!-- IF_LONG_MENU_URL_END -->
 <!-- ARRAY_LONG_MENU_END -->
 										</div>
