@@ -10,9 +10,9 @@
 	{INSERT_HEADER}
 	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
 	<link href="{THEME_URL}jquery-ui.min.css" rel="stylesheet" type="text/css" />
-	<script src="{THEME_URL}js/jquery.min.js"></script>
-	<script src="{THEME_URL}js/jquery-ui.min.js"></script>
- <script>
+	<script type="text/javascript" src="{THEME_URL}js/jquery.min.js"></script>
+	<script type="text/javascript" src="{THEME_URL}js/jquery-ui.min.js"></script>
+ <script type="text/javascript">
 $(function () {
 	$("button")
 		.button()
@@ -43,12 +43,12 @@ $(function () {
 <div align="center">
 	<table class="my" width="{GALLERY_WIDHT}" cellspacing="0" cellpadding="0">
 		<tr>
-           	<td class="shapko">
+           	<td class="header">
 				<img src="{THEME_URL}images/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="polja_small_left">
+			<td class="field_small_left">
 				<table cellpadding="0" cellspacing="0" width="100%">
 					<tr>
 						<td>
@@ -78,7 +78,7 @@ $(function () {
 								<table align="right" border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input class="form" size="50" type="text" name="search_main_text" /></td>
-										<td><input name="poisk" type="image" value="search_main_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEME_URL}images/submit_small_poisk.gif" align="middle" /></td>
+										<td><input name="poisk" type="image" value="search_main_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEME_URL}images/submit_small_search.gif" align="middle" /></td>
 									</tr>
 								</table>
 							</form>
@@ -88,7 +88,7 @@ $(function () {
 			</td>
 		</tr>
 		<tr>
-			<td class="polja">
+			<td class="field">
 				<table cellpadding="0" cellspacing="0" width="100%">
                        	<col width="{LEFT_PANEL_WIDHT}" />
                         <col />
@@ -103,11 +103,11 @@ $(function () {
 						<td class="td_spacer" width="{RIGHT_PANEL_WIDHT}"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="{RIGHT_PANEL_WIDHT}" /></td>
 					</tr>
 					<tr>
-						<td class="polja">
+						<td class="field">
 <!-- ARRAY_LEFT_PANEL_BEGIN -->
 <!-- SELECT_LEFT_BLOCK_BEGIN -->
 <!-- CASE_MENU -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{LONG_MENU_NAME_BLOCK}</td>
@@ -131,42 +131,42 @@ $(function () {
 							</table>
 <!-- BREAK_MENU -->
 <!-- CASE_TOP_LAST_PHOTO -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{NAME_BLOCK}</td>
 									<td class="name_block_right">&nbsp;</td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
-                                    <td class="mini_foto"></td>
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
+                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-                                    <td class="mini_foto"></td>
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
+                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto">
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo">
 <!-- IF_USER_EXISTS_BEGIN -->
 										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
 <!-- IF_USER_EXISTS_ELSE -->
 										{D_REAL_NAME_USER_ADD}
 <!-- IF_USER_EXISTS_END -->
 									</td>
-                                    <td class="mini_foto"></td>
+                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto">{PHOTO_RATE}</td>
-                                    <td class="mini_foto"></td>
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo">{PHOTO_RATE}</td>
+                                    <td class="mini_photo"></td>
 								</tr>
 							</table>
 <!-- BREAK_TOP_LAST_PHOTO -->
 <!-- CASE_DEFAULT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">ERROR_CASE_BLOCK</td>
@@ -178,4 +178,4 @@ $(function () {
 <!-- ARRAY_LEFT_PANEL_END -->
 						</td>
 						<td width="5px" class="td_spacer">&nbsp;</td>
-						<td class="polja">
+						<td class="field">

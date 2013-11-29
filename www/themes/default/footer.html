@@ -1,11 +1,11 @@
 						</td>
 						<td width="5px" class="td_spacer">&nbsp;</td>
-						<td class="polja">
+						<td class="field">
 <!-- ARRAY_RIGHT_PANEL_BEGIN -->
 <!-- SELECT_RIGHT_BLOCK_BEGIN -->
 <!-- CASE_USER_INFO -->
 <!-- IF_USER_NOT_LOGIN_BEGIN -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{NAME_BLOCK}</td>
@@ -25,7 +25,7 @@
 													<td style="text-align:left;"><input class="form" type="password" name="password" /></td>
 												</tr>
 												<tr>
-													<td colspan="2"><input name="submit" type="image" value="{L_ENTER}" title="{L_ENTER}" alt="{L_ENTER}" src="{THEME_URL}images/submit_small_vojti.gif" align="middle" /></td>
+													<td colspan="2"><input name="submit" type="image" value="{L_ENTER}" title="{L_ENTER}" alt="{L_ENTER}" src="{THEME_URL}images/submit_small_enter.gif" align="middle" /></td>
 												</tr>
 											</table>
 										</form>
@@ -42,7 +42,7 @@
 								</tr>
 							</table>
 <!-- IF_USER_NOT_LOGIN_ELSE -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{NAME_BLOCK}</td>
@@ -59,7 +59,7 @@
 <!-- IF_USER_NOT_LOGIN_END -->
 <!-- BREAK_USER_INFO -->
 <!-- CASE_STATISTIC -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{NAME_BLOCK}</td>
@@ -109,7 +109,7 @@
 							</table>
 <!-- BREAK_STATISTIC -->
 <!-- CASE_BEST_USER -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{NAME_BLOCK}</td>
@@ -143,42 +143,42 @@
 
 <!-- BREAK_BEST_USER -->
 <!-- CASE_RANDOM_PHOTO -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">{NAME_BLOCK}</td>
 									<td class="name_block_right">&nbsp;</td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
-                                    <td class="mini_foto"></td>
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
+                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-                                    <td class="mini_foto"></td>
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
+                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto">
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo">
 <!-- IF_USER_EXISTS_BEGIN -->
 										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
 <!-- IF_USER_EXISTS_ELSE -->
 										{D_REAL_NAME_USER_ADD}
 <!-- IF_USER_EXISTS_END -->
 									</td>
-                                    <td class="mini_foto"></td>
+                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_foto"></td>
-									<td class="mini_foto">{PHOTO_RATE}</td>
-                                    <td class="mini_foto"></td>
+                                	<td class="mini_photo"></td>
+									<td class="mini_photo">{PHOTO_RATE}</td>
+                                    <td class="mini_photo"></td>
 								</tr>
 							</table>
 <!-- BREAK_RANDOM_PHOTO -->
 <!-- CASE_DEFAULT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="polja_small">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
 									<td class="name_block_left">&nbsp;</td>
 									<td class="name_block">ERROR_CASE_BLOCK</td>
@@ -194,10 +194,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="polja_copyright" colspan="5">&copy;&nbsp;{COPYRIGHT_YEAR}&nbsp;<a href="{COPYRIGHT_URL}" title="{COPYRIGHT_TEXT}" target="_blank">{COPYRIGHT_TEXT}</a></td>
+			<td class="field_copyright" colspan="5">&copy;&nbsp;{COPYRIGHT_YEAR}&nbsp;<a href="{COPYRIGHT_URL}" title="{COPYRIGHT_TEXT}" target="_blank">{COPYRIGHT_TEXT}</a></td>
 		</tr>
 		<tr>
-			<td class="polja_copyright" colspan="5"><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>&nbsp;&nbsp;<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+			<td class="field_copyright" colspan="5"><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>&nbsp;&nbsp;<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
         alt="Правильный CSS!" /></a></td>
 		</tr>
 	</table>
