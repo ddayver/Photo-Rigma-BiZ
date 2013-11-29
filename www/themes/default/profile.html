@@ -14,7 +14,7 @@
 												<table border="0" cellspacing="0" cellpadding="0" class="regist_data">
 													<tr>
 														<td>{L_LOGIN}:</td>
-														<td><input type="text" name="login" value="{D_LOGIN}" size="40" maxlength="32" class="form" /></td>
+														<td><input type="text" name="login" value="{D_LOGIN}" size="40" maxlength="32" class="form ui-corner-all" /></td>
 														<td class="error">
 <!-- IF_ERROR_LOGIN_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_LOGIN}" />
@@ -25,7 +25,7 @@
 													</tr>
 													<tr>
 														<td>{L_PASSWORD}:</td>
-														<td><input type="password" name="password" size="40" maxlength="50" class="form" /></td>
+														<td><input type="password" name="password" size="40" maxlength="50" class="form ui-corner-all" /></td>
 														<td class="error">
 <!-- IF_ERROR_PASSWORD_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_PASSWORD}" />
@@ -36,7 +36,7 @@
 													</tr>
 													<tr>
 														<td>{L_RE_PASSWORD}:</td>
-														<td><input type="password" name="re_password" size="40" maxlength="50" class="form" /></td>
+														<td><input type="password" name="re_password" size="40" maxlength="50" class="form ui-corner-all" /></td>
 														<td class="error">
 <!-- IF_ERROR_RE_PASSWORD_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_RE_PASSWORD}" />
@@ -47,7 +47,7 @@
 													</tr>
 													<tr>
 														<td>{L_EMAIL}:</td>
-														<td><input type="text" name="email" value="{D_EMAIL}" size="40" maxlength="50" class="form" /></td>
+														<td><input type="text" name="email" value="{D_EMAIL}" size="40" maxlength="50" class="form ui-corner-all" /></td>
 														<td class="error">
 <!-- IF_ERROR_EMAIL_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_EMAIL}" />
@@ -58,7 +58,7 @@
 													</tr>
 													<tr>
 														<td>{L_REAL_NAME}:</td>
-														<td><input type="text" name="real_name" value="{D_REAL_NAME}" size="40" maxlength="50" class="form" /></td>
+														<td><input type="text" name="real_name" value="{D_REAL_NAME}" size="40" maxlength="50" class="form ui-corner-all" /></td>
 														<td class="error">
 <!-- IF_ERROR_REAL_NAME_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_REAL_NAME}" />
@@ -72,7 +72,7 @@
 													</tr>
 													<tr>
 														<td>{D_CAPTCHA_QUESTION}&nbsp;=</td>
-														<td><input type="text" name="captcha" size="40" maxlength="50" class="form" /></td>
+														<td><input type="text" name="captcha" size="40" maxlength="50" class="form ui-corner-all" /></td>
 														<td class="error">
 <!-- IF_ERROR_CAPTCHA_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_CAPTCHA}" />
@@ -83,8 +83,7 @@
 													</tr>
 													<tr>
 														<td class="regist" colspan="3">
-															<br />
-                                                            <input type="image" name="submit" value="{L_REGISTER}" src="{THEME_URL}images/submit_small_register.gif" align="middle" />
+                                                            <br /><input class="ui-corner-all no_jquery" type="submit" name="submit" value="{L_REGISTER}" />
 														</td>
 													</tr>
 												</table>
@@ -161,7 +160,7 @@
 <!-- IF_NEED_PASSWORD_END -->
 													<tr>
 														<td class="regist" colspan="2">
-															<input name="submit" type="image" value="{L_SAVE_PROFILE}" alt="{L_SAVE_PROFILE}" title="{L_SAVE_PROFILE}" src="{THEME_URL}images/submit_small_save.gif" align="middle" />
+															<input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SAVE_PROFILE}" title="{L_SAVE_PROFILE}" />
 														</td>
 													</tr>
 												</table>

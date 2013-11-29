@@ -34,7 +34,7 @@ if ($work->check_session('admin_on', TRUE) && $_SESSION['admin_on'] === TRUE && 
 {
 	if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'settings') // если была команда на общие настройки, то...
 	{
-		if ($work->check_post('submit_x', TRUE, TRUE) && $work->check_post('submit_y', TRUE, TRUE)) // если поступил запрос на сохранение общих настроек, то...
+		if ($work->check_post('submit', TRUE, TRUE)) // если поступил запрос на сохранение общих настроек, то...
 		{
 			$new_config = $work->config; // формируем массив настроек, хранящихся в базе на текущий момент
 
@@ -191,7 +191,7 @@ if ($work->check_session('admin_on', TRUE) && $_SESSION['admin_on'] === TRUE && 
 				$temp = $db->res_row();
 				if ($temp)
 				{
-					if ($work->check_post('submit_x', TRUE, TRUE) && $work->check_post('submit_y', TRUE, TRUE))
+					if ($work->check_post('submit', TRUE, TRUE))
 					{
 						if ($work->check_post('group', TRUE, TRUE, '^[0-9]+\$', TRUE) && $_POST['group'] != $temp['group'])
 						{
@@ -281,7 +281,7 @@ if ($work->check_session('admin_on', TRUE) && $_SESSION['admin_on'] === TRUE && 
 		}
 		else
 		{
-			if ($work->check_post('submit_x', TRUE, TRUE) && $work->check_post('submit_y', TRUE, TRUE) && $work->check_post('search_user', TRUE, TRUE))
+			if ($work->check_post('submit', TRUE, TRUE) && $work->check_post('search_user', TRUE, TRUE))
 			{
 				if ($_POST['search_user'] == '*') $_POST['search_user'] = '%';
 
@@ -313,6 +313,7 @@ if ($work->check_session('admin_on', TRUE) && $_SESSION['admin_on'] === TRUE && 
 			$template->add_string_ar(array(
 				'L_SEARCH_USER' => $lang['admin']['search_user'],
 				'L_HELP_SEARCH' => $lang['admin']['help_search_user'],
+				'L_SEARCH' => $lang['main']['search'],
 				'D_SEARCH_USER' => $work->check_post('search_user', TRUE, TRUE) ? $work->clean_field($_POST['search_user']) : ''
 			));
 		}
@@ -325,7 +326,7 @@ if ($work->check_session('admin_on', TRUE) && $_SESSION['admin_on'] === TRUE && 
 		$template->add_case('ADMIN_BLOCK', 'ADMIN_GROUP');
 		$template->add_string('L_NAME_BLOCK', $lang['admin']['title'] . ' - ' . $lang['admin']['admin_group']);
 
-		if ($work->check_post('submit_x', TRUE, TRUE) && $work->check_post('submit_y', TRUE, TRUE) && $work->check_post('id_group', TRUE, FALSE, '^[0-9]+\$'))
+		if ($work->check_post('submit', TRUE, TRUE) && $work->check_post('id_group', TRUE, FALSE, '^[0-9]+\$'))
 		{
 			if ($db->select('*', TBL_GROUP, '`id` = ' . $work->clean_field($_POST['id_group'])))
 			{
@@ -357,7 +358,7 @@ if ($work->check_session('admin_on', TRUE) && $_SESSION['admin_on'] === TRUE && 
 			else log_in_file($db->error, DIE_IF_ERROR);
 		}
 
-		if ($work->check_post('submit_x', TRUE, TRUE) && $work->check_post('submit_y', TRUE, TRUE) && $work->check_post('group', TRUE, FALSE, '^[0-9]+\$'))
+		if ($work->check_post('submit', TRUE, TRUE) && $work->check_post('group', TRUE, FALSE, '^[0-9]+\$'))
 		{
 			if ($db->select('*', TBL_GROUP, '`id` = ' . $work->clean_field($_POST['group'])))
 			{

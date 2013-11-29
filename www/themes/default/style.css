@@ -193,7 +193,7 @@ vertical-align:middle;
 width:14px
 }
 
-button {
+button, .no_jquery {
 background:#1f2329;
 border:solid 1px;
 color:#cccccc

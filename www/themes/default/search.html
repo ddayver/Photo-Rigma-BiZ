@@ -13,8 +13,7 @@
 													<td>{L_SEARCH_TITLE}</td>
 												</tr>
 												<tr>
-													<td><input class="form" size="50" type="text" name="search_text" value="{D_SEARCH_TEXT}"/>
-													<input name="poisk" type="image" value="search_text" title="{L_SEARCH}" alt="{L_SEARCH}" src="{THEME_URL}images/submit_small_search.gif" align="middle" /></td>
+													<td><input class="form ui-corner-all" size="50" type="text" name="search_text" value="{D_SEARCH_TEXT}"/>&nbsp;<input class="ui-corner-all no_jquery" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
 												</tr>
 												<tr>
 													<td><input class="form" name="search_user" type="checkbox" value="true" {D_NEED_USER} />&nbsp;{L_NEED_USER} <input class="form" name="search_category" type="checkbox" value="true" {D_NEED_CATEGORY} />&nbsp;{L_NEED_CATEGORY} <input class="form" name="search_news" type="checkbox" value="true" {D_NEED_NEWS} />&nbsp;{L_NEED_NEWS} <input class="form" name="search_photo" type="checkbox" value="true" {D_NEED_PHOTO} />&nbsp;{L_NEED_PHOTO}</td>
@@ -32,19 +31,19 @@
 									<td class="name_block">{L_FIND_USER}</td>
 									<td class="name_block_right">&nbsp;</td>
 								</tr>
-<!-- ARRAY_SEARCH_USER_BEGIN -->
 								<tr>
 									<td class="category_center"></td>
 									<td class="category_center">
+<!-- ARRAY_SEARCH_USER_BEGIN -->
 <!-- IF_USER_FIND_BEGIN -->
-										<a href="{U_USER_FIND}" title="{D_USER_FIND}">{D_USER_FIND}</a>
+										<div class="mini_photo_category">&nbsp;&bull;&nbsp;<a href="{U_USER_FIND}" title="{D_USER_FIND}">{D_USER_FIND}</a></div>
 <!-- IF_USER_FIND_ELSE -->
 										{D_USER_FIND}
 <!-- IF_USER_FIND_END -->
+<!-- ARRAY_SEARCH_USER_END -->
 									</td>
 									<td class="category_center"></td>
 								</tr>
-<!-- ARRAY_SEARCH_USER_END -->
 							</table>
 <!-- IF_NEED_USER_END -->
 <!-- IF_NEED_CATEGORY_BEGIN -->
@@ -108,16 +107,6 @@
 												<tr>
         	            			            	<td class="mini_photo"></td>
 													<td class="mini_photo" height="{MAX_PHOTO_HEIGHT}"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-                	                    			<td class="mini_photo"></td>
-												</tr>
-												<tr>
-                            	    				<td class="mini_photo"></td>
-													<td class="mini_photo">{USER_ADD}</td>
-                                    				<td class="mini_photo"></td>
-												</tr>
-												<tr>
-        	                        				<td class="mini_photo"></td>
-													<td class="mini_photo">{PHOTO_RATE}</td>
                 	                    			<td class="mini_photo"></td>
 												</tr>
 											</table>

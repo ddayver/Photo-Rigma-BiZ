@@ -50,7 +50,7 @@
                                     <td class="category_center">
 										{L_DESCRIPTION_BLOCK}
 <!-- IF_EDIT_BLOCK_BEGIN -->
-										<br /><div class="long_edit_delete"><button class="long_edit" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">{L_EDIT_BLOCK}</button><button class="long_delete" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">{L_DELETE_BLOCK}</button></div>
+										<br /><div class="long_edit_delete"><button class="long_edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">{L_EDIT_BLOCK}</button><button class="long_delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">{L_DELETE_BLOCK}</button></div>
 <!-- IF_EDIT_BLOCK_END -->
 									<hr class="line" /></td>
                                     <td class="category_center"></td>
@@ -121,16 +121,16 @@
 												</tr>
 												<tr>
 			            	                        <td class="category_center">{L_NAME_CATEGORY}:</td>
-			                	                    <td class="category_center"><input name="name_category" value="{D_NAME_CATEGORY}" type="text" size="20" maxlength="50" /></td>
+			                	                    <td class="category_center"><input class="ui-corner-all" name="name_category" value="{D_NAME_CATEGORY}" type="text" size="20" maxlength="50" /></td>
 												</tr>
 												<tr>
                                     				<td class="category_center">{L_DESCRIPTION_CATEGORY}:</td>
-                                    				<td class="category_center"><input name="description_category" value="{D_DESCRIPTION_CATEGORY}" type="text" size="20" maxlength="250" /></td>
+                                    				<td class="category_center"><input class="ui-corner-all" name="description_category" value="{D_DESCRIPTION_CATEGORY}" type="text" size="20" maxlength="250" /></td>
 												</tr>
 											</table>
 											<table cellpadding="0" cellspacing="0" border="0" width="100%">
 												<tr>
-													<td class="mini_photo"><input name="submit" type="image" value="{L_EDIT_THIS}" src="{THEME_URL}images/submit_small_save.gif" align="middle" /></td>
+													<td class="mini_photo"><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_EDIT_THIS}" /></td>
 												</tr>
 											</table>
 										</form>

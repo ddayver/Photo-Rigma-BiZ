@@ -129,7 +129,7 @@ if ($search['news'])
 		$find = $db->res_arr();
 		if ($find)
 		{
-			$template->add_if('CATEGORY_FIND', TRUE);
+			$template->add_if('NEWS_FIND', TRUE);
 			foreach ($find as $key => $val)
 			{
 				$template->add_string_ar(array(
