@@ -1,7 +1,0 @@
-<map id="clean" name="clean">
-<area shape="rect" id="node2" href="$classdb.html#a64e06aa1e935928274a6d3a5b309ae19" title="Функция формирования запроса на удаление" alt="" coords="113,5,170,32"/>
-<area shape="rect" id="node3" href="$classdb.html#ae4539ccb2baeefb7e924b73125017b35" title="Функция формирования запроса на вставку строк" alt="" coords="115,56,168,83"/>
-<area shape="rect" id="node4" href="$classdb.html#a04b44c7043dd13112a7d98aea299deaa" title="Функция формирования SELECT&#45;запроса" alt="" coords="113,107,169,133"/>
-<area shape="rect" id="node5" href="$classdb.html#a8296b3c656f04ac84c5bc427d095dfdb" title="Функция формирования запроса на очистку таблицы" alt="" coords="107,157,176,184"/>
-<area shape="rect" id="node6" href="$classdb.html#af17f89b3edaf07600abb19d2ee7a138b" title="Функция формирования простого запроса на обновление" alt="" coords="111,208,172,235"/>
-</map>
