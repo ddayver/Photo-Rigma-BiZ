@@ -103,19 +103,19 @@ $(function(){initNavTree('d0/d58/_0c_0cPhotoRigma_0c_0cClasses_0c_0cWork_1_1__se
 </div><!--header-->
 <div class="contents">
 <p>Устанавливает значение свойства <code>$config</code>.</p>
-<p>Устанавливает значение свойства <code>$config</code>. Этот метод вызывается автоматически при попытке установить значение недоступного свойства. Доступ разрешён только к свойству <code>$config</code>. Если запрашивается другое свойство, выбрасывается исключение \Exception. Значение <code>$config</code> должно быть массивом, где ключи и значения являются строками. При успешном обновлении конфигурации:</p><ul>
+<p>Устанавливает значение свойства <code>$config</code>. Этот метод вызывается автоматически при попытке установить значение недоступного свойства. Доступ разрешён только к свойству <code>$config</code>. Если запрашивается другое свойство, выбрасывается исключение Exception. Значение <code>$config</code> должно быть массивом, где ключи и значения являются строками. При успешном обновлении конфигурации:</p><ul>
 <li>Изменения логируются с помощью функции log_in_file (за исключением ключей из списка exclude_from_logging).</li>
 <li>Обновлённая конфигурация передаётся в дочерние классы ($this-&gt;image, $this-&gt;template, $this-&gt;core_logic) через их свойства config.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd>\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work::$config Свойство, содержащее конфигурацию. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work_CoreLogic::$config Свойство дочернего класса Work_CoreLogic. </dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство дочернего класса Work_CoreLogic. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work_Image::$config Свойство дочернего класса Work_Image. </dd>
+<a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Image\$config</a> Свойство дочернего класса Work_Image. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work_Template::$config Свойство дочернего класса Work_Template. </dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Template\$config</a> Свойство дочернего класса Work_Template. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Include\log_in_file() Логирует ошибки.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$name</td><td>Имя свойства:<ul>
@@ -132,17 +132,11 @@ $(function(){initNavTree('d0/d58/_0c_0cPhotoRigma_0c_0cClasses_0c_0cWork_1_1__se
 </dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если значение некорректно (не массив или содержатся некорректные ключи/значения). </td></tr>
+    <tr><td class="paramname">Exception</td><td>Если запрашивается несуществующее свойство.</td></tr>
   </table>
   </dd>
 </dl>
-<p>\InvalidArgumentException Если значение некорректно (не массив или содержатся некорректные ключи/значения). </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>\Exception Если запрашивается несуществующее свойство.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Этот метод предназначен только для изменения свойства <code>$config</code>. Логирование изменений выполняется только для определённых ключей.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Некорректные данные (не массив, нестроковые ключи или значения) вызывают исключение. Попытка установки значения для несуществующего свойства также вызывает исключение.</dd></dl>
 <div class="fragment"><div class="line"><span class="comment">// Пример использования метода</span></div>

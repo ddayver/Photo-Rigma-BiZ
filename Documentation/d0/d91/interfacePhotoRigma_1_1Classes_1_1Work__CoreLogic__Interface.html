@@ -143,9 +143,9 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <li>Управление изображениями (del_photo, create_photo).</li>
 <li>Получение данных о новостях, языках и темах (news, get_languages, get_themes).</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic Реализация интерфейса. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.">PhotoRigma\Classes\Work_CoreLogic</a> Реализация интерфейса. </dd>
 <dd>
-\PhotoRigma\Classes\Database Класс для работы с базой данных. </dd></dl>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd></dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#_a9">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
@@ -190,17 +190,11 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если входные параметры имеют некорректный тип. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если входные параметры имеют некорректный тип. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных. </p>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5">Work_CoreLogic</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a2">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -258,17 +252,11 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый $type или $id_photo. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выборке данных из базы данных или доступе к файлу. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если передан недопустимый $type или $id_photo. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если произошла ошибка при выборке данных из базы данных или доступе к файлу. </p>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">Work_CoreLogic</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a7">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -300,17 +288,11 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если удаление успешно, иначе False.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если параметр $photo_id имеет некорректный тип или значение. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных или удалении файлов. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов. </p>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639">Work_CoreLogic</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a3">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -340,14 +322,14 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если:</p><ul>
+    <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/language/</code> недоступна или не существует.</li>
 <li>Ни один язык не найден в указанной директории. </li>
 </ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66">Work_CoreLogic</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a5">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -373,14 +355,14 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с именами доступных тем.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если:</p><ul>
+    <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/themes/</code> не существует или недоступна для чтения.</li>
 <li>Ни одна тема не найдена в указанной директории. </li>
 </ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613">Work_CoreLogic</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a6">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -421,17 +403,11 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан некорректный $act или $news_id_or_limit. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выполнении запроса к базе данных. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если передан некорректный $act или $news_id_or_limit. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если произошла ошибка при выполнении запроса к базе данных. </p>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a4">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>

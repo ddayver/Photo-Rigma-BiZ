@@ -16,9 +16,9 @@
  *              - Получение данных о новостях, языках и темах (методы `news`, `get_languages`, `get_themes`).
  *              Все методы зависят от конфигурации приложения и данных, полученных из базы данных.
  *
- * @see         \\PhotoRigma\\Classes\\Work_CoreLogic_Interface Интерфейс, который реализует данный класс.
- * @see         \\PhotoRigma\\Classes\\Database Класс для работы с базой данных.
- * @see         \\PhotoRigma\\Classes\\Work_Helper::clean_field() Метод для очистки данных.
+ * @see         PhotoRigma::Classes::Work_CoreLogic_Interface Интерфейс, который реализует данный класс.
+ * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
+ * @see         PhotoRigma::Classes::Work_Helper::clean_field() Метод для очистки данных.
  * @see         index.php Файл, который подключает work_corelogic.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в выполнении базовой логики приложения.
@@ -54,8 +54,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Управление изображениями (del_photo, create_photo).
  *          - Получение данных о новостях, языках и темах (news, get_languages, get_themes).
  *
- * @see \PhotoRigma\Classes\Work_CoreLogic Реализация интерфейса.
- * @see \PhotoRigma\Classes\Database Класс для работы с базой данных.
+ * @see PhotoRigma::Classes::Work_CoreLogic Реализация интерфейса.
+ * @see PhotoRigma::Classes::Database Класс для работы с базой данных.
  */
 interface Work_CoreLogic_Interface
 {
@@ -75,8 +75,8 @@ interface Work_CoreLogic_Interface
      *               - url_last_photo: Ссылка на последнюю фотографию.
      *               - url_top_photo: Ссылка на лучшую фотографию.
      *
-     * @throws \InvalidArgumentException Если входные параметры имеют некорректный тип.
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws InvalidArgumentException Если входные параметры имеют некорректный тип.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array;
 
@@ -87,8 +87,8 @@ interface Work_CoreLogic_Interface
      *
      * @return bool True, если удаление успешно, иначе False.
      *
-     * @throws \InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение.
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
+     * @throws InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
      */
     public function del_photo(int $photo_id): bool;
 
@@ -102,8 +102,8 @@ interface Work_CoreLogic_Interface
      *
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      */
     public function news(int $news_id_or_limit, string $act): array;
 
@@ -114,7 +114,7 @@ interface Work_CoreLogic_Interface
      *               - `value`: Имя директории языка (строка).
      *               - `name`: Название языка из файла `main.php` (строка).
      *
-     * @throws \RuntimeException Если:
+     * @throws RuntimeException Если:
      *                           - Директория `/language/` недоступна или не существует.
      *                           - Ни один язык не найден в указанной директории.
      */
@@ -125,7 +125,7 @@ interface Work_CoreLogic_Interface
      *
      * @return array Массив с именами доступных тем.
      *
-     * @throws \RuntimeException Если:
+     * @throws RuntimeException Если:
      *                           - Директория `/themes/` не существует или недоступна для чтения.
      *                           - Ни одна тема не найдена в указанной директории.
      */
@@ -156,8 +156,8 @@ interface Work_CoreLogic_Interface
      *               - 'width': Ширина изображения после масштабирования.
      *               - 'height': Высота изображения после масштабирования.
      *
-     * @throws \InvalidArgumentException Если передан недопустимый $type или $id_photo.
-     * @throws \RuntimeException         Если произошла ошибка при выборке данных из базы данных или доступе к файлу.
+     * @throws InvalidArgumentException Если передан недопустимый $type или $id_photo.
+     * @throws RuntimeException         Если произошла ошибка при выборке данных из базы данных или доступе к файлу.
      */
     public function create_photo(string $type, int $id_photo): array;
 }
@@ -175,8 +175,8 @@ interface Work_CoreLogic_Interface
  *
  * @implements Work_CoreLogic_Interface
  *
- * @see \PhotoRigma\Interfaces\Work_CoreLogic_Interface Интерфейс, который реализует данный класс.
- * @see \PhotoRigma\Classes\Database Класс для работы с базой данных.
+ * @see PhotoRigma::Classes::Work_CoreLogic_Interface Интерфейс, который реализует данный класс.
+ * @see PhotoRigma::Classes::Database Класс для работы с базой данных.
  */
 class Work_CoreLogic implements Work_CoreLogic_Interface
 {
@@ -190,28 +190,28 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @brief Конструктор класса.
      *
      * @details Инициализирует зависимости: конфигурацию, базу данных и объект класса Work.
-     *          Этот класс является дочерним для \\PhotoRigma\\Classes\\Work.
+     *          Этот класс является дочерним для PhotoRigma::Classes::Work.
      *          Все параметры обязательны для корректной работы класса.
      *
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work Родительский класс, через который передаются зависимости.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$work Свойство, содержащее основной объект приложения.
+     * @see PhotoRigma::Classes::Work Родительский класс, через который передаются зависимости.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$work Свойство, содержащее основной объект приложения.
      *
      * @param array $config Конфигурация приложения.
      *                      Должен быть массивом. Если передан некорректный тип, выбрасывается исключение.
      * @param Database_Interface $db Объект для работы с базой данных.
      * @param Work $work Основной объект приложения.
      *
-     * @throws \\InvalidArgumentException Если параметр $config не является массивом.
+     * @throws InvalidArgumentException Если параметр $config не является массивом.
      *
      * @note Важно: все зависимости должны быть корректно инициализированы перед использованием класса.
      * @warning Не передавайте в конструктор некорректные или пустые зависимости, так как это может привести к ошибкам.
      *
-     * @example \\PhotoRigma\\Classes\\Work_CoreLogic::__construct
+     * @example PhotoRigma::Classes::Work_CoreLogic::__construct
      * @code
      * // Пример использования конструктора
      * $config = ['temp_photo_w' => 800];
@@ -242,7 +242,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$config Свойство, к которому обращается метод.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, к которому обращается метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -250,12 +250,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return array Значение свойства `$config`.
      *
-     * @throws \\InvalidArgumentException Если запрашиваемое свойство не существует.
+     * @throws InvalidArgumentException Если запрашиваемое свойство не существует.
      *
      * @note Этот метод предназначен только для доступа к свойству `$config`.
      * @warning Не используйте этот метод для доступа к другим свойствам, так как это вызовет исключение.
      *
-     * @example \\PhotoRigma\\Classes\\Work_CoreLogic::__get
+     * @example PhotoRigma::Classes::Work_CoreLogic::__get
      * @code
      * // Пример использования метода
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic(['temp_photo_w' => 800], $db, $work);
@@ -281,7 +281,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$config Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, которое изменяет метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -289,12 +289,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @param array $value Новое значение свойства:
      *                     - Должен быть массивом.
      *
-     * @throws \\InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
+     * @throws InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
      *
      * @note Этот метод предназначен только для изменения свойства `$config`.
      * @warning Не используйте этот метод для изменения других свойств, так как это вызовет исключение.
      *
-     * @example \\PhotoRigma\\Classes\\Work_CoreLogic::__set
+     * @example PhotoRigma::Classes::Work_CoreLogic::__set
      * @code
      * // Пример использования метода
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic([], $db, $work);
@@ -321,8 +321,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$lang Свойство, которое изменяет метод.
-     * @see \\PhotoRigma\\Classes\\Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
      *
      * @param array $lang Языковые данные:
      *                    - Должен быть массивом.
@@ -330,12 +330,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return void Метод ничего не возвращает.
      *
-     * @throws \\InvalidArgumentException Если передан некорректный тип данных или `null`.
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
      *
      * @note Убедитесь, что передаваемые языковые данные корректны и соответствуют ожидаемому формату.
      * @warning Не передавайте пустые или некорректные данные, так как это может привести к ошибкам.
      *
-     * @example \\PhotoRigma\\Classes\\Work_CoreLogic::set_lang
+     * @example PhotoRigma::Classes::Work_CoreLogic::set_lang
      * @code
      * // Пример использования метода
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic($config, $db, $work);
@@ -361,20 +361,20 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$user Свойство, которое изменяет метод.
-     * @see \\PhotoRigma\\Classes\\Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
      *
      * @param User $user Объект пользователя:
      *                   - Должен быть экземпляром класса User.
      *
      * @return void Метод ничего не возвращает.
      *
-     * @throws \\InvalidArgumentException Если передан некорректный тип данных или `null`.
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
      *
      * @note Убедитесь, что передаваемый объект пользователя является экземпляром класса User.
      * @warning Не передавайте null или некорректные объекты, так как это может привести к ошибкам.
      *
-     * @example \\PhotoRigma\\Classes\\Work_CoreLogic::set_user
+     * @example PhotoRigma::Classes::Work_CoreLogic::set_user
      * @code
      * // Пример использования метода
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic($config, $db, $work);
@@ -407,11 +407,11 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - url_last_photo: Ссылка на последнюю фотографию.
      *               - url_top_photo: Ссылка на лучшую фотографию.
      *
-     * @throws \InvalidArgumentException Если входные параметры имеют некорректный тип.
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws InvalidArgumentException Если входные параметры имеют некорректный тип.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
-     * @see \PhotoRigma\Classes\Work::category() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_category_internal() Основная логика метода реализована здесь.
+     * @see PhotoRigma::Classes::Work::category() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_category_internal() Основная логика метода реализована здесь.
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array
     {
@@ -428,11 +428,11 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return bool True, если удаление успешно, иначе False.
      *
-     * @throws \InvalidArgumentException Если параметр \$photo_id имеет некорректный тип или значение.
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
+     * @throws InvalidArgumentException Если параметр \$photo_id имеет некорректный тип или значение.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
      *
-     * @see \PhotoRigma\Classes\Work::del_photo() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_del_photo_internal() Основная логика метода реализована здесь.
+     * @see PhotoRigma::Classes::Work::del_photo() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_del_photo_internal() Основная логика метода реализована здесь.
      */
     public function del_photo(int $photo_id): bool
     {
@@ -445,8 +445,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * Метод формирует массив данных о новостях в зависимости от типа запроса.
      * Этот метод является редиректом на защищенный метод _news_internal, где реализована основная логика.
      *
-     * @see \PhotoRigma\Classes\Work::news() Вызывает этот метод для получения данных о новостях.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_news_internal() Основная логика метода реализована здесь.
+     * @see PhotoRigma::Classes::Work::news() Вызывает этот метод для получения данных о новостях.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_news_internal() Основная логика метода реализована здесь.
      *
      * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
      * @param string $act              Тип запроса:
@@ -455,8 +455,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *
      * @example
      * @code
@@ -481,16 +481,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * язык добавляется в список доступных языков.
      * Этот метод является редиректом на защищенный метод _get_languages_internal, где реализована основная логика.
      *
-     * @see \PhotoRigma\Classes\Work::get_languages()
+     * @see PhotoRigma::Classes::Work::get_languages()
      *      Вызывает этот метод для получения списка доступных языков.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_get_languages_internal()
+     * @see PhotoRigma::Classes::Work_CoreLogic::_get_languages_internal()
      *      Основная логика метода реализована здесь.
      *
      * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
      *               - `value`: Имя директории языка (строка).
      *               - `name`: Название языка из файла `main.php` (строка).
      *
-     * @throws \RuntimeException Если:
+     * @throws RuntimeException Если:
      *                           - Директория `/language/` недоступна или не существует.
      *                           - Ни один язык не найден в указанной директории.
      *
@@ -513,14 +513,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * Метод перебирает все поддиректории в `/themes/` и добавляет их имена в список доступных тем.
      * Этот метод является редиректом на защищенный метод _get_themes_internal, где реализована основная логика.
      *
-     * @see \PhotoRigma\Classes\Work::get_themes()
+     * @see PhotoRigma::Classes::Work::get_themes()
      *      Вызывает этот метод для получения списка доступных тем.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_get_themes_internal()
+     * @see PhotoRigma::Classes::Work_CoreLogic::_get_themes_internal()
      *      Основная логика метода реализована здесь.
      *
      * @return array Массив с именами доступных тем.
      *
-     * @throws \RuntimeException Если:
+     * @throws RuntimeException Если:
      *                           - Директория `/themes/` не существует или недоступна для чтения.
      *                           - Ни одна тема не найдена в указанной директории.
      */
@@ -566,11 +566,11 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - 'width': Ширина изображения после масштабирования.
      *               - 'height': Высота изображения после масштабирования.
      *
-     * @throws \InvalidArgumentException Если передан недопустимый $type или $id_photo.
-     * @throws \RuntimeException         Если произошла ошибка при выборке данных из базы данных или доступе к файлу.
+     * @throws InvalidArgumentException Если передан недопустимый $type или $id_photo.
+     * @throws RuntimeException         Если произошла ошибка при выборке данных из базы данных или доступе к файлу.
      *
-     * @see \PhotoRigma\Classes\Work::create_photo() Метод, используемый для генерации блока вывода изображений.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_create_photo_internal() Основная логика метода реализована здесь.
+     * @see PhotoRigma::Classes::Work::create_photo() Метод, используемый для генерации блока вывода изображений.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Основная логика метода реализована здесь.
      */
     public function create_photo(string $type, int $id_photo): array
     {
@@ -597,14 +597,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - url_last_photo: Ссылка на последнюю фотографию.
      *               - url_top_photo: Ссылка на лучшую фотографию.
      *
-     * @throws \InvalidArgumentException Если входные параметры имеют некорректный тип.
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws InvalidArgumentException Если входные параметры имеют некорректный тип.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::category() Публичный метод-редирект для вызова этой логики.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя.
-     * @see \PhotoRigma\Classes\Work_Helper::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::category() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work_Helper::clean_field() Метод для очистки данных.
      */
     protected function _category_internal(int $cat_id = 0, int $user_flag = 0): array
     {
@@ -740,16 +740,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return bool True, если удаление успешно, иначе False.
      *
-     * @throws \InvalidArgumentException Если параметр \$photo_id имеет некорректный тип или значение.
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
+     * @throws InvalidArgumentException Если параметр \$photo_id имеет некорректный тип или значение.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::del_photo() Публичный метод-редирект для вызова этой логики.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see \PhotoRigma\Classes\Database::join() Метод, используемый для объединения данных из нескольких таблиц.
-     * @see \PhotoRigma\Classes\Database::delete() Метод, используемый для удаления записей из таблиц базы данных.
-     * @see \PhotoRigma\Classes\Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Database::join() Метод, используемый для объединения данных из нескольких таблиц.
+     * @see PhotoRigma::Classes::Database::delete() Метод, используемый для удаления записей из таблиц базы данных.
+     * @see PhotoRigma::Classes::Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
      */
     protected function _del_photo_internal(int $photo_id): bool
     {
@@ -815,8 +815,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * Метод формирует массив данных о новостях в зависимости от типа запроса.
      * Этот метод содержит основную логику, вызываемую через публичный метод news().
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::news() Публичный метод-редирект для вызова этой логики.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект базы данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::news() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект базы данных.
      *
      * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
      * @param string $act              Тип запроса:
@@ -825,8 +825,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *
      * @example
      * @code
@@ -906,18 +906,18 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * язык добавляется в список доступных языков.
      * Этот метод содержит основную логику, вызываемую через публичный метод get_languages().
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::get_languages()
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$config
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
      *      Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
-     * @see \PhotoRigma\Include\log_in_file
+     * @see PhotoRigma::Include::log_in_file
      *      Функция для логирования ошибок.
      *
      * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
      *               - `value`: Имя директории языка (строка).
      *               - `name`: Название языка из файла `main.php` (строка).
      *
-     * @throws \RuntimeException Если:
+     * @throws RuntimeException Если:
      *                           - Директория `/language/` недоступна или не существует.
      *                           - Ни один язык не найден в указанной директории.
      *
@@ -1010,16 +1010,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * Метод перебирает все поддиректории в `/themes/` и добавляет их имена в список доступных тем.
      * Этот метод содержит основную логику, вызываемую через публичный метод get_themes().
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::get_themes()
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$config
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
      *      Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
-     * @see \PhotoRigma\Include\log_in_file
+     * @see PhotoRigma::Include::log_in_file
      *      Функция для логирования ошибок.
      *
      * @return array Массив с именами доступных тем.
      *
-     * @throws \RuntimeException Если:
+     * @throws RuntimeException Если:
      *                           - Директория `/themes/` не существует или недоступна для чтения.
      *                           - Ни одна тема не найдена в указанной директории.
      */
@@ -1120,18 +1120,18 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - 'width': Ширина изображения после масштабирования.
      *               - 'height': Высота изображения после масштабирования.
      *
-     * @throws \InvalidArgumentException Если передан недопустимый $type или $id_photo.
-     * @throws \RuntimeException         Если произошла ошибка при выборке данных из базы данных или доступе к файлу.
+     * @throws InvalidArgumentException Если передан недопустимый $type или $id_photo.
+     * @throws RuntimeException         Если произошла ошибка при выборке данных из базы данных или доступе к файлу.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::create_photo() Публичный метод-редирект для вызова этой логики.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::generate_photo_data() Приватный метод для формирования массива данных по умолчанию.
-     * @see \PhotoRigma\Classes\Work::size_image() Метод, используемый для вычисления размеров изображения.
-     * @see \PhotoRigma\Classes\Database::join() Метод, используемый для объединения данных из нескольких таблиц.
-     * @see \PhotoRigma\Classes\Database::res_row() Метод, используемый для получения одной строки результата.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::create_photo() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work_CoreLogic::generate_photo_data() Приватный метод для формирования массива данных по умолчанию.
+     * @see PhotoRigma::Classes::Work::size_image() Метод, используемый для вычисления размеров изображения.
+     * @see PhotoRigma::Classes::Database::join() Метод, используемый для объединения данных из нескольких таблиц.
+     * @see PhotoRigma::Classes::Database::res_row() Метод, используемый для получения одной строки результата.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      */
     protected function _create_photo_internal(string $type, int $id_photo): array
     {
@@ -1231,20 +1231,19 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @brief Генерация массива данных для вывода изображения.
      *
      * @details Метод формирует массив данных для вывода изображения, используя значения по умолчанию
-     *          или данные, переданные в параметре `$photo_data`. Если какое-либо значение отсутствует
-     *          в `$photo_data`, используется соответствующее значение по умолчанию. Значения по умолчанию
-     *          берутся из конфигурации приложения (`$this->config`) и языковых переменных (`$this->lang`).
-     *
+     *          или данные, переданные в параметре $photo_data. Если какое-либо значение отсутствует
+     *          в $photo_data, используется соответствующее значение по умолчанию. Значения по умолчанию
+     *          берутся из конфигурации приложения ($this->config) и языковых переменных ($this->lang).
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$config
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
      *      Свойство, содержащее конфигурацию приложения.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$lang
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang
      *      Свойство, содержащее языковые переменные.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::_create_photo_internal()
+     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal()
      *      Метод, вызывающий этот приватный метод.
      *
      * @param array $photo_data Массив данных изображения, полученных из базы данных.
@@ -1262,14 +1261,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - 'url_user' (string|null): URL профиля пользователя, добавившего изображение.
      *               - 'real_name' (string): Реальное имя пользователя.
      *
-     * @throws \\InvalidArgumentException Если `$photo_data` не является массивом.
+     * @throws InvalidArgumentException Если $photo_data не является массивом.
      *      Пример сообщения:
-     *          Аргумент \$photo_data должен быть массивом. Получено: [тип]
+     *          Аргумент $photo_data должен быть массивом. Получено: [тип]
      *
-     * @warning Метод зависит от конфигурации приложения (`$this->config`) и языковых переменных (`$this->lang`).
+     * @warning Метод зависит от конфигурации приложения ($this->config) и языковых переменных ($this->lang).
      *          Убедитесь, что эти свойства правильно инициализированы перед вызовом метода.
      *
-     * @example \\PhotoRigma\\Classes\\Database::generate_photo_data
+     * Пример вызова метода внутри класса:
      * @code
      * // Пример генерации массива данных только со значениями по умолчанию
      * $default_photo = $this->generate_photo_data();

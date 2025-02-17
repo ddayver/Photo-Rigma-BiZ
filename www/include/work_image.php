@@ -15,9 +15,9 @@
  *              и логирование ошибок. Публичные методы класса являются редиректами
  *              на защищённые методы с суффиксом `_internal`, что обеспечивает более гибкую архитектуру (паттерн "фасад").
  *
- * @see         \\PhotoRigma\\Classes\\Work_Image_Interface Интерфейс для работы с изображениями.
- * @see         \\PhotoRigma\\Classes\\Work Класс, через который вызываются методы для работы с изображениями.
- * @see         \\PhotoRigma\\Classes\\Work::validate_mime_type() Метод для проверки MIME-типов изображений.
+ * @see         PhotoRigma::Classes::Work_Image_Interface Интерфейс для работы с изображениями.
+ * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с изображениями.
+ * @see         PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типов изображений.
  * @see         index.php Файл, который подключает work_image.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в обработке изображений.
@@ -55,7 +55,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Вывод изображений через HTTP.
  *          - Корректировка расширения файла в соответствии с его MIME-типом.
  *
- * @see \PhotoRigma\Classes\Work_Image Класс, реализующий данный интерфейс.
+ * @see PhotoRigma::Classes::Work_Image Класс, реализующий данный интерфейс.
  */
 interface Work_Image_Interface
 {
@@ -82,7 +82,7 @@ interface Work_Image_Interface
      *     height: int  // Высота эскиза.
      * } Массив с шириной и высотой эскиза.
      *
-     * @throws \RuntimeException Если файл не существует или не удалось получить размеры изображения.
+     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
      */
     public function size_image(string $path_image): array;
 
@@ -110,8 +110,8 @@ interface Work_Image_Interface
      *
      * @return bool True, если операция выполнена успешно, иначе False.
      *
-     * @throws \InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws \RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
+     * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
      */
     public function image_resize(string $full_path, string $thumbnail_path): bool;
 
@@ -172,14 +172,14 @@ interface Work_Image_Interface
      * Если у файла отсутствует расширение, оно добавляется автоматически.
      * Метод используется для обеспечения корректного соответствия расширения файла его реальному типу.
      *
-     * @see \PhotoRigma\Classes\Work::fix_file_extension() Вызывается из этого метода.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::fix_file_extension() Вызывается из этого метода.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
      *
      * @param string $full_path Полный путь к файлу.
      * @return string Полный путь к файлу с правильным расширением.
      *
-     * @throws \InvalidArgumentException Если путь к файлу некорректен или файл не существует.
-     * @throws \RuntimeException Если MIME-тип файла не поддерживается.
+     * @throws InvalidArgumentException Если путь к файлу некорректен или файл не существует.
+     * @throws RuntimeException Если MIME-тип файла не поддерживается.
      *
      * @example Пример использования метода:
      * @code
@@ -203,10 +203,10 @@ interface Work_Image_Interface
  *          - Логирования ошибок через функцию `log_in_file`.
  *          - Корректировки расширения файла в соответствии с его MIME-типом.
  *
- * @see \PhotoRigma\Classes\Work_Image_Interface Интерфейс для работы с изображениями.
- * @see \PhotoRigma\Classes\Work Класс, через который вызываются методы для работы с изображениями.
- * @see \PhotoRigma\Classes\Work::validate_mime_type() Метод для проверки MIME-типов изображений.
- * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+ * @see PhotoRigma::Classes::Work_Image_Interface Интерфейс для работы с изображениями.
+ * @see PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с изображениями.
+ * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типов изображений.
+ * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  *
  * @note Этот класс реализует интерфейс Work_Image_Interface.
  * @warning Не используйте этот класс напрямую, все вызовы должны выполняться через класс Work.
@@ -215,23 +215,25 @@ class Work_Image implements Work_Image_Interface
 {
     // Свойства:
     private array $config; ///< Конфигурация приложения.
+    public const MAX_IMAGE_WIDTH = 5000; // Максимальная ширина изображения (в пикселях)
+    public const MAX_IMAGE_HEIGHT = 5000; // Максимальная высота изображения (в пикселях)
 
     /**
      * @brief Конструктор класса.
      *
      * @details Инициализирует объект класса `Work_Image` с переданной конфигурацией.
-     * Этот класс является дочерним для \\PhotoRigma\\Classes\\Work.
+     * Этот класс является дочерним для PhotoRigma::Classes::Work.
      *
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work Родительский класс, который создаёт объект класса Work_Image.
-     * @see \\PhotoRigma\\Classes\\Work_Image::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work Родительский класс, который создаёт объект класса Work_Image.
+     * @see PhotoRigma::Classes::Work_Image::$config Свойство, содержащее конфигурацию приложения.
      *
      * @param array $config Конфигурация приложения.
      *                      Должен быть массивом. Если передан некорректный тип, выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Если параметр $config не является массивом.
+     * @throws InvalidArgumentException Если параметр $config не является массивом.
      *
      * @note Конфигурация должна содержать все необходимые параметры для корректной работы класса.
      *       Параметры сохраняются в свойство $this->config.
@@ -239,7 +241,7 @@ class Work_Image implements Work_Image_Interface
      * @warning Отсутствие необходимых ключей в массиве $config может привести к ошибкам при работе класса.
      *          Убедитесь, что конфигурация содержит все требуемые параметры.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Image::__construct
+     * @example PhotoRigma::Classes::Work_Image::__construct
      * @code
      * // Пример использования конструктора
      * $config = [
@@ -268,7 +270,7 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Image::$config Свойство, к которому обращается метод.
+     * @see PhotoRigma::Classes::Work_Image::$config Свойство, к которому обращается метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -276,7 +278,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @return mixed Значение свойства `$config`.
      *
-     * @throws \\InvalidArgumentException Если запрашиваемое свойство не существует.
+     * @throws InvalidArgumentException Если запрашиваемое свойство не существует.
      *
      * @note Этот метод предназначен только для доступа к свойству `$config`.
      *       Любые другие запросы будут игнорироваться с выбросом исключения.
@@ -284,7 +286,7 @@ class Work_Image implements Work_Image_Interface
      * @warning Попытка доступа к несуществующему свойству вызовет исключение.
      *          Убедитесь, что вы запрашиваете только допустимые свойства.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Image::__get
+     * @example PhotoRigma::Classes::Work_Image::__get
      * @code
      * // Пример использования метода
      * $workImage = new \PhotoRigma\Classes\Work_Image(['temp_photo_w' => 800]);
@@ -310,7 +312,7 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Image::$config Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work_Image::$config Свойство, которое изменяет метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -318,7 +320,7 @@ class Work_Image implements Work_Image_Interface
      * @param mixed $value Новое значение свойства:
      *                     - Может быть любого типа, но рекомендуется использовать массив для конфигурации.
      *
-     * @throws \\InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
+     * @throws InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
      *
      * @note Этот метод предназначен только для изменения свойства `$config`.
      *       Любые другие попытки установки значений будут игнорироваться с выбросом исключения.
@@ -326,7 +328,7 @@ class Work_Image implements Work_Image_Interface
      * @warning Попытка установки значения для несуществующего свойства вызовет исключение.
      *          Убедитесь, что вы устанавливаете значение только для допустимых свойств.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Image::__set
+     * @example PhotoRigma::Classes::Work_Image::__set
      * @code
      * // Пример использования метода
      * $workImage = new \PhotoRigma\Classes\Work_Image([]);
@@ -350,9 +352,9 @@ class Work_Image implements Work_Image_Interface
      *
      * @details Это публичный редирект на защищённый метод `_size_image_internal`.
      *
-     * @see \PhotoRigma\Classes\Work Класс, через который вызывается этот метод.
-     * @see \PhotoRigma\Classes\Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот метод.
-     * @see \PhotoRigma\Classes\Work_Image::_size_image_internal() Защищённый метод, выполняющий основную логику.
+     * @see PhotoRigma::Classes::Work Класс, через который вызывается этот метод.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот метод.
+     * @see PhotoRigma::Classes::Work_Image::_size_image_internal() Защищённый метод, выполняющий основную логику.
      *
      * @param string $path_image Путь к файлу изображения.
      *
@@ -361,7 +363,7 @@ class Work_Image implements Work_Image_Interface
      *     height: int  // Высота эскиза.
      * } Массив с шириной и высотой эскиза.
      *
-     * @throws \RuntimeException Если файл не существует или не удалось получить размеры изображения.
+     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
      */
     public function size_image(string $path_image): array
     {
@@ -373,16 +375,16 @@ class Work_Image implements Work_Image_Interface
      *
      * @details Это публичный редирект на защищённый метод `_image_resize_internal`.
      *
-     * @see \PhotoRigma\Classes\Work::image_resize() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Image::_image_resize_internal() Защищённый метод, выполняющий основную логику.
+     * @see PhotoRigma::Classes::Work::image_resize() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal() Защищённый метод, выполняющий основную логику.
      *
      * @param string $full_path Путь к исходному изображению.
      * @param string $thumbnail_path Путь для сохранения эскиза.
      *
      * @return bool True, если операция выполнена успешно, иначе False.
      *
-     * @throws \InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws \RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
+     * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
      */
     public function image_resize(string $full_path, string $thumbnail_path): bool
     {
@@ -394,8 +396,8 @@ class Work_Image implements Work_Image_Interface
      *
      * @details Это публичный редирект на защищённый метод `_no_photo_internal`.
      *
-     * @see \PhotoRigma\Classes\Work::no_photo() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Image::_no_photo_internal() Защищённый метод, выполняющий основную логику.
+     * @see PhotoRigma::Classes::Work::no_photo() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Image::_no_photo_internal() Защищённый метод, выполняющий основную логику.
      *
      * @return array{
      *     url: string, // URL полноразмерного изображения.
@@ -419,8 +421,8 @@ class Work_Image implements Work_Image_Interface
      *
      * @details Это публичный редирект на защищённый метод `_image_attach_internal`.
      *
-     * @see \PhotoRigma\Classes\Work::image_attach() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Image::_image_attach_internal() Защищённый метод, выполняющий основную логику.
+     * @see PhotoRigma::Classes::Work::image_attach() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Image::_image_attach_internal() Защищённый метод, выполняющий основную логику.
      *
      * @param string $full_path Полный путь к файлу.
      * @param string $name_file Имя файла для заголовка Content-Disposition.
@@ -439,15 +441,15 @@ class Work_Image implements Work_Image_Interface
      * и возвращает полный путь с правильным расширением.
      * Если у файла отсутствует расширение, оно добавляется автоматически.
      *
-     * @see \PhotoRigma\Classes\Work_Image::_fix_file_extension_internal() Вызывает этот метод для корректировки расширения.
-     * @see \PhotoRigma\Classes\Work::fix_file_extension() Вызывается из этого метода.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Image::_fix_file_extension_internal() Вызывает этот метод для корректировки расширения.
+     * @see PhotoRigma::Classes::Work::fix_file_extension() Вызывается из этого метода.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
      *
      * @param string $full_path Полный путь к файлу.
      * @return string Полный путь к файлу с правильным расширением.
      *
-     * @throws \InvalidArgumentException Если путь к файлу некорректен или файл не существует.
-     * @throws \RuntimeException Если MIME-тип файла не поддерживается.
+     * @throws InvalidArgumentException Если путь к файлу некорректен или файл не существует.
+     * @throws RuntimeException Если MIME-тип файла не поддерживается.
      */
     public function fix_file_extension(string $full_path): string
     {
@@ -462,8 +464,8 @@ class Work_Image implements Work_Image_Interface
      * целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются
      * пропорционально.
      *
-     * @see \PhotoRigma\Classes\Work_Image::size_image() Публичный редирект, вызывающий этот метод.
-     * @see \PhotoRigma\Classes\Work_Image::calculate_thumbnail_size() Этот метод используется для расчёта размера эскиза.
+     * @see PhotoRigma::Classes::Work_Image::size_image() Публичный редирект, вызывающий этот метод.
+     * @see PhotoRigma::Classes::Work_Image::calculate_thumbnail_size() Этот метод используется для расчёта размера эскиза.
      *
      * @param string $path_image Путь к файлу изображения.
      *
@@ -472,7 +474,7 @@ class Work_Image implements Work_Image_Interface
      *     height: int  // Высота эскиза.
      * } Массив с шириной и высотой эскиза.
      *
-     * @throws \RuntimeException Если файл не существует или не удалось получить размеры изображения.
+     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
      */
     protected function _size_image_internal(string $path_image): array
     {
@@ -503,24 +505,21 @@ class Work_Image implements Work_Image_Interface
      * В противном случае создаётся новый эскиз с использованием одной из доступных библиотек:
      * GraphicsMagick, ImageMagick или GD (в порядке приоритета).
      *
-     * @see \PhotoRigma\Classes\Work_Image::image_resize() Публичный редирект, вызывающий этот метод.
-     * @see \PhotoRigma\Classes\Work_Image::calculate_thumbnail_size() Метод для расчёта размеров эскиза.
-     * @see \PhotoRigma\Classes\Work_Image::process_image_resize_gmagick() Обработка через GraphicsMagick.
-     * @see \PhotoRigma\Classes\Work_Image::process_image_resize_imagick() Обработка через ImageMagick.
-     * @see \PhotoRigma\Classes\Work_Image::process_image_resize_gd() Обработка через GD.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Image::image_resize() Публичный редирект, вызывающий этот метод.
+     * @see PhotoRigma::Classes::Work_Image::calculate_thumbnail_size() Метод для расчёта размеров эскиза.
+     * @see PhotoRigma::Classes::Work_Image::process_image_resize_gmagick() Обработка через GraphicsMagick.
+     * @see PhotoRigma::Classes::Work_Image::process_image_resize_imagick() Обработка через ImageMagick.
+     * @see PhotoRigma::Classes::Work_Image::process_image_resize_gd() Обработка через GD.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
      *
      * @param string $full_path Путь к исходному изображению.
      * @param string $thumbnail_path Путь для сохранения эскиза.
      *
      * @return bool True, если операция выполнена успешно, иначе False.
      *
-     * @throws \InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws \RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
+     * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
      */
-    public const MAX_IMAGE_WIDTH = 5000; // Максимальная ширина изображения (в пикселях)
-    public const MAX_IMAGE_HEIGHT = 5000; // Максимальная высота изображения (в пикселях)
-
     protected function _image_resize_internal(string $full_path, string $thumbnail_path): bool
     {
         // Нормализация путей через realpath()
@@ -631,7 +630,7 @@ class Work_Image implements Work_Image_Interface
      * об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено
      * или недоступно. Метод использует конфигурацию приложения (`site_url`) для формирования URL-адресов.
      *
-     * @see \PhotoRigma\Classes\Work_Image::no_photo() Публичный редирект, вызывающий этот метод.
+     * @see PhotoRigma::Classes::Work_Image::no_photo() Публичный редирект, вызывающий этот метод.
      *
      * @return array{
      *     url: string, // URL полноразмерного изображения.
@@ -668,8 +667,8 @@ class Work_Image implements Work_Image_Interface
      * возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением
      * MIME-типа, возвращается HTTP-статус 500.
      *
-     * @see \PhotoRigma\Classes\Work_Image::image_attach() Публичный редирект, вызывающий этот метод.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Image::image_attach() Публичный редирект, вызывающий этот метод.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
      *
      * @param string $full_path Полный путь к файлу.
      * @param string $name_file Имя файла для заголовка Content-Disposition.
@@ -740,15 +739,15 @@ class Work_Image implements Work_Image_Interface
      * и возвращает полный путь с правильным расширением.
      * Если у файла отсутствует расширение, оно добавляется автоматически.
      *
-     * @see \PhotoRigma\Classes\Work_Image::_fix_file_extension_internal() Вызывает этот метод для корректировки расширения.
-     * @see \PhotoRigma\Classes\Work::fix_file_extension() Вызывается из этого метода.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Image::_fix_file_extension_internal() Вызывает этот метод для корректировки расширения.
+     * @see PhotoRigma::Classes::Work::fix_file_extension() Вызывается из этого метода.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
      *
      * @param string $full_path Полный путь к файлу.
      * @return string Полный путь к файлу с правильным расширением.
      *
-     * @throws \InvalidArgumentException Если путь к файлу некорректен или файл не существует.
-     * @throws \RuntimeException Если MIME-тип файла не поддерживается.
+     * @throws InvalidArgumentException Если путь к файлу некорректен или файл не существует.
+     * @throws RuntimeException Если MIME-тип файла не поддерживается.
      */
     protected function _fix_file_extension_internal(string $full_path): string
     {
@@ -840,31 +839,29 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Image::$config
+     * @see PhotoRigma::Classes::Work_Image::$config
      *      Массив с конфигурацией приложения.
-     * @see \\PhotoRigma\\Classes\\Work_Image::size_image()
+     * @see PhotoRigma::Classes::Work_Image::size_image()
      *      Вычисляет размеры для вывода эскиза изображения.
-     * @see \\PhotoRigma\\Classes\\Work_Image::image_resize()
+     * @see PhotoRigma::Classes::Work_Image::image_resize()
      *      Изменяет размер изображения.
      *
-     * @param array{
-     *         0: int, // Ширина изображения (должна быть положительным целым числом).
-     *         1: int  // Высота изображения (должна быть положительным целым числом).
-     * } $size Массив с реальными размерами изображения.
+     * @param array $size Массив с реальными размерами изображения.
+     *                    - Индекс 0: int — Ширина изображения (должна быть положительным целым числом).
+     *                    - Индекс 1: int — Высота изображения (должна быть положительным целым числом).
      *
-     * @return array{
-     *         width: int,  // Ширина эскиза (целое число ≥ 0).
-     *         height: int  // Высота эскиза (целое число ≥ 0).
-     * } Массив с шириной и высотой эскиза.
+     * @return array Массив с шириной и высотой эскиза.
+     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
+     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
      *
-     * @throws \\InvalidArgumentException Если массив `$size` не содержит двух положительных целых чисел.
+     * @throws InvalidArgumentException Если массив `$size` не содержит двух положительных целых чисел.
      *      Пример сообщения:
      *
      *          Некорректные размеры изображения
      *          Требуется массив с двумя положительными целыми числами.
      *          Получено: width = [значение], height = [значение]
      *
-     * @throws \\RuntimeException Если значения `temp_photo_w` или `temp_photo_h` в конфигурации некорректны.
+     * @throws RuntimeException Если значения `temp_photo_w` или `temp_photo_h` в конфигурации некорректны.
      *      Пример сообщения:
      *
      *          Некорректная конфигурация temp_photo_w или temp_photo_h
@@ -873,7 +870,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @todo Перевести аргументы на массивовые значения ($size[0] -> $size['width']; $size[1] -> $size['height']).
      *
-     * @example \\PhotoRigma\\Classes\\Database::calculate_thumbnail_size
+     * Пример вызова метода внутри класса:
      * @code
      * // Исходные размеры изображения
      * $originalSize = [1920, 1080];
@@ -955,7 +952,7 @@ class Work_Image implements Work_Image_Interface
      * @details Метод выполняет следующие шаги:
      * 1. Проверяет поддержку MIME-типа через массив разрешённых форматов.
      * 2. Преобразует MIME-тип в формат GraphicsMagick.
-     * 3. Проверяет поддержку формата через \Gmagick::queryFormats().
+     * 3. Проверяет поддержку формата через Gmagick::queryFormats().
      * 4. Ограничивает использование памяти до 25% от доступной.
      * 5. Создаёт резервную копию старого эскиза (если он существует).
      * 6. Загружает исходное изображение и создаёт новый эскиз заданных размеров.
@@ -967,11 +964,9 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Image::_image_resize_internal()
+     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal()
      *      Метод, вызывающий этот приватный метод.
-     * @see \\Gmagick
-     *      Класс из библиотеки GraphicsMagick, используемый для обработки изображений.
-     * @see \\PhotoRigma\\Include\\log_in_file()
+     * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      * @param array $original_data Данные об оригинальном изображении:
@@ -988,13 +983,13 @@ class Work_Image implements Work_Image_Interface
      *
      * @return bool True, если эскиз создан успешно.
      *
-     * @throws \\GmagickException Если возникает ошибка при работе с GraphicsMagick (например, при загрузке или обработке изображения).
+     * @throws GmagickException Если возникает ошибка при работе с GraphicsMagick (например, при загрузке или обработке изображения).
      *
      * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
      *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
      * @warning Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.
      *
-     * @example \\PhotoRigma\\Classes\\Database::process_image_resize_gmagick
+     * Пример вызова метода внутри класса:
      * @code
      * $original_data = [
      *     'path' => '/path/to/original.jpg',
@@ -1117,7 +1112,7 @@ class Work_Image implements Work_Image_Interface
      * @details Метод выполняет следующие шаги:
      * 1. Проверяет поддержку MIME-типа через массив разрешённых форматов.
      * 2. Преобразует MIME-тип в формат ImageMagick.
-     * 3. Проверяет поддержку формата через \Imagick::queryFormats().
+     * 3. Проверяет поддержку формата через Imagick::queryFormats().
      * 4. Ограничивает использование памяти до 25% от доступной.
      * 5. Создаёт резервную копию старого эскиза (если он существует).
      * 6. Загружает исходное изображение и создаёт новый эскиз заданных размеров.
@@ -1129,11 +1124,9 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Image::_image_resize_internal()
+     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal()
      *      Метод, вызывающий этот приватный метод.
-     * @see \\Imagick
-     *      Класс из библиотеки ImageMagick, используемый для обработки изображений.
-     * @see \\PhotoRigma\\Include\\log_in_file()
+     * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      * @param array $original_data Данные об оригинальном изображении:
@@ -1150,13 +1143,13 @@ class Work_Image implements Work_Image_Interface
      *
      * @return bool True, если эскиз создан успешно.
      *
-     * @throws \\ImagickException Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке изображения).
+     * @throws ImagickException Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке изображения).
      *
      * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
      *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
      * @warning Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.
      *
-     * @example \\PhotoRigma\\Classes\\Database::process_image_resize_imagick
+     * Пример вызова метода внутри класса:
      * @code
      * $original_data = [
      *     'path' => '/path/to/original.jpg',
@@ -1292,9 +1285,9 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Image::_image_resize_internal()
+     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal()
      *      Метод, вызывающий этот приватный метод.
-     * @see \\PhotoRigma\\Include\\log_in_file()
+     * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      * @param array $original_data Данные об оригинальном изображении:
@@ -1311,10 +1304,10 @@ class Work_Image implements Work_Image_Interface
      *
      * @return bool True, если эскиз создан успешно.
      *
-     * @throws \\InvalidArgumentException Если MIME-тип или тип изображения не поддерживаются.
+     * @throws InvalidArgumentException Если MIME-тип или тип изображения не поддерживаются.
      *      Пример сообщения:
      *          Неподдерживаемый MIME-тип для GD | Получено: [значение]
-     * @throws \\RuntimeException Если возникает ошибка при работе с GD (например, при загрузке, обработке или сохранении изображения).
+     * @throws RuntimeException Если возникает ошибка при работе с GD (например, при загрузке, обработке или сохранении изображения).
      *      Пример сообщения:
      *          Не удалось создать ресурс изображения через GD | Путь: [значение]
      *
@@ -1323,7 +1316,7 @@ class Work_Image implements Work_Image_Interface
      * @warning Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.
      * @warning Поддержка форматов зависит от текущей версии GD. Например, WebP может быть недоступен.
      *
-     * @example \\PhotoRigma\\Classes\\Database::process_image_resize_gd
+     * Пример вызова метода внутри класса:
      * @code
      * $original_data = [
      *     'path' => '/path/to/original.jpg',

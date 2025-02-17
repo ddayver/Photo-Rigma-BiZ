@@ -211,6 +211,7 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
 <tr class="memitem:a40ec1fd9d599c07199049eb1df5551b6" id="r_a40ec1fd9d599c07199049eb1df5551b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40ec1fd9d599c07199049eb1df5551b6">generate_photo_data</a> (array $photo_data=[])</td></tr>
+<tr class="memdesc:a40ec1fd9d599c07199049eb1df5551b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Генерация массива данных для вывода изображения.  <br /></td></tr>
 <tr class="separator:a40ec1fd9d599c07199049eb1df5551b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -239,9 +240,9 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <li>Получение данных о новостях, языках и темах.</li>
 <li>Генерация блоков вывода изображений для различных типов запросов.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Interfaces\Work_CoreLogic_Interface Интерфейс, который реализует данный класс. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.">PhotoRigma\Classes\Work_CoreLogic_Interface</a> Интерфейс, который реализует данный класс. </dd>
 <dd>
-\PhotoRigma\Classes\Database Класс для работы с базой данных. </dd></dl>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd></dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#_a6">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a> и <a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#_a8">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
@@ -377,32 +378,26 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если входные параметры имеют некорректный тип. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных.</td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если входные параметры имеют некорректный тип. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::category() Публичный метод-редирект для вызова этой логики. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для конкретного раздела или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных. </dd>
+<a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75" title="Объект для работы с базой данных (обязательный).">PhotoRigma\Classes\Work_CoreLogic\$db</a> Свойство, содержащее объект для работы с базой данных. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$lang Свойство, содержащее языковые строки. </dd>
+<a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Языковые данные (могут быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$lang</a> Свойство, содержащее языковые строки. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя. </dd>
+<a class="el" href="#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя (может быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$user</a> Свойство, содержащее данные текущего пользователя. </dd>
 <dd>
-\PhotoRigma\Classes\Work_Helper::clean_field() Метод для очистки данных. </dd></dl>
+<a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work_Helper\clean_field()</a> Метод для очистки данных. </dd></dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a17">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00609">609</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00875">Work\clean_field()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00874">Work\clean_field()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00416">category()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -507,40 +502,34 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый $type или $id_photo. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выборке данных из базы данных или доступе к файлу.</td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если передан недопустимый $type или $id_photo. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если произошла ошибка при выборке данных из базы данных или доступе к файлу.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::create_photo() Публичный метод-редирект для вызова этой логики. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab90e7e1e6aa1d2c9abe81faed1db03a1">PhotoRigma\Classes\Work_CoreLogic\create_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения. </dd>
+<a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство, содержащее конфигурацию приложения. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя. </dd>
+<a class="el" href="#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя (может быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$user</a> Свойство, содержащее данные текущего пользователя. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::generate_photo_data() Приватный метод для формирования массива данных по умолчанию. </dd>
+<a class="el" href="#a40ec1fd9d599c07199049eb1df5551b6" title="Генерация массива данных для вывода изображения.">PhotoRigma\Classes\Work_CoreLogic\generate_photo_data()</a> Приватный метод для формирования массива данных по умолчанию. </dd>
 <dd>
-\PhotoRigma\Classes\Work::size_image() Метод, используемый для вычисления размеров изображения. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">PhotoRigma\Classes\Work\size_image()</a> Метод, используемый для вычисления размеров изображения. </dd>
 <dd>
-\PhotoRigma\Classes\Database::join() Метод, используемый для объединения данных из нескольких таблиц. </dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Метод, используемый для объединения данных из нескольких таблиц. </dd>
 <dd>
-\PhotoRigma\Classes\Database::res_row() Метод, используемый для получения одной строки результата. </dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d" title="Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.">PhotoRigma\Classes\Database\res_row()</a> Метод, используемый для получения одной строки результата. </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок. </dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок. </dd>
 <dd>
-\PhotoRigma\Classes\Work::clean_field() Метод для очистки данных. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a27">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01136">1136</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00875">Work\clean_field()</a> и <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01287">generate_photo_data()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00874">Work\clean_field()</a> и <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01286">generate_photo_data()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00575">create_photo()</a>.</p>
 <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -553,7 +542,7 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <area shape="rect" title=" " alt="" coords="5,47,158,72"/>
 <area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="206,12,349,51"/>
 <area shape="poly" title=" " alt="" coords="158,46,190,41,191,47,158,51"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6" title=" " alt="" coords="206,75,348,100"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6" title="Генерация массива данных для вывода изображения." alt="" coords="206,75,348,100"/>
 <area shape="poly" title=" " alt="" coords="158,68,191,73,190,78,158,73"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="397,12,562,51"/>
 <area shape="poly" title=" " alt="" coords="350,29,381,29,381,34,350,34"/>
@@ -610,30 +599,24 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если удаление успешно, иначе False.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если параметр $photo_id имеет некорректный тип или значение. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.</td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::del_photo() Публичный метод-редирект для вызова этой логики. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\del_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных. </dd>
+<a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75" title="Объект для работы с базой данных (обязательный).">PhotoRigma\Classes\Work_CoreLogic\$db</a> Свойство, содержащее объект для работы с базой данных. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения. </dd>
+<a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство, содержащее конфигурацию приложения. </dd>
 <dd>
-\PhotoRigma\Classes\Database::join() Метод, используемый для объединения данных из нескольких таблиц. </dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Метод, используемый для объединения данных из нескольких таблиц. </dd>
 <dd>
-\PhotoRigma\Classes\Database::delete() Метод, используемый для удаления записей из таблиц базы данных. </dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Метод, используемый для удаления записей из таблиц базы данных. </dd>
 <dd>
-\PhotoRigma\Classes\Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса. </dd>
+PhotoRigma::Classes::Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса. </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок. </dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок. </dd></dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a19">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
@@ -722,22 +705,22 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </div><div class="memdoc">
 <p>Загружает доступные темы из директории /themes/.</p>
 <p>Метод перебирает все поддиректории в <code>/themes/</code> и добавляет их имена в список доступных тем. Этот метод содержит основную логику, вызываемую через публичный метод get_themes().</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::get_themes() Публичный метод-редирект для вызова этой логики. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a8d2f43c00af0c9574caa0455df82c613">PhotoRigma\Classes\Work_CoreLogic\get_themes()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения, включая путь к директории (<code>site_dir</code>). </dd>
+<a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство, содержащее конфигурацию приложения, включая путь к директории (<code>site_dir</code>). </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с именами доступных тем.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если:</p><ul>
+    <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/themes/</code> не существует или недоступна для чтения.</li>
 <li>Ни одна тема не найдена в указанной директории. </li>
 </ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a25">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
@@ -847,20 +830,14 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если входные параметры имеют некорректный тип. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных.</td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если входные параметры имеют некорректный тип. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::category() Этот метод вызывается через класс Work. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a592862a13036c81f13f0fbb9f5d15abe">PhotoRigma\Classes\Work\category()</a> Этот метод вызывается через класс Work. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::_category_internal() Основная логика метода реализована здесь. </dd></dl>
+<a class="el" href="#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для конкретного раздела или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\_category_internal()</a> Основная логика метода реализована здесь. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">Work_CoreLogic_Interface</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a16">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -953,20 +930,14 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый $type или $id_photo. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выборке данных из базы данных или доступе к файлу.</td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если передан недопустимый $type или $id_photo. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если произошла ошибка при выборке данных из базы данных или доступе к файлу.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::create_photo() Метод, используемый для генерации блока вывода изображений. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a5b23fb55b20e92336e0dccc4c0341b1d">PhotoRigma\Classes\Work\create_photo()</a> Метод, используемый для генерации блока вывода изображений. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::_create_photo_internal() Основная логика метода реализована здесь. </dd></dl>
+<a class="el" href="#a5be64e2d9c6592be321468cd2f947aeb">PhotoRigma\Classes\Work_CoreLogic\_create_photo_internal()</a> Основная логика метода реализована здесь. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">Work_CoreLogic_Interface</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a26">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -987,7 +958,7 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <area shape="poly" title=" " alt="" coords="102,57,134,57,134,62,102,62"/>
 <area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="350,12,493,51"/>
 <area shape="poly" title=" " alt="" coords="302,46,334,41,335,47,303,51"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6" title=" " alt="" coords="350,75,493,100"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6" title="Генерация массива данных для вывода изображения." alt="" coords="350,75,493,100"/>
 <area shape="poly" title=" " alt="" coords="303,68,335,73,335,78,302,73"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="541,12,707,51"/>
 <area shape="poly" title=" " alt="" coords="494,29,526,29,526,34,494,34"/>
@@ -1024,20 +995,14 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если удаление успешно, иначе False.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если параметр $photo_id имеет некорректный тип или значение. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.</td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::del_photo() Этот метод вызывается через класс Work. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a60353d13b64ee02fe027d3727d07bc4b">PhotoRigma\Classes\Work\del_photo()</a> Этот метод вызывается через класс Work. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::_del_photo_internal() Основная логика метода реализована здесь. </dd></dl>
+<a class="el" href="#a818796fb684f095ff90ef5f03a894989" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\_del_photo_internal()</a> Основная логика метода реализована здесь. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">Work_CoreLogic_Interface</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a18">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -1083,10 +1048,55 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a29">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+
+<p>Генерация массива данных для вывода изображения. </p>
+<p>Метод формирует массив данных для вывода изображения, используя значения по умолчанию или данные, переданные в параметре $photo_data. Если какое-либо значение отсутствует в $photo_data, используется соответствующее значение по умолчанию. Значения по умолчанию берутся из конфигурации приложения ($this-&gt;config) и языковых переменных ($this-&gt;lang). Этот метод является приватным и предназначен только для использования внутри класса.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство, содержащее конфигурацию приложения. </dd>
+<dd>
+<a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Языковые данные (могут быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$lang</a> Свойство, содержащее языковые переменные. </dd>
+<dd>
+<a class="el" href="#a5be64e2d9c6592be321468cd2f947aeb">PhotoRigma\Classes\Work_CoreLogic\_create_photo_internal()</a> Метод, вызывающий этот приватный метод.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$photo_data</td><td>Массив данных изображения, полученных из базы данных. Может быть пустым, если требуется сгенерировать массив только со значениями по умолчанию.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив данных для вывода изображения. Содержит следующие ключи:<ul>
+<li>'url' (string): URL для просмотра полного изображения.</li>
+<li>'thumbnail_url' (string): URL для миниатюры изображения.</li>
+<li>'name' (string): Название изображения.</li>
+<li>'description' (string): Описание изображения.</li>
+<li>'category_name' (string): Название категории.</li>
+<li>'category_description' (string): Описание категории.</li>
+<li>'rate' (string): Рейтинг изображения (например, "Рейтинг: 0/0").</li>
+<li>'url_user' (string|null): URL профиля пользователя, добавившего изображение.</li>
+<li>'real_name' (string): Реальное имя пользователя.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если $photo_data не является массивом. Пример сообщения: Аргумент $photo_data должен быть массивом. Получено: [тип]</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от конфигурации приложения ($this-&gt;config) и языковых переменных ($this-&gt;lang). Убедитесь, что эти свойства правильно инициализированы перед вызовом метода.</dd></dl>
+<p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line"><span class="comment">// Пример генерации массива данных только со значениями по умолчанию</span></div>
+<div class="line">$default_photo = $this-&gt;<a class="code hl_function" href="#a40ec1fd9d599c07199049eb1df5551b6">generate_photo_data</a>();</div>
+<div class="line">print_r($default_photo);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Пример с передачей данных</span></div>
+<div class="line">$photo_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;Лучшее фото&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;description&#39;</span> =&gt; <span class="stringliteral">&#39;Описание лучшего фото&#39;</span>,</div>
+<div class="line">];</div>
+<div class="line">$photo_block = $this-&gt;<a class="code hl_function" href="#a40ec1fd9d599c07199049eb1df5551b6">generate_photo_data</a>($photo_data);</div>
+<div class="line">print_r($photo_block);</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html_a40ec1fd9d599c07199049eb1df5551b6"><div class="ttname"><a href="#a40ec1fd9d599c07199049eb1df5551b6">PhotoRigma\Classes\Work_CoreLogic\generate_photo_data</a></div><div class="ttdeci">generate_photo_data(array $photo_data=[])</div><div class="ttdoc">Генерация массива данных для вывода изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l01286">work_corelogic.php:1286</a></div></div>
+</div><!-- fragment --> <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a29">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
 </dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01287">1287</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01286">1286</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01136">_create_photo_internal()</a>.</p>
 <div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -1096,7 +1106,7 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph">
-<area shape="rect" title=" " alt="" coords="350,5,492,30"/>
+<area shape="rect" title="Генерация массива данных для вывода изображения." alt="" coords="350,5,492,30"/>
 <area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb" title=" " alt="" coords="150,5,302,30"/>
 <area shape="poly" title=" " alt="" coords="335,20,302,20,302,15,335,15"/>
 <area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1" title=" " alt="" coords="5,5,102,30"/>
@@ -1128,14 +1138,14 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если:</p><ul>
+    <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/language/</code> недоступна или не существует.</li>
 <li>Ни один язык не найден в указанной директории. </li>
 </ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">Work_CoreLogic_Interface</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a22">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -1175,20 +1185,20 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </div><div class="memdoc">
 <p>Загружает доступные темы из директории /themes/.</p>
 <p>Метод перебирает все поддиректории в <code>/themes/</code> и добавляет их имена в список доступных тем. Этот метод является редиректом на защищенный метод _get_themes_internal, где реализована основная логика.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::get_themes() Вызывает этот метод для получения списка доступных тем. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8d2f43c00af0c9574caa0455df82c613">PhotoRigma\Classes\Work\get_themes()</a> Вызывает этот метод для получения списка доступных тем. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::_get_themes_internal() Основная логика метода реализована здесь.</dd></dl>
+<a class="el" href="#afd6b68f8d6f551886000447b30191b6a">PhotoRigma\Classes\Work_CoreLogic\_get_themes_internal()</a> Основная логика метода реализована здесь.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с именами доступных тем.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если:</p><ul>
+    <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/themes/</code> не существует или недоступна для чтения.</li>
 <li>Ни одна тема не найдена в указанной директории. </li>
 </ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">Work_CoreLogic_Interface</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a24">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
@@ -1245,17 +1255,11 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан некорректный $act или $news_id_or_limit. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выполнении запроса к базе данных. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если передан некорректный $act или $news_id_or_limit. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если произошла ошибка при выполнении запроса к базе данных. </p>
 
 <p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic_Interface</a>.</p>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a20">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>

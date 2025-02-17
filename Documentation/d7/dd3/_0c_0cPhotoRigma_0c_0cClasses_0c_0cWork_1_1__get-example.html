@@ -103,8 +103,8 @@ $(function(){initNavTree('d7/dd3/_0c_0cPhotoRigma_0c_0cClasses_0c_0cWork_1_1__ge
 </div><!--header-->
 <div class="contents">
 <p>Магический метод для получения значения свойства <code>$config</code>.</p>
-<p>Магический метод для получения значения свойства <code>$config</code>. Этот метод вызывается автоматически при попытке получить значение недоступного свойства. Доступ разрешён только к свойству <code>$config</code>. Если запрашивается другое свойство, выбрасывается исключение \InvalidArgumentException.</p>
-<dl class="section see"><dt>См. также</dt><dd>\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work::$config Свойство, содержащее конфигурацию.</dd></dl>
+<p>Магический метод для получения значения свойства <code>$config</code>. Этот метод вызывается автоматически при попытке получить значение недоступного свойства. Доступ разрешён только к свойству <code>$config</code>. Если запрашивается другое свойство, выбрасывается исключение InvalidArgumentException.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$name</td><td>Имя свойства:<ul>
@@ -118,11 +118,10 @@ $(function(){initNavTree('d7/dd3/_0c_0cPhotoRigma_0c_0cClasses_0c_0cWork_1_1__ge
 <dl class="section return"><dt>Возвращает</dt><dd>array Значение свойства <code>$config</code>.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если запрашиваемое свойство не существует или недоступно.</td></tr>
   </table>
   </dd>
 </dl>
-<p>\InvalidArgumentException Если запрашиваемое свойство не существует или недоступно.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Этот метод предназначен только для доступа к свойству <code>$config</code>. Любые другие запросы будут игнорироваться с выбросом исключения.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Попытка доступа к несуществующему свойству вызовет исключение. Убедитесь, что вы запрашиваете только допустимые свойства.</dd></dl>
 <div class="fragment"><div class="line"><span class="comment">// Пример использования метода</span></div>

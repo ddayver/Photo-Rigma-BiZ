@@ -1,6 +1,6 @@
 <map id="calculate_thumbnail_size" name="calculate_thumbnail_size">
-<area shape="rect" id="Node000001" title=" " alt="" coords="352,31,518,55"/>
-<area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title=" " alt="" coords="151,5,304,30"/>
+<area shape="rect" id="Node000001" title="Расчёт размера эскиза." alt="" coords="352,31,518,55"/>
+<area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,5,304,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="336,34,304,30,305,24,337,28"/>
 <area shape="rect" id="Node000004" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a887f702cc34cf74259c6f10365fc6c9b" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="156,55,298,79"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="337,57,299,61,299,56,336,52"/>

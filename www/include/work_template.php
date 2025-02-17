@@ -15,9 +15,9 @@
  *              на основе запросов к базе данных и конфигурации. Реализация методов зависит от глобальных переменных,
  *              таких как $_SESSION, для проверки статуса авторизации.
  *
- * @see         \\PhotoRigma\\Classes\\Work_Template_Interface Интерфейс, который реализует данный класс.
- * @see         \\PhotoRigma\\Classes\\Work Класс, через который вызываются методы для работы с шаблонами.
- * @see         \\PhotoRigma\\Classes\\Work::clean_field() Метод для очистки данных.
+ * @see         PhotoRigma::Classes::Work_Template_Interface Интерфейс, который реализует данный класс.
+ * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с шаблонами.
+ * @see         PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
  * @see         index.php Файл, который подключает work_template.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в формировании данных для шаблонов.
@@ -56,12 +56,12 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * на странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Реализующие классы
  * должны обеспечивать выполнение всех методов согласно их описанию.
  *
- * @see \PhotoRigma\Classes\Work_Template Класс, реализующий данный интерфейс.
- * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
- * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
- * @see \PhotoRigma\Classes\Work_Template::$user Свойство, содержащее данные текущего пользователя.
- * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
- * @see \PhotoRigma\Classes\Work::validate_mime_type() Метод для проверки MIME-типа файла.
+ * @see PhotoRigma::Classes::Work_Template Класс, реализующий данный интерфейс.
+ * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+ * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+ * @see PhotoRigma::Classes::Work_Template::$user Свойство, содержащее данные текущего пользователя.
+ * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+ * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типа файла.
  *
  * @note Методы интерфейса зависят от данных из базы данных и конфигурации.
  * Реализующие классы должны обрабатывать возможные ошибки при работе с БД.
@@ -76,18 +76,18 @@ interface Work_Template_Interface
      * @details Метод формирует массив данных для меню на основе переданного типа ($menu) и активного пункта ($action).
      * Если данные отсутствуют, возвращается пустой массив.
      *
-     * @see \PhotoRigma\Classes\Work::create_menu() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект базы данных.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work::create_menu() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект базы данных.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$user Свойство, содержащее данные текущего пользователя.
      *
      * @param string $action Активный пункт меню.
      * @param int    $menu   Тип меню. Допустимые значения: 0 (горизонтальное), 1 (вертикальное).
      *
      * @return array Ассоциативный массив с данными для меню. Если меню пустое, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $menu или $action.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $menu или $action.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *
      * @note Данные для меню берутся из таблицы TBL_MENU. Для получения дополнительной информации см. структуру таблицы.
      * @warning Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.
@@ -111,11 +111,11 @@ interface Work_Template_Interface
      * Если пользователь не авторизован, формируется блок с ссылками на вход, восстановление пароля и регистрацию.
      * Если пользователь авторизован, формируется блок с приветствием, группой и аватаром.
      *
-     * @see \PhotoRigma\Classes\Work::template_user() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$user Свойство, содержащее данные текущего пользователя.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
-     * @see \PhotoRigma\Classes\Work::validate_mime_type() Метод для проверки MIME-типа файла.
+     * @see PhotoRigma::Classes::Work::template_user() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типа файла.
      *
      * @return array Ассоциативный массив с данными для блока пользователя:
      *               - NAME_BLOCK: Название блока.
@@ -131,7 +131,7 @@ interface Work_Template_Interface
      *               - L_GROUP: Группа пользователя.
      *               - U_AVATAR: URL аватара пользователя.
      *
-     * @throws \RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
      *
      * @note Используется глобальная переменная $_SESSION для проверки статуса авторизации.
      * @todo Заменить использование $_SESSION на метод или свойство класса для инкапсуляции доступа к сессии.
@@ -154,10 +154,10 @@ interface Work_Template_Interface
      * категориях, фотографиях, оценках и онлайн-пользователях. Результат формируется в виде ассоциативного массива,
      * который используется для отображения статистики на странице.
      *
-     * @see \PhotoRigma\Classes\Work::template_stat() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work::template_stat() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      *
      * @return array Ассоциативный массив данных для вывода статистики:
      *               - NAME_BLOCK: Название блока статистики.
@@ -178,7 +178,7 @@ interface Work_Template_Interface
      *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
      *               - D_STAT_ONLINE: Список онлайн-пользователей.
      *
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
      * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
      * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.
@@ -192,10 +192,10 @@ interface Work_Template_Interface
      * которые загрузили наибольшее количество фотографий. Результат формируется в виде ассоциативного массива,
      * который используется для отображения в шаблоне. Если данные отсутствуют, добавляется запись "пустого" пользователя.
      *
-     * @see \PhotoRigma\Classes\Work::template_best_user() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work::template_best_user() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      *
      * @param int $best_user Количество лучших пользователей для вывода. Должно быть положительным целым числом. Значение по умолчанию: 1.
      *
@@ -207,7 +207,7 @@ interface Work_Template_Interface
      *               - user_name: Имя пользователя ('---', если данных нет).
      *               - user_photo: Количество загруженных фотографий ('-', если данных нет).
      *
-     * @throws \InvalidArgumentException Если параметр $best_user не является положительным целым числом.
+     * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      *
      * @note Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя.
      */
@@ -221,12 +221,12 @@ interface Work_Template_Interface
  * необходимых для отображения различных блоков на странице, таких как меню, блок пользователя, статистика
  * и список лучших пользователей. Все данные формируются на основе запросов к базе данных и конфигурации.
  *
- * @see \PhotoRigma\Classes\Work_Template_Interface Интерфейс, который реализует данный класс.
- * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
- * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
- * @see \PhotoRigma\Classes\Work_Template::$user Свойство, содержащее данные текущего пользователя.
- * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
- * @see \PhotoRigma\Classes\Work::validate_mime_type() Метод для проверки MIME-типа файла.
+ * @see PhotoRigma::Classes::Work_Template_Interface Интерфейс, который реализует данный класс.
+ * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+ * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+ * @see PhotoRigma::Classes::Work_Template::$user Свойство, содержащее данные текущего пользователя.
+ * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+ * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типа файла.
  *
  * @note Класс использует глобальную переменную $_SESSION для проверки статуса авторизации.
  * Рекомендуется заменить её на метод или свойство класса для инкапсуляции доступа к сессии.
@@ -251,20 +251,20 @@ class Work_Template implements Work_Template_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work Родительский класс, через который передаются зависимости.
-     * @see \\PhotoRigma\\Classes\\Work_Template::$config Свойство, содержащее конфигурацию приложения.
-     * @see \\PhotoRigma\\Classes\\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work Родительский класс, через который передаются зависимости.
+     * @see PhotoRigma::Classes::Work_Template::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
      *
      * @param array $config Конфигурация приложения.
      *                      Должен быть массивом. Если передан некорректный тип, выбрасывается исключение.
      * @param Database_Interface $db Объект для работы с базой данных.
      *
-     * @throws \\InvalidArgumentException Если параметр $config не является массивом.
+     * @throws InvalidArgumentException Если параметр $config не является массивом.
      *
      * @note Важно: все зависимости должны быть корректно инициализированы перед использованием класса.
      * @warning Не передавайте в конструктор некорректные или пустые зависимости, так как это может привести к ошибкам.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Template::__construct
+     * @example PhotoRigma::Classes::Work_Template::__construct
      * @code
      * // Пример использования конструктора
      * $config = ['temp_photo_w' => 800];
@@ -294,7 +294,7 @@ class Work_Template implements Work_Template_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Template::$config Свойство, к которому обращается метод.
+     * @see PhotoRigma::Classes::Work_Template::$config Свойство, к которому обращается метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -302,12 +302,12 @@ class Work_Template implements Work_Template_Interface
      *
      * @return array Значение свойства `$config`.
      *
-     * @throws \\InvalidArgumentException Если запрашиваемое свойство не существует.
+     * @throws InvalidArgumentException Если запрашиваемое свойство не существует.
      *
      * @note Этот метод предназначен только для доступа к свойству `$config`.
      * @warning Не используйте этот метод для доступа к другим свойствам, так как это вызовет исключение.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Template::__get
+     * @example PhotoRigma::Classes::Work_Template::__get
      * @code
      * // Пример использования метода
      * $template = new \PhotoRigma\Classes\Work_Template(['temp_photo_w' => 800], $db, $work);
@@ -333,7 +333,7 @@ class Work_Template implements Work_Template_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Template::$config Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work_Template::$config Свойство, которое изменяет метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -341,12 +341,12 @@ class Work_Template implements Work_Template_Interface
      * @param array $value Новое значение свойства:
      *                     - Должен быть массивом.
      *
-     * @throws \\InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
+     * @throws InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
      *
      * @note Этот метод предназначен только для изменения свойства `$config`.
      * @warning Не используйте этот метод для изменения других свойств, так как это вызовет исключение.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Template::__set
+     * @example PhotoRigma::Classes::Work_Template::__set
      * @code
      * // Пример использования метода
      * $template = new \PhotoRigma\Classes\Work_Template([], $db, $work);
@@ -373,8 +373,8 @@ class Work_Template implements Work_Template_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Template::$lang Свойство, которое изменяет метод.
-     * @see \\PhotoRigma\\Classes\\Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
      *
      * @param array $lang Языковые данные:
      *                    - Должен быть массивом.
@@ -382,12 +382,12 @@ class Work_Template implements Work_Template_Interface
      *
      * @return void Метод ничего не возвращает.
      *
-     * @throws \\InvalidArgumentException Если передан некорректный тип данных или `null`.
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
      *
      * @note Убедитесь, что передаваемые языковые данные корректны и соответствуют ожидаемому формату.
      * @warning Не передавайте пустые или некорректные данные, так как это может привести к ошибкам.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Template::set_lang
+     * @example PhotoRigma::Classes::Work_Template::set_lang
      * @code
      * // Пример использования метода
      * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
@@ -413,20 +413,20 @@ class Work_Template implements Work_Template_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work_Template::$user Свойство, которое изменяет метод.
-     * @see \\PhotoRigma\\Classes\\Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
+     * @see PhotoRigma::Classes::Work_Template::$user Свойство, которое изменяет метод.
+     * @see PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
      *
      * @param User $user Объект пользователя:
      *                   - Должен быть экземпляром класса User.
      *
      * @return void Метод ничего не возвращает.
      *
-     * @throws \\InvalidArgumentException Если передан некорректный тип данных или `null`.
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
      *
      * @note Убедитесь, что передаваемый объект пользователя является экземпляром класса User.
      * @warning Не передавайте null или некорректные объекты, так как это может привести к ошибкам.
      *
-     * @example \\PhotoRigma\\Classes\\Work_Template::set_user
+     * @example PhotoRigma::Classes::Work_Template::set_user
      * @code
      * // Пример использования метода
      * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
@@ -445,8 +445,8 @@ class Work_Template implements Work_Template_Interface
      * @details Этот метод является редиректом на защищённый метод _create_menu_internal().
      * Он предоставляет доступ к функционалу формирования данных для меню через публичный интерфейс.
      *
-     * @see \PhotoRigma\Classes\Work::create_menu() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::_create_menu_internal() Защищённый метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work::create_menu() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::_create_menu_internal() Защищённый метод, реализующий логику.
      *
      * @param string $action Активный пункт меню.
      * @param int    $menu   Тип меню:
@@ -455,8 +455,8 @@ class Work_Template implements Work_Template_Interface
      *
      * @return array Массив с данными для меню. Если меню пустое, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $menu или $action.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $menu или $action.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *
      * @note Данные для меню берутся из таблицы TBL_MENU. Для получения дополнительной информации см. структуру таблицы.
      * @warning Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.
@@ -482,8 +482,8 @@ class Work_Template implements Work_Template_Interface
      * @details Этот метод является редиректом на защищённый метод _template_best_user_internal().
      * Он предоставляет доступ к функционалу формирования списка лучших пользователей через публичный интерфейс.
      *
-     * @see \PhotoRigma\Classes\Work::template_best_user() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::_template_best_user_internal() Защищённый метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work::template_best_user() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::_template_best_user_internal() Защищённый метод, реализующий логику.
      *
      * @param int $best_user Количество лучших пользователей для вывода. Должно быть положительным целым числом.
      *
@@ -495,7 +495,7 @@ class Work_Template implements Work_Template_Interface
      *               - user_name: Имя пользователя.
      *               - user_photo: Количество загруженных фотографий.
      *
-     * @throws \InvalidArgumentException Если параметр $best_user не является положительным целым числом.
+     * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      *
      * @note Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя.
      */
@@ -510,8 +510,8 @@ class Work_Template implements Work_Template_Interface
      * @details Этот метод является редиректом на защищённый метод _template_stat_internal().
      * Он предоставляет доступ к функционалу генерации статистических данных через публичный интерфейс.
      *
-     * @see \PhotoRigma\Classes\Work::template_stat() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::_template_stat_internal() Защищённый метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work::template_stat() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::_template_stat_internal() Защищённый метод, реализующий логику.
      *
      * @return array Ассоциативный массив данных для вывода статистики:
      *               - NAME_BLOCK: Название блока статистики.
@@ -532,7 +532,7 @@ class Work_Template implements Work_Template_Interface
      *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
      *               - D_STAT_ONLINE: Список онлайн-пользователей.
      *
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
      * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
      * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.
@@ -548,12 +548,12 @@ class Work_Template implements Work_Template_Interface
      * @details Этот метод является редиректом на защищённый метод _template_user_internal().
      * Он предоставляет доступ к функционалу формирования данных для блока пользователя через публичный интерфейс.
      *
-     * @see \PhotoRigma\Classes\Work::template_user() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Classes\Work_Template::_template_user_internal() Защищённый метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work::template_user() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Template::_template_user_internal() Защищённый метод, реализующий логику.
      *
      * @return array Массив с данными для блока пользователя.
      *
-     * @throws \RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
      *
      * @note Используется глобальная переменная $_SESSION для проверки статуса авторизации.
      * @todo Заменить использование $_SESSION на метод или свойство класса для инкапсуляции доступа к сессии.
@@ -578,12 +578,12 @@ class Work_Template implements Work_Template_Interface
      * @details Метод формирует массив данных для меню в зависимости от типа и активного пункта. Результат формируется на основе запроса к базе данных.
      * Этот метод вызывается через редирект из публичного метода.
      *
-     * @see \PhotoRigma\Classes\Work_Template::create_menu() Этот метод вызывается через редирект из публичного метода.
-     * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект базы данных.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$user Свойство, содержащее данные текущего пользователя.
-     * @see \PhotoRigma\Classes\Database::select() Метод, используемый для выполнения SELECT-запросов.
-     * @see \PhotoRigma\Classes\Database::res_arr() Метод, используемый для получения массива результатов.
+     * @see PhotoRigma::Classes::Work_Template::create_menu() Этот метод вызывается через редирект из публичного метода.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект базы данных.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Database::select() Метод, используемый для выполнения SELECT-запросов.
+     * @see PhotoRigma::Classes::Database::res_arr() Метод, используемый для получения массива результатов.
      *
      * @param string $action Активный пункт меню.
      * @param int    $menu   Тип меню:
@@ -592,8 +592,8 @@ class Work_Template implements Work_Template_Interface
      *
      * @return array Массив с данными для меню. Если меню пустое, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $menu или $action.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $menu или $action.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *
      * @note Данные для меню берутся из таблицы TBL_MENU. Для получения дополнительной информации см. структуру таблицы.
      * @warning Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.
@@ -685,15 +685,15 @@ class Work_Template implements Work_Template_Interface
      * Если пользователь авторизован, формируется блок с приветствием, группой и аватаром.
      * Этот метод вызывается через редирект из публичного метода.
      *
-     * @see \PhotoRigma\Classes\Work_Template::template_user() Этот метод вызывается через редирект из публичного метода.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$user Свойство, содержащее данные текущего пользователя.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
-     * @see \PhotoRigma\Classes\Work::validate_mime_type() Метод для проверки MIME-типа файла.
+     * @see PhotoRigma::Classes::Work_Template::template_user() Этот метод вызывается через редирект из публичного метода.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типа файла.
      *
      * @return array Массив с данными для блока пользователя.
      *
-     * @throws \RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
      *
      * @note Используется глобальная переменная $_SESSION для проверки статуса авторизации.
      * @todo Заменить использование $_SESSION на метод или свойство класса для инкапсуляции доступа к сессии.
@@ -765,10 +765,10 @@ class Work_Template implements Work_Template_Interface
      * категориях, фотографиях, оценках и онлайн-пользователях. Результат формируется в виде ассоциативного массива,
      * который используется для отображения статистики на странице. Этот метод вызывается через редирект из публичного метода.
      *
-     * @see \PhotoRigma\Classes\Work_Template::template_stat() Этот метод вызывается через редирект из публичного метода.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work_Template::template_stat() Этот метод вызывается через редирект из публичного метода.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      *
      * @return array Ассоциативный массив данных для вывода статистики:
      *               - NAME_BLOCK: Название блока статистики.
@@ -789,7 +789,7 @@ class Work_Template implements Work_Template_Interface
      *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
      *               - D_STAT_ONLINE: Список онлайн-пользователей.
      *
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
      * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
      * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.
@@ -883,10 +883,10 @@ class Work_Template implements Work_Template_Interface
      * который используется для отображения в шаблоне. Если данные отсутствуют, добавляется запись "пустого" пользователя.
      * Этот метод вызывается через редирект из публичного метода.
      *
-     * @see \PhotoRigma\Classes\Work_Template::template_best_user() Этот метод вызывается через редирект из публичного метода.
-     * @see \PhotoRigma\Classes\Work_Template::$lang Свойство, содержащее языковые строки.
-     * @see \PhotoRigma\Classes\Work_Template::$db Свойство, содержащее объект для работы с базой данных.
-     * @see \PhotoRigma\Classes\Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work_Template::template_best_user() Этот метод вызывается через редирект из публичного метода.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_Template::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      *
      * @param int $best_user Количество лучших пользователей для вывода. Должно быть положительным целым числом.
      *
@@ -898,7 +898,7 @@ class Work_Template implements Work_Template_Interface
      *               - user_name: Имя пользователя.
      *               - user_photo: Количество загруженных фотографий.
      *
-     * @throws \InvalidArgumentException Если параметр $best_user не является положительным целым числом.
+     * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      *
      * @note Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя.
      */

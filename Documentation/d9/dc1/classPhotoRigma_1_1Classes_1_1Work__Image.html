@@ -163,7 +163,6 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Открытые атрибуты</h2></td></tr>
 <tr class="memitem:a50cced8b0f9f5fb1f5fb4fcf9595e5bf" id="r_a50cced8b0f9f5fb1f5fb4fcf9595e5bf"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50cced8b0f9f5fb1f5fb4fcf9595e5bf">MAX_IMAGE_WIDTH</a> = 5000</td></tr>
-<tr class="memdesc:a50cced8b0f9f5fb1f5fb4fcf9595e5bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Изменяет размер изображения.  <br /></td></tr>
 <tr class="separator:a50cced8b0f9f5fb1f5fb4fcf9595e5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae70ec35c87dd3bc4270f743731d77bfa" id="r_ae70ec35c87dd3bc4270f743731d77bfa"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae70ec35c87dd3bc4270f743731d77bfa">MAX_IMAGE_HEIGHT</a> = 5000</td></tr>
 <tr class="separator:ae70ec35c87dd3bc4270f743731d77bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,6 +173,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <tr class="memdesc:a887f702cc34cf74259c6f10365fc6c9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет размеры для вывода эскиза изображения.  <br /></td></tr>
 <tr class="separator:a887f702cc34cf74259c6f10365fc6c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f18185f2629abbc3bf148d8addfcfe8" id="r_a7f18185f2629abbc3bf148d8addfcfe8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8">_image_resize_internal</a> (string $full_path, string $thumbnail_path)</td></tr>
+<tr class="memdesc:a7f18185f2629abbc3bf148d8addfcfe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Изменяет размер изображения.  <br /></td></tr>
 <tr class="separator:a7f18185f2629abbc3bf148d8addfcfe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b5c40822e7f0dcc8beb47dad2660286" id="r_a2b5c40822e7f0dcc8beb47dad2660286"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b5c40822e7f0dcc8beb47dad2660286">_no_photo_internal</a> ()</td></tr>
 <tr class="memdesc:a2b5c40822e7f0dcc8beb47dad2660286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает данные для отсутствующего изображения.  <br /></td></tr>
@@ -187,12 +187,16 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
 <tr class="memitem:a87a203ec3e8e0964cd9637de5d35d22c" id="r_a87a203ec3e8e0964cd9637de5d35d22c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87a203ec3e8e0964cd9637de5d35d22c">calculate_thumbnail_size</a> (array $size)</td></tr>
+<tr class="memdesc:a87a203ec3e8e0964cd9637de5d35d22c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Расчёт размера эскиза.  <br /></td></tr>
 <tr class="separator:a87a203ec3e8e0964cd9637de5d35d22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6154fb2649a1052f31514aed4818ad2c" id="r_a6154fb2649a1052f31514aed4818ad2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6154fb2649a1052f31514aed4818ad2c">process_image_resize_gmagick</a> (array $original_data, array $thumbnail_data)</td></tr>
+<tr class="memdesc:a6154fb2649a1052f31514aed4818ad2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.  <br /></td></tr>
 <tr class="separator:a6154fb2649a1052f31514aed4818ad2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab09fc88efda540da282034ef94d4ab74" id="r_ab09fc88efda540da282034ef94d4ab74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab09fc88efda540da282034ef94d4ab74">process_image_resize_imagick</a> (array $original_data, array $thumbnail_data)</td></tr>
+<tr class="memdesc:ab09fc88efda540da282034ef94d4ab74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обработка создания эскиза изображения с использованием библиотеки ImageMagick.  <br /></td></tr>
 <tr class="separator:ab09fc88efda540da282034ef94d4ab74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afaedd403d60cd5b36facbf5414e5b6ce" id="r_afaedd403d60cd5b36facbf5414e5b6ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afaedd403d60cd5b36facbf5414e5b6ce">process_image_resize_gd</a> (array $original_data, array $thumbnail_data)</td></tr>
+<tr class="memdesc:afaedd403d60cd5b36facbf5414e5b6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обработка создания эскиза изображения с использованием библиотеки GD.  <br /></td></tr>
 <tr class="separator:afaedd403d60cd5b36facbf5414e5b6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -212,13 +216,13 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <li>Логирования ошибок через функцию <code>log_in_file</code>.</li>
 <li>Корректировки расширения файла в соответствии с его MIME-типом.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image_Interface Интерфейс для работы с изображениями. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями.">PhotoRigma\Classes\Work_Image_Interface</a> Интерфейс для работы с изображениями. </dd>
 <dd>
-\PhotoRigma\Classes\Work Класс, через который вызываются методы для работы с изображениями. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы для работы с изображениями. </dd>
 <dd>
-\PhotoRigma\Classes\Work::validate_mime_type() Метод для проверки MIME-типов изображений. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типов изображений. </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот класс реализует интерфейс Work_Image_Interface. </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот класс напрямую, все вызовы должны выполняться через класс Work. </dd></dl>
 <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#_a3">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a>.</dd>
@@ -241,7 +245,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00252">252</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00254">254</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00217">$config</a>.</p>
 
@@ -263,7 +267,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00294">294</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00296">296</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00217">$config</a>.</p>
 
@@ -288,7 +292,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00337">337</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00339">339</a></p>
 
 </div>
 </div>
@@ -316,11 +320,11 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </div><div class="memdoc">
 <p>Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).</p>
 <p>Метод вызывает защищённый метод _fix_file_extension_internal() для проверки MIME-типа файла и возвращает полный путь с правильным расширением. Если у файла отсутствует расширение, оно добавляется автоматически.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image::_fix_file_extension_internal() Вызывает этот метод для корректировки расширения. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#af7cd1deb24cdf852e9981eb4f2665ff1">PhotoRigma\Classes\Work_Image\_fix_file_extension_internal()</a> Вызывает этот метод для корректировки расширения. </dd>
 <dd>
-\PhotoRigma\Classes\Work::fix_file_extension() Вызывается из этого метода. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138">PhotoRigma\Classes\Work\fix_file_extension()</a> Вызывается из этого метода. </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. </td></tr>
@@ -330,21 +334,15 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dl class="section return"><dt>Возвращает</dt><dd>string Полный путь к файлу с правильным расширением.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если путь к файлу некорректен или файл не существует. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если MIME-тип файла не поддерживается. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если путь к файлу некорректен или файл не существует. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если MIME-тип файла не поддерживается. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00753">753</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00752">752</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00452">fix_file_extension()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00454">fix_file_extension()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -389,9 +387,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Вывод изображения через HTTP. </p>
 <p>Метод проверяет существование и доступность файла, определяет его MIME-тип и отправляет содержимое файла через HTTP. Если файл не найден или недоступен, возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением MIME-типа, возвращается HTTP-статус 500.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image::image_attach() Публичный редирект, вызывающий этот метод. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aeabe138e0704bd8403da0faf894ad0df" title="Вывод изображения через HTTP.">PhotoRigma\Classes\Work_Image\image_attach()</a> Публичный редирект, вызывающий этот метод. </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. </td></tr>
@@ -401,9 +399,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>void Метод ничего не возвращает. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00679">679</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00678">678</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00430">image_attach()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00432">image_attach()</a>.</p>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
@@ -446,11 +444,40 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00524">524</a></p>
+<p>Изменяет размер изображения. </p>
+<p>Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров. Размеры эскиза рассчитываются на основе конфигурации (<code>temp_photo_w</code>, <code>temp_photo_h</code>) с использованием метода <code>calculate_thumbnail_size</code>. Если файл эскиза уже существует и его размеры совпадают с рассчитанными, метод завершает работу без изменений. В противном случае создаётся новый эскиз с использованием одной из доступных библиотек: GraphicsMagick, ImageMagick или GD (в порядке приоритета).</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\image_resize()</a> Публичный редирект, вызывающий этот метод. </dd>
+<dd>
+<a class="el" href="#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза.">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size()</a> Метод для расчёта размеров эскиза. </dd>
+<dd>
+<a class="el" href="#a6154fb2649a1052f31514aed4818ad2c" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.">PhotoRigma\Classes\Work_Image\process_image_resize_gmagick()</a> Обработка через GraphicsMagick. </dd>
+<dd>
+<a class="el" href="#ab09fc88efda540da282034ef94d4ab74" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick.">PhotoRigma\Classes\Work_Image\process_image_resize_imagick()</a> Обработка через ImageMagick. </dd>
+<dd>
+<a class="el" href="#afaedd403d60cd5b36facbf5414e5b6ce" title="Обработка создания эскиза изображения с использованием библиотеки GD.">PhotoRigma\Classes\Work_Image\process_image_resize_gd()</a> Обработка через GD. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Путь к исходному изображению. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$thumbnail_path</td><td>Путь для сохранения эскиза.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если операция выполнена успешно, иначе False.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если пути к файлам некорректны или имеют недопустимый формат. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникли ошибки при проверке файлов, директорий или размеров изображения. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00893">calculate_thumbnail_size()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01348">process_image_resize_gd()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01019">process_image_resize_gmagick()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l01181">process_image_resize_imagick()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00523">523</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00387">image_resize()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00890">calculate_thumbnail_size()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01341">process_image_resize_gd()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01014">process_image_resize_gmagick()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l01174">process_image_resize_imagick()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00389">image_resize()</a>.</p>
 <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
@@ -458,14 +485,14 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph">
-<area shape="rect" title=" " alt="" coords="5,83,159,107"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title=" " alt="" coords="209,5,376,30"/>
+<area shape="rect" title="Изменяет размер изображения." alt="" coords="5,83,159,107"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза." alt="" coords="209,5,376,30"/>
 <area shape="poly" title=" " alt="" coords="110,80,206,41,230,32,231,38,208,45,112,85"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title=" " alt="" coords="207,55,378,79"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="207,55,378,79"/>
 <area shape="poly" title=" " alt="" coords="159,82,191,78,191,83,159,87"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title=" " alt="" coords="217,104,368,142"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="217,104,368,142"/>
 <area shape="poly" title=" " alt="" coords="159,103,202,108,201,114,159,108"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title=" " alt="" coords="217,166,368,205"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="217,166,368,205"/>
 <area shape="poly" title=" " alt="" coords="110,106,208,151,224,158,221,163,206,156,108,110"/>
 </map>
 </div>
@@ -476,7 +503,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph">
-<area shape="rect" title=" " alt="" coords="151,5,304,30"/>
+<area shape="rect" title="Изменяет размер изображения." alt="" coords="151,5,304,30"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения." alt="" coords="5,5,103,30"/>
 <area shape="poly" title=" " alt="" coords="135,20,103,20,103,15,135,15"/>
 </map>
@@ -509,12 +536,12 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Возвращает данные для отсутствующего изображения. </p>
 <p>Метод формирует массив данных, который используется для представления информации об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено или недоступно. Метод использует конфигурацию приложения (<code>site_url</code>) для формирования URL-адресов.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image::no_photo() Публичный редирект, вызывающий этот метод.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\no_photo()</a> Публичный редирект, вызывающий этот метод.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array{ url: string, // URL полноразмерного изображения. thumbnail_url: string, // URL эскиза изображения. name: string, // Название изображения. description: string, // Описание изображения. category_name: string, // Название категории. category_description: string, // Описание категории. rate: string, // Рейтинг изображения. url_user: null, // URL пользователя (если доступен). real_name: string // Имя пользователя. } Массив с данными об отсутствующем изображении. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00648">648</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00647">647</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00412">no_photo()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00414">no_photo()</a>.</p>
 <div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
@@ -555,9 +582,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Вычисляет размеры для вывода эскиза изображения. </p>
 <p>Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения и конфигурационных параметров (<code>temp_photo_w</code> и <code>temp_photo_h</code>). Если изображение меньше целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются пропорционально.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image::size_image() Публичный редирект, вызывающий этот метод. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\size_image()</a> Публичный редирект, вызывающий этот метод. </dd>
 <dd>
-\PhotoRigma\Classes\Work_Image::calculate_thumbnail_size() Этот метод используется для расчёта размера эскиза.</dd></dl>
+<a class="el" href="#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза.">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size()</a> Этот метод используется для расчёта размера эскиза.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$path_image</td><td>Путь к файлу изображения.</td></tr>
@@ -567,17 +594,16 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dl class="section return"><dt>Возвращает</dt><dd>array{ width: int, // Ширина эскиза. height: int // Высота эскиза. } Массив с шириной и высотой эскиза.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если файл не существует или не удалось получить размеры изображения. </td></tr>
   </table>
   </dd>
 </dl>
-<p>RuntimeException Если файл не существует или не удалось получить размеры изображения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00477">477</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00479">479</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00893">calculate_thumbnail_size()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00890">calculate_thumbnail_size()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00366">size_image()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00368">size_image()</a>.</p>
 <div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-7-summary" class="dynsummary" style="display:block;">
@@ -586,7 +612,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph">
 <area shape="rect" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="5,5,148,30"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title=" " alt="" coords="196,5,362,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза." alt="" coords="196,5,362,30"/>
 <area shape="poly" title=" " alt="" coords="148,15,180,15,180,20,148,20"/>
 </map>
 </div>
@@ -628,9 +654,60 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00893">893</a></p>
+<p>Расчёт размера эскиза. </p>
+<p>Метод вычисляет ширину и высоту эскиза на основе реальных размеров изображения и конфигурационных параметров (<code>temp_photo_w</code> и <code>temp_photo_h</code>). Этот метод является приватным и предназначен только для использования внутри класса.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Image\$config</a> Массив с конфигурацией приложения. </dd>
+<dd>
+<a class="el" href="#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\size_image()</a> Вычисляет размеры для вывода эскиза изображения. </dd>
+<dd>
+<a class="el" href="#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\image_resize()</a> Изменяет размер изображения.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$size</td><td>Массив с реальными размерами изображения.<ul>
+<li>Индекс 0: int — Ширина изображения (должна быть положительным целым числом).</li>
+<li>Индекс 1: int — Высота изображения (должна быть положительным целым числом).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с шириной и высотой эскиза.<ul>
+<li>Ключ 'width': int — Ширина эскиза (целое число ≥ 0).</li>
+<li>Ключ 'height': int — Высота эскиза (целое число ≥ 0).</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если массив <code>$size</code> не содержит двух положительных целых чисел. Пример сообщения: <pre class="fragment">Некорректные размеры изображения
+Требуется массив с двумя положительными целыми числами.
+Получено: width = [значение], height = [значение]
+</pre></td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если значения <code>temp_photo_w</code> или <code>temp_photo_h</code> в конфигурации некорректны. Пример сообщения: <pre class="fragment">Некорректная конфигурация temp_photo_w или temp_photo_h
+Значения должны быть числами ≥ 0.
+Получено: temp_photo_w = [значение], temp_photo_h = [значение]
+</pre></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000016">Необходимо сделать</a></b></dt><dd>Перевести аргументы на массивовые значения ($size[0] -&gt; $size['width']; $size[1] -&gt; $size['height']).</dd></dl>
+<p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line"><span class="comment">// Исходные размеры изображения</span></div>
+<div class="line">$originalSize = [1920, 1080];</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Конфигурация приложения</span></div>
+<div class="line">$this-&gt;config[<span class="stringliteral">&#39;temp_photo_w&#39;</span>] = 800;</div>
+<div class="line">$this-&gt;config[<span class="stringliteral">&#39;temp_photo_h&#39;</span>] = 600;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Вычисление размеров эскиза</span></div>
+<div class="line">$thumbnailSize = $this-&gt;<a class="code hl_function" href="#a87a203ec3e8e0964cd9637de5d35d22c">calculate_thumbnail_size</a>($originalSize);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Результат</span></div>
+<div class="line">echo <span class="stringliteral">&quot;Ширина эскиза: {$thumbnailSize[&#39;width&#39;]}, Высота эскиза: {$thumbnailSize[&#39;height&#39;]}&quot;</span>;</div>
+<div class="line"><span class="comment">// Вывод: Ширина эскиза: 800, Высота эскиза: 450</span></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a87a203ec3e8e0964cd9637de5d35d22c"><div class="ttname"><a href="#a87a203ec3e8e0964cd9637de5d35d22c">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size</a></div><div class="ttdeci">calculate_thumbnail_size(array $size)</div><div class="ttdoc">Расчёт размера эскиза.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00890">work_image.php:890</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00890">890</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00524">_image_resize_internal()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00477">_size_image_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00523">_image_resize_internal()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00479">_size_image_internal()</a>.</p>
 <div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-9-summary" class="dynsummary" style="display:block;">
@@ -638,8 +715,8 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph">
-<area shape="rect" title=" " alt="" coords="352,31,518,55"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title=" " alt="" coords="151,5,304,30"/>
+<area shape="rect" title="Расчёт размера эскиза." alt="" coords="352,31,518,55"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,5,304,30"/>
 <area shape="poly" title=" " alt="" coords="336,34,304,30,305,24,337,28"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a887f702cc34cf74259c6f10365fc6c9b" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="156,55,298,79"/>
 <area shape="poly" title=" " alt="" coords="337,57,299,61,299,56,336,52"/>
@@ -668,11 +745,11 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </div><div class="memdoc">
 <p>Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).</p>
 <p>Метод вызывает защищённый метод _fix_file_extension_internal() для проверки MIME-типа файла и возвращает полный путь с правильным расширением. Если у файла отсутствует расширение, оно добавляется автоматически.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image::_fix_file_extension_internal() Вызывает этот метод для корректировки расширения. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#af7cd1deb24cdf852e9981eb4f2665ff1">PhotoRigma\Classes\Work_Image\_fix_file_extension_internal()</a> Вызывает этот метод для корректировки расширения. </dd>
 <dd>
-\PhotoRigma\Classes\Work::fix_file_extension() Вызывается из этого метода. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138">PhotoRigma\Classes\Work\fix_file_extension()</a> Вызывается из этого метода. </dd>
 <dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. </td></tr>
@@ -682,23 +759,17 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dl class="section return"><dt>Возвращает</dt><dd>string Полный путь к файлу с правильным расширением.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если путь к файлу некорректен или файл не существует. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если MIME-тип файла не поддерживается. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если путь к файлу некорректен или файл не существует. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если MIME-тип файла не поддерживается. </p>
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#a89d4e7cb491d0c91282d16ff5abe3138">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00452">452</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00454">454</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00753">_fix_file_extension_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00752">_fix_file_extension_internal()</a>.</p>
 <div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
@@ -735,9 +806,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Вывод изображения через HTTP. </p>
 <p>Это публичный редирект на защищённый метод <code>_image_attach_internal</code>.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::image_attach() Этот метод вызывается через класс Work. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeabe138e0704bd8403da0faf894ad0df">PhotoRigma\Classes\Work\image_attach()</a> Этот метод вызывается через класс Work. </dd>
 <dd>
-\PhotoRigma\Classes\Work_Image::_image_attach_internal() Защищённый метод, выполняющий основную логику.</dd></dl>
+<a class="el" href="#a0502831dd0f02e73d62586e4966e6a71" title="Вывод изображения через HTTP.">PhotoRigma\Classes\Work_Image\_image_attach_internal()</a> Защищённый метод, выполняющий основную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. </td></tr>
@@ -749,9 +820,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#aeabe138e0704bd8403da0faf894ad0df">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00430">430</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00432">432</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00679">_image_attach_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00678">_image_attach_internal()</a>.</p>
 <div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-11-summary" class="dynsummary" style="display:block;">
@@ -788,9 +859,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Изменяет размер изображения. </p>
 <p>Это публичный редирект на защищённый метод <code>_image_resize_internal</code>.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::image_resize() Этот метод вызывается через класс Work. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af37eb2b0693905dd71dd677f86d47831">PhotoRigma\Classes\Work\image_resize()</a> Этот метод вызывается через класс Work. </dd>
 <dd>
-\PhotoRigma\Classes\Work_Image::_image_resize_internal() Защищённый метод, выполняющий основную логику.</dd></dl>
+<a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Защищённый метод, выполняющий основную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Путь к исходному изображению. </td></tr>
@@ -801,23 +872,17 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если операция выполнена успешно, иначе False.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если пути к файлам некорректны или имеют недопустимый формат. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникли ошибки при проверке файлов, директорий или размеров изображения. </td></tr>
   </table>
   </dd>
 </dl>
-<p>InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения. </p>
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#af37eb2b0693905dd71dd677f86d47831">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00387">387</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00389">389</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00524">_image_resize_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00523">_image_resize_internal()</a>.</p>
 <div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-12-summary" class="dynsummary" style="display:block;">
@@ -826,15 +891,15 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph">
 <area shape="rect" title="Изменяет размер изображения." alt="" coords="5,83,103,107"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title=" " alt="" coords="151,83,304,107"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,83,304,107"/>
 <area shape="poly" title=" " alt="" coords="103,92,135,92,135,98,103,98"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title=" " alt="" coords="354,5,521,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза." alt="" coords="354,5,521,30"/>
 <area shape="poly" title=" " alt="" coords="256,80,351,41,375,32,377,38,353,45,258,85"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title=" " alt="" coords="352,55,523,79"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="352,55,523,79"/>
 <area shape="poly" title=" " alt="" coords="304,82,336,78,337,83,305,87"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title=" " alt="" coords="362,104,513,142"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="362,104,513,142"/>
 <area shape="poly" title=" " alt="" coords="305,103,347,108,346,114,304,108"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title=" " alt="" coords="362,166,513,205"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="362,166,513,205"/>
 <area shape="poly" title=" " alt="" coords="256,106,353,151,369,158,367,163,351,156,253,110"/>
 </map>
 </div>
@@ -858,16 +923,16 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Возвращает данные для отсутствующего изображения. </p>
 <p>Это публичный редирект на защищённый метод <code>_no_photo_internal</code>.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::no_photo() Этот метод вызывается через класс Work. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1">PhotoRigma\Classes\Work\no_photo()</a> Этот метод вызывается через класс Work. </dd>
 <dd>
-\PhotoRigma\Classes\Work_Image::_no_photo_internal() Защищённый метод, выполняющий основную логику.</dd></dl>
+<a class="el" href="#a2b5c40822e7f0dcc8beb47dad2660286" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\_no_photo_internal()</a> Защищённый метод, выполняющий основную логику.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array{ url: string, // URL полноразмерного изображения. thumbnail_url: string, // URL эскиза изображения. name: string, // Название изображения. description: string, // Описание изображения. category_name: string, // Название категории. category_description: string, // Описание категории. rate: string, // Рейтинг изображения. url_user: null, // URL пользователя (если доступен). real_name: string // Имя пользователя. } Массив с данными об отсутствующем изображении. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00412">412</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00414">414</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00648">_no_photo_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00647">_no_photo_internal()</a>.</p>
 <div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-13-summary" class="dynsummary" style="display:block;">
@@ -910,9 +975,76 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01348">1348</a></p>
+<p>Обработка создания эскиза изображения с использованием библиотеки GD. </p>
+<p>Метод выполняет следующие шаги:</p><ol type="1">
+<li>Проверяет поддержку MIME-типа через массив разрешённых форматов.</li>
+<li>Преобразует MIME-тип в константу IMAGETYPE_*.</li>
+<li>Проверяет поддержку формата через функцию imagetypes().</li>
+<li>Ограничивает использование памяти до 25% от доступной.</li>
+<li>Создаёт резервную копию старого эскиза (если он существует).</li>
+<li>Загружает исходное изображение и создаёт новый эскиз заданных размеров.</li>
+<li>Сохраняет новый эскиз в указанный файл.</li>
+<li>Восстанавливает старый эскиз в случае ошибки.</li>
+</ol>
+<p>Этот метод является приватным и предназначен только для использования внутри класса.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Метод, вызывающий этот приватный метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$original_data</td><td>Данные об оригинальном изображении:<ul>
+<li>'path' (string): Абсолютный путь к исходному файлу.</li>
+<li>'type' (string): MIME-тип изображения (например, 'image/jpeg'). Должен быть одним из разрешённых MIME-типов.</li>
+<li>'width' (int): Ширина исходного изображения (положительное число).</li>
+<li>'height' (int): Высота исходного изображения (положительное число). </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$thumbnail_data</td><td>Данные об эскизе:<ul>
+<li>'path' (string): Абсолютный путь для сохранения эскиза.</li>
+<li>'width' (int): Желаемая ширина эскиза (положительное число).</li>
+<li>'height' (int): Желаемая высота эскиза (положительное число).</li>
+<li>'exists' (bool): Существует ли файл эскиза (<code>true</code> или <code>false</code>).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если эскиз создан успешно.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если MIME-тип или тип изображения не поддерживаются. Пример сообщения: Неподдерживаемый MIME-тип для GD | Получено: [значение] </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при работе с GD (например, при загрузке, обработке или сохранении изображения). Пример сообщения: Не удалось создать ресурс изображения через GD | Путь: [значение]</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов). Убедитесь, что скрипт имеет необходимые права на запись и чтение. </dd>
+<dd>
+Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений. </dd>
+<dd>
+Поддержка форматов зависит от текущей версии GD. Например, WebP может быть недоступен.</dd></dl>
+<p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line">$original_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;path&#39;</span> =&gt; <span class="stringliteral">&#39;/path/to/original.jpg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;image/jpeg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;width&#39;</span> =&gt; 1920,</div>
+<div class="line">    <span class="stringliteral">&#39;height&#39;</span> =&gt; 1080,</div>
+<div class="line">];</div>
+<div class="line">$thumbnail_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;path&#39;</span> =&gt; <span class="stringliteral">&#39;/path/to/thumbnail.jpg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;width&#39;</span> =&gt; 300,</div>
+<div class="line">    <span class="stringliteral">&#39;height&#39;</span> =&gt; 200,</div>
+<div class="line">    <span class="stringliteral">&#39;exists&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line">];</div>
+<div class="line">$result = $this-&gt;<a class="code hl_function" href="#afaedd403d60cd5b36facbf5414e5b6ce">process_image_resize_gd</a>($original_data, $thumbnail_data);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Эскиз успешно создан!&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_afaedd403d60cd5b36facbf5414e5b6ce"><div class="ttname"><a href="#afaedd403d60cd5b36facbf5414e5b6ce">PhotoRigma\Classes\Work_Image\process_image_resize_gd</a></div><div class="ttdeci">process_image_resize_gd(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки GD.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01341">work_image.php:1341</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01341">1341</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00524">_image_resize_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00523">_image_resize_internal()</a>.</p>
 <div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-14-summary" class="dynsummary" style="display:block;">
@@ -920,8 +1052,8 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph">
-<area shape="rect" title=" " alt="" coords="352,5,523,30"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title=" " alt="" coords="151,5,304,30"/>
+<area shape="rect" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="352,5,523,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,5,304,30"/>
 <area shape="poly" title=" " alt="" coords="337,20,304,20,304,15,337,15"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения." alt="" coords="5,5,103,30"/>
 <area shape="poly" title=" " alt="" coords="135,20,103,20,103,15,135,15"/>
@@ -957,9 +1089,73 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01019">1019</a></p>
+<p>Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick. </p>
+<p>Метод выполняет следующие шаги:</p><ol type="1">
+<li>Проверяет поддержку MIME-типа через массив разрешённых форматов.</li>
+<li>Преобразует MIME-тип в формат GraphicsMagick.</li>
+<li>Проверяет поддержку формата через Gmagick::queryFormats().</li>
+<li>Ограничивает использование памяти до 25% от доступной.</li>
+<li>Создаёт резервную копию старого эскиза (если он существует).</li>
+<li>Загружает исходное изображение и создаёт новый эскиз заданных размеров.</li>
+<li>Сохраняет новый эскиз в указанный файл.</li>
+<li>Восстанавливает старый эскиз в случае ошибки.</li>
+</ol>
+<p>Этот метод является приватным и предназначен только для использования внутри класса.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Метод, вызывающий этот приватный метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$original_data</td><td>Данные об оригинальном изображении:<ul>
+<li>'path' (string): Абсолютный путь к исходному файлу.</li>
+<li>'type' (string): MIME-тип изображения (например, 'image/jpeg'). Должен быть одним из разрешённых MIME-типов.</li>
+<li>'width' (int): Ширина исходного изображения (положительное число).</li>
+<li>'height' (int): Высота исходного изображения (положительное число). </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$thumbnail_data</td><td>Данные об эскизе:<ul>
+<li>'path' (string): Абсолютный путь для сохранения эскиза.</li>
+<li>'width' (int): Желаемая ширина эскиза (положительное число).</li>
+<li>'height' (int): Желаемая высота эскиза (положительное число).</li>
+<li>'exists' (bool): Существует ли файл эскиза (<code>true</code> или <code>false</code>).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если эскиз создан успешно.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GmagickException</td><td>Если возникает ошибка при работе с GraphicsMagick (например, при загрузке или обработке изображения).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов). Убедитесь, что скрипт имеет необходимые права на запись и чтение. </dd>
+<dd>
+Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.</dd></dl>
+<p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line">$original_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;path&#39;</span> =&gt; <span class="stringliteral">&#39;/path/to/original.jpg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;image/jpeg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;width&#39;</span> =&gt; 1920,</div>
+<div class="line">    <span class="stringliteral">&#39;height&#39;</span> =&gt; 1080,</div>
+<div class="line">];</div>
+<div class="line">$thumbnail_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;path&#39;</span> =&gt; <span class="stringliteral">&#39;/path/to/thumbnail.jpg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;width&#39;</span> =&gt; 300,</div>
+<div class="line">    <span class="stringliteral">&#39;height&#39;</span> =&gt; 200,</div>
+<div class="line">    <span class="stringliteral">&#39;exists&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line">];</div>
+<div class="line">$result = $this-&gt;<a class="code hl_function" href="#a6154fb2649a1052f31514aed4818ad2c">process_image_resize_gmagick</a>($original_data, $thumbnail_data);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Эскиз успешно создан!&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a6154fb2649a1052f31514aed4818ad2c"><div class="ttname"><a href="#a6154fb2649a1052f31514aed4818ad2c">PhotoRigma\Classes\Work_Image\process_image_resize_gmagick</a></div><div class="ttdeci">process_image_resize_gmagick(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01014">work_image.php:1014</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01014">1014</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00524">_image_resize_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00523">_image_resize_internal()</a>.</p>
 <div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-15-summary" class="dynsummary" style="display:block;">
@@ -967,8 +1163,8 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph">
-<area shape="rect" title=" " alt="" coords="352,5,502,44"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title=" " alt="" coords="151,12,304,37"/>
+<area shape="rect" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="352,5,502,44"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,12,304,37"/>
 <area shape="poly" title=" " alt="" coords="337,27,304,27,304,22,337,22"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения." alt="" coords="5,12,103,37"/>
 <area shape="poly" title=" " alt="" coords="135,27,103,27,103,22,135,22"/>
@@ -1004,9 +1200,73 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01181">1181</a></p>
+<p>Обработка создания эскиза изображения с использованием библиотеки ImageMagick. </p>
+<p>Метод выполняет следующие шаги:</p><ol type="1">
+<li>Проверяет поддержку MIME-типа через массив разрешённых форматов.</li>
+<li>Преобразует MIME-тип в формат ImageMagick.</li>
+<li>Проверяет поддержку формата через Imagick::queryFormats().</li>
+<li>Ограничивает использование памяти до 25% от доступной.</li>
+<li>Создаёт резервную копию старого эскиза (если он существует).</li>
+<li>Загружает исходное изображение и создаёт новый эскиз заданных размеров.</li>
+<li>Сохраняет новый эскиз в указанный файл.</li>
+<li>Восстанавливает старый эскиз в случае ошибки.</li>
+</ol>
+<p>Этот метод является приватным и предназначен только для использования внутри класса.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Метод, вызывающий этот приватный метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$original_data</td><td>Данные об оригинальном изображении:<ul>
+<li>'path' (string): Абсолютный путь к исходному файлу.</li>
+<li>'type' (string): MIME-тип изображения (например, 'image/jpeg'). Должен быть одним из разрешённых MIME-типов.</li>
+<li>'width' (int): Ширина исходного изображения (положительное число).</li>
+<li>'height' (int): Высота исходного изображения (положительное число). </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$thumbnail_data</td><td>Данные об эскизе:<ul>
+<li>'path' (string): Абсолютный путь для сохранения эскиза.</li>
+<li>'width' (int): Желаемая ширина эскиза (положительное число).</li>
+<li>'height' (int): Желаемая высота эскиза (положительное число).</li>
+<li>'exists' (bool): Существует ли файл эскиза (<code>true</code> или <code>false</code>).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если эскиз создан успешно.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ImagickException</td><td>Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке изображения).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов). Убедитесь, что скрипт имеет необходимые права на запись и чтение. </dd>
+<dd>
+Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.</dd></dl>
+<p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line">$original_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;path&#39;</span> =&gt; <span class="stringliteral">&#39;/path/to/original.jpg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;image/jpeg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;width&#39;</span> =&gt; 1920,</div>
+<div class="line">    <span class="stringliteral">&#39;height&#39;</span> =&gt; 1080,</div>
+<div class="line">];</div>
+<div class="line">$thumbnail_data = [</div>
+<div class="line">    <span class="stringliteral">&#39;path&#39;</span> =&gt; <span class="stringliteral">&#39;/path/to/thumbnail.jpg&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;width&#39;</span> =&gt; 300,</div>
+<div class="line">    <span class="stringliteral">&#39;height&#39;</span> =&gt; 200,</div>
+<div class="line">    <span class="stringliteral">&#39;exists&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line">];</div>
+<div class="line">$result = $this-&gt;<a class="code hl_function" href="#ab09fc88efda540da282034ef94d4ab74">process_image_resize_imagick</a>($original_data, $thumbnail_data);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Эскиз успешно создан!&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_ab09fc88efda540da282034ef94d4ab74"><div class="ttname"><a href="#ab09fc88efda540da282034ef94d4ab74">PhotoRigma\Classes\Work_Image\process_image_resize_imagick</a></div><div class="ttdeci">process_image_resize_imagick(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки ImageMagick.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01174">work_image.php:1174</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01174">1174</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00524">_image_resize_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00523">_image_resize_internal()</a>.</p>
 <div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-16-summary" class="dynsummary" style="display:block;">
@@ -1014,8 +1274,8 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div id="dynsection-16-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph">
-<area shape="rect" title=" " alt="" coords="352,5,502,44"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title=" " alt="" coords="151,12,304,37"/>
+<area shape="rect" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="352,5,502,44"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,12,304,37"/>
 <area shape="poly" title=" " alt="" coords="337,27,304,27,304,22,337,22"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения." alt="" coords="5,12,103,37"/>
 <area shape="poly" title=" " alt="" coords="135,27,103,27,103,22,135,22"/>
@@ -1041,11 +1301,11 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Вычисляет размеры для вывода эскиза изображения. </p>
 <p>Это публичный редирект на защищённый метод <code>_size_image_internal</code>.</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work Класс, через который вызывается этот метод. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, через который вызывается этот метод. </dd>
 <dd>
-\PhotoRigma\Classes\Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот метод. </dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb">PhotoRigma\Classes\Work_CoreLogic\_create_photo_internal()</a> Метод, вызывающий этот метод. </dd>
 <dd>
-\PhotoRigma\Classes\Work_Image::_size_image_internal() Защищённый метод, выполняющий основную логику.</dd></dl>
+<a class="el" href="#a887f702cc34cf74259c6f10365fc6c9b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\_size_image_internal()</a> Защищённый метод, выполняющий основную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$path_image</td><td>Путь к файлу изображения.</td></tr>
@@ -1055,17 +1315,16 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dl class="section return"><dt>Возвращает</dt><dd>array{ width: int, // Ширина эскиза. height: int // Высота эскиза. } Массив с шириной и высотой эскиза.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если файл не существует или не удалось получить размеры изображения. </td></tr>
   </table>
   </dd>
 </dl>
-<p>RuntimeException Если файл не существует или не удалось получить размеры изображения. </p>
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00366">366</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00368">368</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00477">_size_image_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00479">_size_image_internal()</a>.</p>
 <div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-17-summary" class="dynsummary" style="display:block;">
@@ -1076,7 +1335,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <area shape="rect" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="5,5,92,30"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a887f702cc34cf74259c6f10365fc6c9b" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="140,5,282,30"/>
 <area shape="poly" title=" " alt="" coords="92,15,124,15,124,20,92,20"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title=" " alt="" coords="330,5,496,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза." alt="" coords="330,5,496,30"/>
 <area shape="poly" title=" " alt="" coords="283,15,314,15,314,20,283,20"/>
 </map>
 </div>
@@ -1108,7 +1367,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00217">217</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00252">__construct()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00294">__get()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00254">__construct()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00296">__get()</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1383,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00522">522</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00219">219</a></p>
 
 </div>
 </div>
@@ -1140,42 +1399,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
       </table>
 </div><div class="memdoc">
 
-<p>Изменяет размер изображения. </p>
-<p>Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров. Размеры эскиза рассчитываются на основе конфигурации (<code>temp_photo_w</code>, <code>temp_photo_h</code>) с использованием метода <code>calculate_thumbnail_size</code>. Если файл эскиза уже существует и его размеры совпадают с рассчитанными, метод завершает работу без изменений. В противном случае создаётся новый эскиз с использованием одной из доступных библиотек: GraphicsMagick, ImageMagick или GD (в порядке приоритета).</p>
-<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Image::image_resize() Публичный редирект, вызывающий этот метод. </dd>
-<dd>
-\PhotoRigma\Classes\Work_Image::calculate_thumbnail_size() Метод для расчёта размеров эскиза. </dd>
-<dd>
-\PhotoRigma\Classes\Work_Image::process_image_resize_gmagick() Обработка через GraphicsMagick. </dd>
-<dd>
-\PhotoRigma\Classes\Work_Image::process_image_resize_imagick() Обработка через ImageMagick. </dd>
-<dd>
-\PhotoRigma\Classes\Work_Image::process_image_resize_gd() Обработка через GD. </dd>
-<dd>
-\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
-<dl class="params"><dt>Аргументы</dt><dd>
-  <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Путь к исходному изображению. </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$thumbnail_path</td><td>Путь для сохранения эскиза.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Возвращает</dt><dd>bool True, если операция выполнена успешно, иначе False.</dd></dl>
-<dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат. </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения. </p>
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00521">521</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00218">218</a></p>
 
 </div>
 </div>

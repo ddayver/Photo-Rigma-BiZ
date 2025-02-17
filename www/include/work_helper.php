@@ -7,7 +7,7 @@
  * @author      Dark Dayver
  * @version     0.4.0
  * @date        2025-02-12
- * @namespace   PhotoRigma\Classes
+ * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_Helper`, который реализует вспомогательные методы для обработки данных.
  *              Класс предоставляет методы для очистки строк от HTML-тегов, преобразования размеров в байты,
@@ -16,8 +16,8 @@
  *              с суффиксом `_internal`, что обеспечивает более гибкую архитектуру (паттерн "фасад").
  *              Все методы класса являются статическими.
  *
- * @see         \\PhotoRigma\\Classes\\Work Класс, через который вызываются методы для работы с данными.
- * @see         \\PhotoRigma\\Include\\log_in_file Функция для логирования ошибок.
+ * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с данными.
+ * @see         PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  * @see         index.php Файл, который подключает work_helper.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в обработке данных.
@@ -59,7 +59,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          Методы интерфейса предназначены для использования в различных частях приложения, таких как обработка пользовательского ввода,
  *          работа с файлами, генерация безопасного вывода и т.д.
  *
- * @see \PhotoRigma\Classes\Work_Helper Реализация интерфейса.
+ * @see PhotoRigma::Classes::Work_Helper Реализация интерфейса.
  */
 interface Work_Helper_Interface
 {
@@ -72,9 +72,9 @@ interface Work_Helper_Interface
      * @param mixed $field Строка или данные для очистки.
      * @return string Очищенная строка.
      *
-     * @see \PhotoRigma\Classes\Work::clean_field() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work_Helper::clean_field() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::clean_field() Реализация метода в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -98,9 +98,9 @@ interface Work_Helper_Interface
      * @param string|int $val Размер в формате "число[K|M|G]" или число.
      * @return int Размер в байтах.
      *
-     * @see \PhotoRigma\Classes\Work::return_bytes() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work_Helper::return_bytes() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::return_bytes() Реализация метода в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -130,9 +130,9 @@ interface Work_Helper_Interface
      * @param string $string Исходная строка.
      * @return string Строка после транслитерации и замены символов.
      *
-     * @see \PhotoRigma\Classes\Work::encodename() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work_Helper::encodename() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work::encodename() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::encodename() Реализация метода в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -173,9 +173,9 @@ interface Work_Helper_Interface
      * @param string $text Текст с BBCode.
      * @return string Текст с HTML-разметкой.
      *
-     * @see \PhotoRigma\Classes\Work::ubb() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work_Helper::ubb() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::ubb() Реализация метода в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -201,9 +201,9 @@ interface Work_Helper_Interface
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
      * @return string Строка, разбитая на несколько строк.
      *
-     * @see \PhotoRigma\Classes\Work::utf8_wordwrap() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work_Helper::utf8_wordwrap() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap() Реализация метода в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -230,9 +230,9 @@ interface Work_Helper_Interface
      * @param string $real_mime_type Реальный MIME-тип файла.
      * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
      *
-     * @see \PhotoRigma\Classes\Work::validate_mime_type() Этот метод вызывается через класс Work.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work_Helper::validate_mime_type() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type() Реализация метода в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -260,9 +260,9 @@ interface Work_Helper_Interface
  *          Методы класса предназначены для использования в различных частях приложения, таких как обработка пользовательского ввода,
  *          работа с файлами, генерация безопасного вывода и т.д.
  *
- * @see \PhotoRigma\Classes\Work_Helper_Interface Интерфейс для вспомогательных методов.
- * @see \PhotoRigma\Classes\Work Класс, через который вызываются вспомогательные методы.
- * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
+ * @see PhotoRigma::Classes::Work_Helper_Interface Интерфейс для вспомогательных методов.
+ * @see PhotoRigma::Classes::Work Класс, через который вызываются вспомогательные методы.
+ * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  */
 class Work_Helper implements Work_Helper_Interface
 {
@@ -276,8 +276,8 @@ class Work_Helper implements Work_Helper_Interface
      * @param mixed $field Строка или данные для очистки.
      * @return string|null Очищенная строка или null, если входные данные пусты.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::_clean_field_internal() Защищённый метод, выполняющий очистку.
-     * @see \PhotoRigma\Classes\Work::clean_field() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::_clean_field_internal() Защищённый метод, выполняющий очистку.
+     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
      *
      * @example Пример использования метода:
      * @code
@@ -304,8 +304,8 @@ class Work_Helper implements Work_Helper_Interface
      * @param string|int $val Размер в формате "число[K|M|G]" или число.
      * @return int Размер в байтах.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::_return_bytes_internal() Защищённый метод, выполняющий преобразование.
-     * @see \PhotoRigma\Classes\Work::return_bytes() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::_return_bytes_internal() Защищённый метод, выполняющий преобразование.
+     * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
      *
      * @example Пример использования метода:
      * @code
@@ -338,8 +338,8 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $string Исходная строка.
      * @return string Строка после транслитерации и замены символов.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::_encodename_internal() Защищённый метод, выполняющий транслитерацию.
-     * @see \PhotoRigma\Classes\Work::encodename() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::_encodename_internal() Защищённый метод, выполняющий транслитерацию.
+     * @see PhotoRigma::Classes::Work::encodename() Этот метод вызывается через класс Work.
      *
      * @example Пример использования метода:
      * @code
@@ -383,9 +383,9 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $text Текст с BBCode.
      * @return string Текст с HTML-разметкой.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::_ubb_internal() Защищённый метод, выполняющий преобразование BBCode.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::ubb() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::_ubb_internal() Защищённый метод, выполняющий преобразование BBCode.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
      *
      * @example Пример использования метода:
      * @code
@@ -414,9 +414,9 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
      * @return string Строка, разбитая на несколько строк.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::_utf8_wordwrap_internal() Защищённый метод, выполняющий разбиение строки.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::utf8_wordwrap() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::_utf8_wordwrap_internal() Защищённый метод, выполняющий разбиение строки.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
      *
      * @example Пример использования метода:
      * @code
@@ -449,9 +449,9 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $real_mime_type Реальный MIME-тип файла.
      * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::_validate_mime_type_internal() Защищённый метод, выполняющий проверку MIME-типа.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::validate_mime_type() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::_validate_mime_type_internal() Защищённый метод, выполняющий проверку MIME-типа.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
      *
      * @example Пример использования метода:
      * @code
@@ -476,8 +476,8 @@ class Work_Helper implements Work_Helper_Interface
      * @param mixed $field Строка или данные для очистки.
      * @return string|null Очищенная строка или null, если входные данные пусты.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::clean_field() Публичный метод, вызывающий этот защищённый метод.
-     * @see \PhotoRigma\Classes\Work::clean_field() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::clean_field() Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
      */
     protected static function _clean_field_internal($field): ?string
     {
@@ -512,8 +512,8 @@ class Work_Helper implements Work_Helper_Interface
      * @param string|int $val Размер в формате "число[K|M|G]" или число.
      * @return int Размер в байтах.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::return_bytes() Публичный метод, вызывающий этот защищённый метод.
-     * @see \PhotoRigma\Classes\Work::return_bytes() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::return_bytes() Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
      */
     protected static function _return_bytes_internal($val): int
     {
@@ -556,8 +556,8 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $string Исходная строка.
      * @return string Строка после транслитерации и замены символов.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::encodename() Публичный метод, вызывающий этот защищённый метод.
-     * @see \PhotoRigma\Classes\Work::encodename() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::encodename() Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Classes::Work::encodename() Этот метод вызывается через класс Work.
      */
     protected static function _encodename_internal(string $string): string
     {
@@ -632,9 +632,9 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $text Текст с BBCode.
      * @return string Текст с HTML-разметкой.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::ubb() Публичный метод, вызывающий этот защищённый метод.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::ubb() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::ubb() Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
      */
     protected static function _ubb_internal(string $text): string
     {
@@ -755,9 +755,9 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
      * @return string Строка, разбитая на несколько строк.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::utf8_wordwrap() Публичный метод, вызывающий этот защищённый метод.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::utf8_wordwrap() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap() Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
      */
     protected static function _utf8_wordwrap_internal(string $str, int $width = 70, string $break = PHP_EOL): string
     {
@@ -801,9 +801,9 @@ class Work_Helper implements Work_Helper_Interface
      * @param string $real_mime_type Реальный MIME-тип файла.
      * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::validate_mime_type() Публичный метод, вызывающий этот защищённый метод.
-     * @see \PhotoRigma\Include\log_in_file Функция для логирования ошибок.
-     * @see \PhotoRigma\Classes\Work::validate_mime_type() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type() Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
      */
     protected static function _validate_mime_type_internal(string $real_mime_type): bool
     {

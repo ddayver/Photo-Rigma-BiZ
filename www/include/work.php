@@ -19,14 +19,14 @@
  *              - Интеграцию с интерфейсами для работы с базой данных, обработкой данных.
  *              - Механизмы для управления директориями, пользовательской статистикой и другими компонентами системы.
  *
- * @see         \\PhotoRigma\\Classes\\Database_Interface Интерфейс для работы с базой данных.
- * @see         \\PhotoRigma\\Classes\\Work_Security_Interface Интерфейс для работы с безопасностью приложения.
- * @see         \\PhotoRigma\\Classes\\Work_Image_Interface Интерфейс, определяющий методы для работы с изображениями.
- * @see         \\PhotoRigma\\Classes\\Work_Template_Interface Интерфейс для работы с шаблонами.
- * @see         \\PhotoRigma\\Classes\\Work_Helper_Interface Интерфейс для вспомогательных функций, таких как очистка строк и проверка MIME-типов.
- * @see         \\PhotoRigma\\Classes\\Work_CoreLogic_Interface Интерфейс для реализации основной логики приложения.
- * @see         \\PhotoRigma\\Classes\\User_Interface Интерфейс для работы с пользователями.
- * @see         \\PhotoRigma\\Include\\log_in_file() Функция для логирования ошибок.
+ * @see         PhotoRigma::Classes::Database_Interface Интерфейс для работы с базой данных.
+ * @see         PhotoRigma::Classes::Work_Security_Interface Интерфейс для работы с безопасностью приложения.
+ * @see         PhotoRigma::Classes::Work_Image_Interface Интерфейс, определяющий методы для работы с изображениями.
+ * @see         PhotoRigma::Classes::Work_Template_Interface Интерфейс для работы с шаблонами.
+ * @see         PhotoRigma::Classes::Work_Helper_Interface Интерфейс для вспомогательных функций, таких как очистка строк и проверка MIME-типов.
+ * @see         PhotoRigma::Classes::Work_CoreLogic_Interface Интерфейс для реализации основной логики приложения.
+ * @see         PhotoRigma::Classes::User_Interface Интерфейс для работы с пользователями.
+ * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
  * @see         index.php Файл, который подключает work.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
@@ -71,15 +71,15 @@ use PhotoRigma\Classes\Work_CoreLogic;
  *              - Интеграцию с интерфейсами для работы с базой данных, обработкой данных.
  *              - Механизмы для управления директориями, пользовательской статистикой и другими компонентами системы.
  *
- * @see         PhotoRigma\Classes\Database Класс для работы с базой данных.
- * @see         PhotoRigma\Classes\Work_Security Класс для работы с безопасностью приложения.
- * @see         PhotoRigma\Classes\Work_Image Класс, реализующий интерфейс `Work_Image_Interface` для работы с изображениями.
- * @see         PhotoRigma\Classes\Work_Template Класс для работы с шаблонами.
- * @see         PhotoRigma\Classes\Work_Helper Класс для очистки строк, преобразования размеров и проверки MIME-типов.
- * @see         PhotoRigma\Classes\Work_CoreLogic Класс для реализации основной логики приложения.
- * @see         PhotoRigma\Classes\User Класс для работы с пользователями.
+ * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
+ * @see         PhotoRigma::Classes::Work_Security Класс для работы с безопасностью приложения.
+ * @see         PhotoRigma::Classes::Work_Image Класс, реализующий интерфейс `Work_Image_Interface` для работы с изображениями.
+ * @see         PhotoRigma::Classes::Work_Template Класс для работы с шаблонами.
+ * @see         PhotoRigma::Classes::Work_Helper Класс для очистки строк, преобразования размеров и проверки MIME-типов.
+ * @see         PhotoRigma::Classes::Work_CoreLogic Класс для реализации основной логики приложения.
+ * @see         PhotoRigma::Classes::User Класс для работы с пользователями.
  *
- * @example     Пример использования класса Work:
+ * Пример использования класса Work:
  * @code
  *              $db = new Database(); // Инициализация объекта базы данных
  *              $config = ['site_name' => 'PhotoRigma', 'theme' => 'dark']; // Конфигурация
@@ -124,14 +124,14 @@ class Work
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work::$config Свойство, содержащее конфигурацию.
-     * @see \\PhotoRigma\\Classes\\Work::$db Объект для работы с базой данных.
-     * @see \\PhotoRigma\\Classes\\Work::$security Свойство, содержащее объект Work_Security.
-     * @see \\PhotoRigma\\Classes\\Work::$image Свойство, содержащее объект Work_Image.
-     * @see \\PhotoRigma\\Classes\\Work::$template Свойство, содержащее объект Work_Template.
-     * @see \\PhotoRigma\\Classes\\Work::$helper Свойство, содержащее объект для очистки строк, преобразования размеров и проверки MIME-типов.
-     * @see \\PhotoRigma\\Classes\\Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
-     * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
+     * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
+     * @see PhotoRigma::Classes::Work::$db Объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work::$security Свойство, содержащее объект Work_Security.
+     * @see PhotoRigma::Classes::Work::$image Свойство, содержащее объект Work_Image.
+     * @see PhotoRigma::Classes::Work::$template Свойство, содержащее объект Work_Template.
+     * @see PhotoRigma::Classes::Work::$helper Свойство, содержащее объект для очистки строк, преобразования размеров и проверки MIME-типов.
+     * @see PhotoRigma::Classes::Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
+     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
      * @param Database_Interface $db Объект для работы с базой данных.
      * @param array $config Конфигурация приложения.
@@ -147,9 +147,8 @@ class Work
      * @warning Если таблица TBL_CONFIG отсутствует или данные не загружены, это может привести к неполному функционированию приложения.
      *          Ошибки записываются в лог через log_in_file.
      *
-     * @example \\PhotoRigma\\Classes\\Work::__construct
+     * Пример создания объекта класса Work:
      * @code
-     * // Пример создания объекта класса Work
      * $db = new \PhotoRigma\Classes\Database($db_config);
      * $config = [
      *     'app_name' => 'PhotoRigma',
@@ -189,12 +188,12 @@ class Work
      *
      * @details Этот метод вызывается автоматически при попытке получить значение недоступного свойства.
      *          Доступ разрешён только к свойству `$config`. Если запрашивается другое свойство,
-     *          выбрасывается исключение \InvalidArgumentException.
+     *          выбрасывается исключение InvalidArgumentException.
      *
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work::$config Свойство, содержащее конфигурацию.
+     * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -202,7 +201,7 @@ class Work
      *
      * @return array Значение свойства `$config`.
      *
-     * @throws \\InvalidArgumentException Если запрашиваемое свойство не существует или недоступно.
+     * @throws InvalidArgumentException Если запрашиваемое свойство не существует или недоступно.
      *
      * @note Этот метод предназначен только для доступа к свойству `$config`.
      *       Любые другие запросы будут игнорироваться с выбросом исключения.
@@ -232,7 +231,7 @@ class Work
      *
      * @details Этот метод вызывается автоматически при попытке установить значение недоступного свойства.
      *          Доступ разрешён только к свойству `$config`. Если запрашивается другое свойство,
-     *          выбрасывается исключение \Exception.
+     *          выбрасывается исключение Exception.
      *          Значение `$config` должно быть массивом, где ключи и значения являются строками.
      *          При успешном обновлении конфигурации:
      *          - Изменения логируются с помощью функции log_in_file (за исключением ключей из списка exclude_from_logging).
@@ -242,11 +241,11 @@ class Work
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work::$config Свойство, содержащее конфигурацию.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$config Свойство дочернего класса Work_CoreLogic.
-     * @see \\PhotoRigma\\Classes\\Work_Image::$config Свойство дочернего класса Work_Image.
-     * @see \\PhotoRigma\\Classes\\Work_Template::$config Свойство дочернего класса Work_Template.
-     * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
+     * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство дочернего класса Work_CoreLogic.
+     * @see PhotoRigma::Classes::Work_Image::$config Свойство дочернего класса Work_Image.
+     * @see PhotoRigma::Classes::Work_Template::$config Свойство дочернего класса Work_Template.
+     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -254,8 +253,8 @@ class Work
      * @param mixed $value Значение свойства:
      *                     - Должен быть массивом, где ключи и значения являются строками.
      *
-     * @throws \\InvalidArgumentException Если значение некорректно (не массив или содержатся некорректные ключи/значения).
-     * @throws \\Exception Если запрашивается несуществующее свойство.
+     * @throws InvalidArgumentException Если значение некорректно (не массив или содержатся некорректные ключи/значения).
+     * @throws Exception Если запрашивается несуществующее свойство.
      *
      * @note Этот метод предназначен только для изменения свойства `$config`.
      *       Логирование изменений выполняется только для определённых ключей.
@@ -354,17 +353,17 @@ class Work
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work::validate_array Рекурсивная проверка массива на корректность ключей и значений.
-     * @see \\PhotoRigma\\Classes\\Work::sanitize_array Рекурсивная обработка массива через Work::clean_field.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$lang Свойство дочернего класса Work_CoreLogic.
-     * @see \\PhotoRigma\\Classes\\Work_Template::$lang Свойство дочернего класса Work_Template.
-     * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
+     * @see PhotoRigma::Classes::Work::validate_array Рекурсивная проверка массива на корректность ключей и значений.
+     * @see PhotoRigma::Classes::Work::sanitize_array Рекурсивная обработка массива через Work::clean_field.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство дочернего класса Work_CoreLogic.
+     * @see PhotoRigma::Classes::Work_Template::$lang Свойство дочернего класса Work_Template.
+     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
      * @param array $lang Массив языковых данных:
      *                    - Не должен быть пустым.
      *                    - Ключи и значения должны соответствовать ограничениям (глубина до 4 уровней).
      *
-     * @throws \\InvalidArgumentException Если массив некорректен (пустой или содержит некорректные ключи/значения).
+     * @throws InvalidArgumentException Если массив некорректен (пустой или содержит некорректные ключи/значения).
      *
      * @note Метод рекурсивно проверяет и обрабатывает массив языковых данных.
      *       Изменения логируются только при наличии изменений.
@@ -429,15 +428,15 @@ class Work
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\User Класс с объектом пользователя.
-     * @see \\PhotoRigma\\Classes\\Work_CoreLogic::$user Свойство дочернего класса Work_CoreLogic.
-     * @see \\PhotoRigma\\Classes\\Work_Template::$user Свойство дочернего класса Work_Template.
-     * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
+     * @see PhotoRigma::Classes::User Класс с объектом пользователя.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство дочернего класса Work_CoreLogic.
+     * @see PhotoRigma::Classes::Work_Template::$user Свойство дочернего класса Work_Template.
+     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
      * @param User $user Объект пользователя:
      *                   - Должен быть экземпляром класса User.
      *
-     * @throws \\InvalidArgumentException Если передан некорректный объект (не экземпляр класса User).
+     * @throws InvalidArgumentException Если передан некорректный объект (не экземпляр класса User).
      *
      * @note Метод проверяет тип переданного объекта.
      *       Объект пользователя передаётся в дочерние классы для дальнейшего использования.
@@ -467,8 +466,8 @@ class Work
     /**
      * Заглушка для check_post().
      *
-     * @deprecated Этот метод устарел. Используйте \PhotoRigma\Classes\Work::check_input() вместо него.
-     * @see \PhotoRigma\Classes\Work_Security::check_input() Метод, который проверяет входные данные.
+     * @deprecated Этот метод устарел. Используйте PhotoRigma::Classes::Work::check_input() вместо него.
+     * @see PhotoRigma::Classes::Work_Security::check_input() Метод, который проверяет входные данные.
      * @param string $field Поле для проверки.
      * @param bool $isset Флаг, указывающий, что поле должно существовать.
      * @param bool $empty Флаг, указывающий, что поле не должно быть пустым.
@@ -489,8 +488,8 @@ class Work
     /**
      * Заглушка для check_get().
      *
-     * @deprecated Этот метод устарел. Используйте \PhotoRigma\Classes\Work::check_input() вместо него.
-     * @see \PhotoRigma\Classes\Work_Security::check_input() Метод, который проверяет входные данные.
+     * @deprecated Этот метод устарел. Используйте PhotoRigma::Classes::Work::check_input() вместо него.
+     * @see PhotoRigma::Classes::Work_Security::check_input() Метод, который проверяет входные данные.
      * @param string $field Поле для проверки.
      * @param bool $isset Флаг, указывающий, что поле должно существовать.
      * @param bool $empty Флаг, указывающий, что поле не должно быть пустым.
@@ -511,8 +510,8 @@ class Work
     /**
      * Заглушка для check_session().
      *
-     * @deprecated Этот метод устарел. Используйте \PhotoRigma\Classes\Work::check_input() вместо него.
-     * @see \PhotoRigma\Classes\Work_Security::check_input() Метод, который проверяет входные данные.
+     * @deprecated Этот метод устарел. Используйте PhotoRigma::Classes::Work::check_input() вместо него.
+     * @see PhotoRigma::Classes::Work_Security::check_input() Метод, который проверяет входные данные.
      * @param string $field Поле для проверки.
      * @param bool $isset Флаг, указывающий, что поле должно существовать.
      * @param bool $empty Флаг, указывающий, что поле не должно быть пустым.
@@ -543,7 +542,7 @@ class Work
      * }
      * @endcode
      *
-     * @see \PhotoRigma\Classes\Work_Security::url_check() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work_Security::url_check() Реализация метода внутри класса Work_Security.
      *
      * @return bool True, если URL безопасен, иначе False.
      */
@@ -570,7 +569,7 @@ class Work
      * }
      * @endcode
      *
-     * @see \PhotoRigma\Classes\Work_Security::check_input() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work_Security::check_input() Реализация метода внутри класса Work_Security.
      *
      * @param string $source_name Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
      * @param string $field Поле для проверки (имя ключа в массиве источника данных).
@@ -601,7 +600,7 @@ class Work
      * echo $filteredEmail; // Выведет: example[at]example[dot]com
      * @endcode
      *
-     * @see \PhotoRigma\Classes\Work_Security::filt_email() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work_Security::filt_email() Реализация метода внутри класса Work_Security.
      *
      * @param string $email Email-адрес для обработки.
      *
@@ -626,7 +625,7 @@ class Work
      * }
      * @endcode
      *
-     * @see \PhotoRigma\Classes\Work_Security::check_field() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work_Security::check_field() Реализация метода внутри класса Work_Security.
      *
      * @param string $field Значение поля для проверки.
      * @param string|false $regexp Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению.
@@ -652,7 +651,7 @@ class Work
      * // Пример вывода: Вопрос: 2 x (3 + 4), Ответ: 14
      * @endcode
      *
-     * @see \PhotoRigma\Classes\Work_Security::gen_captcha() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work_Security::gen_captcha() Реализация метода внутри класса Work_Security.
      *
      * @return array{
      *     question: string, // Математическое выражение (например, "2 x (3 + 4)")
@@ -667,7 +666,7 @@ class Work
     /**
      * Получение данных о категории.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::category() Метод для получения данных о категории.
+     * @see PhotoRigma::Classes::Work_CoreLogic::category() Метод для получения данных о категории.
      * @param int $cat_id ID категории.
      * @param bool $user_flag Флаг пользователя.
      * @return array Данные о категории.
@@ -680,7 +679,7 @@ class Work
     /**
      * Удаление изображения.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::del_photo() Метод для удаления изображения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo() Метод для удаления изображения.
      * @param int $photo_id ID изображения.
      * @return void
      */
@@ -692,7 +691,7 @@ class Work
     /**
      * Формирование новостей.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::news() Метод для формирования новостей.
+     * @see PhotoRigma::Classes::Work_CoreLogic::news() Метод для формирования новостей.
      * @param array $news_data Данные новостей.
      * @param string $act Действие.
      * @return string HTML-код новостей.
@@ -705,7 +704,7 @@ class Work
     /**
      * Получение списка доступных языков.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::get_languages() Метод для получения списка языков.
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages() Метод для получения списка языков.
      * @return array Список языков.
      */
     public function get_languages()
@@ -716,7 +715,7 @@ class Work
     /**
      * Получение списка доступных тем оформления.
      *
-     * @see \PhotoRigma\Classes\Work_CoreLogic::get_themes() Метод для получения списка тем.
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes() Метод для получения списка тем.
      * @return array Список тем.
      */
     public function get_themes()
@@ -730,7 +729,7 @@ class Work
      * @details Данный метод служит точкой доступа к функционалу формирования данных для меню,
      * делегируя выполнение соответствующему методу create_menu() в подклассе Work_Template.
      *
-     * @see \PhotoRigma\Classes\Work_Template::create_menu() Метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work_Template::create_menu() Метод, реализующий логику.
      *
      * @param string $action Активный пункт меню.
      * @param int    $menu   Тип меню:
@@ -739,8 +738,8 @@ class Work
      *
      * @return array Массив с данными для меню. Если меню пустое, возвращается пустой массив.
      *
-     * @throws \InvalidArgumentException Если передан некорректный $menu или $action.
-     * @throws \RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     * @throws InvalidArgumentException Если передан некорректный $menu или $action.
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *
      * @note Данные для меню берутся из таблицы TBL_MENU. Для получения дополнительной информации см. структуру таблицы.
      * @warning Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.
@@ -766,11 +765,11 @@ class Work
      * @details Данный метод служит точкой доступа к функционалу формирования данных для блока
      * пользователя, делегируя выполнение соответствующему методу template_user() в подклассе Work_Template.
      *
-     * @see \PhotoRigma\Classes\Work_Template::template_user() Метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work_Template::template_user() Метод, реализующий логику.
      *
      * @return array Массив с данными для блока пользователя.
      *
-     * @throws \RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
      *
      * @note Используется глобальная переменная $_SESSION для проверки статуса авторизации.
      * @todo Заменить использование $_SESSION на метод или свойство класса для инкапсуляции доступа к сессии.
@@ -796,7 +795,7 @@ class Work
      * @details Данный метод служит точкой доступа к функционалу генерации статистических данных,
      * делегируя выполнение соответствующему методу template_stat() в подклассе Work_Template.
      *
-     * @see \PhotoRigma\Classes\Work_Template::template_stat() Метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work_Template::template_stat() Метод, реализующий логику.
      *
      * @return array Ассоциативный массив данных для вывода статистики:
      *               - NAME_BLOCK: Название блока статистики.
@@ -817,7 +816,7 @@ class Work
      *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
      *               - D_STAT_ONLINE: Список онлайн-пользователей.
      *
-     * @throws \RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
      * @todo Вынести время онлайн в настройки через БД.
      * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.
@@ -833,7 +832,7 @@ class Work
      * @details Данный метод служит точкой доступа к функционалу формирования списка лучших
      * пользователей, делегируя выполнение соответствующему методу template_best_user() в подклассе Work_Template.
      *
-     * @see \PhotoRigma\Classes\Work_Template::template_best_user() Метод, реализующий логику.
+     * @see PhotoRigma::Classes::Work_Template::template_best_user() Метод, реализующий логику.
      *
      * @param int $best_user Количество лучших пользователей для вывода. Должно быть положительным целым числом.
      *
@@ -845,7 +844,7 @@ class Work
      *               - user_name: Имя пользователя.
      *               - user_photo: Количество загруженных фотографий.
      *
-     * @throws \InvalidArgumentException Если параметр $best_user не является положительным целым числом.
+     * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      *
      * @note Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя.
      */
@@ -864,7 +863,7 @@ class Work
      * @param mixed $field Строка или данные для очистки.
      * @return string|null Очищенная строка или null, если входные данные пусты.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::clean_field() Публичный метод в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::clean_field() Публичный метод в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -892,7 +891,7 @@ class Work
      * @param string|int $val Размер в формате "число[K|M|G]" или число.
      * @return int Размер в байтах.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::return_bytes() Публичный метод в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::return_bytes() Публичный метод в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -926,7 +925,7 @@ class Work
      * @param string $string Исходная строка.
      * @return string Строка после транслитерации и замены символов.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::encodename() Публичный метод в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::encodename() Публичный метод в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -971,7 +970,7 @@ class Work
      * @param string $text Текст с BBCode.
      * @return string Текст с HTML-разметкой.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::ubb() Публичный метод в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::ubb() Публичный метод в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -1001,7 +1000,7 @@ class Work
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
      * @return string Строка, разбитая на несколько строк.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::utf8_wordwrap() Публичный метод в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap() Публичный метод в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -1034,7 +1033,7 @@ class Work
      * @param string $real_mime_type Реальный MIME-тип файла.
      * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
      *
-     * @see \PhotoRigma\Classes\Work_Helper::validate_mime_type() Публичный метод в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type() Публичный метод в классе Work_Helper.
      *
      * @example Пример использования метода:
      * @code
@@ -1055,7 +1054,7 @@ class Work
      *
      * @details Это метод-витрина, который вызывает соответствующий метод из класса Work_Image.
      *
-     * @see \PhotoRigma\Classes\Work_Image::size_image() Оригинальный метод в Work_Image.
+     * @see PhotoRigma::Classes::Work_Image::size_image() Оригинальный метод в Work_Image.
      *
      * @param string $path_image Путь к файлу изображения.
      * @return array Массив с шириной и высотой эскиза.
@@ -1077,7 +1076,7 @@ class Work
      *
      * @details Это метод-витрина, который вызывает соответствующий метод из класса Work_Image.
      *
-     * @see \PhotoRigma\Classes\Work_Image::image_resize() Оригинальный метод в Work_Image.
+     * @see PhotoRigma::Classes::Work_Image::image_resize() Оригинальный метод в Work_Image.
      *
      * @param string $full_path Путь к исходному изображению.
      * @param string $thumbnail_path Путь для сохранения эскиза.
@@ -1102,7 +1101,7 @@ class Work
      *
      * @details Это метод-витрина, который вызывает соответствующий метод из класса Work_Image.
      *
-     * @see \PhotoRigma\Classes\Work_Image::no_photo() Оригинальный метод в Work_Image.
+     * @see PhotoRigma::Classes::Work_Image::no_photo() Оригинальный метод в Work_Image.
      *
      * @return array Массив с данными об отсутствующем изображении.
      *
@@ -1124,7 +1123,7 @@ class Work
      *
      * @details Это метод-витрина, который вызывает соответствующий метод из класса Work_Image.
      *
-     * @see \PhotoRigma\Classes\Work_Image::image_attach() Оригинальный метод в Work_Image.
+     * @see PhotoRigma::Classes::Work_Image::image_attach() Оригинальный метод в Work_Image.
      *
      * @param string $full_path Полный путь к файлу.
      * @param string $name_file Имя файла для заголовка Content-Disposition.
@@ -1146,7 +1145,7 @@ class Work
      *
      * @details Это метод-витрина, который вызывает соответствующий метод из класса Work_Image.
      *
-     * @see \PhotoRigma\Classes\Work_Image::fix_file_extension() Оригинальный метод в Work_Image.
+     * @see PhotoRigma::Classes::Work_Image::fix_file_extension() Оригинальный метод в Work_Image.
      *
      * @param string $full_path Полный путь к файлу.
      * @return string Полный путь к файлу с правильным расширением.
@@ -1166,7 +1165,7 @@ class Work
     /**
      * Создание изображения на основе типа и ID.
      *
-     * @see \PhotoRigma\Classes\Work_Image::create_photo() Метод для создания изображения.
+     * @see PhotoRigma::Classes::Work_Image::create_photo() Метод для создания изображения.
      * @param string $type Тип изображения.
      * @param int|null $id_photo ID изображения.
      * @return array Данные созданного изображения.
@@ -1179,7 +1178,7 @@ class Work
     /**
      * Генерация данных изображения.
      *
-     * @see \PhotoRigma\Classes\Work_Image::generate_photo_data() Метод для генерации данных изображения.
+     * @see PhotoRigma::Classes::Work_Image::generate_photo_data() Метод для генерации данных изображения.
      * @param array $photo_data Исходные данные изображения.
      * @return array Сгенерированные данные изображения.
      */
@@ -1198,10 +1197,11 @@ class Work
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
-     * @warning Метод чувствителен к глубине массива. Убедитесь, что параметр `$max_depth` установлен корректно.
-     * @warning Не используйте метод для очень больших массивов из-за риска переполнения стека.
+     * @callergraph
+     * @callgraph
      *
-     * @see \PhotoRigma\Classes\Work::set_lang Сеттер для установки массива $lang.
+     * @see PhotoRigma::Classes::Work::set_lang
+     *      Сеттер для установки массива $lang.
      *
      * @param array $array Массив для проверки. Пустые массивы недопустимы.
      * @param int $max_depth Максимальная допустимая глубина массива (должна быть положительным целым числом).
@@ -1210,7 +1210,12 @@ class Work
      * @return array Массив ошибок. Каждый элемент представляет собой строку с описанием проблемы.
      *               Пример: ['Ключ должен быть строкой', 'Глубина превышена'].
      *
-     * @example \\PhotoRigma\\Classes\\Database::validate_array
+     * @warning Метод чувствителен к глубине массива. Убедитесь, что параметр `$max_depth` установлен корректно.
+     * @warning Не используйте метод для очень больших массивов из-за риска переполнения стека.
+     *
+     * @todo Планируется интеграция в систему кеширования языковых параметров.
+     *
+     * Пример вызова метода внутри класса:
      * @code
      * $data = [
      *     'key1' => 'value1',
@@ -1228,8 +1233,6 @@ class Work
      *     echo "Массив прошёл проверку успешно.";
      * }
      * @endcode
-     *
-     * @todo Планируется интеграция в систему кеширования языковых параметров.
      */
     private function validate_array(array $array, int $max_depth, int $current_depth = 1): array
     {
@@ -1264,9 +1267,9 @@ class Work
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Work::set_lang
+     * @see PhotoRigma::Classes::Work::set_lang
      *      Сеттер для установки массива $lang.
-     * @see \\PhotoRigma\\Classes\\Work::clean_field()
+     * @see PhotoRigma::Classes::Work::clean_field()
      *      Обработка значений для безопасного вывода через HTML.
      *
      * @param array $array Массив для обработки. Пустые массивы недопустимы.
@@ -1281,7 +1284,7 @@ class Work
      *
      * @todo Планируется интеграция в систему кеширования языковых параметров.
      *
-     * @example \\PhotoRigma\\Classes\\Database::sanitize_array
+     * Пример вызова метода внутри класса:
      * @code
      * $data = [
      *     'title' => '<script>alert("XSS")</script>',

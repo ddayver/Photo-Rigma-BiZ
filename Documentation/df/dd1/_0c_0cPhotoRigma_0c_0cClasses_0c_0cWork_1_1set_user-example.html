@@ -107,13 +107,13 @@ $(function(){initNavTree('df/dd1/_0c_0cPhotoRigma_0c_0cClasses_0c_0cWork_1_1set_
 <li>Проверяет, что переданный объект является экземпляром класса User.</li>
 <li>Передаёт объект в дочерние классы (Work_Template и Work_CoreLogic) через их методы set_user.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd>\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\User Класс с объектом пользователя. </dd>
+<dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::User Класс с объектом пользователя. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work_CoreLogic::$user Свойство дочернего класса Work_CoreLogic. </dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя (может быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$user</a> Свойство дочернего класса Work_CoreLogic. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work_Template::$user Свойство дочернего класса Work_Template. </dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя.">PhotoRigma\Classes\Work_Template\$user</a> Свойство дочернего класса Work_Template. </dd>
 <dd>
-\<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Include\log_in_file() Логирует ошибки.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">User</td><td class="paramname">$user</td><td>Объект пользователя:<ul>
@@ -125,11 +125,10 @@ $(function(){initNavTree('df/dd1/_0c_0cPhotoRigma_0c_0cClasses_0c_0cWork_1_1set_
 </dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан некорректный объект (не экземпляр класса User).</td></tr>
   </table>
   </dd>
 </dl>
-<p>\InvalidArgumentException Если передан некорректный объект (не экземпляр класса User).</p>
 <dl class="section note"><dt>Заметки</dt><dd>Метод проверяет тип переданного объекта. Объект пользователя передаётся в дочерние классы для дальнейшего использования.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Некорректный объект (не экземпляр класса User) вызывает исключение.</dd></dl>
 <div class="fragment"><div class="line"><span class="comment">// Пример использования метода</span></div>
