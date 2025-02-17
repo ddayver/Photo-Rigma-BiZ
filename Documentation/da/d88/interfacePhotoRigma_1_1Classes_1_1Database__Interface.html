@@ -105,6 +105,9 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
   <div class="headertitle"><div class="title">Интерфейс Database_Interface</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Интерфейс Database_Interface определяет методы для работы с базой данных.  
+ <a href="#details">Подробнее...</a></p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Граф наследования:Database_Interface:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -112,8 +115,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d6/d05/interfacePhotoRigma_1_1Classes_1_1Database__Interface__inherit__graph.png" border="0" usemap="#aDatabase__Interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="aDatabase__Interface_inherit__map" id="aDatabase__Interface_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,5,140,30"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title=" " alt="" coords="34,78,111,103"/>
+<area shape="rect" title="Интерфейс Database_Interface определяет методы для работы с базой данных." alt="" coords="5,5,140,30"/>
+<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных..." alt="" coords="34,78,111,103"/>
 <area shape="poly" title=" " alt="" coords="75,46,75,78,70,78,70,46"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">см. легенду</a>]</span></center></div>
@@ -121,28 +124,55 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:aab30d2495bb1362d218cd62e1556b13e" id="r_aab30d2495bb1362d218cd62e1556b13e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a> (string|array $select, string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:aab30d2495bb1362d218cd62e1556b13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, и выполняет его.  <br /></td></tr>
 <tr class="separator:aab30d2495bb1362d218cd62e1556b13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2b6c23b3a70e9ef06c22d8a4885d69a" id="r_aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $join, array $options=[])</td></tr>
+<tr class="memdesc:aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, и выполняет его.  <br /></td></tr>
 <tr class="separator:aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d8e6acdfb996002f980ab7c9c18515" id="r_a73d8e6acdfb996002f980ab7c9c18515"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73d8e6acdfb996002f980ab7c9c18515">delete</a> (string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:a73d8e6acdfb996002f980ab7c9c18515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, и выполняет его.  <br /></td></tr>
 <tr class="separator:a73d8e6acdfb996002f980ab7c9c18515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4d4e455d9e4bf865126c72cf23a517b" id="r_ad4d4e455d9e4bf865126c72cf23a517b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4d4e455d9e4bf865126c72cf23a517b">truncate</a> (string $from_tbl)</td></tr>
+<tr class="memdesc:ad4d4e455d9e4bf865126c72cf23a517b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
 <tr class="separator:ad4d4e455d9e4bf865126c72cf23a517b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a539e51bc2144b972bfafeccdda56ee9e" id="r_a539e51bc2144b972bfafeccdda56ee9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e">update</a> (array $update, string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:a539e51bc2144b972bfafeccdda56ee9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, и выполняет его.  <br /></td></tr>
 <tr class="separator:a539e51bc2144b972bfafeccdda56ee9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e5af1f386c0c7968aa10ea928c7a110" id="r_a6e5af1f386c0c7968aa10ea928c7a110"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110">insert</a> (array $insert, string $to_tbl, string $type='', array $options=[])</td></tr>
+<tr class="memdesc:a6e5af1f386c0c7968aa10ea928c7a110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, и выполняет его.  <br /></td></tr>
 <tr class="separator:a6e5af1f386c0c7968aa10ea928c7a110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a974af553ef190897a8849c77166ea32d" id="r_a974af553ef190897a8849c77166ea32d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a974af553ef190897a8849c77166ea32d">res_row</a> ()</td></tr>
+<tr class="memdesc:a974af553ef190897a8849c77166ea32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>.  <br /></td></tr>
 <tr class="separator:a974af553ef190897a8849c77166ea32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bfd8e43ae69ed64120dd984b9e288a4" id="r_a0bfd8e43ae69ed64120dd984b9e288a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a> ()</td></tr>
+<tr class="memdesc:a0bfd8e43ae69ed64120dd984b9e288a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>, и возвращает их как массив.  <br /></td></tr>
 <tr class="separator:a0bfd8e43ae69ed64120dd984b9e288a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c437dae4e310529391e7f5388b133ba" id="r_a2c437dae4e310529391e7f5388b133ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c437dae4e310529391e7f5388b133ba">get_affected_rows</a> ()</td></tr>
+<tr class="memdesc:a2c437dae4e310529391e7f5388b133ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество строк, затронутых последним запросом.  <br /></td></tr>
 <tr class="separator:a2c437dae4e310529391e7f5388b133ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abafff8c03a52d73e37072449448e5a3c" id="r_abafff8c03a52d73e37072449448e5a3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abafff8c03a52d73e37072449448e5a3c">get_last_insert_id</a> ()</td></tr>
+<tr class="memdesc:abafff8c03a52d73e37072449448e5a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ID последней вставленной строки.  <br /></td></tr>
 <tr class="separator:abafff8c03a52d73e37072449448e5a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock">
+<div class="textblock"><p>Интерфейс Database_Interface определяет методы для работы с базой данных. </p>
+<p>Интерфейс определяет контракт для работы с базами данных через PDO. Поддерживаемые СУБД: MySQL (MariaDB) и PostgreSQL. Реализованы операции SELECT, JOIN, UPDATE, INSERT, DELETE и TRUNCATE. Особенности реализации:</p><ul>
+<li>Выполнение запроса возвращает <code>true</code> при успешном выполнении или выбрасывает исключение в случае ошибки.</li>
+<li>Результаты запросов извлекаются с помощью следующих методов:<ul>
+<li><code>res_row</code>: Извлекает одну строку результата.</li>
+<li><code>res_arr</code>: Извлекает все строки результата как массив.</li>
+<li><code>get_affected_rows</code>: Возвращает количество строк, затронутых последним запросом.</li>
+<li><code>get_last_insert_id</code>: Возвращает ID последней вставленной строки.</li>
+</ul>
+</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс, который реализует интерфейс. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000005">Необходимо сделать</a></b></dt><dd>Добавить поддержку SQLite.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Интерфейс поддерживает только MySQL (MariaDB) и PostgreSQL.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Методы интерфейса изменили свою реализацию в отличие от предыдущей версии. Убедитесь, что вы изучили новую документацию по методам перед использованием. </dd></dl>
+
 <p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00074">74</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a73d8e6acdfb996002f980ab7c9c18515" name="a73d8e6acdfb996002f980ab7c9c18515"></a>
@@ -164,6 +194,55 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, и выполняет его. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет типы входных данных: <code>$from_tbl</code> (строка), <code>$options</code> (массив).</li>
+<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Проверяет наличие обязательного условия <code>where</code> в массиве <code>$options</code>. Если условие отсутствует, выбрасывается исключение для предотвращения случайного удаления всех данных.</li>
+<li>Проверяет и удаляет недопустимые ключи из массива <code>$options</code>:<ul>
+<li>Ключ <code>group</code> не поддерживается в запросах DELETE и удаляется с записью в лог.</li>
+<li>Ключи <code>order</code> и <code>limit</code> должны использоваться совместно. Если указан только один из них, оба удаляются с записью в лог.</li>
+</ul>
+</li>
+<li>Формирует базовый SQL-запрос на удаление данных.</li>
+<li>Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод <code>build_conditions</code>.</li>
+<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Метод, который реализует в классе заявленную логику. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой необходимо удалить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]). Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.</li>
+<li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC"). Может использоваться только вместе с <code>limit</code>. Если указан только один из этих ключей, оба игнорируются.</li>
+<li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10"). Может использоваться только вместе с <code>order</code>. Если указан только один из этих ключей, оба игнорируются.</li>
+<li>params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" =&gt; 1, ":status" =&gt; "active"]).</li>
+<li>group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и удаляется с записью в лог.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li><code>$from_tbl</code> не является строкой.</li>
+<li><code>$options</code> не является массивом.</li>
+<li>Отсутствует обязательное условие <code>where</code> в массиве <code>$options</code>.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия <code>where</code>. Запрос без условия <code>where</code> не будет выполнен. Ключи <code>group</code>, <code>order</code> и <code>limit</code> проверяются на корректность. Недопустимые ключи удаляются с записью в лог. Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство <code>$error</code>. Теперь метод выбрасывает исключение при ошибках. Старый способ вызова: delete($from_tbl, $where = FALSE, $order = FALSE, $limit = FALSE).</dd></dl>
+<p>Пример использования метода delete(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;delete(<span class="stringliteral">&#39;users&#39;</span>, [</div>
+<div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; 1],</div>
+<div class="line">]);</div>
+<div class="ttc" id="anamespacePhotoRigma_html_a1fa3127fc82f96b1436d871ef02be319"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">PhotoRigma\$db</a></div><div class="ttdeci">$db</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00139">index.php:139</a></div></div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515">Database</a>.</p>
 
 </div>
@@ -183,6 +262,28 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает количество строк, затронутых последним запросом. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет, что свойство <code>$aff_rows</code> установлено. Если это не так, выбрасывается исключение.</li>
+<li>Проверяет, что значение свойства <code>$aff_rows</code> является целым числом. Если это не так, выбрасывается исключение.</li>
+<li>Возвращает значение свойства <code>$aff_rows</code>, которое представляет собой количество строк, затронутых последним SQL-запросом.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba" title="Возвращает количество строк, затронутых последним запросом.">PhotoRigma\Classes\Database\get_affected_rows()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>int Количество строк, затронутых последним SQL-запросом.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li>Свойство <code>$aff_rows</code> не установлено.</li>
+<li>Значение свойства <code>$aff_rows</code> не является целым числом.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$aff_rows</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$aff_rows</code> как целое число. Ранее был прямой доступ к свойству <code>$aff_rows</code>. Теперь используется метод для получения значения, чтобы обеспечить безопасность и контроль данных.</dd></dl>
+<p>Пример использования метода get_affected_rows(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;delete(<span class="stringliteral">&#39;users&#39;</span>, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;status = 0&#39;</span>]);</div>
+<div class="line">echo <span class="stringliteral">&quot;Affected rows: &quot;</span> . <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;get_affected_rows();</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba">Database</a>.</p>
 
 </div>
@@ -202,6 +303,28 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает ID последней вставленной строки. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет, что свойство <code>$insert_id</code> установлено. Если это не так, выбрасывается исключение.</li>
+<li>Проверяет, что значение свойства <code>$insert_id</code> является целым числом. Если это не так, выбрасывается исключение.</li>
+<li>Возвращает значение свойства <code>$insert_id</code>, которое представляет собой ID последней вставленной строки.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c" title="Возвращает ID последней вставленной строки.">PhotoRigma\Classes\Database\get_last_insert_id()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>int ID последней вставленной строки.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li>Свойство <code>$insert_id</code> не установлено.</li>
+<li>Значение свойства <code>$insert_id</code> не является целым числом.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$insert_id</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$insert_id</code> как целое число. Ранее был прямой доступ к свойству <code>$insert_id</code>. Теперь используется метод для получения значения, чтобы обеспечить безопасность и контроль данных.</dd></dl>
+<p>Пример использования метода get_last_insert_id(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;insert([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>, <span class="stringliteral">&#39;email&#39;</span> =&gt; <span class="stringliteral">&#39;john@example.com&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>);</div>
+<div class="line">echo <span class="stringliteral">&quot;Last insert ID: &quot;</span> . <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;get_last_insert_id();</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c">Database</a>.</p>
 
 </div>
@@ -235,6 +358,52 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, и выполняет его. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет типы входных данных: <code>$insert</code> (ассоциативный массив), <code>$to_tbl</code> (строка), <code>$type</code> (строка), <code>$options</code> (массив).</li>
+<li>Проверяет, что массив <code>$insert</code> не пустой. Если массив пустой, выбрасывается исключение.</li>
+<li>Экранирует имя таблицы (<code>$to_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Нормализует параметр <code>$type</code>, приводя его к нижнему регистру, и проверяет на допустимые значения: &lsquo;'ignore&rsquo;<code>,</code>'replace'<code>,</code>'into'<code>,</code>''<code>. Если указан недопустимый тип, выбрасывается исключение.</code></li>
+<li><code>Определяет тип запроса на основе параметра</code>$type<code>: -</code>'ignore'<code>: Формирует запрос типа "INSERT IGNORE INTO". -</code>'replace'<code>: Формирует запрос типа "REPLACE INTO". -</code>'into'<code>или пустая строка (</code>''<code>): Формирует запрос типа "INSERT INTO" (по умолчанию).</code></li>
+<li><code>Подготавливает данные для запроса с использованием метода</code>prepare_insert_data<code>, который преобразует массив</code>$insert<code>в строки формата "поле" и "плейсхолдер" для подготовленного выражения. Каждое имя поля экранируется методом</code>sanitize_expression<code>и оборачивается в обратные кавычки (\</code> `).</li>
+<li>Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.</li>
+<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\insert()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$insert</td><td>Ассоциативный массив данных для вставки в формате: 'имя_поля' =&gt; 'значение'. Каждое имя поля экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). Значения преобразуются в плейсхолдеры методом <code>prepare_insert_data</code> для подготовленного выражения. Пример: ['name' =&gt; 'John Doe', 'email' =&gt; '<a href="#" onclick="location.href='mai'+'lto:'+'joh'+'n@'+'exa'+'mp'+'le.'+'co'+'m'; return false;">john@<span class="obfuscator">.nosp@m.</span>exam<span class="obfuscator">.nosp@m.</span>ple.c<span class="obfuscator">.nosp@m.</span>om</a>']. Если передан пустой массив, выбрасывается исключение. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$to_tbl</td><td>Имя таблицы, в которую необходимо вставить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:<ul>
+<li>'ignore': Формирует запрос типа "INSERT IGNORE INTO".</li>
+<li>'replace': Формирует запрос типа "REPLACE INTO".</li>
+<li>'into': Формирует запрос типа "INSERT INTO" (явное указание).</li>
+<li>'' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию). Если указан недопустимый тип, выбрасывается исключение. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
+<li>params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":name" =&gt; "John Doe", ":email" =&gt; "john@example.com"]).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li><code>$insert</code> не является массивом или является пустым массивом.</li>
+<li><code>$to_tbl</code> не является строкой.</li>
+<li><code>$type</code> содержит недопустимое значение (не '', 'ignore', 'replace', 'into').</li>
+<li><code>$options</code> не является массивом.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Убедитесь, что массив <code>$insert</code> не пустой и содержит корректные данные. Параметр <code>$type</code> должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'. Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство <code>$error</code>. Теперь метод выбрасывает исключение при ошибках. Старый способ вызова: insert($insert, $to_tbl, $type = FALSE).</dd></dl>
+<p>Пример использования метода insert(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;insert([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>, <span class="stringliteral">&#39;email&#39;</span> =&gt; <span class="stringliteral">&#39;john@example.com&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110">Database</a>.</p>
 
 </div>
@@ -268,6 +437,68 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, и выполняет его. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет типы входных данных: <code>$select</code> (строка или массив), <code>$from_tbl</code> (строка), <code>$join</code> (массив), <code>$options</code> (массив).</li>
+<li>Обрабатывает список полей для выборки (<code>$select</code>), преобразуя его в строку с экранированными именами полей. Каждое имя поля оборачивается в обратные кавычки (` `).</li>
+<li>Экранирует имя основной таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Обрабатывает массив JOIN-операций (<code>$join</code>):<ul>
+<li>Для каждой операции проверяется наличие имени таблицы (<code>table</code>) и условия (<code>on</code>).</li>
+<li>Если тип JOIN не указан, используется <code>INNER</code> по умолчанию.</li>
+<li>Условия JOIN формируются с использованием метода <code>sanitize_expression</code>.</li>
+</ul>
+</li>
+<li>Формирует базовый SQL-запрос с использованием JOIN-операций.</li>
+<li>Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
+<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Каждое поле экранируется методом <code>sanitize_expression</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя основной таблицы, из которой начинается выборка. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$join</td><td>Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:<ul>
+<li>table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.</li>
+<li>type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.</li>
+<li>on (string): Условие для JOIN. Должно быть строкой с допустимым условием сравнения полей. Если условие отсутствует, выбрасывается исключение. Пример: [['type' =&gt; 'INNER', 'table' =&gt; 'orders', 'on' =&gt; 'users.id = orders.user_id']]. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
+<li>group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").</li>
+<li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>
+<li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").</li>
+<li>params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" =&gt; 1, ":status" =&gt; "active"]).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li><code>$from_tbl</code> не является строкой.</li>
+<li><code>$join</code> не является массивом.</li>
+<li><code>$select</code> не является строкой или массивом.</li>
+<li>Отсутствует имя таблицы (<code>table</code>) или условие (<code>on</code>) в описании JOIN.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Это новый метод, ранее недоступный.</dd></dl>
+<p>Пример использования метода join(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;join(</div>
+<div class="line">    [<span class="stringliteral">&#39;users.id&#39;</span>, <span class="stringliteral">&#39;users.name&#39;</span>, <span class="stringliteral">&#39;orders.order_date&#39;</span>],</div>
+<div class="line">    <span class="stringliteral">&#39;users&#39;</span>,</div>
+<div class="line">    [</div>
+<div class="line">        [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;INNER&#39;</span>, <span class="stringliteral">&#39;table&#39;</span> =&gt; <span class="stringliteral">&#39;orders&#39;</span>, <span class="stringliteral">&#39;on&#39;</span> =&gt; <span class="stringliteral">&#39;users.id = orders.user_id&#39;</span>],</div>
+<div class="line">    ],</div>
+<div class="line">    [</div>
+<div class="line">        <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;users.status&#39;</span> =&gt; 1],</div>
+<div class="line">    ]</div>
+<div class="line">);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">Database</a>.</p>
 
 </div>
@@ -287,6 +518,36 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>, и возвращает их как массив. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет, что свойство <code>$res_query</code> установлено и является объектом типа <code>\PDOStatement</code>. Если это не так, выбрасывается исключение.</li>
+<li>Использует метод <code>fetchAll(\PDO::FETCH_ASSOC)</code> для извлечения всех строк результата в виде массива ассоциативных массивов.</li>
+<li>Если результатов нет (метод <code>fetchAll</code> возвращает пустой массив), явно возвращает <code>false</code>.</li>
+<li>В противном случае возвращает массив, содержащий все строки результата.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4" title="Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве $res_query,...">PhotoRigma\Classes\Database\res_arr()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны. Если результатов нет, возвращает <code>false</code>.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li>Свойство <code>$res_query</code> не установлено.</li>
+<li>Свойство <code>$res_query</code> не является объектом типа <code>\PDOStatement</code>.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$res_query</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$res_query</code> как объект <code>\PDOStatement</code>. Ранее метод мог работать с устаревшим способом обработки результатов. Теперь он требует корректной инициализации <code>$res_query</code> через выполнение запроса.</dd></dl>
+<p>Пример использования метода res_arr(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;select([<span class="stringliteral">&#39;id&#39;</span>, <span class="stringliteral">&#39;name&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;status = 1&#39;</span>]);</div>
+<div class="line">$results = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;res_arr();</div>
+<div class="line"><span class="keywordflow">if</span> ($results) {</div>
+<div class="line">    <span class="keywordflow">foreach</span> ($results as $row) {</div>
+<div class="line">        echo <span class="stringliteral">&quot;ID: &quot;</span> . $row[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&quot;, Name: &quot;</span> . $row[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">    }</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;No results found.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4">Database</a>.</p>
 
 </div>
@@ -306,6 +567,31 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет, что свойство <code>$res_query</code> установлено и является объектом типа <code>\PDOStatement</code>. Если это не так, выбрасывается исключение.</li>
+<li>Использует метод <code>fetch(\PDO::FETCH_ASSOC)</code> для извлечения одной строки результата в виде ассоциативного массива.</li>
+<li>Если результатов нет (метод <code>fetch</code> возвращает <code>false</code>), явно возвращает <code>false</code>.</li>
+<li>В противном случае возвращает ассоциативный массив, содержащий данные строки.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d" title="Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.">PhotoRigma\Classes\Database\res_row()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны. Если результатов нет, возвращает <code>false</code>.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li>Свойство <code>$res_query</code> не установлено.</li>
+<li>Свойство <code>$res_query</code> не является объектом типа <code>\PDOStatement</code>.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$res_query</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$res_query</code> как объект <code>\PDOStatement</code>. Ранее метод мог работать с устаревшим способом обработки результатов. Теперь он требует корректной инициализации <code>$res_query</code> через выполнение запроса.</dd></dl>
+<p>Пример использования метода res_row(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;select([<span class="stringliteral">&#39;id&#39;</span>, <span class="stringliteral">&#39;name&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;status = 1&#39;</span>]);</div>
+<div class="line"><span class="keywordflow">while</span> ($row = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;res_row()) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;ID: &quot;</span> . $row[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&quot;, Name: &quot;</span> . $row[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d">Database</a>.</p>
 
 </div>
@@ -334,8 +620,53 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, и выполняет его. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет типы входных данных: <code>$select</code> (строка или массив), <code>$from_tbl</code> (строка), <code>$options</code> (массив).</li>
+<li>Обрабатывает список полей для выборки (<code>$select</code>), преобразуя его в строку с экранированными именами полей. Каждое имя поля оборачивается в обратные кавычки (` `).</li>
+<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Формирует базовый SQL-запрос.</li>
+<li>Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
+<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Каждое поле экранируется методом <code>sanitize_expression</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой выбираются данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
+<li>group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").</li>
+<li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>
+<li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").</li>
+<li>params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" =&gt; 1, ":status" =&gt; "active"]).</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li><code>$from_tbl</code> не является строкой.</li>
+<li><code>$options</code> не является массивом.</li>
+<li><code>$select</code> не является строкой или массивом.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство <code>$error</code>. Теперь метод выбрасывает исключение при ошибках. Старый способ вызова: select($select, $from_tbl, $where = FALSE, $order = FALSE, $group = FALSE, $limit = FALSE).</dd></dl>
+<p>Пример использования метода select(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;select([<span class="stringliteral">&#39;id&#39;</span>, <span class="stringliteral">&#39;name&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>, [</div>
+<div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;status&#39;</span> =&gt; <span class="stringliteral">&#39;active&#39;</span>],</div>
+<div class="line">    <span class="stringliteral">&#39;group&#39;</span> =&gt; <span class="stringliteral">&#39;category_id&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;order&#39;</span> =&gt; <span class="stringliteral">&#39;created_at DESC&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;limit&#39;</span> =&gt; 10,</div>
+<div class="line">]);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e">Database</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#a13">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a>.</dd>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#a15">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a>.</dd>
 </dl>
 
 </div>
@@ -355,6 +686,33 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет тип входных данных: <code>$from_tbl</code> должен быть строкой. Если передан неверный тип, выбрасывается исключение.</li>
+<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Формирует базовый SQL-запрос TRUNCATE TABLE.</li>
+<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет.">PhotoRigma\Classes\Database\truncate()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, которую необходимо очистить. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li><code>$from_tbl</code> не является строкой.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью. Ранее метод возвращал <code>false</code> и записывал ошибку в свойство <code>$error</code>, теперь выбрасывает исключение через <code>throw</code>.</dd></dl>
+<p>Пример использования метода truncate(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;truncate(<span class="stringliteral">&#39;users&#39;</span>);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b">Database</a>.</p>
 
 </div>
@@ -383,6 +741,53 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
       </table>
 </div><div class="memdoc">
 
+<p>Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, и выполняет его. </p>
+<p>Метод выполняет следующие шаги:</p><ul>
+<li>Проверяет типы входных данных: <code>$update</code> (ассоциативный массив), <code>$from_tbl</code> (строка), <code>$options</code> (массив).</li>
+<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Проверяет наличие обязательного условия <code>where</code> в массиве <code>$options</code>. Если условие отсутствует, выбрасывается исключение для предотвращения случайного обновления всех данных.</li>
+<li>Удаляет недопустимый ключ <code>group</code> из массива <code>$options</code> с записью в лог, так как GROUP BY не поддерживается в запросах UPDATE.</li>
+<li>Преобразует массив <code>$update</code> в строку формата "поле = значение" с использованием метода <code>prepare_insert_data</code>, который заменяет значения на плейсхолдеры для подготовленного выражения.</li>
+<li>Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.</li>
+<li>Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
+<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\update()</a> Метод, который реализует в классе заявленную логику. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$update</td><td>Ассоциативный массив данных для обновления в формате: 'имя_поля' =&gt; 'значение'. Каждое имя поля экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). Значения преобразуются в плейсхолдеры методом <code>prepare_insert_data</code> для подготовленного выражения. Пример: ['name' =&gt; 'John Doe', 'status' =&gt; 1]. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, в которой необходимо обновить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]). Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.</li>
+<li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>
+<li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").</li>
+<li>params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" =&gt; 1, ":status" =&gt; "active"]).</li>
+<li>group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и удаляется с записью в лог.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
+<li><code>$update</code> не является массивом.</li>
+<li><code>$from_tbl</code> не является строкой.</li>
+<li><code>$options</code> не является массивом.</li>
+<li>Отсутствует обязательное условие <code>where</code> в массиве <code>$options</code>.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия <code>where</code>. Запрос без условия <code>where</code> не будет выполнен. Ключ <code>group</code> не поддерживается в запросах UPDATE и удаляется с записью в лог. Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство <code>$error</code>. Теперь метод выбрасывает исключение при ошибках. Старый способ вызова: update($update, $to_tbl, $where = FALSE, $order = FALSE, $limit = FALSE).</dd></dl>
+<p>Пример использования метода update(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;update([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>, [</div>
+<div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; 1],</div>
+<div class="line">]);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e">Database</a>.</p>
 
 </div>

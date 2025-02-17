@@ -9,6 +9,6 @@ var files_dup =
     [ "log", "dir_9381a7bbd03577d6d8720c7f35c94ffa.html", "dir_9381a7bbd03577d6d8720c7f35c94ffa" ],
     [ "themes", "dir_62adca9fbf9a8949ee1e01e61bf8f24e.html", "dir_62adca9fbf9a8949ee1e01e61bf8f24e" ],
     [ "thumbnail", "dir_61426e5d1398367c5ebaa59d7a086d1f.html", null ],
-    [ "config.php", "d0/d45/config_8php.html", null ],
-    [ "index.php", "de/d20/index_8php.html", null ]
+    [ "config.php", "d0/d45/config_8php.html", "d0/d45/config_8php" ],
+    [ "index.php", "de/d20/index_8php.html", "de/d20/index_8php" ]
 ];

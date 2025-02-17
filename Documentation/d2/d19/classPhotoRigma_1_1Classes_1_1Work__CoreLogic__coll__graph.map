@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,14,445,20,594,30,742,46,773,51,772,57,741,51,593,35,445,26,196,20"/>
 <area shape="rect" id="Node000013" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения." alt="" coords="253,108,370,133"/>
 <area shape="poly" id="edge16_Node000013_Node000002" title=" " alt="" coords="136,35,284,105,282,110,134,39"/>
-<area shape="rect" id="Node000003" href="$da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title=" " alt="" coords="26,139,160,163"/>
+<area shape="rect" id="Node000003" href="$da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title="Интерфейс Database_Interface определяет методы для работы с базой данных." alt="" coords="26,139,160,163"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="136,130,191,110,252,94,396,74,539,64,667,61,765,62,765,68,667,66,539,69,396,79,253,99,192,115,138,135"/>
 <area shape="rect" id="Node000004" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title=" " alt="" coords="546,273,598,298"/>
 <area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="176,155,313,176,390,194,464,218,515,244,555,271,552,275,512,248,462,223,388,199,312,181,175,160"/>

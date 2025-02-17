@@ -1,12 +1,12 @@
 <map id="_update_internal" name="_update_internal">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,122,105"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title=" " alt="" coords="170,55,284,79"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="5,80,122,105"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="170,55,284,79"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,81,154,76,155,81,122,86"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title=" " alt="" coords="332,5,467,30"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="332,5,467,30"/>
 <area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="85,77,123,58,169,40,244,25,316,18,317,23,245,30,170,46,126,63,88,82"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title=" " alt="" coords="515,55,650,79"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="515,55,650,79"/>
 <area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="122,90,284,88,500,73,500,78,284,94,122,96"/>
-<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title=" " alt="" coords="175,155,279,179"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="175,155,279,179"/>
 <area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="94,103,185,145,183,150,91,108"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="272,51,339,32,340,37,274,57"/>
 <area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="284,64,499,64,499,70,284,70"/>

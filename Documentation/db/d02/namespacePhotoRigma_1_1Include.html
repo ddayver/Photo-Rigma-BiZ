@@ -109,13 +109,15 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Функции</h2></td></tr>
 <tr class="memitem:af8032313a2eb1344b860a29c714f1a72" id="r_af8032313a2eb1344b860a29c714f1a72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8032313a2eb1344b860a29c714f1a72">archive_old_logs</a> ()</td></tr>
+<tr class="memdesc:af8032313a2eb1344b860a29c714f1a72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.  <br /></td></tr>
 <tr class="separator:af8032313a2eb1344b860a29c714f1a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d74c46a21e4ce612a98eee60981aef0" id="r_a2d74c46a21e4ce612a98eee60981aef0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a> (string $txt, bool $die=false)</td></tr>
+<tr class="memdesc:a2d74c46a21e4ce612a98eee60981aef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.  <br /></td></tr>
 <tr class="separator:a2d74c46a21e4ce612a98eee60981aef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:ad3a0fb3868a188b480b4695a8a91442c" id="r_ad3a0fb3868a188b480b4695a8a91442c"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3a0fb3868a188b480b4695a8a91442c">DIE_IF_ERROR</a> (!defined('IN_GALLERY')||IN_GALLERY !==true) true</td></tr>
+<tr class="memitem:ad3a0fb3868a188b480b4695a8a91442c" id="r_ad3a0fb3868a188b480b4695a8a91442c"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3a0fb3868a188b480b4695a8a91442c">DIE_IF_ERROR</a> (!defined('<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) true</td></tr>
 <tr class="memdesc:ad3a0fb3868a188b480b4695a8a91442c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Останавливать ли скрипт во время серьезных ошибок? (True - останавливать)  <br /></td></tr>
 <tr class="separator:ad3a0fb3868a188b480b4695a8a91442c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c3394673d867f3293d98eb77f069fd1" id="r_a1c3394673d867f3293d98eb77f069fd1"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c3394673d867f3293d98eb77f069fd1">LOG_DIR</a> $config['site_dir'] . 'log/'</td></tr>
@@ -158,9 +160,10 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memitem:ae61eeb74d6e738c902452868f3b3ca32" id="r_ae61eeb74d6e738c902452868f3b3ca32"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae61eeb74d6e738c902452868f3b3ca32">REG_EMAIL</a> '/^[\u0030-\u0039\u0041-\u005A\u0061-\u007A\u002E\u002D\u005F\u0025\u002B\u002D]+@[\u0030-\u0039\u0041-\u005A\u0061-\u007A\u002E\u002D]+\.[\u0041-\u005A\u0061-\u007A]{2,}$/'</td></tr>
 <tr class="separator:ae61eeb74d6e738c902452868f3b3ca32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abec6ae06ad5526172520fb1ccb7c6806" id="r_abec6ae06ad5526172520fb1ccb7c6806"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abec6ae06ad5526172520fb1ccb7c6806">$cookie_domain</a> = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
+<tr class="memdesc:abec6ae06ad5526172520fb1ccb7c6806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Безопасная проверка HTTP_HOST.  <br /></td></tr>
 <tr class="separator:abec6ae06ad5526172520fb1ccb7c6806"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab408c4099149d8137d6693a245d2c34e" id="r_ab408c4099149d8137d6693a245d2c34e"><td class="memItemLeft" align="right" valign="top">if(! $cookie_domain) if(! $cookie_domain) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab408c4099149d8137d6693a245d2c34e">$cur_cookie</a> = session_get_cookie_params()</td></tr>
-<tr class="separator:ab408c4099149d8137d6693a245d2c34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa1882ba8ff3a56afbb18d186724f64" id="r_adaa1882ba8ff3a56afbb18d186724f64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adaa1882ba8ff3a56afbb18d186724f64">$cur_cookie</a> = session_get_cookie_params()</td></tr>
+<tr class="separator:adaa1882ba8ff3a56afbb18d186724f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a897408179e814597df3eb0c708611873" id="r_a897408179e814597df3eb0c708611873"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a897408179e814597df3eb0c708611873">COMPRESSION_LEVEL</a> = 9</td></tr>
 <tr class="separator:a897408179e814597df3eb0c708611873"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97db6f3e6431bb4ff9a3521a93dbacaf" id="r_a97db6f3e6431bb4ff9a3521a93dbacaf"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97db6f3e6431bb4ff9a3521a93dbacaf">LOG_LIFETIME_DAYS</a> = '-7 days'</td></tr>
@@ -184,9 +187,29 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00192">192</a></p>
+<p>Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы. </p>
+<p>Сжимает логи старше недели в формате .gz и удаляет исходные файлы. Требует расширение zlib для работы. Если возникают проблемы (например, отсутствие расширения zlib или доступа к файлам), ошибки логируются через стандартную PHP-функцию error_log, но выполнение скрипта не прерывается.</p>
+<p>Последовательность действий:</p><ul>
+<li>Проверка наличия расширения zlib.</li>
+<li>Проверка доступности директории логов.</li>
+<li>Поиск файлов логов с расширением .txt.</li>
+<li>Определение даты неделю назад.</li>
+<li>Обработка каждого файла: проверка даты, сжатие, удаление исходного файла.</li>
+<li>Логирование ошибок через error_log при возникновении проблем.</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>COMPRESSION_LEVEL: Уровень сжатия (максимальный, значение 9).</li>
+<li>LOG_LIFETIME_DAYS: Срок хранения логов ('-7 days'). Требуется расширение zlib для работы функции.</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Функция может пропустить файлы при возникновении ошибок (например, если файл недоступен для чтения или записи).</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>void Функция ничего не возвращает.</dd></dl>
+<p>"Тихая" архивация старых логов: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#af8032313a2eb1344b860a29c714f1a72">archive_old_logs</a>();</div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_af8032313a2eb1344b860a29c714f1a72"><div class="ttname"><a href="#af8032313a2eb1344b860a29c714f1a72">PhotoRigma\Include\archive_old_logs</a></div><div class="ttdeci">archive_old_logs()</div><div class="ttdoc">Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00209">common.php:209</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">209</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00189">COMPRESSION_LEVEL</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">LOG_DIR</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00190">LOG_LIFETIME_DAYS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00168">COMPRESSION_LEVEL</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00293">PhotoRigma\FILTER_VALIDATE_IP</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">LOG_DIR</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00169">LOG_LIFETIME_DAYS</a>.</p>
 
 </div>
 </div>
@@ -209,11 +232,46 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">329</a></p>
+<p>Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта. </p>
+<p>Записывает сообщение об ошибке в лог-файл с возможностью завершения выполнения скрипта. Последовательность действий:</p><ul>
+<li>Проверка существования директории логов (создание, если отсутствует).</li>
+<li>Ограничение размера файла логов (архивация при превышении MAX_LOG_SIZE с использованием расширения zlib или без него).</li>
+<li>Подготовка текста для записи (включая трассировку, если включён DEBUG_GALLERY).</li>
+<li>Безопасная запись в файл через потоки с блокировкой (flock).</li>
+<li>Завершение работы скрипта при необходимости (если $die === true и DIE_IF_ERROR установлено). Если возникают проблемы (например, отсутствие доступа к файлам), ошибки логируются через стандартную PHP-функцию error_log.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$txt</td><td>Сообщение для записи в лог. Не должно быть пустым. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$die</td><td>Флаг, указывающий, следует ли завершить выполнение скрипта после записи. Значение по умолчанию — false. Этот параметр скоро будет исключён из функции как устаревший.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если запись успешна, иначе False.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Возникает при проблемах с созданием директории, доступом к файлам, чтением/записью данных. </td></tr>
+    <tr><td class="paramname">Exception</td><td>Любые непредвиденные ошибки.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000001">Уст.</a></b></dt><dd>Параметр $die скоро будет исключён из функции.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000003">Необходимо сделать</a></b></dt><dd>Полностью исключить из работы функции параметр $die как устаревший.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>MAX_LOG_SIZE: Максимальный размер файла лога (10 MB).</li>
+<li>COMPRESSION_LEVEL: Уровень сжатия (максимальный, значение 9). Требуется расширение zlib для архивации логов.</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Функция может завершить выполнение скрипта, если установлен флаг $die и константа DIE_IF_ERROR.</dd></dl>
+<p>Логирование ошибки без завершения скрипта: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(<span class="stringliteral">&quot;Ошибка при обработке данных.&quot;</span>);</div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdoc">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00341">common.php:341</a></div></div>
+</div><!-- fragment --><p> Логирование критической ошибки с завершением скрипта (deprecated!): </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(<span class="stringliteral">&quot;Критическая ошибка!&quot;</span>, <span class="keyword">true</span>);</div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">341</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00189">COMPRESSION_LEVEL</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00053">DIE_IF_ERROR</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">LOG_DIR</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">log_in_file()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00327">MAX_LOG_SIZE</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00334">PhotoRigma\$safe_output</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00168">COMPRESSION_LEVEL</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00066">PhotoRigma\DEBUG_GALLERY</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00053">DIE_IF_ERROR</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00293">PhotoRigma\FILTER_VALIDATE_IP</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">LOG_DIR</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00170">MAX_LOG_SIZE</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -221,7 +279,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph.png" border="0" usemap="#adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph" alt=""/></div>
 <map name="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph" id="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,84,54"/>
+<area shape="rect" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="5,29,84,54"/>
 <area shape="poly" title=" " alt="" coords="30,29,29,12,35,5,45,3,55,6,61,13,56,16,52,10,44,8,37,10,34,14,35,29"/>
 </map>
 </div>
@@ -232,7 +290,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph.png" border="0" usemap="#adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph" alt=""/></div>
 <map name="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph" id="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph">
-<area shape="rect" title=" " alt="" coords="5,29,84,54"/>
+<area shape="rect" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="5,29,84,54"/>
 <area shape="poly" title=" " alt="" coords="56,16,52,10,44,8,37,10,34,14,35,29,30,29,29,12,35,5,45,3,55,6,61,13"/>
 </map>
 </div>
@@ -251,31 +309,32 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Безопасная проверка HTTP_HOST.</p>
+
+<p>Безопасная проверка HTTP_HOST. </p>
 <p>Используются различные источники данных для определения HTTP_HOST:</p><ul>
 <li>$_SERVER['HTTP_HOST'] (основной источник).</li>
-<li>$_SERVER['SERVER_NAME'] (резервный источник). Выполняется валидация формата домена для предотвращения атак через заголовки. </li>
+<li>$_SERVER['SERVER_NAME'] (резервный источник). Выполняется валидация формата домена для предотвращения атак через заголовки.</li>
 </ul>
+<p>Домен, используемый для настройки куков.</p>
+<p>Значение извлекается из $_SERVER['HTTP_HOST'] с применением фильтрации для защиты от вредоносных данных. Если значение недоступно или некорректно, используется резервный источник $_SERVER['SERVER_NAME']. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00117">117</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00122">122</a></p>
 
 </div>
 </div>
-<a id="ab408c4099149d8137d6693a245d2c34e" name="ab408c4099149d8137d6693a245d2c34e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab408c4099149d8137d6693a245d2c34e">&#9670;&#160;</a></span>$cur_cookie</h2>
+<a id="adaa1882ba8ff3a56afbb18d186724f64" name="adaa1882ba8ff3a56afbb18d186724f64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaa1882ba8ff3a56afbb18d186724f64">&#9670;&#160;</a></span>$cur_cookie</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if(! $cookie_domain) if(! $cookie_domain) if (!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain)) $cur_cookie = session_get_cookie_params()</td>
+          <td class="memname">$cur_cookie = session_get_cookie_params()</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Настройка параметров куков для сессий.</p>
-<p>Используются текущие параметры куков, полученные через session_get_cookie_params(). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00141">141</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00156">156</a></p>
 
 </div>
 </div>
@@ -291,9 +350,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00189">189</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00168">168</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00192">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -322,9 +381,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const DIE_IF_ERROR(!defined( 'IN_GALLERY')||IN_GALLERY !==true) </td>
+          <td class="memname">const DIE_IF_ERROR(!defined( '<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) </td>
           <td>(</td>
-          <td class="paramtype">!defined('IN_GALLERY')||IN_GALLERY !</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">=&#160;true</span></td><td>)</td>
+          <td class="paramtype">!defined('<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">=&#160;true</span></td><td>)</td>
           <td> true</td>
         </tr>
       </table>
@@ -334,7 +393,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00053">53</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -354,7 +413,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">54</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00192">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -370,9 +429,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00190">190</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00169">169</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00192">archive_old_logs()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">archive_old_logs()</a>.</p>
 
 </div>
 </div>
@@ -388,9 +447,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00327">327</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00170">170</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00329">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
 
 </div>
 </div>

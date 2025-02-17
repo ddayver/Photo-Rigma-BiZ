@@ -5,7 +5,7 @@ var searchData=
   ['pars_5ftemplate_2',['pars_template',['../d5/d26/classPhotoRigma_1_1Classes_1_1template.html#adb3b69ac7b01b40a43410bad7576b9f4',1,'PhotoRigma::Classes::template']]],
   ['photo_20rigma_20biz_3',['Photo Rigma BiZ',['../index.html',1,'']]],
   ['photo_2ephp_4',['photo.php',['../dc/d71/photo_8php.html',1,'']]],
-  ['photorigma_5',['PhotoRigma',['../d9/d8f/interfacePhotoRigma.html',1,'PhotoRigma'],['../de/d90/namespacePhotoRigma.html',1,'PhotoRigma']]],
+  ['photorigma_5',['PhotoRigma',['../de/d90/namespacePhotoRigma.html',1,'']]],
   ['photorigma_3a_3aaction_6',['Action',['../de/d8e/namespacePhotoRigma_1_1Action.html',1,'PhotoRigma']]],
   ['photorigma_3a_3aclasses_7',['Classes',['../d6/dc3/namespacePhotoRigma_1_1Classes.html',1,'PhotoRigma']]],
   ['photorigma_3a_3ainclude_8',['Include',['../db/d02/namespacePhotoRigma_1_1Include.html',1,'PhotoRigma']]],

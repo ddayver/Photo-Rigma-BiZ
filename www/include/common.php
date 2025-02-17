@@ -18,8 +18,8 @@
  *                - Архивация старых логов: Сжимает логи старше недели в формате `.gz` и удаляет исходные файлы.
  *                - Логирование ошибок: Сохраняет ошибки в лог-файл.
  *
- * @see         \\PhotoRigma\\Include\\archive_old_logs Функция для архивации старых логов.
- * @see         \\PhotoRigma\\Include\\log_in_file Функция для логирования ошибок.
+ * @see         PhotoRigma::Include::archive_old_logs Функция для архивации старых логов.
+ * @see         PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  * @see         index.php Файл, который подключает common.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и предоставляет базовые инструменты для работы приложения.
@@ -108,11 +108,16 @@ define('REG_NAME', '/^[\p{L}\p{N}\p{Zs}\-\.\,\!\?]{1,100}$/u');
 define('REG_EMAIL', '/^[\u0030-\u0039\u0041-\u005A\u0061-\u007A\u002E\u002D\u005F\u0025\u002B\u002D]+@[\u0030-\u0039\u0041-\u005A\u0061-\u007A\u002E\u002D]+\.[\u0041-\u005A\u0061-\u007A]{2,}$/');
 
 /**
- * Безопасная проверка HTTP_HOST.
+ * @brief Безопасная проверка HTTP_HOST.
  * @details Используются различные источники данных для определения HTTP_HOST:
  *          - $_SERVER['HTTP_HOST'] (основной источник).
  *          - $_SERVER['SERVER_NAME'] (резервный источник).
  *          Выполняется валидация формата домена для предотвращения атак через заголовки.
+ *
+ * @var string|null $cookie_domain
+ * @brief Домен, используемый для настройки куков.
+ * @details Значение извлекается из $_SERVER['HTTP_HOST'] с применением фильтрации для защиты от вредоносных данных.
+ *          Если значение недоступно или некорректно, используется резервный источник $_SERVER['SERVER_NAME'].
  */
 $cookie_domain = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -135,17 +140,34 @@ if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $cookie_
 }
 
 /**
- * Настройка параметров куков для сессий.
+ * @brief Настройка параметров куков для сессий.
  * @details Используются текущие параметры куков, полученные через session_get_cookie_params().
+ *          Эти параметры применяются для настройки сессий с помощью session_set_cookie_params().
+ *
+ * @var array $cur_cookie
+ * @brief Текущие параметры куков, полученные через session_get_cookie_params().
+ * @details Содержит следующие ключи:
+ *          - lifetime: Время жизни куки в секундах.
+ *          - path: Путь, для которого действует куки.
+ *          - domain: Домен, для которого действует куки.
+ *          - secure: Флаг, указывающий, что куки должны передаваться только по HTTPS.
+ *          - httponly: Флаг, указывающий, что куки доступны только через HTTP(S), но не через JavaScript.
  */
 $cur_cookie = session_get_cookie_params();
+
+// Настройка параметров куков для сессий
 session_set_cookie_params(
-    $cur_cookie['lifetime'],
-    $cur_cookie['path'],
-    $cookie_domain,
-    $cur_cookie['secure'],
-    $cur_cookie['httponly']
+    $cur_cookie['lifetime'], // Время жизни куки
+    $cur_cookie['path'],     // Путь, для которого действует куки
+    $cookie_domain,          // Домен, для которого действует куки
+    $cur_cookie['secure'],   // Куки передаются только по HTTPS
+    $cur_cookie['httponly']  // Куки недоступны через JavaScript
 );
+
+// Константы для настройки
+const COMPRESSION_LEVEL = 9; // Уровень сжатия (максимальный)
+const LOG_LIFETIME_DAYS = '-7 days'; // Срок хранения логов
+const MAX_LOG_SIZE = 10 * 1024 * 1024; // 10 MB
 
 /**
  * Инициализация сессии.
@@ -179,25 +201,18 @@ session_start();
  *
  * @return void Функция ничего не возвращает.
  *
- * @example \\PhotoRigma\\Include\\archive_old_logs
+ * "Тихая" архивация старых логов:
  * @code
- * // "Тихая" архивация старых логов
  * archive_old_logs();
  * @endcode
  */
-// Константы для настройки
-const COMPRESSION_LEVEL = 9; // Уровень сжатия (максимальный)
-const LOG_LIFETIME_DAYS = '-7 days'; // Срок хранения логов
-
 function archive_old_logs(): void
 {
     // Проверяем, подключено ли расширение zlib
     if (!extension_loaded('zlib')) {
         error_log(
             date('H:i:s') .
-            " [ERROR] | " .
-            (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-            " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Расширение zlib не подключено"
+            " [ERROR] | UNKNOWN_IP | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Расширение zlib не подключено"
         );
         return;
     }
@@ -300,8 +315,8 @@ function archive_old_logs(): void
  *
  * @return bool True, если запись успешна, иначе False.
  *
- * @throws \\RuntimeException Возникает при проблемах с созданием директории, доступом к файлам, чтением/записью данных.
- * @throws \\Exception Любые непредвиденные ошибки.
+ * @throws RuntimeException Возникает при проблемах с созданием директории, доступом к файлам, чтением/записью данных.
+ * @throws Exception Любые непредвиденные ошибки.
  *
  * @deprecated Параметр $die скоро будет исключён из функции.
  *
@@ -314,18 +329,15 @@ function archive_old_logs(): void
  *
  * @warning Функция может завершить выполнение скрипта, если установлен флаг $die и константа DIE_IF_ERROR.
  *
- * @example \\PhotoRigma\\Include\\log_in_file
+ * Логирование ошибки без завершения скрипта:
  * @code
- * // Логирование ошибки без завершения скрипта
  * log_in_file("Ошибка при обработке данных.");
- *
- * // Логирование критической ошибки с завершением скрипта (deprecated!)
+ * @endcode
+ * Логирование критической ошибки с завершением скрипта (deprecated!):
+ * @code
  * log_in_file("Критическая ошибка!", true);
  * @endcode
  */
-// Константы для настройки COMPRESSION_LEVEL - определена ранее
-const MAX_LOG_SIZE = 10 * 1024 * 1024; // 10 MB
-
 function log_in_file(string $txt, bool $die = false): bool
 {
     static $log_in_process = false; // Статический флаг для предотвращения рекурсии

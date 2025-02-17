@@ -1,5 +1,5 @@
 <map id="Database" name="Database">
-<area shape="rect" id="Node000001" title=" " alt="" coords="34,78,111,103"/>
-<area shape="rect" id="Node000002" href="$da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title=" " alt="" coords="5,5,140,30"/>
+<area shape="rect" id="Node000001" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных..." alt="" coords="34,78,111,103"/>
+<area shape="rect" id="Node000002" href="$da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title="Интерфейс Database_Interface определяет методы для работы с базой данных." alt="" coords="5,5,140,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,46,75,78,70,78,70,46"/>
 </map>

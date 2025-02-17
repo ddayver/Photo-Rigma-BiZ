@@ -15,9 +15,9 @@
  *              - Управление соединением с базой данных.
  *              - Обработка ошибок через централизованную систему логирования и обработки ошибок.
  *
- * @see         \\PhotoRigma\\Classes\\Database_Interface Интерфейс для работы с базами данных.
- * @see         \\PhotoRigma\\Classes\\Database Класс для работы с базами данных.
- * @see         \\PhotoRigma\\Include\\log_in_file() Функция для логирования ошибок.
+ * @see         PhotoRigma::Classes::Database_Interface Интерфейс для работы с базами данных.
+ * @see         PhotoRigma::Classes::Database Класс для работы с базами данных.
+ * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
  * @see         index.php Файл, который подключает db.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с базами данных.
@@ -47,7 +47,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 /**
- * @interface \\PhotoRigma\\Classes\\Database_Interface
+ * @interface Database_Interface
  * @brief Интерфейс Database_Interface определяет методы для работы с базой данных.
  *
  * @details Интерфейс определяет контракт для работы с базами данных через PDO. Поддерживаемые СУБД: MySQL (MariaDB) и PostgreSQL.
@@ -62,8 +62,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *
  * @callgraph
  *
- * @see \\PhotoRigma\\Classes\\Database Класс, который реализует интерфейс.
- * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
+ * @see PhotoRigma::Classes::Database Класс, который реализует интерфейс.
+ * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
  *
  * @todo Добавить поддержку SQLite.
  *
@@ -87,7 +87,7 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::select() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::select() Метод, который реализует в классе заявленную логику.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -105,7 +105,7 @@ interface Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -114,9 +114,8 @@ interface Database_Interface
      *          Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство `$error`. Теперь метод выбрасывает исключение при ошибках.
      *          Старый способ вызова: select($select, $from_tbl, $where = FALSE, $order = FALSE, $group = FALSE, $limit = FALSE).
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::select()
+     * Пример использования метода select():
      * @code
-     * // Пример использования метода select() из интерфейса Database_Interface
      * $db->select(['id', 'name'], 'users', [
      *     'where' => ['status' => 'active'],
      *     'group' => 'category_id',
@@ -145,7 +144,7 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::join() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::join() Метод, который реализует в классе заявленную логику.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -169,7 +168,7 @@ interface Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$join` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -178,9 +177,8 @@ interface Database_Interface
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *          Это новый метод, ранее недоступный.
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::join()
+     * Пример использования метода join():
      * @code
-     * // Пример использования метода join()
      * $db->join(
      *     ['users.id', 'users.name', 'orders.order_date'],
      *     'users',
@@ -211,8 +209,8 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::delete() Метод, который реализует в классе заявленную логику.
-     * @see \\PhotoRigma\\Include\\log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Database::delete() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -229,7 +227,7 @@ interface Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
@@ -240,9 +238,8 @@ interface Database_Interface
      *          Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство `$error`. Теперь метод выбрасывает исключение при ошибках.
      *          Старый способ вызова: delete($from_tbl, $where = FALSE, $order = FALSE, $limit = FALSE).
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::delete()
+     * Пример использования метода delete():
      * @code
-     * // Пример использования метода delete()
      * $db->delete('users', [
      *     'where' => ['id' => 1],
      * ]);
@@ -260,7 +257,7 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::truncate() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::truncate() Метод, который реализует в классе заявленную логику.
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -268,16 +265,15 @@ interface Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
      *          Ранее метод возвращал `false` и записывал ошибку в свойство `$error`, теперь выбрасывает исключение через `throw`.
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::truncate()
+     * Пример использования метода truncate():
      * @code
-     * // Пример использования метода truncate()
      * $db->truncate('users');
      * @endcode
      */
@@ -298,8 +294,8 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::update() Метод, который реализует в классе заявленную логику.
-     * @see \\PhotoRigma\\Include\\log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Database::update() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
      *                       Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -318,7 +314,7 @@ interface Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$update` не является массивом.
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
@@ -330,9 +326,8 @@ interface Database_Interface
      *          Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство `$error`. Теперь метод выбрасывает исключение при ошибках.
      *          Старый способ вызова: update($update, $to_tbl, $where = FALSE, $order = FALSE, $limit = FALSE).
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::update()
+     * Пример использования метода update():
      * @code
-     * // Пример использования метода update()
      * $db->update(['name' => 'John Doe'], 'users', [
      *     'where' => ['id' => 1],
      * ]);
@@ -360,7 +355,7 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::insert() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который реализует в классе заявленную логику.
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
      *                       Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -381,7 +376,7 @@ interface Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$insert` не является массивом или является пустым массивом.
      *                                    - `$to_tbl` не является строкой.
      *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
@@ -393,9 +388,8 @@ interface Database_Interface
      *          Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство `$error`. Теперь метод выбрасывает исключение при ошибках.
      *          Старый способ вызова: insert($insert, $to_tbl, $type = FALSE).
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::insert()
+     * Пример использования метода insert():
      * @code
-     * // Пример использования метода insert()
      * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * @endcode
      */
@@ -412,21 +406,20 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::res_row() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::res_row() Метод, который реализует в классе заявленную логику.
      *
      * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
      *                      Если результатов нет, возвращает `false`.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$res_query` не установлено.
      *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
      *
      * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
      *          Ранее метод мог работать с устаревшим способом обработки результатов. Теперь он требует корректной инициализации `$res_query` через выполнение запроса.
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::res_row()
+     * Пример использования метода res_row():
      * @code
-     * // Пример использования метода res_row()
      * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      * while ($row = $db->res_row()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
@@ -446,21 +439,20 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::res_arr() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::res_arr() Метод, который реализует в классе заявленную логику.
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
      *                      Если результатов нет, возвращает `false`.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$res_query` не установлено.
      *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
      *
      * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
      *          Ранее метод мог работать с устаревшим способом обработки результатов. Теперь он требует корректной инициализации `$res_query` через выполнение запроса.
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::res_arr()
+     * Пример использования метода res_arr():
      * @code
-     * // Пример использования метода res_arr()
      * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      * $results = $db->res_arr();
      * if ($results) {
@@ -484,20 +476,19 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::get_affected_rows() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::get_affected_rows() Метод, который реализует в классе заявленную логику.
      *
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$aff_rows` не установлено.
      *                                    - Значение свойства `$aff_rows` не является целым числом.
      *
      * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
      *          Ранее был прямой доступ к свойству `$aff_rows`. Теперь используется метод для получения значения, чтобы обеспечить безопасность и контроль данных.
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::get_affected_rows()
+     * Пример использования метода get_affected_rows():
      * @code
-     * // Пример использования метода get_affected_rows()
      * $db->delete('users', ['where' => 'status = 0']);
      * echo "Affected rows: " . $db->get_affected_rows();
      * @endcode
@@ -514,20 +505,19 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::get_last_insert_id() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Classes::Database::get_last_insert_id() Метод, который реализует в классе заявленную логику.
      *
      * @return int ID последней вставленной строки.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$insert_id` не установлено.
      *                                    - Значение свойства `$insert_id` не является целым числом.
      *
      * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
      *          Ранее был прямой доступ к свойству `$insert_id`. Теперь используется метод для получения значения, чтобы обеспечить безопасность и контроль данных.
      *
-     * @example \\PhotoRigma\\Classes\\Database_Interface::get_last_insert_id()
+     * Пример использования метода get_last_insert_id():
      * @code
-     * // Пример использования метода get_last_insert_id()
      * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * echo "Last insert ID: " . $db->get_last_insert_id();
      * @endcode
@@ -536,7 +526,7 @@ interface Database_Interface
 }
 
 /**
- * @class \\PhotoRigma\\Classes\\Database
+ * @class Database
  * @brief Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных.
  *
  * @details Класс реализует все методы интерфейса `Database_Interface` и предоставляет функционал для работы с базами данных через PDO.
@@ -550,16 +540,15 @@ interface Database_Interface
  *            - `get_affected_rows`: Возвращает количество строк, затронутых последним запросом.
  *            - `get_last_insert_id`: Возвращает ID последней вставленной строки.
  *
- * @implements \\PhotoRigma\\Classes\\Database_Interface
+ * @implements Database_Interface
  *
- * @see \\PhotoRigma\\Classes\\Database_Interface Интерфейс, который реализует класс.
- * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
+ * @see PhotoRigma::Classes::Database_Interface Интерфейс, который реализует класс.
+ * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
  *
  * @todo Добавить поддержку SQLite.
  *
- * @example \\PhotoRigma\\Classes\\Database
+ * Пример создания объекта класса Database:
  * @code
- * // Пример создания объекта класса Database
  * $config = [
  *     'driver' => 'mysql',
  *     'host' => 'localhost',
@@ -595,35 +584,34 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Include\\log_in_file() Логирует ошибки.
-     * @see \\PhotoRigma\\Classes\\Database::$pdo Свойство, хранящее объект PDO для подключения к базе данных.
+     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
+     * @see PhotoRigma::Classes::Database::$pdo Свойство, хранящее объект PDO для подключения к базе данных.
      *
      * @param array $db_config Массив с конфигурацией подключения:
      *   - dbtype (string): Тип базы данных (mysql, pgsql). Обязательный параметр.
-     *                      Если передан недопустимый тип, выбрасывается исключение \InvalidArgumentException.
+     *                      Если передан недопустимый тип, выбрасывается исключение InvalidArgumentException.
      *   - dbsock (string): Путь к сокету (опционально).
      *                      Если путь некорректен или файл не существует, записывается предупреждение в лог.
      *                      Если подключение через сокет не удалось, выполняется попытка подключения через хост и порт.
      *   - dbname (string): Имя базы данных. Обязательный параметр.
-     *                      Если имя не указано, выбрасывается исключение \InvalidArgumentException.
+     *                      Если имя не указано, выбрасывается исключение InvalidArgumentException.
      *   - dbuser (string): Имя пользователя. Обязательный параметр.
-     *                      Если имя не указано, выбрасывается исключение \InvalidArgumentException.
+     *                      Если имя не указано, выбрасывается исключение InvalidArgumentException.
      *   - dbpass (string): Пароль пользователя. Обязательный параметр.
      *   - dbhost (string): Хост базы данных. Обязательный параметр, если не используется сокет.
-     *                      Если хост некорректен, выбрасывается исключение \InvalidArgumentException.
+     *                      Если хост некорректен, выбрасывается исключение InvalidArgumentException.
      *   - dbport (int): Порт базы данных (опционально).
-     *                   Если порт некорректен, выбрасывается исключение \InvalidArgumentException.
+     *                   Если порт некорректен, выбрасывается исключение InvalidArgumentException.
      *
-     * @throws \\InvalidArgumentException Если параметры конфигурации неверны.
-     * @throws \\PDOException Если произошла ошибка при подключении к базе данных.
+     * @throws InvalidArgumentException Если параметры конфигурации неверны.
+     * @throws PDOException Если произошла ошибка при подключении к базе данных.
      *
      * @warning Если параметр 'dbsock' указан, но файл сокета не существует, выполняется попытка подключения через хост и порт.
      *
      * @todo Добавить поддержку SQLite.
      *
-     * @example \\PhotoRigma\\Classes\\Database::__construct
+     * Пример использования конструктора:
      * @code
-     * // Пример использования конструктора
      * $db_config = [
      *     'dbtype' => 'mysql',
      *     'dbname' => 'test_db',
@@ -717,11 +705,11 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_select_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::_select_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -739,16 +727,15 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - `$select` не является строкой или массивом.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *
-     * @example \\PhotoRigma\\Classes\\Database::select()
+     * Пример использования метода select():
      * @code
-     * // Пример использования метода select()
      * $db = new \\PhotoRigma\\Classes\\Database();
      * $db->select(['id', 'name'], 'users', [
      *     'where' => ['status' => 'active'],
@@ -772,11 +759,11 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_join_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::_join_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -800,7 +787,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$join` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -808,9 +795,8 @@ class Database implements Database_Interface
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *
-     * @example \\PhotoRigma\\Classes\\Database::join()
+     * Пример использования метода join():
      * @code
-     * // Пример использования метода join()
      * $db = new \\PhotoRigma\\Classes\\Database();
      * $db->join(
      *     ['users.id', 'users.name', 'orders.order_date'],
@@ -839,12 +825,12 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_delete_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     * @see \\PhotoRigma\\Include\\log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Database::_delete_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -861,7 +847,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
@@ -870,9 +856,8 @@ class Database implements Database_Interface
      *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
      *          Ключи `group`, `order` и `limit` проверяются на корректность. Недопустимые ключи удаляются с записью в лог.
      *
-     * @example \\PhotoRigma\\Classes\\Database::delete()
+     * Пример использования метода delete():
      * @code
-     * // Пример использования метода delete()
      * $db = new \\PhotoRigma\\Classes\\Database();
      * $db->delete('users', [
      *     'where' => ['id' => 1],
@@ -894,10 +879,10 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_truncate_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::_truncate_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -905,15 +890,14 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
      *
-     * @example \\PhotoRigma\\Classes\\Database::truncate()
+     * Пример использования метода truncate()
      * @code
-     * // Пример использования метода truncate()
      * $db = new \\PhotoRigma\\Classes\\Database();
      * $db->truncate('users');
      * @endcode
@@ -933,12 +917,12 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_update_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::_update_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
      *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -957,7 +941,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$update` не является массивом.
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
@@ -967,9 +951,8 @@ class Database implements Database_Interface
      *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
      *          Ключ `group` не поддерживается в запросах UPDATE и удаляется с записью в лог.
      *
-     * @example \\PhotoRigma\\Classes\\Database::update()
+     * Пример использования метода update()
      * @code
-     * // Пример использования метода update()
      * $db = new \\PhotoRigma\\Classes\\Database();
      * $db->update(['name' => 'John Doe'], 'users', [
      *     'where' => ['id' => 1],
@@ -990,11 +973,11 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_insert_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::_insert_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
      *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -1015,7 +998,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$insert` не является массивом или является пустым массивом.
      *                                    - `$to_tbl` не является строкой.
      *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
@@ -1025,9 +1008,8 @@ class Database implements Database_Interface
      *          Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
      *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
      *
-     * @example \\PhotoRigma\\Classes\\Database::insert()
+     * Пример использования метода insert():
      * @code
-     * // Пример использования метода insert()
      * $db = new \\PhotoRigma\\Classes\\Database();
      * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * @endcode
@@ -1046,23 +1028,22 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_res_row_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see \\PhotoRigma\\Classes\\Database::select() Метод, который может использовать `res_row()` для получения результатов SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::_res_row_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `res_row()` для получения результатов SELECT-запроса.
      *
      * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
      *                     Если результатов нет, возвращает `false`.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$res_query` не установлено.
      *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
      *
      * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
      *
-     * @example \\PhotoRigma\\Classes\\Database::res_row()
+     * Пример использования метода res_row()
      * @code
-     * // Пример использования метода res_row()
      * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      * while ($row = $db->res_row()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
@@ -1083,24 +1064,23 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_res_arr_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see \\PhotoRigma\\Classes\\Database::select() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::join() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса с использованием JOIN.
+     * @see PhotoRigma::Classes::Database::_res_arr_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::join() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса с использованием JOIN.
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
      *                     Если результатов нет, возвращает `false`.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$res_query` не установлено.
      *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
      *
      * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
      *
-     * @example \\PhotoRigma\\Classes\\Database::res_arr()
+     * Пример использования метода res_arr():
      * @code
-     * // Пример использования метода res_arr()
      * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      * $results = $db->res_arr();
      * if ($results) {
@@ -1126,24 +1106,23 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_get_affected_rows_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::$aff_rows Свойство, хранящее количество затронутых строк.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
-     * @see \\PhotoRigma\\Classes\\Database::delete() Метод, который может изменять значение `$aff_rows`.
-     * @see \\PhotoRigma\\Classes\\Database::update() Метод, который может изменять значение `$aff_rows`.
-     * @see \\PhotoRigma\\Classes\\Database::insert() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::_get_affected_rows_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$aff_rows Свойство, хранящее количество затронутых строк.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::delete() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::update() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который может изменять значение `$aff_rows`.
      *
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$aff_rows` не установлено.
      *                                    - Значение свойства `$aff_rows` не является целым числом.
      *
      * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
      *
-     * @example \\PhotoRigma\\Classes\\Database::get_affected_rows()
+     * Пример использования метода get_affected_rows():
      * @code
-     * // Пример использования метода get_affected_rows()
      * $db->delete('users', ['where' => 'status = 0']);
      * echo "Affected rows: " . $db->get_affected_rows();
      * @endcode
@@ -1162,22 +1141,21 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::_get_last_insert_id_internal() Защищённый метод, реализующий основную логику.
-     * @see \\PhotoRigma\\Classes\\Database::$insert_id Свойство, хранящее ID последней вставленной строки.
-     * @see \\PhotoRigma\\Classes\\Database::insert() Метод, который устанавливает значение `$insert_id`.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::_get_last_insert_id_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$insert_id Свойство, хранящее ID последней вставленной строки.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который устанавливает значение `$insert_id`.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
      *
      * @return int ID последней вставленной строки.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$insert_id` не установлено.
      *                                    - Значение свойства `$insert_id` не является целым числом.
      *
      * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
      *
-     * @example \\PhotoRigma\\Classes\\Database::get_last_insert_id()
+     * Пример использования метода get_last_insert_id():
      * @code
-     * // Пример использования метода get_last_insert_id()
      * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * echo "Last insert ID: " . $db->get_last_insert_id();
      * @endcode
@@ -1204,11 +1182,11 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::select() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::select() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -1227,16 +1205,15 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - `$select` не является строкой или массивом.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_select_internal
+     * Пример использования метода _select_internal():
      * @code
-     * // Пример использования метода _select_internal()
      * $this->_select_internal(['id', 'name'], 'users', [
      *     'where' => ['status' => 'active'],
      *     'group' => 'category_id',
@@ -1295,11 +1272,11 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::join() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::join() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -1324,7 +1301,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$join` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -1332,9 +1309,8 @@ class Database implements Database_Interface
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_join_internal()
+     * Пример использования метода _join_internal():
      * @code
-     * // Пример использования метода _join_internal()
      * $this->_join_internal(
      *     ['users.id', 'users.name', 'orders.order_date'],
      *     'users',
@@ -1413,12 +1389,12 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::delete() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     * @see \\PhotoRigma\\Include\\log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Database::delete() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -1436,7 +1412,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
@@ -1445,9 +1421,8 @@ class Database implements Database_Interface
      *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
      *          Ключи `group`, `order` и `limit` проверяются на корректность. Недопустимые ключи удаляются с записью в лог.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_delete_internal()
+     * Пример использования метода _delete_internal():
      * @code
-     * // Пример использования метода _delete_internal()
      * $this->_delete_internal('users', [
      *     'where' => ['id' => 1],
      * ]);
@@ -1516,10 +1491,10 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::truncate() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::truncate() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -1528,15 +1503,14 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
      *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_truncate_internal()
+     * Пример использования метода _truncate_internal():
      * @code
-     * // Пример использования метода _truncate_internal()
      * $this->_truncate_internal('users');
      * @endcode
      */
@@ -1574,12 +1548,12 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::update() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::update() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
      *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -1599,7 +1573,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$update` не является массивом.
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
@@ -1609,9 +1583,8 @@ class Database implements Database_Interface
      *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
      *          Ключ `group` не поддерживается в запросах UPDATE и удаляется с записью в лог.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_update_internal()
+     * Пример использования метода _update_internal():
      * @code
-     * // Пример использования метода _update_internal()
      * $this->_update_internal(['name' => 'John Doe'], 'users', [
      *     'where' => ['id' => 1],
      * ]);
@@ -1697,11 +1670,11 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::insert() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Выполняет SQL-запрос.
-     * @see \\PhotoRigma\\Classes\\Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::insert() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
      *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -1723,7 +1696,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - `$insert` не является массивом или является пустым массивом.
      *                                    - `$to_tbl` не является строкой.
      *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
@@ -1733,9 +1706,8 @@ class Database implements Database_Interface
      *          Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
      *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_insert_internal()
+     * Пример использования метода _insert_internal():
      * @code
-     * // Пример использования метода _insert_internal()
      * $this->_insert_internal(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * @endcode
      */
@@ -1797,23 +1769,22 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::res_row() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see \\PhotoRigma\\Classes\\Database::select() Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::res_row() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
      *
      * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
      *                     Если результатов нет, возвращает `false`.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$res_query` не установлено.
      *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
      *
      * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_res_row_internal()
+     * Пример использования метода _res_row_internal()
      * @code
-     * // Пример использования метода _res_row_internal()
      * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      * while ($row = $this->_res_row_internal()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
@@ -1850,24 +1821,23 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::res_arr() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see \\PhotoRigma\\Classes\\Database::select() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::join() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с использованием JOIN.
+     * @see PhotoRigma::Classes::Database::res_arr() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::join() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с использованием JOIN.
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
      *                     Если результатов нет, возвращает `false`.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$res_query` не установлено.
      *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
      *
      * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_res_arr_internal()
+     * Пример использования метода _res_arr_internal():
      * @code
-     * // Пример использования метода _res_arr_internal()
      * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      * $results = $this->_res_arr_internal();
      * if ($results) {
@@ -1908,24 +1878,23 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::get_affected_rows() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::$aff_rows Свойство, хранящее количество затронутых строк.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
-     * @see \\PhotoRigma\\Classes\\Database::delete() Метод, который может изменять значение `$aff_rows`.
-     * @see \\PhotoRigma\\Classes\\Database::update() Метод, который может изменять значение `$aff_rows`.
-     * @see \\PhotoRigma\\Classes\\Database::insert() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::get_affected_rows() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$aff_rows Свойство, хранящее количество затронутых строк.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::delete() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::update() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который может изменять значение `$aff_rows`.
      *
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$aff_rows` не установлено.
      *                                    - Значение свойства `$aff_rows` не является целым числом.
      *
      * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_get_affected_rows_internal()
+     * Пример использования метода _get_affected_rows_internal():
      * @code
-     * // Пример использования метода _get_affected_rows_internal()
      * $this->delete('users', ['where' => 'status = 0']);
      * echo "Affected rows: " . $this->_get_affected_rows_internal();
      * @endcode
@@ -1960,22 +1929,21 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::get_last_insert_id() Публичный метод-редирект для вызова этой логики.
-     * @see \\PhotoRigma\\Classes\\Database::$insert_id Свойство, хранящее ID последней вставленной строки.
-     * @see \\PhotoRigma\\Classes\\Database::insert() Метод, который устанавливает значение `$insert_id`.
-     * @see \\PhotoRigma\\Classes\\Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::get_last_insert_id() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$insert_id Свойство, хранящее ID последней вставленной строки.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который устанавливает значение `$insert_id`.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
      *
      * @return int ID последней вставленной строки.
      *
-     * @throws \\InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException Выбрасывается, если:
      *                                    - Свойство `$insert_id` не установлено.
      *                                    - Значение свойства `$insert_id` не является целым числом.
      *
      * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
      *
-     * @example \\PhotoRigma\\Classes\\Database::_get_last_insert_id_internal()
+     * Пример использования метода _get_last_insert_id_internal():
      * @code
-     * // Пример использования метода _get_last_insert_id_internal()
      * $this->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * echo "Last insert ID: " . $this->_get_last_insert_id_internal();
      * @endcode
@@ -2020,29 +1988,29 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Include\\log_in_file()
+     * @see PhotoRigma::Include::log_in_file()
      *      Логирует медленные запросы.
-     * @see \\PhotoRigma\\Classes\\Database::$pdo
+     * @see PhotoRigma::Classes::Database::$pdo
      *      Объект PDO, используемый для выполнения запроса.
-     * @see \\PhotoRigma\\Classes\\Database::$res_query
+     * @see PhotoRigma::Classes::Database::$res_query
      *      Результат подготовленного выражения.
-     * @see \\PhotoRigma\\Classes\\Database::$aff_rows
+     * @see PhotoRigma::Classes::Database::$aff_rows
      *      Количество затронутых строк после выполнения запроса.
-     * @see \\PhotoRigma\\Classes\\Database::$insert_id
+     * @see PhotoRigma::Classes::Database::$insert_id
      *      ID последней вставленной записи.
-     * @see \\PhotoRigma\\Classes\\Database::$txt_query
+     * @see PhotoRigma::Classes::Database::$txt_query
      *      Свойство, в которое помещается текст SQL-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::delete()
+     * @see PhotoRigma::Classes::Database::delete()
      *      Метод, который вызывает execute_query() для выполнения DELETE-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::truncate()
+     * @see PhotoRigma::Classes::Database::truncate()
      *      Метод, который вызывает execute_query() для выполнения TRUNCATE-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::update()
+     * @see PhotoRigma::Classes::Database::update()
      *      Метод, который вызывает execute_query() для выполнения UPDATE-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::insert()
+     * @see PhotoRigma::Classes::Database::insert()
      *      Метод, который вызывает execute_query() для выполнения INSERT-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::select()
+     * @see PhotoRigma::Classes::Database::select()
      *      Метод, который вызывает execute_query() для выполнения SELECT-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::join()
+     * @see PhotoRigma::Classes::Database::join()
      *      Метод, который вызывает execute_query() для выполнения JOIN-запроса.
      *
      * @param array $params Массив параметров для подготовленного выражения (необязательно).
@@ -2051,15 +2019,14 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен.
      *
-     * @throws \\InvalidArgumentException Если аргументы неверного типа.
-     * @throws \\PDOException Если возникает ошибка при выполнении запроса.
+     * @throws InvalidArgumentException Если аргументы неверного типа.
+     * @throws PDOException Если возникает ошибка при выполнении запроса.
      *
-     * @example \\PhotoRigma\\Classes\\Database::execute_query
+     * Пример использования метода execute_query():
      * @code
-     * // Пример использования метода execute_query()
      * $query = "SELECT * FROM users WHERE id = :id";
      * $params = [':id' => 1];
-     * $db->execute_query($query, $params);
+     * $this->execute_query($query, $params);
      * echo "Запрос выполнен успешно!";
      * @endcode
      */
@@ -2127,46 +2094,45 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression()
+     * @see PhotoRigma::Classes::Database::sanitize_expression()
      *      Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::prepare_insert_data()
+     * @see PhotoRigma::Classes::Database::prepare_insert_data()
      *      Подготавливает данные для формирования условий WHERE.
-     * @see \\PhotoRigma\\Classes\\Database::delete()
+     * @see PhotoRigma::Classes::Database::delete()
      *      Метод, который вызывает build_conditions() для формирования DELETE-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::update()
+     * @see PhotoRigma::Classes::Database::update()
      *      Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::select()
+     * @see PhotoRigma::Classes::Database::select()
      *      Метод, который вызывает build_conditions() для формирования SELECT-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::join()
+     * @see PhotoRigma::Classes::Database::join()
      *      Метод, который вызывает build_conditions() для формирования JOIN-запроса.
      *
      * @param array $options Опции запроса:
      *   - where (string|array): Условие WHERE.
      *                           Может быть строкой или ассоциативным массивом.
      *                           Если передан неверный тип, выбрасывается исключение
-     *                           \\InvalidArgumentException.
+     *                           InvalidArgumentException.
      *   - group (string): Группировка GROUP BY.
      *                     Должна быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                     \\InvalidArgumentException.
+     *                     InvalidArgumentException.
      *   - order (string): Сортировка ORDER BY.
      *                     Должна быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                     \\InvalidArgumentException.
+     *                     InvalidArgumentException.
      *   - limit (int|string): Ограничение LIMIT.
      *                         Должно быть числом или строкой (например "0, 10"). Если передан неверный
-     *                         тип, выбрасывается исключение \\InvalidArgumentException.
+     *                         тип, выбрасывается исключение InvalidArgumentException.
      *   - params (array): Параметры для подготовленного выражения (необязательно).
      *                     Если параметры не соответствуют условиям, выбрасывается исключение
-     *                     \\InvalidArgumentException.
+     *                     InvalidArgumentException.
      *
      * @return array Массив с двумя элементами:
      *               - string $conditions - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
      *               - array $params - Обновлённый массив параметров для подготовленного выражения.
      *
-     * @throws \\InvalidArgumentException Если параметры имеют недопустимый тип.
+     * @throws InvalidArgumentException Если параметры имеют недопустимый тип.
      *
-     * @example \\PhotoRigma\\Classes\\Database::build_conditions
+     * Пример использования метода build_conditions():
      * @code
-     * // Пример использования метода build_conditions()
      * $options = [
      *     'where' => ['id' => 1, 'status' => 'active'],
      *     'group' => 'category_id',
@@ -2174,7 +2140,7 @@ class Database implements Database_Interface
      *     'limit' => 10,
      *     'params' => [':id' => 1, ':status' => 'active'],
      * ];
-     * [$conditions, $params] = $db->build_conditions($options);
+     * [$conditions, $params] = $this->build_conditions($options);
      * echo "Условия: $conditions\n";
      * print_r($params);
      * @endcode
@@ -2258,34 +2224,33 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions()
+     * @see PhotoRigma::Classes::Database::build_conditions()
      *      Метод, который вызывает sanitize_expression() для обработки условий WHERE, GROUP BY, ORDER BY и других частей запроса.
-     * @see \\PhotoRigma\\Classes\\Database::delete()
+     * @see PhotoRigma::Classes::Database::delete()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы.
-     * @see \\PhotoRigma\\Classes\\Database::truncate()
+     * @see PhotoRigma::Classes::Database::truncate()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы.
-     * @see \\PhotoRigma\\Classes\\Database::update()
+     * @see PhotoRigma::Classes::Database::update()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и полей.
-     * @see \\PhotoRigma\\Classes\\Database::insert()
+     * @see PhotoRigma::Classes::Database::insert()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и полей.
-     * @see \\PhotoRigma\\Classes\\Database::select()
+     * @see PhotoRigma::Classes::Database::select()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и полей.
-     * @see \\PhotoRigma\\Classes\\Database::join()
+     * @see PhotoRigma::Classes::Database::join()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и условий JOIN.
      *
      * @param string $expression SQL-выражение (например, условие WHERE, ON или SELECT).
      *                           Должно быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           \\InvalidArgumentException.
+     *                           InvalidArgumentException.
      *
      * @return string Очищенное и безопасное выражение.
      *
-     * @throws \\InvalidArgumentException Если выражение имеет недопустимый тип или содержит некорректные части.
+     * @throws InvalidArgumentException Если выражение имеет недопустимый тип или содержит некорректные части.
      *
-     * @example \\PhotoRigma\\Classes\\Database::sanitize_expression
+     * Пример использования метода sanitize_expression():
      * @code
-     * // Пример использования метода sanitize_expression()
      * $unsafe_expression = "users.id = 1 AND users.status = 'active'";
-     * $safe_expression = $db->sanitize_expression($unsafe_expression);
+     * $safe_expression = $this->sanitize_expression($unsafe_expression);
      * echo "Безопасное выражение: $safe_expression";
      * @endcode
      */
@@ -2367,37 +2332,36 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see \\PhotoRigma\\Classes\\Database::sanitize_expression()
+     * @see PhotoRigma::Classes::Database::sanitize_expression()
      *      Экранирует и обрабатывает имена полей.
-     * @see \\PhotoRigma\\Classes\\Database::insert()
+     * @see PhotoRigma::Classes::Database::insert()
      *      Метод, который вызывает prepare_insert_data() для подготовки данных для INSERT-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::update()
+     * @see PhotoRigma::Classes::Database::update()
      *      Метод, который вызывает prepare_insert_data() для подготовки данных для UPDATE-запроса.
-     * @see \\PhotoRigma\\Classes\\Database::build_conditions()
+     * @see PhotoRigma::Classes::Database::build_conditions()
      *      Метод, который вызывает prepare_insert_data() для подготовки данных для условий WHERE.
      *
      * @param array $data Массив данных для обработки в формате 'имя_поля' => 'значение'.
      *                    Если передан неверный тип или пустой массив, выбрасывается исключение
-     *                    \\InvalidArgumentException.
+     *                    InvalidArgumentException.
      * @param string $prefix Префикс для плейсхолдеров (например, 'insert_', 'where_').
      *                       Должен быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                       \\InvalidArgumentException.
+     *                       InvalidArgumentException.
      * @param array $params Массив параметров плейсхолдеров (по умолчанию пустой).
      *                      Если параметры не соответствуют условиям, выбрасывается исключение
-     *                      \\InvalidArgumentException.
+     *                      InvalidArgumentException.
      *
      * @return array Массив с тремя элементами:
      *               - string $fields_clause - Строка с перечислением полей.
      *               - string $placeholders_clause - Строка с плейсхолдерами.
      *               - array $final_params - Обновлённый массив параметров для подготовленного выражения.
      *
-     * @throws \\InvalidArgumentException Если аргументы имеют недопустимый тип или содержат некорректные данные.
+     * @throws InvalidArgumentException Если аргументы имеют недопустимый тип или содержат некорректные данные.
      *
-     * @example \\PhotoRigma\\Classes\\Database::prepare_insert_data
+     * Пример использования метода prepare_insert_data():
      * @code
-     * // Пример использования метода prepare_insert_data()
      * $data = ['name' => 'John Doe', 'email' => 'john@example.com'];
-     * [$fields_clause, $placeholders_clause, $final_params] = $db->prepare_insert_data($data, 'insert_');
+     * [$fields_clause, $placeholders_clause, $final_params] = $this->prepare_insert_data($data, 'insert_');
      * @endcode
      */
     private function prepare_insert_data(array $data, string $prefix = '', array $params = []): array

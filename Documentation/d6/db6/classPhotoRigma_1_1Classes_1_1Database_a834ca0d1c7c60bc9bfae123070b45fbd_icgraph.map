@@ -1,5 +1,5 @@
 <map id="_get_affected_rows_internal" name="_get_affected_rows_internal">
-<area shape="rect" id="Node000001" title=" " alt="" coords="181,5,315,44"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba" title=" " alt="" coords="5,12,133,37"/>
+<area shape="rect" id="Node000001" title="Возвращает количество строк, затронутых последним запросом." alt="" coords="181,5,315,44"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba" title="Возвращает количество строк, затронутых последним запросом." alt="" coords="5,12,133,37"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,27,133,27,133,22,165,22"/>
 </map>

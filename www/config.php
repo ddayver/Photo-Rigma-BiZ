@@ -16,7 +16,7 @@
  *
  *              Важно: Этот файл должен быть защищён от прямого доступа через веб-сервер.
  *
- * @see         \\PhotoRigma\\Classes\\Work::$config Массив, куда копируются настройки из $config.
+ * @see         PhotoRigma::Classes::Work::$config Массив, куда копируются настройки из $config.
  * @see         index.php Файл, который подключает config.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в настройке приложения.
@@ -49,8 +49,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @var array $config
  * @brief Массив с настройками сервера.
  * @details Содержит как редактируемые пользователем параметры (например, параметры БД), так и автоматически генерируемые параметры (например, URL сайта).
- *          После инициализации массив $config передаётся в свойство \PhotoRigma\Classes\Work::$config.
- * @see \\PhotoRigma\\Classes\\Work::$config
+ *          После инициализации массив $config передаётся в свойство PhotoRigma::Classes::Work::$config.
+ * @see PhotoRigma::Classes::Work::$config
  */
 $config = [];
 

@@ -144,11 +144,11 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">PhotoRigma\Classes</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Предотвращение прямого вызова файла</span></div>
-<div class="line"><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || IN_GALLERY !== <span class="keyword">true</span>) {</div>
+<div class="line"><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || <a id="a0" name="a0"></a><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !== <span class="keyword">true</span>) {</div>
 <div class="line">    error_log(</div>
 <div class="line">        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) .</div>
 <div class="line">        <span class="stringliteral">&quot; [ERROR] | &quot;</span> .</div>
-<div class="line">        (filter_input(INPUT_SERVER, <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>, FILTER_VALIDATE_IP) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) .</div>
+<div class="line">        (filter_input(INPUT_SERVER, <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>, <a id="a1" name="a1"></a><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#ae07beac783fdab08b691bb38425a6771">FILTER_VALIDATE_IP</a>) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) .</div>
 <div class="line">        <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
 <div class="line">    );</div>
 <div class="line">    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
@@ -156,20 +156,20 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line"></div>
 <div class="line"><span class="keyword">interface </span>Work_CoreLogic_Interface</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a0" name="a0"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a2" name="a2"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array;</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a1" name="a1"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a>(<span class="keywordtype">int</span> $photo_id): bool;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a3" name="a3"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a>(<span class="keywordtype">int</span> $photo_id): bool;</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a2" name="a2"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">news</a>(<span class="keywordtype">int</span> $news_id_or_limit, <span class="keywordtype">string</span> $act): array;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a4" name="a4"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">news</a>(<span class="keywordtype">int</span> $news_id_or_limit, <span class="keywordtype">string</span> $act): array;</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a3" name="a3"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>(): array;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a5" name="a5"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>(): array;</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a4" name="a4"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>(): array;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a6" name="a6"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>(): array;</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a5" name="a5"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">create_photo</a>(<span class="keywordtype">string</span> $type, <span class="keywordtype">int</span> $id_photo): array;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a7" name="a7"></a><a class="code hl_function" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">create_photo</a>(<span class="keywordtype">string</span> $type, <span class="keywordtype">int</span> $id_photo): array;</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">class </span><a id="_a6" name="_a6"></a><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a> <span class="keyword">implements</span> <a id="_a7" name="_a7"></a><a class="code hl_interface" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">Work_CoreLogic_Interface</a></div>
+<div class="line"><span class="keyword">class </span><a id="_a8" name="_a8"></a><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a> <span class="keyword">implements</span> <a id="_a9" name="_a9"></a><a class="code hl_interface" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">Work_CoreLogic_Interface</a></div>
 <div class="line">{</div>
 <div class="line">    <span class="keyword">private</span> array <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>; </div>
 <div class="line">    <span class="keyword">private</span> ?array <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a> = <span class="keyword">null</span>; </div>
@@ -177,7 +177,7 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line">    <span class="keyword">private</span> Work <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aa1464d140ae01b78294ee8d81d3374d7">$work</a>; </div>
 <div class="line">    <span class="keyword">private</span> ?User <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7">$user</a> = <span class="keyword">null</span>; </div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a8" name="a8"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a37da0eda4c359e328dbf967d69a853a1">__construct</a>(array <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, Database_Interface <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, Work <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aa1464d140ae01b78294ee8d81d3374d7">$work</a>)</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a10" name="a10"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a37da0eda4c359e328dbf967d69a853a1">__construct</a>(array <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, Database_Interface <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, Work <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aa1464d140ae01b78294ee8d81d3374d7">$work</a>)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> (!is_array(<a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>)) {</div>
 <div class="line">            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
@@ -189,17 +189,17 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line">        $this-&gt;work = <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aa1464d140ae01b78294ee8d81d3374d7">$work</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a9" name="a9"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a0acd7052f38245fd3723ea29c83bf3f3">__get</a>(<span class="keywordtype">string</span> $name): array</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a11" name="a11"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a0acd7052f38245fd3723ea29c83bf3f3">__get</a>(<span class="keywordtype">string</span> $name): array</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> ($name === <span class="stringliteral">&#39;config&#39;</span>) {</div>
-<div class="line">            <span class="keywordflow">return</span> <a id="a10" name="a10"></a><a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
+<div class="line">            <span class="keywordflow">return</span> <a id="a12" name="a12"></a><a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
 <div class="line">            __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Свойство не существует | Получено: &#39;{$name}&#39;&quot;</span></div>
 <div class="line">        );</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a11" name="a11"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a7c8aa5e8f1335dd150232b9ba442d694">__set</a>(<span class="keywordtype">string</span> $name, array $value): void</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a13" name="a13"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a7c8aa5e8f1335dd150232b9ba442d694">__set</a>(<span class="keywordtype">string</span> $name, array $value): void</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> ($name === <span class="stringliteral">&#39;config&#39;</span>) {</div>
 <div class="line">            $this-&gt;config = $value;</div>
@@ -210,7 +210,7 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a12" name="a12"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a>(array <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>): void</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a14" name="a14"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a>(array <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>): void</div>
 <div class="line">    {</div>
 <div class="line">        <span class="keywordflow">if</span> (!is_array(<a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>)) {</div>
 <div class="line">            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
@@ -220,39 +220,39 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line">        $this-&gt;lang = <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a13" name="a13"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ac632034f4e83ba35a7b3e2124829e0c2">set_user</a>(User <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7">$user</a>): void</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a15" name="a15"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ac632034f4e83ba35a7b3e2124829e0c2">set_user</a>(User <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7">$user</a>): void</div>
 <div class="line">    {</div>
 <div class="line">        $this-&gt;user = <a class="code hl_variable" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7">$user</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a14" name="a14"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a16" name="a16"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a15" name="a15"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433">_category_internal</a>($cat_id, $user_flag);</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a17" name="a17"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433">_category_internal</a>($cat_id, $user_flag);</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a16" name="a16"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a>(<span class="keywordtype">int</span> $photo_id): bool</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a18" name="a18"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a>(<span class="keywordtype">int</span> $photo_id): bool</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a17" name="a17"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a818796fb684f095ff90ef5f03a894989">_del_photo_internal</a>($photo_id);</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a19" name="a19"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a818796fb684f095ff90ef5f03a894989">_del_photo_internal</a>($photo_id);</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a18" name="a18"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90">news</a>(<span class="keywordtype">int</span> $news_id_or_limit, <span class="keywordtype">string</span> $act): array</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a20" name="a20"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90">news</a>(<span class="keywordtype">int</span> $news_id_or_limit, <span class="keywordtype">string</span> $act): array</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a19" name="a19"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfae1b80256c5a8b8addb7770d8939cf">_news_internal</a>($news_id_or_limit, $act);</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a21" name="a21"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfae1b80256c5a8b8addb7770d8939cf">_news_internal</a>($news_id_or_limit, $act);</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a20" name="a20"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>(): array</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a22" name="a22"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>(): array</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a21" name="a21"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1">_get_languages_internal</a>();</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a23" name="a23"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1">_get_languages_internal</a>();</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a22" name="a22"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>(): array</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a24" name="a24"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>(): array</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a23" name="a23"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#afd6b68f8d6f551886000447b30191b6a">_get_themes_internal</a>();</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a25" name="a25"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#afd6b68f8d6f551886000447b30191b6a">_get_themes_internal</a>();</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a24" name="a24"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">create_photo</a>(<span class="keywordtype">string</span> $type, <span class="keywordtype">int</span> $id_photo): array</div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a26" name="a26"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">create_photo</a>(<span class="keywordtype">string</span> $type, <span class="keywordtype">int</span> $id_photo): array</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a25" name="a25"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb">_create_photo_internal</a>($type, $id_photo);</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<a id="a27" name="a27"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb">_create_photo_internal</a>($type, $id_photo);</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433">_category_internal</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array</div>
@@ -288,7 +288,7 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line">                );</div>
 <div class="line">            }</div>
 <div class="line">            $add_query = <span class="stringliteral">&#39; AND `user_upload` = :user_id&#39;</span>;</div>
-<div class="line">            $category_data[<span class="stringliteral">&#39;description&#39;</span>] = $category_data[<span class="stringliteral">&#39;name&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . <a id="a26" name="a26"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($user_data[<span class="stringliteral">&#39;real_name&#39;</span>]);</div>
+<div class="line">            $category_data[<span class="stringliteral">&#39;description&#39;</span>] = $category_data[<span class="stringliteral">&#39;name&#39;</span>] . <span class="charliteral">&#39; &#39;</span> . <a id="a28" name="a28"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($user_data[<span class="stringliteral">&#39;real_name&#39;</span>]);</div>
 <div class="line">            $category_data[<span class="stringliteral">&#39;name&#39;</span>] = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($user_data[<span class="stringliteral">&#39;real_name&#39;</span>]);</div>
 <div class="line">        } <span class="keywordflow">else</span> {</div>
 <div class="line">            <span class="comment">// Получение данных о категории</span></div>
@@ -647,7 +647,7 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="line">        }</div>
 <div class="line">        <span class="comment">// Проверяем права пользователя на просмотр изображений</span></div>
 <div class="line">        <span class="keywordflow">if</span> ($this-&gt;user-&gt;user[<span class="stringliteral">&#39;pic_view&#39;</span>] !== <span class="keyword">true</span>) {</div>
-<div class="line">            <span class="keywordflow">return</span> $this-&gt;<a id="a27" name="a27"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6">generate_photo_data</a>();</div>
+<div class="line">            <span class="keywordflow">return</span> $this-&gt;<a id="a29" name="a29"></a><a class="code hl_function" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6">generate_photo_data</a>();</div>
 <div class="line">        }</div>
 <div class="line">        <span class="comment">// Формируем условия для SQL-запроса</span></div>
 <div class="line">        $conditions = match ($type) {</div>
@@ -785,8 +785,10 @@ $(function(){initNavTree('df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include
 <div class="ttc" id="anamespacePhotoRigma_1_1Action_html_ae68c67c422f1090027f6eb6ba01b62b2"><div class="ttname"><a href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ae68c67c422f1090027f6eb6ba01b62b2">PhotoRigma\Action\$photo</a></div><div class="ttdeci">$photo</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d71/photo_8php_source.html#l00033">photo.php:33</a></div></div>
 <div class="ttc" id="anamespacePhotoRigma_1_1Classes_html"><div class="ttname"><a href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">PhotoRigma\Classes</a></div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00036">db.php:36</a></div></div>
 <div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a26ebc544afff0aad8a2ae5ca6005ed08"><div class="ttname"><a href="../../db/d02/namespacePhotoRigma_1_1Include.html#a26ebc544afff0aad8a2ae5ca6005ed08">PhotoRigma\Include\TBL_NEWS</a></div><div class="ttdeci">const TBL_NEWS</div><div class="ttdoc">Таблица с новостями</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00063">common.php:63</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00329">common.php:329</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdoc">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00341">common.php:341</a></div></div>
 <div class="ttc" id="anamespacePhotoRigma_1_1Language_html_aaac542e9d3d45bc170bae6775a413a9d"><div class="ttname"><a href="../../dc/d7a/namespacePhotoRigma_1_1Language.html#aaac542e9d3d45bc170bae6775a413a9d">PhotoRigma\Language\$lang_name</a></div><div class="ttdeci">if(!defined(&#39;IN_GALLERY&#39;)||IN_GALLERY !==true) $lang_name</div><div class="ttdoc">Название языка</div><div class="ttdef"><b>Определения</b> <a href="../../d4/d40/language_2english_2main_8php_source.html#l00041">main.php:41</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_ae07beac783fdab08b691bb38425a6771"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#ae07beac783fdab08b691bb38425a6771">PhotoRigma\FILTER_VALIDATE_IP</a></div><div class="ttdeci">if( $header_footer) if($template_output) catch(\RuntimeException $e) catch(\PDOException $e) catch(\InvalidArgumentException $e) catch(\LogicException $e) catch(\BadMethodCallException $e) catch(\BadFunctionCallException $e) catch(\DomainException $e) catch(\UnexpectedValueException $e) catch(\LengthException $e) catch(\OutOfBoundsException $e) catch(\RangeException $e) catch(\Exception $e FILTER_VALIDATE_IP</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00293">index.php:293</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_afc238d5007d9f82f9c59e7d33f7a75c6"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">PhotoRigma\IN_GALLERY</a></div><div class="ttdeci">const IN_GALLERY</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00059">index.php:59</a></div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

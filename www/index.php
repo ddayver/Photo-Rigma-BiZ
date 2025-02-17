@@ -107,7 +107,7 @@ try {
     // Массив для хранения ошибок
     $errors = [];
 
-    // Проверяем каждый файл
+    // Проходит по массиву списку обязательных файлов и проверяет, существуют ли файлы и доступны ли они для чтения.
     foreach ($required_files as $file) {
         if (!is_file($file)) {
             $errors[] = "Файл отсутствует или не является файлом: {$file}";
@@ -124,7 +124,7 @@ try {
         );
     }
 
-    // Подключаем все файлы из массива $required_files
+    // Подключаем все файлы из списка обязательных файлов
     foreach ($required_files as $file) {
         require_once $file;
     }
@@ -132,7 +132,7 @@ try {
     /** @var \\PhotoRigma\\Classes\\Database $db
      * @brief Создание объекта класса Database для работы с основной БД.
      * @details Инициализируется через конструктор с параметрами из массива $config['db'].
-     * @see \\PhotoRigma\\Classes\\Database Класс для работы с базой данных.
+     * @see PhotoRigma::Classes::Database Класс для работы с базой данных.
      * @see include/db.php Файл, содержащий реализацию класса Database.
      * @see $config Массив конфигурации, используемый для подключения к БД.
      */
@@ -141,11 +141,11 @@ try {
     /** @var \\PhotoRigma\\Classes\\Work $work
      * @brief Создание объекта класса Work.
      * @details Используется для выполнения различных вспомогательных операций.
-     * @see \\PhotoRigma\\Classes\\Work Класс для выполнения вспомогательных операций.
+     * @see PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
      * @see include/work.php Файл, содержащий реализацию класса Work.
-     * @see \\PhotoRigma\\Classes\\Work::$config Свойство, хранящее конфигурацию приложения.
-     * @see \\PhotoRigma\\Classes\\Work::check_input() Метод для проверки входных данных.
-     * @see \\PhotoRigma\\Classes\\Work::url_check() Метод для проверки URL на наличие вредоносного кода.
+     * @see PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
+     * @see PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
      */
     $work = new Work($db, $config);
 
@@ -159,13 +159,13 @@ try {
     /** @var \\PhotoRigma\\Classes\\Template $template
      * @brief Создание объекта класса Template.
      * @details Используется для генерации HTML-контента страниц.
-     * @see \\PhotoRigma\\Classes\\Template Класс для работы с HTML-шаблонами.
+     * @see PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
      * @see include/template.php Файл, содержащий реализацию класса Template.
-     * @see \\PhotoRigma\\Classes\\Work::$config Свойство, хранящее конфигурацию для шаблонов.
-     * @see \\PhotoRigma\\Classes\\Template::create_template() Метод для создания содержимого страницы.
-     * @see \\PhotoRigma\\Classes\\Template::page_header() Метод для добавления шапки страницы.
-     * @see \\PhotoRigma\\Classes\\Template::page_footer() Метод для добавления подвала страницы.
-     * @see \\PhotoRigma\\Classes\\Template::$content Свойство, хранящее содержимое всей страницы.
+     * @see PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию для шаблонов.
+     * @see PhotoRigma::Classes::Template::create_template() Метод для создания содержимого страницы.
+     * @see PhotoRigma::Classes::Template::page_header() Метод для добавления шапки страницы.
+     * @see PhotoRigma::Classes::Template::page_footer() Метод для добавления подвала страницы.
+     * @see PhotoRigma::Classes::Template::$content Свойство, хранящее содержимое всей страницы.
      * @see $title Переменная, используемая для добавления текста к заголовку страницы.
      */
     $template = new Template(
@@ -177,7 +177,7 @@ try {
     /** @var \\PhotoRigma\\Classes\\User $user
      * @brief Создание объекта класса User.
      * @details Используется для управления пользователями системы.
-     * @see \\PhotoRigma\\Classes\\User Класс для управления пользователями.
+     * @see PhotoRigma::Classes::User Класс для управления пользователями.
      * @see include/user.php Файл, содержащий реализацию класса User.
      */
     $user = new User();
@@ -201,8 +201,8 @@ try {
      * @var string $action
      * @brief Действие, которое необходимо выполнить.
      * @details Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'.
-     * @example $action
-     * $_GET['action'] = 'profile'; // Пример вызова действия 'profile'
+     * Пример вызова действия 'profile':
+     * $_GET['action'] = 'profile';
      */
     $action = 'main'; // Значение по умолчанию
 
