@@ -1,12 +1,6 @@
 var searchData=
 [
-  ['template',['template',['../classtemplate.html#aad92cc1c9f8851dcc0ca87bb457af9bc',1,'template']]],
-  ['template_5fbest_5fuser',['template_best_user',['../classwork.html#a00a3456ccd4563d05fcf39781a911ee9',1,'work']]],
-  ['template_5fcase',['template_case',['../classtemplate.html#a7d3049a37e00dc8ec0367256ba3a712d',1,'template']]],
-  ['template_5fif',['template_if',['../classtemplate.html#a3de3365a95ff83f90a9240bd22937c2a',1,'template']]],
-  ['template_5fobject',['template_object',['../classtemplate.html#acd334c8ab27fcd3d00d8ba5508686ad7',1,'template']]],
-  ['template_5fstat',['template_stat',['../classwork.html#a116ebcf799d07566a74e7e765aecc1b7',1,'work']]],
-  ['template_5fuser',['template_user',['../classwork.html#a1f3df8874c79377e6a8b4398ea6ad774',1,'work']]],
-  ['test_5fis_5fobject',['test_is_object',['../classtemplate.html#aaecfbc774dfa04efa0a25723a461d877',1,'template']]],
-  ['truncate',['truncate',['../classdb.html#a8296b3c656f04ac84c5bc427d095dfdb',1,'db']]]
+  ['res_5farr_0',['res_arr',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4',1,'PhotoRigma\Classes\Database_Interface\res_arr()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4',1,'PhotoRigma\Classes\Database\res_arr()']]],
+  ['res_5frow_1',['res_row',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a974af553ef190897a8849c77166ea32d',1,'PhotoRigma\Classes\Database_Interface\res_row()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d',1,'PhotoRigma\Classes\Database\res_row()']]],
+  ['return_5fbytes_2',['return_bytes',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a08089badb76485629afe2c4d9f766a30',1,'PhotoRigma\Classes\Work\return_bytes()'],['../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html#a08089badb76485629afe2c4d9f766a30',1,'PhotoRigma\Classes\Work_Helper_Interface\return_bytes()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30',1,'PhotoRigma\Classes\Work_Helper\return_bytes()']]]
 ];

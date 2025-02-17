@@ -1,0 +1,1484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Photo-Rigma-BiZ: Класс Work_CoreLogic</title>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Поиск',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pro-methods">Защищенные члены</a> &#124;
+<a href="#pri-methods">Закрытые члены</a> &#124;
+<a href="#pri-attribs">Закрытые данные</a> &#124;
+<a href="../../d5/ddf/classPhotoRigma_1_1Classes_1_1Work__CoreLogic-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Класс Work_CoreLogic</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.  
+ <a href="#details">Подробнее...</a></p>
+<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Граф наследования:Work_CoreLogic:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../da/da6/classPhotoRigma_1_1Classes_1_1Work__CoreLogic__inherit__graph.png" border="0" usemap="#aWork__CoreLogic_inherit__map" alt="Inheritance graph"/></div>
+<map name="aWork__CoreLogic_inherit__map" id="aWork__CoreLogic_inherit__map">
+<area shape="rect" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения." alt="" coords="34,78,152,103"/>
+<area shape="rect" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения." alt="" coords="5,5,181,30"/>
+<area shape="poly" title=" " alt="" coords="96,46,96,78,90,78,90,46"/>
+</map>
+<center><span class="legend">[<a target="top" href="../../graph_legend.html">см. легенду</a>]</span></center></div>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Граф связей класса Work_CoreLogic:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d2/d19/classPhotoRigma_1_1Classes_1_1Work__CoreLogic__coll__graph.png" border="0" usemap="#aWork__CoreLogic_coll__map" alt="Collaboration graph"/></div>
+<map name="aWork__CoreLogic_coll__map" id="aWork__CoreLogic_coll__map">
+<area shape="rect" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения." alt="" coords="765,55,883,79"/>
+<area shape="rect" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения." alt="" coords="5,5,181,30"/>
+<area shape="poly" title=" " alt="" coords="196,14,445,20,594,30,742,46,773,51,772,57,741,51,593,35,445,26,196,20"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения." alt="" coords="253,108,370,133"/>
+<area shape="poly" title=" " alt="" coords="136,35,284,105,282,110,134,39"/>
+<area shape="rect" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title=" " alt="" coords="26,139,160,163"/>
+<area shape="poly" title=" " alt="" coords="136,130,191,110,252,94,396,74,539,64,667,61,765,62,765,68,667,66,539,69,396,79,253,99,192,115,138,135"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title=" " alt="" coords="546,273,598,298"/>
+<area shape="poly" title=" " alt="" coords="176,155,313,176,390,194,464,218,515,244,555,271,552,275,512,248,462,223,388,199,312,181,175,160"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html" title="Класс Work_Template отвечает за формирование данных для шаблонов." alt="" coords="768,327,880,351"/>
+<area shape="poly" title=" " alt="" coords="150,166,253,192,327,203,392,206,504,202,557,202,613,208,674,224,743,253,767,268,787,288,817,324,812,328,784,291,763,272,740,257,672,229,612,213,557,207,504,207,392,211,327,209,252,198,148,171"/>
+<area shape="poly" title=" " alt="" coords="175,137,252,126,253,131,176,142"/>
+<area shape="poly" title=" " alt="" coords="597,261,806,78,810,82,601,265"/>
+<area shape="poly" title=" " alt="" coords="613,294,682,312,768,328,767,333,681,317,612,300"/>
+<area shape="poly" title=" " alt="" coords="557,261,520,200,494,169,462,144,440,134,417,127,370,121,371,116,418,122,442,129,464,139,497,165,525,197,561,258"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html" title="Класс для обеспечения безопасности приложения." alt="" coords="259,273,364,298"/>
+<area shape="poly" title=" " alt="" coords="379,283,546,283,546,288,379,288"/>
+<area shape="rect" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью." alt="" coords="11,273,175,298"/>
+<area shape="poly" title=" " alt="" coords="190,283,258,283,258,288,190,288"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html" title="Класс для работы с изображениями." alt="" coords="264,323,358,347"/>
+<area shape="poly" title=" " alt="" coords="373,321,546,288,547,293,374,326"/>
+<area shape="rect" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями." alt="" coords="17,323,169,347"/>
+<area shape="poly" title=" " alt="" coords="185,332,264,332,264,338,185,338"/>
+<area shape="poly" title=" " alt="" coords="775,359,729,367,705,367,681,362,651,350,625,333,584,300,588,296,628,329,654,345,682,357,705,362,729,362,774,354"/>
+<area shape="rect" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html" title="Интерфейс Work_Template_Interface определяет контракт для классов, формирующих данные для шаблонов." alt="" coords="487,393,657,418"/>
+<area shape="poly" title=" " alt="" coords="660,387,741,367,791,349,793,354,742,372,661,392"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html" title="Класс для вспомогательных методов." alt="" coords="263,372,360,397"/>
+<area shape="poly" title=" " alt="" coords="374,365,462,336,546,296,548,301,464,341,376,370"/>
+<area shape="rect" href="../../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов." alt="" coords="16,372,170,397"/>
+<area shape="poly" title=" " alt="" coords="185,382,263,382,263,387,185,387"/>
+<area shape="poly" title=" " alt="" coords="357,137,464,185,521,230,561,271,557,275,517,234,462,189,355,142"/>
+</map>
+<center><span class="legend">[<a target="top" href="../../graph_legend.html">см. легенду</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a37da0eda4c359e328dbf967d69a853a1" id="r_a37da0eda4c359e328dbf967d69a853a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37da0eda4c359e328dbf967d69a853a1">__construct</a> (array $config, <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a> $db, <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> $work)</td></tr>
+<tr class="separator:a37da0eda4c359e328dbf967d69a853a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0acd7052f38245fd3723ea29c83bf3f3" id="r_a0acd7052f38245fd3723ea29c83bf3f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0acd7052f38245fd3723ea29c83bf3f3">__get</a> (string $name)</td></tr>
+<tr class="separator:a0acd7052f38245fd3723ea29c83bf3f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c8aa5e8f1335dd150232b9ba442d694" id="r_a7c8aa5e8f1335dd150232b9ba442d694"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c8aa5e8f1335dd150232b9ba442d694">__set</a> (string $name, array $value)</td></tr>
+<tr class="separator:a7c8aa5e8f1335dd150232b9ba442d694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf95d95540a3e47c5905a47db3424ed9" id="r_aaf95d95540a3e47c5905a47db3424ed9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a> (array $lang)</td></tr>
+<tr class="separator:aaf95d95540a3e47c5905a47db3424ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac632034f4e83ba35a7b3e2124829e0c2" id="r_ac632034f4e83ba35a7b3e2124829e0c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac632034f4e83ba35a7b3e2124829e0c2">set_user</a> (User $<a class="el" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a>)</td></tr>
+<tr class="separator:ac632034f4e83ba35a7b3e2124829e0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dfb943f9b750ec6e1e2924a9620c7f5" id="r_a4dfb943f9b750ec6e1e2924a9620c7f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a> (int $cat_id=0, int $user_flag=0)</td></tr>
+<tr class="memdesc:a4dfb943f9b750ec6e1e2924a9620c7f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует информационную строку для конкретного раздела или пользовательского альбома.  <br /></td></tr>
+<tr class="separator:a4dfb943f9b750ec6e1e2924a9620c7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84a1eeee53079a8e60fea1d1e0d94639" id="r_a84a1eeee53079a8e60fea1d1e0d94639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a> (int $photo_id)</td></tr>
+<tr class="memdesc:a84a1eeee53079a8e60fea1d1e0d94639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.  <br /></td></tr>
+<tr class="separator:a84a1eeee53079a8e60fea1d1e0d94639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfa7c6c53ae460403a3d0b3923e71a90" id="r_abfa7c6c53ae460403a3d0b3923e71a90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfa7c6c53ae460403a3d0b3923e71a90">news</a> (int $news_id_or_limit, string $act)</td></tr>
+<tr class="separator:abfa7c6c53ae460403a3d0b3923e71a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c2ee4da4bf10547c3aff7296d707c66" id="r_a9c2ee4da4bf10547c3aff7296d707c66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a> ()</td></tr>
+<tr class="separator:a9c2ee4da4bf10547c3aff7296d707c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d2f43c00af0c9574caa0455df82c613" id="r_a8d2f43c00af0c9574caa0455df82c613"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d2f43c00af0c9574caa0455df82c613">get_themes</a> ()</td></tr>
+<tr class="separator:a8d2f43c00af0c9574caa0455df82c613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab90e7e1e6aa1d2c9abe81faed1db03a1" id="r_ab90e7e1e6aa1d2c9abe81faed1db03a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab90e7e1e6aa1d2c9abe81faed1db03a1">create_photo</a> (string $type, int $id_photo)</td></tr>
+<tr class="separator:ab90e7e1e6aa1d2c9abe81faed1db03a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Защищенные члены</h2></td></tr>
+<tr class="memitem:af92390a67888a39d1aa0f3f10a045433" id="r_af92390a67888a39d1aa0f3f10a045433"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af92390a67888a39d1aa0f3f10a045433">_category_internal</a> (int $cat_id=0, int $user_flag=0)</td></tr>
+<tr class="memdesc:af92390a67888a39d1aa0f3f10a045433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует информационную строку для конкретного раздела или пользовательского альбома.  <br /></td></tr>
+<tr class="separator:af92390a67888a39d1aa0f3f10a045433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a818796fb684f095ff90ef5f03a894989" id="r_a818796fb684f095ff90ef5f03a894989"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a818796fb684f095ff90ef5f03a894989">_del_photo_internal</a> (int $photo_id)</td></tr>
+<tr class="memdesc:a818796fb684f095ff90ef5f03a894989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.  <br /></td></tr>
+<tr class="separator:a818796fb684f095ff90ef5f03a894989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfae1b80256c5a8b8addb7770d8939cf" id="r_abfae1b80256c5a8b8addb7770d8939cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfae1b80256c5a8b8addb7770d8939cf">_news_internal</a> (int $news_id_or_limit, string $act)</td></tr>
+<tr class="separator:abfae1b80256c5a8b8addb7770d8939cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ca0976dc523b429918f6904b8fc4c1" id="r_a35ca0976dc523b429918f6904b8fc4c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35ca0976dc523b429918f6904b8fc4c1">_get_languages_internal</a> ()</td></tr>
+<tr class="separator:a35ca0976dc523b429918f6904b8fc4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd6b68f8d6f551886000447b30191b6a" id="r_afd6b68f8d6f551886000447b30191b6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd6b68f8d6f551886000447b30191b6a">_get_themes_internal</a> ()</td></tr>
+<tr class="separator:afd6b68f8d6f551886000447b30191b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5be64e2d9c6592be321468cd2f947aeb" id="r_a5be64e2d9c6592be321468cd2f947aeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5be64e2d9c6592be321468cd2f947aeb">_create_photo_internal</a> (string $type, int $id_photo)</td></tr>
+<tr class="separator:a5be64e2d9c6592be321468cd2f947aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Закрытые члены</h2></td></tr>
+<tr class="memitem:a40ec1fd9d599c07199049eb1df5551b6" id="r_a40ec1fd9d599c07199049eb1df5551b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40ec1fd9d599c07199049eb1df5551b6">generate_photo_data</a> (array $photo_data=[])</td></tr>
+<tr class="separator:a40ec1fd9d599c07199049eb1df5551b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Закрытые данные</h2></td></tr>
+<tr class="memitem:ab76f8f2ac851632a23ef69df2bd99dad" id="r_ab76f8f2ac851632a23ef69df2bd99dad"><td class="memItemLeft" align="right" valign="top">array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a></td></tr>
+<tr class="memdesc:ab76f8f2ac851632a23ef69df2bd99dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конфигурация приложения.  <br /></td></tr>
+<tr class="separator:ab76f8f2ac851632a23ef69df2bd99dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fd8978d2c6cbdcfdd6be875be161b7b" id="r_a9fd8978d2c6cbdcfdd6be875be161b7b"><td class="memItemLeft" align="right" valign="top">array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a> = null</td></tr>
+<tr class="memdesc:a9fd8978d2c6cbdcfdd6be875be161b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Языковые данные (могут быть null при инициализации).  <br /></td></tr>
+<tr class="separator:a9fd8978d2c6cbdcfdd6be875be161b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18e3eac65d39ced5231d9b3e3630ba75" id="r_a18e3eac65d39ced5231d9b3e3630ba75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a></td></tr>
+<tr class="memdesc:a18e3eac65d39ced5231d9b3e3630ba75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Объект для работы с базой данных (обязательный).  <br /></td></tr>
+<tr class="separator:a18e3eac65d39ced5231d9b3e3630ba75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1464d140ae01b78294ee8d81d3374d7" id="r_aa1464d140ae01b78294ee8d81d3374d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1464d140ae01b78294ee8d81d3374d7">$work</a></td></tr>
+<tr class="memdesc:aa1464d140ae01b78294ee8d81d3374d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Основной объект приложения (обязательный).  <br /></td></tr>
+<tr class="separator:aa1464d140ae01b78294ee8d81d3374d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35c45cc33d8d420da794514df59466b7" id="r_a35c45cc33d8d420da794514df59466b7"><td class="memItemLeft" align="right" valign="top">User&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35c45cc33d8d420da794514df59466b7">$user</a> = null</td></tr>
+<tr class="memdesc:a35c45cc33d8d420da794514df59466b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Объект пользователя (может быть null при инициализации).  <br /></td></tr>
+<tr class="separator:a35c45cc33d8d420da794514df59466b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения. </p>
+<p>Класс Work_CoreLogic предоставляет реализацию всех методов, определенных в интерфейсе Work_CoreLogic_Interface. Он отвечает за выполнение следующих задач:</p><ul>
+<li>Формирование информационных строк для категорий и пользовательских альбомов.</li>
+<li>Удаление изображений и связанных данных.</li>
+<li>Получение данных о новостях, языках и темах.</li>
+<li>Генерация блоков вывода изображений для различных типов запросов.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Interfaces\Work_CoreLogic_Interface Интерфейс, который реализует данный класс. </dd>
+<dd>
+\PhotoRigma\Classes\Database Класс для работы с базой данных. </dd></dl>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#_a4">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a> и <a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#_a6">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00181">181</a></p>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a37da0eda4c359e328dbf967d69a853a1" name="a37da0eda4c359e328dbf967d69a853a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37da0eda4c359e328dbf967d69a853a1">&#9670;&#160;</a></span>__construct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__construct </td>
+          <td>(</td>
+          <td class="paramtype">array</td>          <td class="paramname"><span class="paramname"><em>$config</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a></td>          <td class="paramname"><span class="paramname"><em>$db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a></td>          <td class="paramname"><span class="paramname"><em>$work</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a8">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00223">223</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00183">$config</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00185">$db</a> и <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00186">$work</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="a0acd7052f38245fd3723ea29c83bf3f3" name="a0acd7052f38245fd3723ea29c83bf3f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0acd7052f38245fd3723ea29c83bf3f3">&#9670;&#160;</a></span>__get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__get </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a9">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00265">265</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00183">$config</a>.</p>
+
+</div>
+</div>
+<a id="a7c8aa5e8f1335dd150232b9ba442d694" name="a7c8aa5e8f1335dd150232b9ba442d694"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c8aa5e8f1335dd150232b9ba442d694">&#9670;&#160;</a></span>__set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__set </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array</td>          <td class="paramname"><span class="paramname"><em>$value</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a11">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00304">304</a></p>
+
+</div>
+</div>
+<a id="af92390a67888a39d1aa0f3f10a045433" name="af92390a67888a39d1aa0f3f10a045433"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af92390a67888a39d1aa0f3f10a045433">&#9670;&#160;</a></span>_category_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_category_internal </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$cat_id</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_flag</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Формирует информационную строку для конкретного раздела или пользовательского альбома. </p>
+<p>Метод выполняет запросы к базе данных для получения информации о категории или пользовательском альбоме, включая количество фотографий, данные о последней и лучшей фотографии. Этот метод содержит основную логику, вызываемую через публичный метод category().</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$cat_id</td><td>Идентификатор раздела или пользователя (если $user_flag = 1). </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_flag</td><td>Флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Информационная строка для конкретного раздела или пользовательского альбома:<ul>
+<li>name: Название категории или альбома.</li>
+<li>description: Описание категории или альбома.</li>
+<li>count_photo: Количество фотографий.</li>
+<li>last_photo: Название последней фотографии.</li>
+<li>top_photo: Название лучшей фотографии.</li>
+<li>url_cat: Ссылка на категорию или альбом.</li>
+<li>url_last_photo: Ссылка на последнюю фотографию.</li>
+<li>url_top_photo: Ссылка на лучшую фотографию.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если входные параметры имеют некорректный тип. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::category() Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$lang Свойство, содержащее языковые строки. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя. </dd>
+<dd>
+\PhotoRigma\Classes\Work_Helper::clean_field() Метод для очистки данных. </dd></dl>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a15">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00609">609</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00875">Work\clean_field()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00416">category()</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph">
+<area shape="rect" title="Формирует информационную строку для конкретного раздела или пользовательского альбома." alt="" coords="5,19,132,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="180,12,323,51"/>
+<area shape="poly" title=" " alt="" coords="132,29,164,29,164,34,132,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="371,12,536,51"/>
+<area shape="poly" title=" " alt="" coords="324,29,355,29,355,34,324,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="584,5,728,58"/>
+<area shape="poly" title=" " alt="" coords="537,29,569,29,569,34,537,34"/>
+</map>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph">
+<area shape="rect" title="Формирует информационную строку для конкретного раздела или пользовательского альбома." alt="" coords="124,5,250,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для конкретного раздела или пользовательского альбома." alt="" coords="5,5,76,30"/>
+<area shape="poly" title=" " alt="" coords="108,20,76,20,76,15,108,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5be64e2d9c6592be321468cd2f947aeb" name="a5be64e2d9c6592be321468cd2f947aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5be64e2d9c6592be321468cd2f947aeb">&#9670;&#160;</a></span>_create_photo_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_create_photo_internal </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$id_photo</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Генерирует блок вывода изображений для различных типов запросов.</p>
+<p>Метод выполняет следующие действия:</p><ol type="1">
+<li>Проверяет права пользователя на просмотр изображений.</li>
+<li>Формирует SQL-запрос для получения данных изображения и пользователя через JOIN:<ul>
+<li>Для типа 'top': Выбирает лучшее изображение с учетом рейтинга.</li>
+<li>Для типа 'last': Выбирает последнее загруженное изображение.</li>
+<li>Для типа 'cat': Выбирает изображение из конкретной категории по $id_photo.</li>
+<li>Для случайного типа: Выбирает любое случайное изображение.</li>
+</ul>
+</li>
+<li>Проверяет существование файла изображения и его доступность.</li>
+<li>Вычисляет размеры изображения через метод size_image().</li>
+<li>Возвращает массив данных для вывода изображения. Этот метод содержит основную логику, вызываемую через публичный метод create_photo().</li>
+</ol>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип изображения:<ul>
+<li>'top': Лучшее изображение (по рейтингу).</li>
+<li>'last': Последнее загруженное изображение.</li>
+<li>'cat': Изображение из конкретной категории (требует указания $id_photo).</li>
+<li>Случайное: Любое случайное изображение. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id_photo</td><td>Идентификатор фото. Используется только при $type == 'cat'.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив данных для вывода изображения. Содержит следующие ключи:<ul>
+<li>'name_block': Название блока изображения (например, "Лучшее фото").</li>
+<li>'url': URL для просмотра полного изображения.</li>
+<li>'thumbnail_url': URL для миниатюры изображения.</li>
+<li>'name': Название изображения.</li>
+<li>'category_name': Название категории.</li>
+<li>'description': Описание изображения.</li>
+<li>'category_description': Описание категории.</li>
+<li>'rate': Рейтинг изображения (например, "Рейтинг: 5/10").</li>
+<li>'url_user': URL профиля пользователя, добавившего изображение.</li>
+<li>'real_name': Реальное имя пользователя.</li>
+<li>'category_url': URL категории или пользовательского альбома.</li>
+<li>'width': Ширина изображения после масштабирования.</li>
+<li>'height': Высота изображения после масштабирования.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если передан недопустимый $type или $id_photo. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если произошла ошибка при выборке данных из базы данных или доступе к файлу.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::create_photo() Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::generate_photo_data() Приватный метод для формирования массива данных по умолчанию. </dd>
+<dd>
+\PhotoRigma\Classes\Work::size_image() Метод, используемый для вычисления размеров изображения. </dd>
+<dd>
+\PhotoRigma\Classes\Database::join() Метод, используемый для объединения данных из нескольких таблиц. </dd>
+<dd>
+\PhotoRigma\Classes\Database::res_row() Метод, используемый для получения одной строки результата. </dd>
+<dd>
+\PhotoRigma\Include\log_in_file Функция для логирования ошибок. </dd>
+<dd>
+\PhotoRigma\Classes\Work::clean_field() Метод для очистки данных. </dd></dl>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a25">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01136">1136</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00875">Work\clean_field()</a> и <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01287">generate_photo_data()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00575">create_photo()</a>.</p>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_cgraph">
+<area shape="rect" title=" " alt="" coords="5,47,158,72"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="206,12,349,51"/>
+<area shape="poly" title=" " alt="" coords="158,46,190,41,191,47,158,51"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6" title=" " alt="" coords="206,75,348,100"/>
+<area shape="poly" title=" " alt="" coords="158,68,191,73,190,78,158,73"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="397,12,562,51"/>
+<area shape="poly" title=" " alt="" coords="350,29,381,29,381,34,350,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="610,5,754,58"/>
+<area shape="poly" title=" " alt="" coords="563,29,595,29,595,34,563,34"/>
+</map>
+</div>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a5be64e2d9c6592be321468cd2f947aeb_icgraph">
+<area shape="rect" title=" " alt="" coords="150,5,302,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1" title=" " alt="" coords="5,5,102,30"/>
+<area shape="poly" title=" " alt="" coords="134,20,102,20,102,15,134,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a818796fb684f095ff90ef5f03a894989" name="a818796fb684f095ff90ef5f03a894989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a818796fb684f095ff90ef5f03a894989">&#9670;&#160;</a></span>_del_photo_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_del_photo_internal </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$photo_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта. </p>
+<p>Метод удаляет файлы из каталогов полноразмерных изображений и эскизов, а также записи из таблиц базы данных. Этот метод содержит основную логику, вызываемую через публичный метод del_photo().</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>Идентификатор удаляемого изображения (обязательное поле).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если удаление успешно, иначе False.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::del_photo() Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения. </dd>
+<dd>
+\PhotoRigma\Classes\Database::join() Метод, используемый для объединения данных из нескольких таблиц. </dd>
+<dd>
+\PhotoRigma\Classes\Database::delete() Метод, используемый для удаления записей из таблиц базы данных. </dd>
+<dd>
+\PhotoRigma\Classes\Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса. </dd>
+<dd>
+\PhotoRigma\Include\log_in_file Функция для логирования ошибок. </dd></dl>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a17">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00754">754</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00437">del_photo()</a>.</p>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph">
+<area shape="rect" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="131,5,264,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="5,5,83,30"/>
+<area shape="poly" title=" " alt="" coords="115,20,83,20,83,15,115,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a35ca0976dc523b429918f6904b8fc4c1" name="a35ca0976dc523b429918f6904b8fc4c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35ca0976dc523b429918f6904b8fc4c1">&#9670;&#160;</a></span>_get_languages_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_get_languages_internal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a21">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00932">932</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00505">get_languages()</a>.</p>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph">
+<area shape="rect" title=" " alt="" coords="159,5,320,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title=" " alt="" coords="5,5,111,30"/>
+<area shape="poly" title=" " alt="" coords="143,20,111,20,111,15,143,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="afd6b68f8d6f551886000447b30191b6a" name="afd6b68f8d6f551886000447b30191b6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd6b68f8d6f551886000447b30191b6a">&#9670;&#160;</a></span>_get_themes_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_get_themes_internal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Загружает доступные темы из директории /themes/.</p>
+<p>Метод перебирает все поддиректории в <code>/themes/</code> и добавляет их имена в список доступных тем. Этот метод содержит основную логику, вызываемую через публичный метод get_themes().</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_CoreLogic::get_themes() Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения, включая путь к директории (<code>site_dir</code>). </dd>
+<dd>
+\PhotoRigma\Include\log_in_file Функция для логирования ошибок.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с именами доступных тем.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если:</p><ul>
+<li>Директория <code>/themes/</code> не существует или недоступна для чтения.</li>
+<li>Ни одна тема не найдена в указанной директории. </li>
+</ul>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a23">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01026">1026</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00527">get_themes()</a>.</p>
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph">
+<area shape="rect" title=" " alt="" coords="143,5,288,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title=" " alt="" coords="5,5,95,30"/>
+<area shape="poly" title=" " alt="" coords="127,20,95,20,95,15,127,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abfae1b80256c5a8b8addb7770d8939cf" name="abfae1b80256c5a8b8addb7770d8939cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfae1b80256c5a8b8addb7770d8939cf">&#9670;&#160;</a></span>_news_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_news_internal </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$news_id_or_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$act</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a19">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00841">841</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00471">news()</a>.</p>
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph">
+<area shape="rect" title=" " alt="" coords="106,5,214,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title=" " alt="" coords="5,5,58,30"/>
+<area shape="poly" title=" " alt="" coords="90,20,58,20,58,15,90,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4dfb943f9b750ec6e1e2924a9620c7f5" name="a4dfb943f9b750ec6e1e2924a9620c7f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dfb943f9b750ec6e1e2924a9620c7f5">&#9670;&#160;</a></span>category()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">category </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$cat_id</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_flag</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Формирует информационную строку для конкретного раздела или пользовательского альбома. </p>
+<p>Метод выполняет запросы к базе данных для получения информации о категории или пользовательском альбоме, включая количество фотографий, данные о последней и лучшей фотографии. Этот метод является редиректом на защищенный метод _category_internal, где реализована основная логика.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$cat_id</td><td>Идентификатор раздела или пользователя (если $user_flag = 1). </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_flag</td><td>Флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Информационная строка для конкретного раздела или пользовательского альбома:<ul>
+<li>name: Название категории или альбома.</li>
+<li>description: Описание категории или альбома.</li>
+<li>count_photo: Количество фотографий.</li>
+<li>last_photo: Название последней фотографии.</li>
+<li>top_photo: Название лучшей фотографии.</li>
+<li>url_cat: Ссылка на категорию или альбом.</li>
+<li>url_last_photo: Ссылка на последнюю фотографию.</li>
+<li>url_top_photo: Ссылка на лучшую фотографию.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если входные параметры имеют некорректный тип. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::category() Этот метод вызывается через класс Work. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::_category_internal() Основная логика метода реализована здесь. </dd></dl>
+
+<p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">Work_CoreLogic_Interface</a>.</p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a14">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00416">416</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00609">_category_internal()</a>.</p>
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph">
+<area shape="rect" title="Формирует информационную строку для конкретного раздела или пользовательского альбома." alt="" coords="5,19,76,44"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для конкретного раздела или пользовательского альбома." alt="" coords="124,19,250,44"/>
+<area shape="poly" title=" " alt="" coords="76,29,108,29,108,34,76,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="298,12,441,51"/>
+<area shape="poly" title=" " alt="" coords="250,29,282,29,282,34,250,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="489,12,655,51"/>
+<area shape="poly" title=" " alt="" coords="442,29,474,29,474,34,442,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="703,5,846,58"/>
+<area shape="poly" title=" " alt="" coords="655,29,688,29,688,34,655,34"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab90e7e1e6aa1d2c9abe81faed1db03a1" name="ab90e7e1e6aa1d2c9abe81faed1db03a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab90e7e1e6aa1d2c9abe81faed1db03a1">&#9670;&#160;</a></span>create_photo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">create_photo </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$id_photo</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Генерирует блок вывода изображений для различных типов запросов.</p>
+<p>Метод выполняет следующие действия:</p><ol type="1">
+<li>Проверяет права пользователя на просмотр изображений.</li>
+<li>Формирует SQL-запрос для получения данных изображения и пользователя через JOIN:<ul>
+<li>Для типа 'top': Выбирает лучшее изображение с учетом рейтинга.</li>
+<li>Для типа 'last': Выбирает последнее загруженное изображение.</li>
+<li>Для типа 'cat': Выбирает изображение из конкретной категории по $id_photo.</li>
+<li>Для случайного типа: Выбирает любое случайное изображение.</li>
+</ul>
+</li>
+<li>Проверяет существование файла изображения и его доступность.</li>
+<li>Вычисляет размеры изображения через метод size_image().</li>
+<li>Возвращает массив данных для вывода изображения. Этот метод является редиректом на защищенный метод _create_photo_internal, где реализована основная логика.</li>
+</ol>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип изображения:<ul>
+<li>'top': Лучшее изображение (по рейтингу).</li>
+<li>'last': Последнее загруженное изображение.</li>
+<li>'cat': Изображение из конкретной категории (требует указания $id_photo).</li>
+<li>Случайное: Любое случайное изображение. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id_photo</td><td>Идентификатор фото. Используется только при $type == 'cat'.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив данных для вывода изображения. Содержит следующие ключи:<ul>
+<li>'name_block': Название блока изображения (например, "Лучшее фото").</li>
+<li>'url': URL для просмотра полного изображения.</li>
+<li>'thumbnail_url': URL для миниатюры изображения.</li>
+<li>'name': Название изображения.</li>
+<li>'category_name': Название категории.</li>
+<li>'description': Описание изображения.</li>
+<li>'category_description': Описание категории.</li>
+<li>'rate': Рейтинг изображения (например, "Рейтинг: 5/10").</li>
+<li>'url_user': URL профиля пользователя, добавившего изображение.</li>
+<li>'real_name': Реальное имя пользователя.</li>
+<li>'category_url': URL категории или пользовательского альбома.</li>
+<li>'width': Ширина изображения после масштабирования.</li>
+<li>'height': Высота изображения после масштабирования.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если передан недопустимый $type или $id_photo. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если произошла ошибка при выборке данных из базы данных или доступе к файлу.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::create_photo() Метод, используемый для генерации блока вывода изображений. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::_create_photo_internal() Основная логика метода реализована здесь. </dd></dl>
+
+<p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">Work_CoreLogic_Interface</a>.</p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a24">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00575">575</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01136">_create_photo_internal()</a>.</p>
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_ab90e7e1e6aa1d2c9abe81faed1db03a1_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_ab90e7e1e6aa1d2c9abe81faed1db03a1_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_ab90e7e1e6aa1d2c9abe81faed1db03a1_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_ab90e7e1e6aa1d2c9abe81faed1db03a1_cgraph">
+<area shape="rect" title=" " alt="" coords="5,47,102,72"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb" title=" " alt="" coords="150,47,302,72"/>
+<area shape="poly" title=" " alt="" coords="102,57,134,57,134,62,102,62"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="350,12,493,51"/>
+<area shape="poly" title=" " alt="" coords="302,46,334,41,335,47,303,51"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a40ec1fd9d599c07199049eb1df5551b6" title=" " alt="" coords="350,75,493,100"/>
+<area shape="poly" title=" " alt="" coords="303,68,335,73,335,78,302,73"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title=" " alt="" coords="541,12,707,51"/>
+<area shape="poly" title=" " alt="" coords="494,29,526,29,526,34,494,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="755,5,898,58"/>
+<area shape="poly" title=" " alt="" coords="707,29,740,29,740,34,707,34"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a84a1eeee53079a8e60fea1d1e0d94639" name="a84a1eeee53079a8e60fea1d1e0d94639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84a1eeee53079a8e60fea1d1e0d94639">&#9670;&#160;</a></span>del_photo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">del_photo </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$photo_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта. </p>
+<p>Метод удаляет файлы из каталогов полноразмерных изображений и эскизов, а также записи из таблиц базы данных. Этот метод является редиректом на защищенный метод _del_photo_internal, где реализована основная логика.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>Идентификатор удаляемого изображения (обязательное поле).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если удаление успешно, иначе False.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::del_photo() Этот метод вызывается через класс Work. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::_del_photo_internal() Основная логика метода реализована здесь. </dd></dl>
+
+<p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">Work_CoreLogic_Interface</a>.</p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a16">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00437">437</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00754">_del_photo_internal()</a>.</p>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph">
+<area shape="rect" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="5,5,83,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a818796fb684f095ff90ef5f03a894989" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="131,5,264,30"/>
+<area shape="poly" title=" " alt="" coords="83,15,115,15,115,20,83,20"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a40ec1fd9d599c07199049eb1df5551b6" name="a40ec1fd9d599c07199049eb1df5551b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40ec1fd9d599c07199049eb1df5551b6">&#9670;&#160;</a></span>generate_photo_data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">generate_photo_data </td>
+          <td>(</td>
+          <td class="paramtype">array</td>          <td class="paramname"><span class="paramname"><em>$photo_data</em></span><span class="paramdefsep"> = </span><span class="paramdefval">[]</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a27">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01287">1287</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01136">_create_photo_internal()</a>.</p>
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a40ec1fd9d599c07199049eb1df5551b6_icgraph">
+<area shape="rect" title=" " alt="" coords="350,5,492,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb" title=" " alt="" coords="150,5,302,30"/>
+<area shape="poly" title=" " alt="" coords="335,20,302,20,302,15,335,15"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1" title=" " alt="" coords="5,5,102,30"/>
+<area shape="poly" title=" " alt="" coords="134,20,102,20,102,15,134,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9c2ee4da4bf10547c3aff7296d707c66" name="a9c2ee4da4bf10547c3aff7296d707c66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c2ee4da4bf10547c3aff7296d707c66">&#9670;&#160;</a></span>get_languages()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">get_languages </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Загружает доступные языки из директории /language/.</p>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о доступных языках. Каждый элемент массива содержит:<ul>
+<li><code>value</code>: Имя директории языка (строка).</li>
+<li><code>name</code>: Название языка из файла <code>main.php</code> (строка).</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если:</p><ul>
+<li>Директория <code>/language/</code> недоступна или не существует.</li>
+<li>Ни один язык не найден в указанной директории. </li>
+</ul>
+
+<p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">Work_CoreLogic_Interface</a>.</p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a20">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00505">505</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00932">_get_languages_internal()</a>.</p>
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,111,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1" title=" " alt="" coords="159,5,320,30"/>
+<area shape="poly" title=" " alt="" coords="111,15,143,15,143,20,111,20"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8d2f43c00af0c9574caa0455df82c613" name="a8d2f43c00af0c9574caa0455df82c613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d2f43c00af0c9574caa0455df82c613">&#9670;&#160;</a></span>get_themes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">get_themes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Загружает доступные темы из директории /themes/.</p>
+<p>Метод перебирает все поддиректории в <code>/themes/</code> и добавляет их имена в список доступных тем. Этот метод является редиректом на защищенный метод _get_themes_internal, где реализована основная логика.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work::get_themes() Вызывает этот метод для получения списка доступных тем. </dd>
+<dd>
+\PhotoRigma\Classes\Work_CoreLogic::_get_themes_internal() Основная логика метода реализована здесь.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с именами доступных тем.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если:</p><ul>
+<li>Директория <code>/themes/</code> не существует или недоступна для чтения.</li>
+<li>Ни одна тема не найдена в указанной директории. </li>
+</ul>
+
+<p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">Work_CoreLogic_Interface</a>.</p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a22">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00527">527</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01026">_get_themes_internal()</a>.</p>
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,95,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#afd6b68f8d6f551886000447b30191b6a" title=" " alt="" coords="143,5,288,30"/>
+<area shape="poly" title=" " alt="" coords="95,15,127,15,127,20,95,20"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abfa7c6c53ae460403a3d0b3923e71a90" name="abfa7c6c53ae460403a3d0b3923e71a90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfa7c6c53ae460403a3d0b3923e71a90">&#9670;&#160;</a></span>news()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">news </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$news_id_or_limit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$act</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Получает данные о новостях.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$news_id_or_limit</td><td>Количество новостей или ID новости (в зависимости от параметра $act). </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$act</td><td>Тип запроса:<ul>
+<li>'id': Получение новости по её ID.</li>
+<li>'list': Получение списка новостей с сортировкой по дате последнего редактирования.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если передан некорректный $act или $news_id_or_limit. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если произошла ошибка при выполнении запроса к базе данных. </p>
+
+<p>Замещает <a class="el" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic_Interface</a>.</p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a18">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00471">471</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00841">_news_internal()</a>.</p>
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,58,30"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfae1b80256c5a8b8addb7770d8939cf" title=" " alt="" coords="106,5,214,30"/>
+<area shape="poly" title=" " alt="" coords="58,15,90,15,90,20,58,20"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aaf95d95540a3e47c5905a47db3424ed9" name="aaf95d95540a3e47c5905a47db3424ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf95d95540a3e47c5905a47db3424ed9">&#9670;&#160;</a></span>set_lang()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set_lang </td>
+          <td>(</td>
+          <td class="paramtype">array</td>          <td class="paramname"><span class="paramname"><em>$lang</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a12">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00345">345</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00184">$lang</a>.</p>
+
+</div>
+</div>
+<a id="ac632034f4e83ba35a7b3e2124829e0c2" name="ac632034f4e83ba35a7b3e2124829e0c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac632034f4e83ba35a7b3e2124829e0c2">&#9670;&#160;</a></span>set_user()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set_user </td>
+          <td>(</td>
+          <td class="paramtype">User</td>          <td class="paramname"><span class="paramname"><em>$user</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a13">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00385">385</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00187">$user</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Данные класса</h2>
+<a id="ab76f8f2ac851632a23ef69df2bd99dad" name="ab76f8f2ac851632a23ef69df2bd99dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">&#9670;&#160;</a></span>$config</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">array $config</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конфигурация приложения. </p>
+<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a10">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00183">183</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00223">__construct()</a> и <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00265">__get()</a>.</p>
+
+</div>
+</div>
+<a id="a18e3eac65d39ced5231d9b3e3630ba75" name="a18e3eac65d39ced5231d9b3e3630ba75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">&#9670;&#160;</a></span>$db</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a> $db</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Объект для работы с базой данных (обязательный). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00185">185</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00223">__construct()</a>.</p>
+
+</div>
+</div>
+<a id="a9fd8978d2c6cbdcfdd6be875be161b7b" name="a9fd8978d2c6cbdcfdd6be875be161b7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fd8978d2c6cbdcfdd6be875be161b7b">&#9670;&#160;</a></span>$lang</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">array $lang = null</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Языковые данные (могут быть null при инициализации). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00184">184</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00345">set_lang()</a>.</p>
+
+</div>
+</div>
+<a id="a35c45cc33d8d420da794514df59466b7" name="a35c45cc33d8d420da794514df59466b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35c45cc33d8d420da794514df59466b7">&#9670;&#160;</a></span>$user</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">User $<a class="el" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a> = null</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Объект пользователя (может быть null при инициализации). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00187">187</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00385">set_user()</a>.</p>
+
+</div>
+</div>
+<a id="aa1464d140ae01b78294ee8d81d3374d7" name="aa1464d140ae01b78294ee8d81d3374d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1464d140ae01b78294ee8d81d3374d7">&#9670;&#160;</a></span>$work</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> $work</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Основной объект приложения (обязательный). </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00186">186</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00223">__construct()</a>.</p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>include/<a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></li><li class="navelem"><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

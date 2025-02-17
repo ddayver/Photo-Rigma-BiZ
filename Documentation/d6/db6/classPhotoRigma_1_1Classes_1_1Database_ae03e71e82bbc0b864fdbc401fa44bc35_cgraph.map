@@ -1,0 +1,9 @@
+<map id="build_conditions" name="build_conditions">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,120,55"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title=" " alt="" coords="168,5,303,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,32,152,27,153,32,120,37"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title=" " alt="" coords="351,31,485,55"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="120,40,335,40,335,46,120,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="304,24,336,29,335,34,303,30"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="388,32,381,22,385,12,397,6,418,4,441,7,452,14,450,18,439,12,418,9,399,11,389,16,387,21,392,29"/>
+</map>

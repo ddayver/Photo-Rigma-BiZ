@@ -1,5 +1,8 @@
-/www/*.webprj
-/www/*.session
 /doc_gen.sh
-/doxygen_error.log
+doxygen_*.*
 doc_gen.bat
+*.session
+*.webprj
+*.php~
+/templates/
+/toolbars/

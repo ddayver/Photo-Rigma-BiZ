@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['reg_5femail',['REG_EMAIL',['../common_8php.html#ae61eeb74d6e738c902452868f3b3ca32',1,'common.php']]],
-  ['reg_5flogin',['REG_LOGIN',['../common_8php.html#abcaad3156cca5ada2c3a8df418291208',1,'common.php']]],
-  ['reg_5fname',['REG_NAME',['../common_8php.html#a328f2af671059a9d73b0cfef6c3a644f',1,'common.php']]]
+  ['debug_5fgallery_0',['DEBUG_GALLERY',['../d9/d8f/interfacePhotoRigma.html#a62b7f878abcac93af0f81464c8d008d7',1,'PhotoRigma']]],
+  ['default_5fgroup_1',['DEFAULT_GROUP',['../db/d02/namespacePhotoRigma_1_1Include.html#a2790a51795c400a411236e4651f1b3f1',1,'PhotoRigma::Include']]],
+  ['die_5fif_5ferror_2',['DIE_IF_ERROR',['../db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c',1,'PhotoRigma::Include']]]
 ];

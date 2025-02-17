@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['ubb',['ubb',['../classwork.html#a1e65af654a4f2333ddbc9aab1bf11d70',1,'work']]],
-  ['update',['update',['../classdb.html#af17f89b3edaf07600abb19d2ee7a138b',1,'db']]],
-  ['url_5fcheck',['url_check',['../classwork.html#a1e1a4ab6b213ada0d89c77a24d8ffe32',1,'work']]],
-  ['url_5fmod_5frewrite',['url_mod_rewrite',['../classtemplate.html#ae15268c9b3b621eda2bac241d3ecf408',1,'template']]],
-  ['user',['user',['../classuser.html',1,'user'],['../classuser.html#ae8a275690ff1b618e1947378b0ed73ae',1,'user\user()']]],
-  ['user_2ephp',['user.php',['../user_8php.html',1,'']]],
-  ['utf8_5fwordwrap',['utf8_wordwrap',['../classwork.html#a6a58c39030bff2e7887005bde31e5563',1,'work']]]
+  ['sanitize_5farray_0',['sanitize_array',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3fc2465ff08a31b214f6d708c51090e0',1,'PhotoRigma::Classes::Work']]],
+  ['sanitize_5fexpression_1',['sanitize_expression',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7',1,'PhotoRigma::Classes::Database']]],
+  ['search_2ephp_2',['search.php',['../dd/d71/search_8php.html',1,'']]],
+  ['select_3',['select',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e',1,'PhotoRigma\Classes\Database_Interface\select()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e',1,'PhotoRigma\Classes\Database\select()']]],
+  ['set_5flang_4',['set_lang',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaf95d95540a3e47c5905a47db3424ed9',1,'PhotoRigma\Classes\Work\set_lang()'],['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aaf95d95540a3e47c5905a47db3424ed9',1,'PhotoRigma\Classes\Work_CoreLogic\set_lang()'],['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aaf95d95540a3e47c5905a47db3424ed9',1,'PhotoRigma\Classes\Work_Template\set_lang()']]],
+  ['set_5fuser_5',['set_user',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac632034f4e83ba35a7b3e2124829e0c2',1,'PhotoRigma\Classes\Work\set_user()'],['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ac632034f4e83ba35a7b3e2124829e0c2',1,'PhotoRigma\Classes\Work_CoreLogic\set_user()'],['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ac632034f4e83ba35a7b3e2124829e0c2',1,'PhotoRigma\Classes\Work_Template\set_user()']]],
+  ['size_5fimage_6',['size_image',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b',1,'PhotoRigma\Classes\Work\size_image()'],['../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b',1,'PhotoRigma\Classes\Work_Image_Interface\size_image()'],['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b',1,'PhotoRigma\Classes\Work_Image\size_image()']]]
 ];

@@ -1,0 +1,33 @@
+<map id="Work_Template" name="Work_Template">
+<area shape="rect" id="Node000001" title="Класс Work_Template отвечает за формирование данных для шаблонов." alt="" coords="763,55,875,79"/>
+<area shape="rect" id="Node000002" href="$d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html" title="Интерфейс Work_Template_Interface определяет контракт для классов, формирующих данные для шаблонов." alt="" coords="5,5,176,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,14,440,20,588,30,737,46,768,51,767,57,736,51,588,35,439,26,191,20"/>
+<area shape="rect" id="Node000009" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html" title="Класс Work_Template отвечает за формирование данных для шаблонов." alt="" coords="248,108,360,133"/>
+<area shape="poly" id="edge10_Node000009_Node000002" title=" " alt="" coords="133,35,277,105,275,110,130,39"/>
+<area shape="rect" id="Node000003" href="$da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title=" " alt="" coords="23,139,158,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="134,130,187,110,247,94,392,74,536,64,665,61,762,62,762,68,665,66,537,69,393,79,248,99,189,115,135,135"/>
+<area shape="rect" id="Node000004" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title=" " alt="" coords="530,273,581,298"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="173,156,303,178,375,195,445,218,497,244,538,271,535,275,494,248,443,223,373,200,302,183,172,162"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="173,137,247,126,248,131,173,142"/>
+<area shape="rect" id="Node000012" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения." alt="" coords="760,327,878,351"/>
+<area shape="poly" id="edge17_Node000012_Node000003" title=" " alt="" coords="144,166,248,195,322,206,387,209,499,204,552,203,608,209,669,224,738,253,762,268,782,288,812,324,807,328,779,291,758,272,735,257,667,229,607,214,552,209,499,209,387,214,322,212,247,200,142,171"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="582,261,801,78,804,82,586,265"/>
+<area shape="poly" id="edge12_Node000009_Node000004" title=" " alt="" coords="540,261,502,200,475,169,443,144,402,128,360,122,361,117,404,123,445,139,479,165,507,197,544,258"/>
+<area shape="poly" id="edge18_Node000012_Node000004" title=" " alt="" coords="597,294,668,312,760,328,760,333,667,317,595,299"/>
+<area shape="rect" id="Node000005" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html" title="Класс для обеспечения безопасности приложения." alt="" coords="251,273,356,298"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="372,283,529,283,529,288,372,288"/>
+<area shape="rect" id="Node000006" href="$da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью." alt="" coords="9,273,172,298"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="188,283,251,283,251,288,188,288"/>
+<area shape="rect" id="Node000007" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html" title="Класс для работы с изображениями." alt="" coords="257,323,351,347"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="366,320,529,288,530,293,367,326"/>
+<area shape="rect" id="Node000008" href="$d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями." alt="" coords="14,323,167,347"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="183,332,256,332,256,338,183,338"/>
+<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="350,137,445,185,502,230,544,271,541,275,499,234,443,189,347,142"/>
+<area shape="rect" id="Node000010" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html" title="Класс для вспомогательных методов." alt="" coords="256,372,352,397"/>
+<area shape="poly" id="edge13_Node000004_Node000010" title=" " alt="" coords="363,364,443,336,529,296,531,301,445,341,364,369"/>
+<area shape="rect" id="Node000011" href="$d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов." alt="" coords="13,372,168,397"/>
+<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="183,382,255,382,255,387,183,387"/>
+<area shape="poly" id="edge15_Node000004_Node000012" title=" " alt="" coords="769,359,720,367,693,367,667,362,637,350,609,333,568,300,572,296,612,329,639,345,668,357,693,362,719,362,768,354"/>
+<area shape="rect" id="Node000013" href="$d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения." alt="" coords="468,393,643,418"/>
+<area shape="poly" id="edge16_Node000012_Node000013" title=" " alt="" coords="655,387,736,368,788,349,790,354,737,374,657,392"/>
+</map>

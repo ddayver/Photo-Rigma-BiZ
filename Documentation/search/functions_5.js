@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['gen_5fcaptcha',['gen_captcha',['../classwork.html#a19ab20c34a49c9684a03c09c62f8af46',1,'work']]],
-  ['get_5flanguages',['get_languages',['../classwork.html#a9c2ee4da4bf10547c3aff7296d707c66',1,'work']]],
-  ['get_5fthemes',['get_themes',['../classwork.html#a8d2f43c00af0c9574caa0455df82c613',1,'work']]],
-  ['group',['group',['../classdb.html#ac34168a28ab2726e05aad5d141907d9d',1,'db']]]
+  ['encodename_0',['encodename',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e',1,'PhotoRigma\Classes\Work\encodename()'],['../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html#ad9ac814e0001840a4cdbf826d0d6e53e',1,'PhotoRigma\Classes\Work_Helper_Interface\encodename()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e',1,'PhotoRigma\Classes\Work_Helper\encodename()']]],
+  ['execute_5fquery_1',['execute_query',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65',1,'PhotoRigma::Classes::Database']]]
 ];

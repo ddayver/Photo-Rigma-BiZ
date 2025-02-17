@@ -1,0 +1,904 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Photo-Rigma-BiZ: Исходный файл include/db.php</title>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Поиск',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('dc/d82/db_8php_source.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">db.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../dc/d82/db_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">   36</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">PhotoRigma\Classes</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">// Предотвращение прямого вызова файла</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || IN_GALLERY !== <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    error_log(</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) .</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="stringliteral">&quot; [ERROR] | &quot;</span> .</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        (filter_input(INPUT_SERVER, <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>, FILTER_VALIDATE_IP) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) .</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    );</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="foldopen" id="foldopen00074" data-start="{" data-end="};">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">   74</a></span><span class="keyword">interface </span><a class="code hl_interface" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>{</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e">  128</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e">select</a>(<span class="keywordtype">string</span>|array $select, <span class="keywordtype">string</span> $from_tbl, array $options = []): bool;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">  196</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a>(<span class="keywordtype">string</span>|array $select, <span class="keywordtype">string</span> $from_tbl, array $join, array $options = []): bool;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a73d8e6acdfb996002f980ab7c9c18515">  251</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <span class="keyword">delete</span>(<span class="keywordtype">string</span> $from_tbl, array $options = []): bool;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#ad4d4e455d9e4bf865126c72cf23a517b">  284</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#ad4d4e455d9e4bf865126c72cf23a517b">truncate</a>(<span class="keywordtype">string</span> $from_tbl): bool;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span></div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e">  341</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e">update</a>(array $update, <span class="keywordtype">string</span> $from_tbl, array $options = []): bool;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span></div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a6e5af1f386c0c7968aa10ea928c7a110">  402</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a6e5af1f386c0c7968aa10ea928c7a110">insert</a>(array $insert, <span class="keywordtype">string</span> $to_tbl, <span class="keywordtype">string</span> $type = <span class="stringliteral">&#39;&#39;</span>, array $options = []): bool;</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span></div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a974af553ef190897a8849c77166ea32d">  436</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a974af553ef190897a8849c77166ea32d">res_row</a>(): array|false;</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span></div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4">  475</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a>(): array|false;</div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span></div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba">  505</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba">get_affected_rows</a>(): int;</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span></div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno"><a class="line" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#abafff8c03a52d73e37072449448e5a3c">  535</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#abafff8c03a52d73e37072449448e5a3c">get_last_insert_id</a>(): int;</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>}</div>
+</div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span></div>
+<div class="foldopen" id="foldopen00573" data-start="{" data-end="};">
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">  573</a></span><span class="keyword">class </span><a class="code hl_class" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a></div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>{</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>    <span class="comment">// Свойства класса</span></div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5766efd703cef0e00bfc06b3f3acbe0e">  576</a></span>    <span class="keyword">private</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5766efd703cef0e00bfc06b3f3acbe0e">$pdo</a> = <span class="keyword">null</span>;          </div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad8a3d0085346dd9a4d7bfa9500faae20">  577</a></span>    <span class="keyword">private</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad8a3d0085346dd9a4d7bfa9500faae20">$txt_query</a> = <span class="keyword">null</span>;    </div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a4e0fa9799781410b983bb2581c2ace29">  578</a></span>    <span class="keyword">private</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a4e0fa9799781410b983bb2581c2ace29">$res_query</a> = <span class="keyword">null</span>;    </div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a112ef069ddc0454086e3d1e6d8d55d07">  579</a></span>    <span class="keyword">private</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a112ef069ddc0454086e3d1e6d8d55d07">$result</a> = <span class="keyword">false</span>;      </div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adac4bb14b3d809b245c89d5e7388096f">  580</a></span>    <span class="keyword">private</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adac4bb14b3d809b245c89d5e7388096f">$aff_rows</a> = 0;        </div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7d5870c89e950451ed8a204c07c66a30">  581</a></span>    <span class="keyword">private</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7d5870c89e950451ed8a204c07c66a30">$insert_id</a> = 0;       </div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span></div>
+<div class="foldopen" id="foldopen00638" data-start="{" data-end="}">
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab020da18450b0c34601b4d365da6f943">  638</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab020da18450b0c34601b4d365da6f943">__construct</a>(array $db_config)</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>    {</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>        <span class="comment">// Проверка допустимых значений dbtype</span></div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        $allowed_dbtypes = [<span class="stringliteral">&#39;mysql&#39;</span>, <span class="stringliteral">&#39;pgsql&#39;</span>];</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        <span class="keywordflow">if</span> (!in_array($db_config[<span class="stringliteral">&#39;dbtype&#39;</span>], $allowed_dbtypes, <span class="keyword">true</span>)) {</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Недопустимый тип базы данных | Значение: {$db_config[&#39;dbtype&#39;]}&quot;</span></div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>            );</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>        }</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>        <span class="comment">// Проверка корректности dbname и dbuser</span></div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>        <span class="keywordflow">if</span> (empty($db_config[<span class="stringliteral">&#39;dbname&#39;</span>]) || empty($db_config[<span class="stringliteral">&#39;dbuser&#39;</span>])) {</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Не указано имя базы данных или пользователь | Конфигурация: &quot;</span> . json_encode($db_config)</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>            );</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>        }</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>        <span class="comment">// Проверка dbsock (первая попытка подключения через сокет)</span></div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        <span class="keywordflow">if</span> (!empty($db_config[<span class="stringliteral">&#39;dbsock&#39;</span>])) {</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>            <span class="keywordflow">if</span> (!is_string($db_config[<span class="stringliteral">&#39;dbsock&#39;</span>]) || !file_exists($db_config[<span class="stringliteral">&#39;dbsock&#39;</span>])) {</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>                log_in_file(</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный или несуществующий путь к сокету | Путь: {$db_config[&#39;dbsock&#39;]}&quot;</span></div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>                );</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>                <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>                    $dsn = <span class="stringliteral">&quot;{$db_config[&#39;dbtype&#39;]}:unix_socket={$db_config[&#39;dbsock&#39;]};dbname={$db_config[&#39;dbname&#39;]}&quot;</span>;</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>                    $this-&gt;pdo = new \PDO($dsn, $db_config[<span class="stringliteral">&#39;dbuser&#39;</span>], $db_config[<span class="stringliteral">&#39;dbpass&#39;</span>], [</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>                        \PDO::ATTR_ERRMODE            =&gt; \PDO::ERRMODE_EXCEPTION,</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>                        \PDO::ATTR_DEFAULT_FETCH_MODE =&gt; \PDO::FETCH_ASSOC,</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                        \PDO::ATTR_EMULATE_PREPARES   =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>                        \PDO::ATTR_STRINGIFY_FETCHES  =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>                    ]);</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>                    <span class="keywordflow">return</span>; <span class="comment">// Подключение успешно, завершаем выполнение метода</span></div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>                } <span class="keywordflow">catch</span> (\PDOException $e) {</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>                    log_in_file(</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>                        __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Ошибка подключения через сокет | Сокет: {$db_config[&#39;dbsock&#39;]} | Сообщение: &quot;</span> . $e-&gt;getMessage()</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>                    );</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>                    <span class="comment">// Переходим к следующему варианту подключения</span></div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>                }</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>            }</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        }</div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>        <span class="comment">// Проверка dbhost и dbport (вторая попытка подключения через хост и порт)</span></div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>        <span class="keywordflow">if</span> (empty($db_config[<span class="stringliteral">&#39;dbhost&#39;</span>])) {</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Не указан хост базы данных | Конфигурация: &quot;</span> . json_encode($db_config)</div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>            );</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>        }</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>        <span class="keywordflow">if</span> (!filter_var($db_config[<span class="stringliteral">&#39;dbhost&#39;</span>], FILTER_VALIDATE_IP) &amp;&amp; !preg_match(<span class="stringliteral">&#39;/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/&#39;</span>, $db_config[<span class="stringliteral">&#39;dbhost&#39;</span>]) &amp;&amp; strtolower($db_config[<span class="stringliteral">&#39;dbhost&#39;</span>]) !== <span class="stringliteral">&#39;localhost&#39;</span>) {</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный хост базы данных | Значение: {$db_config[&#39;dbhost&#39;]}&quot;</span></div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>            );</div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>        }</div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>        $dsn = <span class="stringliteral">&quot;{$db_config[&#39;dbtype&#39;]}:host={$db_config[&#39;dbhost&#39;]};dbname={$db_config[&#39;dbname&#39;]}&quot;</span>;</div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>        <span class="keywordflow">if</span> (!empty($db_config[<span class="stringliteral">&#39;dbport&#39;</span>])) {</div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>            <span class="keywordflow">if</span> (!is_numeric($db_config[<span class="stringliteral">&#39;dbport&#39;</span>]) || $db_config[<span class="stringliteral">&#39;dbport&#39;</span>] &lt; 1 || $db_config[<span class="stringliteral">&#39;dbport&#39;</span>] &gt; 65535) {</div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный порт базы данных | Значение: {$db_config[&#39;dbport&#39;]}&quot;</span></div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>                );</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>            }</div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>            $dsn .= <span class="stringliteral">&quot;;port={$db_config[&#39;dbport&#39;]}&quot;</span>;</div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>        }</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>            $this-&gt;pdo = new \PDO($dsn, $db_config[<span class="stringliteral">&#39;dbuser&#39;</span>], $db_config[<span class="stringliteral">&#39;dbpass&#39;</span>], [</div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>                \PDO::ATTR_ERRMODE            =&gt; \PDO::ERRMODE_EXCEPTION,</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>                \PDO::ATTR_DEFAULT_FETCH_MODE =&gt; \PDO::FETCH_ASSOC,</div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>                \PDO::ATTR_EMULATE_PREPARES   =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span>                \PDO::ATTR_STRINGIFY_FETCHES  =&gt; <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>            ]);</div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>        } <span class="keywordflow">catch</span> (\PDOException $e) {</div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>            <span class="keywordflow">throw</span> new \PDOException(</div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Ошибка подключения через хост и порт | Хост: {$db_config[&#39;dbhost&#39;]}, Порт: {$db_config[&#39;dbport&#39;]} | Сообщение: &quot;</span> . $e-&gt;getMessage()</div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>            );</div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>        }</div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>    }</div>
+</div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span></div>
+<div class="foldopen" id="foldopen00761" data-start="{" data-end="}">
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e">  761</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e">select</a>(<span class="keywordtype">string</span>|array $select, <span class="keywordtype">string</span> $from_tbl, array $options = []): bool</div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>    {</div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1">_select_internal</a>($select, $from_tbl, $options);</div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>    }</div>
+</div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span></div>
+<div class="foldopen" id="foldopen00827" data-start="{" data-end="}">
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">  827</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a>(<span class="keywordtype">string</span>|array $select, <span class="keywordtype">string</span> $from_tbl, array $join, array $options = []): bool</div>
+<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>    {</div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b">_join_internal</a>($select, $from_tbl, $join, $options);</div>
+<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span>    }</div>
+</div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span></div>
+<div class="foldopen" id="foldopen00882" data-start="{" data-end="}">
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515">  882</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <span class="keyword">delete</span>(<span class="keywordtype">string</span> $from_tbl, array $options = []): bool</div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>    {</div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d">_delete_internal</a>($from_tbl, $options);</div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>    }</div>
+</div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span></div>
+<div class="foldopen" id="foldopen00921" data-start="{" data-end="}">
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b">  921</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b">truncate</a>(<span class="keywordtype">string</span> $from_tbl): bool</div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span>    {</div>
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8">_truncate_internal</a>($from_tbl);</div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>    }</div>
+</div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span></div>
+<div class="foldopen" id="foldopen00979" data-start="{" data-end="}">
+<div class="line"><a id="l00979" name="l00979"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e">  979</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e">update</a>(array $update, <span class="keywordtype">string</span> $from_tbl, array $options = []): bool</div>
+<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>    {</div>
+<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0">_update_internal</a>($update, $from_tbl, $options);</div>
+<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>    }</div>
+</div>
+<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span></div>
+<div class="foldopen" id="foldopen01035" data-start="{" data-end="}">
+<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110"> 1035</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110">insert</a>(array $insert, <span class="keywordtype">string</span> $to_tbl, <span class="keywordtype">string</span> $type = <span class="stringliteral">&#39;&#39;</span>, array $options = []): bool</div>
+<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>    {</div>
+<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a">_insert_internal</a>($insert, $to_tbl, $type, $options);</div>
+<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>    }</div>
+</div>
+<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span></div>
+<div class="foldopen" id="foldopen01072" data-start="{" data-end="}">
+<div class="line"><a id="l01072" name="l01072"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d"> 1072</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d">res_row</a>(): array|false</div>
+<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>    {</div>
+<div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adbe79d2c68c4501e901c6a978544ba25">_res_row_internal</a>();</div>
+<div class="line"><a id="l01075" name="l01075"></a><span class="lineno"> 1075</span>    }</div>
+</div>
+<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span></div>
+<div class="foldopen" id="foldopen01115" data-start="{" data-end="}">
+<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4"> 1115</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a>(): array|false</div>
+<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>    {</div>
+<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a71ffa0229d9d0c5053501c55e6fd98d0">_res_arr_internal</a>();</div>
+<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span>    }</div>
+</div>
+<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span></div>
+<div class="foldopen" id="foldopen01151" data-start="{" data-end="}">
+<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba"> 1151</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba">get_affected_rows</a>(): int</div>
+<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>    {</div>
+<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a834ca0d1c7c60bc9bfae123070b45fbd">_get_affected_rows_internal</a>();</div>
+<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span>    }</div>
+</div>
+<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span></div>
+<div class="foldopen" id="foldopen01185" data-start="{" data-end="}">
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c"> 1185</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c">get_last_insert_id</a>(): int</div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>    {</div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab122f53e8d2ca9d723e32426c9e691e9">_get_last_insert_id_internal</a>();</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>    }</div>
+</div>
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span></div>
+<div class="foldopen" id="foldopen01248" data-start="{" data-end="}">
+<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1"> 1248</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1">_select_internal</a>(<span class="keywordtype">string</span>|array $select, <span class="keywordtype">string</span> $from_tbl, array $options = []): bool</div>
+<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>    {</div>
+<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>        <span class="keywordflow">if</span> (!is_string($from_tbl)) {</div>
+<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип имени таблицы | Ожидалась строка, получено: &quot;</span> . gettype($from_tbl)</div>
+<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span>            );</div>
+<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>        }</div>
+<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>        <span class="keywordflow">if</span> (!is_array($options)) {</div>
+<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип опций | Ожидался массив, получено: &quot;</span> . gettype($options)</div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>            );</div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>        }</div>
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>        <span class="comment">// === 2. Обработка $select ===</span></div>
+<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>        <span class="keywordflow">if</span> (!is_array($select)) {</div>
+<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span>            $select = [$select];</div>
+<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span>        }</div>
+<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>        $select = implode(<span class="stringliteral">&#39;, &#39;</span>, array_map([$this, <span class="stringliteral">&#39;sanitize_expression&#39;</span>], $select));</div>
+<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>        <span class="comment">// === 3. Обработка $from_tbl ===</span></div>
+<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>        $from_tbl = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($from_tbl);</div>
+<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>        <span class="comment">// === 4. Формирование базового запроса ===</span></div>
+<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>        $this-&gt;txt_query = <span class="stringliteral">&quot;SELECT $select FROM $from_tbl&quot;</span>;</div>
+<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>        <span class="comment">// === 5. Добавление условий ===</span></div>
+<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>        [$conditions, $params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">build_conditions</a>($options);</div>
+<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>        $this-&gt;txt_query .= $conditions;</div>
+<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span>        <span class="comment">// === 6. Выполнение запроса ===</span></div>
+<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>($params);</div>
+<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span>    }</div>
+</div>
+<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span></div>
+<div class="foldopen" id="foldopen01350" data-start="{" data-end="}">
+<div class="line"><a id="l01350" name="l01350"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b"> 1350</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b">_join_internal</a>(<span class="keywordtype">string</span>|array $select, <span class="keywordtype">string</span> $from_tbl, array $join, array $options = []): bool</div>
+<div class="line"><a id="l01351" name="l01351"></a><span class="lineno"> 1351</span>    {</div>
+<div class="line"><a id="l01352" name="l01352"></a><span class="lineno"> 1352</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l01353" name="l01353"></a><span class="lineno"> 1353</span>        <span class="keywordflow">if</span> (!is_string($from_tbl)) {</div>
+<div class="line"><a id="l01354" name="l01354"></a><span class="lineno"> 1354</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01355" name="l01355"></a><span class="lineno"> 1355</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип имени основной таблицы | Ожидалась строка, получено: &quot;</span> . gettype($from_tbl)</div>
+<div class="line"><a id="l01356" name="l01356"></a><span class="lineno"> 1356</span>            );</div>
+<div class="line"><a id="l01357" name="l01357"></a><span class="lineno"> 1357</span>        }</div>
+<div class="line"><a id="l01358" name="l01358"></a><span class="lineno"> 1358</span>        <span class="keywordflow">if</span> (!is_array($join)) {</div>
+<div class="line"><a id="l01359" name="l01359"></a><span class="lineno"> 1359</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01360" name="l01360"></a><span class="lineno"> 1360</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип описания JOIN | Ожидался массив, получено: &quot;</span> . gettype($join)</div>
+<div class="line"><a id="l01361" name="l01361"></a><span class="lineno"> 1361</span>            );</div>
+<div class="line"><a id="l01362" name="l01362"></a><span class="lineno"> 1362</span>        }</div>
+<div class="line"><a id="l01363" name="l01363"></a><span class="lineno"> 1363</span>        <span class="comment">// === 2. Обработка $select ===</span></div>
+<div class="line"><a id="l01364" name="l01364"></a><span class="lineno"> 1364</span>        <span class="keywordflow">if</span> (!is_array($select)) {</div>
+<div class="line"><a id="l01365" name="l01365"></a><span class="lineno"> 1365</span>            $select = [$select];</div>
+<div class="line"><a id="l01366" name="l01366"></a><span class="lineno"> 1366</span>        }</div>
+<div class="line"><a id="l01367" name="l01367"></a><span class="lineno"> 1367</span>        $select = implode(<span class="stringliteral">&#39;, &#39;</span>, array_map([$this, <span class="stringliteral">&#39;sanitize_expression&#39;</span>], $select));</div>
+<div class="line"><a id="l01368" name="l01368"></a><span class="lineno"> 1368</span>        <span class="comment">// === 3. Обработка $from_tbl ===</span></div>
+<div class="line"><a id="l01369" name="l01369"></a><span class="lineno"> 1369</span>        $from_tbl = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($from_tbl);</div>
+<div class="line"><a id="l01370" name="l01370"></a><span class="lineno"> 1370</span>        <span class="comment">// === 4. Обработка $join ===</span></div>
+<div class="line"><a id="l01371" name="l01371"></a><span class="lineno"> 1371</span>        $join_clauses = [];</div>
+<div class="line"><a id="l01372" name="l01372"></a><span class="lineno"> 1372</span>        <span class="keywordflow">foreach</span> ($join as $j) {</div>
+<div class="line"><a id="l01373" name="l01373"></a><span class="lineno"> 1373</span>            <span class="keywordflow">if</span> (empty($j[<span class="stringliteral">&#39;table&#39;</span>])) {</div>
+<div class="line"><a id="l01374" name="l01374"></a><span class="lineno"> 1374</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01375" name="l01375"></a><span class="lineno"> 1375</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Отсутствует имя таблицы в описании JOIN | Проверьте структуру массива \$join&quot;</span></div>
+<div class="line"><a id="l01376" name="l01376"></a><span class="lineno"> 1376</span>                );</div>
+<div class="line"><a id="l01377" name="l01377"></a><span class="lineno"> 1377</span>            }</div>
+<div class="line"><a id="l01378" name="l01378"></a><span class="lineno"> 1378</span>            <span class="keywordflow">if</span> (empty($j[<span class="stringliteral">&#39;on&#39;</span>])) {</div>
+<div class="line"><a id="l01379" name="l01379"></a><span class="lineno"> 1379</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01380" name="l01380"></a><span class="lineno"> 1380</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Отсутствует условие &#39;on&#39; для таблицы &#39;{$j[&#39;table&#39;]}&#39; в описании JOIN | Проверьте структуру массива \$join&quot;</span></div>
+<div class="line"><a id="l01381" name="l01381"></a><span class="lineno"> 1381</span>                );</div>
+<div class="line"><a id="l01382" name="l01382"></a><span class="lineno"> 1382</span>            }</div>
+<div class="line"><a id="l01383" name="l01383"></a><span class="lineno"> 1383</span>            $table = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($j[<span class="stringliteral">&#39;table&#39;</span>]);</div>
+<div class="line"><a id="l01384" name="l01384"></a><span class="lineno"> 1384</span>            $on_condition = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($j[<span class="stringliteral">&#39;on&#39;</span>]);</div>
+<div class="line"><a id="l01385" name="l01385"></a><span class="lineno"> 1385</span>            $type = !empty($j[<span class="stringliteral">&#39;type&#39;</span>]) ? strtoupper($j[<span class="stringliteral">&#39;type&#39;</span>]) . <span class="charliteral">&#39; &#39;</span> : <span class="stringliteral">&#39;INNER &#39;</span>;</div>
+<div class="line"><a id="l01386" name="l01386"></a><span class="lineno"> 1386</span>            $join_clauses[] = <span class="stringliteral">&quot;{$type}JOIN $table ON $on_condition&quot;</span>;</div>
+<div class="line"><a id="l01387" name="l01387"></a><span class="lineno"> 1387</span>        }</div>
+<div class="line"><a id="l01388" name="l01388"></a><span class="lineno"> 1388</span>        <span class="comment">// === 5. Формирование базового запроса ===</span></div>
+<div class="line"><a id="l01389" name="l01389"></a><span class="lineno"> 1389</span>        $this-&gt;txt_query = <span class="stringliteral">&quot;SELECT $select FROM $from_tbl &quot;</span> . implode(<span class="charliteral">&#39; &#39;</span>, $join_clauses);</div>
+<div class="line"><a id="l01390" name="l01390"></a><span class="lineno"> 1390</span>        <span class="comment">// === 6. Добавление условий ===</span></div>
+<div class="line"><a id="l01391" name="l01391"></a><span class="lineno"> 1391</span>        [$conditions, $params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">build_conditions</a>($options);</div>
+<div class="line"><a id="l01392" name="l01392"></a><span class="lineno"> 1392</span>        $this-&gt;txt_query .= $conditions;</div>
+<div class="line"><a id="l01393" name="l01393"></a><span class="lineno"> 1393</span>        <span class="comment">// === 7. Выполнение запроса ===</span></div>
+<div class="line"><a id="l01394" name="l01394"></a><span class="lineno"> 1394</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>($params);</div>
+<div class="line"><a id="l01395" name="l01395"></a><span class="lineno"> 1395</span>    }</div>
+</div>
+<div class="line"><a id="l01396" name="l01396"></a><span class="lineno"> 1396</span></div>
+<div class="foldopen" id="foldopen01456" data-start="{" data-end="}">
+<div class="line"><a id="l01456" name="l01456"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d"> 1456</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d">_delete_internal</a>(<span class="keywordtype">string</span> $from_tbl, array $options = []): bool</div>
+<div class="line"><a id="l01457" name="l01457"></a><span class="lineno"> 1457</span>    {</div>
+<div class="line"><a id="l01458" name="l01458"></a><span class="lineno"> 1458</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l01459" name="l01459"></a><span class="lineno"> 1459</span>        <span class="keywordflow">if</span> (!is_string($from_tbl)) {</div>
+<div class="line"><a id="l01460" name="l01460"></a><span class="lineno"> 1460</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01461" name="l01461"></a><span class="lineno"> 1461</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип имени таблицы | Ожидалась строка, получено: &quot;</span> . gettype($from_tbl)</div>
+<div class="line"><a id="l01462" name="l01462"></a><span class="lineno"> 1462</span>            );</div>
+<div class="line"><a id="l01463" name="l01463"></a><span class="lineno"> 1463</span>        }</div>
+<div class="line"><a id="l01464" name="l01464"></a><span class="lineno"> 1464</span>        <span class="keywordflow">if</span> (!is_array($options)) {</div>
+<div class="line"><a id="l01465" name="l01465"></a><span class="lineno"> 1465</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01466" name="l01466"></a><span class="lineno"> 1466</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип опций | Ожидался массив, получено: &quot;</span> . gettype($options)</div>
+<div class="line"><a id="l01467" name="l01467"></a><span class="lineno"> 1467</span>            );</div>
+<div class="line"><a id="l01468" name="l01468"></a><span class="lineno"> 1468</span>        }</div>
+<div class="line"><a id="l01469" name="l01469"></a><span class="lineno"> 1469</span>        <span class="keywordflow">if</span> (empty($options[<span class="stringliteral">&#39;where&#39;</span>])) {</div>
+<div class="line"><a id="l01470" name="l01470"></a><span class="lineno"> 1470</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01471" name="l01471"></a><span class="lineno"> 1471</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности&quot;</span></div>
+<div class="line"><a id="l01472" name="l01472"></a><span class="lineno"> 1472</span>            );</div>
+<div class="line"><a id="l01473" name="l01473"></a><span class="lineno"> 1473</span>        }</div>
+<div class="line"><a id="l01474" name="l01474"></a><span class="lineno"> 1474</span> </div>
+<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span>        <span class="comment">// === 2. Проверка и удаление недопустимых ключей ===</span></div>
+<div class="line"><a id="l01476" name="l01476"></a><span class="lineno"> 1476</span>        <span class="keywordflow">if</span> (isset($options[<span class="stringliteral">&#39;group&#39;</span>])) {</div>
+<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span>            log_in_file(</div>
+<div class="line"><a id="l01478" name="l01478"></a><span class="lineno"> 1478</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Был использован GROUP BY в DELETE | Переданные опции: &quot;</span> . json_encode($options)</div>
+<div class="line"><a id="l01479" name="l01479"></a><span class="lineno"> 1479</span>            );</div>
+<div class="line"><a id="l01480" name="l01480"></a><span class="lineno"> 1480</span>            unset($options[<span class="stringliteral">&#39;group&#39;</span>]); <span class="comment">// Удаляем ключ &#39;group&#39;</span></div>
+<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"> 1481</span>        }</div>
+<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"> 1482</span> </div>
+<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"> 1483</span>        <span class="keywordflow">if</span> ((isset($options[<span class="stringliteral">&#39;order&#39;</span>]) &amp;&amp; !isset($options[<span class="stringliteral">&#39;limit&#39;</span>])) ||</div>
+<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>            (!isset($options[<span class="stringliteral">&#39;order&#39;</span>]) &amp;&amp; isset($options[<span class="stringliteral">&#39;limit&#39;</span>]))) {</div>
+<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span>            log_in_file(</div>
+<div class="line"><a id="l01486" name="l01486"></a><span class="lineno"> 1486</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: &quot;</span> . json_encode($options)</div>
+<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span>            );</div>
+<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span>            unset($options[<span class="stringliteral">&#39;order&#39;</span>], $options[<span class="stringliteral">&#39;limit&#39;</span>]); <span class="comment">// Удаляем ключи &#39;order&#39; и &#39;limit&#39;</span></div>
+<div class="line"><a id="l01489" name="l01489"></a><span class="lineno"> 1489</span>        }</div>
+<div class="line"><a id="l01490" name="l01490"></a><span class="lineno"> 1490</span> </div>
+<div class="line"><a id="l01491" name="l01491"></a><span class="lineno"> 1491</span>        <span class="comment">// === 3. Обработка $from_tbl ===</span></div>
+<div class="line"><a id="l01492" name="l01492"></a><span class="lineno"> 1492</span>        $from_tbl = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($from_tbl);</div>
+<div class="line"><a id="l01493" name="l01493"></a><span class="lineno"> 1493</span> </div>
+<div class="line"><a id="l01494" name="l01494"></a><span class="lineno"> 1494</span>        <span class="comment">// === 4. Формирование базового запроса ===</span></div>
+<div class="line"><a id="l01495" name="l01495"></a><span class="lineno"> 1495</span>        $this-&gt;txt_query = <span class="stringliteral">&quot;DELETE FROM $from_tbl&quot;</span>;</div>
+<div class="line"><a id="l01496" name="l01496"></a><span class="lineno"> 1496</span> </div>
+<div class="line"><a id="l01497" name="l01497"></a><span class="lineno"> 1497</span>        <span class="comment">// === 5. Добавление условий ===</span></div>
+<div class="line"><a id="l01498" name="l01498"></a><span class="lineno"> 1498</span>        [$conditions, $params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">build_conditions</a>($options);</div>
+<div class="line"><a id="l01499" name="l01499"></a><span class="lineno"> 1499</span>        $this-&gt;txt_query .= $conditions;</div>
+<div class="line"><a id="l01500" name="l01500"></a><span class="lineno"> 1500</span> </div>
+<div class="line"><a id="l01501" name="l01501"></a><span class="lineno"> 1501</span>        <span class="comment">// === 6. Выполнение запроса ===</span></div>
+<div class="line"><a id="l01502" name="l01502"></a><span class="lineno"> 1502</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>($params);</div>
+<div class="line"><a id="l01503" name="l01503"></a><span class="lineno"> 1503</span>    }</div>
+</div>
+<div class="line"><a id="l01504" name="l01504"></a><span class="lineno"> 1504</span></div>
+<div class="foldopen" id="foldopen01543" data-start="{" data-end="}">
+<div class="line"><a id="l01543" name="l01543"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8"> 1543</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8">_truncate_internal</a>(<span class="keywordtype">string</span> $from_tbl): bool</div>
+<div class="line"><a id="l01544" name="l01544"></a><span class="lineno"> 1544</span>    {</div>
+<div class="line"><a id="l01545" name="l01545"></a><span class="lineno"> 1545</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l01546" name="l01546"></a><span class="lineno"> 1546</span>        <span class="keywordflow">if</span> (!is_string($from_tbl)) {</div>
+<div class="line"><a id="l01547" name="l01547"></a><span class="lineno"> 1547</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01548" name="l01548"></a><span class="lineno"> 1548</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип имени таблицы | Ожидалась строка, получено: &quot;</span> . gettype($from_tbl)</div>
+<div class="line"><a id="l01549" name="l01549"></a><span class="lineno"> 1549</span>            );</div>
+<div class="line"><a id="l01550" name="l01550"></a><span class="lineno"> 1550</span>        }</div>
+<div class="line"><a id="l01551" name="l01551"></a><span class="lineno"> 1551</span>        <span class="comment">// === 2. Обработка $from_tbl ===</span></div>
+<div class="line"><a id="l01552" name="l01552"></a><span class="lineno"> 1552</span>        $from_tbl = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($from_tbl);</div>
+<div class="line"><a id="l01553" name="l01553"></a><span class="lineno"> 1553</span>        <span class="comment">// === 3. Формирование базового запроса ===</span></div>
+<div class="line"><a id="l01554" name="l01554"></a><span class="lineno"> 1554</span>        $this-&gt;txt_query = <span class="stringliteral">&quot;TRUNCATE TABLE $from_tbl&quot;</span>;</div>
+<div class="line"><a id="l01555" name="l01555"></a><span class="lineno"> 1555</span>        <span class="comment">// === 4. Выполнение запроса ===</span></div>
+<div class="line"><a id="l01556" name="l01556"></a><span class="lineno"> 1556</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>();</div>
+<div class="line"><a id="l01557" name="l01557"></a><span class="lineno"> 1557</span>    }</div>
+</div>
+<div class="line"><a id="l01558" name="l01558"></a><span class="lineno"> 1558</span></div>
+<div class="foldopen" id="foldopen01620" data-start="{" data-end="}">
+<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0"> 1620</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0">_update_internal</a>(array $update, <span class="keywordtype">string</span> $from_tbl, array $options = []): bool</div>
+<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span>    {</div>
+<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"> 1623</span>        <span class="keywordflow">if</span> (!is_array($update)) {</div>
+<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип данных для обновления | Ожидался массив, получено: &quot;</span> . gettype($update)</div>
+<div class="line"><a id="l01626" name="l01626"></a><span class="lineno"> 1626</span>            );</div>
+<div class="line"><a id="l01627" name="l01627"></a><span class="lineno"> 1627</span>        }</div>
+<div class="line"><a id="l01628" name="l01628"></a><span class="lineno"> 1628</span>        <span class="keywordflow">if</span> (!is_string($from_tbl)) {</div>
+<div class="line"><a id="l01629" name="l01629"></a><span class="lineno"> 1629</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01630" name="l01630"></a><span class="lineno"> 1630</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип имени таблицы | Ожидалась строка, получено: &quot;</span> . gettype($from_tbl)</div>
+<div class="line"><a id="l01631" name="l01631"></a><span class="lineno"> 1631</span>            );</div>
+<div class="line"><a id="l01632" name="l01632"></a><span class="lineno"> 1632</span>        }</div>
+<div class="line"><a id="l01633" name="l01633"></a><span class="lineno"> 1633</span>        <span class="keywordflow">if</span> (!is_array($options)) {</div>
+<div class="line"><a id="l01634" name="l01634"></a><span class="lineno"> 1634</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01635" name="l01635"></a><span class="lineno"> 1635</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип опций | Ожидался массив, получено: &quot;</span> . gettype($options)</div>
+<div class="line"><a id="l01636" name="l01636"></a><span class="lineno"> 1636</span>            );</div>
+<div class="line"><a id="l01637" name="l01637"></a><span class="lineno"> 1637</span>        }</div>
+<div class="line"><a id="l01638" name="l01638"></a><span class="lineno"> 1638</span>        <span class="keywordflow">if</span> (empty($options[<span class="stringliteral">&#39;where&#39;</span>])) {</div>
+<div class="line"><a id="l01639" name="l01639"></a><span class="lineno"> 1639</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01640" name="l01640"></a><span class="lineno"> 1640</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Запрос UPDATE без условия WHERE запрещён | Причина: Соображения безопасности&quot;</span></div>
+<div class="line"><a id="l01641" name="l01641"></a><span class="lineno"> 1641</span>            );</div>
+<div class="line"><a id="l01642" name="l01642"></a><span class="lineno"> 1642</span>        }</div>
+<div class="line"><a id="l01643" name="l01643"></a><span class="lineno"> 1643</span> </div>
+<div class="line"><a id="l01644" name="l01644"></a><span class="lineno"> 1644</span>        <span class="comment">// === 2. Удаление недопустимого ключа `group` ===</span></div>
+<div class="line"><a id="l01645" name="l01645"></a><span class="lineno"> 1645</span>        <span class="keywordflow">if</span> (isset($options[<span class="stringliteral">&#39;group&#39;</span>])) {</div>
+<div class="line"><a id="l01646" name="l01646"></a><span class="lineno"> 1646</span>            log_in_file(</div>
+<div class="line"><a id="l01647" name="l01647"></a><span class="lineno"> 1647</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Был использован GROUP BY в UPDATE | Переданные опции: &quot;</span> . json_encode($options)</div>
+<div class="line"><a id="l01648" name="l01648"></a><span class="lineno"> 1648</span>            );</div>
+<div class="line"><a id="l01649" name="l01649"></a><span class="lineno"> 1649</span>            unset($options[<span class="stringliteral">&#39;group&#39;</span>]); <span class="comment">// Удаляем ключ &#39;group&#39;</span></div>
+<div class="line"><a id="l01650" name="l01650"></a><span class="lineno"> 1650</span>        }</div>
+<div class="line"><a id="l01651" name="l01651"></a><span class="lineno"> 1651</span> </div>
+<div class="line"><a id="l01652" name="l01652"></a><span class="lineno"> 1652</span>        <span class="comment">// === 3. Обработка $from_tbl ===</span></div>
+<div class="line"><a id="l01653" name="l01653"></a><span class="lineno"> 1653</span>        $from_tbl = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($from_tbl);</div>
+<div class="line"><a id="l01654" name="l01654"></a><span class="lineno"> 1654</span> </div>
+<div class="line"><a id="l01655" name="l01655"></a><span class="lineno"> 1655</span>        <span class="comment">// === 4. Формирование списка полей для обновления ===</span></div>
+<div class="line"><a id="l01656" name="l01656"></a><span class="lineno"> 1656</span>        [$set_fields, $set_placeholders, $params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899">prepare_insert_data</a>($update, <span class="stringliteral">&#39;update_&#39;</span>);</div>
+<div class="line"><a id="l01657" name="l01657"></a><span class="lineno"> 1657</span>        $set_clause = implode(<span class="stringliteral">&#39;, &#39;</span>, array_map(</div>
+<div class="line"><a id="l01658" name="l01658"></a><span class="lineno"> 1658</span>            fn ($field, $placeholder) =&gt; <span class="stringliteral">&quot;$field = $placeholder&quot;</span>,</div>
+<div class="line"><a id="l01659" name="l01659"></a><span class="lineno"> 1659</span>            explode(<span class="stringliteral">&#39;, &#39;</span>, $set_fields),</div>
+<div class="line"><a id="l01660" name="l01660"></a><span class="lineno"> 1660</span>            explode(<span class="stringliteral">&#39;, &#39;</span>, $set_placeholders)</div>
+<div class="line"><a id="l01661" name="l01661"></a><span class="lineno"> 1661</span>        ));</div>
+<div class="line"><a id="l01662" name="l01662"></a><span class="lineno"> 1662</span> </div>
+<div class="line"><a id="l01663" name="l01663"></a><span class="lineno"> 1663</span>        <span class="comment">// === 5. Формирование базового запроса ===</span></div>
+<div class="line"><a id="l01664" name="l01664"></a><span class="lineno"> 1664</span>        $this-&gt;txt_query = <span class="stringliteral">&quot;UPDATE $from_tbl SET $set_clause&quot;</span>;</div>
+<div class="line"><a id="l01665" name="l01665"></a><span class="lineno"> 1665</span> </div>
+<div class="line"><a id="l01666" name="l01666"></a><span class="lineno"> 1666</span>        <span class="comment">// === 6. Добавление условий ===</span></div>
+<div class="line"><a id="l01667" name="l01667"></a><span class="lineno"> 1667</span>        [$conditions, $condition_params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">build_conditions</a>($options);</div>
+<div class="line"><a id="l01668" name="l01668"></a><span class="lineno"> 1668</span>        $this-&gt;txt_query .= $conditions;</div>
+<div class="line"><a id="l01669" name="l01669"></a><span class="lineno"> 1669</span> </div>
+<div class="line"><a id="l01670" name="l01670"></a><span class="lineno"> 1670</span>        <span class="comment">// === 7. Подготовка параметров ===</span></div>
+<div class="line"><a id="l01671" name="l01671"></a><span class="lineno"> 1671</span>        $params = array_merge($params, $condition_params);</div>
+<div class="line"><a id="l01672" name="l01672"></a><span class="lineno"> 1672</span> </div>
+<div class="line"><a id="l01673" name="l01673"></a><span class="lineno"> 1673</span>        <span class="comment">// === 8. Выполнение запроса ===</span></div>
+<div class="line"><a id="l01674" name="l01674"></a><span class="lineno"> 1674</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>($params);</div>
+<div class="line"><a id="l01675" name="l01675"></a><span class="lineno"> 1675</span>    }</div>
+</div>
+<div class="line"><a id="l01676" name="l01676"></a><span class="lineno"> 1676</span></div>
+<div class="foldopen" id="foldopen01742" data-start="{" data-end="}">
+<div class="line"><a id="l01742" name="l01742"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a"> 1742</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a">_insert_internal</a>(array $insert, <span class="keywordtype">string</span> $to_tbl, <span class="keywordtype">string</span> $type = <span class="stringliteral">&#39;&#39;</span>, array $options = []): bool</div>
+<div class="line"><a id="l01743" name="l01743"></a><span class="lineno"> 1743</span>    {</div>
+<div class="line"><a id="l01744" name="l01744"></a><span class="lineno"> 1744</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l01745" name="l01745"></a><span class="lineno"> 1745</span>        <span class="keywordflow">if</span> (!is_array($insert)) {</div>
+<div class="line"><a id="l01746" name="l01746"></a><span class="lineno"> 1746</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01747" name="l01747"></a><span class="lineno"> 1747</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип данных для вставки | Ожидался массив, получено: &quot;</span> . gettype($insert)</div>
+<div class="line"><a id="l01748" name="l01748"></a><span class="lineno"> 1748</span>            );</div>
+<div class="line"><a id="l01749" name="l01749"></a><span class="lineno"> 1749</span>        }</div>
+<div class="line"><a id="l01750" name="l01750"></a><span class="lineno"> 1750</span>        <span class="keywordflow">if</span> (!is_string($to_tbl)) {</div>
+<div class="line"><a id="l01751" name="l01751"></a><span class="lineno"> 1751</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01752" name="l01752"></a><span class="lineno"> 1752</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип имени таблицы | Ожидалась строка, получено: &quot;</span> . gettype($to_tbl)</div>
+<div class="line"><a id="l01753" name="l01753"></a><span class="lineno"> 1753</span>            );</div>
+<div class="line"><a id="l01754" name="l01754"></a><span class="lineno"> 1754</span>        }</div>
+<div class="line"><a id="l01755" name="l01755"></a><span class="lineno"> 1755</span>        <span class="keywordflow">if</span> (empty($insert)) {</div>
+<div class="line"><a id="l01756" name="l01756"></a><span class="lineno"> 1756</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01757" name="l01757"></a><span class="lineno"> 1757</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Данные для вставки не могут быть пустыми | Причина: Пустой массив данных&quot;</span></div>
+<div class="line"><a id="l01758" name="l01758"></a><span class="lineno"> 1758</span>            );</div>
+<div class="line"><a id="l01759" name="l01759"></a><span class="lineno"> 1759</span>        }</div>
+<div class="line"><a id="l01760" name="l01760"></a><span class="lineno"> 1760</span>        <span class="comment">// Нормализация $type (приведение к нижнему регистру)</span></div>
+<div class="line"><a id="l01761" name="l01761"></a><span class="lineno"> 1761</span>        $type = strtolower($type);</div>
+<div class="line"><a id="l01762" name="l01762"></a><span class="lineno"> 1762</span>        <span class="comment">// Проверка допустимых значений для $type</span></div>
+<div class="line"><a id="l01763" name="l01763"></a><span class="lineno"> 1763</span>        <span class="keywordflow">if</span> (!in_array($type, [<span class="stringliteral">&#39;&#39;</span>, <span class="stringliteral">&#39;ignore&#39;</span>, <span class="stringliteral">&#39;replace&#39;</span>, <span class="stringliteral">&#39;into&#39;</span>], <span class="keyword">true</span>)) {</div>
+<div class="line"><a id="l01764" name="l01764"></a><span class="lineno"> 1764</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01765" name="l01765"></a><span class="lineno"> 1765</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Недопустимый тип вставки | Разрешённые значения: &#39;&#39;, &#39;ignore&#39;, &#39;replace&#39;, &#39;into&#39;. Получено: &#39;$type&#39;&quot;</span></div>
+<div class="line"><a id="l01766" name="l01766"></a><span class="lineno"> 1766</span>            );</div>
+<div class="line"><a id="l01767" name="l01767"></a><span class="lineno"> 1767</span>        }</div>
+<div class="line"><a id="l01768" name="l01768"></a><span class="lineno"> 1768</span>        <span class="comment">// === 2. Обработка $to_tbl ===</span></div>
+<div class="line"><a id="l01769" name="l01769"></a><span class="lineno"> 1769</span>        $to_tbl = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($to_tbl);</div>
+<div class="line"><a id="l01770" name="l01770"></a><span class="lineno"> 1770</span>        <span class="comment">// === 3. Определение типа запроса ===</span></div>
+<div class="line"><a id="l01771" name="l01771"></a><span class="lineno"> 1771</span>        <span class="keywordflow">if</span> ($type === <span class="stringliteral">&#39;ignore&#39;</span>) {</div>
+<div class="line"><a id="l01772" name="l01772"></a><span class="lineno"> 1772</span>            $query_type = <span class="stringliteral">&#39;INSERT IGNORE INTO &#39;</span>;</div>
+<div class="line"><a id="l01773" name="l01773"></a><span class="lineno"> 1773</span>        } elseif ($type === <span class="stringliteral">&#39;replace&#39;</span>) {</div>
+<div class="line"><a id="l01774" name="l01774"></a><span class="lineno"> 1774</span>            $query_type = <span class="stringliteral">&#39;REPLACE INTO &#39;</span>;</div>
+<div class="line"><a id="l01775" name="l01775"></a><span class="lineno"> 1775</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01776" name="l01776"></a><span class="lineno"> 1776</span>            $query_type = <span class="stringliteral">&#39;INSERT INTO &#39;</span>; <span class="comment">// По умолчанию или если указано &#39;into&#39;</span></div>
+<div class="line"><a id="l01777" name="l01777"></a><span class="lineno"> 1777</span>        }</div>
+<div class="line"><a id="l01778" name="l01778"></a><span class="lineno"> 1778</span>        <span class="comment">// === 4. Подготовка данных для запроса ===</span></div>
+<div class="line"><a id="l01779" name="l01779"></a><span class="lineno"> 1779</span>        [$fields_clause, $placeholders_clause, $params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899">prepare_insert_data</a>($insert, $options[<span class="stringliteral">&#39;params&#39;</span>] ?? []);</div>
+<div class="line"><a id="l01780" name="l01780"></a><span class="lineno"> 1780</span>        <span class="comment">// === 5. Формирование базового запроса ===</span></div>
+<div class="line"><a id="l01781" name="l01781"></a><span class="lineno"> 1781</span>        $this-&gt;txt_query = <span class="stringliteral">&quot;$query_type$to_tbl ($fields_clause) VALUES ($placeholders_clause)&quot;</span>;</div>
+<div class="line"><a id="l01782" name="l01782"></a><span class="lineno"> 1782</span>        <span class="comment">// === 6. Выполнение запроса ===</span></div>
+<div class="line"><a id="l01783" name="l01783"></a><span class="lineno"> 1783</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>($params);</div>
+<div class="line"><a id="l01784" name="l01784"></a><span class="lineno"> 1784</span>    }</div>
+</div>
+<div class="line"><a id="l01785" name="l01785"></a><span class="lineno"> 1785</span></div>
+<div class="foldopen" id="foldopen01823" data-start="{" data-end="}">
+<div class="line"><a id="l01823" name="l01823"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adbe79d2c68c4501e901c6a978544ba25"> 1823</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adbe79d2c68c4501e901c6a978544ba25">_res_row_internal</a>(): array|false</div>
+<div class="line"><a id="l01824" name="l01824"></a><span class="lineno"> 1824</span>    {</div>
+<div class="line"><a id="l01825" name="l01825"></a><span class="lineno"> 1825</span>        <span class="comment">// === 1. Валидация состояния запроса ===</span></div>
+<div class="line"><a id="l01826" name="l01826"></a><span class="lineno"> 1826</span>        <span class="keywordflow">if</span> (!isset($this-&gt;res_query) || !($this-&gt;res_query instanceof \PDOStatement)) {</div>
+<div class="line"><a id="l01827" name="l01827"></a><span class="lineno"> 1827</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01828" name="l01828"></a><span class="lineno"> 1828</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement&quot;</span></div>
+<div class="line"><a id="l01829" name="l01829"></a><span class="lineno"> 1829</span>            );</div>
+<div class="line"><a id="l01830" name="l01830"></a><span class="lineno"> 1830</span>        }</div>
+<div class="line"><a id="l01831" name="l01831"></a><span class="lineno"> 1831</span>        <span class="comment">// === 2. Извлечение строки результата ===</span></div>
+<div class="line"><a id="l01832" name="l01832"></a><span class="lineno"> 1832</span>        $row = $this-&gt;res_query-&gt;fetch(\PDO::FETCH_ASSOC);</div>
+<div class="line"><a id="l01833" name="l01833"></a><span class="lineno"> 1833</span>        <span class="keywordflow">if</span> ($row === <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l01834" name="l01834"></a><span class="lineno"> 1834</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Явно возвращаем false, если результатов нет</span></div>
+<div class="line"><a id="l01835" name="l01835"></a><span class="lineno"> 1835</span>        }</div>
+<div class="line"><a id="l01836" name="l01836"></a><span class="lineno"> 1836</span>        <span class="keywordflow">return</span> $row;</div>
+<div class="line"><a id="l01837" name="l01837"></a><span class="lineno"> 1837</span>    }</div>
+</div>
+<div class="line"><a id="l01838" name="l01838"></a><span class="lineno"> 1838</span></div>
+<div class="foldopen" id="foldopen01882" data-start="{" data-end="}">
+<div class="line"><a id="l01882" name="l01882"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a71ffa0229d9d0c5053501c55e6fd98d0"> 1882</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a71ffa0229d9d0c5053501c55e6fd98d0">_res_arr_internal</a>(): array|false</div>
+<div class="line"><a id="l01883" name="l01883"></a><span class="lineno"> 1883</span>    {</div>
+<div class="line"><a id="l01884" name="l01884"></a><span class="lineno"> 1884</span>        <span class="comment">// === 1. Валидация состояния запроса ===</span></div>
+<div class="line"><a id="l01885" name="l01885"></a><span class="lineno"> 1885</span>        <span class="keywordflow">if</span> (!isset($this-&gt;res_query) || !($this-&gt;res_query instanceof \PDOStatement)) {</div>
+<div class="line"><a id="l01886" name="l01886"></a><span class="lineno"> 1886</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01887" name="l01887"></a><span class="lineno"> 1887</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement&quot;</span></div>
+<div class="line"><a id="l01888" name="l01888"></a><span class="lineno"> 1888</span>            );</div>
+<div class="line"><a id="l01889" name="l01889"></a><span class="lineno"> 1889</span>        }</div>
+<div class="line"><a id="l01890" name="l01890"></a><span class="lineno"> 1890</span>        <span class="comment">// === 2. Извлечение всех строк результата ===</span></div>
+<div class="line"><a id="l01891" name="l01891"></a><span class="lineno"> 1891</span>        $rows = $this-&gt;res_query-&gt;fetchAll(\PDO::FETCH_ASSOC);</div>
+<div class="line"><a id="l01892" name="l01892"></a><span class="lineno"> 1892</span>        <span class="keywordflow">if</span> (empty($rows)) {</div>
+<div class="line"><a id="l01893" name="l01893"></a><span class="lineno"> 1893</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Явно возвращаем false, если результатов нет</span></div>
+<div class="line"><a id="l01894" name="l01894"></a><span class="lineno"> 1894</span>        }</div>
+<div class="line"><a id="l01895" name="l01895"></a><span class="lineno"> 1895</span>        <span class="keywordflow">return</span> $rows;</div>
+<div class="line"><a id="l01896" name="l01896"></a><span class="lineno"> 1896</span>    }</div>
+</div>
+<div class="line"><a id="l01897" name="l01897"></a><span class="lineno"> 1897</span></div>
+<div class="foldopen" id="foldopen01933" data-start="{" data-end="}">
+<div class="line"><a id="l01933" name="l01933"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a834ca0d1c7c60bc9bfae123070b45fbd"> 1933</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a834ca0d1c7c60bc9bfae123070b45fbd">_get_affected_rows_internal</a>(): int</div>
+<div class="line"><a id="l01934" name="l01934"></a><span class="lineno"> 1934</span>    {</div>
+<div class="line"><a id="l01935" name="l01935"></a><span class="lineno"> 1935</span>        <span class="comment">// === 1. Валидация состояния ===</span></div>
+<div class="line"><a id="l01936" name="l01936"></a><span class="lineno"> 1936</span>        <span class="keywordflow">if</span> (!isset($this-&gt;aff_rows)) {</div>
+<div class="line"><a id="l01937" name="l01937"></a><span class="lineno"> 1937</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01938" name="l01938"></a><span class="lineno"> 1938</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Количество затронутых строк не установлено | Причина: Свойство aff_rows не определено&quot;</span></div>
+<div class="line"><a id="l01939" name="l01939"></a><span class="lineno"> 1939</span>            );</div>
+<div class="line"><a id="l01940" name="l01940"></a><span class="lineno"> 1940</span>        }</div>
+<div class="line"><a id="l01941" name="l01941"></a><span class="lineno"> 1941</span>        <span class="keywordflow">if</span> (!is_int($this-&gt;aff_rows)) {</div>
+<div class="line"><a id="l01942" name="l01942"></a><span class="lineno"> 1942</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01943" name="l01943"></a><span class="lineno"> 1943</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректное значение количества затронутых строк | Причина: Ожидалось целое число&quot;</span></div>
+<div class="line"><a id="l01944" name="l01944"></a><span class="lineno"> 1944</span>            );</div>
+<div class="line"><a id="l01945" name="l01945"></a><span class="lineno"> 1945</span>        }</div>
+<div class="line"><a id="l01946" name="l01946"></a><span class="lineno"> 1946</span>        <span class="comment">// === 2. Возврат значения ===</span></div>
+<div class="line"><a id="l01947" name="l01947"></a><span class="lineno"> 1947</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adac4bb14b3d809b245c89d5e7388096f">$this-&gt;aff_rows</a>;</div>
+<div class="line"><a id="l01948" name="l01948"></a><span class="lineno"> 1948</span>    }</div>
+</div>
+<div class="line"><a id="l01949" name="l01949"></a><span class="lineno"> 1949</span></div>
+<div class="foldopen" id="foldopen01983" data-start="{" data-end="}">
+<div class="line"><a id="l01983" name="l01983"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab122f53e8d2ca9d723e32426c9e691e9"> 1983</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab122f53e8d2ca9d723e32426c9e691e9">_get_last_insert_id_internal</a>(): int</div>
+<div class="line"><a id="l01984" name="l01984"></a><span class="lineno"> 1984</span>    {</div>
+<div class="line"><a id="l01985" name="l01985"></a><span class="lineno"> 1985</span>        <span class="comment">// === 1. Валидация состояния ===</span></div>
+<div class="line"><a id="l01986" name="l01986"></a><span class="lineno"> 1986</span>        <span class="keywordflow">if</span> (!isset($this-&gt;insert_id)) {</div>
+<div class="line"><a id="l01987" name="l01987"></a><span class="lineno"> 1987</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01988" name="l01988"></a><span class="lineno"> 1988</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | ID последней вставленной строки не установлен | Причина: Свойство insert_id не определено&quot;</span></div>
+<div class="line"><a id="l01989" name="l01989"></a><span class="lineno"> 1989</span>            );</div>
+<div class="line"><a id="l01990" name="l01990"></a><span class="lineno"> 1990</span>        }</div>
+<div class="line"><a id="l01991" name="l01991"></a><span class="lineno"> 1991</span>        <span class="keywordflow">if</span> (!is_int($this-&gt;insert_id)) {</div>
+<div class="line"><a id="l01992" name="l01992"></a><span class="lineno"> 1992</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l01993" name="l01993"></a><span class="lineno"> 1993</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректное значение ID последней вставленной строки | Причина: Ожидалось целое число&quot;</span></div>
+<div class="line"><a id="l01994" name="l01994"></a><span class="lineno"> 1994</span>            );</div>
+<div class="line"><a id="l01995" name="l01995"></a><span class="lineno"> 1995</span>        }</div>
+<div class="line"><a id="l01996" name="l01996"></a><span class="lineno"> 1996</span>        <span class="comment">// === 2. Возврат значения ===</span></div>
+<div class="line"><a id="l01997" name="l01997"></a><span class="lineno"> 1997</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7d5870c89e950451ed8a204c07c66a30">$this-&gt;insert_id</a>;</div>
+<div class="line"><a id="l01998" name="l01998"></a><span class="lineno"> 1998</span>    }</div>
+</div>
+<div class="line"><a id="l01999" name="l01999"></a><span class="lineno"> 1999</span></div>
+<div class="foldopen" id="foldopen02066" data-start="{" data-end="}">
+<div class="line"><a id="l02066" name="l02066"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65"> 2066</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">execute_query</a>(array $params = []): bool</div>
+<div class="line"><a id="l02067" name="l02067"></a><span class="lineno"> 2067</span>    {</div>
+<div class="line"><a id="l02068" name="l02068"></a><span class="lineno"> 2068</span>        <span class="comment">// Валидация состояния запроса и аргументов</span></div>
+<div class="line"><a id="l02069" name="l02069"></a><span class="lineno"> 2069</span>        <span class="keywordflow">if</span> (isset($this-&gt;res_query) &amp;&amp; !($this-&gt;res_query instanceof \PDOStatement)) {</div>
+<div class="line"><a id="l02070" name="l02070"></a><span class="lineno"> 2070</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02071" name="l02071"></a><span class="lineno"> 2071</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректное состояние результата запроса | Текущее значение: &quot;</span> . gettype($this-&gt;res_query)</div>
+<div class="line"><a id="l02072" name="l02072"></a><span class="lineno"> 2072</span>            );</div>
+<div class="line"><a id="l02073" name="l02073"></a><span class="lineno"> 2073</span>        }</div>
+<div class="line"><a id="l02074" name="l02074"></a><span class="lineno"> 2074</span>        <span class="comment">// Очистка внутренних свойств для вывода результата запроса</span></div>
+<div class="line"><a id="l02075" name="l02075"></a><span class="lineno"> 2075</span>        $this-&gt;res_query = <span class="keyword">null</span>;</div>
+<div class="line"><a id="l02076" name="l02076"></a><span class="lineno"> 2076</span>        $this-&gt;aff_rows = 0;</div>
+<div class="line"><a id="l02077" name="l02077"></a><span class="lineno"> 2077</span>        $this-&gt;insert_id = 0;</div>
+<div class="line"><a id="l02078" name="l02078"></a><span class="lineno"> 2078</span>        <span class="comment">// Валидация аргументов</span></div>
+<div class="line"><a id="l02079" name="l02079"></a><span class="lineno"> 2079</span>        <span class="keywordflow">if</span> (!is_string($this-&gt;txt_query)) {</div>
+<div class="line"><a id="l02080" name="l02080"></a><span class="lineno"> 2080</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02081" name="l02081"></a><span class="lineno"> 2081</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип SQL-запроса | Ожидалась строка, получено: &quot;</span> . gettype($this-&gt;txt_query)</div>
+<div class="line"><a id="l02082" name="l02082"></a><span class="lineno"> 2082</span>            );</div>
+<div class="line"><a id="l02083" name="l02083"></a><span class="lineno"> 2083</span>        }</div>
+<div class="line"><a id="l02084" name="l02084"></a><span class="lineno"> 2084</span>        <span class="keywordflow">if</span> (!is_array($params)) {</div>
+<div class="line"><a id="l02085" name="l02085"></a><span class="lineno"> 2085</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02086" name="l02086"></a><span class="lineno"> 2086</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип параметров | Ожидался массив, получено: &quot;</span> . gettype($params)</div>
+<div class="line"><a id="l02087" name="l02087"></a><span class="lineno"> 2087</span>            );</div>
+<div class="line"><a id="l02088" name="l02088"></a><span class="lineno"> 2088</span>        }</div>
+<div class="line"><a id="l02089" name="l02089"></a><span class="lineno"> 2089</span>        <span class="comment">// Начало замера времени</span></div>
+<div class="line"><a id="l02090" name="l02090"></a><span class="lineno"> 2090</span>        $start_time = microtime(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l02091" name="l02091"></a><span class="lineno"> 2091</span>        $this-&gt;res_query = $this-&gt;pdo-&gt;prepare($this-&gt;txt_query);</div>
+<div class="line"><a id="l02092" name="l02092"></a><span class="lineno"> 2092</span>        $this-&gt;res_query-&gt;execute($params);</div>
+<div class="line"><a id="l02093" name="l02093"></a><span class="lineno"> 2093</span>        $this-&gt;aff_rows = $this-&gt;res_query-&gt;rowCount();</div>
+<div class="line"><a id="l02094" name="l02094"></a><span class="lineno"> 2094</span>        $this-&gt;insert_id = (int)$this-&gt;pdo-&gt;lastInsertId();</div>
+<div class="line"><a id="l02095" name="l02095"></a><span class="lineno"> 2095</span>        <span class="comment">// Конец замера времени</span></div>
+<div class="line"><a id="l02096" name="l02096"></a><span class="lineno"> 2096</span>        $end_time = microtime(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l02097" name="l02097"></a><span class="lineno"> 2097</span>        $execution_time = ($end_time - $start_time) * 1000; <span class="comment">// Время в миллисекундах</span></div>
+<div class="line"><a id="l02098" name="l02098"></a><span class="lineno"> 2098</span>        <span class="comment">// Логирование медленных запросов</span></div>
+<div class="line"><a id="l02099" name="l02099"></a><span class="lineno"> 2099</span>        $slow_query_threshold = 200; <span class="comment">// Порог в миллисекундах</span></div>
+<div class="line"><a id="l02100" name="l02100"></a><span class="lineno"> 2100</span>        <span class="keywordflow">if</span> ($execution_time &gt; $slow_query_threshold) {</div>
+<div class="line"><a id="l02101" name="l02101"></a><span class="lineno"> 2101</span>            log_in_file(</div>
+<div class="line"><a id="l02102" name="l02102"></a><span class="lineno"> 2102</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Обнаружен медленный запрос | Время выполнения: {$execution_time} мс | SQL: $this-&gt;txt_query&quot;</span></div>
+<div class="line"><a id="l02103" name="l02103"></a><span class="lineno"> 2103</span>            );</div>
+<div class="line"><a id="l02104" name="l02104"></a><span class="lineno"> 2104</span>        }</div>
+<div class="line"><a id="l02105" name="l02105"></a><span class="lineno"> 2105</span>        <span class="comment">// Очистка строки запроса после её выполнения</span></div>
+<div class="line"><a id="l02106" name="l02106"></a><span class="lineno"> 2106</span>        $this-&gt;txt_query = <span class="keyword">null</span>;</div>
+<div class="line"><a id="l02107" name="l02107"></a><span class="lineno"> 2107</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l02108" name="l02108"></a><span class="lineno"> 2108</span>    }</div>
+</div>
+<div class="line"><a id="l02109" name="l02109"></a><span class="lineno"> 2109</span></div>
+<div class="foldopen" id="foldopen02182" data-start="{" data-end="}">
+<div class="line"><a id="l02182" name="l02182"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35"> 2182</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">build_conditions</a>(array $options): array</div>
+<div class="line"><a id="l02183" name="l02183"></a><span class="lineno"> 2183</span>    {</div>
+<div class="line"><a id="l02184" name="l02184"></a><span class="lineno"> 2184</span>        $conditions = <span class="stringliteral">&#39;&#39;</span>;</div>
+<div class="line"><a id="l02185" name="l02185"></a><span class="lineno"> 2185</span>        $params = $options[<span class="stringliteral">&#39;params&#39;</span>] ?? [];</div>
+<div class="line"><a id="l02186" name="l02186"></a><span class="lineno"> 2186</span>        <span class="comment">// === 1. Обработка WHERE ===</span></div>
+<div class="line"><a id="l02187" name="l02187"></a><span class="lineno"> 2187</span>        <span class="keywordflow">if</span> (isset($options[<span class="stringliteral">&#39;where&#39;</span>])) {</div>
+<div class="line"><a id="l02188" name="l02188"></a><span class="lineno"> 2188</span>            <span class="keywordflow">if</span> (is_string($options[<span class="stringliteral">&#39;where&#39;</span>])) {</div>
+<div class="line"><a id="l02189" name="l02189"></a><span class="lineno"> 2189</span>                <span class="comment">// Преобразуем строку в массив с одним элементом</span></div>
+<div class="line"><a id="l02190" name="l02190"></a><span class="lineno"> 2190</span>                $options[<span class="stringliteral">&#39;where&#39;</span>] = [<span class="stringliteral">&#39;condition&#39;</span> =&gt; $options[<span class="stringliteral">&#39;where&#39;</span>]];</div>
+<div class="line"><a id="l02191" name="l02191"></a><span class="lineno"> 2191</span>            }</div>
+<div class="line"><a id="l02192" name="l02192"></a><span class="lineno"> 2192</span>            <span class="keywordflow">if</span> (is_array($options[<span class="stringliteral">&#39;where&#39;</span>])) {</div>
+<div class="line"><a id="l02193" name="l02193"></a><span class="lineno"> 2193</span>                <span class="comment">// Используем prepare_insert_data() для обработки</span></div>
+<div class="line"><a id="l02194" name="l02194"></a><span class="lineno"> 2194</span>                [$where_fields, $where_placeholders, $params] = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899">prepare_insert_data</a>($options[<span class="stringliteral">&#39;where&#39;</span>], <span class="stringliteral">&#39;where_&#39;</span>);</div>
+<div class="line"><a id="l02195" name="l02195"></a><span class="lineno"> 2195</span>                $conditions .= <span class="stringliteral">&#39; WHERE &#39;</span> . implode(<span class="stringliteral">&#39; AND &#39;</span>, array_map(</div>
+<div class="line"><a id="l02196" name="l02196"></a><span class="lineno"> 2196</span>                    fn ($field, $placeholder) =&gt; <span class="stringliteral">&quot;$field = $placeholder&quot;</span>,</div>
+<div class="line"><a id="l02197" name="l02197"></a><span class="lineno"> 2197</span>                    explode(<span class="stringliteral">&#39;, &#39;</span>, $where_fields),</div>
+<div class="line"><a id="l02198" name="l02198"></a><span class="lineno"> 2198</span>                    explode(<span class="stringliteral">&#39;, &#39;</span>, $where_placeholders)</div>
+<div class="line"><a id="l02199" name="l02199"></a><span class="lineno"> 2199</span>                ));</div>
+<div class="line"><a id="l02200" name="l02200"></a><span class="lineno"> 2200</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02201" name="l02201"></a><span class="lineno"> 2201</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02202" name="l02202"></a><span class="lineno"> 2202</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверное условие &#39;where&#39; | Ожидалась строка или массив, получено: &quot;</span> . gettype($options[<span class="stringliteral">&#39;where&#39;</span>])</div>
+<div class="line"><a id="l02203" name="l02203"></a><span class="lineno"> 2203</span>                );</div>
+<div class="line"><a id="l02204" name="l02204"></a><span class="lineno"> 2204</span>            }</div>
+<div class="line"><a id="l02205" name="l02205"></a><span class="lineno"> 2205</span>        }</div>
+<div class="line"><a id="l02206" name="l02206"></a><span class="lineno"> 2206</span>        <span class="comment">// === 2. Обработка GROUP BY ===</span></div>
+<div class="line"><a id="l02207" name="l02207"></a><span class="lineno"> 2207</span>        <span class="keywordflow">if</span> (isset($options[<span class="stringliteral">&#39;group&#39;</span>])) {</div>
+<div class="line"><a id="l02208" name="l02208"></a><span class="lineno"> 2208</span>            <span class="keywordflow">if</span> (is_string($options[<span class="stringliteral">&#39;group&#39;</span>])) {</div>
+<div class="line"><a id="l02209" name="l02209"></a><span class="lineno"> 2209</span>                $conditions .= <span class="stringliteral">&#39; GROUP BY &#39;</span> . $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($options[<span class="stringliteral">&#39;group&#39;</span>]);</div>
+<div class="line"><a id="l02210" name="l02210"></a><span class="lineno"> 2210</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02211" name="l02211"></a><span class="lineno"> 2211</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02212" name="l02212"></a><span class="lineno"> 2212</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверное значение &#39;group&#39; | Ожидалась строка, получено: &quot;</span> . gettype($options[<span class="stringliteral">&#39;group&#39;</span>])</div>
+<div class="line"><a id="l02213" name="l02213"></a><span class="lineno"> 2213</span>                );</div>
+<div class="line"><a id="l02214" name="l02214"></a><span class="lineno"> 2214</span>            }</div>
+<div class="line"><a id="l02215" name="l02215"></a><span class="lineno"> 2215</span>        }</div>
+<div class="line"><a id="l02216" name="l02216"></a><span class="lineno"> 2216</span>        <span class="comment">// === 3. Обработка ORDER BY ===</span></div>
+<div class="line"><a id="l02217" name="l02217"></a><span class="lineno"> 2217</span>        <span class="keywordflow">if</span> (isset($options[<span class="stringliteral">&#39;order&#39;</span>])) {</div>
+<div class="line"><a id="l02218" name="l02218"></a><span class="lineno"> 2218</span>            <span class="keywordflow">if</span> (is_string($options[<span class="stringliteral">&#39;order&#39;</span>])) {</div>
+<div class="line"><a id="l02219" name="l02219"></a><span class="lineno"> 2219</span>                $conditions .= <span class="stringliteral">&#39; ORDER BY &#39;</span> . $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($options[<span class="stringliteral">&#39;order&#39;</span>]);</div>
+<div class="line"><a id="l02220" name="l02220"></a><span class="lineno"> 2220</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02221" name="l02221"></a><span class="lineno"> 2221</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02222" name="l02222"></a><span class="lineno"> 2222</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверное значение &#39;order&#39; | Ожидалась строка, получено: &quot;</span> . gettype($options[<span class="stringliteral">&#39;order&#39;</span>])</div>
+<div class="line"><a id="l02223" name="l02223"></a><span class="lineno"> 2223</span>                );</div>
+<div class="line"><a id="l02224" name="l02224"></a><span class="lineno"> 2224</span>            }</div>
+<div class="line"><a id="l02225" name="l02225"></a><span class="lineno"> 2225</span>        }</div>
+<div class="line"><a id="l02226" name="l02226"></a><span class="lineno"> 2226</span>        <span class="comment">// === 4. Обработка LIMIT ===</span></div>
+<div class="line"><a id="l02227" name="l02227"></a><span class="lineno"> 2227</span>        <span class="keywordflow">if</span> (isset($options[<span class="stringliteral">&#39;limit&#39;</span>])) {</div>
+<div class="line"><a id="l02228" name="l02228"></a><span class="lineno"> 2228</span>            <span class="keywordflow">if</span> (is_numeric($options[<span class="stringliteral">&#39;limit&#39;</span>])) {</div>
+<div class="line"><a id="l02229" name="l02229"></a><span class="lineno"> 2229</span>                $conditions .= <span class="stringliteral">&#39; LIMIT &#39;</span> . intval($options[<span class="stringliteral">&#39;limit&#39;</span>]);</div>
+<div class="line"><a id="l02230" name="l02230"></a><span class="lineno"> 2230</span>            } elseif (is_string($options[<span class="stringliteral">&#39;limit&#39;</span>]) &amp;&amp; preg_match(<span class="stringliteral">&#39;/^\d+\s*,\s*\d+$/&#39;</span>, $options[<span class="stringliteral">&#39;limit&#39;</span>])) {</div>
+<div class="line"><a id="l02231" name="l02231"></a><span class="lineno"> 2231</span>                <span class="comment">// Разбиваем строку на два числа</span></div>
+<div class="line"><a id="l02232" name="l02232"></a><span class="lineno"> 2232</span>                [$offset, $count] = array_map(<span class="stringliteral">&#39;intval&#39;</span>, explode(<span class="charliteral">&#39;,&#39;</span>, $options[<span class="stringliteral">&#39;limit&#39;</span>]));</div>
+<div class="line"><a id="l02233" name="l02233"></a><span class="lineno"> 2233</span>                $conditions .= <span class="stringliteral">&#39; LIMIT &#39;</span> . $offset . <span class="stringliteral">&#39;, &#39;</span> . $count;</div>
+<div class="line"><a id="l02234" name="l02234"></a><span class="lineno"> 2234</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02235" name="l02235"></a><span class="lineno"> 2235</span>                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02236" name="l02236"></a><span class="lineno"> 2236</span>                    <span class="stringliteral">&quot;[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: &#39;global&#39;})] | Неверное значение &#39;limit&#39; | Ожидалось число или строка формата &#39;OFFSET, COUNT&#39;, получено: &quot;</span> . gettype($options[<span class="stringliteral">&#39;limit&#39;</span>]) . <span class="stringliteral">&quot; ($options[limit])&quot;</span></div>
+<div class="line"><a id="l02237" name="l02237"></a><span class="lineno"> 2237</span>                );</div>
+<div class="line"><a id="l02238" name="l02238"></a><span class="lineno"> 2238</span>            }</div>
+<div class="line"><a id="l02239" name="l02239"></a><span class="lineno"> 2239</span>        }</div>
+<div class="line"><a id="l02240" name="l02240"></a><span class="lineno"> 2240</span>        <span class="keywordflow">return</span> [$conditions, $params];</div>
+<div class="line"><a id="l02241" name="l02241"></a><span class="lineno"> 2241</span>    }</div>
+</div>
+<div class="line"><a id="l02242" name="l02242"></a><span class="lineno"> 2242</span></div>
+<div class="foldopen" id="foldopen02292" data-start="{" data-end="}">
+<div class="line"><a id="l02292" name="l02292"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7"> 2292</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>(<span class="keywordtype">string</span> $expression): string</div>
+<div class="line"><a id="l02293" name="l02293"></a><span class="lineno"> 2293</span>    {</div>
+<div class="line"><a id="l02294" name="l02294"></a><span class="lineno"> 2294</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l02295" name="l02295"></a><span class="lineno"> 2295</span>        <span class="keywordflow">if</span> (!is_string($expression)) {</div>
+<div class="line"><a id="l02296" name="l02296"></a><span class="lineno"> 2296</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02297" name="l02297"></a><span class="lineno"> 2297</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип выражения | Ожидалась строка, получено: &quot;</span> . gettype($expression)</div>
+<div class="line"><a id="l02298" name="l02298"></a><span class="lineno"> 2298</span>            );</div>
+<div class="line"><a id="l02299" name="l02299"></a><span class="lineno"> 2299</span>        }</div>
+<div class="line"><a id="l02300" name="l02300"></a><span class="lineno"> 2300</span>        <span class="comment">// === 2. Разделение выражения на части ===</span></div>
+<div class="line"><a id="l02301" name="l02301"></a><span class="lineno"> 2301</span>        $pattern = <span class="stringliteral">&#39;/(\bAND\b|\bOR\b|=|&lt;|&gt;|LIKE|IN|IS NULL)/i&#39;</span>;</div>
+<div class="line"><a id="l02302" name="l02302"></a><span class="lineno"> 2302</span>        $parts = preg_split($pattern, $expression, -1, PREG_SPLIT_DELIM_CAPTURE);</div>
+<div class="line"><a id="l02303" name="l02303"></a><span class="lineno"> 2303</span>        <span class="comment">// === 3. Обработка каждой части ===</span></div>
+<div class="line"><a id="l02304" name="l02304"></a><span class="lineno"> 2304</span>        $sanitized_parts = array_map(<span class="keyword">function</span> ($part) {</div>
+<div class="line"><a id="l02305" name="l02305"></a><span class="lineno"> 2305</span>            $part = trim($part);</div>
+<div class="line"><a id="l02306" name="l02306"></a><span class="lineno"> 2306</span>            <span class="keywordflow">if</span> (empty($part)) {</div>
+<div class="line"><a id="l02307" name="l02307"></a><span class="lineno"> 2307</span>                <span class="keywordflow">return</span> $part;</div>
+<div class="line"><a id="l02308" name="l02308"></a><span class="lineno"> 2308</span>            }</div>
+<div class="line"><a id="l02309" name="l02309"></a><span class="lineno"> 2309</span>            <span class="comment">// Если часть — это оператор, возвращаем её без изменений</span></div>
+<div class="line"><a id="l02310" name="l02310"></a><span class="lineno"> 2310</span>            <span class="keywordflow">if</span> (preg_match(<span class="stringliteral">&#39;/^(AND|OR|=|&lt;|&gt;|LIKE|IN|IS NULL)$/i&#39;</span>, $part)) {</div>
+<div class="line"><a id="l02311" name="l02311"></a><span class="lineno"> 2311</span>                <span class="keywordflow">return</span> $part;</div>
+<div class="line"><a id="l02312" name="l02312"></a><span class="lineno"> 2312</span>            }</div>
+<div class="line"><a id="l02313" name="l02313"></a><span class="lineno"> 2313</span>            <span class="comment">// Если часть — это значение в кавычках, возвращаем её без изменений</span></div>
+<div class="line"><a id="l02314" name="l02314"></a><span class="lineno"> 2314</span>            <span class="keywordflow">if</span> (preg_match(<span class="stringliteral">&#39;/^([\&#39;&quot;]).*\1$/&#39;</span>, $part)) {</div>
+<div class="line"><a id="l02315" name="l02315"></a><span class="lineno"> 2315</span>                <span class="keywordflow">return</span> $part;</div>
+<div class="line"><a id="l02316" name="l02316"></a><span class="lineno"> 2316</span>            }</div>
+<div class="line"><a id="l02317" name="l02317"></a><span class="lineno"> 2317</span>            <span class="comment">// Если часть — это подзапрос, рекурсивно обрабатываем его</span></div>
+<div class="line"><a id="l02318" name="l02318"></a><span class="lineno"> 2318</span>            <span class="keywordflow">if</span> (preg_match(<span class="stringliteral">&#39;/^\&zwj;(.*\&zwj;)$/&#39;</span>, $part)) {</div>
+<div class="line"><a id="l02319" name="l02319"></a><span class="lineno"> 2319</span>                $subquery = substr($part, 1, -1);</div>
+<div class="line"><a id="l02320" name="l02320"></a><span class="lineno"> 2320</span>                $sanitized_subquery = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($subquery);</div>
+<div class="line"><a id="l02321" name="l02321"></a><span class="lineno"> 2321</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;($sanitized_subquery)&quot;</span>;</div>
+<div class="line"><a id="l02322" name="l02322"></a><span class="lineno"> 2322</span>            }</div>
+<div class="line"><a id="l02323" name="l02323"></a><span class="lineno"> 2323</span>            <span class="comment">// Если часть — это функция базы данных, проверяем её</span></div>
+<div class="line"><a id="l02324" name="l02324"></a><span class="lineno"> 2324</span>            <span class="keywordflow">if</span> (preg_match(<span class="stringliteral">&#39;/^[A-Z_]+\&zwj;(/i&#39;</span>, $part)) {</div>
+<div class="line"><a id="l02325" name="l02325"></a><span class="lineno"> 2325</span>                <span class="keywordflow">if</span> (!preg_match(<span class="stringliteral">&#39;/^[A-Z_]+\&zwj;([a-zA-Z0-9_\s\.\,\=\&#39;\&quot;]*\&zwj;)$/i&#39;</span>, $part)) {</div>
+<div class="line"><a id="l02326" name="l02326"></a><span class="lineno"> 2326</span>                    <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02327" name="l02327"></a><span class="lineno"> 2327</span>                        __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Недопустимая SQL-функция | Получено: $part&quot;</span></div>
+<div class="line"><a id="l02328" name="l02328"></a><span class="lineno"> 2328</span>                    );</div>
+<div class="line"><a id="l02329" name="l02329"></a><span class="lineno"> 2329</span>                }</div>
+<div class="line"><a id="l02330" name="l02330"></a><span class="lineno"> 2330</span>                <span class="keywordflow">return</span> $part;</div>
+<div class="line"><a id="l02331" name="l02331"></a><span class="lineno"> 2331</span>            }</div>
+<div class="line"><a id="l02332" name="l02332"></a><span class="lineno"> 2332</span>            <span class="comment">// Если часть — это имя таблицы или поля, экранируем её</span></div>
+<div class="line"><a id="l02333" name="l02333"></a><span class="lineno"> 2333</span>            <span class="keywordflow">if</span> (preg_match(<span class="stringliteral">&#39;/^[a-zA-Z0-9_\.]+$/&#39;</span>, $part)) {</div>
+<div class="line"><a id="l02334" name="l02334"></a><span class="lineno"> 2334</span>                <span class="keywordflow">if</span> (strpos($part, <span class="charliteral">&#39;.&#39;</span>) !== <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l02335" name="l02335"></a><span class="lineno"> 2335</span>                    list($table, $column) = explode(<span class="charliteral">&#39;.&#39;</span>, $part, 2);</div>
+<div class="line"><a id="l02336" name="l02336"></a><span class="lineno"> 2336</span>                    <span class="keywordflow">return</span> <span class="stringliteral">&quot;`$table`.`$column`&quot;</span>;</div>
+<div class="line"><a id="l02337" name="l02337"></a><span class="lineno"> 2337</span>                }</div>
+<div class="line"><a id="l02338" name="l02338"></a><span class="lineno"> 2338</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;`$part`&quot;</span>;</div>
+<div class="line"><a id="l02339" name="l02339"></a><span class="lineno"> 2339</span>            }</div>
+<div class="line"><a id="l02340" name="l02340"></a><span class="lineno"> 2340</span>            <span class="comment">// Если часть — это что-то другое, выбрасываем исключение</span></div>
+<div class="line"><a id="l02341" name="l02341"></a><span class="lineno"> 2341</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02342" name="l02342"></a><span class="lineno"> 2342</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Недопустимая часть выражения | Получено: $part&quot;</span></div>
+<div class="line"><a id="l02343" name="l02343"></a><span class="lineno"> 2343</span>            );</div>
+<div class="line"><a id="l02344" name="l02344"></a><span class="lineno"> 2344</span>        }, $parts);</div>
+<div class="line"><a id="l02345" name="l02345"></a><span class="lineno"> 2345</span>        <span class="comment">// === 4. Сборка результата ===</span></div>
+<div class="line"><a id="l02346" name="l02346"></a><span class="lineno"> 2346</span>        <span class="keywordflow">return</span> implode(<span class="stringliteral">&#39;&#39;</span>, $sanitized_parts);</div>
+<div class="line"><a id="l02347" name="l02347"></a><span class="lineno"> 2347</span>    }</div>
+</div>
+<div class="line"><a id="l02348" name="l02348"></a><span class="lineno"> 2348</span></div>
+<div class="foldopen" id="foldopen02403" data-start="{" data-end="}">
+<div class="line"><a id="l02403" name="l02403"></a><span class="lineno"><a class="line" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899"> 2403</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899">prepare_insert_data</a>(array $data, <span class="keywordtype">string</span> $prefix = <span class="stringliteral">&#39;&#39;</span>, array $params = []): array</div>
+<div class="line"><a id="l02404" name="l02404"></a><span class="lineno"> 2404</span>    {</div>
+<div class="line"><a id="l02405" name="l02405"></a><span class="lineno"> 2405</span>        <span class="comment">// === 1. Валидация аргументов ===</span></div>
+<div class="line"><a id="l02406" name="l02406"></a><span class="lineno"> 2406</span>        <span class="keywordflow">if</span> (!is_array($data)) {</div>
+<div class="line"><a id="l02407" name="l02407"></a><span class="lineno"> 2407</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02408" name="l02408"></a><span class="lineno"> 2408</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип данных | Ожидался массив, получено: &quot;</span> . gettype($data)</div>
+<div class="line"><a id="l02409" name="l02409"></a><span class="lineno"> 2409</span>            );</div>
+<div class="line"><a id="l02410" name="l02410"></a><span class="lineno"> 2410</span>        }</div>
+<div class="line"><a id="l02411" name="l02411"></a><span class="lineno"> 2411</span>        <span class="keywordflow">if</span> (!is_string($prefix)) {</div>
+<div class="line"><a id="l02412" name="l02412"></a><span class="lineno"> 2412</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02413" name="l02413"></a><span class="lineno"> 2413</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип префикса | Ожидалась строка, получено: &quot;</span> . gettype($prefix)</div>
+<div class="line"><a id="l02414" name="l02414"></a><span class="lineno"> 2414</span>            );</div>
+<div class="line"><a id="l02415" name="l02415"></a><span class="lineno"> 2415</span>        }</div>
+<div class="line"><a id="l02416" name="l02416"></a><span class="lineno"> 2416</span>        <span class="keywordflow">if</span> (!is_array($params)) {</div>
+<div class="line"><a id="l02417" name="l02417"></a><span class="lineno"> 2417</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02418" name="l02418"></a><span class="lineno"> 2418</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип параметров | Ожидался массив, получено: &quot;</span> . gettype($params)</div>
+<div class="line"><a id="l02419" name="l02419"></a><span class="lineno"> 2419</span>            );</div>
+<div class="line"><a id="l02420" name="l02420"></a><span class="lineno"> 2420</span>        }</div>
+<div class="line"><a id="l02421" name="l02421"></a><span class="lineno"> 2421</span>        <span class="keywordflow">if</span> (empty($data)) {</div>
+<div class="line"><a id="l02422" name="l02422"></a><span class="lineno"> 2422</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02423" name="l02423"></a><span class="lineno"> 2423</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Массив данных не может быть пустым | Причина: Отсутствуют данные для обработки&quot;</span></div>
+<div class="line"><a id="l02424" name="l02424"></a><span class="lineno"> 2424</span>            );</div>
+<div class="line"><a id="l02425" name="l02425"></a><span class="lineno"> 2425</span>        }</div>
+<div class="line"><a id="l02426" name="l02426"></a><span class="lineno"> 2426</span>        <span class="comment">// === 2. Подготовка данных ===</span></div>
+<div class="line"><a id="l02427" name="l02427"></a><span class="lineno"> 2427</span>        $fields = [];</div>
+<div class="line"><a id="l02428" name="l02428"></a><span class="lineno"> 2428</span>        $placeholders = [];</div>
+<div class="line"><a id="l02429" name="l02429"></a><span class="lineno"> 2429</span>        $final_params = $params;</div>
+<div class="line"><a id="l02430" name="l02430"></a><span class="lineno"> 2430</span>        <span class="keywordflow">foreach</span> ($data as $key =&gt; $value) {</div>
+<div class="line"><a id="l02431" name="l02431"></a><span class="lineno"> 2431</span>            $sanitized_key = $this-&gt;<a class="code hl_function" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">sanitize_expression</a>($key);</div>
+<div class="line"><a id="l02432" name="l02432"></a><span class="lineno"> 2432</span>            <span class="keywordflow">if</span> (is_string($value) &amp;&amp; strpos($value, <span class="charliteral">&#39;:&#39;</span>) === 0) {</div>
+<div class="line"><a id="l02433" name="l02433"></a><span class="lineno"> 2433</span>                <span class="comment">// Если значение уже является плейсхолдером</span></div>
+<div class="line"><a id="l02434" name="l02434"></a><span class="lineno"> 2434</span>                $placeholder = $value;</div>
+<div class="line"><a id="l02435" name="l02435"></a><span class="lineno"> 2435</span>                <span class="comment">// Проверяем, есть ли значение для этого плейсхолдера в $params</span></div>
+<div class="line"><a id="l02436" name="l02436"></a><span class="lineno"> 2436</span>                <span class="keywordflow">if</span> (!isset($final_params[$placeholder])) {</div>
+<div class="line"><a id="l02437" name="l02437"></a><span class="lineno"> 2437</span>                    <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l02438" name="l02438"></a><span class="lineno"> 2438</span>                        __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Отсутствует значение для плейсхолдера | Получено: &#39;$placeholder&#39;&quot;</span></div>
+<div class="line"><a id="l02439" name="l02439"></a><span class="lineno"> 2439</span>                    );</div>
+<div class="line"><a id="l02440" name="l02440"></a><span class="lineno"> 2440</span>                }</div>
+<div class="line"><a id="l02441" name="l02441"></a><span class="lineno"> 2441</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02442" name="l02442"></a><span class="lineno"> 2442</span>                <span class="comment">// Генерируем новый плейсхолдер</span></div>
+<div class="line"><a id="l02443" name="l02443"></a><span class="lineno"> 2443</span>                $placeholder = <span class="stringliteral">&quot;:{$prefix}{$key}&quot;</span>;</div>
+<div class="line"><a id="l02444" name="l02444"></a><span class="lineno"> 2444</span>                $final_params[$placeholder] = $value;</div>
+<div class="line"><a id="l02445" name="l02445"></a><span class="lineno"> 2445</span>            }</div>
+<div class="line"><a id="l02446" name="l02446"></a><span class="lineno"> 2446</span>            $fields[] = $sanitized_key;</div>
+<div class="line"><a id="l02447" name="l02447"></a><span class="lineno"> 2447</span>            $placeholders[] = $placeholder;</div>
+<div class="line"><a id="l02448" name="l02448"></a><span class="lineno"> 2448</span>        }</div>
+<div class="line"><a id="l02449" name="l02449"></a><span class="lineno"> 2449</span>        <span class="comment">// === 3. Формирование результатов ===</span></div>
+<div class="line"><a id="l02450" name="l02450"></a><span class="lineno"> 2450</span>        $fields_clause = implode(<span class="stringliteral">&#39;, &#39;</span>, $fields);</div>
+<div class="line"><a id="l02451" name="l02451"></a><span class="lineno"> 2451</span>        $placeholders_clause = implode(<span class="stringliteral">&#39;, &#39;</span>, $placeholders);</div>
+<div class="line"><a id="l02452" name="l02452"></a><span class="lineno"> 2452</span>        <span class="keywordflow">return</span> [$fields_clause, $placeholders_clause, $final_params];</div>
+<div class="line"><a id="l02453" name="l02453"></a><span class="lineno"> 2453</span>    }</div>
+</div>
+<div class="line"><a id="l02454" name="l02454"></a><span class="lineno"> 2454</span>}</div>
+</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">PhotoRigma\Classes\Database</a></div><div class="ttdef"><b>Определения</b> <a href="#l00573">db.php:574</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a0bfd8e43ae69ed64120dd984b9e288a4"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4">PhotoRigma\Classes\Database\res_arr</a></div><div class="ttdeci">res_arr()</div><div class="ttdef"><b>Определения</b> <a href="#l01115">db.php:1115</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a112ef069ddc0454086e3d1e6d8d55d07"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a112ef069ddc0454086e3d1e6d8d55d07">PhotoRigma\Classes\Database\$result</a></div><div class="ttdeci">$result</div><div class="ttdoc">Массив результатов выборки или false, если результатов нет</div><div class="ttdef"><b>Определения</b> <a href="#l00579">db.php:579</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a2c437dae4e310529391e7f5388b133ba"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba">PhotoRigma\Classes\Database\get_affected_rows</a></div><div class="ttdeci">get_affected_rows()</div><div class="ttdef"><b>Определения</b> <a href="#l01151">db.php:1151</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a3e40bb61553455b6f52be0ab9a6062b1"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1">PhotoRigma\Classes\Database\_select_internal</a></div><div class="ttdeci">_select_internal(string|array $select, string $from_tbl, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l01248">db.php:1248</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a442c0348c8bd3cd7104cb110cc71348a"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a">PhotoRigma\Classes\Database\_insert_internal</a></div><div class="ttdeci">_insert_internal(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l01742">db.php:1742</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a4e0fa9799781410b983bb2581c2ace29"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a4e0fa9799781410b983bb2581c2ace29">PhotoRigma\Classes\Database\$res_query</a></div><div class="ttdeci">$res_query</div><div class="ttdoc">Результат выполнения подготовленного выражения (PDOStatement)</div><div class="ttdef"><b>Определения</b> <a href="#l00578">db.php:578</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a539e51bc2144b972bfafeccdda56ee9e"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e">PhotoRigma\Classes\Database\update</a></div><div class="ttdeci">update(array $update, string $from_tbl, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l00979">db.php:979</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a5766efd703cef0e00bfc06b3f3acbe0e"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5766efd703cef0e00bfc06b3f3acbe0e">PhotoRigma\Classes\Database\$pdo</a></div><div class="ttdeci">$pdo</div><div class="ttdoc">Объект PDO для подключения к базе данных</div><div class="ttdef"><b>Определения</b> <a href="#l00576">db.php:576</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a6e5af1f386c0c7968aa10ea928c7a110"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110">PhotoRigma\Classes\Database\insert</a></div><div class="ttdeci">insert(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l01035">db.php:1035</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a71ffa0229d9d0c5053501c55e6fd98d0"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a71ffa0229d9d0c5053501c55e6fd98d0">PhotoRigma\Classes\Database\_res_arr_internal</a></div><div class="ttdeci">_res_arr_internal()</div><div class="ttdef"><b>Определения</b> <a href="#l01882">db.php:1882</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a7d5870c89e950451ed8a204c07c66a30"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7d5870c89e950451ed8a204c07c66a30">PhotoRigma\Classes\Database\$insert_id</a></div><div class="ttdeci">$insert_id</div><div class="ttdoc">ID последней вставленной строки после выполнения INSERT-запроса</div><div class="ttdef"><b>Определения</b> <a href="#l00581">db.php:581</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a834ca0d1c7c60bc9bfae123070b45fbd"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a834ca0d1c7c60bc9bfae123070b45fbd">PhotoRigma\Classes\Database\_get_affected_rows_internal</a></div><div class="ttdeci">_get_affected_rows_internal()</div><div class="ttdef"><b>Определения</b> <a href="#l01933">db.php:1933</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a974af553ef190897a8849c77166ea32d"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d">PhotoRigma\Classes\Database\res_row</a></div><div class="ttdeci">res_row()</div><div class="ttdef"><b>Определения</b> <a href="#l01072">db.php:1072</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa2b6c23b3a70e9ef06c22d8a4885d69a"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">PhotoRigma\Classes\Database\join</a></div><div class="ttdeci">join(string|array $select, string $from_tbl, array $join, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l00827">db.php:827</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa3fbbc7c98d1c241e897f0bf80177d2b"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b">PhotoRigma\Classes\Database\_join_internal</a></div><div class="ttdeci">_join_internal(string|array $select, string $from_tbl, array $join, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l01350">db.php:1350</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa4094e522b4780bd58666dba20fdd09d"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d">PhotoRigma\Classes\Database\_delete_internal</a></div><div class="ttdeci">_delete_internal(string $from_tbl, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l01456">db.php:1456</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aab30d2495bb1362d218cd62e1556b13e"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e">PhotoRigma\Classes\Database\select</a></div><div class="ttdeci">select(string|array $select, string $from_tbl, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l00761">db.php:761</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab020da18450b0c34601b4d365da6f943"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab020da18450b0c34601b4d365da6f943">PhotoRigma\Classes\Database\__construct</a></div><div class="ttdeci">__construct(array $db_config)</div><div class="ttdef"><b>Определения</b> <a href="#l00638">db.php:638</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab122f53e8d2ca9d723e32426c9e691e9"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab122f53e8d2ca9d723e32426c9e691e9">PhotoRigma\Classes\Database\_get_last_insert_id_internal</a></div><div class="ttdeci">_get_last_insert_id_internal()</div><div class="ttdef"><b>Определения</b> <a href="#l01983">db.php:1983</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab1dc7ae1ce60a864b1d7c865e99029b0"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0">PhotoRigma\Classes\Database\_update_internal</a></div><div class="ttdeci">_update_internal(array $update, string $from_tbl, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="#l01620">db.php:1620</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_abafff8c03a52d73e37072449448e5a3c"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c">PhotoRigma\Classes\Database\get_last_insert_id</a></div><div class="ttdeci">get_last_insert_id()</div><div class="ttdef"><b>Определения</b> <a href="#l01185">db.php:1185</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_abc7fc3b91f038f52e180afb480397d65"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65">PhotoRigma\Classes\Database\execute_query</a></div><div class="ttdeci">execute_query(array $params=[])</div><div class="ttdef"><b>Определения</b> <a href="#l02066">db.php:2066</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ad353291f086236ab7be0d1edc0ed3ba8"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8">PhotoRigma\Classes\Database\_truncate_internal</a></div><div class="ttdeci">_truncate_internal(string $from_tbl)</div><div class="ttdef"><b>Определения</b> <a href="#l01543">db.php:1543</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ad4d4e455d9e4bf865126c72cf23a517b"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b">PhotoRigma\Classes\Database\truncate</a></div><div class="ttdeci">truncate(string $from_tbl)</div><div class="ttdef"><b>Определения</b> <a href="#l00921">db.php:921</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ad8a3d0085346dd9a4d7bfa9500faae20"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad8a3d0085346dd9a4d7bfa9500faae20">PhotoRigma\Classes\Database\$txt_query</a></div><div class="ttdeci">$txt_query</div><div class="ttdoc">Текст последнего SQL-запроса, сформированного методами класса</div><div class="ttdef"><b>Определения</b> <a href="#l00577">db.php:577</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_adac4bb14b3d809b245c89d5e7388096f"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adac4bb14b3d809b245c89d5e7388096f">PhotoRigma\Classes\Database\$aff_rows</a></div><div class="ttdeci">$aff_rows</div><div class="ttdoc">Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)</div><div class="ttdef"><b>Определения</b> <a href="#l00580">db.php:580</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_adbe79d2c68c4501e901c6a978544ba25"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adbe79d2c68c4501e901c6a978544ba25">PhotoRigma\Classes\Database\_res_row_internal</a></div><div class="ttdeci">_res_row_internal()</div><div class="ttdef"><b>Определения</b> <a href="#l01823">db.php:1823</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ae03e71e82bbc0b864fdbc401fa44bc35"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">PhotoRigma\Classes\Database\build_conditions</a></div><div class="ttdeci">build_conditions(array $options)</div><div class="ttdef"><b>Определения</b> <a href="#l02182">db.php:2182</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ae086bc0ecde3e2e6c33a483e2f7dc899"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899">PhotoRigma\Classes\Database\prepare_insert_data</a></div><div class="ttdeci">prepare_insert_data(array $data, string $prefix=&#39;&#39;, array $params=[])</div><div class="ttdef"><b>Определения</b> <a href="#l02403">db.php:2403</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ae52395b38793b8f4adeb05716bb4faa7"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7">PhotoRigma\Classes\Database\sanitize_expression</a></div><div class="ttdeci">sanitize_expression(string $expression)</div><div class="ttdef"><b>Определения</b> <a href="#l02292">db.php:2292</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">PhotoRigma\Classes\Database_Interface</a></div><div class="ttdef"><b>Определения</b> <a href="#l00074">db.php:75</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_a0bfd8e43ae69ed64120dd984b9e288a4"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4">PhotoRigma\Classes\Database_Interface\res_arr</a></div><div class="ttdeci">res_arr()</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_a2c437dae4e310529391e7f5388b133ba"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba">PhotoRigma\Classes\Database_Interface\get_affected_rows</a></div><div class="ttdeci">get_affected_rows()</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_a539e51bc2144b972bfafeccdda56ee9e"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e">PhotoRigma\Classes\Database_Interface\update</a></div><div class="ttdeci">update(array $update, string $from_tbl, array $options=[])</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_a6e5af1f386c0c7968aa10ea928c7a110"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a6e5af1f386c0c7968aa10ea928c7a110">PhotoRigma\Classes\Database_Interface\insert</a></div><div class="ttdeci">insert(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_a974af553ef190897a8849c77166ea32d"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a974af553ef190897a8849c77166ea32d">PhotoRigma\Classes\Database_Interface\res_row</a></div><div class="ttdeci">res_row()</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_aa2b6c23b3a70e9ef06c22d8a4885d69a"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">PhotoRigma\Classes\Database_Interface\join</a></div><div class="ttdeci">join(string|array $select, string $from_tbl, array $join, array $options=[])</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_aab30d2495bb1362d218cd62e1556b13e"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e">PhotoRigma\Classes\Database_Interface\select</a></div><div class="ttdeci">select(string|array $select, string $from_tbl, array $options=[])</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_abafff8c03a52d73e37072449448e5a3c"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#abafff8c03a52d73e37072449448e5a3c">PhotoRigma\Classes\Database_Interface\get_last_insert_id</a></div><div class="ttdeci">get_last_insert_id()</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_ad4d4e455d9e4bf865126c72cf23a517b"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#ad4d4e455d9e4bf865126c72cf23a517b">PhotoRigma\Classes\Database_Interface\truncate</a></div><div class="ttdeci">truncate(string $from_tbl)</div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Classes_html"><div class="ttname"><a href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">PhotoRigma\Classes</a></div><div class="ttdef"><b>Определения</b> <a href="#l00036">db.php:36</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../dc/d82/db_8php.html">db.php</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

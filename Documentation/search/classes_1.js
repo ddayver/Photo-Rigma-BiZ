@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['template',['template',['../classtemplate.html',1,'']]]
+  ['photorigma_0',['PhotoRigma',['../d9/d8f/interfacePhotoRigma.html',1,'']]]
 ];

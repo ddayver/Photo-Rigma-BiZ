@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Photo-Rigma-BiZ: /home/victoria/Photo-Rigma-BiZ/www/include/work.php</title>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Поиск',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Метод формирует массив данных для меню в зависимости от типа и активного пункта.</p>
+<p>Метод формирует массив данных для меню в зависимости от типа и активного пункта. Данный метод служит точкой доступа к функционалу формирования данных для меню, делегируя выполнение соответствующему методу create_menu() в подклассе Work_Template.</p>
+<dl class="section see"><dt>См. также</dt><dd>\PhotoRigma\Classes\Work_Template::create_menu() Метод, реализующий логику.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$action</td><td>Активный пункт меню. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$menu</td><td>Тип меню:<ul>
+<li>0: Горизонтальное краткое меню.</li>
+<li>1: Вертикальное боковое меню.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными для меню. Если меню пустое, возвращается пустой массив.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>InvalidArgumentException Если передан некорректный $menu или $action. </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>RuntimeException Если произошла ошибка при выполнении запроса к базе данных.</p>
+<dl class="section note"><dt>Заметки</dt><dd>Данные для меню берутся из таблицы TBL_MENU. Для получения дополнительной информации см. структуру таблицы. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.</dd></dl>
+<div class="fragment"><div class="line"><span class="comment">// Пример использования метода create_menu()</span></div>
+<div class="line">$short_menu = $work-&gt;create_menu(<span class="stringliteral">&#39;home&#39;</span>, 0); <span class="comment">// Создание горизонтального меню</span></div>
+<div class="line">print_r($short_menu);</div>
+<div class="line"> </div>
+<div class="line">$long_menu = $work-&gt;create_menu(<span class="stringliteral">&#39;profile&#39;</span>, 1); <span class="comment">// Создание вертикального меню</span></div>
+<div class="line">print_r($long_menu);</div>
+</div><!-- fragment --><div class="fragment"><div class="line">&lt;?php</div>
+<div class="line"></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">PhotoRigma\Classes</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Предотвращение прямого вызова файла</span></div>
+<div class="line"><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || IN_GALLERY !== <span class="keyword">true</span>) {</div>
+<div class="line">    error_log(</div>
+<div class="line">        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) .</div>
+<div class="line">        <span class="stringliteral">&quot; [ERROR] | &quot;</span> .</div>
+<div class="line">        (filter_input(INPUT_SERVER, <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>, FILTER_VALIDATE_IP) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) .</div>
+<div class="line">        <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
+<div class="line">    );</div>
+<div class="line">    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">use <a id="_a0" name="_a0"></a><a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">PhotoRigma\Classes\Work_Security</a>;</div>
+<div class="line">use <a id="_a1" name="_a1"></a><a class="code hl_class" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a>;</div>
+<div class="line">use <a id="_a2" name="_a2"></a><a class="code hl_class" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma\Classes\Work_Template</a>;</div>
+<div class="line">use <a id="_a3" name="_a3"></a><a class="code hl_class" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html">PhotoRigma\Classes\Work_Helper</a>;</div>
+<div class="line">use <a id="_a4" name="_a4"></a><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Work</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Свойства:</span></div>
+<div class="line">    <span class="keyword">private</span> array <a id="a5" name="a5"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a> = []; </div>
+<div class="line">    <span class="keyword">private</span> ?Database_Interface <a id="a6" name="a6"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a> = <span class="keyword">null</span>; </div>
+<div class="line">    <span class="keyword">private</span> Work_Security <a id="a7" name="a7"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a82d7359ac20005ddda09f8a9bb46afbe">$security</a>; </div>
+<div class="line">    <span class="keyword">private</span> Work_Image <a id="a8" name="a8"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaa91e6962b68bc0c0896341f680f1770">$image</a>; </div>
+<div class="line">    <span class="keyword">private</span> Work_Template <a id="a9" name="a9"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aca87a58e031a0d778d2db06aa29601a6">$template</a>; </div>
+<div class="line">    <span class="keyword">private</span> Work_Helper <a id="a10" name="a10"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1302bab9161235940ceaa4221e2be70e">$helper</a>; </div>
+<div class="line">    <span class="keyword">private</span> Work_CoreLogic <a id="a11" name="a11"></a><a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8b6a35b7140ba93f44fa12a2247ba8b5">$core_logic</a>; </div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a12" name="a12"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aebda93a95626971f99ba32c8ac7b4f30">__construct</a>(Database_Interface <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, array <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>)</div>
+<div class="line">    {</div>
+<div class="line">        $this-&gt;db = <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>;</div>
+<div class="line">        <span class="comment">// Загружаем конфигурацию из базы данных</span></div>
+<div class="line">        $this-&gt;db-&gt;<a id="a13" name="a13"></a><a class="code hl_function" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e">select</a>([<span class="charliteral">&#39;*&#39;</span>], TBL_CONFIG, [<span class="stringliteral">&#39;params&#39;</span> =&gt; []]);</div>
+<div class="line">        $result = $this-&gt;db-&gt;res_arr();</div>
+<div class="line">        <span class="keywordflow">if</span> (is_array($result)) {</div>
+<div class="line">            <span class="keywordflow">foreach</span> ($result as $tmp) {</div>
+<div class="line">                $this-&gt;config[$tmp[<span class="stringliteral">&#39;name&#39;</span>]] = $tmp[<span class="stringliteral">&#39;value&#39;</span>];</div>
+<div class="line">            }</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">            <a class="code hl_function" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(</div>
+<div class="line">                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                <span class="stringliteral">&quot;Ошибка загрузки конфигурации | Не удалось получить данные из таблицы &quot;</span> . TBL_CONFIG</div>
+<div class="line">            );</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// Инициализация подклассов</span></div>
+<div class="line">        $this-&gt;helper = <span class="keyword">new</span> Work_Helper();</div>
+<div class="line">        $this-&gt;security = <span class="keyword">new</span> Work_Security();</div>
+<div class="line">        $this-&gt;image = <span class="keyword">new</span> Work_Image(<a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>);</div>
+<div class="line">        $this-&gt;<span class="keyword">template</span> = <span class="keyword">new</span> Work_Template(<a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>);</div>
+<div class="line">        $this-&gt;core_logic = <span class="keyword">new</span> Work_CoreLogic(<a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, $this);</div>
+<div class="line">        <span class="comment">// Устанавливаем кодировку для работы с мультибайтовыми строками</span></div>
+<div class="line">        mb_regex_encoding(<span class="stringliteral">&#39;UTF-8&#39;</span>);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a14" name="a14"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a0acd7052f38245fd3723ea29c83bf3f3">__get</a>(<span class="keywordtype">string</span> $name): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> ($name === <span class="stringliteral">&#39;config&#39;</span>) {</div>
+<div class="line">            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line">            __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Свойство не существует | Получено: &#39;{$name}&#39;&quot;</span></div>
+<div class="line">        );</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a15" name="a15"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a83c2703c91959192f759992ad5640b67">__set</a>($name, $value)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> ($name === <span class="stringliteral">&#39;config&#39;</span>) {</div>
+<div class="line">            <span class="comment">// Проверка, что значение является массивом</span></div>
+<div class="line">            <span class="keywordflow">if</span> (!is_array($value)) {</div>
+<div class="line">                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line">                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                    <span class="stringliteral">&quot;Некорректный тип значения | Значение config должно быть массивом&quot;</span></div>
+<div class="line">                );</div>
+<div class="line">            }</div>
+<div class="line">            <span class="comment">// Проверка ключей и значений</span></div>
+<div class="line">            $errors = [];</div>
+<div class="line">            <span class="keywordflow">foreach</span> ($value as $key =&gt; $val) {</div>
+<div class="line">                <span class="keywordflow">if</span> (!is_string($key)) {</div>
+<div class="line">                    $errors[] = <span class="stringliteral">&quot;Ключ &#39;{$key}&#39; должен быть строкой.&quot;</span>;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">if</span> (!is_string($val)) {</div>
+<div class="line">                    $errors[] = <span class="stringliteral">&quot;Значение для ключа &#39;{$key}&#39; должно быть строкой.&quot;</span>;</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">if</span> (!empty($errors)) {</div>
+<div class="line">                <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line">                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                    <span class="stringliteral">&quot;Обнаружены ошибки в конфигурации | Ошибки: &quot;</span> . json_encode($errors)</div>
+<div class="line">                );</div>
+<div class="line">            }</div>
+<div class="line">            <span class="comment">// Логирование изменений</span></div>
+<div class="line">            $exclude_from_logging = [<span class="stringliteral">&#39;language&#39;</span>, <span class="stringliteral">&#39;themes&#39;</span>]; <span class="comment">// Ключи, которые не нужно логировать</span></div>
+<div class="line">            $updated_settings = [];</div>
+<div class="line">            $added_settings = [];</div>
+<div class="line">            <span class="keywordflow">foreach</span> ($value as $key =&gt; $val) {</div>
+<div class="line">                <span class="keywordflow">if</span> (in_array($key, $exclude_from_logging)) {</div>
+<div class="line">                    <span class="keywordflow">continue</span>; <span class="comment">// Пропускаем логирование для исключённых ключей</span></div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">if</span> (array_key_exists($key, $this-&gt;config)) {</div>
+<div class="line">                    $updated_settings[$key] = $val;</div>
+<div class="line">                } <span class="keywordflow">else</span> {</div>
+<div class="line">                    $added_settings[$key] = $val;</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">if</span> (!empty($updated_settings)) {</div>
+<div class="line">                <a class="code hl_function" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(</div>
+<div class="line">                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                    <span class="stringliteral">&quot;Обновление настроек | Настройки: &quot;</span> . json_encode($updated_settings)</div>
+<div class="line">                );</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">if</span> (!empty($added_settings)) {</div>
+<div class="line">                <a class="code hl_function" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(</div>
+<div class="line">                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                    <span class="stringliteral">&quot;Добавление настроек | Настройки: &quot;</span> . json_encode($added_settings)</div>
+<div class="line">                );</div>
+<div class="line">            }</div>
+<div class="line">            <span class="comment">// Обновляем основной конфиг</span></div>
+<div class="line">            $this-&gt;config = $value;</div>
+<div class="line">            <span class="comment">// Передаём конфигурацию в подклассы через магические методы</span></div>
+<div class="line">            $this-&gt;image-&gt;config = <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
+<div class="line">            $this-&gt;<span class="keyword">template</span>-&gt;config = <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
+<div class="line">            $this-&gt;core_logic-&gt;config = <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">            <span class="keywordflow">throw</span> new \Exception(</div>
+<div class="line">                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                <span class="stringliteral">&quot;Несуществующее свойство | Свойство: {$name}&quot;</span></div>
+<div class="line">            );</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a16" name="a16"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a>(array $lang)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> (empty($lang)) {</div>
+<div class="line">            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line">                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                <span class="stringliteral">&quot;Некорректный массив языковых данных | Массив не должен быть пустым&quot;</span></div>
+<div class="line">            );</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// Проверяем массив на корректность</span></div>
+<div class="line">        $errors = $this-&gt;<a id="a17" name="a17"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9bdfa510d626dd97616fb1e1bdb4d8c6">validate_array</a>($lang, 4); <span class="comment">// Ограничение глубины до 4 уровней</span></div>
+<div class="line">        <span class="keywordflow">if</span> (!empty($errors)) {</div>
+<div class="line">            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line">                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                <span class="stringliteral">&quot;Обнаружены ошибки в массиве языковых данных | Ошибки: &quot;</span> . json_encode($errors)</div>
+<div class="line">            );</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// Обрабатываем массив через clean_field</span></div>
+<div class="line">        $changes = $this-&gt;<a id="a18" name="a18"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3fc2465ff08a31b214f6d708c51090e0">sanitize_array</a>($lang);</div>
+<div class="line">        <span class="comment">// Логируем изменения, если они есть</span></div>
+<div class="line">        <span class="keywordflow">if</span> (!empty($changes)) {</div>
+<div class="line">            <a class="code hl_function" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(</div>
+<div class="line">                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                <span class="stringliteral">&quot;Очищенные значения | Значения: &quot;</span> . json_encode($changes)</div>
+<div class="line">            );</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// Передаём языковые данные в подклассы</span></div>
+<div class="line">        $this-&gt;<span class="keyword">template</span>-&gt;set_lang($lang);</div>
+<div class="line">        $this-&gt;core_logic-&gt;set_lang($lang);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a19" name="a19"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac632034f4e83ba35a7b3e2124829e0c2">set_user</a>(User $user)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> (!$user instanceof User) {</div>
+<div class="line">            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line">                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | &quot;</span> .</div>
+<div class="line">                <span class="stringliteral">&quot;Некорректный тип аргумента | Ожидается объект класса User&quot;</span></div>
+<div class="line">            );</div>
+<div class="line">        }</div>
+<div class="line">        $this-&gt;<span class="keyword">template</span>-&gt;set_user($user);</div>
+<div class="line">        $this-&gt;core_logic-&gt;set_user($user);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a20" name="a20"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeb13fee613cd87923546463495400380">check_post</a>(<span class="keywordtype">string</span> $field, <span class="keywordtype">bool</span> $isset = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $empty = <span class="keyword">false</span>, <span class="keywordtype">string</span>|<span class="keyword">false</span> $regexp = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $not_zero = <span class="keyword">false</span>): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;check_input($_POST, $field, [</div>
+<div class="line">            <span class="stringliteral">&#39;isset&#39;</span> =&gt; $isset,</div>
+<div class="line">            <span class="stringliteral">&#39;empty&#39;</span> =&gt; $empty,</div>
+<div class="line">            <span class="stringliteral">&#39;regexp&#39;</span> =&gt; $regexp,</div>
+<div class="line">            <span class="stringliteral">&#39;not_zero&#39;</span> =&gt; $not_zero,</div>
+<div class="line">        ]);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a21" name="a21"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a2274d881c2d51e38c452a2ebaacaa9e7">check_get</a>(<span class="keywordtype">string</span> $field, <span class="keywordtype">bool</span> $isset = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $empty = <span class="keyword">false</span>, <span class="keywordtype">string</span>|<span class="keyword">false</span> $regexp = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $not_zero = <span class="keyword">false</span>): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;check_input($_GET, $field, [</div>
+<div class="line">            <span class="stringliteral">&#39;isset&#39;</span> =&gt; $isset,</div>
+<div class="line">            <span class="stringliteral">&#39;empty&#39;</span> =&gt; $empty,</div>
+<div class="line">            <span class="stringliteral">&#39;regexp&#39;</span> =&gt; $regexp,</div>
+<div class="line">            <span class="stringliteral">&#39;not_zero&#39;</span> =&gt; $not_zero,</div>
+<div class="line">        ]);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a22" name="a22"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a66530d233d955a715024b02a75043179">check_session</a>(<span class="keywordtype">string</span> $field, <span class="keywordtype">bool</span> $isset = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $empty = <span class="keyword">false</span>, <span class="keywordtype">string</span>|<span class="keyword">false</span> $regexp = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $not_zero = <span class="keyword">false</span>): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;check_input($_SESSION, $field, [</div>
+<div class="line">            <span class="stringliteral">&#39;isset&#39;</span> =&gt; $isset,</div>
+<div class="line">            <span class="stringliteral">&#39;empty&#39;</span> =&gt; $empty,</div>
+<div class="line">            <span class="stringliteral">&#39;regexp&#39;</span> =&gt; $regexp,</div>
+<div class="line">            <span class="stringliteral">&#39;not_zero&#39;</span> =&gt; $not_zero,</div>
+<div class="line">        ]);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a23" name="a23"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">url_check</a>(): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;url_check();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a24" name="a24"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d">check_input</a>(<span class="keywordtype">string</span> $source_name, <span class="keywordtype">string</span> $field, array $options = []): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;check_input($source_name, $field, $options);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a25" name="a25"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4289bbbeca07e599a9366a812d069972">filt_email</a>(<span class="keywordtype">string</span> $email): string</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;filt_email($email);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a26" name="a26"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7fd7e97a953487a9422281b97bd6f083">check_field</a>(<span class="keywordtype">string</span> $field, <span class="keywordtype">string</span>|<span class="keyword">false</span> $regexp = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $not_zero = <span class="keyword">false</span>): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;check_field($field, $regexp, $not_zero);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a27" name="a27"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a19ab20c34a49c9684a03c09c62f8af46">gen_captcha</a>(): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;security-&gt;gen_captcha();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a28" name="a28"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a592862a13036c81f13f0fbb9f5d15abe">category</a>($cat_id, $user_flag)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;core_logic-&gt;category($cat_id, $user_flag);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a29" name="a29"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a60353d13b64ee02fe027d3727d07bc4b">del_photo</a>($photo_id)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;core_logic-&gt;del_photo($photo_id);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a30" name="a30"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a31c11bea77af4fd560d1bb1f1b17824c">news</a>($news_data, $act)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;core_logic-&gt;news($news_data, $act);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a31" name="a31"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>()</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;core_logic-&gt;get_languages();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a32" name="a32"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>()</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;core_logic-&gt;get_themes();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a33" name="a33"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af970fc714c16e27d2d60d698522a8504">create_menu</a>(<span class="keywordtype">string</span> $action, <span class="keywordtype">int</span> $menu): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<span class="keyword">template</span>-&gt;create_menu($action, $menu);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a34" name="a34"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1f3df8874c79377e6a8b4398ea6ad774">template_user</a>(): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<span class="keyword">template</span>-&gt;template_user();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a35" name="a35"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a116ebcf799d07566a74e7e765aecc1b7">template_stat</a>(): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<span class="keyword">template</span>-&gt;template_stat();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a36" name="a36"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9143fed87a3064985e0b51fe5fbb4ac3">template_best_user</a>(<span class="keywordtype">int</span> $best_user = 1): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;<span class="keyword">template</span>-&gt;template_best_user($best_user);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a id="a37" name="a37"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">clean_field</a>($field): ?string</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> <a id="a38" name="a38"></a><a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">Work_Helper::clean_field</a>($field);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a id="a39" name="a39"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a08089badb76485629afe2c4d9f766a30">return_bytes</a>($val): int</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> <a id="a40" name="a40"></a><a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">Work_Helper::return_bytes</a>($val);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a id="a41" name="a41"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e">encodename</a>(<span class="keywordtype">string</span> $string): string</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> <a id="a42" name="a42"></a><a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">Work_Helper::encodename</a>($string);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a id="a43" name="a43"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712">ubb</a>(<span class="keywordtype">string</span> $text): string</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> <a id="a44" name="a44"></a><a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">Work_Helper::ubb</a>($text);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a id="a45" name="a45"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32">utf8_wordwrap</a>(<span class="keywordtype">string</span> $str, <span class="keywordtype">int</span> $width = 70, <span class="keywordtype">string</span> $break = PHP_EOL): string</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> <a id="a46" name="a46"></a><a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">Work_Helper::utf8_wordwrap</a>($str, $width, $break);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a id="a47" name="a47"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">validate_mime_type</a>(<span class="keywordtype">string</span> $real_mime_type): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> <a id="a48" name="a48"></a><a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">Work_Helper::validate_mime_type</a>($real_mime_type);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a49" name="a49"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">size_image</a>(<span class="keywordtype">string</span> $path_image): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;image-&gt;size_image($path_image);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a50" name="a50"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af37eb2b0693905dd71dd677f86d47831">image_resize</a>(<span class="keywordtype">string</span> $full_path, <span class="keywordtype">string</span> $thumbnail_path): bool</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;image-&gt;image_resize($full_path, $thumbnail_path);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a51" name="a51"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1">no_photo</a>(): array</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;image-&gt;no_photo();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a52" name="a52"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeabe138e0704bd8403da0faf894ad0df">image_attach</a>(<span class="keywordtype">string</span> $full_path, <span class="keywordtype">string</span> $name_file): void</div>
+<div class="line">    {</div>
+<div class="line">        $this-&gt;image-&gt;image_attach($full_path, $name_file);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a53" name="a53"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138">fix_file_extension</a>(<span class="keywordtype">string</span> $full_path): string</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;image-&gt;fix_file_extension($full_path);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a54" name="a54"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a5b23fb55b20e92336e0dccc4c0341b1d">create_photo</a>($type, $id_photo)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;image-&gt;create_photo($type, $id_photo);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a id="a55" name="a55"></a><a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a16ad1436509f3cd6dd6775c0781ee795">generate_photo_data</a>($photo_data)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">return</span> $this-&gt;image-&gt;generate_photo_data($photo_data);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9bdfa510d626dd97616fb1e1bdb4d8c6">validate_array</a>(array $array, <span class="keywordtype">int</span> $max_depth, <span class="keywordtype">int</span> $current_depth = 1): array</div>
+<div class="line">    {</div>
+<div class="line">        $errors = [];</div>
+<div class="line">        <span class="keywordflow">foreach</span> ($array as $key =&gt; $value) {</div>
+<div class="line">            <span class="keywordflow">if</span> (!is_string($key)) {</div>
+<div class="line">                $errors[] = <span class="stringliteral">&quot;Ключ &#39;{$key}&#39; на уровне {$current_depth} должен быть строкой.&quot;</span>;</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">if</span> (is_array($value)) {</div>
+<div class="line">                <span class="keywordflow">if</span> ($current_depth &gt;= $max_depth) {</div>
+<div class="line">                    $errors[] = <span class="stringliteral">&quot;Глубина массива превышает допустимое значение ({$max_depth}).&quot;</span>;</div>
+<div class="line">                } <span class="keywordflow">else</span> {</div>
+<div class="line">                    $nested_errors = $this-&gt;<a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9bdfa510d626dd97616fb1e1bdb4d8c6">validate_array</a>($value, $max_depth, $current_depth + 1);</div>
+<div class="line">                    $errors = array_merge($errors, $nested_errors);</div>
+<div class="line">                }</div>
+<div class="line">            } elseif (!is_string($value)) {</div>
+<div class="line">                $errors[] = <span class="stringliteral">&quot;Значение для ключа &#39;{$key}&#39; на уровне {$current_depth} должно быть строкой.&quot;</span>;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">return</span> $errors;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3fc2465ff08a31b214f6d708c51090e0">sanitize_array</a>(array $array): array</div>
+<div class="line">    {</div>
+<div class="line">        $changes = [];</div>
+<div class="line">        <span class="keywordflow">foreach</span> ($array as $key =&gt; &amp;$value) {</div>
+<div class="line">            <span class="keywordflow">if</span> (is_array($value)) {</div>
+<div class="line">                $nested_changes = $this-&gt;<a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3fc2465ff08a31b214f6d708c51090e0">sanitize_array</a>($value);</div>
+<div class="line">                $changes = array_merge($changes, $nested_changes);</div>
+<div class="line">            } elseif (is_string($value)) {</div>
+<div class="line">                $original_value = $value;</div>
+<div class="line">                $cleaned_value = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($value);</div>
+<div class="line">                <span class="keywordflow">if</span> ($original_value !== $cleaned_value) {</div>
+<div class="line">                    $changes[<span class="stringliteral">&quot;{$key}&quot;</span>] = [</div>
+<div class="line">                        <span class="stringliteral">&#39;original&#39;</span> =&gt; $original_value,</div>
+<div class="line">                        <span class="stringliteral">&#39;cleaned&#39;</span> =&gt; $cleaned_value,</div>
+<div class="line">                    ];</div>
+<div class="line">                    $value = $cleaned_value;</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">return</span> $changes;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00181">work_corelogic.php:182</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html">PhotoRigma\Classes\Work_Helper</a></div><div class="ttdoc">Класс для вспомогательных методов.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00267">work_helper.php:268</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work_Helper\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00325">work_helper.php:325</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work_Helper\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00399">work_helper.php:399</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work_Helper\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00465">work_helper.php:465</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work_Helper\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00433">work_helper.php:433</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work_Helper\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00288">work_helper.php:288</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work_Helper\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00356">work_helper.php:356</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html"><div class="ttname"><a href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a></div><div class="ttdoc">Класс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00214">work_image.php:215</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html"><div class="ttname"><a href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">PhotoRigma\Classes\Work_Security</a></div><div class="ttdoc">Класс для обеспечения безопасности приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00191">work_security.php:192</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma\Classes\Work_Template</a></div><div class="ttdoc">Класс Work_Template отвечает за формирование данных для шаблонов.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00236">work_template.php:237</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00912">work.php:912</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a096b7e5c3f9fb908fbb30e1adc2ac61b"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">PhotoRigma\Classes\Work\size_image</a></div><div class="ttdeci">size_image(string $path_image)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01070">work.php:1070</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a0acd7052f38245fd3723ea29c83bf3f3"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a0acd7052f38245fd3723ea29c83bf3f3">PhotoRigma\Classes\Work\__get</a></div><div class="ttdeci">__get(string $name)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00220">work.php:220</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a116ebcf799d07566a74e7e765aecc1b7"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a116ebcf799d07566a74e7e765aecc1b7">PhotoRigma\Classes\Work\template_stat</a></div><div class="ttdeci">template_stat()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00825">work.php:825</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a1302bab9161235940ceaa4221e2be70e"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1302bab9161235940ceaa4221e2be70e">PhotoRigma\Classes\Work\$helper</a></div><div class="ttdeci">Work_Helper $helper</div><div class="ttdoc">Объект для очистки строк, преобразования размеров и проверки MIME-типов.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00113">work.php:113</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a16ad1436509f3cd6dd6775c0781ee795"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a16ad1436509f3cd6dd6775c0781ee795">PhotoRigma\Classes\Work\generate_photo_data</a></div><div class="ttdeci">generate_photo_data($photo_data)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01186">work.php:1186</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00109">work.php:109</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a19ab20c34a49c9684a03c09c62f8af46"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a19ab20c34a49c9684a03c09c62f8af46">PhotoRigma\Classes\Work\gen_captcha</a></div><div class="ttdeci">gen_captcha()</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00662">work.php:662</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a1e1a4ab6b213ada0d89c77a24d8ffe32"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">PhotoRigma\Classes\Work\url_check</a></div><div class="ttdeci">url_check()</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00550">work.php:550</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a1f3df8874c79377e6a8b4398ea6ad774"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1f3df8874c79377e6a8b4398ea6ad774">PhotoRigma\Classes\Work\template_user</a></div><div class="ttdeci">template_user()</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00788">work.php:788</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a2274d881c2d51e38c452a2ebaacaa9e7"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a2274d881c2d51e38c452a2ebaacaa9e7">PhotoRigma\Classes\Work\check_get</a></div><div class="ttdeci">check_get(string $field, bool $isset=false, bool $empty=false, string|false $regexp=false, bool $not_zero=false)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00501">work.php:501</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00985">work.php:985</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a31c11bea77af4fd560d1bb1f1b17824c"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a31c11bea77af4fd560d1bb1f1b17824c">PhotoRigma\Classes\Work\news</a></div><div class="ttdeci">news($news_data, $act)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00700">work.php:700</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a3fc2465ff08a31b214f6d708c51090e0"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3fc2465ff08a31b214f6d708c51090e0">PhotoRigma\Classes\Work\sanitize_array</a></div><div class="ttdeci">sanitize_array(array $array)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01306">work.php:1306</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01048">work.php:1048</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a4289bbbeca07e599a9366a812d069972"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4289bbbeca07e599a9366a812d069972">PhotoRigma\Classes\Work\filt_email</a></div><div class="ttdeci">filt_email(string $email)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00610">work.php:610</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a592862a13036c81f13f0fbb9f5d15abe"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a592862a13036c81f13f0fbb9f5d15abe">PhotoRigma\Classes\Work\category</a></div><div class="ttdeci">category($cat_id, $user_flag)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00675">work.php:675</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a5b23fb55b20e92336e0dccc4c0341b1d"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a5b23fb55b20e92336e0dccc4c0341b1d">PhotoRigma\Classes\Work\create_photo</a></div><div class="ttdeci">create_photo($type, $id_photo)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01174">work.php:1174</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a60353d13b64ee02fe027d3727d07bc4b"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a60353d13b64ee02fe027d3727d07bc4b">PhotoRigma\Classes\Work\del_photo</a></div><div class="ttdeci">del_photo($photo_id)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00687">work.php:687</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a66530d233d955a715024b02a75043179"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a66530d233d955a715024b02a75043179">PhotoRigma\Classes\Work\check_session</a></div><div class="ttdeci">check_session(string $field, bool $isset=false, bool $empty=false, string|false $regexp=false, bool $not_zero=false)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00523">work.php:523</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a6e6ea2a212c3c2dee206a1753b673b7d"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d">PhotoRigma\Classes\Work\check_input</a></div><div class="ttdeci">check_input(string $source_name, string $field, array $options=[])</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00587">work.php:587</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a7fd7e97a953487a9422281b97bd6f083"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7fd7e97a953487a9422281b97bd6f083">PhotoRigma\Classes\Work\check_field</a></div><div class="ttdeci">check_field(string $field, string|false $regexp=false, bool $not_zero=false)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00637">work.php:637</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a82d7359ac20005ddda09f8a9bb46afbe"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a82d7359ac20005ddda09f8a9bb46afbe">PhotoRigma\Classes\Work\$security</a></div><div class="ttdeci">Work_Security $security</div><div class="ttdoc">Объект для работы с безопасностью.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00110">work.php:110</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a83c2703c91959192f759992ad5640b67"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a83c2703c91959192f759992ad5640b67">PhotoRigma\Classes\Work\__set</a></div><div class="ttdeci">__set($name, $value)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00276">work.php:276</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a89d4e7cb491d0c91282d16ff5abe3138"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138">PhotoRigma\Classes\Work\fix_file_extension</a></div><div class="ttdeci">fix_file_extension(string $full_path)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01161">work.php:1161</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a8b6a35b7140ba93f44fa12a2247ba8b5"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8b6a35b7140ba93f44fa12a2247ba8b5">PhotoRigma\Classes\Work\$core_logic</a></div><div class="ttdeci">Work_CoreLogic $core_logic</div><div class="ttdoc">Объект для основной логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00114">work.php:114</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a8d2f43c00af0c9574caa0455df82c613"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8d2f43c00af0c9574caa0455df82c613">PhotoRigma\Classes\Work\get_themes</a></div><div class="ttdeci">get_themes()</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00722">work.php:722</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a9143fed87a3064985e0b51fe5fbb4ac3"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9143fed87a3064985e0b51fe5fbb4ac3">PhotoRigma\Classes\Work\template_best_user</a></div><div class="ttdeci">template_best_user(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00852">work.php:852</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a9bdfa510d626dd97616fb1e1bdb4d8c6"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9bdfa510d626dd97616fb1e1bdb4d8c6">PhotoRigma\Classes\Work\validate_array</a></div><div class="ttdeci">validate_array(array $array, int $max_depth, int $current_depth=1)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01234">work.php:1234</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a9c2ee4da4bf10547c3aff7296d707c66"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9c2ee4da4bf10547c3aff7296d707c66">PhotoRigma\Classes\Work\get_languages</a></div><div class="ttdeci">get_languages()</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00711">work.php:711</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01018">work.php:1018</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aaa91e6962b68bc0c0896341f680f1770"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaa91e6962b68bc0c0896341f680f1770">PhotoRigma\Classes\Work\$image</a></div><div class="ttdeci">Work_Image $image</div><div class="ttdoc">Объект класса Work_Image для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00111">work.php:111</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aaf95d95540a3e47c5905a47db3424ed9"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaf95d95540a3e47c5905a47db3424ed9">PhotoRigma\Classes\Work\set_lang</a></div><div class="ttdeci">set_lang(array $lang)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00390">work.php:390</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00875">work.php:875</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Массив, хранящий конфигурацию приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00108">work.php:108</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ac632034f4e83ba35a7b3e2124829e0c2"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac632034f4e83ba35a7b3e2124829e0c2">PhotoRigma\Classes\Work\set_user</a></div><div class="ttdeci">set_user(User $user)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00455">work.php:455</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aca87a58e031a0d778d2db06aa29601a6"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aca87a58e031a0d778d2db06aa29601a6">PhotoRigma\Classes\Work\$template</a></div><div class="ttdeci">Work_Template $template</div><div class="ttdoc">Объект для работы с шаблонами.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00112">work.php:112</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00943">work.php:943</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_adfcd1cb7963a860013ca9ca1898f54f1"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1">PhotoRigma\Classes\Work\no_photo</a></div><div class="ttdeci">no_photo()</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01117">work.php:1117</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aeabe138e0704bd8403da0faf894ad0df"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeabe138e0704bd8403da0faf894ad0df">PhotoRigma\Classes\Work\image_attach</a></div><div class="ttdeci">image_attach(string $full_path, string $name_file)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01139">work.php:1139</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aeb13fee613cd87923546463495400380"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeb13fee613cd87923546463495400380">PhotoRigma\Classes\Work\check_post</a></div><div class="ttdeci">check_post(string $field, bool $isset=false, bool $empty=false, string|false $regexp=false, bool $not_zero=false)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00479">work.php:479</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aebda93a95626971f99ba32c8ac7b4f30"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aebda93a95626971f99ba32c8ac7b4f30">PhotoRigma\Classes\Work\__construct</a></div><div class="ttdeci">__construct(Database_Interface $db, array $config)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00161">work.php:161</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_af37eb2b0693905dd71dd677f86d47831"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af37eb2b0693905dd71dd677f86d47831">PhotoRigma\Classes\Work\image_resize</a></div><div class="ttdeci">image_resize(string $full_path, string $thumbnail_path)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01095">work.php:1095</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_af970fc714c16e27d2d60d698522a8504"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af970fc714c16e27d2d60d698522a8504">PhotoRigma\Classes\Work\create_menu</a></div><div class="ttdeci">create_menu(string $action, int $menu)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00758">work.php:758</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html_aab30d2495bb1362d218cd62e1556b13e"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e">PhotoRigma\Classes\Database_Interface\select</a></div><div class="ttdeci">select(string|array $select, string $from_tbl, array $options=[])</div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Classes_html"><div class="ttname"><a href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">PhotoRigma\Classes</a></div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00036">db.php:36</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00329">common.php:329</a></div></div>
+</div><!-- fragment --> </div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

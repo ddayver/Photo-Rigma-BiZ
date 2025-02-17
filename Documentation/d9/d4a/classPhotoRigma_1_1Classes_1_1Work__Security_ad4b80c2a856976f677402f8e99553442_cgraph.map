@@ -1,0 +1,11 @@
+<map id="_check_input_internal" name="_check_input_internal">
+<area shape="rect" id="Node000001" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="5,33,153,58"/>
+<area shape="rect" id="Node000002" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="217,5,359,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,33,201,27,201,32,153,38"/>
+<area shape="rect" id="Node000003" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title=" " alt="" coords="201,54,375,93"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,53,186,57,185,63,153,58"/>
+<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title=" " alt="" coords="423,47,572,100"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="375,71,408,71,408,76,375,76"/>
+<area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="620,47,777,100"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="573,71,605,71,605,76,573,76"/>
+</map>

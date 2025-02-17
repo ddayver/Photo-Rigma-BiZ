@@ -1,0 +1,525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Photo-Rigma-BiZ: Исходный файл include/work_template.php</title>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Поиск',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d9/d2a/work__template_8php_source.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">work_template.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d9/d2a/work__template_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">namespace </span>PhotoRigma\Classes;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment">// Предотвращение прямого вызова файла</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || IN_GALLERY !== <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    error_log(</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) .</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="stringliteral">&quot; [ERROR] | &quot;</span> .</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        (filter_input(INPUT_SERVER, <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>, FILTER_VALIDATE_IP) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) .</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    );</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
+<div class="foldopen" id="foldopen00071" data-start="{" data-end="};">
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html">   71</a></span><span class="keyword">interface </span><a class="code hl_interface" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html">Work_Template_Interface</a></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>{</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">  105</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">create_menu</a>(<span class="keywordtype">string</span> $action, <span class="keywordtype">int</span> $menu): array;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">  148</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">template_user</a>(): array;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">  186</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">template_stat</a>(): array;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">  214</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">template_best_user</a>(<span class="keywordtype">int</span> $best_user = 1): array;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
+</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span></div>
+<div class="foldopen" id="foldopen00236" data-start="{" data-end="};">
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">  236</a></span><span class="keyword">class </span><a class="code hl_class" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">Work_Template</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html">Work_Template_Interface</a></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>{</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="comment">//Свойства:</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">  239</a></span>    <span class="keyword">private</span> array <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>; </div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">  240</a></span>    <span class="keyword">private</span> ?array <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a> = <span class="keyword">null</span>; </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75">  241</a></span>    <span class="keyword">private</span> <a class="code hl_interface" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a> <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a> = <span class="keyword">null</span>; </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aa1464d140ae01b78294ee8d81d3374d7">  242</a></span>    <span class="keyword">private</span> <a class="code hl_class" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aa1464d140ae01b78294ee8d81d3374d7">$work</a> = <span class="keyword">null</span>; </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">  243</a></span>    <span class="keyword">private</span> ?User <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a> = <span class="keyword">null</span>; </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span></div>
+<div class="foldopen" id="foldopen00276" data-start="{" data-end="}">
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ae76285edc52414fb83b9efd79a77d36d">  276</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ae76285edc52414fb83b9efd79a77d36d">__construct</a>(array <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_interface" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">Database_Interface</a> <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    {</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <span class="keywordflow">if</span> (!is_array(<a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>)) {</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Ошибка конструктора | Ожидается массив конфигурации&quot;</span></div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            );</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        }</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        $this-&gt;config = <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        $this-&gt;db = <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    }</div>
+</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span></div>
+<div class="foldopen" id="foldopen00317" data-start="{" data-end="}">
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a0acd7052f38245fd3723ea29c83bf3f3">  317</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a0acd7052f38245fd3723ea29c83bf3f3">__get</a>(<span class="keywordtype">string</span> $name)</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    {</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        <span class="keywordflow">if</span> ($name === <span class="stringliteral">&#39;config&#39;</span>) {</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">$this-&gt;config</a>;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        }</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Свойство не существует | Получено: &#39;{$name}&#39;&quot;</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        );</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    }</div>
+</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span></div>
+<div class="foldopen" id="foldopen00356" data-start="{" data-end="}">
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a2c4e9c30cf213decde815cdcb37e1ac8">  356</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a2c4e9c30cf213decde815cdcb37e1ac8">__set</a>(<span class="keywordtype">string</span> $name, $value)</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    {</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>        <span class="keywordflow">if</span> ($name === <span class="stringliteral">&#39;config&#39;</span>) {</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            $this-&gt;config = $value;</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Свойство не может быть установлено | Получено: &#39;{$name}&#39;&quot;</span></div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>            );</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        }</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    }</div>
+</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span></div>
+<div class="foldopen" id="foldopen00397" data-start="{" data-end="}">
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aaf95d95540a3e47c5905a47db3424ed9">  397</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a>(array <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>): void</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    {</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        <span class="keywordflow">if</span> (!is_array(<a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>)) {</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Неверный тип данных для языковых строк | Ожидался массив, получено: &quot;</span> . gettype(<a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>)</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>            );</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        }</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>        $this-&gt;lang = <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">$lang</a>;</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    }</div>
+</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span></div>
+<div class="foldopen" id="foldopen00437" data-start="{" data-end="}">
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ac632034f4e83ba35a7b3e2124829e0c2">  437</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ac632034f4e83ba35a7b3e2124829e0c2">set_user</a>(User <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a>): void</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>    {</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>        $this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a> = <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a>;</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>    }</div>
+</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span></div>
+<div class="foldopen" id="foldopen00474" data-start="{" data-end="}">
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504">  474</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504">create_menu</a>(<span class="keywordtype">string</span> $action, <span class="keywordtype">int</span> $menu): array</div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>    {</div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62">_create_menu_internal</a>($action, $menu);</div>
+<div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span>    }</div>
+</div>
+<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span></div>
+<div class="foldopen" id="foldopen00502" data-start="{" data-end="}">
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3">  502</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3">template_best_user</a>(<span class="keywordtype">int</span> $best_user = 1): array</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>    {</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c">_template_best_user_internal</a>($best_user);</div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>    }</div>
+</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span></div>
+<div class="foldopen" id="foldopen00540" data-start="{" data-end="}">
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7">  540</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7">template_stat</a>(): array</div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>    {</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3">_template_stat_internal</a>();</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>    }</div>
+</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span></div>
+<div class="foldopen" id="foldopen00570" data-start="{" data-end="}">
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774">  570</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774">template_user</a>(): array</div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>    {</div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>        <span class="keywordflow">return</span> $this-&gt;<a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0">_template_user_internal</a>();</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>    }</div>
+</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span></div>
+<div class="foldopen" id="foldopen00611" data-start="{" data-end="}">
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62">  611</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62">_create_menu_internal</a>(<span class="keywordtype">string</span> $action, <span class="keywordtype">int</span> $menu): array</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    {</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <span class="comment">// Валидация входных данных (лучше перебдеть :D)</span></div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        <span class="keywordflow">if</span> (!is_string($action)) {</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный тип параметра \$action&quot;</span></div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>            );</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        }</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>        <span class="keywordflow">if</span> (!in_array($menu, [0, 1], <span class="keyword">true</span>)) {</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный тип меню (\$menu)&quot;</span></div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>            );</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        }</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        <span class="comment">// Определение типа меню через match() (поддерживается начиная с PHP 8.0)</span></div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>        $menu_type = match ($menu) {</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>            0 =&gt; <span class="stringliteral">&#39;short&#39;</span>,</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>            1 =&gt; <span class="stringliteral">&#39;long&#39;</span>,</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>            <span class="keywordflow">default</span> =&gt; <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный тип меню (\$menu)&quot;</span></div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            ),</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>        };</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>        <span class="comment">// Формирование запроса для получения данных меню (используем параметры для безопасности)</span></div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>        <span class="comment">// Условие &quot;:menu_type = 1&quot; используется для выборки по имени столбца (смена имени столбца для выборки).</span></div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>        $this-&gt;db-&gt;select(</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>            [<span class="charliteral">&#39;*&#39;</span>], <span class="comment">// Все поля таблицы используются для этого запроса</span></div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>            TBL_MENU,</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>            [</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                <span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;:menu_type = 1&#39;</span>,</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:menu_type&#39;</span> =&gt; $menu_type],</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>                <span class="stringliteral">&#39;order_by&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; <span class="stringliteral">&#39;ASC&#39;</span>]</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>            ]</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        );</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>        <span class="comment">// Получение результатов запроса</span></div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>        $menu_data = $this-&gt;db-&gt;res_arr();</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>        <span class="keywordflow">if</span> ($menu_data === <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>            <span class="keywordflow">throw</span> new \RuntimeException(</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Не удалось получить данные из базы данных&quot;</span></div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>            );</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>        }</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>        <span class="comment">// Формирование массива меню</span></div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>        $menu_items = [];</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>        <span class="keywordflow">foreach</span> ($menu_data as $key =&gt; $menu_item) {</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>            $is_visible = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>            <span class="comment">// Проверяем права доступа для текущего пользователя</span></div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>            <span class="comment">// user_login: 0 - гость, 1 - не гость.</span></div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>            <span class="comment">// user_access: 0 - нельзя смотреть, 1 - можно смотреть.</span></div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>            <span class="keywordflow">if</span> (($menu_item[<span class="stringliteral">&#39;user_login&#39;</span>] !== <span class="stringliteral">&#39;&#39;</span>) &amp;&amp; (</div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>                ($menu_item[<span class="stringliteral">&#39;user_login&#39;</span>] == 0 &amp;&amp; $this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a>-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] &gt; 0) ||</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>                ($menu_item[<span class="stringliteral">&#39;user_login&#39;</span>] == 1 &amp;&amp; $this-&gt;user-&gt;user[<span class="stringliteral">&#39;id&#39;</span>] == 0)</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>            )) {</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>                $is_visible = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>            }</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            <span class="keywordflow">if</span> ($menu_item[<span class="stringliteral">&#39;user_access&#39;</span>] !== <span class="stringliteral">&#39;&#39;</span> &amp;&amp; $this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a>-&gt;user[$menu_item[<span class="stringliteral">&#39;user_access&#39;</span>]] != 1) {</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>                $is_visible = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>            }</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>            <span class="comment">// Если пункт меню видим, добавляем его в результат</span></div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>            <span class="keywordflow">if</span> ($is_visible) {</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>                <span class="comment">// Очищаем данные с использованием Work::clean_field() (статический метод с расширенными проверками)</span></div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>                $url_action = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($menu_item[<span class="stringliteral">&#39;url_action&#39;</span>]);</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>                $name_action = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($menu_item[<span class="stringliteral">&#39;name_action&#39;</span>]);</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>                $menu_items[$key] = [</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>                    <span class="stringliteral">&#39;url&#39;</span>  =&gt; ($menu_item[<span class="stringliteral">&#39;action&#39;</span>] == $action ? null : $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . $url_action),</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>                    <span class="stringliteral">&#39;name&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;menu&#39;</span>][$name_action] ?? ucfirst($name_action)</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>                ];</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>            }</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        }</div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>        <span class="keywordflow">return</span> $menu_items;</div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>    }</div>
+</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span></div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d">  710</a></span>    <span class="keyword">public</span> <span class="keyword">const</span> <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d">NO_USER_AVATAR</a> = <span class="stringliteral">&#39;no_avatar.jpg&#39;</span>; <span class="comment">// Объявление константы на уровне класса</span></div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span> </div>
+<div class="foldopen" id="foldopen00712" data-start="{" data-end="}">
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0">  712</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0">_template_user_internal</a>(): array</div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>    {</div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>        <span class="comment">// Проверка, что объект пользователя установлен</span></div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>        <span class="keywordflow">if</span> ($this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a> === <span class="keyword">null</span>) {</div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>            <span class="keywordflow">throw</span> new \RuntimeException(</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Объект пользователя не установлен | Решение: используйте set_user() для внедрения зависимости&quot;</span></div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>            );</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>        }</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>        <span class="comment">// Определение пути к аватару</span></div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>        $avatar_path = sprintf(<span class="stringliteral">&#39;%s/%s&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;avatar_folder&#39;</span>], $this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a>-&gt;user[<span class="stringliteral">&#39;avatar&#39;</span>] ?? self::NO_USER_AVATAR);</div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>        <span class="comment">// Проверка существования файла и его MIME-типа</span></div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>        <span class="keywordflow">if</span> ($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>] &gt; 0) {</div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>            $full_avatar_path = $this-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="charliteral">&#39;/&#39;</span> . $avatar_path;</div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>            <span class="keywordflow">if</span> (!file_exists($full_avatar_path)) {</div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>                $avatar_path = sprintf(<span class="stringliteral">&#39;%s/%s&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;avatar_folder&#39;</span>], self::NO_USER_AVATAR);</div>
+<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>                $finfo = new \finfo(FILEINFO_MIME_TYPE);</div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>                $mime_type = $finfo-&gt;file($full_avatar_path);</div>
+<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span>                <span class="keywordflow">if</span> (!<a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">Work::validate_mime_type</a>($mime_type)) {</div>
+<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>                    log_in_file(</div>
+<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>                        __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Недопустимый MIME-тип аватара | Файл: {$full_avatar_path}&quot;</span></div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>                    );</div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>                    $avatar_path = sprintf(<span class="stringliteral">&#39;%s/%s&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;avatar_folder&#39;</span>], self::NO_USER_AVATAR);</div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>                }</div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>            }</div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>        }</div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>        <span class="comment">// Проверка статуса авторизации через match</span></div>
+<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>        $array_data = match ($_SESSION[<span class="stringliteral">&#39;login_id&#39;</span>]) {</div>
+<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>            0 =&gt; [</div>
+<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>                <span class="stringliteral">&#39;NAME_BLOCK&#39;</span>        =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;user_block&#39;</span>],</div>
+<div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span>                <span class="stringliteral">&#39;L_LOGIN&#39;</span>           =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;login&#39;</span>],</div>
+<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>                <span class="stringliteral">&#39;L_PASSWORD&#39;</span>        =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;pass&#39;</span>],</div>
+<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>                <span class="stringliteral">&#39;L_ENTER&#39;</span>           =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;enter&#39;</span>],</div>
+<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>                <span class="stringliteral">&#39;L_FORGOT_PASSWORD&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;forgot_password&#39;</span>],</div>
+<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>                <span class="stringliteral">&#39;L_REGISTRATION&#39;</span>    =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;registration&#39;</span>],</div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>                <span class="stringliteral">&#39;U_LOGIN&#39;</span>           =&gt; sprintf(<span class="stringliteral">&#39;%s?action=profile&amp;amp;subact=login&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]),</div>
+<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>                <span class="stringliteral">&#39;U_FORGOT_PASSWORD&#39;</span> =&gt; sprintf(<span class="stringliteral">&#39;%s?action=profile&amp;amp;subact=forgot&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]),</div>
+<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>                <span class="stringliteral">&#39;U_REGISTRATION&#39;</span>    =&gt; sprintf(<span class="stringliteral">&#39;%s?action=profile&amp;amp;subact=regist&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>]),</div>
+<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>            ],</div>
+<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>            <span class="keywordflow">default</span> =&gt; [</div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>                <span class="stringliteral">&#39;NAME_BLOCK&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;user_block&#39;</span>],</div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>                <span class="stringliteral">&#39;L_HI_USER&#39;</span>  =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;hi_user&#39;</span>] . <span class="stringliteral">&#39;, &#39;</span> . <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a>-&gt;user[<span class="stringliteral">&#39;real_name&#39;</span>]),</div>
+<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>                <span class="stringliteral">&#39;L_GROUP&#39;</span>    =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;group&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $this-&gt;<a class="code hl_class" href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">user</a>-&gt;user[<span class="stringliteral">&#39;group&#39;</span>],</div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>                <span class="stringliteral">&#39;U_AVATAR&#39;</span>   =&gt; $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>] . $avatar_path,</div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>            ],</div>
+<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>        };</div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>        <span class="keywordflow">return</span> $array_data;</div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>    }</div>
+</div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span></div>
+<div class="foldopen" id="foldopen00797" data-start="{" data-end="}">
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3">  797</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3">_template_stat_internal</a>(): array</div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>    {</div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>        $stat = [];</div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>        <span class="comment">// Получение статистики пользователей</span></div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>        $this-&gt;db-&gt;select(</div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>            [</div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>                <span class="stringliteral">&#39;COUNT(*) AS regist_user&#39;</span>,</div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>                <span class="stringliteral">&#39;SUM(CASE WHEN `group` = 3 THEN 1 ELSE 0 END) AS user_admin&#39;</span>,</div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>                <span class="stringliteral">&#39;SUM(CASE WHEN `group` = 2 THEN 1 ELSE 0 END) AS user_moder&#39;</span></div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>            ],</div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>            TBL_USERS,</div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>            []</div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>        );</div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>        $user_stats = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>        $stat[<span class="stringliteral">&#39;regist&#39;</span>] = $user_stats ? (int)$user_stats[<span class="stringliteral">&#39;regist_user&#39;</span>] : 0;</div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>        $stat[<span class="stringliteral">&#39;user_admin&#39;</span>] = $user_stats ? (int)$user_stats[<span class="stringliteral">&#39;user_admin&#39;</span>] : 0;</div>
+<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>        $stat[<span class="stringliteral">&#39;user_moder&#39;</span>] = $user_stats ? (int)$user_stats[<span class="stringliteral">&#39;user_moder&#39;</span>] : 0;</div>
+<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>        <span class="comment">// Получение статистики категорий</span></div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>        $this-&gt;db-&gt;select(</div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>            [</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>                <span class="stringliteral">&#39;COUNT(*) AS category&#39;</span>,</div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>                <span class="stringliteral">&#39;COUNT(DISTINCT CASE WHEN `category` = 0 THEN `user_upload` END) AS category_user&#39;</span></div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>            ],</div>
+<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>            TBL_CATEGORY,</div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>            [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;`id` != 0&#39;</span>]</div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>        );</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>        $category_stats = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>        $stat[<span class="stringliteral">&#39;category&#39;</span>] = $category_stats ? (int)$category_stats[<span class="stringliteral">&#39;category&#39;</span>] : 0;</div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>        $stat[<span class="stringliteral">&#39;category_user&#39;</span>] = $category_stats ? (int)$category_stats[<span class="stringliteral">&#39;category_user&#39;</span>] : 0;</div>
+<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>        $stat[<span class="stringliteral">&#39;category&#39;</span>] += $stat[<span class="stringliteral">&#39;category_user&#39;</span>];</div>
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>        <span class="comment">// Получение статистики фотографий</span></div>
+<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>        $this-&gt;db-&gt;select([<span class="stringliteral">&#39;COUNT(*) AS photo_count&#39;</span>], TBL_PHOTO, []);</div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>        $photo_stats = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span>        $stat[<span class="stringliteral">&#39;photo&#39;</span>] = $photo_stats ? (int)$photo_stats[<span class="stringliteral">&#39;photo_count&#39;</span>] : 0;</div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>        <span class="comment">// Получение статистики оценок</span></div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>        $this-&gt;db-&gt;select([<span class="stringliteral">&#39;COUNT(*) AS rate_user&#39;</span>], TBL_RATE_USER, []);</div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>        $rate_user_stats = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>        $stat[<span class="stringliteral">&#39;rate_user&#39;</span>] = $rate_user_stats ? (int)$rate_user_stats[<span class="stringliteral">&#39;rate_user&#39;</span>] : 0;</div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>        $this-&gt;db-&gt;select([<span class="stringliteral">&#39;COUNT(*) AS rate_moder&#39;</span>], TBL_RATE_MODER, []);</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>        $rate_moder_stats = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>        $stat[<span class="stringliteral">&#39;rate_moder&#39;</span>] = $rate_moder_stats ? (int)$rate_moder_stats[<span class="stringliteral">&#39;rate_moder&#39;</span>] : 0;</div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>        <span class="comment">// Получение онлайн-пользователей</span></div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>        $this-&gt;db-&gt;select(</div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>            [<span class="stringliteral">&#39;id&#39;</span>, <span class="stringliteral">&#39;real_name&#39;</span>],</div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>            TBL_USERS,</div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>            [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;`date_last_activ` &gt;= (CURRENT_TIMESTAMP - 900)&#39;</span>]</div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>        );</div>
+<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>        $online_users_data = $this-&gt;db-&gt;res_arr();</div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>        $stat[<span class="stringliteral">&#39;online&#39;</span>] = $online_users_data</div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>            ? implode(<span class="stringliteral">&#39;, &#39;</span>, array_map(<span class="keyword">function</span> (<a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a>) {</div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>                <span class="keywordflow">return</span> sprintf(</div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>                    <span class="stringliteral">&#39;&lt;a href=&quot;%s?action=profile&amp;amp;subact=profile&amp;amp;uid=%d&quot; title=&quot;%s&quot;&gt;%s&lt;/a&gt;&#39;</span>,</div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>                    $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>],</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>                    <a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a>[<span class="stringliteral">&#39;id&#39;</span>],</div>
+<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>                    <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>(<a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a>[<span class="stringliteral">&#39;real_name&#39;</span>]),</div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>                    <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>(<a class="code hl_variable" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">$user</a>[<span class="stringliteral">&#39;real_name&#39;</span>])</div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>                );</div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>            }, $online_users_data)) . <span class="charliteral">&#39;.&#39;</span></div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>            : $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_no_online&#39;</span>];</div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>        <span class="comment">// Формирование результирующего массива</span></div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>        <span class="keywordflow">return</span> [</div>
+<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>            <span class="stringliteral">&#39;NAME_BLOCK&#39;</span>        =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_title&#39;</span>],</div>
+<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>            <span class="stringliteral">&#39;L_STAT_REGIST&#39;</span>     =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_regist&#39;</span>],</div>
+<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>            <span class="stringliteral">&#39;D_STAT_REGIST&#39;</span>     =&gt; $stat[<span class="stringliteral">&#39;regist&#39;</span>],</div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>            <span class="stringliteral">&#39;L_STAT_PHOTO&#39;</span>      =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_photo&#39;</span>],</div>
+<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>            <span class="stringliteral">&#39;D_STAT_PHOTO&#39;</span>      =&gt; $stat[<span class="stringliteral">&#39;photo&#39;</span>],</div>
+<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>            <span class="stringliteral">&#39;L_STAT_CATEGORY&#39;</span>   =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_category&#39;</span>],</div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>            <span class="stringliteral">&#39;D_STAT_CATEGORY&#39;</span>   =&gt; $stat[<span class="stringliteral">&#39;category&#39;</span>] . <span class="charliteral">&#39;(&#39;</span> . $stat[<span class="stringliteral">&#39;category_user&#39;</span>] . <span class="charliteral">&#39;)&#39;</span>,</div>
+<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>            <span class="stringliteral">&#39;L_STAT_USER_ADMIN&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_user_admin&#39;</span>],</div>
+<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>            <span class="stringliteral">&#39;D_STAT_USER_ADMIN&#39;</span> =&gt; $stat[<span class="stringliteral">&#39;user_admin&#39;</span>],</div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>            <span class="stringliteral">&#39;L_STAT_USER_MODER&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_user_moder&#39;</span>],</div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>            <span class="stringliteral">&#39;D_STAT_USER_MODER&#39;</span> =&gt; $stat[<span class="stringliteral">&#39;user_moder&#39;</span>],</div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>            <span class="stringliteral">&#39;L_STAT_RATE_USER&#39;</span>  =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_rate_user&#39;</span>],</div>
+<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>            <span class="stringliteral">&#39;D_STAT_RATE_USER&#39;</span>  =&gt; $stat[<span class="stringliteral">&#39;rate_user&#39;</span>],</div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>            <span class="stringliteral">&#39;L_STAT_RATE_MODER&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_rate_moder&#39;</span>],</div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>            <span class="stringliteral">&#39;D_STAT_RATE_MODER&#39;</span> =&gt; $stat[<span class="stringliteral">&#39;rate_moder&#39;</span>],</div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>            <span class="stringliteral">&#39;L_STAT_ONLINE&#39;</span>     =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;stat_online&#39;</span>],</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>            <span class="stringliteral">&#39;D_STAT_ONLINE&#39;</span>     =&gt; $stat[<span class="stringliteral">&#39;online&#39;</span>]</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>        ];</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>    }</div>
+</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span></div>
+<div class="foldopen" id="foldopen00905" data-start="{" data-end="}">
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno"><a class="line" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c">  905</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c">_template_best_user_internal</a>(<span class="keywordtype">int</span> $best_user = 1): array</div>
+<div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>    {</div>
+<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>        <span class="comment">// Проверка параметра $best_user</span></div>
+<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>        <span class="keywordflow">if</span> (!is_int($best_user) || $best_user &lt;= 0) {</div>
+<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>            <span class="keywordflow">throw</span> new \InvalidArgumentException(</div>
+<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>                __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Некорректный параметр \$best_user | Ожидается положительное целое число, получено: {$best_user}&quot;</span></div>
+<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>            );</div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>        }</div>
+<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>        $array_data = [];</div>
+<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>        <span class="comment">// Блок получения данных через join()</span></div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>        $this-&gt;db-&gt;join(</div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>            [<span class="stringliteral">&#39;users.id&#39;</span>, <span class="stringliteral">&#39;users.real_name&#39;</span>, <span class="stringliteral">&#39;COUNT(photos.id) AS user_photo&#39;</span>],</div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>            TBL_USERS,</div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>            [</div>
+<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span>                [<span class="stringliteral">&#39;type&#39;</span> =&gt; <span class="stringliteral">&#39;INNER&#39;</span>, <span class="stringliteral">&#39;table&#39;</span> =&gt; TBL_PHOTO, <span class="stringliteral">&#39;on&#39;</span> =&gt; <span class="stringliteral">&#39;users.id = photos.user_upload&#39;</span>]</div>
+<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span>            ],</div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>            [</div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span>                <span class="stringliteral">&#39;group&#39;</span> =&gt; <span class="stringliteral">&#39;users.id&#39;</span>,</div>
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span>                <span class="stringliteral">&#39;order&#39;</span> =&gt; <span class="stringliteral">&#39;user_photo DESC&#39;</span>,</div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>                <span class="stringliteral">&#39;limit&#39;</span> =&gt; $best_user</div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>            ]</div>
+<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>        );</div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>        $user_data = $this-&gt;db-&gt;res_arr();</div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span>        <span class="comment">// Проверка: $user_data может быть массивом (если данные есть) или false (если запрос не вернул данных).</span></div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>        $array_data = ($user_data !== <span class="keyword">false</span>)</div>
+<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>            ? array_map(<span class="keyword">function</span> ($current_user, $idx) {</div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>                <span class="keywordflow">return</span> [</div>
+<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>                    <span class="stringliteral">&#39;user_url&#39;</span>   =&gt; sprintf(<span class="stringliteral">&#39;%s?action=profile&amp;amp;subact=profile&amp;amp;uid=%d&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>], $current_user[<span class="stringliteral">&#39;id&#39;</span>]),</div>
+<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>                    <span class="stringliteral">&#39;user_name&#39;</span>  =&gt; <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($current_user[<span class="stringliteral">&#39;real_name&#39;</span>]),</div>
+<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>                    <span class="stringliteral">&#39;user_photo&#39;</span> =&gt; (int)$current_user[<span class="stringliteral">&#39;user_photo&#39;</span>]</div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>                ];</div>
+<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>            }, $user_data, array_keys($user_data))</div>
+<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>            : [[</div>
+<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>                <span class="stringliteral">&#39;user_url&#39;</span>   =&gt; <span class="keyword">null</span>,</div>
+<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>                <span class="stringliteral">&#39;user_name&#39;</span>  =&gt; <span class="stringliteral">&#39;---&#39;</span>,</div>
+<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>                <span class="stringliteral">&#39;user_photo&#39;</span> =&gt; <span class="charliteral">&#39;-&#39;</span></div>
+<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>            ]];</div>
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>        <span class="comment">// Блок формирования метаданных для шаблона</span></div>
+<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>        $array_data[0] = [</div>
+<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>            <span class="stringliteral">&#39;NAME_BLOCK&#39;</span>   =&gt; sprintf($this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;best_user&#39;</span>], $best_user),</div>
+<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>            <span class="stringliteral">&#39;L_USER_NAME&#39;</span>  =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;user_name&#39;</span>],</div>
+<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>            <span class="stringliteral">&#39;L_USER_PHOTO&#39;</span> =&gt; $this-&gt;lang[<span class="stringliteral">&#39;main&#39;</span>][<span class="stringliteral">&#39;best_user_photo&#39;</span>]</div>
+<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>        ];</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>        <span class="keywordflow">return</span> $array_data;</div>
+<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>    }</div>
+</div>
+<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>}</div>
+</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma\Classes\Work_Template</a></div><div class="ttdoc">Класс Work_Template отвечает за формирование данных для шаблонов.</div><div class="ttdef"><b>Определения</b> <a href="#l00236">work_template.php:237</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a0acd7052f38245fd3723ea29c83bf3f3"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a0acd7052f38245fd3723ea29c83bf3f3">PhotoRigma\Classes\Work_Template\__get</a></div><div class="ttdeci">__get(string $name)</div><div class="ttdef"><b>Определения</b> <a href="#l00317">work_template.php:317</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a116ebcf799d07566a74e7e765aecc1b7"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7">PhotoRigma\Classes\Work_Template\template_stat</a></div><div class="ttdeci">template_stat()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div><div class="ttdef"><b>Определения</b> <a href="#l00540">work_template.php:540</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a13745a6536499d5589da42ea46b1535d"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d">PhotoRigma\Classes\Work_Template\NO_USER_AVATAR</a></div><div class="ttdeci">const NO_USER_AVATAR</div><div class="ttdef"><b>Определения</b> <a href="#l00710">work_template.php:710</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work_Template\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="#l00241">work_template.php:241</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a1f3df8874c79377e6a8b4398ea6ad774"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774">PhotoRigma\Classes\Work_Template\template_user</a></div><div class="ttdeci">template_user()</div><div class="ttdef"><b>Определения</b> <a href="#l00570">work_template.php:570</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a2c4e9c30cf213decde815cdcb37e1ac8"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a2c4e9c30cf213decde815cdcb37e1ac8">PhotoRigma\Classes\Work_Template\__set</a></div><div class="ttdeci">__set(string $name, $value)</div><div class="ttdef"><b>Определения</b> <a href="#l00356">work_template.php:356</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a35c45cc33d8d420da794514df59466b7"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">PhotoRigma\Classes\Work_Template\$user</a></div><div class="ttdeci">User $user</div><div class="ttdoc">Объект пользователя.</div><div class="ttdef"><b>Определения</b> <a href="#l00243">work_template.php:243</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a44160f09c7dbb17349602f0862c95d62"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62">PhotoRigma\Classes\Work_Template\_create_menu_internal</a></div><div class="ttdeci">_create_menu_internal(string $action, int $menu)</div><div class="ttdef"><b>Определения</b> <a href="#l00611">work_template.php:611</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a4c85b7dc68591aedd8df9848c1a08dd0"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0">PhotoRigma\Classes\Work_Template\_template_user_internal</a></div><div class="ttdeci">_template_user_internal()</div><div class="ttdef"><b>Определения</b> <a href="#l00712">work_template.php:712</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a7c272bd5112b72e9047a6dafdd9cfd8c"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c">PhotoRigma\Classes\Work_Template\_template_best_user_internal</a></div><div class="ttdeci">_template_best_user_internal(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div><div class="ttdef"><b>Определения</b> <a href="#l00905">work_template.php:905</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a9143fed87a3064985e0b51fe5fbb4ac3"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3">PhotoRigma\Classes\Work_Template\template_best_user</a></div><div class="ttdeci">template_best_user(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div><div class="ttdef"><b>Определения</b> <a href="#l00502">work_template.php:502</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a9fd8978d2c6cbdcfdd6be875be161b7b"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b">PhotoRigma\Classes\Work_Template\$lang</a></div><div class="ttdeci">array $lang</div><div class="ttdoc">Языковые данные.</div><div class="ttdef"><b>Определения</b> <a href="#l00240">work_template.php:240</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_aa1464d140ae01b78294ee8d81d3374d7"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aa1464d140ae01b78294ee8d81d3374d7">PhotoRigma\Classes\Work_Template\$work</a></div><div class="ttdeci">Work $work</div><div class="ttdoc">Основной объект приложения.</div><div class="ttdef"><b>Определения</b> <a href="#l00242">work_template.php:242</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_aaf95d95540a3e47c5905a47db3424ed9"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aaf95d95540a3e47c5905a47db3424ed9">PhotoRigma\Classes\Work_Template\set_lang</a></div><div class="ttdeci">set_lang(array $lang)</div><div class="ttdef"><b>Определения</b> <a href="#l00397">work_template.php:397</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Template\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Конфигурация приложения.</div><div class="ttdef"><b>Определения</b> <a href="#l00239">work_template.php:239</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ac632034f4e83ba35a7b3e2124829e0c2"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ac632034f4e83ba35a7b3e2124829e0c2">PhotoRigma\Classes\Work_Template\set_user</a></div><div class="ttdeci">set_user(User $user)</div><div class="ttdef"><b>Определения</b> <a href="#l00437">work_template.php:437</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ad1a946d518250f1085369cfad3719cc3"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3">PhotoRigma\Classes\Work_Template\_template_stat_internal</a></div><div class="ttdeci">_template_stat_internal()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div><div class="ttdef"><b>Определения</b> <a href="#l00797">work_template.php:797</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ae76285edc52414fb83b9efd79a77d36d"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ae76285edc52414fb83b9efd79a77d36d">PhotoRigma\Classes\Work_Template\__construct</a></div><div class="ttdeci">__construct(array $config, Database_Interface $db)</div><div class="ttdef"><b>Определения</b> <a href="#l00276">work_template.php:276</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_af970fc714c16e27d2d60d698522a8504"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504">PhotoRigma\Classes\Work_Template\create_menu</a></div><div class="ttdeci">create_menu(string $action, int $menu)</div><div class="ttdef"><b>Определения</b> <a href="#l00474">work_template.php:474</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00105">work.php:106</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01048">work.php:1048</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00875">work.php:875</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1user_html"><div class="ttname"><a href="../../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html">PhotoRigma\Classes\user</a></div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00053">user.php:54</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Database__Interface_html"><div class="ttname"><a href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html">PhotoRigma\Classes\Database_Interface</a></div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00074">db.php:75</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Template__Interface_html"><div class="ttname"><a href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html">PhotoRigma\Classes\Work_Template_Interface</a></div><div class="ttdoc">Интерфейс Work_Template_Interface определяет контракт для классов, формирующих данные для шаблонов.</div><div class="ttdef"><b>Определения</b> <a href="#l00071">work_template.php:72</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Template__Interface_html_a116ebcf799d07566a74e7e765aecc1b7"><div class="ttname"><a href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">PhotoRigma\Classes\Work_Template_Interface\template_stat</a></div><div class="ttdeci">template_stat()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Template__Interface_html_a1f3df8874c79377e6a8b4398ea6ad774"><div class="ttname"><a href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">PhotoRigma\Classes\Work_Template_Interface\template_user</a></div><div class="ttdeci">template_user()</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Template__Interface_html_a9143fed87a3064985e0b51fe5fbb4ac3"><div class="ttname"><a href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">PhotoRigma\Classes\Work_Template_Interface\template_best_user</a></div><div class="ttdeci">template_best_user(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Template__Interface_html_af970fc714c16e27d2d60d698522a8504"><div class="ttname"><a href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">PhotoRigma\Classes\Work_Template_Interface\create_menu</a></div><div class="ttdeci">create_menu(string $action, int $menu)</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../d9/d2a/work__template_8php.html">work_template.php</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>
