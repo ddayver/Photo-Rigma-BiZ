@@ -18,6 +18,7 @@
  * @see         PhotoRigma::Classes::Work_Image_Interface Интерфейс для работы с изображениями.
  * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с изображениями.
  * @see         PhotoRigma::Classes::Work::clean_field() Метод для проверки MIME-типов изображений.
+ * @see         PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  * @see         index.php Файл, который подключает work_image.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в обработке изображений.

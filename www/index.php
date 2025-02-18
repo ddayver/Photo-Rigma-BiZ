@@ -104,6 +104,7 @@ try {
         $config['inc_dir'] . 'user.php',
     ];
 
+    //@cond
     // Массив для хранения ошибок
     $errors = [];
 
@@ -128,6 +129,7 @@ try {
     foreach ($required_files as $file) {
         require_once $file;
     }
+    //@endcond
 
     /** @var \\PhotoRigma\\Classes\\Database $db
      * @brief Создание объекта класса Database для работы с основной БД.
@@ -181,6 +183,9 @@ try {
      * @see include/user.php Файл, содержащий реализацию класса User.
      */
     $user = new User();
+
+    // Передаем объект User в класс Work
+    $work->set_user($user);
 
     /** @var bool $header_footer
      * @brief Флаг: выводить ли заголовок и подвал страницы.

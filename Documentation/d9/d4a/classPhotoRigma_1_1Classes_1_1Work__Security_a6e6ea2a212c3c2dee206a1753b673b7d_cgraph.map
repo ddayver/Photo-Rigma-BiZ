@@ -1,5 +1,5 @@
 <map id="check_input" name="check_input">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,33,97,58"/>
+<area shape="rect" id="Node000001" title="Универсальная проверка входных данных." alt="" coords="5,33,97,58"/>
 <area shape="rect" id="Node000002" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="145,33,292,58"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,43,129,43,129,48,97,48"/>
 <area shape="rect" id="Node000003" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="356,5,498,30"/>

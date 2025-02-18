@@ -41,6 +41,9 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
 
+// Передаем языковый массив в класс Work
+$work->set_lang($lang);
+
 $template->point_template_file('main.html');
 
 $title = $lang['main']['main'];

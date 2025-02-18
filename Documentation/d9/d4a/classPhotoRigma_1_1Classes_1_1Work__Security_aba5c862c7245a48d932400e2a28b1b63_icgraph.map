@@ -1,5 +1,5 @@
 <map id="_filt_email_internal" name="_filt_email_internal">
 <area shape="rect" id="Node000001" title="Внутренний метод для замены символов в email&#45;адресах." alt="" coords="126,5,254,30"/>
-<area shape="rect" id="Node000002" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title=" " alt="" coords="5,5,78,30"/>
+<area shape="rect" id="Node000002" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email&#45;адресах для &quot;обмана&quot; ботов." alt="" coords="5,5,78,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,20,78,20,78,15,110,15"/>
 </map>

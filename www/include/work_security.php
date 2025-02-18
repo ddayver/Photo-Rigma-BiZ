@@ -19,6 +19,7 @@
  * @see         PhotoRigma::Classes::Work_Security_Interface Интерфейс для работы с безопасностью приложения.
  * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы безопасности.
  * @see         PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типов загружаемых файлов.
+ * @see         PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  * @see         index.php Файл, который подключает work_security.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в обеспечении безопасности приложения.
@@ -46,29 +47,62 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 /**
+ * @interface Work_Security_Interface
  * @brief Интерфейс для работы с безопасностью.
  *
  * @details Этот интерфейс определяет методы, которые должны быть реализованы
- * классами, отвечающими за безопасность приложения. Все методы вызываются через класс Work.
+ *          классами, отвечающими за безопасность приложения. Все методы вызываются через класс Work.
+ *          Интерфейс охватывает такие задачи, как проверка входных данных, защита от спам-ботов,
+ *          фильтрация email-адресов и другие аспекты безопасности.
+ *
+ * @callgraph
+ *
+ * @see PhotoRigma::Classes::Work_Security Класс, реализующий данный интерфейс.
+ * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типов загружаемых файлов.
+ *
+ * @warning Не используйте классы, реализующие этот интерфейс, напрямую. Все вызовы должны выполняться через класс Work.
+ *
+ * Пример класса, реализующего интерфейс:
+ * @code
+ * class Work_Security implements \PhotoRigma\Classes\Work_Security_Interface {
+ * }
+ * @endcode
  */
 interface Work_Security_Interface
 {
     /**
      * @brief Проверяет URL на наличие вредоносного кода.
      *
-     * @details Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов.
+     * @details Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов,
+     *          определяемых в массиве $this->compiled_rules. Если формат URL некорректен или найден запрещённый паттерн,
+     *          метод возвращает false.
      *
-     * @example Пример использования метода:
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::url_check()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
+     * @return bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.
+     *
+     * @note Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].
+     *
+     * @warning Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
+     *
+     * Пример использования:
      * @code
-     * $work = new Work();
-     * if (!$work->url_check()) {
-     *     echo "Обнаружен подозрительный URL!";
+     * // Проверка безопасности URL
+     * $security = new \PhotoRigma\Classes\Work_Security();
+     * $is_safe = $security->url_check();
+     * if ($is_safe) {
+     *     echo "URL безопасен.";
+     * } else {
+     *     echo "URL содержит запрещённые паттерны.";
      * }
      * @endcode
-     *
-     * @see PhotoRigma::Classes::Work::url_check() Этот метод вызывается через класс Work.
-     *
-     * @return bool True, если URL безопасен, иначе False.
      */
     public function url_check(): bool;
 
@@ -76,34 +110,55 @@ interface Work_Security_Interface
      * @brief Универсальная проверка входных данных.
      *
      * @details Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES)
-     * на соответствие заданным условиям.
+     *          на соответствие заданным условиям. Поддерживаются следующие типы проверок:
+     *          - Проверка наличия поля в источнике данных (параметр 'isset').
+     *          - Проверка, что значение поля не пустое (параметр 'empty').
+     *          - Проверка значения поля по регулярному выражению (параметр 'regexp').
+     *          - Проверка, что значение поля не равно нулю (параметр 'not_zero').
+     *          - Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа.
      *
-     * @example Пример использования метода:
-     * @code
-     * $work = new Work();
-     * $result = $work->check_input('_POST', 'username', [
-     *     'isset' => true,
-     *     'empty' => false,
-     *     'regexp' => '/^[a-z0-9]+$/i',
-     * ]);
-     * if ($result) {
-     *     echo "Проверка пройдена!";
-     * }
-     * @endcode
+     *          Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
+     *          Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.
      *
-     * @see PhotoRigma::Classes::Work::check_input() Этот метод вызывается через класс Work.
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::check_input()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Classes::Work::validate_mime_type()
+     *      Метод для проверки поддерживаемых MIME-типов.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
      * @param string $source_name Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
+     *                            Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'.
      * @param string $field Поле для проверки (имя ключа в массиве источника данных).
-     * @param array{
-     *     isset?: bool,          // Проверять наличие поля в источнике данных.
-     *     empty?: bool,          // Проверять, что значение поля не пустое.
-     *     regexp?: string|false, // Регулярное выражение для проверки значения поля.
-     *     not_zero?: bool,       // Проверять, что значение поля не равно нулю.
-     *     max_size?: int         // Максимальный размер файла (в байтах) для $_FILES.
-     * } $options Дополнительные параметры проверки.
+     *                      Указывается имя ключа, которое необходимо проверить.
+     * @param array $options Дополнительные параметры проверки:
+     *                       - 'isset' (bool, опционально): Проверять наличие поля в источнике данных.
+     *                       - 'empty' (bool, опционально): Проверять, что значение поля не пустое.
+     *                       - 'regexp' (string|false, опционально): Регулярное выражение для проверки значения поля.
+     *                       - 'not_zero' (bool, опционально): Проверять, что значение поля не равно нулю.
+     *                       - 'max_size' (int, опционально): Максимальный размер файла (в байтах) для $_FILES.
      *
      * @return bool True, если данные прошли проверку, иначе False.
+     *              Для $_FILES также учитывается корректность MIME-типа и размера файла.
+     *
+     * @throws RuntimeException Если MIME-тип загруженного файла не поддерживается.
+     *
+     * Пример использования:
+     * @code
+     * // Проверка поля $_POST['username'] на наличие и непустое значение
+     * $security = new \PhotoRigma\Classes\Work_Security();
+     * $is_valid = $security->check_input('_POST', 'username', [
+     *     'isset' => true,
+     *     'empty' => true,
+     * ]);
+     * if ($is_valid) {
+     *     echo "Поле username прошло проверку.";
+     * } else {
+     *     echo "Поле username не прошло проверку.";
+     * }
+     * @endcode
      */
     public function check_input(string $source_name, string $field, array $options = []): bool;
 
@@ -111,25 +166,46 @@ interface Work_Security_Interface
      * @brief Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.
      *
      * @details Метод выполняет следующие проверки:
-     * - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
-     * - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
+     *          - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
+     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок компиляции).
+     *          - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
+     *          - Проверяет, что значение не содержит запрещённых паттернов из $this->compiled_rules.
      *
-     * @example Пример использования метода:
-     * @code
-     * $work = new Work();
-     * $result = $work->check_field('test123', '/^[a-z0-9]+$/i', false);
-     * if ($result) {
-     *     echo "Поле прошло проверку!";
-     * }
-     * @endcode
+     *          Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
      *
-     * @see PhotoRigma::Classes::Work::check_field() Этот метод вызывается через класс Work.
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::check_field()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
      * @param string $field Значение поля для проверки.
+     *                      Указывается строковое значение, которое необходимо проверить.
      * @param string|false $regexp Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению.
+     *                              Если регулярное выражение некорректно (например, содержит ошибки компиляции),
+     *                              метод завершает выполнение с ошибкой.
      * @param bool $not_zero Флаг, указывающий, что значение не должно быть числом 0.
+     *                       Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
      *
      * @return bool True, если поле прошло все проверки, иначе False.
+     *              Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов
+     *              и выполнение условия $not_zero (если оно задано).
+     *
+     * Пример использования:
+     * @code
+     * // Проверка поля на соответствие регулярному выражению и условию not_zero
+     * $security = new \PhotoRigma\Classes\Work_Security();
+     * $field_value = "example123";
+     * $regexp = "/^[a-z0-9]+$/i";
+     * $is_valid = $security->check_field($field_value, $regexp, true);
+     * if ($is_valid) {
+     *     echo "Поле прошло проверку.";
+     * } else {
+     *     echo "Поле не прошло проверку.";
+     * }
+     * @endcode
      */
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool;
 
@@ -137,56 +213,100 @@ interface Work_Security_Interface
      * @brief Генерирует математический CAPTCHA-вопрос и ответ.
      *
      * @details Метод создаёт случайное математическое выражение (сложение или умножение)
-     * и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.
+     *          и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.
+     *          Выражение может включать комбинацию сложения и умножения с использованием скобок.
      *
-     * @example Пример использования метода:
+     *          Метод использует функцию rand() для генерации случайных чисел.
+     *          Если требуется криптографическая безопасность, следует заменить её на random_int().
+     *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::gen_captcha()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     *
+     * @return array Массив с ключами 'question' и 'answer':
+     *               - 'question': строка математического выражения (например, "2 x (3 + 4)").
+     *               - 'answer': целочисленный результат вычисления (например, 14).
+     *
+     * Пример использования:
      * @code
-     * $work = new Work();
-     * $captcha = $work->gen_captcha();
-     * echo "Вопрос: {$captcha['question']}, Ответ: {$captcha['answer']}";
-     * // Пример вывода: Вопрос: 2 x (3 + 4), Ответ: 14
+     * // Генерация CAPTCHA-вопроса и ответа
+     * $security = new \PhotoRigma\Classes\Work_Security();
+     * $captcha = $security->gen_captcha();
+     * echo "Вопрос: {$captcha['question']}\n";
+     * echo "Ответ: {$captcha['answer']}\n";
      * @endcode
-     *
-     * @see PhotoRigma::Classes::Work::gen_captcha() Этот метод вызывается через класс Work.
-     *
-     * @return array{
-     *     question: string, // Математическое выражение (например, "2 x (3 + 4)")
-     *     answer: int       // Числовой ответ на выражение (например, 14)
-     * } Массив с ключами 'question' и 'answer'.
      */
     public function gen_captcha(): array;
 
     /**
-     * @brief Заменяет символы в email-адресах для "обмана" ботов.
+     * @brief Генерирует математический CAPTCHA-вопрос и ответ.
      *
-     * @details Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами.
+     * @details Метод создаёт случайное математическое выражение (сложение или умножение)
+     *          и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.
+     *          Выражение может включать комбинацию сложения и умножения с использованием скобок.
      *
-     * @example Пример использования метода:
+     *          Метод использует функцию rand() для генерации случайных чисел.
+     *          Если требуется криптографическая безопасность, следует заменить её на random_int().
+     *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::gen_captcha()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
+     * @return array Массив с ключами 'question' и 'answer':
+     *               - 'question': строка математического выражения (например, "2 x (3 + 4)").
+     *               - 'answer': целочисленный результат вычисления (например, 14).
+     *
+     * Пример использования:
      * @code
-     * $work = new Work();
-     * $filteredEmail = $work->filt_email('example@example.com');
-     * echo $filteredEmail; // Выведет: example[at]example[dot]com
+     * // Генерация CAPTCHA-вопроса и ответа
+     * $security = new \PhotoRigma\Classes\Work_Security();
+     * $captcha = $security->gen_captcha();
+     * echo "Вопрос: {$captcha['question']}\n";
+     * echo "Ответ: {$captcha['answer']}\n";
      * @endcode
-     *
-     * @see PhotoRigma::Classes::Work::filt_email() Этот метод вызывается через класс Work.
-     *
-     * @param string $email Email-адрес для обработки.
-     *
-     * @return string Обработанный email-адрес.
      */
     public function filt_email(string $email): string;
 }
 
 /**
+ * @class Work_Security
  * @brief Класс для обеспечения безопасности приложения.
  *
  * @details Этот класс предоставляет методы для проверки входных данных, защиты от спам-ботов,
- * фильтрации email-адресов и других задач, связанных с безопасностью приложения.
+ *          фильтрации email-адресов и других задач, связанных с безопасностью приложения.
+ *          Реализует интерфейс Work_Security_Interface.
+ *
+ * @implements Work_Security_Interface Интерфейс для работы с безопасностью.
+ *
+ * @callergraph
+ * @callgraph
  *
  * @see PhotoRigma::Classes::Work Все методы этого класса вызываются через класс Work.
+ * @see Work_Security_Interface Интерфейс, который реализует класс.
+ * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типов загружаемых файлов.
  *
  * @note Этот класс реализует интерфейс Work_Security_Interface.
  * @warning Не используйте этот класс напрямую, все вызовы должны выполняться через класс Work.
+ *
+ * Пример использования класса:
+ * @code
+ * // Создание экземпляра класса Work_Security
+ * $security = new Work_Security();
+ *
+ * // Проверка email-адреса
+ * $email = "example@example.com";
+ * $filtered_email = $security->filt_email($email);
+ * if (!empty($filtered_email)) {
+ *     echo "Обработанный email: {$filtered_email}";
+ * } else {
+ *     echo "Email некорректен или пуст.";
+ * }
+ * @endcode
  */
 class Work_Security implements Work_Security_Interface
 {
@@ -211,9 +331,8 @@ class Work_Security implements Work_Security_Interface
      * @warning Правила защиты жёстко заданы в конструкторе. При изменении или расширении массива правил потребуется обновление кода.
      *          Использование preg_quote с флагом '/' делает правила чувствительными к символу '/', что может быть важно при их использовании.
      *
-     * @example PhotoRigma::Classes::Work_Security::__construct
+     * Пример создания объекта класса Work_Security:
      * @code
-     * // Пример создания объекта класса Work_Security
      * $security = new \PhotoRigma\Classes\Work_Security();
      *
      * // Пример проверки входных данных
@@ -277,20 +396,38 @@ class Work_Security implements Work_Security_Interface
     /**
      * @brief Проверяет URL на наличие вредоносного кода.
      *
-     * @details Этот метод является "витриной" для вызова внутреннего метода _url_check_internal.
+     * @details Этот метод является публичным редиректом на защищённый метод `_url_check_internal`.
+     *          Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов,
+     *          определяемых в массиве `$compiled_rules`. Если формат URL некорректен или найден запрещённый паттерн,
+     *          метод возвращает false.
      *
-     * @example Пример использования метода:
+     * @callergraph
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::_url_check_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::url_check() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Security::$compiled_rules Свойство, содержащее массив скомпилированных правил.
+     *
+     * @return bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.
+     *
+     * @warning Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
+     *
+     * @note Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].
+     *
+     * Пример использования:
      * @code
-     * $work = new Work();
-     * if (!$work->url_check()) {
-     *     echo "Обнаружен подозрительный URL!";
+     * // Создание экземпляра класса Work_Security
+     * $security = new Work_Security();
+     *
+     * // Проверка безопасности URL
+     * if ($security->url_check()) {
+     *     echo "URL безопасен.";
+     * } else {
+     *     echo "URL содержит запрещённые паттерны.";
      * }
      * @endcode
-     *
-     * @see PhotoRigma::Classes::Work::url_check() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Classes::Work_Security::_url_check_internal() Реализация метода внутри класса Work_Security.
-     *
-     * @return bool True, если URL безопасен, иначе False.
      */
     public function url_check(): bool
     {
@@ -300,35 +437,58 @@ class Work_Security implements Work_Security_Interface
     /**
      * @brief Универсальная проверка входных данных.
      *
-     * @details Этот метод является "витриной" для вызова внутреннего метода _check_input_internal.
+     * @details Этот метод является публичным редиректом на защищённый метод `_check_input_internal`.
+     *          Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES)
+     *          на соответствие заданным условиям. Поддерживаются следующие типы проверок:
+     *          - Проверка наличия поля в источнике данных (параметр 'isset').
+     *          - Проверка, что значение поля не пустое (параметр 'empty').
+     *          - Проверка значения поля по регулярному выражению (параметр 'regexp').
+     *          - Проверка, что значение поля не равно нулю (параметр 'not_zero').
+     *          - Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа.
      *
-     * @example Пример использования метода:
-     * @code
-     * $work = new Work();
-     * $result = $work->check_input('_POST', 'username', [
-     *     'isset' => true,
-     *     'empty' => false,
-     *     'regexp' => '/^[a-z0-9]+$/i',
-     * ]);
-     * if ($result) {
-     *     echo "Проверка пройдена!";
-     * }
-     * @endcode
+     * @callergraph
+     * @callgraph
      *
+     * @see PhotoRigma::Classes::Work_Security::_check_input_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Work::check_input() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Classes::Work_Security::_check_input_internal() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки поддерживаемых MIME-типов.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param string $source_name Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
+     *                            Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'.
      * @param string $field Поле для проверки (имя ключа в массиве источника данных).
-     * @param array{
-     *     isset?: bool,          // Проверять наличие поля в источнике данных.
-     *     empty?: bool,          // Проверять, что значение поля не пустое.
-     *     regexp?: string|false, // Регулярное выражение для проверки значения поля.
-     *     not_zero?: bool,       // Проверять, что значение поля не равно нулю.
-     *     max_size?: int         // Максимальный размер файла (в байтах) для $_FILES.
-     * } $options Дополнительные параметры проверки.
+     *                      Указывается имя ключа, которое необходимо проверить.
+     * @param array $options Дополнительные параметры проверки. Массив может содержать следующие ключи:
+     *                       - 'isset' (bool, опционально): Проверять наличие поля в источнике данных.
+     *                       - 'empty' (bool, опционально): Проверять, что значение поля не пустое.
+     *                       - 'regexp' (string|false, опционально): Регулярное выражение для проверки значения поля.
+     *                       - 'not_zero' (bool, опционально): Проверять, что значение поля не равно нулю.
+     *                       - 'max_size' (int, опционально): Максимальный размер файла (в байтах) для $_FILES.
      *
      * @return bool True, если данные прошли проверку, иначе False.
+     *              Для $_FILES также учитывается корректность MIME-типа и размера файла.
+     *
+     * @throws RuntimeException Если MIME-тип загруженного файла не поддерживается.
+     *
+     * @warning Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
+     *          Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.
+     *
+     * Пример использования:
+     * @code
+     * // Создание экземпляра класса Work_Security
+     * $security = new Work_Security();
+     *
+     * // Проверка поля $_POST['username'] на наличие и непустое значение
+     * $is_valid = $security->check_input('_POST', 'username', [
+     *     'isset' => true,
+     *     'empty' => false,
+     * ]);
+     * if ($is_valid) {
+     *     echo "Поле username прошло проверку.";
+     * } else {
+     *     echo "Поле username не прошло проверку.";
+     * }
+     * @endcode
      */
     public function check_input(string $source_name, string $field, array $options = []): bool
     {
@@ -338,25 +498,51 @@ class Work_Security implements Work_Security_Interface
     /**
      * @brief Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.
      *
-     * @details Этот метод является "витриной" для вызова внутреннего метода _check_field_internal.
+     * @details Этот метод является публичным редиректом на защищённый метод `_check_field_internal`.
+     *          Метод выполняет следующие проверки:
+     *          - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
+     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок компиляции).
+     *          - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
+     *          - Проверяет, что значение не содержит запрещённых паттернов из $this->compiled_rules.
      *
-     * @example Пример использования метода:
-     * @code
-     * $work = new Work();
-     * $result = $work->check_field('test123', '/^[a-z0-9]+$/i', false);
-     * if ($result) {
-     *     echo "Поле прошло проверку!";
-     * }
-     * @endcode
+     * @callergraph
+     * @callgraph
      *
+     * @see PhotoRigma::Classes::Work_Security::_check_field_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Work::check_field() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Classes::Work_Security::_check_field_internal() Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work_Security::$compiled_rules Свойство, содержащее массив скомпилированных правил для проверки.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param string $field Значение поля для проверки.
+     *                      Указывается строковое значение, которое необходимо проверить.
      * @param string|false $regexp Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению.
+     *                              Если регулярное выражение некорректно (например, содержит ошибки компиляции),
+     *                              метод завершает выполнение с ошибкой.
      * @param bool $not_zero Флаг, указывающий, что значение не должно быть числом 0.
+     *                       Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
      *
      * @return bool True, если поле прошло все проверки, иначе False.
+     *              Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов
+     *              и выполнение условия $not_zero (если оно задано).
+     *
+     * @warning Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
+     *
+     * Пример использования:
+     * @code
+     * // Создание экземпляра класса Work_Security
+     * $security = new Work_Security();
+     *
+     * // Проверка поля на соответствие регулярному выражению и условию not_zero
+     * $field_value = "example123";
+     * $regexp = "/^[a-z0-9]+$/i";
+     * $is_valid = $security->check_field($field_value, $regexp, true);
+     * if ($is_valid) {
+     *     echo "Поле прошло проверку.";
+     * } else {
+     *     echo "Поле не прошло проверку.";
+     * }
+     * @endcode
      */
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
@@ -364,13 +550,125 @@ class Work_Security implements Work_Security_Interface
     }
 
     /**
+     * @brief Генерирует математический CAPTCHA-вопрос и ответ.
+     *
+     * @details Этот метод является публичным редиректом на защищённый метод `_gen_captcha_internal`.
+     *          Метод создаёт случайное математическое выражение (сложение или умножение)
+     *          и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.
+     *          Выражение может включать комбинацию сложения и умножения с использованием скобок.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::_gen_captcha_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::gen_captcha() Этот метод вызывается через класс Work.
+     *
+     * @return array Массив с ключами 'question' и 'answer'.
+     *               - Ключ 'question' содержит строку математического выражения (например, "2 x (3 + 4)").
+     *               - Ключ 'answer' содержит целочисленный результат вычисления (например, 14).
+     *
+     * @warning Метод использует функцию rand() для генерации случайных чисел.
+     *          Если требуется криптографическая безопасность, следует заменить её на random_int().
+     *
+     * Пример использования:
+     * @code
+     * // Создание экземпляра класса Work_Security
+     * $security = new Work_Security();
+     *
+     * // Генерация CAPTCHA-вопроса и ответа
+     * $captcha = $security->gen_captcha();
+     * echo "Вопрос: {$captcha['question']}\n";
+     * echo "Ответ: {$captcha['answer']}\n";
+     * // Пример вывода:
+     * // Вопрос: 2 x (3 + 4)
+     * // Ответ: 14
+     * @endcode
+     */
+    public function gen_captcha(): array
+    {
+        return $this->_gen_captcha_internal();
+    }
+
+    /**
+     * @brief Заменяет символы в email-адресах для "обмана" ботов.
+     *
+     * @details Этот метод является публичным редиректом на защищённый метод `_filt_email_internal`.
+     *          Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами.
+     *          Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст,
+     *          метод возвращает пустую строку.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::_filt_email_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::filt_email() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
+     * @param string $email Email-адрес для обработки.
+     *                      Должен быть непустым и соответствовать формату email (например, "example@example.com").
+     *                      Если email некорректен или пуст, метод возвращает пустую строку.
+     *
+     * @return string Обработанный email-адрес, где символы '@' и '.' заменены на '[at]' и '[dot]'.
+     *                Если входной email некорректен или пуст, возвращается пустая строка.
+     *
+     * @warning Метод использует функцию filter_var() для проверки формата email.
+     *          Если требуется более строгая валидация, следует учитывать дополнительные правила.
+     *
+     * Пример использования:
+     * @code
+     * // Создание экземпляра класса Work_Security
+     * $security = new Work_Security();
+     *
+     * // Обработка email-адреса
+     * $email = "example@example.com";
+     * $filtered_email = $security->filt_email($email);
+     * if (!empty($filtered_email)) {
+     *     echo "Обработанный email: {$filtered_email}";
+     * } else {
+     *     echo "Email некорректен или пуст.";
+     * }
+     * @endcode
+     */
+    public function filt_email(string $email): string
+    {
+        return $this->_filt_email_internal($email);
+    }
+
+    /**
      * @brief Внутренний метод для проверки URL на наличие вредоносного кода.
      *
-     * @details Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов.
+     * @details Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов,
+     *          определяемых в массиве $this->compiled_rules. Если формат URL некорректен или найден запрещённый паттерн,
+     *          метод возвращает false. Этот метод является защищённым и предназначен для использования внутри класса
+     *          или его наследников. Основная логика вызывается через публичный метод url_check().
      *
-     * @see PhotoRigma::Classes::Work_Security::url_check() Публичный метод, который вызывает этот внутренний метод.
+     * @callergraph
+     * @callgraph
      *
-     * @return bool True, если URL безопасен, иначе False.
+     * @see PhotoRigma::Classes::Work_Security::url_check()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Security::$compiled_rules
+     *      Свойство, содержащее массив скомпилированных правил для проверки.
+     *
+     * @return bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.
+     *
+     * @warning Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
+     *
+     * @note Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].
+     *
+     * Пример использования:
+     * @code
+     * // Проверка безопасности URL
+     * $is_safe = $this->_url_check_internal();
+     * if ($is_safe) {
+     *     echo "URL безопасен.";
+     * } else {
+     *     echo "URL содержит запрещённые паттерны.";
+     * }
+     * @endcode
      */
     protected function _url_check_internal(): bool
     {
@@ -393,66 +691,35 @@ class Work_Security implements Work_Security_Interface
     }
 
     /**
-     * @brief Генерирует математический CAPTCHA-вопрос и ответ.
-     *
-     * @details Этот метод является "витриной" для вызова внутреннего метода _gen_captcha_internal.
-     *
-     * @example Пример использования метода:
-     * @code
-     * $work = new Work();
-     * $captcha = $work->gen_captcha();
-     * echo "Вопрос: {$captcha['question']}, Ответ: {$captcha['answer']}";
-     * // Пример вывода: Вопрос: 2 x (3 + 4), Ответ: 14
-     * @endcode
-     *
-     * @see PhotoRigma::Classes::Work::gen_captcha() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Classes::Work_Security::_gen_captcha_internal() Реализация метода внутри класса Work_Security.
-     *
-     * @return array{
-     *     question: string, // Математическое выражение (например, "2 x (3 + 4)")
-     *     answer: int       // Числовой ответ на выражение (например, 14)
-     * } Массив с ключами 'question' и 'answer'.
-     */
-    public function gen_captcha(): array
-    {
-        return $this->_gen_captcha_internal();
-    }
-
-    /**
-     * @brief Заменяет символы в email-адресах для "обмана" ботов.
-     *
-     * @details Этот метод является "витриной" для вызова внутреннего метода _filt_email_internal.
-     *
-     * @example Пример использования метода:
-     * @code
-     * $work = new Work();
-     * $filteredEmail = $work->filt_email('example@example.com');
-     * echo $filteredEmail; // Выведет: example[at]example[dot]com
-     * @endcode
-     *
-     * @see PhotoRigma::Classes::Work::filt_email() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Classes::Work_Security::_filt_email_internal() Реализация метода внутри класса Work_Security.
-     *
-     * @param string $email Email-адрес для обработки.
-     *
-     * @return string Обработанный email-адрес.
-     */
-    public function filt_email(string $email): string
-    {
-        return $this->_filt_email_internal($email);
-    }
-
-    /**
      * @brief Внутренний метод для универсальной проверки входных данных.
      *
      * @details Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES)
-     * на соответствие заданным условиям.
+     *          на соответствие заданным условиям. Поддерживаются следующие типы проверок:
+     *          - Проверка наличия поля в источнике данных (параметр 'isset').
+     *          - Проверка, что значение поля не пустое (параметр 'empty').
+     *          - Проверка значения поля по регулярному выражению (параметр 'regexp').
+     *          - Проверка, что значение поля не равно нулю (параметр 'not_zero').
+     *          - Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа.
+     *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод check_input().
      *
-     * @see PhotoRigma::Classes::Work_Security::check_input() Публичный метод, который вызывает этот внутренний метод.
+     * @callergraph
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::check_input()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::validate_mime_type()
+     *      Метод для проверки поддерживаемых MIME-типов.
+     * @see PhotoRigma::Classes::Work_Security::_check_field_internal()
+     *      Защищённый метод, используемый для дополнительной проверки поля.
      *
      * @param string $source_name Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
+     *                            Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'.
      * @param string $field Поле для проверки (имя ключа в массиве источника данных).
-     * @param array $options Дополнительные параметры проверки.
+     *                      Указывается имя ключа, которое необходимо проверить.
+     * @param array $options Дополнительные параметры проверки:
      *                       - Ключ 'isset' (bool, опционально): Проверять наличие поля в источнике данных.
      *                       - Ключ 'empty' (bool, опционально): Проверять, что значение поля не пустое.
      *                       - Ключ 'regexp' (string|false, опционально): Регулярное выражение для проверки значения поля.
@@ -460,6 +727,26 @@ class Work_Security implements Work_Security_Interface
      *                       - Ключ 'max_size' (int, опционально): Максимальный размер файла (в байтах) для $_FILES.
      *
      * @return bool True, если данные прошли проверку, иначе False.
+     *              Для $_FILES также учитывается корректность MIME-типа и размера файла.
+     *
+     * @throws RuntimeException Если MIME-тип загруженного файла не поддерживается.
+     *
+     * @warning Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
+     *          Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.
+     *
+     * Пример использования:
+     * @code
+     * // Проверка поля $_POST['username'] на наличие и непустое значение
+     * $is_valid = $this->_check_input_internal('_POST', 'username', [
+     *     'isset' => true,
+     *     'empty' => true,
+     * ]);
+     * if ($is_valid) {
+     *     echo "Поле username прошло проверку.";
+     * } else {
+     *     echo "Поле username не прошло проверку.";
+     * }
+     * @endcode
      */
     protected function _check_input_internal(string $source_name, string $field, array $options = []): bool
     {
@@ -530,17 +817,50 @@ class Work_Security implements Work_Security_Interface
      * @brief Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим условиям.
      *
      * @details Метод выполняет следующие проверки:
-     * - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
-     * - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
-     * - Проверяет, что значение не содержит запрещённых паттернов из $this->compiled_rules.
+     *          - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
+     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок компиляции).
+     *          - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
+     *          - Проверяет, что значение не содержит запрещённых паттернов из $this->compiled_rules.
+     *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод check_field().
      *
-     * @see PhotoRigma::Classes::Work_Security::check_field() Публичный метод, который вызывает этот внутренний метод.
+     * @callergraph
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::check_field()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Security::$compiled_rules
+     *      Свойство, содержащее массив скомпилированных правил для проверки.
      *
      * @param string $field Значение поля для проверки.
+     *                      Указывается строковое значение, которое необходимо проверить.
      * @param string|false $regexp Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению.
+     *                              Если регулярное выражение некорректно (например, содержит ошибки компиляции),
+     *                              метод завершает выполнение с ошибкой.
      * @param bool $not_zero Флаг, указывающий, что значение не должно быть числом 0.
+     *                       Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
      *
      * @return bool True, если поле прошло все проверки, иначе False.
+     *              Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов
+     *              и выполнение условия $not_zero (если оно задано).
+     *
+     * @warning Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
+     *
+     * Пример использования:
+     * @code
+     * // Проверка поля на соответствие регулярному выражению и условию not_zero
+     * $field_value = "example123";
+     * $regexp = "/^[a-z0-9]+$/i";
+     * $is_valid = $this->_check_field_internal($field_value, $regexp, true);
+     * if ($is_valid) {
+     *     echo "Поле прошло проверку.";
+     * } else {
+     *     echo "Поле не прошло проверку.";
+     * }
+     * @endcode
      */
     protected function _check_field_internal(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
@@ -588,14 +908,30 @@ class Work_Security implements Work_Security_Interface
      * @brief Внутренний метод для генерации математического CAPTCHA-вопроса и ответа.
      *
      * @details Метод создаёт случайное математическое выражение (сложение или умножение)
-     * и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.
+     *          и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.
+     *          Выражение может включать комбинацию сложения и умножения с использованием скобок.
+     *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод gen_captcha().
      *
-     * @see PhotoRigma::Classes::Work_Security::gen_captcha() Публичный метод, который вызывает этот внутренний метод.
+     * @callergraph
      *
-     * @return array{
-     *     question: string, // Математическое выражение (например, "2 x (3 + 4)")
-     *     answer: int       // Числовой ответ на выражение (например, 14)
-     * } Массив с ключами 'question' и 'answer'.
+     * @see PhotoRigma::Classes::Work_Security::gen_captcha()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     *
+     * @return array Массив с ключами 'question' и 'answer'.
+     *               - Ключ 'question' содержит строку математического выражения (например, "2 x (3 + 4)").
+     *               - Ключ 'answer' содержит целочисленный результат вычисления (например, 14).
+     *
+     * @warning Метод использует функцию rand() для генерации случайных чисел.
+     *          Если требуется криптографическая безопасность, следует заменить её на random_int().
+     *
+     * Пример использования:
+     * @code
+     * // Генерация CAPTCHA-вопроса и ответа
+     * $captcha = $this->_gen_captcha_internal();
+     * echo "Вопрос: {$captcha['question']}\n";
+     * echo "Ответ: {$captcha['answer']}\n";
+     * @endcode
      */
     protected function _gen_captcha_internal(): array
     {
@@ -634,13 +970,39 @@ class Work_Security implements Work_Security_Interface
      * @brief Внутренний метод для замены символов в email-адресах.
      *
      * @details Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами.
-     * Проверяет, что входной email не пустой и соответствует формату email.
+     *          Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст,
+     *          метод возвращает пустую строку. Метод является защищённым и предназначен для использования внутри класса
+     *          или его наследников. Основная логика вызывается через публичный метод filt_email().
      *
-     * @see PhotoRigma::Classes::Work_Security::filt_email() Публичный метод, который вызывает этот внутренний метод.
+     * @callergraph
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Security::filt_email()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
      * @param string $email Email-адрес для обработки.
+     *                      Должен быть непустым и соответствовать формату email (например, "example@example.com").
+     *                      Если email некорректен или пуст, метод возвращает пустую строку.
      *
-     * @return string Обработанный email-адрес.
+     * @return string Обработанный email-адрес, где символы '@' и '.' заменены на '[at]' и '[dot]'.
+     *                Если входной email некорректен или пуст, возвращается пустая строка.
+     *
+     * @warning Метод использует функцию filter_var() для проверки формата email.
+     *          Если требуется более строгая валидация, следует учитывать дополнительные правила.
+     *
+     * Пример использования:
+     * @code
+     * // Обработка email-адреса
+     * $email = "example@example.com";
+     * $filtered_email = $this->_filt_email_internal($email);
+     * if (!empty($filtered_email)) {
+     *     echo "Обработанный email: {$filtered_email}";
+     * } else {
+     *     echo "Email некорректен или пуст.";
+     * }
+     * @endcode
      */
     protected function _filt_email_internal(string $email): string
     {

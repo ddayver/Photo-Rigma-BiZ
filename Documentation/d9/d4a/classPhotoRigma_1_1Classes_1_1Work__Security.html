@@ -138,16 +138,22 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:a095c5d389db211932136b53f25f39685" id="r_a095c5d389db211932136b53f25f39685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a095c5d389db211932136b53f25f39685">__construct</a> ()</td></tr>
+<tr class="memdesc:a095c5d389db211932136b53f25f39685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор класса.  <br /></td></tr>
 <tr class="separator:a095c5d389db211932136b53f25f39685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e1a4ab6b213ada0d89c77a24d8ffe32" id="r_a1e1a4ab6b213ada0d89c77a24d8ffe32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e1a4ab6b213ada0d89c77a24d8ffe32">url_check</a> ()</td></tr>
+<tr class="memdesc:a1e1a4ab6b213ada0d89c77a24d8ffe32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет URL на наличие вредоносного кода.  <br /></td></tr>
 <tr class="separator:a1e1a4ab6b213ada0d89c77a24d8ffe32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e6ea2a212c3c2dee206a1753b673b7d" id="r_a6e6ea2a212c3c2dee206a1753b673b7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e6ea2a212c3c2dee206a1753b673b7d">check_input</a> (string $source_name, string $field, array $options=[])</td></tr>
+<tr class="memdesc:a6e6ea2a212c3c2dee206a1753b673b7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Универсальная проверка входных данных.  <br /></td></tr>
 <tr class="separator:a6e6ea2a212c3c2dee206a1753b673b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fd7e97a953487a9422281b97bd6f083" id="r_a7fd7e97a953487a9422281b97bd6f083"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fd7e97a953487a9422281b97bd6f083">check_field</a> (string $field, string|false $regexp=false, bool $not_zero=false)</td></tr>
+<tr class="memdesc:a7fd7e97a953487a9422281b97bd6f083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.  <br /></td></tr>
 <tr class="separator:a7fd7e97a953487a9422281b97bd6f083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19ab20c34a49c9684a03c09c62f8af46" id="r_a19ab20c34a49c9684a03c09c62f8af46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19ab20c34a49c9684a03c09c62f8af46">gen_captcha</a> ()</td></tr>
+<tr class="memdesc:a19ab20c34a49c9684a03c09c62f8af46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Генерирует математический CAPTCHA-вопрос и ответ.  <br /></td></tr>
 <tr class="separator:a19ab20c34a49c9684a03c09c62f8af46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4289bbbeca07e599a9366a812d069972" id="r_a4289bbbeca07e599a9366a812d069972"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4289bbbeca07e599a9366a812d069972">filt_email</a> (string $email)</td></tr>
+<tr class="memdesc:a4289bbbeca07e599a9366a812d069972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заменяет символы в email-адресах для "обмана" ботов.  <br /></td></tr>
 <tr class="separator:a4289bbbeca07e599a9366a812d069972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
@@ -176,14 +182,33 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс для обеспечения безопасности приложения. </p>
-<p>Этот класс предоставляет методы для проверки входных данных, защиты от спам-ботов, фильтрации email-адресов и других задач, связанных с безопасностью приложения.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Все методы этого класса вызываются через класс Work.</dd></dl>
+<p>Этот класс предоставляет методы для проверки входных данных, защиты от спам-ботов, фильтрации email-адресов и других задач, связанных с безопасностью приложения. Реализует интерфейс Work_Security_Interface.</p>
+<p>Интерфейс для работы с безопасностью.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Все методы этого класса вызываются через класс Work. </dd>
+<dd>
+Work_Security_Interface Интерфейс, который реализует класс. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типов загружаемых файлов.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот класс реализует интерфейс Work_Security_Interface. </dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот класс напрямую, все вызовы должны выполняться через класс Work. </dd></dl>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#_a2">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a>.</dd>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот класс напрямую, все вызовы должны выполняться через класс Work.</dd></dl>
+<p>Пример использования класса: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Security</span></div>
+<div class="line">$security = <span class="keyword">new</span> <a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Проверка email-адреса</span></div>
+<div class="line">$email = <span class="stringliteral">&quot;example@example.com&quot;</span>;</div>
+<div class="line">$filtered_email = $security-&gt;filt_email($email);</div>
+<div class="line"><span class="keywordflow">if</span> (!empty($filtered_email)) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Обработанный email: {$filtered_email}&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Email некорректен или пуст.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html"><div class="ttname"><a href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">PhotoRigma\Classes\Work_Security</a></div><div class="ttdoc">Класс для обеспечения безопасности приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00311">work_security.php:312</a></div></div>
+</div><!-- fragment --> <dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../d4/dcc/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_8php-example.html#_a2">/home/victoria/Photo-Rigma-BiZ/www/include/work.php</a>.</dd>
 </dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00191">191</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00311">311</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a095c5d389db211932136b53f25f39685" name="a095c5d389db211932136b53f25f39685"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a095c5d389db211932136b53f25f39685">&#9670;&#160;</a></span>__construct()</h2>
@@ -200,7 +225,25 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00229">229</a></p>
+<p>Конструктор класса. </p>
+<p>Инициализирует предварительно скомпилированные правила защиты из массива $array_rules. Эти правила используются для проверки URL и входных данных на наличие вредоносных паттернов. Этот класс является дочерним для <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a>.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Родительский класс. </dd>
+<dd>
+<a class="el" href="#ad85bdb24db59e241b8965e0aa589308f" title="Предварительно скомпилированные правила защиты.">PhotoRigma\Classes\Work_Security\$compiled_rules</a> Свойство, содержащее предварительно скомпилированные правила защиты.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Правила компилируются с использованием preg_quote для экранирования специальных символов.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Правила защиты жёстко заданы в конструкторе. При изменении или расширении массива правил потребуется обновление кода. Использование preg_quote с флагом '/' делает правила чувствительными к символу '/', что может быть важно при их использовании.</dd></dl>
+<p>Пример создания объекта класса Work_Security: </p><div class="fragment"><div class="line">$security = new \PhotoRigma\Classes\Work_Security();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Пример проверки входных данных</span></div>
+<div class="line">$input = <span class="stringliteral">&quot;SELECT * FROM users WHERE id = 1&quot;</span>;</div>
+<div class="line"><span class="keywordflow">foreach</span> ($security-&gt;compiled_rules as $rule) {</div>
+<div class="line">    <span class="keywordflow">if</span> (preg_match($rule, $input)) {</div>
+<div class="line">        echo <span class="stringliteral">&quot;Обнаружен вредоносный паттерн!&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00348">348</a></p>
 
 </div>
 </div>
@@ -239,24 +282,39 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 
 <p>Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим условиям. </p>
 <p>Метод выполняет следующие проверки:</p><ul>
-<li>Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.</li>
+<li>Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению. При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок компиляции).</li>
 <li>Если флаг $not_zero установлен, проверяет, что значение не является числом 0.</li>
-<li>Проверяет, что значение не содержит запрещённых паттернов из $this-&gt;compiled_rules.</li>
+<li>Проверяет, что значение не содержит запрещённых паттернов из $this-&gt;compiled_rules. Метод является защищённым и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод check_field().</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7fd7e97a953487a9422281b97bd6f083">PhotoRigma\Classes\Work_Security\check_field()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.">PhotoRigma\Classes\Work_Security\check_field()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="#ad85bdb24db59e241b8965e0aa589308f" title="Предварительно скомпилированные правила защиты.">PhotoRigma\Classes\Work_Security\$compiled_rules</a> Свойство, содержащее массив скомпилированных правил для проверки.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Значение поля для проверки. </td></tr>
-    <tr><td class="paramtype">string&#160;|&#160;false</td><td class="paramname">$regexp</td><td>Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению. </td></tr>
-    <tr><td class="paramtype">bool</td><td class="paramname">$not_zero</td><td>Флаг, указывающий, что значение не должно быть числом 0.</td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Значение поля для проверки. Указывается строковое значение, которое необходимо проверить. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;false</td><td class="paramname">$regexp</td><td>Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению. Если регулярное выражение некорректно (например, содержит ошибки компиляции), метод завершает выполнение с ошибкой. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$not_zero</td><td>Флаг, указывающий, что значение не должно быть числом 0. Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>bool True, если поле прошло все проверки, иначе False. </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если поле прошло все проверки, иначе False. Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов и выполнение условия $not_zero (если оно задано).</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в свойстве $this-&gt;compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Проверка поля на соответствие регулярному выражению и условию not_zero</span></div>
+<div class="line">$field_value = <span class="stringliteral">&quot;example123&quot;</span>;</div>
+<div class="line">$regexp = <span class="stringliteral">&quot;/^[a-z0-9]+$/i&quot;</span>;</div>
+<div class="line">$is_valid = $this-&gt;<a class="code hl_function" href="#a21615966844dc1457ab7186ed8ae16b2">_check_field_internal</a>($field_value, $regexp, <span class="keyword">true</span>);</div>
+<div class="line"><span class="keywordflow">if</span> ($is_valid) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле прошло проверку.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле не прошло проверку.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html_a21615966844dc1457ab7186ed8ae16b2"><div class="ttname"><a href="#a21615966844dc1457ab7186ed8ae16b2">PhotoRigma\Classes\Work_Security\_check_field_internal</a></div><div class="ttdeci">_check_field_internal(string $field, string|false $regexp=false, bool $not_zero=false)</div><div class="ttdoc">Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов...</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00865">work_security.php:865</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00865">865</a></p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00545">545</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00464">_check_input_internal()</a> и <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00361">check_field()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00751">_check_input_internal()</a> и <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00547">check_field()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -267,9 +325,9 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <area shape="rect" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="340,31,482,55"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="145,5,292,30"/>
 <area shape="poly" title=" " alt="" coords="324,34,292,30,293,25,325,29"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title=" " alt="" coords="175,55,262,79"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям." alt="" coords="175,55,262,79"/>
 <area shape="poly" title=" " alt="" coords="325,56,262,64,262,59,324,51"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title=" " alt="" coords="5,5,97,30"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных." alt="" coords="5,5,97,30"/>
 <area shape="poly" title=" " alt="" coords="129,20,97,20,97,15,129,15"/>
 </map>
 </div>
@@ -309,13 +367,25 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 </div><div class="memdoc">
 
 <p>Внутренний метод для универсальной проверки входных данных. </p>
-<p>Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES) на соответствие заданным условиям.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a6e6ea2a212c3c2dee206a1753b673b7d">PhotoRigma\Classes\Work_Security\check_input()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
+<p>Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES) на соответствие заданным условиям. Поддерживаются следующие типы проверок:</p><ul>
+<li>Проверка наличия поля в источнике данных (параметр 'isset').</li>
+<li>Проверка, что значение поля не пустое (параметр 'empty').</li>
+<li>Проверка значения поля по регулярному выражению (параметр 'regexp').</li>
+<li>Проверка, что значение поля не равно нулю (параметр 'not_zero').</li>
+<li>Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа. Метод является защищённым и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод check_input().</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки поддерживаемых MIME-типов. </dd>
+<dd>
+<a class="el" href="#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов...">PhotoRigma\Classes\Work_Security\_check_field_internal()</a> Защищённый метод, используемый для дополнительной проверки поля.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$source_name</td><td>Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Поле для проверки (имя ключа в массиве источника данных). </td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Дополнительные параметры проверки.<ul>
+    <tr><td class="paramtype">string</td><td class="paramname">$source_name</td><td>Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Поле для проверки (имя ключа в массиве источника данных). Указывается имя ключа, которое необходимо проверить. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Дополнительные параметры проверки:<ul>
 <li>Ключ 'isset' (bool, опционально): Проверять наличие поля в источнике данных.</li>
 <li>Ключ 'empty' (bool, опционально): Проверять, что значение поля не пустое.</li>
 <li>Ключ 'regexp' (string|false, опционально): Регулярное выражение для проверки значения поля.</li>
@@ -326,13 +396,31 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>bool True, если данные прошли проверку, иначе False. </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если данные прошли проверку, иначе False. Для $_FILES также учитывается корректность MIME-типа и размера файла.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если MIME-тип загруженного файла не поддерживается.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Проверка поля $_POST[&#39;username&#39;] на наличие и непустое значение</span></div>
+<div class="line">$is_valid = $this-&gt;<a class="code hl_function" href="#ad4b80c2a856976f677402f8e99553442">_check_input_internal</a>(<span class="stringliteral">&#39;_POST&#39;</span>, <span class="stringliteral">&#39;username&#39;</span>, [</div>
+<div class="line">    <span class="stringliteral">&#39;isset&#39;</span> =&gt; <span class="keyword">true</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;empty&#39;</span> =&gt; <span class="keyword">true</span>,</div>
+<div class="line">]);</div>
+<div class="line"><span class="keywordflow">if</span> ($is_valid) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле username прошло проверку.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле username не прошло проверку.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html_ad4b80c2a856976f677402f8e99553442"><div class="ttname"><a href="#ad4b80c2a856976f677402f8e99553442">PhotoRigma\Classes\Work_Security\_check_input_internal</a></div><div class="ttdeci">_check_input_internal(string $source_name, string $field, array $options=[])</div><div class="ttdoc">Внутренний метод для универсальной проверки входных данных.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00751">work_security.php:751</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00751">751</a></p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00464">464</a></p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00865">_check_field_internal()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01047">Work\validate_mime_type()</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00545">_check_field_internal()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01047">Work\validate_mime_type()</a>.</p>
-
-<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00333">check_input()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00493">check_input()</a>.</p>
 <div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
@@ -359,7 +447,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ad4b80c2a856976f677402f8e99553442_icgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ad4b80c2a856976f677402f8e99553442_icgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ad4b80c2a856976f677402f8e99553442_icgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ad4b80c2a856976f677402f8e99553442_icgraph">
 <area shape="rect" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="145,5,292,30"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title=" " alt="" coords="5,5,97,30"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных." alt="" coords="5,5,97,30"/>
 <area shape="poly" title=" " alt="" coords="129,20,97,20,97,15,129,15"/>
 </map>
 </div>
@@ -390,19 +478,31 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 </div><div class="memdoc">
 
 <p>Внутренний метод для замены символов в email-адресах. </p>
-<p>Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами. Проверяет, что входной email не пустой и соответствует формату email.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a4289bbbeca07e599a9366a812d069972">PhotoRigma\Classes\Work_Security\filt_email()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
+<p>Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами. Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст, метод возвращает пустую строку. Метод является защищённым и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод filt_email().</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email-адресах для &quot;обмана&quot; ботов.">PhotoRigma\Classes\Work_Security\filt_email()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$email</td><td>Email-адрес для обработки.</td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$email</td><td>Email-адрес для обработки. Должен быть непустым и соответствовать формату email (например, "example@example.com"). Если email некорректен или пуст, метод возвращает пустую строку.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>string Обработанный email-адрес. </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>string Обработанный email-адрес, где символы '@' и '.' заменены на '[at]' и '[dot]'. Если входной email некорректен или пуст, возвращается пустая строка.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод использует функцию filter_var() для проверки формата email. Если требуется более строгая валидация, следует учитывать дополнительные правила.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Обработка email-адреса</span></div>
+<div class="line">$email = <span class="stringliteral">&quot;example@example.com&quot;</span>;</div>
+<div class="line">$filtered_email = $this-&gt;<a class="code hl_function" href="#aba5c862c7245a48d932400e2a28b1b63">_filt_email_internal</a>($email);</div>
+<div class="line"><span class="keywordflow">if</span> (!empty($filtered_email)) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Обработанный email: {$filtered_email}&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Email некорректен или пуст.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html_aba5c862c7245a48d932400e2a28b1b63"><div class="ttname"><a href="#aba5c862c7245a48d932400e2a28b1b63">PhotoRigma\Classes\Work_Security\_filt_email_internal</a></div><div class="ttdeci">_filt_email_internal(string $email)</div><div class="ttdoc">Внутренний метод для замены символов в email-адресах.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l01007">work_security.php:1007</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l01007">1007</a></p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00645">645</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00440">filt_email()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00632">filt_email()</a>.</p>
 <div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
@@ -411,7 +511,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_aba5c862c7245a48d932400e2a28b1b63_icgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_aba5c862c7245a48d932400e2a28b1b63_icgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_aba5c862c7245a48d932400e2a28b1b63_icgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_aba5c862c7245a48d932400e2a28b1b63_icgraph">
 <area shape="rect" title="Внутренний метод для замены символов в email&#45;адресах." alt="" coords="126,5,254,30"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title=" " alt="" coords="5,5,78,30"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email&#45;адресах для &quot;обмана&quot; ботов." alt="" coords="5,5,78,30"/>
 <area shape="poly" title=" " alt="" coords="110,20,78,20,78,15,110,15"/>
 </map>
 </div>
@@ -442,13 +542,23 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 </div><div class="memdoc">
 
 <p>Внутренний метод для генерации математического CAPTCHA-вопроса и ответа. </p>
-<p>Метод создаёт случайное математическое выражение (сложение или умножение) и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a19ab20c34a49c9684a03c09c62f8af46">PhotoRigma\Classes\Work_Security\gen_captcha()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
-<dl class="section return"><dt>Возвращает</dt><dd>array{ question: string, // Математическое выражение (например, "2 x (3 + 4)") answer: int // Числовой ответ на выражение (например, 14) } Массив с ключами 'question' и 'answer'. </dd></dl>
+<p>Метод создаёт случайное математическое выражение (сложение или умножение) и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов. Выражение может включать комбинацию сложения и умножения с использованием скобок. Метод является защищённым и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод gen_captcha().</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a19ab20c34a49c9684a03c09c62f8af46" title="Генерирует математический CAPTCHA-вопрос и ответ.">PhotoRigma\Classes\Work_Security\gen_captcha()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с ключами 'question' и 'answer'.<ul>
+<li>Ключ 'question' содержит строку математического выражения (например, "2 x (3 + 4)").</li>
+<li>Ключ 'answer' содержит целочисленный результат вычисления (например, 14).</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод использует функцию rand() для генерации случайных чисел. Если требуется криптографическая безопасность, следует заменить её на random_int().</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Генерация CAPTCHA-вопроса и ответа</span></div>
+<div class="line">$captcha = $this-&gt;<a class="code hl_function" href="#a8c35952cd45c6149bb8b178105a8805e">_gen_captcha_internal</a>();</div>
+<div class="line">echo <span class="stringliteral">&quot;Вопрос: {$captcha[&#39;question&#39;]}\n&quot;</span>;</div>
+<div class="line">echo <span class="stringliteral">&quot;Ответ: {$captcha[&#39;answer&#39;]}\n&quot;</span>;</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html_a8c35952cd45c6149bb8b178105a8805e"><div class="ttname"><a href="#a8c35952cd45c6149bb8b178105a8805e">PhotoRigma\Classes\Work_Security\_gen_captcha_internal</a></div><div class="ttdeci">_gen_captcha_internal()</div><div class="ttdoc">Внутренний метод для генерации математического CAPTCHA-вопроса и ответа.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00936">work_security.php:936</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00936">936</a></p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00600">600</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00416">gen_captcha()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00587">gen_captcha()</a>.</p>
 <div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
@@ -457,7 +567,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a8c35952cd45c6149bb8b178105a8805e_icgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a8c35952cd45c6149bb8b178105a8805e_icgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a8c35952cd45c6149bb8b178105a8805e_icgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a8c35952cd45c6149bb8b178105a8805e_icgraph">
 <area shape="rect" title="Внутренний метод для генерации математического CAPTCHA&#45;вопроса и ответа." alt="" coords="149,5,300,30"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46" title=" " alt="" coords="5,5,101,30"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46" title="Генерирует математический CAPTCHA&#45;вопрос и ответ." alt="" coords="5,5,101,30"/>
 <area shape="poly" title=" " alt="" coords="133,20,101,20,101,15,133,15"/>
 </map>
 </div>
@@ -488,13 +598,27 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 </div><div class="memdoc">
 
 <p>Внутренний метод для проверки URL на наличие вредоносного кода. </p>
-<p>Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a1e1a4ab6b213ada0d89c77a24d8ffe32">PhotoRigma\Classes\Work_Security\url_check()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
-<dl class="section return"><dt>Возвращает</dt><dd>bool True, если URL безопасен, иначе False. </dd></dl>
+<p>Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов, определяемых в массиве $this-&gt;compiled_rules. Если формат URL некорректен или найден запрещённый паттерн, метод возвращает false. Этот метод является защищённым и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод url_check().</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода.">PhotoRigma\Classes\Work_Security\url_check()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="#ad85bdb24db59e241b8965e0aa589308f" title="Предварительно скомпилированные правила защиты.">PhotoRigma\Classes\Work_Security\$compiled_rules</a> Свойство, содержащее массив скомпилированных правил для проверки.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в свойстве $this-&gt;compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Проверка безопасности URL</span></div>
+<div class="line">$is_safe = $this-&gt;<a class="code hl_function" href="#ab854f33e4a55413e489384fb7ad75d56">_url_check_internal</a>();</div>
+<div class="line"><span class="keywordflow">if</span> ($is_safe) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;URL безопасен.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;URL содержит запрещённые паттерны.&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html_ab854f33e4a55413e489384fb7ad75d56"><div class="ttname"><a href="#ab854f33e4a55413e489384fb7ad75d56">PhotoRigma\Classes\Work_Security\_url_check_internal</a></div><div class="ttdeci">_url_check_internal()</div><div class="ttdoc">Внутренний метод для проверки URL на наличие вредоносного кода.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00673">work_security.php:673</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00673">673</a></p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00375">375</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00295">url_check()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00432">url_check()</a>.</p>
 <div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-7-summary" class="dynsummary" style="display:block;">
@@ -503,7 +627,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ab854f33e4a55413e489384fb7ad75d56_icgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ab854f33e4a55413e489384fb7ad75d56_icgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ab854f33e4a55413e489384fb7ad75d56_icgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_ab854f33e4a55413e489384fb7ad75d56_icgraph">
 <area shape="rect" title="Внутренний метод для проверки URL на наличие вредоносного кода." alt="" coords="131,5,264,30"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title=" " alt="" coords="5,5,83,30"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода." alt="" coords="5,5,83,30"/>
 <area shape="poly" title=" " alt="" coords="115,20,83,20,83,15,115,15"/>
 </map>
 </div>
@@ -534,11 +658,47 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
       </table>
 </div><div class="memdoc">
 
+<p>Проверяет содержимое поля на соответствие регулярному выражению или другим условиям. </p>
+<p>Этот метод является публичным редиректом на защищённый метод <code>_check_field_internal</code>. Метод выполняет следующие проверки:</p><ul>
+<li>Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению. При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок компиляции).</li>
+<li>Если флаг $not_zero установлен, проверяет, что значение не является числом 0.</li>
+<li>Проверяет, что значение не содержит запрещённых паттернов из $this-&gt;compiled_rules.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов...">PhotoRigma\Classes\Work_Security\_check_field_internal()</a> Защищённый метод, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7fd7e97a953487a9422281b97bd6f083">PhotoRigma\Classes\Work\check_field()</a> Этот метод вызывается через класс Work. </dd>
+<dd>
+<a class="el" href="#ad85bdb24db59e241b8965e0aa589308f" title="Предварительно скомпилированные правила защиты.">PhotoRigma\Classes\Work_Security\$compiled_rules</a> Свойство, содержащее массив скомпилированных правил для проверки. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Значение поля для проверки. Указывается строковое значение, которое необходимо проверить. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;false</td><td class="paramname">$regexp</td><td>Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению. Если регулярное выражение некорректно (например, содержит ошибки компиляции), метод завершает выполнение с ошибкой. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$not_zero</td><td>Флаг, указывающий, что значение не должно быть числом 0. Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если поле прошло все проверки, иначе False. Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов и выполнение условия $not_zero (если оно задано).</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в свойстве $this-&gt;compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Security</span></div>
+<div class="line">$security = <span class="keyword">new</span> <a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Проверка поля на соответствие регулярному выражению и условию not_zero</span></div>
+<div class="line">$field_value = <span class="stringliteral">&quot;example123&quot;</span>;</div>
+<div class="line">$regexp = <span class="stringliteral">&quot;/^[a-z0-9]+$/i&quot;</span>;</div>
+<div class="line">$is_valid = $security-&gt;check_field($field_value, $regexp, <span class="keyword">true</span>);</div>
+<div class="line"><span class="keywordflow">if</span> ($is_valid) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле прошло проверку.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле не прошло проверку.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a7fd7e97a953487a9422281b97bd6f083">Work_Security_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00361">361</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00547">547</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00545">_check_field_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00865">_check_field_internal()</a>.</p>
 <div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
@@ -546,7 +706,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a7fd7e97a953487a9422281b97bd6f083_cgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a7fd7e97a953487a9422281b97bd6f083_cgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a7fd7e97a953487a9422281b97bd6f083_cgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a7fd7e97a953487a9422281b97bd6f083_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,92,30"/>
+<area shape="rect" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям." alt="" coords="5,5,92,30"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="140,5,282,30"/>
 <area shape="poly" title=" " alt="" coords="92,15,124,15,124,20,92,20"/>
 </map>
@@ -578,11 +738,63 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
       </table>
 </div><div class="memdoc">
 
+<p>Универсальная проверка входных данных. </p>
+<p>Этот метод является публичным редиректом на защищённый метод <code>_check_input_internal</code>. Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES) на соответствие заданным условиям. Поддерживаются следующие типы проверок:</p><ul>
+<li>Проверка наличия поля в источнике данных (параметр 'isset').</li>
+<li>Проверка, что значение поля не пустое (параметр 'empty').</li>
+<li>Проверка значения поля по регулярному выражению (параметр 'regexp').</li>
+<li>Проверка, что значение поля не равно нулю (параметр 'not_zero').</li>
+<li>Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных.">PhotoRigma\Classes\Work_Security\_check_input_internal()</a> Защищённый метод, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d">PhotoRigma\Classes\Work\check_input()</a> Этот метод вызывается через класс Work. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки поддерживаемых MIME-типов. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$source_name</td><td>Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Поле для проверки (имя ключа в массиве источника данных). Указывается имя ключа, которое необходимо проверить. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Дополнительные параметры проверки. Массив может содержать следующие ключи:<ul>
+<li>'isset' (bool, опционально): Проверять наличие поля в источнике данных.</li>
+<li>'empty' (bool, опционально): Проверять, что значение поля не пустое.</li>
+<li>'regexp' (string|false, опционально): Регулярное выражение для проверки значения поля.</li>
+<li>'not_zero' (bool, опционально): Проверять, что значение поля не равно нулю.</li>
+<li>'max_size' (int, опционально): Максимальный размер файла (в байтах) для $_FILES.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если данные прошли проверку, иначе False. Для $_FILES также учитывается корректность MIME-типа и размера файла.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если MIME-тип загруженного файла не поддерживается.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Security</span></div>
+<div class="line">$security = <span class="keyword">new</span> <a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Проверка поля $_POST[&#39;username&#39;] на наличие и непустое значение</span></div>
+<div class="line">$is_valid = $security-&gt;check_input(<span class="stringliteral">&#39;_POST&#39;</span>, <span class="stringliteral">&#39;username&#39;</span>, [</div>
+<div class="line">    <span class="stringliteral">&#39;isset&#39;</span> =&gt; <span class="keyword">true</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;empty&#39;</span> =&gt; <span class="keyword">false</span>,</div>
+<div class="line">]);</div>
+<div class="line"><span class="keywordflow">if</span> ($is_valid) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле username прошло проверку.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Поле username не прошло проверку.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a6e6ea2a212c3c2dee206a1753b673b7d">Work_Security_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00333">333</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00493">493</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00464">_check_input_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00751">_check_input_internal()</a>.</p>
 <div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-9-summary" class="dynsummary" style="display:block;">
@@ -590,7 +802,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a6e6ea2a212c3c2dee206a1753b673b7d_cgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a6e6ea2a212c3c2dee206a1753b673b7d_cgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a6e6ea2a212c3c2dee206a1753b673b7d_cgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a6e6ea2a212c3c2dee206a1753b673b7d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,33,97,58"/>
+<area shape="rect" title="Универсальная проверка входных данных." alt="" coords="5,33,97,58"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="145,33,292,58"/>
 <area shape="poly" title=" " alt="" coords="97,43,129,43,129,48,97,48"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="356,5,498,30"/>
@@ -621,11 +833,38 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
       </table>
 </div><div class="memdoc">
 
+<p>Заменяет символы в email-адресах для "обмана" ботов. </p>
+<p>Этот метод является публичным редиректом на защищённый метод <code>_filt_email_internal</code>. Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами. Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст, метод возвращает пустую строку.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aba5c862c7245a48d932400e2a28b1b63" title="Внутренний метод для замены символов в email-адресах.">PhotoRigma\Classes\Work_Security\_filt_email_internal()</a> Защищённый метод, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4289bbbeca07e599a9366a812d069972">PhotoRigma\Classes\Work\filt_email()</a> Этот метод вызывается через класс Work. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$email</td><td>Email-адрес для обработки. Должен быть непустым и соответствовать формату email (например, "example@example.com"). Если email некорректен или пуст, метод возвращает пустую строку.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>string Обработанный email-адрес, где символы '@' и '.' заменены на '[at]' и '[dot]'. Если входной email некорректен или пуст, возвращается пустая строка.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод использует функцию filter_var() для проверки формата email. Если требуется более строгая валидация, следует учитывать дополнительные правила.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Security</span></div>
+<div class="line">$security = <span class="keyword">new</span> <a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Обработка email-адреса</span></div>
+<div class="line">$email = <span class="stringliteral">&quot;example@example.com&quot;</span>;</div>
+<div class="line">$filtered_email = $security-&gt;filt_email($email);</div>
+<div class="line"><span class="keywordflow">if</span> (!empty($filtered_email)) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Обработанный email: {$filtered_email}&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Email некорректен или пуст.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a4289bbbeca07e599a9366a812d069972">Work_Security_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00440">440</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00632">632</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00645">_filt_email_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l01007">_filt_email_internal()</a>.</p>
 <div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
@@ -633,7 +872,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a4289bbbeca07e599a9366a812d069972_cgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a4289bbbeca07e599a9366a812d069972_cgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a4289bbbeca07e599a9366a812d069972_cgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a4289bbbeca07e599a9366a812d069972_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,78,30"/>
+<area shape="rect" title="Заменяет символы в email&#45;адресах для &quot;обмана&quot; ботов." alt="" coords="5,5,78,30"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#aba5c862c7245a48d932400e2a28b1b63" title="Внутренний метод для замены символов в email&#45;адресах." alt="" coords="126,5,254,30"/>
 <area shape="poly" title=" " alt="" coords="78,15,110,15,110,20,78,20"/>
 </map>
@@ -656,11 +895,33 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
       </table>
 </div><div class="memdoc">
 
+<p>Генерирует математический CAPTCHA-вопрос и ответ. </p>
+<p>Этот метод является публичным редиректом на защищённый метод <code>_gen_captcha_internal</code>. Метод создаёт случайное математическое выражение (сложение или умножение) и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов. Выражение может включать комбинацию сложения и умножения с использованием скобок.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a8c35952cd45c6149bb8b178105a8805e" title="Внутренний метод для генерации математического CAPTCHA-вопроса и ответа.">PhotoRigma\Classes\Work_Security\_gen_captcha_internal()</a> Защищённый метод, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a19ab20c34a49c9684a03c09c62f8af46">PhotoRigma\Classes\Work\gen_captcha()</a> Этот метод вызывается через класс Work.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с ключами 'question' и 'answer'.<ul>
+<li>Ключ 'question' содержит строку математического выражения (например, "2 x (3 + 4)").</li>
+<li>Ключ 'answer' содержит целочисленный результат вычисления (например, 14).</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод использует функцию rand() для генерации случайных чисел. Если требуется криптографическая безопасность, следует заменить её на random_int().</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Security</span></div>
+<div class="line">$security = <span class="keyword">new</span> <a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Генерация CAPTCHA-вопроса и ответа</span></div>
+<div class="line">$captcha = $security-&gt;gen_captcha();</div>
+<div class="line">echo <span class="stringliteral">&quot;Вопрос: {$captcha[&#39;question&#39;]}\n&quot;</span>;</div>
+<div class="line">echo <span class="stringliteral">&quot;Ответ: {$captcha[&#39;answer&#39;]}\n&quot;</span>;</div>
+<div class="line"><span class="comment">// Пример вывода:</span></div>
+<div class="line"><span class="comment">// Вопрос: 2 x (3 + 4)</span></div>
+<div class="line"><span class="comment">// Ответ: 14</span></div>
+</div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a19ab20c34a49c9684a03c09c62f8af46">Work_Security_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00416">416</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00587">587</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00600">_gen_captcha_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00936">_gen_captcha_internal()</a>.</p>
 <div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-11-summary" class="dynsummary" style="display:block;">
@@ -668,7 +929,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a19ab20c34a49c9684a03c09c62f8af46_cgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a19ab20c34a49c9684a03c09c62f8af46_cgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a19ab20c34a49c9684a03c09c62f8af46_cgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a19ab20c34a49c9684a03c09c62f8af46_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,101,30"/>
+<area shape="rect" title="Генерирует математический CAPTCHA&#45;вопрос и ответ." alt="" coords="5,5,101,30"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a8c35952cd45c6149bb8b178105a8805e" title="Внутренний метод для генерации математического CAPTCHA&#45;вопроса и ответа." alt="" coords="149,5,300,30"/>
 <area shape="poly" title=" " alt="" coords="101,15,133,15,133,20,101,20"/>
 </map>
@@ -691,11 +952,33 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
       </table>
 </div><div class="memdoc">
 
+<p>Проверяет URL на наличие вредоносного кода. </p>
+<p>Этот метод является публичным редиректом на защищённый метод <code>_url_check_internal</code>. Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов, определяемых в массиве <code>$compiled_rules</code>. Если формат URL некорректен или найден запрещённый паттерн, метод возвращает false.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab854f33e4a55413e489384fb7ad75d56" title="Внутренний метод для проверки URL на наличие вредоносного кода.">PhotoRigma\Classes\Work_Security\_url_check_internal()</a> Защищённый метод, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">PhotoRigma\Classes\Work\url_check()</a> Этот метод вызывается через класс Work. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="#ad85bdb24db59e241b8965e0aa589308f" title="Предварительно скомпилированные правила защиты.">PhotoRigma\Classes\Work_Security\$compiled_rules</a> Свойство, содержащее массив скомпилированных правил.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в свойстве $this-&gt;compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Security</span></div>
+<div class="line">$security = <span class="keyword">new</span> <a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Проверка безопасности URL</span></div>
+<div class="line"><span class="keywordflow">if</span> ($security-&gt;url_check()) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;URL безопасен.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;URL содержит запрещённые паттерны.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">Work_Security_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00295">295</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00432">432</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00375">_url_check_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00673">_url_check_internal()</a>.</p>
 <div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-12-summary" class="dynsummary" style="display:block;">
@@ -703,7 +986,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 <div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph.png" border="0" usemap="#ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" alt=""/></div>
 <map name="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph" id="ad9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security_a1e1a4ab6b213ada0d89c77a24d8ffe32_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,83,30"/>
+<area shape="rect" title="Проверяет URL на наличие вредоносного кода." alt="" coords="5,5,83,30"/>
 <area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ab854f33e4a55413e489384fb7ad75d56" title="Внутренний метод для проверки URL на наличие вредоносного кода." alt="" coords="131,5,264,30"/>
 <area shape="poly" title=" " alt="" coords="83,15,115,15,115,20,83,20"/>
 </map>
@@ -734,7 +1017,7 @@ $(function(){initNavTree('d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.ht
 
 <p>Предварительно скомпилированные правила защиты. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00194">194</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00314">314</a></p>
 
 </div>
 </div>
