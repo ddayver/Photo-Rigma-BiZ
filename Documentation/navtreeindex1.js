@@ -230,7 +230,6 @@ var NAVTREEINDEX1 =
 "d9/ded/group__LanguageEnglishCategory.html":[3,3],
 "da/d32/language_2russian_2main_8php.html":[6,0,5,1,0],
 "da/d32/language_2russian_2main_8php_source.html":[6,0,5,1,0],
-"da/d3b/PhotoRigma_1_1Classes_1_1Work_Image_1_1__set-example.html":[7,8],
 "da/d58/deprecated.html":[2],
 "da/d71/action_2main_8php.html":[6,0,0,3],
 "da/d71/action_2main_8php_source.html":[6,0,0,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html":[4,0,0,1,1],
 "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html":[5,0,0,0,1],
 "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4":[4,0,0,1,1,5],
-"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4":[5,0,0,0,1,5]
+"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4":[5,0,0,0,1,5],
+"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba":[4,0,0,1,1,1]
 };

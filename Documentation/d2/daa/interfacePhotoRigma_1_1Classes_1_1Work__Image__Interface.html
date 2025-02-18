@@ -124,14 +124,19 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:a096b7e5c3f9fb908fbb30e1adc2ac61b" id="r_a096b7e5c3f9fb908fbb30e1adc2ac61b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a096b7e5c3f9fb908fbb30e1adc2ac61b">size_image</a> (string $path_image)</td></tr>
+<tr class="memdesc:a096b7e5c3f9fb908fbb30e1adc2ac61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет размеры для вывода эскиза изображения.  <br /></td></tr>
 <tr class="separator:a096b7e5c3f9fb908fbb30e1adc2ac61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af37eb2b0693905dd71dd677f86d47831" id="r_af37eb2b0693905dd71dd677f86d47831"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af37eb2b0693905dd71dd677f86d47831">image_resize</a> (string $full_path, string $thumbnail_path)</td></tr>
+<tr class="memdesc:af37eb2b0693905dd71dd677f86d47831"><td class="mdescLeft">&#160;</td><td class="mdescRight">Изменяет размер изображения.  <br /></td></tr>
 <tr class="separator:af37eb2b0693905dd71dd677f86d47831"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfcd1cb7963a860013ca9ca1898f54f1" id="r_adfcd1cb7963a860013ca9ca1898f54f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfcd1cb7963a860013ca9ca1898f54f1">no_photo</a> ()</td></tr>
+<tr class="memdesc:adfcd1cb7963a860013ca9ca1898f54f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает данные для отсутствующего изображения.  <br /></td></tr>
 <tr class="separator:adfcd1cb7963a860013ca9ca1898f54f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeabe138e0704bd8403da0faf894ad0df" id="r_aeabe138e0704bd8403da0faf894ad0df"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeabe138e0704bd8403da0faf894ad0df">image_attach</a> (string $full_path, string $name_file)</td></tr>
+<tr class="memdesc:aeabe138e0704bd8403da0faf894ad0df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вывод изображения через HTTP.  <br /></td></tr>
 <tr class="separator:aeabe138e0704bd8403da0faf894ad0df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89d4e7cb491d0c91282d16ff5abe3138" id="r_a89d4e7cb491d0c91282d16ff5abe3138"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89d4e7cb491d0c91282d16ff5abe3138">fix_file_extension</a> (string $full_path)</td></tr>
+<tr class="memdesc:a89d4e7cb491d0c91282d16ff5abe3138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Корректировка расширения файла в соответствии с его MIME-типом.  <br /></td></tr>
 <tr class="separator:a89d4e7cb491d0c91282d16ff5abe3138"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
@@ -143,9 +148,22 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
 <li>Вывод изображений через HTTP.</li>
 <li>Корректировка расширения файла в соответствии с его MIME-типом.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html" title="Класс для работы с изображениями.">PhotoRigma\Classes\Work_Image</a> Класс, реализующий данный интерфейс. </dd></dl>
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00060">60</a></p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html" title="Класс для работы с изображениями.">PhotoRigma\Classes\Work_Image</a> Класс, реализующий данный интерфейс. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li><code>MAX_IMAGE_WIDTH = 5000</code>: Максимальная ширина изображения (в пикселях).</li>
+<li><code>MAX_IMAGE_HEIGHT = 5000</code>: Максимальная высота изображения (в пикселях).</li>
+</ul>
+</dd></dl>
+<p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">Work_Image</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html">\PhotoRigma\Classes\Work_Image_Interface</a> {</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html"><div class="ttname"><a href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a></div><div class="ttdoc">Класс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00320">work_image.php:321</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Image__Interface_html"><div class="ttname"><a href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html">PhotoRigma\Classes\Work_Image_Interface</a></div><div class="ttdoc">Интерфейс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00075">work_image.php:76</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00075">75</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a89d4e7cb491d0c91282d16ff5abe3138" name="a89d4e7cb491d0c91282d16ff5abe3138"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89d4e7cb491d0c91282d16ff5abe3138">&#9670;&#160;</a></span>fix_file_extension()</h2>
@@ -162,6 +180,32 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
       </table>
 </div><div class="memdoc">
 
+<p>Корректировка расширения файла в соответствии с его MIME-типом. </p>
+<p>Метод проверяет MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу. Если у файла отсутствует расширение, оно добавляется автоматически. Если расширение уже корректное, файл остаётся без изменений.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).">PhotoRigma\Classes\Work_Image\fix_file_extension()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения. Формат пути должен соответствовать регулярному выражению /^[a-zA-Z0-9\/.-_]+$/.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>string Полный путь к файлу с правильным расширением. Если расширение было изменено или добавлено, возвращается новый путь. Если расширение уже корректное, возвращается исходный путь.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если путь к файлу некорректен, имеет недопустимый формат или файл не существует. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если MIME-тип файла не поддерживается или файл недоступен для чтения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается. Убедитесь, что файл существует и доступен для чтения перед вызовом метода.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Корректировка расширения файла</span></div>
+<div class="line">$full_path = <span class="stringliteral">&#39;/path/to/file_without_extension&#39;</span>;</div>
+<div class="line">$image = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$corrected_path = $image-&gt;fix_file_extension($full_path);</div>
+<div class="line">echo <span class="stringliteral">&quot;Исправленный путь: {$corrected_path}&quot;</span>;</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138">Work_Image</a>.</p>
 
 </div>
@@ -185,6 +229,26 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
       </table>
 </div><div class="memdoc">
 
+<p>Вывод изображения через HTTP. </p>
+<p>Метод проверяет существование и доступность файла, определяет его MIME-тип и отправляет содержимое файла через HTTP. Если файл не найден или недоступен, возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением MIME-типа, возвращается HTTP-статус 500. Метод завершает выполнение скрипта после отправки заголовков и содержимого файла.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aeabe138e0704bd8403da0faf894ad0df" title="Вывод изображения через HTTP.">PhotoRigma\Classes\Work_Image\image_attach()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field()</a> Публичный метод для очистки строк от HTML-тегов и специальных символов.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$name_file</td><td>Имя файла для заголовка Content-Disposition. Имя должно быть корректным (например, без запрещённых символов).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод завершает выполнение скрипта (<code>exit()</code>), отправляя заголовки и содержимое файла.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Вызов публичного метода через класс Work_Image</span></div>
+<div class="line">$image = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$image-&gt;image_attach(<span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>, <span class="stringliteral">&#39;example.jpg&#39;</span>);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aeabe138e0704bd8403da0faf894ad0df">Work_Image</a>.</p>
 
 </div>
@@ -208,6 +272,39 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
       </table>
 </div><div class="memdoc">
 
+<p>Изменяет размер изображения. </p>
+<p>Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров. Размеры эскиза рассчитываются на основе конфигурации (<code>temp_photo_w</code>, <code>temp_photo_h</code>) с использованием метода <code>calculate_thumbnail_size</code>. Если файл эскиза уже существует и его размеры совпадают с рассчитанными, метод завершает работу без изменений. В противном случае создаётся новый эскиз с использованием одной из доступных библиотек: GraphicsMagick, ImageMagick или GD (в порядке приоритета).</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\image_resize()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Путь к исходному изображению. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$thumbnail_path</td><td>Путь для сохранения эскиза. Путь должен быть абсолютным, и директория должна быть доступна для записи.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool True, если операция выполнена успешно, иначе False.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если пути к файлам некорректны или имеют недопустимый формат. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникли ошибки при проверке файлов, директорий или размеров изображения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в конфигурации (<code>temp_photo_w</code>, <code>temp_photo_h</code>). Если эти параметры некорректны, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Изменение размера изображения</span></div>
+<div class="line">$full_path = <span class="stringliteral">&#39;/path/to/source_image.jpg&#39;</span>;</div>
+<div class="line">$thumbnail_path = <span class="stringliteral">&#39;/path/to/thumbnail.jpg&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">$image = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$success = $image-&gt;image_resize($full_path, $thumbnail_path);</div>
+<div class="line"><span class="keywordflow">if</span> ($success) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Эскиз успешно создан.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Ошибка при создании эскиза.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831">Work_Image</a>.</p>
 
 </div>
@@ -227,6 +324,17 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает данные для отсутствующего изображения. </p>
+<p>Метод формирует массив данных, который используется для представления информации об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено или недоступно. Метод использует конфигурацию приложения (<code>site_url</code>) для формирования URL-адресов.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\no_photo()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array{ url: string, // URL полноразмерного изображения. thumbnail_url: string, // URL эскиза изображения. name: string, // Название изображения. description: string, // Описание изображения. category_name: string, // Название категории. category_description: string, // Описание категории. rate: string, // Рейтинг изображения. url_user: null, // URL пользователя (если доступен). real_name: string // Имя пользователя. } Массив с данными об отсутствующем изображении. Значения по умолчанию используются для отсутствующих данных.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в конфигурации (<code>site_url</code>). Если этот параметр некорректен, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Вызов публичного метода через класс Work_Image</span></div>
+<div class="line">$image = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$noPhotoData = $image-&gt;no_photo();</div>
+<div class="line">echo <span class="stringliteral">&quot;URL изображения: {$noPhotoData[&#39;url&#39;]}\n&quot;</span>;</div>
+<div class="line">echo <span class="stringliteral">&quot;Описание: {$noPhotoData[&#39;description&#39;]}\n&quot;</span>;</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1">Work_Image</a>.</p>
 
 </div>
@@ -246,6 +354,33 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
       </table>
 </div><div class="memdoc">
 
+<p>Вычисляет размеры для вывода эскиза изображения. </p>
+<p>Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения и конфигурационных параметров (<code>temp_photo_w</code> и <code>temp_photo_h</code>). Если изображение меньше целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются пропорционально.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\size_image()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$path_image</td><td>Путь к файлу изображения. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив с шириной и высотой эскиза.<ul>
+<li>Ключ 'width': int — Ширина эскиза (целое число ≥ 0).</li>
+<li>Ключ 'height': int — Высота эскиза (целое число ≥ 0). Размеры могут совпадать с оригинальными размерами изображения, если оно меньше целевого размера.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если файл не существует или не удалось получить размеры изображения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в конфигурации (<code>temp_photo_w</code> и <code>temp_photo_h</code>). Если эти параметры некорректны, результат может быть непредсказуемым.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Вычисление размеров эскиза для изображения</span></div>
+<div class="line">$path = <span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>;</div>
+<div class="line">$image = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$sizes = $image-&gt;size_image($path);</div>
+<div class="line">echo <span class="stringliteral">&quot;Ширина: {$sizes[&#39;width&#39;]}, Высота: {$sizes[&#39;height&#39;]}&quot;</span>;</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">Work_Image</a>.</p>
 
 </div>

@@ -77,7 +77,7 @@ interface Work_Helper_Interface
     /**
      * @brief Очистка строки от HTML-тегов и специальных символов.
      *
-     * @details Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как `<`, `>`, `&`, `"`, `'`.
+     * @details Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как `&lt;`, `&gt;`, `&amp;`, `&quot`, `&#039;`.
      *          Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
      *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
      *          Основная логика метода вызывается через публичный метод clean_field().
@@ -98,9 +98,9 @@ interface Work_Helper_Interface
      * Пример использования:
      * @code
      * // Вызов публичного метода через класс Work_Helper
-     * $dirty_input = '<script>alert("XSS")</script>';
+     * $dirty_input = '&lt;script&gt;alert(&quotXSS&quot)&lt;/script&gt;';
      * $cleaned = Work_Helper::clean_field($dirty_input);
-     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;>
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
      * @endcode
      */
     public static function clean_field($field): string;
@@ -385,7 +385,7 @@ class Work_Helper implements Work_Helper_Interface
      * @brief Очистка строки от HTML-тегов и специальных символов (публичная обёртка).
      *
      * @details Публичная обёртка для вызова защищённого метода, который удаляет HTML-теги и экранирует специальные символы,
-     *          такие как `<`, `>`, `&`, `"`, `'`. Используется для защиты от XSS-атак и других проблем,
+     *          такие как `&lt;`, `&gt;`, `&amp;`, `&quot`, `&#039;`. Используется для защиты от XSS-атак и других проблем,
      *          связанных с некорректными данными. Вся основная логика реализована в защищённом методе _clean_field_internal().
      *
      * @callergraph
@@ -404,8 +404,9 @@ class Work_Helper implements Work_Helper_Interface
      *
      * Пример использования метода:
      * @code
-     * $cleaned = Work_Helper::clean_field('<script>alert("XSS")</script>');
-     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;>
+     * $dirty_input = '&lt;script&gt;alert(&quotXSS&quot)&lt;/script&gt;';
+     * $cleaned = Work_Helper::clean_field($dirty_input);
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
      * @endcode
      */
     public static function clean_field($field): ?string
@@ -658,7 +659,7 @@ class Work_Helper implements Work_Helper_Interface
     /**
      * @brief Очистка строки от HTML-тегов и специальных символов (защищённый метод).
      *
-     * @details Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как `<`, `>`, `&`, `"`, `'`.
+     * @details Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как `&lt;`, `&gt;`, `&amp;`, `&quot`, `&#039;`.
      *          Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
      *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
      *          Основная логика метода вызывается через публичный метод clean_field().
@@ -679,9 +680,9 @@ class Work_Helper implements Work_Helper_Interface
      * Пример использования:
      * @code
      * // Вызов защищённого метода внутри класса
-     * $dirty_input = '<script>alert("XSS")</script>';
+     * $dirty_input = '&lt;script&gt;alert(&quotXSS&quot)&lt;/script&gt;';
      * $cleaned = self::_clean_field_internal($dirty_input);
-     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;>
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
      * @endcode
      */
     protected static function _clean_field_internal($field): ?string

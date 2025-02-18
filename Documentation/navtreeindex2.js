@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba":[4,0,0,1,1,1],
 "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba":[5,0,0,0,1,1],
 "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e":[4,0,0,1,1,9],
 "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e":[5,0,0,0,1,9],
@@ -48,10 +47,9 @@ var NAVTREEINDEX2 =
 "db/d02/namespacePhotoRigma_1_1Include.html#ae61eeb74d6e738c902452868f3b3ca32":[4,0,0,2,10],
 "db/d02/namespacePhotoRigma_1_1Include.html#af7d24f8d6208f91370d570179ecc7588":[4,0,0,2,13],
 "db/d02/namespacePhotoRigma_1_1Include.html#af8032313a2eb1344b860a29c714f1a72":[4,0,0,2,0],
-"db/d14/PhotoRigma_1_1Classes_1_1Work_Template_1_1set_lang-example.html":[7,14],
+"db/d14/PhotoRigma_1_1Classes_1_1Work_Template_1_1set_lang-example.html":[7,11],
 "db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html":[4,0,0,1,7],
 "db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html":[5,0,0,0,7],
-"db/dbc/PhotoRigma_1_1Classes_1_1Work_Image_1_1__construct-example.html":[7,6],
 "dc/d5b/language_2english_2index_8php.html":[6,0,5,0,0],
 "dc/d5b/language_2english_2index_8php.html#a08c76240af9e12b5f506c4b917d529e4":[6,0,5,0,0,3],
 "dc/d5b/language_2english_2index_8php.html#a975313adfd784c332fbbbcd1bfaa5850":[6,0,5,0,0,0],
@@ -79,7 +77,6 @@ var NAVTREEINDEX2 =
 "dd/df8/profile_8php_source.html":[6,0,0,6],
 "de/d20/index_8php.html":[6,0,10],
 "de/d20/index_8php_source.html":[6,0,10],
-"de/d45/PhotoRigma_1_1Classes_1_1Work_Image_1_1__get-example.html":[7,7],
 "de/d67/work__image_8php.html":[6,0,3,7],
 "de/d67/work__image_8php_source.html":[6,0,3,7],
 "de/d8e/group__LanguageEnglish.html":[3,0],

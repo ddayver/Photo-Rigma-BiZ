@@ -188,29 +188,22 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 </div><div class="memdoc">
 
 <p>Очистка строки от HTML-тегов и специальных символов. </p>
-<p>Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>"&lt;/tt&gt;, &amp;lsquo;&amp;rsquo;`.
-         Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
-         Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
-         Основная логика метода вызывается через публичный метод clean_field().
-
-
-
-@see PhotoRigma::Classes::Work_Helper::clean_field()
-     Публичный метод, вызывающий этот защищённый метод.
-
-@param mixed $field Строка или данные, которые могут быть преобразованы в строку.
-                    Если входные данные пусты (null или пустая строка), метод вернёт null.
-
-@return string|null Очищенная строка или null, если входные данные пусты.
-
-@warning Метод не обрабатывает вложенные структуры данных (например, массивы).
-         Убедитесь, что входные данные могут быть преобразованы в строку.
-
-Пример использования:
-@code 
-// Вызов публичного метода через класс Work_Helper
-$dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Helper::clean_field($dirty_input); echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&gt;  </code></p>
-
+<p>Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot</code>, <code>&amp;#039;</code>. Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными. Этот метод является защищённым и предназначен для использования внутри класса или его наследников. Основная логика метода вызывается через публичный метод clean_field().</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов (публичная обёртка).">PhotoRigma\Classes\Work_Helper\clean_field()</a> Публичный метод, вызывающий этот защищённый метод.</dd></dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">mixed</td><td class="paramname">$field</td><td>Строка или данные, которые могут быть преобразованы в строку. Если входные данные пусты (null или пустая строка), метод вернёт null.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>string|null Очищенная строка или null, если входные данные пусты.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод не обрабатывает вложенные структуры данных (например, массивы). Убедитесь, что входные данные могут быть преобразованы в строку.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Вызов публичного метода через класс Work_Helper</span></div>
+<div class="line">$dirty_input = <span class="stringliteral">&#39;&amp;lt;script&amp;gt;alert(&amp;quotXSS&amp;quot)&amp;lt;/script&amp;gt;&#39;</span>;</div>
+<div class="line">$cleaned = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">Work_Helper::clean_field</a>($dirty_input);</div>
+<div class="line">echo $cleaned; <span class="comment">// Выведет: &amp;lt;script&amp;gt;alert(&amp;quot;XSS&amp;quot;)&amp;lt;/script&amp;gt;</span></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work_Helper\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdoc">Очистка строки от HTML-тегов и специальных символов (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00412">work_helper.php:412</a></div></div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">Work_Helper</a>.</p>
 
 </div>
@@ -260,7 +253,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Help
 <div class="line"><span class="comment">// Обработка строки без кириллицы и знаков пунктуации</span></div>
 <div class="line">$encoded = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">\PhotoRigma\Classes\Work_Helper::encodename</a>(<span class="stringliteral">&#39;12345&#39;</span>);</div>
 <div class="line">echo $encoded; <span class="comment">// Выведет: 12345</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work_Helper\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00506">work_helper.php:506</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work_Helper\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00507">work_helper.php:507</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">Work_Helper</a>.</p>
 
@@ -319,7 +312,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Help
 <div class="line"><span class="comment">// Преобразование некорректных данных</span></div>
 <div class="line">$bytes = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">Work_Helper::return_bytes</a>(<span class="stringliteral">&#39;abc&#39;</span>);</div>
 <div class="line">echo $bytes; <span class="comment">// Выведет: 0</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work_Helper\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdoc">Преобразование размера в байты (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00462">work_helper.php:462</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work_Helper\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdoc">Преобразование размера в байты (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00463">work_helper.php:463</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">Work_Helper</a>.</p>
 
@@ -385,7 +378,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Help
 <div class="line"><span class="comment">// Преобразование ссылки</span></div>
 <div class="line">$html = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">Work_Helper::ubb</a>(<span class="stringliteral">&#39;[url=https://example.com]Example[/url]&#39;</span>);</div>
 <div class="line">echo $html; <span class="comment">// Выведет: &lt;a href=&quot;https://example.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; title=&quot;Example&quot;&gt;Example&lt;/a&gt;</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work_Helper\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразование BBCode в HTML (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00561">work_helper.php:561</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work_Helper\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразование BBCode в HTML (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00562">work_helper.php:562</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">Work_Helper</a>.</p>
 
@@ -449,7 +442,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Help
 <div class="line"><span class="comment">// string that</span></div>
 <div class="line"><span class="comment">// needs to be</span></div>
 <div class="line"><span class="comment">// wrapped.</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work_Helper\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивка строки на несколько строк ограниченной длины (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00609">work_helper.php:609</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work_Helper\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивка строки на несколько строк ограниченной длины (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00610">work_helper.php:610</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">Work_Helper</a>.</p>
 
@@ -502,7 +495,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Help
 <div class="line"><span class="comment">// Проверка неподдерживаемого MIME-типа</span></div>
 <div class="line">$is_supported = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">Work_Helper::validate_mime_type</a>(<span class="stringliteral">&#39;application/pdf&#39;</span>);</div>
 <div class="line">var_dump($is_supported); <span class="comment">// Выведет: false</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work_Helper\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00653">work_helper.php:653</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work_Helper\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00654">work_helper.php:654</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">Work_Helper</a>.</p>
 
