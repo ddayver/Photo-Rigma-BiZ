@@ -6,5 +6,5 @@ var searchData=
   ['url_5fmod_5frewrite_3',['url_mod_rewrite',['../d5/d26/classPhotoRigma_1_1Classes_1_1template.html#a9e34f1509bc89f404476790f164f831e',1,'PhotoRigma::Classes::template']]],
   ['user_4',['user',['../d9/d8a/classPhotoRigma_1_1Classes_1_1user.html',1,'PhotoRigma::Classes']]],
   ['user_2ephp_5',['user.php',['../d1/d1a/user_8php.html',1,'']]],
-  ['utf8_5fwordwrap_6',['utf8_wordwrap',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work\utf8_wordwrap()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work_Helper\utf8_wordwrap()']]]
+  ['utf8_5fwordwrap_6',['utf8_wordwrap',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work\utf8_wordwrap()'],['../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work_Helper_Interface\utf8_wordwrap()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work_Helper\utf8_wordwrap()']]]
 ];

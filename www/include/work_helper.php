@@ -46,6 +46,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 /**
+ * @interface Work_Helper_Interface
  * @brief Интерфейс для вспомогательных методов.
  *
  * @details Интерфейс определяет контракт для класса `Work_Helper`, который предоставляет статические методы для выполнения различных вспомогательных задач:
@@ -59,27 +60,47 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          Методы интерфейса предназначены для использования в различных частях приложения, таких как обработка пользовательского ввода,
  *          работа с файлами, генерация безопасного вывода и т.д.
  *
+ * @callgraph
+ *
  * @see PhotoRigma::Classes::Work_Helper Реализация интерфейса.
+ * @see PhotoRigma::Include::log_in_file Внешняя функция для логирования ошибок.
+ *
+ * Пример класса, реализующего интерфейс:
+ * @code
+ * class Work_Helper implements \PhotoRigma\Classes\Work_Helper_Interface {
+ *     // Реализация методов интерфейса
+ * }
+ * @endcode
  */
 interface Work_Helper_Interface
 {
     /**
      * @brief Очистка строки от HTML-тегов и специальных символов.
      *
-     * @details Метод удаляет HTML-теги и экранирует специальные символы, такие как `<`, `>`, `&`, `"`, `'`.
+     * @details Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как `<`, `>`, `&`, `"`, `'`.
      *          Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод clean_field().
      *
-     * @param mixed $field Строка или данные для очистки.
-     * @return string Очищенная строка.
+     * @callgraph
      *
-     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work_Helper::clean_field() Реализация метода в классе Work_Helper.
+     * @see PhotoRigma::Classes::Work_Helper::clean_field()
+     *      Публичный метод, вызывающий этот защищённый метод.
      *
-     * @example Пример использования метода:
+     * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
+     *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
+     *
+     * @return string|null Очищенная строка или null, если входные данные пусты.
+     *
+     * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
+     *          Убедитесь, что входные данные могут быть преобразованы в строку.
+     *
+     * Пример использования:
      * @code
-     * $cleaned = Work::clean_field('<script>alert("XSS")</script>');
-     * echo $cleaned; // Выведет: <script>alert(&quot;XSS&quot;)</script>
+     * // Вызов публичного метода через класс Work_Helper
+     * $dirty_input = '<script>alert("XSS")</script>';
+     * $cleaned = Work_Helper::clean_field($dirty_input);
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;>
      * @endcode
      */
     public static function clean_field($field): string;
@@ -93,27 +114,38 @@ interface Work_Helper_Interface
      *          - M (мегабайты): умножается на 1024².
      *          - G (гигабайты): умножается на 1024³.
      *          Если суффикс отсутствует или недопустим, значение считается в байтах.
+     *          Отрицательные числа преобразуются в положительные.
      *          Если входные данные некорректны, возвращается 0.
      *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::return_bytes()
+     *      Публичный метод, вызывающий этот метод.
+     *
      * @param string|int $val Размер в формате "число[K|M|G]" или число.
-     * @return int Размер в байтах.
+     *                        Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
+     *                        Отрицательные числа преобразуются в положительные.
      *
-     * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work_Helper::return_bytes() Реализация метода в классе Work_Helper.
+     * @return int Размер в байтах. Возвращает 0 для некорректных входных данных.
      *
-     * @example Пример использования метода:
+     * @warning Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
+     *
+     * Пример использования:
      * @code
-     * $bytes = Work::return_bytes('2M');
+     * // Преобразование с допустимым суффиксом
+     * $bytes = Work_Helper::return_bytes('2M');
      * echo $bytes; // Выведет: 2097152
      *
-     * $bytes = Work::return_bytes('-1G');
+     * // Преобразование отрицательного значения
+     * $bytes = Work_Helper::return_bytes('-1G');
      * echo $bytes; // Выведет: 1073741824
      *
-     * $bytes = Work::return_bytes('10X');
+     * // Преобразование с недопустимым суффиксом
+     * $bytes = Work_Helper::return_bytes('10X');
      * echo $bytes; // Выведет: 10
      *
-     * $bytes = Work::return_bytes('abc');
+     * // Преобразование некорректных данных
+     * $bytes = Work_Helper::return_bytes('abc');
      * echo $bytes; // Выведет: 0
      * @endcode
      */
@@ -122,27 +154,37 @@ interface Work_Helper_Interface
     /**
      * @brief Транслитерация строки и замена знаков пунктуации на "_".
      *
-     * @details Метод выполняет транслитерацию кириллических символов в латиницу и заменяет знаки пунктуации на "_".
+     * @details Этот метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_".
      *          Используется для создания "безопасных" имен файлов или URL.
      *          Если входная строка пустая, она возвращается без обработки.
      *          Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.
      *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::encodename()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     *
      * @param string $string Исходная строка.
+     *                       Если строка пустая, она возвращается без обработки.
+     *                       Рекомендуется использовать строки в кодировке UTF-8.
+     *
      * @return string Строка после транслитерации и замены символов.
+     *                Если после обработки строка становится пустой, генерируется уникальная последовательность.
      *
-     * @see PhotoRigma::Classes::Work::encodename() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work_Helper::encodename() Реализация метода в классе Work_Helper.
+     * @warning Если расширение intl недоступно, используется резервная таблица транслитерации.
      *
-     * @example Пример использования метода:
+     * Пример использования:
      * @code
-     * $encoded = Work::encodename('Привет, мир!');
-     * echo $encoded; // Выведет: Privet__mir_
+     * // Транслитерация строки с заменой знаков пунктуации
+     * $encoded = \PhotoRigma\Classes\Work_Helper::encodename('Привет, мир!');
+     * echo $encoded; // Выведет: Privet_mir
      *
-     * $encoded = Work::encodename('');
+     * // Обработка пустой строки
+     * $encoded = \PhotoRigma\Classes\Work_Helper::encodename('');
      * echo $encoded; // Выведет: пустую строку
      *
-     * $encoded = Work::encodename('12345');
+     * // Обработка строки без кириллицы и знаков пунктуации
+     * $encoded = \PhotoRigma\Classes\Work_Helper::encodename('12345');
      * echo $encoded; // Выведет: 12345
      * @endcode
      */
@@ -151,7 +193,7 @@ interface Work_Helper_Interface
     /**
      * @brief Преобразование BBCode в HTML.
      *
-     * @details Метод преобразует BBCode-теги в соответствующие HTML-теги с учетом рекурсивной обработки вложенных тегов.
+     * @details Этот метод преобразует BBCode-теги в соответствующие HTML-теги с учетом рекурсивной обработки вложенных тегов.
      *          Поддерживаются следующие BBCode-теги:
      *          - [b]Жирный текст[/b]
      *          - [u]Подчёркнутый текст[/u]
@@ -167,22 +209,33 @@ interface Work_Helper_Interface
      *          - [br] — перенос строки
      *          - [left], [center], [right] — выравнивание текста
      *          - [img]Изображение[/img]
-     *
      *          Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных тегов.
      *
+     * @callgraph
+     *
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work_Helper::ubb()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     *
      * @param string $text Текст с BBCode.
+     *                     Рекомендуется использовать строки в кодировке UTF-8.
+     *                     Если строка пустая, она возвращается без обработки.
+     *
      * @return string Текст с HTML-разметкой.
+     *                Некорректные BBCode-теги игнорируются или преобразуются в текст.
      *
-     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work_Helper::ubb() Реализация метода в классе Work_Helper.
+     * @warning Метод ограничивает глубину рекурсии для вложенных тегов (максимум 10 уровней).
+     * @warning Некорректные URL или изображения заменяются на безопасные значения или удаляются.
      *
-     * @example Пример использования метода:
+     * Пример использования:
      * @code
-     * $html = Work::ubb('[b]Bold text[/b]');
+     * // Преобразование жирного текста
+     * $html = Work_Helper::ubb('[b]Bold text[/b]');
      * echo $html; // Выведет: <strong>Bold text</strong>
      *
-     * $html = Work::ubb('[url=https://example.com]Example[/url]');
+     * // Преобразование ссылки
+     * $html = Work_Helper::ubb('[url=https://example.com]Example[/url]');
      * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer" title="Example">Example</a>
      * @endcode
      */
@@ -191,23 +244,36 @@ interface Work_Helper_Interface
     /**
      * @brief Разбивка строки на несколько строк ограниченной длины.
      *
-     * @details Метод разбивает строку на несколько строк, каждая из которых имеет длину не более указанной.
+     * @details Этот метод разбивает строку на несколько строк, каждая из которых имеет длину не более указанной.
      *          Разрыв строки выполняется только по пробелам, чтобы сохранить читаемость текста.
      *          Поддерживается работа с UTF-8 символами.
      *          Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
      *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
      * @param string $str Исходная строка.
+     *                    Рекомендуется использовать строки в кодировке UTF-8.
+     *                    Если строка пустая или её длина меньше или равна $width, она возвращается без изменений.
      * @param int $width Максимальная длина строки (по умолчанию 70).
+     *                   Должен быть положительным целым числом.
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
+     *                      Не должен быть пустой строкой.
+     *
      * @return string Строка, разбитая на несколько строк.
+     *                В случае некорректных параметров возвращается исходная строка.
      *
-     * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap() Реализация метода в классе Work_Helper.
+     * @warning Метод корректно работает только с UTF-8 символами.
+     * @warning Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
      *
-     * @example Пример использования метода:
+     * Пример использования:
      * @code
-     * $wrapped = Work::utf8_wordwrap('This is a very long string that needs to be wrapped.', 10);
+     * // Разбивка строки на части длиной 10 символов
+     * $wrapped = Work_Helper::utf8_wordwrap('This is a very long string that needs to be wrapped.', 10);
      * echo $wrapped;
      * // Выведет:
      * // This is a
@@ -217,29 +283,41 @@ interface Work_Helper_Interface
      * // wrapped.
      * @endcode
      */
+    public static function utf8_wordwrap(string $str, int $width = 70, string $break = PHP_EOL): string;
+
     /**
      * @brief Проверка MIME-типа файла через доступные библиотеки.
      *
-     * @details Метод проверяет, поддерживается ли указанный MIME-тип хотя бы одной из доступных библиотек:
+     * @details Этот метод проверяет, поддерживается ли указанный MIME-тип хотя бы одной из доступных библиотек:
      *          - Imagick
      *          - Gmagick
-     *          - GD
+     *          - Встроенные функции PHP по работе с изображениями (GD)
      *          Если MIME-тип не поддерживается ни одной библиотекой, возвращается false.
      *          Поддерживаются MIME-типы для изображений, таких как JPEG, PNG, GIF, WebP и другие.
      *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
      * @param string $real_mime_type Реальный MIME-тип файла.
-     * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
+     *                               Должен быть корректным MIME-типом для изображений.
      *
-     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type() Реализация метода в классе Work_Helper.
+     * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе false.
      *
-     * @example Пример использования метода:
+     * @warning Метод зависит от доступности библиотек (Imagick, Gmagick) и встроенных функций PHP по работе с изображениями (GD).
+     *          Если ни одна из библиотек недоступна, метод может некорректно работать.
+     *
+     * Пример использования:
      * @code
-     * $is_supported = Work::validate_mime_type('image/jpeg');
+     * // Проверка поддерживаемого MIME-типа
+     * $is_supported = Work_Helper::validate_mime_type('image/jpeg');
      * var_dump($is_supported); // Выведет: true
      *
-     * $is_supported = Work::validate_mime_type('application/pdf');
+     * // Проверка неподдерживаемого MIME-типа
+     * $is_supported = Work_Helper::validate_mime_type('application/pdf');
      * var_dump($is_supported); // Выведет: false
      * @endcode
      */
@@ -247,6 +325,7 @@ interface Work_Helper_Interface
 }
 
 /**
+ * @class Work_Helper
  * @brief Класс для вспомогательных методов.
  *
  * @details Класс реализует интерфейс `Work_Helper_Interface` и предоставляет статические методы для выполнения различных вспомогательных задач:
@@ -256,13 +335,49 @@ interface Work_Helper_Interface
  *          - Преобразование BBCode в HTML (`ubb`).
  *          - Разбиение строк на несколько строк ограниченной длины (`utf8_wordwrap`).
  *          - Проверка MIME-типов файлов через доступные библиотеки (`validate_mime_type`).
- *
  *          Методы класса предназначены для использования в различных частях приложения, таких как обработка пользовательского ввода,
  *          работа с файлами, генерация безопасного вывода и т.д.
+ *
+ * @implements Work_Helper_Interface Интерфейс для вспомогательных методов.
+ *
+ * @callergraph
  *
  * @see PhotoRigma::Classes::Work_Helper_Interface Интерфейс для вспомогательных методов.
  * @see PhotoRigma::Classes::Work Класс, через который вызываются вспомогательные методы.
  * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+ *
+ * Пример использования класса:
+ * @code
+ * // Очистка строки от HTML-тегов
+ * $cleaned = Work_Helper::clean_field('<script>alert("XSS")</script>');
+ * echo $cleaned; // Выведет: <script>alert(&quot;XSS&quot;)</script>
+ *
+ * // Преобразование размера в байты
+ * $bytes = Work_Helper::return_bytes('2M');
+ * echo $bytes; // Выведет: 2097152
+ *
+ * // Транслитерация строки
+ * $encoded = Work_Helper::encodename('Привет, мир!');
+ * echo $encoded; // Выведет: Privet_mir
+ *
+ * // Преобразование BBCode в HTML
+ * $html = Work_Helper::ubb('[b]Bold text[/b]');
+ * echo $html; // Выведет: <strong>Bold text</strong>
+ *
+ * // Разбиение строки на части
+ * $wrapped = Work_Helper::utf8_wordwrap('This is a very long string that needs to be wrapped.', 10);
+ * echo $wrapped;
+ * // Выведет:
+ * // This is a
+ * // very long
+ * // string that
+ * // needs to be
+ * // wrapped.
+ *
+ * // Проверка MIME-типа
+ * $is_supported = Work_Helper::validate_mime_type('image/jpeg');
+ * var_dump($is_supported); // Выведет: true
+ * @endcode
  */
 class Work_Helper implements Work_Helper_Interface
 {
@@ -271,18 +386,26 @@ class Work_Helper implements Work_Helper_Interface
      *
      * @details Публичная обёртка для вызова защищённого метода, который удаляет HTML-теги и экранирует специальные символы,
      *          такие как `<`, `>`, `&`, `"`, `'`. Используется для защиты от XSS-атак и других проблем,
-     *          связанных с некорректными данными.
+     *          связанных с некорректными данными. Вся основная логика реализована в защищённом методе _clean_field_internal().
      *
-     * @param mixed $field Строка или данные для очистки.
-     * @return string|null Очищенная строка или null, если входные данные пусты.
+     * @callergraph
+     * @callgraph
      *
      * @see PhotoRigma::Classes::Work_Helper::_clean_field_internal() Защищённый метод, выполняющий очистку.
      * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
      *
-     * @example Пример использования метода:
+     * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
+     *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
+     *
+     * @return string|null Очищенная строка или null, если входные данные пусты.
+     *
+     * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
+     *          Убедитесь, что входные данные могут быть преобразованы в строку.
+     *
+     * Пример использования метода:
      * @code
-     * $cleaned = Work::clean_field('<script>alert("XSS")</script>');
-     * echo $cleaned; // Выведет: <script>alert(&quot;XSS&quot;)</script>
+     * $cleaned = Work_Helper::clean_field('<script>alert("XSS")</script>');
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;>
      * @endcode
      */
     public static function clean_field($field): ?string
@@ -299,26 +422,40 @@ class Work_Helper implements Work_Helper_Interface
      *          - M (мегабайты): умножается на 1024².
      *          - G (гигабайты): умножается на 1024³.
      *          Если суффикс отсутствует или недопустим, значение считается в байтах.
+     *          Отрицательные числа преобразуются в положительные.
      *          Если входные данные некорректны, возвращается 0.
+     *          Вся основная логика реализована в защищённом методе _return_bytes_internal().
      *
-     * @param string|int $val Размер в формате "число[K|M|G]" или число.
-     * @return int Размер в байтах.
+     * @callergraph
+     * @callgraph
      *
      * @see PhotoRigma::Classes::Work_Helper::_return_bytes_internal() Защищённый метод, выполняющий преобразование.
      * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
      *
-     * @example Пример использования метода:
+     * @param string|int $val Размер в формате "число[K|M|G]" или число.
+     *                        Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
+     *                        Отрицательные числа преобразуются в положительные.
+     *
+     * @return int Размер в байтах. Возвращает 0 для некорректных входных данных.
+     *
+     * @warning Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
+     *
+     * Пример использования метода:
      * @code
-     * $bytes = Work::return_bytes('2M');
+     * // Преобразование с допустимым суффиксом
+     * $bytes = Work_Helper::return_bytes('2M');
      * echo $bytes; // Выведет: 2097152
      *
-     * $bytes = Work::return_bytes('-1G');
+     * // Преобразование отрицательного значения
+     * $bytes = Work_Helper::return_bytes('-1G');
      * echo $bytes; // Выведет: 1073741824
      *
-     * $bytes = Work::return_bytes('10X');
+     * // Преобразование с недопустимым суффиксом
+     * $bytes = Work_Helper::return_bytes('10X');
      * echo $bytes; // Выведет: 10
      *
-     * $bytes = Work::return_bytes('abc');
+     * // Преобразование некорректных данных
+     * $bytes = Work_Helper::return_bytes('abc');
      * echo $bytes; // Выведет: 0
      * @endcode
      */
@@ -330,26 +467,39 @@ class Work_Helper implements Work_Helper_Interface
     /**
      * @brief Транслитерация строки и замена знаков пунктуации на "_" (публичная обёртка).
      *
-     * @details Публичная обёртка для вызова защищённого метода, который выполняет транслитерацию кириллических символов
+     * @details Публичная обёртка для вызова защищённого метода, который выполняет транслитерацию не латинских символов
      *          в латиницу и заменяет знаки пунктуации на "_". Используется для создания "безопасных" имен файлов или URL.
      *          Если входная строка пустая, она возвращается без обработки.
      *          Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.
+     *          Вся основная логика реализована в защищённом методе _encodename_internal().
      *
-     * @param string $string Исходная строка.
-     * @return string Строка после транслитерации и замены символов.
+     * @callergraph
+     * @callgraph
      *
      * @see PhotoRigma::Classes::Work_Helper::_encodename_internal() Защищённый метод, выполняющий транслитерацию.
      * @see PhotoRigma::Classes::Work::encodename() Этот метод вызывается через класс Work.
      *
-     * @example Пример использования метода:
-     * @code
-     * $encoded = Work::encodename('Привет, мир!');
-     * echo $encoded; // Выведет: Privet__mir_
+     * @param string $string Исходная строка.
+     *                       Если строка пустая, она возвращается без обработки.
+     *                       Рекомендуется использовать строки в кодировке UTF-8.
      *
-     * $encoded = Work::encodename('');
+     * @return string Строка после транслитерации и замены символов.
+     *                Если после обработки строка становится пустой, генерируется уникальная последовательность.
+     *
+     * @warning Если расширение intl недоступно, используется резервная таблица транслитерации.
+     *
+     * Пример использования метода:
+     * @code
+     * // Транслитерация строки с заменой знаков пунктуации
+     * $encoded = Work_Helper::encodename('Привет, мир!');
+     * echo $encoded; // Выведет: Privet_mir
+     *
+     * // Обработка пустой строки
+     * $encoded = Work_Helper::encodename('');
      * echo $encoded; // Выведет: пустую строку
      *
-     * $encoded = Work::encodename('12345');
+     * // Обработка строки без кириллицы и знаков пунктуации
+     * $encoded = Work_Helper::encodename('12345');
      * echo $encoded; // Выведет: 12345
      * @endcode
      */
@@ -377,22 +527,34 @@ class Work_Helper implements Work_Helper_Interface
      *          - [br] — перенос строки
      *          - [left], [center], [right] — выравнивание текста
      *          - [img]Изображение[/img]
-     *
      *          Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных тегов.
+     *          Вся основная логика реализована в защищённом методе _ubb_internal().
      *
-     * @param string $text Текст с BBCode.
-     * @return string Текст с HTML-разметкой.
+     * @callergraph
+     * @callgraph
      *
      * @see PhotoRigma::Classes::Work_Helper::_ubb_internal() Защищённый метод, выполняющий преобразование BBCode.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
      *
-     * @example Пример использования метода:
+     * @param string $text Текст с BBCode.
+     *                     Рекомендуется использовать строки в кодировке UTF-8.
+     *                     Если строка пустая, она возвращается без обработки.
+     *
+     * @return string Текст с HTML-разметкой.
+     *                Некорректные BBCode-теги игнорируются или преобразуются в текст.
+     *
+     * @warning Метод ограничивает глубину рекурсии для вложенных тегов (максимум 10 уровней).
+     * @warning Некорректные URL или изображения заменяются на безопасные значения или удаляются.
+     *
+     * Пример использования метода:
      * @code
-     * $html = Work::ubb('[b]Bold text[/b]');
+     * // Преобразование жирного текста
+     * $html = Work_Helper::ubb('[b]Bold text[/b]');
      * echo $html; // Выведет: <strong>Bold text</strong>
      *
-     * $html = Work::ubb('[url=https://example.com]Example[/url]');
+     * // Преобразование ссылки
+     * $html = Work_Helper::ubb('[url=https://example.com]Example[/url]');
      * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer" title="Example">Example</a>
      * @endcode
      */
@@ -408,19 +570,33 @@ class Work_Helper implements Work_Helper_Interface
      *          каждая из которых имеет длину не более указанной. Разрыв строки выполняется только по пробелам,
      *          чтобы сохранить читаемость текста. Поддерживается работа с UTF-8 символами.
      *          Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
+     *          Вся основная логика реализована в защищённом методе _utf8_wordwrap_internal().
      *
-     * @param string $str Исходная строка.
-     * @param int $width Максимальная длина строки (по умолчанию 70).
-     * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
-     * @return string Строка, разбитая на несколько строк.
+     * @callergraph
+     * @callgraph
      *
      * @see PhotoRigma::Classes::Work_Helper::_utf8_wordwrap_internal() Защищённый метод, выполняющий разбиение строки.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
      *
-     * @example Пример использования метода:
+     * @param string $str Исходная строка.
+     *                    Рекомендуется использовать строки в кодировке UTF-8.
+     *                    Если строка пустая или её длина меньше или равна $width, она возвращается без изменений.
+     * @param int $width Максимальная длина строки (по умолчанию 70).
+     *                   Должен быть положительным целым числом.
+     * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
+     *                      Не должен быть пустой строкой.
+     *
+     * @return string Строка, разбитая на несколько строк.
+     *                В случае некорректных параметров возвращается исходная строка.
+     *
+     * @warning Метод корректно работает только с UTF-8 символами.
+     * @warning Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
+     *
+     * Пример использования метода:
      * @code
-     * $wrapped = Work::utf8_wordwrap('This is a very long string that needs to be wrapped.', 10);
+     * // Разбивка строки на части длиной 10 символов
+     * $wrapped = Work_Helper::utf8_wordwrap('This is a very long string that needs to be wrapped.', 10);
      * echo $wrapped;
      * // Выведет:
      * // This is a
@@ -442,23 +618,35 @@ class Work_Helper implements Work_Helper_Interface
      *          хотя бы одной из доступных библиотек:
      *          - Imagick
      *          - Gmagick
-     *          - GD
+     *          - Встроенные функции PHP по работе с изображениями (GD)
      *          Если MIME-тип не поддерживается ни одной библиотекой, возвращается false.
      *          Поддерживаются MIME-типы для изображений, таких как JPEG, PNG, GIF, WebP и другие.
+     *          Вся основная логика реализована в защищённом методе _validate_mime_type_internal().
+     *          Редирект осуществляется только из класса Work.
      *
-     * @param string $real_mime_type Реальный MIME-тип файла.
-     * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
+     * @callergraph
+     * @callgraph
      *
      * @see PhotoRigma::Classes::Work_Helper::_validate_mime_type_internal() Защищённый метод, выполняющий проверку MIME-типа.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
      *
-     * @example Пример использования метода:
+     * @param string $real_mime_type Реальный MIME-тип файла.
+     *                               Должен быть корректным MIME-типом для изображений.
+     *
+     * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе false.
+     *
+     * @warning Метод зависит от доступности библиотек (Imagick, Gmagick) и встроенных функций PHP по работе с изображениями (GD).
+     *          Если ни одна из библиотек недоступна, метод может некорректно работать.
+     *
+     * Пример использования метода:
      * @code
-     * $is_supported = Work::validate_mime_type('image/jpeg');
+     * // Проверка поддерживаемого MIME-типа
+     * $is_supported = Work_Helper::validate_mime_type('image/jpeg');
      * var_dump($is_supported); // Выведет: true
      *
-     * $is_supported = Work::validate_mime_type('application/pdf');
+     * // Проверка неподдерживаемого MIME-типа
+     * $is_supported = Work_Helper::validate_mime_type('application/pdf');
      * var_dump($is_supported); // Выведет: false
      * @endcode
      */
@@ -472,12 +660,29 @@ class Work_Helper implements Work_Helper_Interface
      *
      * @details Этот защищённый метод удаляет HTML-теги и экранирует специальные символы, такие как `<`, `>`, `&`, `"`, `'`.
      *          Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод clean_field().
      *
-     * @param mixed $field Строка или данные для очистки.
+     * @callergraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::clean_field()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     *
+     * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
+     *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
+     *
      * @return string|null Очищенная строка или null, если входные данные пусты.
      *
-     * @see PhotoRigma::Classes::Work_Helper::clean_field() Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
+     * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
+     *          Убедитесь, что входные данные могут быть преобразованы в строку.
+     *
+     * Пример использования:
+     * @code
+     * // Вызов защищённого метода внутри класса
+     * $dirty_input = '<script>alert("XSS")</script>';
+     * $cleaned = self::_clean_field_internal($dirty_input);
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;>
+     * @endcode
      */
     protected static function _clean_field_internal($field): ?string
     {
@@ -507,13 +712,42 @@ class Work_Helper implements Work_Helper_Interface
      *          - M (мегабайты): умножается на 1024².
      *          - G (гигабайты): умножается на 1024³.
      *          Если суффикс отсутствует или недопустим, значение считается в байтах.
+     *          Отрицательные числа преобразуются в положительные.
      *          Если входные данные некорректны, возвращается 0.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод return_bytes().
+     *
+     * @callergraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::return_bytes()
+     *      Публичный метод, вызывающий этот защищённый метод.
      *
      * @param string|int $val Размер в формате "число[K|M|G]" или число.
-     * @return int Размер в байтах.
+     *                        Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
+     *                        Отрицательные числа преобразуются в положительные.
      *
-     * @see PhotoRigma::Classes::Work_Helper::return_bytes() Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
+     * @return int Размер в байтах. Возвращает 0 для некорректных входных данных.
+     *
+     * @warning Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
+     *
+     * Пример использования:
+     * @code
+     * // Преобразование с допустимым суффиксом
+     * $bytes = self::_return_bytes_internal('2M');
+     * echo $bytes; // Выведет: 2097152
+     *
+     * // Преобразование отрицательного значения
+     * $bytes = self::_return_bytes_internal('-1G');
+     * echo $bytes; // Выведет: 1073741824
+     *
+     * // Преобразование с недопустимым суффиксом
+     * $bytes = self::_return_bytes_internal('10X');
+     * echo $bytes; // Выведет: 10
+     *
+     * // Преобразование некорректных данных
+     * $bytes = self::_return_bytes_internal('abc');
+     * echo $bytes; // Выведет: 0
+     * @endcode
      */
     protected static function _return_bytes_internal($val): int
     {
@@ -548,16 +782,41 @@ class Work_Helper implements Work_Helper_Interface
     /**
      * @brief Транслитерация строки и замена знаков пунктуации на "_" (защищённый метод).
      *
-     * @details Этот защищённый метод выполняет транслитерацию кириллических символов в латиницу и заменяет знаки пунктуации на "_".
+     * @details Этот защищённый метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_".
      *          Используется для создания "безопасных" имен файлов или URL.
      *          Если входная строка пустая, она возвращается без обработки.
      *          Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод encodename().
+     *
+     * @callergraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::encodename()
+     *      Публичный метод, вызывающий этот защищённый метод.
      *
      * @param string $string Исходная строка.
-     * @return string Строка после транслитерации и замены символов.
+     *                       Если строка пустая, она возвращается без обработки.
+     *                       Рекомендуется использовать строки в кодировке UTF-8.
      *
-     * @see PhotoRigma::Classes::Work_Helper::encodename() Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Classes::Work::encodename() Этот метод вызывается через класс Work.
+     * @return string Строка после транслитерации и замены символов.
+     *                Если после обработки строка становится пустой, генерируется уникальная последовательность.
+     *
+     * @warning Если расширение intl недоступно, используется резервная таблица транслитерации.
+     *
+     * Пример использования:
+     * @code
+     * // Транслитерация строки с заменой знаков пунктуации
+     * $encoded = self::_encodename_internal('Привет, мир!');
+     * echo $encoded; // Выведет: Privet_mir
+     *
+     * // Обработка пустой строки
+     * $encoded = self::_encodename_internal('');
+     * echo $encoded; // Выведет: пустую строку
+     *
+     * // Обработка строки без кириллицы и знаков пунктуации
+     * $encoded = self::_encodename_internal('12345');
+     * echo $encoded; // Выведет: 12345
+     * @endcode
      */
     protected static function _encodename_internal(string $string): string
     {
@@ -626,15 +885,37 @@ class Work_Helper implements Work_Helper_Interface
      *          - [br] — перенос строки
      *          - [left], [center], [right] — выравнивание текста
      *          - [img]Изображение[/img]
-     *
      *          Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных тегов.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод ubb().
+     *
+     * @callergraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::ubb()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
      * @param string $text Текст с BBCode.
-     * @return string Текст с HTML-разметкой.
+     *                     Рекомендуется использовать строки в кодировке UTF-8.
+     *                     Если строка пустая, она возвращается без обработки.
      *
-     * @see PhotoRigma::Classes::Work_Helper::ubb() Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
+     * @return string Текст с HTML-разметкой.
+     *                Некорректные BBCode-теги игнорируются или преобразуются в текст.
+     *
+     * @warning Метод ограничивает глубину рекурсии для вложенных тегов (максимум 10 уровней).
+     * @warning Некорректные URL или изображения заменяются на безопасные значения или удаляются.
+     *
+     * Пример использования:
+     * @code
+     * // Преобразование жирного текста
+     * $html = self::_ubb_internal('[b]Bold text[/b]');
+     * echo $html; // Выведет: <strong>Bold text</strong>
+     *
+     * // Преобразование ссылки
+     * $html = self::_ubb_internal('[url=https://example.com]Example[/url]');
+     * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer" title="Example">Example</a>
+     * @endcode
      */
     protected static function _ubb_internal(string $text): string
     {
@@ -749,15 +1030,42 @@ class Work_Helper implements Work_Helper_Interface
      *          Разрыв строки выполняется только по пробелам, чтобы сохранить читаемость текста.
      *          Поддерживается работа с UTF-8 символами.
      *          Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод utf8_wordwrap().
+     *
+     * @callergraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
      * @param string $str Исходная строка.
+     *                    Рекомендуется использовать строки в кодировке UTF-8.
+     *                    Если строка пустая или её длина меньше или равна $width, она возвращается без изменений.
      * @param int $width Максимальная длина строки (по умолчанию 70).
+     *                   Должен быть положительным целым числом.
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
-     * @return string Строка, разбитая на несколько строк.
+     *                      Не должен быть пустой строкой.
      *
-     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap() Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
+     * @return string Строка, разбитая на несколько строк.
+     *                В случае некорректных параметров возвращается исходная строка.
+     *
+     * @warning Метод корректно работает только с UTF-8 символами.
+     * @warning Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
+     *
+     * Пример использования:
+     * @code
+     * // Разбивка строки на части длиной 10 символов
+     * $wrapped = self::_utf8_wordwrap_internal('This is a very long string that needs to be wrapped.', 10);
+     * echo $wrapped;
+     * // Выведет:
+     * // This is a
+     * // very long
+     * // string that
+     * // needs to be
+     * // wrapped.
+     * @endcode
      */
     protected static function _utf8_wordwrap_internal(string $str, int $width = 70, string $break = PHP_EOL): string
     {
@@ -794,16 +1102,37 @@ class Work_Helper implements Work_Helper_Interface
      * @details Этот защищённый метод проверяет, поддерживается ли указанный MIME-тип хотя бы одной из доступных библиотек:
      *          - Imagick
      *          - Gmagick
-     *          - GD
+     *          - Встроенные функции PHP по работе с изображениями (GD)
      *          Если MIME-тип не поддерживается ни одной библиотекой, возвращается false.
      *          Поддерживаются MIME-типы для изображений, таких как JPEG, PNG, GIF, WebP и другие.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод validate_mime_type().
+     *
+     * @callergraph
+     *
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
      * @param string $real_mime_type Реальный MIME-тип файла.
-     * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе False.
+     *                               Должен быть корректным MIME-типом для изображений.
      *
-     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type() Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
+     * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе false.
+     *
+     * @warning Метод зависит от доступности библиотек (Imagick, Gmagick) и встроенных функций PHP по работе с изображениями (GD).
+     *          Если ни одна из библиотек недоступна, метод может некорректно работать.
+     *
+     * Пример использования:
+     * @code
+     * // Проверка поддерживаемого MIME-типа
+     * $is_supported = self::_validate_mime_type_internal('image/jpeg');
+     * var_dump($is_supported); // Выведет: true
+     *
+     * // Проверка неподдерживаемого MIME-типа
+     * $is_supported = self::_validate_mime_type_internal('application/pdf');
+     * var_dump($is_supported); // Выведет: false
+     * @endcode
      */
     protected static function _validate_mime_type_internal(string $real_mime_type): bool
     {
