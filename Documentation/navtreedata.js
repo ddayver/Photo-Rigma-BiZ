@@ -62,7 +62,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a16ad1436509f3cd6dd6775c0781ee795",
-"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4"
+"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

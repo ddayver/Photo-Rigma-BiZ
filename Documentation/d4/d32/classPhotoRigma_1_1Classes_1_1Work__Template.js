@@ -1,6 +1,6 @@
 var classPhotoRigma_1_1Classes_1_1Work__Template =
 [
-    [ "__construct", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ae76285edc52414fb83b9efd79a77d36d", null ],
+    [ "__construct", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aebda93a95626971f99ba32c8ac7b4f30", null ],
     [ "__get", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a0acd7052f38245fd3723ea29c83bf3f3", null ],
     [ "__set", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a2c4e9c30cf213decde815cdcb37e1ac8", null ],
     [ "_create_menu_internal", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62", null ],

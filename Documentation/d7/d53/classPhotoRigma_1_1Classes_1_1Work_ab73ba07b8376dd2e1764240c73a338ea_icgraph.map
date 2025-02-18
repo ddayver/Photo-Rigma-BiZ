@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="516,237,506,200,490,157,466,112,435,72,420,61,424,56,439,68,471,109,495,154,511,199,522,236"/>
 <area shape="rect" id="Node000004" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title=" " alt="" coords="265,83,428,135"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="508,239,478,194,458,171,435,150,418,138,421,134,439,146,462,167,482,191,513,236"/>
-<area shape="rect" id="Node000006" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb" title=" " alt="" coords="262,160,430,213"/>
+<area shape="rect" id="Node000006" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a5be64e2d9c6592be321468cd2f947aeb" title="Генерирует блок вывода изображений для различных типов запросов." alt="" coords="262,160,430,213"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="481,247,436,227,409,216,411,211,438,223,483,242"/>
 <area shape="rect" id="Node000008" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="258,237,435,290"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="469,266,435,266,435,261,469,261"/>
@@ -18,7 +18,7 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,34,194,34,194,29,240,29"/>
 <area shape="rect" id="Node000005" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title=" " alt="" coords="9,90,204,128"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="249,112,205,112,205,106,249,106"/>
-<area shape="rect" id="Node000007" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1" title=" " alt="" coords="6,167,207,206"/>
+<area shape="rect" id="Node000007" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1" title="Генерирует блок вывода изображений для различных типов запросов." alt="" coords="6,167,207,206"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="247,189,207,189,207,184,247,184"/>
 <area shape="rect" id="Node000009" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="21,237,192,290"/>
 <area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="242,266,192,266,192,261,242,261"/>

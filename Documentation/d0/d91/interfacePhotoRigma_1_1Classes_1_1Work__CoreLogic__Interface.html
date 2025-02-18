@@ -124,32 +124,44 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:a4dfb943f9b750ec6e1e2924a9620c7f5" id="r_a4dfb943f9b750ec6e1e2924a9620c7f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a> (int $cat_id=0, int $user_flag=0)</td></tr>
+<tr class="memdesc:a4dfb943f9b750ec6e1e2924a9620c7f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует информационную строку для конкретного раздела или пользовательского альбома.  <br /></td></tr>
 <tr class="separator:a4dfb943f9b750ec6e1e2924a9620c7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84a1eeee53079a8e60fea1d1e0d94639" id="r_a84a1eeee53079a8e60fea1d1e0d94639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a> (int $photo_id)</td></tr>
+<tr class="memdesc:a84a1eeee53079a8e60fea1d1e0d94639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.  <br /></td></tr>
 <tr class="separator:a84a1eeee53079a8e60fea1d1e0d94639"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfa7c6c53ae460403a3d0b3923e71a90" id="r_abfa7c6c53ae460403a3d0b3923e71a90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfa7c6c53ae460403a3d0b3923e71a90">news</a> (int $news_id_or_limit, string $act)</td></tr>
+<tr class="memdesc:abfa7c6c53ae460403a3d0b3923e71a90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получает данные о новостях в зависимости от типа запроса.  <br /></td></tr>
 <tr class="separator:abfa7c6c53ae460403a3d0b3923e71a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c2ee4da4bf10547c3aff7296d707c66" id="r_a9c2ee4da4bf10547c3aff7296d707c66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a> ()</td></tr>
+<tr class="memdesc:a9c2ee4da4bf10547c3aff7296d707c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Загружает доступные языки из директории /language/.  <br /></td></tr>
 <tr class="separator:a9c2ee4da4bf10547c3aff7296d707c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d2f43c00af0c9574caa0455df82c613" id="r_a8d2f43c00af0c9574caa0455df82c613"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d2f43c00af0c9574caa0455df82c613">get_themes</a> ()</td></tr>
+<tr class="memdesc:a8d2f43c00af0c9574caa0455df82c613"><td class="mdescLeft">&#160;</td><td class="mdescRight">Загружает доступные темы из директории /themes/.  <br /></td></tr>
 <tr class="separator:a8d2f43c00af0c9574caa0455df82c613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab90e7e1e6aa1d2c9abe81faed1db03a1" id="r_ab90e7e1e6aa1d2c9abe81faed1db03a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab90e7e1e6aa1d2c9abe81faed1db03a1">create_photo</a> (string $type, int $id_photo)</td></tr>
+<tr class="memdesc:ab90e7e1e6aa1d2c9abe81faed1db03a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Генерирует блок вывода изображений для различных типов запросов.  <br /></td></tr>
 <tr class="separator:ab90e7e1e6aa1d2c9abe81faed1db03a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения. </p>
 <p>Интерфейс Work_CoreLogic_Interface предоставляет набор методов для выполнения ключевых операций:</p><ul>
-<li>Работа с категориями и альбомами (category).</li>
-<li>Управление изображениями (del_photo, create_photo).</li>
-<li>Получение данных о новостях, языках и темах (news, get_languages, get_themes).</li>
+<li>Формирование информационных строк для категорий и пользовательских альбомов.</li>
+<li>Удаление изображений и связанных данных.</li>
+<li>Получение данных о новостях, языках и темах.</li>
+<li>Генерация блоков вывода изображений для различных типов запросов. Этот интерфейс определяет контракт, который должны реализовать классы, отвечающие за базовую логику приложения.</li>
 </ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.">PhotoRigma\Classes\Work_CoreLogic</a> Реализация интерфейса. </dd>
 <dd>
-<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd></dl>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#_a9">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
-
-<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00060">60</a></p>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Внешняя функция для логирования ошибок.</dd></dl>
+<p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">\PhotoRigma\Classes\Work_CoreLogic_Interface</a> {</div>
+<div class="line">    <span class="comment">// Реализация методов интерфейса</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00468">work_corelogic.php:469</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00073">work_corelogic.php:74</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00073">73</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a4dfb943f9b750ec6e1e2924a9620c7f5" name="a4dfb943f9b750ec6e1e2924a9620c7f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4dfb943f9b750ec6e1e2924a9620c7f5">&#9670;&#160;</a></span>category()</h2>
@@ -169,36 +181,62 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Формирует информационную строку для конкретного раздела или пользовательского альбома.</p>
+
+<p>Формирует информационную строку для конкретного раздела или пользовательского альбома. </p>
+<p>Метод выполняет запросы к базе данных для получения информации о категории или пользовательском альбоме, включая следующие шаги:</p><ol type="1">
+<li>Получает данные о категории или пользовательском альбоме из таблиц <code>TBL_CATEGORY</code> и <code>TBL_USERS</code> (если $user_flag = 1).</li>
+<li>Подсчитывает количество фотографий в таблице <code>TBL_PHOTO</code>.</li>
+<li>Получает данные о последней и лучшей фотографии (если разрешено отображение фотографий).</li>
+<li>Для корневой категории ($cat_id = 0) подсчитывает количество уникальных пользователей, загрузивших фотографии.</li>
+<li>Формирует результирующий массив с информацией о категории или альбоме, включая название, описание, количество фотографий, данные о последней и лучшей фотографии, а также ссылки на них. Этот метод содержит основную логику, вызываемую через публичный метод category().</li>
+</ol>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для конкретного раздела или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод использует свойства класса $db, $lang, $user и внешний метод Work_Helper::clean_field(). </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Перед вызовом метода необходимо убедиться, что свойства класса $db, $lang, $user корректно инициализированы.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$cat_id</td><td>Идентификатор раздела или пользователя (если $user_flag = 1). </td></tr>
-    <tr><td class="paramtype">int</td><td class="paramname">$user_flag</td><td>Флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1).</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$cat_id</td><td>Идентификатор раздела или пользователя (если user_flag = 1). Должен быть целым положительным числом. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_flag</td><td>Флаг, указывающий формировать ли обычный список разделов (0) или список пользовательских альбомов (1). Допустимые значения: 0 или 1.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Информационная строка для конкретного раздела или пользовательского альбома:<ul>
-<li>name: Название категории или альбома.</li>
-<li>description: Описание категории или альбома.</li>
-<li>count_photo: Количество фотографий.</li>
-<li>last_photo: Название последней фотографии.</li>
-<li>top_photo: Название лучшей фотографии.</li>
-<li>url_cat: Ссылка на категорию или альбом.</li>
-<li>url_last_photo: Ссылка на последнюю фотографию.</li>
-<li>url_top_photo: Ссылка на лучшую фотографию.</li>
+<li>'name' (string): Название категории или альбома.</li>
+<li>'description' (string): Описание категории или альбома.</li>
+<li>'count_photo' (int): Количество фотографий.</li>
+<li>'last_photo' (string): Название последней фотографии.</li>
+<li>'top_photo' (string): Название лучшей фотографии.</li>
+<li>'url_cat' (string): Ссылка на категорию или альбом.</li>
+<li>'url_last_photo' (string): Ссылка на последнюю фотографию.</li>
+<li>'url_top_photo' (string): Ссылка на лучшую фотографию.</li>
 </ul>
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Если входные параметры имеют некорректный тип. </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных. </td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если входные параметры имеют некорректный тип. Пример сообщения: Неверное значение параметра $cat_id | Ожидалось целое положительное число </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных. Пример сообщения: Не удалось получить данные о категории | Переменная $cat_id = [значение]</td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>TBL_CATEGORY: Таблица для хранения данных о категориях.</li>
+<li>TBL_USERS: Таблица для хранения данных о пользователях.</li>
+<li>TBL_PHOTO: Таблица для хранения данных о фотографиях.</li>
+</ul>
+</dd></dl>
+<p>Конфигурационные ключи:</p><ul>
+<li>site_url: URL сайта, используемый для формирования ссылок на категории и фотографии.</li>
+</ul>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line"><span class="comment">// Получение данных о категории с ID = 5</span></div>
+<div class="line">$coreLogic = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$category_data = $coreLogic-&gt;category(5, 0);</div>
+<div class="line">print_r($category_data);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Получение данных о пользовательском альбоме с ID = 123</span></div>
+<div class="line">$user_album_data = $coreLogic-&gt;category(123, 1);</div>
+<div class="line">print_r($user_album_data);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5">Work_CoreLogic</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a2">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -220,17 +258,34 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Генерирует блок вывода изображений для различных типов запросов.</p>
+
+<p>Генерирует блок вывода изображений для различных типов запросов. </p>
+<p>Метод выполняет следующие шаги:</p><ol type="1">
+<li>Проверяет права пользователя на просмотр изображений.</li>
+<li>Формирует SQL-запрос для получения данных изображения и пользователя через JOIN:<ul>
+<li>Для типа 'top': Выбирает лучшее изображение с учетом рейтинга.</li>
+<li>Для типа 'last': Выбирает последнее загруженное изображение.</li>
+<li>Для типа 'cat': Выбирает изображение из конкретной категории по $id_photo.</li>
+<li>Для случайного типа: Выбирает любое случайное изображение.</li>
+</ul>
+</li>
+<li>Проверяет существование файла изображения и его доступность.</li>
+<li>Вычисляет размеры изображения через метод size_image().</li>
+<li>Возвращает массив данных для вывода изображения или вызывает generate_photo_data() в случае ошибки. Этот метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика метода вызывается через публичный метод create_photo().</li>
+</ol>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1" title="Генерирует блок вывода изображений для различных типов запросов.">PhotoRigma\Classes\Work_CoreLogic\create_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип изображения:<ul>
 <li>'top': Лучшее изображение (по рейтингу).</li>
 <li>'last': Последнее загруженное изображение.</li>
 <li>'cat': Изображение из конкретной категории (требует указания $id_photo).</li>
-<li>Случайное: Любое случайное изображение. </li>
+<li>Случайный: Любое случайное изображение. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramtype">int</td><td class="paramname">$id_photo</td><td>Идентификатор фото. Используется только при $type == 'cat'.</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id_photo</td><td>Идентификатор фото. Используется только при $type == 'cat'. Должен быть положительным целым числом.</td></tr>
   </table>
   </dd>
 </dl>
@@ -252,15 +307,35 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый $type или $id_photo. </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выборке данных из базы данных или доступе к файлу. </td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый $type или $id_photo. Пример сообщения: Недопустимый тип изображения | Переменная $type = [значение] Недопустимый ID фото | Переменная $id_photo = [значение] </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выборке данных из базы данных или доступе к файлу. Пример сообщения: Не удалось получить данные из базы данных | Тип запроса: '$type' Файл изображения недоступен | URL: [значение]</td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section note"><dt>Заметки</dt><dd>Используются следующие параметры из свойства $this-&gt;config:<ul>
+<li>site_dir: Базовый путь к директории сайта.</li>
+<li>gallery_folder: Путь к каталогу полноразмерных изображений.</li>
+<li>site_url: URL сайта, используемый для формирования ссылок.</li>
+</ul>
+</dd></dl>
+<p>Используются следующие константы:</p><ul>
+<li>TBL_PHOTO: Таблица для хранения данных об изображениях.</li>
+<li>TBL_USERS: Таблица для хранения данных о пользователях.</li>
+<li>TBL_CATEGORY: Таблица для хранения данных о категориях.</li>
+</ul>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к правам доступа пользователя ($this-&gt;user-&gt;user['pic_view']). Убедитесь, что пользователь имеет право на просмотр изображений. </dd>
+<dd>
+Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через generate_photo_data().</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line"><span class="comment">// Получение данных для вывода лучшего изображения</span></div>
+<div class="line">$coreLogic = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$top_photo = $coreLogic-&gt;create_photo(<span class="stringliteral">&#39;top&#39;</span>, 0);</div>
+<div class="line">print_r($top_photo);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Получение данных для вывода изображения из категории с ID = 5</span></div>
+<div class="line">$category_photo = $coreLogic-&gt;create_photo(<span class="stringliteral">&#39;cat&#39;</span>, 5);</div>
+<div class="line">print_r($category_photo);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab90e7e1e6aa1d2c9abe81faed1db03a1">Work_CoreLogic</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a7">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -278,25 +353,53 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.</p>
+
+<p>Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта. </p>
+<p>Метод выполняет удаление изображения с указанным идентификатором, включая следующие шаги:</p><ol type="1">
+<li>Удаляет файлы из каталогов полноразмерных изображений и эскизов, используя пути, заданные в конфигурации (<code>$this-&gt;config</code>). Перед удалением проверяется существование файлов.</li>
+<li>Удаляет запись об изображении из таблицы <code>TBL_PHOTO</code>.</li>
+<li>Удаляет связанные записи из таблиц <code>TBL_RATE_USER</code> и <code>TBL_RATE_MODER</code>.</li>
+<li>Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью функции <code>log_in_file()</code>. Этот метод содержит основную логику, вызываемую через публичный метод del_photo().</li>
+</ol>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\del_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>TBL_PHOTO: Таблица для хранения данных об изображениях.</li>
+<li>TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.</li>
+<li>TBL_RATE_MODER: Таблица для хранения оценок модераторов. Конфигурационные ключи:</li>
+<li>site_dir: Базовый путь к директории сайта.</li>
+<li>thumbnail_folder: Путь к каталогу эскизов.</li>
+<li>gallery_folder: Путь к каталогу полноразмерных изображений.</li>
+</ul>
+</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>Идентификатор удаляемого изображения (обязательное поле).</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>Идентификатор удаляемого изображения (обязательное поле). Должен быть положительным целым числом.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если удаление успешно, иначе False.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Если параметр $photo_id имеет некорректный тип или значение. </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных или удалении файлов. </td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если параметр $photo_id имеет некорректный тип или значение. Пример сообщения: Неверное значение параметра $photo_id | Ожидалось положительное целое число </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникает ошибка при выполнении запросов к базе данных или удалении файлов. Пример сообщения: Не удалось найти изображение | Переменная $photo_id = [значение]</td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к правам доступа при удалении файлов. Убедитесь, что скрипт имеет необходимые права на запись и чтение. </dd>
+<dd>
+Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор изображения.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line"><span class="comment">// Удаление изображения с ID = 42</span></div>
+<div class="line">$coreLogic = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$result = $coreLogic-&gt;del_photo(42);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Изображение успешно удалено.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Не удалось удалить изображение.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639">Work_CoreLogic</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a3">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -314,7 +417,22 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Загружает доступные языки из директории /language/.</p>
+
+<p>Загружает доступные языки из директории /language/. </p>
+<p>Метод выполняет загрузку доступных языков, включая следующие шаги:</p><ol type="1">
+<li>Нормализует путь к директории <code>/language/</code> и проверяет её существование.</li>
+<li>Перебирает все поддиректории в <code>/language/</code> и проверяет наличие файла <code>main.php</code>.</li>
+<li>Для каждой поддиректории:<ul>
+<li>Проверяет доступность файла <code>main.php</code>.</li>
+<li>Безопасно подключает файл и проверяет наличие переменной <code>$lang_name</code>.</li>
+<li>Если переменная <code>$lang_name</code> определена и корректна, добавляет язык в список доступных.</li>
+</ul>
+</li>
+<li>Возвращает массив с данными о доступных языках или выбрасывает исключение, если языки не найдены. Этот метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика метода вызывается через публичный метод get_languages().</li>
+</ol>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/.">PhotoRigma\Classes\Work_CoreLogic\get_languages()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о доступных языках. Каждый элемент массива содержит:<ul>
 <li><code>value</code>: Имя директории языка (строка).</li>
 <li><code>name</code>: Название языка из файла <code>main.php</code> (строка).</li>
@@ -324,16 +442,27 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/language/</code> недоступна или не существует.</li>
-<li>Ни один язык не найден в указанной директории. </li>
+<li>Ни один язык не найден в указанной директории.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section note"><dt>Заметки</dt><dd>Используются следующие параметры из свойства $this-&gt;config:<ul>
+<li>site_dir: Базовый путь к директории сайта, содержащей поддиректорию <code>/language/</code>.</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к структуре директории <code>/language/</code> и содержимому файла <code>main.php</code>. Убедитесь, что файл <code>main.php</code> содержит корректную переменную <code>$lang_name</code>. </dd>
+<dd>
+Если директория <code>/language/</code> недоступна или пуста, метод выбрасывает исключение.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line"><span class="comment">// Получение списка доступных языков</span></div>
+<div class="line">$coreLogic = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$languages = $coreLogic-&gt;get_languages();</div>
+<div class="line"><span class="keywordflow">foreach</span> ($languages as $language) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Язык: &quot;</span> . $language[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&quot; (ID: &quot;</span> . $language[<span class="stringliteral">&#39;value&#39;</span>] . <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66">Work_CoreLogic</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a5">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -351,22 +480,48 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Загружает доступные темы из директории /themes/.</p>
-<dl class="section return"><dt>Возвращает</dt><dd>array Массив с именами доступных тем.</dd></dl>
+
+<p>Загружает доступные темы из директории /themes/. </p>
+<p>Метод выполняет загрузку доступных тем, включая следующие шаги:</p><ol type="1">
+<li>Нормализует путь к директории <code>/themes/</code> и проверяет её существование.</li>
+<li>Перебирает все поддиректории в <code>/themes/</code>.</li>
+<li>Для каждой поддиректории:<ul>
+<li>Проверяет доступность директории.</li>
+<li>Проверяет, что директория находится внутри разрешенной директории <code>/themes/</code>.</li>
+<li>Добавляет имя поддиректории в список доступных тем.</li>
+</ul>
+</li>
+<li>Возвращает массив с именами доступных тем или выбрасывает исключение, если темы не найдены. Этот метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика метода вызывается через публичный метод get_themes().</li>
+</ol>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/.">PhotoRigma\Classes\Work_CoreLogic\get_themes()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Массив строк с именами доступных тем. Если темы не найдены, возвращается пустой массив.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>Если:<ul>
 <li>Директория <code>/themes/</code> не существует или недоступна для чтения.</li>
-<li>Ни одна тема не найдена в указанной директории. </li>
+<li>Ни одна тема не найдена в указанной директории.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section note"><dt>Заметки</dt><dd>Используются следующие параметры из свойства $this-&gt;config:<ul>
+<li>site_dir: Базовый путь к директории сайта, содержащей поддиректорию <code>/themes/</code>.</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к структуре директории <code>/themes/</code>. Убедитесь, что директория существует и содержит хотя бы одну поддиректорию. </dd>
+<dd>
+Если директория <code>/themes/</code> недоступна или пуста, метод выбрасывает исключение.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line"><span class="comment">// Получение списка доступных тем</span></div>
+<div class="line">$coreLogic = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$themes = $coreLogic-&gt;get_themes();</div>
+<div class="line"><span class="keywordflow">foreach</span> ($themes as $theme) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Доступная тема: $theme\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613">Work_CoreLogic</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a6">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -388,10 +543,22 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Получает данные о новостях.</p>
+
+<p>Получает данные о новостях в зависимости от типа запроса. </p>
+<p>Метод выполняет запросы к базе данных для получения данных о новостях, включая следующие шаги:</p><ol type="1">
+<li>Проверяет входные параметры $news_id_or_limit и $act на корректность.</li>
+<li>Формирует параметры запроса через match():<ul>
+<li>Для $act = 'id': Получает новость по её ID.</li>
+<li>Для $act = 'list': Получает список новостей с сортировкой по дате последнего редактирования.</li>
+</ul>
+</li>
+<li>Выполняет запрос к таблице TBL_NEWS с использованием параметров.</li>
+<li>Возвращает массив с данными о новостях или пустой массив, если новости не найдены. Этот метод содержит основную логику, вызываемую через публичный метод news().</li>
+</ol>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\news()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$news_id_or_limit</td><td>Количество новостей или ID новости (в зависимости от параметра $act). </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$news_id_or_limit</td><td>Количество новостей или ID новости (в зависимости от параметра $act). Должен быть положительным целым числом. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$act</td><td>Тип запроса:<ul>
 <li>'id': Получение новости по её ID.</li>
 <li>'list': Получение списка новостей с сортировкой по дате последнего редактирования.</li>
@@ -403,15 +570,28 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан некорректный $act или $news_id_or_limit. </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выполнении запроса к базе данных. </td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан некорректный $act или $news_id_or_limit. Пример сообщения: Некорректный ID новости | Переменная $news_id_or_limit = [значение] </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если произошла ошибка при выполнении запроса к базе данных. Пример сообщения: Не удалось получить данные из базы данных | Тип запроса: '$act'</td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>TBL_NEWS: Таблица для хранения данных о новостях.</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных параметров $news_id_or_limit и $act. Убедитесь, что передаются допустимые значения. </dd>
+<dd>
+Если новости не найдены, метод возвращает пустой массив.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line"><span class="comment">// Получение новости с ID = 5</span></div>
+<div class="line">$coreLogic = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$news_by_id = $coreLogic-&gt;news(5, <span class="stringliteral">&#39;id&#39;</span>);</div>
+<div class="line">print_r($news_by_id);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Получение 10 последних новостей</span></div>
+<div class="line">$news_list = $coreLogic-&gt;news(10, <span class="stringliteral">&#39;list&#39;</span>);</div>
+<div class="line">print_r($news_list);</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic</a>.</p>
-<dl class="section examples"><dt>Примеры</dt><dd><a class="el" href="../../df/dac/_2home_2victoria_2Photo-Rigma-BiZ_2www_2include_2work_corelogic_8php-example.html#a4">/home/victoria/Photo-Rigma-BiZ/www/include/work_corelogic.php</a>.</dd>
-</dl>
 
 </div>
 </div>

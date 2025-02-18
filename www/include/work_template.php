@@ -273,7 +273,7 @@ class Work_Template implements Work_Template_Interface
      * $template = new Work_Template($config, $db, $work);
      * @endcode
      */
-    public function __construct(array $config, Database_Interface $db)
+    public function __construct(Database_Interface $db, array $config)
     {
         if (!is_array($config)) {
             throw new \InvalidArgumentException(
