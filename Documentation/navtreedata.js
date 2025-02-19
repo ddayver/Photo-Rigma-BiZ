@@ -53,16 +53,15 @@ var NAVTREE =
         [ "Указатель", "globals.html", null ],
         [ "Переменные", "globals_vars.html", null ]
       ] ]
-    ] ],
-    [ "Примеры", "examples.html", "examples" ]
+    ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32",
-"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a73d8e6acdfb996002f980ab7c9c18515"
+"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a2274d881c2d51e38c452a2ebaacaa9e7",
+"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

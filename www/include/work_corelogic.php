@@ -86,10 +86,11 @@ interface Work_CoreLogic_Interface
      * Этот метод содержит основную логику, вызываемую через публичный метод category().
      *
      * @callgraph
-     * @callergraph
      *
      * @see PhotoRigma::Classes::Work_CoreLogic::category()
      *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_Helper::clean_field()
+     *      Метод для очистки данных.
      *
      * @note Метод использует свойства класса $db, $lang, $user и внешний метод Work_Helper::clean_field().
      * @warning Перед вызовом метода необходимо убедиться, что свойства класса $db, $lang, $user корректно инициализированы.
@@ -150,7 +151,6 @@ interface Work_CoreLogic_Interface
      * Этот метод содержит основную логику, вызываемую через публичный метод del_photo().
      *
      * @callgraph
-     * @callergraph
      *
      * @see PhotoRigma::Classes::Work_CoreLogic::del_photo()
      *      Публичный метод-редирект для вызова этой логики.
@@ -208,7 +208,6 @@ interface Work_CoreLogic_Interface
      * Этот метод содержит основную логику, вызываемую через публичный метод news().
      *
      * @callgraph
-     * @callergraph
      *
      * @see PhotoRigma::Classes::Work_CoreLogic::news()
      *      Публичный метод-редирект для вызова этой логики.
@@ -223,7 +222,7 @@ interface Work_CoreLogic_Interface
      *
      * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
      *      Пример сообщения:
-     *          Некорректный ID новости | Переменная \$news_id_or_limit = [значение]
+     *          Некорректный ID новости | Переменная $news_id_or_limit = [значение]
      * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *      Пример сообщения:
      *          Не удалось получить данные из базы данных | Тип запроса: '$act'
@@ -260,11 +259,9 @@ interface Work_CoreLogic_Interface
      *    - Безопасно подключает файл и проверяет наличие переменной `$lang_name`.
      *    - Если переменная `$lang_name` определена и корректна, добавляет язык в список доступных.
      * 4. Возвращает массив с данными о доступных языках или выбрасывает исключение, если языки не найдены.
-     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      * Основная логика метода вызывается через публичный метод get_languages().
      *
      * @callgraph
-     * @callergraph
      *
      * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
      *      Публичный метод-редирект для вызова этой логики.
@@ -309,11 +306,9 @@ interface Work_CoreLogic_Interface
      *    - Проверяет, что директория находится внутри разрешенной директории `/themes/`.
      *    - Добавляет имя поддиректории в список доступных тем.
      * 4. Возвращает массив с именами доступных тем или выбрасывает исключение, если темы не найдены.
-     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      * Основная логика метода вызывается через публичный метод get_themes().
      *
      * @callgraph
-     * @callergraph
      *
      * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
      *      Публичный метод-редирект для вызова этой логики.
@@ -358,11 +353,9 @@ interface Work_CoreLogic_Interface
      * 3. Проверяет существование файла изображения и его доступность.
      * 4. Вычисляет размеры изображения через метод size_image().
      * 5. Возвращает массив данных для вывода изображения или вызывает generate_photo_data() в случае ошибки.
-     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      * Основная логика метода вызывается через публичный метод create_photo().
      *
      * @callgraph
-     * @callergraph
      *
      * @see PhotoRigma::Classes::Work_CoreLogic::create_photo()
      *      Публичный метод-редирект для вызова этой логики.
@@ -816,7 +809,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
      *      Пример сообщения:
-     *          Некорректный ID новости | Переменная \$news_id_or_limit = [значение]
+     *          Некорректный ID новости | Переменная $news_id_or_limit = [значение]
      * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *      Пример сообщения:
      *          Не удалось получить данные из базы данных | Тип запроса: '$act'
@@ -1352,7 +1345,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
      *      Пример сообщения:
-     *          Некорректный ID новости | Переменная \$news_id_or_limit = [значение]
+     *          Некорректный ID новости | Переменная $news_id_or_limit = [значение]
      * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
      *      Пример сообщения:
      *          Не удалось получить данные из базы данных | Тип запроса: '$act'

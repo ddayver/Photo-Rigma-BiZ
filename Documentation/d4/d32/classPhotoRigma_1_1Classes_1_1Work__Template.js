@@ -18,5 +18,6 @@ var classPhotoRigma_1_1Classes_1_1Work__Template =
     [ "$lang", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b", null ],
     [ "$user", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7", null ],
     [ "$work", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aa1464d140ae01b78294ee8d81d3374d7", null ],
-    [ "NO_USER_AVATAR", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d", null ]
+    [ "NO_USER_AVATAR", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d", null ],
+    [ "ONLINE_USER", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a69b368bb85b4b2b88d547a943c9ec83d", null ]
 ];

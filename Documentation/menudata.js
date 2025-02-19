@@ -75,6 +75,7 @@ var menudata={children:[
 {text:"l",url:"functions_l.html#index_l"},
 {text:"m",url:"functions_m.html#index_m"},
 {text:"n",url:"functions_n.html#index_n"},
+{text:"o",url:"functions_o.html#index_o"},
 {text:"p",url:"functions_p.html#index_p"},
 {text:"r",url:"functions_r.html#index_r"},
 {text:"s",url:"functions_s.html#index_s"},
@@ -104,10 +105,10 @@ var menudata={children:[
 {text:"Переменные",url:"functions_vars.html",children:[
 {text:"$",url:"functions_vars.html#index__24"},
 {text:"m",url:"functions_vars.html#index_m"},
-{text:"n",url:"functions_vars.html#index_n"}]}]}]},
+{text:"n",url:"functions_vars.html#index_n"},
+{text:"o",url:"functions_vars.html#index_o"}]}]}]},
 {text:"Файлы",url:"files.html",children:[
 {text:"Файлы",url:"files.html"},
 {text:"Список членов всех файлов",url:"globals.html",children:[
 {text:"Указатель",url:"globals.html"},
-{text:"Переменные",url:"globals_vars.html"}]}]},
-{text:"Примеры",url:"examples.html"}]}
+{text:"Переменные",url:"globals_vars.html"}]}]}]}

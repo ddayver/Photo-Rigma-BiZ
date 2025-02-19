@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,43,129,43,129,48,97,48"/>
 <area shape="rect" id="Node000003" href="$d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="356,5,498,30"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="292,33,340,27,341,32,293,38"/>
-<area shape="rect" id="Node000004" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title=" " alt="" coords="340,54,514,93"/>
+<area shape="rect" id="Node000004" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME&#45;типа файла через доступные библиотеки." alt="" coords="340,54,514,93"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="293,53,325,57,324,63,292,58"/>
 <area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME&#45;типа файла через доступные библиотеки (публичная обёртка)." alt="" coords="562,47,712,100"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="515,71,547,71,547,76,515,76"/>
