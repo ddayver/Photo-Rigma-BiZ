@@ -1,4 +1,5 @@
 var user_8php =
 [
-    [ "user", "d9/d8a/classPhotoRigma_1_1Classes_1_1user.html", "d9/d8a/classPhotoRigma_1_1Classes_1_1user" ]
+    [ "User_Interface", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface" ],
+    [ "User", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html", "df/dfe/classPhotoRigma_1_1Classes_1_1User" ]
 ];

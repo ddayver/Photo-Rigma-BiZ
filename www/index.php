@@ -182,7 +182,7 @@ try {
      * @see PhotoRigma::Classes::User Класс для управления пользователями.
      * @see include/user.php Файл, содержащий реализацию класса User.
      */
-    $user = new User();
+    $user = new User($db, $_SESSION);
 
     // Передаем объект User в класс Work
     $work->set_user($user);

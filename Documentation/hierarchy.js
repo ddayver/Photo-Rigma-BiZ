@@ -4,7 +4,9 @@ var hierarchy =
       [ "Database", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html", null ]
     ] ],
     [ "template", "d5/d26/classPhotoRigma_1_1Classes_1_1template.html", null ],
-    [ "user", "d9/d8a/classPhotoRigma_1_1Classes_1_1user.html", null ],
+    [ "User_Interface", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html", [
+      [ "User", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html", null ]
+    ] ],
     [ "Work", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html", null ],
     [ "Work_CoreLogic_Interface", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html", [
       [ "Work_CoreLogic", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html", null ]

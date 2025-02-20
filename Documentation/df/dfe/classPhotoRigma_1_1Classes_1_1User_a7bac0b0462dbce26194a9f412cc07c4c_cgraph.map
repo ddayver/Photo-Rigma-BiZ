@@ -1,0 +1,5 @@
+<map id="all_right_fields" name="all_right_fields">
+<area shape="rect" id="Node000001" title="Метод загружает права первого пользователя и первой группы из базы данных, извлекает имена полей (клю..." alt="" coords="5,5,109,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7b22f0ff3047191231f20b97f25833f0" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="157,5,295,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,15,141,15,141,20,109,20"/>
+</map>

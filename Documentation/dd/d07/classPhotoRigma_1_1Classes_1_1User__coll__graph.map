@@ -1,0 +1,7 @@
+<map id="User" name="User">
+<area shape="rect" id="Node000001" title="Класс по работе с пользователями и хранению данных о текущем пользователе." alt="" coords="106,92,156,117"/>
+<area shape="rect" id="Node000002" href="$d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами." alt="" coords="5,5,113,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,40,123,90,119,94,76,43"/>
+<area shape="rect" id="Node000003" href="$da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html" title="Интерфейс Database_Interface определяет методы для работы с базой данных." alt="" coords="137,5,272,30"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,43,143,94,139,90,183,40"/>
+</map>

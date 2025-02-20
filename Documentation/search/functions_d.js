@@ -7,5 +7,6 @@ var searchData=
   ['prepare_5finsert_5fdata_4',['prepare_insert_data',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899',1,'PhotoRigma::Classes::Database']]],
   ['process_5fimage_5fresize_5fgd_5',['process_image_resize_gd',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce',1,'PhotoRigma::Classes::Work_Image']]],
   ['process_5fimage_5fresize_5fgmagick_6',['process_image_resize_gmagick',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c',1,'PhotoRigma::Classes::Work_Image']]],
-  ['process_5fimage_5fresize_5fimagick_7',['process_image_resize_imagick',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74',1,'PhotoRigma::Classes::Work_Image']]]
+  ['process_5fimage_5fresize_5fimagick_7',['process_image_resize_imagick',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74',1,'PhotoRigma::Classes::Work_Image']]],
+  ['process_5fuser_5frights_8',['process_user_rights',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7b22f0ff3047191231f20b97f25833f0',1,'PhotoRigma::Classes::User']]]
 ];
