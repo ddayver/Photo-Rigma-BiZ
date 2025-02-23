@@ -1,5 +1,7 @@
 <map id="get_languages" name="get_languages">
-<area shape="rect" id="Node000001" title="Загружает доступные языки из директории /language/." alt="" coords="5,5,111,30"/>
-<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1" title="Загружает доступные языки из директории /language/." alt="" coords="159,5,320,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,15,143,15,143,20,111,20"/>
+<area shape="rect" id="Node000001" title="Загружает доступные языки из директории /language/." alt="" coords="5,12,111,37"/>
+<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1" title="Загружает доступные языки из директории /language/." alt="" coords="159,12,320,37"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,22,143,22,143,27,111,27"/>
+<area shape="rect" id="Node000003" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="368,5,506,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="321,22,352,22,352,27,321,27"/>
 </map>

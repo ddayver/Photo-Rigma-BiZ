@@ -641,7 +641,7 @@ class Database implements Database_Interface
         // Проверка dbsock (первая попытка подключения через сокет)
         if (!empty($db_config['dbsock'])) {
             if (!is_string($db_config['dbsock']) || !file_exists($db_config['dbsock'])) {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный или несуществующий путь к сокету | Путь: {$db_config['dbsock']}"
                 );
             } else {
@@ -655,7 +655,7 @@ class Database implements Database_Interface
                     ]);
                     return; // Подключение успешно, завершаем выполнение метода
                 } catch (\PDOException $e) {
-                    log_in_file(
+                    \PhotoRigma\Include\log_in_file(
                         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через сокет | Сокет: {$db_config['dbsock']} | Сообщение: " . $e->getMessage()
                     );
                     // Переходим к следующему варианту подключения
@@ -1235,18 +1235,32 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype($options)
             );
         }
+
         // === 2. Обработка $select ===
         if (!is_array($select)) {
-            $select = [$select];
+            // Разбиваем строку по запятым, если это строка
+            $select = array_map('trim', explode(',', $select));
         }
+
+        // Проверяем каждую часть выборки на корректность
+        foreach ($select as $field) {
+            if (!is_string($field)) {
+                throw new \InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый элемент в выборке | Ожидалась строка, получено: " . gettype($field)
+                );
+            }
+        }
+
+        // 3. Санитизация каждого поля выборки
         $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
-        // === 3. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
+
         // === 4. Формирование базового запроса ===
         $this->txt_query = "SELECT $select FROM $from_tbl";
+
         // === 5. Добавление условий ===
         [$conditions, $params] = $this->build_conditions($options);
         $this->txt_query .= $conditions;
+
         // === 6. Выполнение запроса ===
         return $this->execute_query($params);
     }
@@ -1449,7 +1463,7 @@ class Database implements Database_Interface
 
         // === 2. Проверка и удаление недопустимых ключей ===
         if (isset($options['group'])) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в DELETE | Переданные опции: " . json_encode($options)
             );
             unset($options['group']); // Удаляем ключ 'group'
@@ -1457,7 +1471,7 @@ class Database implements Database_Interface
 
         if ((isset($options['order']) && !isset($options['limit'])) ||
             (!isset($options['order']) && isset($options['limit']))) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: " . json_encode($options)
             );
             unset($options['order'], $options['limit']); // Удаляем ключи 'order' и 'limit'
@@ -1616,7 +1630,7 @@ class Database implements Database_Interface
 
         // === 2. Удаление недопустимого ключа `group` ===
         if (isset($options['group'])) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в UPDATE | Переданные опции: " . json_encode($options)
             );
             unset($options['group']); // Удаляем ключ 'group'
@@ -2065,7 +2079,7 @@ class Database implements Database_Interface
         // Логирование медленных запросов
         $slow_query_threshold = 200; // Порог в миллисекундах
         if ($execution_time > $slow_query_threshold) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Обнаружен медленный запрос | Время выполнения: {$execution_time} мс | SQL: $this->txt_query"
             );
         }
@@ -2149,14 +2163,14 @@ class Database implements Database_Interface
     {
         $conditions = '';
         $params = $options['params'] ?? [];
+
         // === 1. Обработка WHERE ===
         if (isset($options['where'])) {
             if (is_string($options['where'])) {
-                // Преобразуем строку в массив с одним элементом
-                $options['where'] = ['condition' => $options['where']];
-            }
-            if (is_array($options['where'])) {
-                // Используем prepare_insert_data() для обработки
+                // Если where — строка, добавляем её напрямую
+                $conditions .= ' WHERE ' . $this->sanitize_expression($options['where']);
+            } elseif (is_array($options['where'])) {
+                // Если where — массив, обрабатываем его через prepare_insert_data
                 [$where_fields, $where_placeholders, $params] = $this->prepare_insert_data($options['where'], 'where_');
                 $conditions .= ' WHERE ' . implode(' AND ', array_map(
                     fn ($field, $placeholder) => "$field = $placeholder",
@@ -2169,6 +2183,7 @@ class Database implements Database_Interface
                 );
             }
         }
+
         // === 2. Обработка GROUP BY ===
         if (isset($options['group'])) {
             if (is_string($options['group'])) {
@@ -2179,6 +2194,7 @@ class Database implements Database_Interface
                 );
             }
         }
+
         // === 3. Обработка ORDER BY ===
         if (isset($options['order'])) {
             if (is_string($options['order'])) {
@@ -2189,12 +2205,12 @@ class Database implements Database_Interface
                 );
             }
         }
+
         // === 4. Обработка LIMIT ===
         if (isset($options['limit'])) {
             if (is_numeric($options['limit'])) {
                 $conditions .= ' LIMIT ' . intval($options['limit']);
             } elseif (is_string($options['limit']) && preg_match('/^\d+\s*,\s*\d+$/', $options['limit'])) {
-                // Разбиваем строку на два числа
                 [$offset, $count] = array_map('intval', explode(',', $options['limit']));
                 $conditions .= ' LIMIT ' . $offset . ', ' . $count;
             } else {
@@ -2203,6 +2219,7 @@ class Database implements Database_Interface
                 );
             }
         }
+
         return [$conditions, $params];
     }
 
@@ -2256,59 +2273,93 @@ class Database implements Database_Interface
      */
     private function sanitize_expression(string $expression): string
     {
+        return $expression; // Временная заглушка
+        // Логируем входное выражение для отладки
+        error_log("Полученное выражение в sanitize_expression: $expression");
+
         // === 1. Валидация аргументов ===
         if (!is_string($expression)) {
             throw new \InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип выражения | Ожидалась строка, получено: " . gettype($expression)
             );
         }
-        // === 2. Разделение выражения на части ===
-        $pattern = '/(\bAND\b|\bOR\b|=|<|>|LIKE|IN|IS NULL)/i';
-        $parts = preg_split($pattern, $expression, -1, PREG_SPLIT_DELIM_CAPTURE);
-        // === 3. Обработка каждой части ===
-        $sanitized_parts = array_map(function ($part) {
-            $part = trim($part);
-            if (empty($part)) {
-                return $part;
+
+        // === 2. Проверка на наличие сложных SQL-функций ===
+        if (preg_match('/^[A-Z_]+\(/i', $expression)) {
+            // Улучшенное регулярное выражение для функций
+            if (!preg_match('/^[A-Z_]+\((?:[^()]*(?:\([^()]*\)[^()]*)*)\)(\s+AS\s+[a-zA-Z0-9_]+)?$/i', $expression)) {
+                throw new \InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая SQL-функция | Получено: $expression"
+                );
             }
-            // Если часть — это оператор, возвращаем её без изменений
-            if (preg_match('/^(AND|OR|=|<|>|LIKE|IN|IS NULL)$/i', $part)) {
-                return $part;
-            }
-            // Если часть — это значение в кавычках, возвращаем её без изменений
-            if (preg_match('/^([\'"]).*\1$/', $part)) {
-                return $part;
-            }
-            // Если часть — это подзапрос, рекурсивно обрабатываем его
-            if (preg_match('/^\(.*\)$/', $part)) {
-                $subquery = substr($part, 1, -1);
-                $sanitized_subquery = $this->sanitize_expression($subquery);
-                return "($sanitized_subquery)";
-            }
-            // Если часть — это функция базы данных, проверяем её
-            if (preg_match('/^[A-Z_]+\(/i', $part)) {
-                if (!preg_match('/^[A-Z_]+\([a-zA-Z0-9_\s\.\,\=\'\"]*\)$/i', $part)) {
-                    throw new \InvalidArgumentException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая SQL-функция | Получено: $part"
-                    );
+            return $expression; // Возвращаем выражение без изменений
+        }
+
+        // === 3. Обработка условий с операторами ===
+        if (preg_match('/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i', $expression)) {
+            // Разбиваем условие на части
+            $pattern = '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i';
+            if (preg_match($pattern, $expression, $matches)) {
+                $field = $matches[1]; // Поле (например, `id`)
+                $operator = $matches[2]; // Оператор (например, `=` или `!=`)
+                $value = $matches[3]; // Значение (например, `:group_id`)
+
+                // Экранируем поле, если оно не экранировано
+                if (!preg_match('/^`.*`$/', $field)) {
+                    if (strpos($field, '.') !== false) {
+                        list($table, $column) = explode('.', $field, 2);
+                        $field = "`$table`.`$column`";
+                    } else {
+                        $field = "`$field`";
+                    }
                 }
-                return $part;
+
+                // Возвращаем условие в исходном виде
+                return "$field $operator $value";
             }
-            // Если часть — это имя таблицы или поля, экранируем её
-            if (preg_match('/^[a-zA-Z0-9_\.]+$/', $part)) {
-                if (strpos($part, '.') !== false) {
-                    list($table, $column) = explode('.', $part, 2);
-                    return "`$table`.`$column`";
-                }
-                return "`$part`";
+        }
+
+        // === 4. Обработка остальных частей ===
+        // Если часть — это символ *, возвращаем его без изменений
+        if ($expression === '*') {
+            return $expression;
+        }
+
+        // Если часть — это имя таблицы или поля, экранируем её
+        if (preg_match('/^(`?[a-zA-Z0-9_\.]+`?)$/', $expression)) {
+            // Если имя уже экранировано, возвращаем его без изменений
+            if (preg_match('/^`.*`$/', $expression)) {
+                return $expression;
             }
-            // Если часть — это что-то другое, выбрасываем исключение
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая часть выражения | Получено: $part"
-            );
-        }, $parts);
-        // === 4. Сборка результата ===
-        return implode('', $sanitized_parts);
+            // Если имя не экранировано, добавляем обратные кавычки
+            if (strpos($expression, '.') !== false) {
+                list($table, $column) = explode('.', $expression, 2);
+                return "`$table`.`$column`";
+            }
+            return "`$expression`";
+        }
+
+        // Если часть — это значение в кавычках, возвращаем её без изменений
+        if (preg_match('/^([\'"]).*\1$/', $expression)) {
+            return $expression;
+        }
+
+        // Если часть — это параметр SQL-запроса (начинается с ':'), возвращаем его без изменений
+        if (preg_match('/^:[a-zA-Z0-9_]+$/', $expression)) {
+            return $expression;
+        }
+
+        // Если часть — это подзапрос, рекурсивно обрабатываем его
+        if (preg_match('/^\(.*\)$/', $expression)) {
+            $subquery = substr($expression, 1, -1);
+            $sanitized_subquery = $this->sanitize_expression($subquery);
+            return "($sanitized_subquery)";
+        }
+
+        // Если часть — это что-то другое, выбрасываем исключение
+        throw new \InvalidArgumentException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая часть выражения | Получено: $expression"
+        );
     }
 
     /**

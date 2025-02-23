@@ -1,39 +1,38 @@
 <map id="sanitize_expression" name="sanitize_expression">
-<area shape="rect" id="Node000001" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="624,176,758,201"/>
-<area shape="poly" id="edge22_Node000001_Node000001" title=" " alt="" coords="722,164,712,157,691,155,672,157,661,161,659,167,665,174,660,177,654,168,657,158,670,152,691,149,714,152,725,159"/>
+<area shape="rect" id="Node000001" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="624,156,758,181"/>
+<area shape="poly" id="edge21_Node000001_Node000001" title=" " alt="" coords="722,144,712,137,691,135,672,137,661,141,659,147,665,154,660,157,654,148,657,138,670,132,691,129,714,132,725,139"/>
 <area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="116,5,228,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="669,165,629,121,603,99,574,81,530,63,484,48,389,29,300,20,228,18,228,13,301,15,390,23,485,43,532,58,577,77,606,95,633,117,673,162"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="280,300,390,325"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="670,214,629,250,604,268,577,283,529,299,480,309,391,316,390,311,479,303,528,294,575,278,601,264,626,246,666,210"/>
-<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b" title="Формирует SQL&#45;запрос с использованием JOIN для выборки данных из нескольких таблиц,..." alt="" coords="123,68,220,93"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="662,168,622,140,575,116,528,101,479,90,381,79,292,76,221,79,221,73,292,71,382,73,480,85,529,96,577,111,625,136,665,164"/>
-<area shape="rect" id="Node000008" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1" title="Формирует SQL&#45;запрос на выборку данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="116,143,228,167"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="608,186,228,161,228,156,608,180"/>
-<area shape="rect" id="Node000010" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="446,349,570,374"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="676,216,636,273,608,305,577,333,547,351,544,346,574,329,604,301,632,270,672,213"/>
-<area shape="rect" id="Node000012" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="114,200,230,225"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="654,210,617,227,576,239,482,250,387,248,300,239,230,228,231,222,301,234,387,243,482,244,575,234,615,222,652,206"/>
-<area shape="rect" id="Node000014" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="278,100,392,125"/>
-<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="647,172,575,147,479,129,392,119,393,113,480,123,576,142,649,167"/>
-<area shape="rect" id="Node000015" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="440,200,576,225"/>
-<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="609,202,576,206,576,201,608,197"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="663,148,623,117,575,91,482,60,388,40,300,28,228,22,229,17,300,23,389,35,484,55,577,86,626,113,666,143"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="280,255,390,279"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="664,193,625,221,577,244,528,257,479,266,390,271,390,266,478,260,527,252,575,239,622,216,661,188"/>
+<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b" title="Формирует SQL&#45;запрос с использованием JOIN для выборки данных из нескольких таблиц,..." alt="" coords="123,56,220,81"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="648,152,575,124,478,102,380,87,221,73,221,68,380,82,479,97,576,119,650,147"/>
+<area shape="rect" id="Node000008" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="446,304,570,329"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="672,195,631,241,577,288,545,306,542,301,574,283,627,237,668,191"/>
+<area shape="rect" id="Node000010" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="114,155,230,179"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="608,171,231,170,231,164,608,165"/>
+<area shape="rect" id="Node000012" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="278,105,392,130"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="608,157,575,152,392,127,393,122,576,147,609,152"/>
+<area shape="rect" id="Node000015" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="440,205,576,230"/>
+<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="629,188,557,207,556,202,627,183"/>
 <area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="7,5,64,30"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,20,64,20,64,15,100,15"/>
-<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="145,300,198,325"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="265,315,199,315,199,310,265,310"/>
-<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL&#45;запрос с использованием JOIN для выборки данных из нескольких таблиц,..." alt="" coords="15,68,56,93"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="107,83,57,83,57,78,107,78"/>
-<area shape="rect" id="Node000009" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL&#45;запрос на выборку данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="7,143,64,167"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="100,158,64,158,64,152,100,152"/>
-<area shape="rect" id="Node000011" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="301,349,369,374"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="430,364,370,364,370,359,430,359"/>
-<area shape="rect" id="Node000013" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="5,200,66,225"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="98,215,66,215,66,210,98,210"/>
-<area shape="poly" id="edge14_Node000014_Node000002" title=" " alt="" coords="298,94,194,33,196,28,301,90"/>
-<area shape="poly" id="edge15_Node000014_Node000006" title=" " alt="" coords="262,101,221,92,222,87,263,96"/>
-<area shape="poly" id="edge16_Node000014_Node000008" title=" " alt="" coords="271,132,222,145,221,140,270,127"/>
-<area shape="poly" id="edge17_Node000014_Node000012" title=" " alt="" coords="304,135,231,181,197,202,194,197,229,177,301,131"/>
-<area shape="poly" id="edge19_Node000015_Node000004" title=" " alt="" coords="473,235,360,302,357,297,470,231"/>
-<area shape="poly" id="edge20_Node000015_Node000012" title=" " alt="" coords="425,215,230,215,230,210,425,210"/>
-<area shape="poly" id="edge21_Node000015_Node000014" title=" " alt="" coords="470,194,357,127,360,123,473,190"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="145,255,198,279"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="265,270,199,270,199,264,265,264"/>
+<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL&#45;запрос с использованием JOIN для выборки данных из нескольких таблиц,..." alt="" coords="15,56,56,81"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="107,71,57,71,57,66,107,66"/>
+<area shape="rect" id="Node000009" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="301,304,369,329"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="430,319,370,319,370,314,430,314"/>
+<area shape="rect" id="Node000011" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="5,155,66,179"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="98,170,66,170,66,164,98,164"/>
+<area shape="poly" id="edge12_Node000012_Node000002" title=" " alt="" coords="304,98,229,47,202,33,204,28,231,42,307,93"/>
+<area shape="poly" id="edge13_Node000012_Node000006" title=" " alt="" coords="276,103,214,84,216,79,278,98"/>
+<area shape="poly" id="edge16_Node000012_Node000010" title=" " alt="" coords="278,138,216,157,214,152,276,133"/>
+<area shape="rect" id="Node000013" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1" title="Формирует SQL&#45;запрос на выборку данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="116,105,228,130"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="262,120,229,120,229,115,262,115"/>
+<area shape="rect" id="Node000014" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL&#45;запрос на выборку данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="7,105,64,130"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="100,120,64,120,64,115,100,115"/>
+<area shape="poly" id="edge18_Node000015_Node000004" title=" " alt="" coords="448,237,382,257,380,252,447,232"/>
+<area shape="poly" id="edge19_Node000015_Node000010" title=" " alt="" coords="425,210,278,188,230,180,231,175,278,183,425,204"/>
+<area shape="poly" id="edge20_Node000015_Node000012" title=" " alt="" coords="470,199,357,133,360,128,473,195"/>
 </map>

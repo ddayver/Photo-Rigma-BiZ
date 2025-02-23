@@ -1,0 +1,7 @@
+<map id="generate_photo_data" name="generate_photo_data">
+<area shape="rect" id="Node000001" title="Генерирует массив данных для вывода изображения." alt="" coords="350,5,492,30"/>
+<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="150,5,302,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="335,20,302,20,302,15,335,15"/>
+<area shape="rect" id="Node000003" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="5,5,102,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,20,102,20,102,15,134,15"/>
+</map>

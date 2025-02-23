@@ -111,7 +111,7 @@ $lang = [
  * @defgroup LanguageEnglishMenu Переменные для пунктов меню сайта
  */
 /*@{*/
-$lang = [
+$lang += [
     'menu' => [
         'name_block' => 'Navigation Panel',
         'home' => 'Home',
@@ -135,7 +135,7 @@ $lang = [
  * @defgroup LanguageEnglishCategory Переменные для процедур обзора и управления разделами
  */
 /*@{*/
-$lang = [
+$lang += [
     'category' => [
         'category' => 'Category',
         'name_block' => 'Categories',
@@ -169,7 +169,7 @@ $lang = [
  * @defgroup LanguageEnglishLogin Переменные для процедур регистрации и восстановления пароля
  */
 /*@{*/
-$lang = [
+$lang += [
     'profile' => [
         'regist' => 'Registration',
         'login' => 'Username',
@@ -206,7 +206,7 @@ $lang = [
  * @defgroup LanguageEnglishNews Переменные для новостей сайта
  */
 /*@{*/
-$lang = [
+$lang += [
     'news' => [
         'news' => 'News Archive',
         'title' => 'News',
@@ -241,7 +241,7 @@ $lang = [
  * @defgroup LanguageEnglishPhoto Переменные для процедур вывода, обработки, оценки изображений
  */
 /*@{*/
-$lang = [
+$lang += [
     'photo' => [
         'title' => 'Image',
         'of_photo' => ' of the image',
@@ -273,7 +273,7 @@ $lang = [
  * @defgroup LanguageEnglishSearch Переменные для страницы поиска
  */
 /*@{*/
-$lang = [
+$lang += [
     'search' => [
         'title' => 'Enter a search string and select a range',
         'need_user' => 'users',
@@ -290,7 +290,7 @@ $lang = [
  * @defgroup LanguageEnglishAdmin Переменные для Админки
  */
 /*@{*/
-$lang = [
+$lang += [
     'admin' => [
         'title' => 'Administration',
         'admin_pass' => 'Enter the password to access the Admin Panel',

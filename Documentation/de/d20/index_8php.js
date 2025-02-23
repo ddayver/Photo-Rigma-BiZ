@@ -13,7 +13,7 @@ var index_8php =
     [ "PhotoRigma\\$user", "de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5", null ],
     [ "PhotoRigma\\$work", "de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48", null ],
     [ "PhotoRigma\\DEBUG_GALLERY", "de/d90/namespacePhotoRigma.html#a62b7f878abcac93af0f81464c8d008d7", null ],
-    [ "PhotoRigma\\else", "de/d90/namespacePhotoRigma.html#aff0371667b73312d21d0b68a4049e371", null ],
+    [ "PhotoRigma\\else", "de/d90/namespacePhotoRigma.html#a7f7d10890238dc99756a75a58e561c4b", null ],
     [ "PhotoRigma\\FILTER_VALIDATE_IP", "de/d90/namespacePhotoRigma.html#ae07beac783fdab08b691bb38425a6771", null ],
     [ "PhotoRigma\\handle_exception", "de/d90/namespacePhotoRigma.html#acefb76e2bff32b4d1b4605e70795a704", null ],
     [ "PhotoRigma\\IN_GALLERY", "de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6", null ],

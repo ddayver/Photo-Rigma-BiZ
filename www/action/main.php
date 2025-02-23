@@ -39,16 +39,17 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die("HACK!");
 }
 
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
+include($work->config['site_dir'] . '/language/' . $work->config['language'] . '/main.php');
 
 // Передаем языковый массив в класс Work
 $work->set_lang($lang);
+$template->set_lang($work->lang);
 
-$template->point_template_file('main.html');
+$template->template_file = 'main.html';
 
 $title = $lang['main']['main'];
-$news = $work->news($work->config['last_news'], 'last');
-if ($news && $user->user['news_view'] == true) {
+$news = $work->news((int)$work->config['last_news'], 'last');
+if (!empty($news) && $user->user['news_view'] == true) {
     foreach ($news as $key => $val) {
         $template->add_string_ar(array(
                 'L_TITLE_NEWS_BLOCK' => $lang['main']['title_news'] . ' - ' . $val['name_post'],
@@ -97,4 +98,3 @@ if ($news && $user->user['news_view'] == true) {
         'L_TEXT_POST'        => $lang['main']['no_news']
     ), 'LAST_NEWS[0]');
 }
-/// @endcond

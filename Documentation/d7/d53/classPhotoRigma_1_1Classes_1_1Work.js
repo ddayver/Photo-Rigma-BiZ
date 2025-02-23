@@ -10,7 +10,7 @@ var classPhotoRigma_1_1Classes_1_1Work =
     [ "check_post", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeb13fee613cd87923546463495400380", null ],
     [ "check_session", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a66530d233d955a715024b02a75043179", null ],
     [ "create_menu", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af970fc714c16e27d2d60d698522a8504", null ],
-    [ "create_photo", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab90e7e1e6aa1d2c9abe81faed1db03a1", null ],
+    [ "create_photo", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a930a20fbdd1b0e274b7e648d966516c5", null ],
     [ "del_photo", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a84a1eeee53079a8e60fea1d1e0d94639", null ],
     [ "filt_email", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4289bbbeca07e599a9366a812d069972", null ],
     [ "fix_file_extension", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138", null ],
@@ -35,6 +35,7 @@ var classPhotoRigma_1_1Classes_1_1Work =
     [ "$db", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75", null ],
     [ "$helper", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1302bab9161235940ceaa4221e2be70e", null ],
     [ "$image", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaa91e6962b68bc0c0896341f680f1770", null ],
+    [ "$lang", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9fd8978d2c6cbdcfdd6be875be161b7b", null ],
     [ "$security", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a82d7359ac20005ddda09f8a9bb46afbe", null ],
     [ "$template", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aca87a58e031a0d778d2db06aa29601a6", null ]
 ];

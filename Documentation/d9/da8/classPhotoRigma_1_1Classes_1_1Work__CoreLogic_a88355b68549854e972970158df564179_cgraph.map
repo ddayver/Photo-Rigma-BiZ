@@ -1,0 +1,13 @@
+<map id="_create_photo_internal" name="_create_photo_internal">
+<area shape="rect" id="Node000001" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="5,75,158,100"/>
+<area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов." alt="" coords="206,12,349,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,72,192,53,193,58,128,77"/>
+<area shape="rect" id="Node000005" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a2a1c4758ea1c521d247be4556f58e5a6" title="Генерирует массив данных для вывода изображения." alt="" coords="206,75,348,100"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="158,85,191,85,191,90,158,90"/>
+<area shape="rect" id="Node000006" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="208,124,346,163"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="128,98,194,117,192,122,127,103"/>
+<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов (публичная обёртка)." alt="" coords="397,12,562,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="350,29,381,29,381,34,350,34"/>
+<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="610,5,754,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="563,29,595,29,595,34,563,34"/>
+</map>

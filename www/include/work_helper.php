@@ -101,7 +101,7 @@ interface Work_Helper_Interface
      * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
      * @endcode
      */
-    public static function clean_field($field): string;
+    public static function clean_field($field): ?string;
 
     /**
      * @brief Преобразование размера в байты.
@@ -925,7 +925,7 @@ class Work_Helper implements Work_Helper_Interface
         // Рекурсивная функция для обработки BBCode
         $process_recursively = function ($text, $depth) use (&$process_recursively, $max_recursion_depth) {
             if ($depth > $max_recursion_depth) {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Превышена максимальная глубина рекурсии при обработке BBCode"
                 );
                 return $text; // Прерываем обработку
@@ -950,7 +950,7 @@ class Work_Helper implements Work_Helper_Interface
                         preg_match('/^(javascript|data|vbscript):/i', $url) ||
                         strlen($url) > 2000
                     ) {
-                        log_in_file(
+                        \PhotoRigma\Include\log_in_file(
                             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
                         );
                         return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
@@ -966,7 +966,7 @@ class Work_Helper implements Work_Helper_Interface
                         preg_match('/^(javascript|data|vbscript):/i', $url) ||
                         strlen($url) > 2000
                     ) {
-                        log_in_file(
+                        \PhotoRigma\Include\log_in_file(
                             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
                         );
                         return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
@@ -1007,7 +1007,7 @@ class Work_Helper implements Work_Helper_Interface
                 '#\[img\](.*?)\[/img\]#si' => function ($matches) {
                     $src = self::clean_field($matches[1]);
                     if (!filter_var($src, FILTER_VALIDATE_URL)) {
-                        log_in_file(
+                        \PhotoRigma\Include\log_in_file(
                             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL изображения | Получено: '$src'"
                         );
                         return ''; // Удаляем некорректные изображения
@@ -1070,7 +1070,7 @@ class Work_Helper implements Work_Helper_Interface
     {
         // Проверка граничных условий
         if ($width <= 0 || empty($break)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные параметры | width = {$width}, break = '{$break}'"
             );
             return $str;
@@ -1148,7 +1148,7 @@ class Work_Helper implements Work_Helper_Interface
             if (in_array($real_mime_type, $allowed_mime_types['imagick'], true)) {
                 $is_mime_supported = true;
             } else {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через imagick | Получено: '{$real_mime_type}'"
                 );
             }
@@ -1158,7 +1158,7 @@ class Work_Helper implements Work_Helper_Interface
             if (in_array($real_mime_type, $allowed_mime_types['gmagick'], true)) {
                 $is_mime_supported = true;
             } else {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через gmagick | Получено: '{$real_mime_type}'"
                 );
             }
@@ -1168,7 +1168,7 @@ class Work_Helper implements Work_Helper_Interface
             if (in_array($real_mime_type, $allowed_mime_types['GD'], true)) {
                 $is_mime_supported = true;
             } else {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через GD | Получено: '{$real_mime_type}'"
                 );
             }

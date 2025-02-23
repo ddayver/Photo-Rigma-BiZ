@@ -111,7 +111,7 @@ $lang = [
  * @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
  */
 /*@{*/
-$lang = [
+$lang += [
     'menu' => [
         'name_block' => 'Панель навигации',
         'home' => 'Главная',
@@ -135,7 +135,7 @@ $lang = [
  * @defgroup LanguageRussianCategory Переменные для процедур обзора и управления разделами
  */
 /*@{*/
-$lang = [
+$lang += [
     'category' => [
         'category' => 'Раздел',
         'name_block' => 'Разделы',
@@ -169,7 +169,7 @@ $lang = [
  * @defgroup LanguageRussianLogin Переменные для процедур регистрации и восстановления пароля
  */
 /*@{*/
-$lang = [
+$lang += [
     'profile' => [
         'regist' => 'Регистрация',
         'login' => 'Имя пользователя',
@@ -206,7 +206,7 @@ $lang = [
  * @defgroup LanguageRussianNews Переменные для новостей сайта
  */
 /*@{*/
-$lang = [
+$lang += [
     'news' => [
         'news' => 'Архив новостей',
         'title' => 'Новость',
@@ -241,7 +241,7 @@ $lang = [
  * @defgroup LanguageRussianPhoto Переменные для процедур вывода, обработки, оценки изображений
  */
 /*@{*/
-$lang = [
+$lang += [
     'photo' => [
         'title' => 'Изображение',
         'of_photo' => ' изображения',
@@ -273,7 +273,7 @@ $lang = [
  * @defgroup LanguageRussianSearch Переменные для страницы поиска
  */
 /*@{*/
-$lang = [
+$lang += [
     'search' => [
         'title' => 'Введите строку для поиска и выберите диапазон',
         'need_user' => 'пользователи',
@@ -290,7 +290,7 @@ $lang = [
  * @defgroup LanguageRussianAdmin Переменные для Админки
  */
 /*@{*/
-$lang = [
+$lang += [
     'admin' => [
         'title' => 'Администрирование',
         'admin_pass' => 'Введите пароль для входа в Админку',

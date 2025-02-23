@@ -881,7 +881,7 @@ class Work_Image implements Work_Image_Interface
                 return $this->process_image_resize_gmagick($original_data, $thumbnail_data);
             }
         } catch (\Exception $e) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через GraphicsMagick | Аргументы: \$full_path = {$full_path}, \$thumbnail_path = {$thumbnail_path} | Сообщение об ошибке: {$e->getMessage()}"
             );
         }
@@ -890,7 +890,7 @@ class Work_Image implements Work_Image_Interface
                 return $this->process_image_resize_imagick($original_data, $thumbnail_data);
             }
         } catch (\Exception $e) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через ImageMagick | Аргументы: \$full_path = {$full_path}, \$thumbnail_path = {$thumbnail_path} | Сообщение об ошибке: {$e->getMessage()}"
             );
         }
@@ -992,7 +992,7 @@ class Work_Image implements Work_Image_Interface
     {
         // Проверяем существование и доступность файла
         if (!file_exists($full_path) || !is_readable($full_path)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: {$full_path}"
             );
             header("HTTP/1.0 404 Not Found");
@@ -1003,7 +1003,7 @@ class Work_Image implements Work_Image_Interface
         $mime_type = finfo_file($finfo, $full_path);
         finfo_close($finfo);
         if (!$mime_type || strpos($mime_type, 'image/') !== 0) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: {$full_path}"
             );
             header("HTTP/1.0 500 Internal Server Error");
@@ -1012,7 +1012,7 @@ class Work_Image implements Work_Image_Interface
         // Проверяем размер файла
         $file_size = filesize($full_path);
         if ($file_size === false || $file_size > 10 * 1024 * 1024) { // Ограничение: 10 МБ
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: {$full_path}, Размер: {$file_size}"
             );
             header("HTTP/1.0 413 Payload Too Large");
@@ -1034,7 +1034,7 @@ class Work_Image implements Work_Image_Interface
         // Открываем файл и отправляем его содержимое
         $fh = fopen($full_path, 'rb');
         if ($fh === false) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: {$full_path}"
             );
             header("HTTP/1.0 500 Internal Server Error");
@@ -1147,7 +1147,7 @@ class Work_Image implements Work_Image_Interface
         if (empty($current_extension)) {
             // Если расширение отсутствует, добавляем его
             $new_full_path = $normalized_path . '.' . $correct_extension;
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '{$correct_extension}' к файлу | Путь: {$normalized_path}"
             );
             return $new_full_path;
@@ -1157,7 +1157,7 @@ class Work_Image implements Work_Image_Interface
         }
         // Формирование нового пути с правильным расширением
         $new_full_path = preg_replace('/\.[^.]+$/', '.' . $correct_extension, $normalized_path);
-        log_in_file(
+        \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: {$normalized_path}, Новый путь: {$new_full_path}"
         );
         return $new_full_path;
@@ -1362,7 +1362,7 @@ class Work_Image implements Work_Image_Interface
         ];
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $gmagick_formats)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для GraphicsMagick | Получено: {$original_data['type']}"
             );
             return false;
@@ -1372,7 +1372,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка поддержки формата через GraphicsMagick
         $supported_formats = \Gmagick::queryFormats();
         if (!in_array($format, $supported_formats)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$format} не поддерживается GraphicsMagick"
             );
             return false;
@@ -1382,7 +1382,7 @@ class Work_Image implements Work_Image_Interface
         $max_memory_usage = 0.25 * $available_memory; // 25% от доступной памяти
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GraphicsMagick"
             );
             return false;
@@ -1391,7 +1391,7 @@ class Work_Image implements Work_Image_Interface
         if ($thumbnail_data['exists']) {
             $backup_thumbnail_path = tempnam(dirname($thumbnail_data['path']), 'bak_');
             if (!$backup_thumbnail_path || !rename($thumbnail_data['path'], $backup_thumbnail_path)) {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать резервную копию старого эскиза через GraphicsMagick"
                 );
                 return false;
@@ -1424,7 +1424,7 @@ class Work_Image implements Work_Image_Interface
             return true;
         } catch (\Exception $e) {
             // Логирование ошибки с контекстом
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через GraphicsMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
             // Восстановление старого эскиза
@@ -1528,7 +1528,7 @@ class Work_Image implements Work_Image_Interface
         ];
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $imagick_formats)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для ImageMagick | Получено: {$original_data['type']}"
             );
             return false;
@@ -1538,7 +1538,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка поддержки формата через ImageMagick
         $supported_formats = \Imagick::queryFormats();
         if (!in_array($format, $supported_formats)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$format} не поддерживается ImageMagick"
             );
             return false;
@@ -1548,7 +1548,7 @@ class Work_Image implements Work_Image_Interface
         $max_memory_usage = 0.25 * $available_memory; // 25% от доступной памяти
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через ImageMagick"
             );
             return false;
@@ -1557,7 +1557,7 @@ class Work_Image implements Work_Image_Interface
         if ($thumbnail_data['exists']) {
             $backup_thumbnail_path = tempnam(dirname($thumbnail_data['path']), 'bak_');
             if (!$backup_thumbnail_path || !rename($thumbnail_data['path'], $backup_thumbnail_path)) {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать резервную копию старого эскиза через ImageMagick"
                 );
                 return false;
@@ -1585,7 +1585,7 @@ class Work_Image implements Work_Image_Interface
             return true;
         } catch (\Exception $e) {
             // Логирование ошибки
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через ImageMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
             // Восстановление старого эскиза
@@ -1683,7 +1683,7 @@ class Work_Image implements Work_Image_Interface
         ];
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $gd_mime_to_type)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для GD | Получено: {$original_data['type']}"
             );
             return false;
@@ -1695,7 +1695,7 @@ class Work_Image implements Work_Image_Interface
             !($image_type === IMAGETYPE_JPEG && (imagetypes() & IMG_JPG)) &&
             !($image_type === IMAGETYPE_PNG && (imagetypes() & IMG_PNG)) &&
             !($image_type === IMAGETYPE_WEBP && (imagetypes() & IMG_WEBP))) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$original_data['type']} не поддерживается текущей версией GD"
             );
             return false;
@@ -1705,7 +1705,7 @@ class Work_Image implements Work_Image_Interface
         $max_memory_usage = 0.25 * $available_memory; // 25% от доступной памяти
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GD"
             );
             return false;
@@ -1714,7 +1714,7 @@ class Work_Image implements Work_Image_Interface
         if ($thumbnail_data['exists']) {
             $backup_thumbnail_path = tempnam(dirname($thumbnail_data['path']), 'bak_');
             if (!$backup_thumbnail_path || !rename($thumbnail_data['path'], $backup_thumbnail_path)) {
-                log_in_file(
+                \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать резервную копию старого эскиза через GD"
                 );
                 return false;

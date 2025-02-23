@@ -1,0 +1,5 @@
+<map id="add_if" name="add_if">
+<area shape="rect" id="Node000001" title="Метод добавляет данные об условиях вывода фрагментов шаблона, с возможностью рекурсивного размещения." alt="" coords="5,5,62,30"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a88f4f4156291c8bd4a518291c30664bf" title="Метод проверяет существование рекурсивного блока массивов&#45;объектов, разбирает путь и возвращает струк..." alt="" coords="110,5,212,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,15,94,15,94,20,62,20"/>
+</map>

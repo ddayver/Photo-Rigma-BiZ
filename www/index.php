@@ -20,11 +20,11 @@
  *
  * @see         config.php Файл конфигурации, содержащий параметры приложения.
  * @see         include/common.php Файл, содержащий глобальные константы и функции.
- * @see         \\PhotoRigma\\Classes\\Database Класс для работы с базой данных.
- * @see         \\PhotoRigma\\Classes\\Work Класс для выполнения вспомогательных операций.
- * @see         \\PhotoRigma\\Classes\\Template Класс для генерации HTML-контента.
- * @see         \\PhotoRigma\\Classes\\User Класс для управления пользователями.
- * @see         \\PhotoRigma\\Include\\archive_old_logs Функция для архивации старых логов.
+ * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
+ * @see         PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
+ * @see         PhotoRigma::Classes::Template Класс для генерации HTML-контента.
+ * @see         PhotoRigma::Classes::User Класс для управления пользователями.
+ * @see         PhotoRigma::Include::archive_old_logs Функция для архивации старых логов.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в запуске и работе приложения.
  *
@@ -48,10 +48,7 @@ use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Language;
 use PhotoRigma\Classes\Action;
-
-// Импортируем функции из PhotoRigma\Include
-use function PhotoRigma\Include\archive_old_logs;
-use function PhotoRigma\Include\log_in_file;
+use PhotoRigma\Include;
 
 /** @def IN_GALLERY
  * @brief Используется для проверки, что файлы подключены через index.php, а не вызваны напрямую.
@@ -61,7 +58,7 @@ define('IN_GALLERY', true);
 /** @def DEBUG_GALLERY
  * @brief Включение режима отладки (более подробный вывод информации об ошибках).
  * @details Используется для включения режима отладки, который влияет на логирование ошибок.
- * @see \\PhotoRigma\\Include\\log_in_file Функция для логирования ошибок.
+ * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  */
 define('DEBUG_GALLERY', false);
 
@@ -104,7 +101,6 @@ try {
         $config['inc_dir'] . 'user.php',
     ];
 
-    //@cond
     // Массив для хранения ошибок
     $errors = [];
 
@@ -129,9 +125,8 @@ try {
     foreach ($required_files as $file) {
         require_once $file;
     }
-    //@endcond
 
-    /** @var \\PhotoRigma\\Classes\\Database $db
+    /** @var PhotoRigma::Classes::Database $db
      * @brief Создание объекта класса Database для работы с основной БД.
      * @details Инициализируется через конструктор с параметрами из массива $config['db'].
      * @see PhotoRigma::Classes::Database Класс для работы с базой данных.
@@ -140,7 +135,7 @@ try {
      */
     $db = new Database($config['db']);
 
-    /** @var \\PhotoRigma\\Classes\\Work $work
+    /** @var PhotoRigma::Classes::Work $work
      * @brief Создание объекта класса Work.
      * @details Используется для выполнения различных вспомогательных операций.
      * @see PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
@@ -158,7 +153,7 @@ try {
      */
     unset($config);
 
-    /** @var \\PhotoRigma\\Classes\\Template $template
+    /** @var PhotoRigma::Classes::Template $template
      * @brief Создание объекта класса Template.
      * @details Используется для генерации HTML-контента страниц.
      * @see PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
@@ -176,7 +171,7 @@ try {
         $work->config['themes']
     );
 
-    /** @var \\PhotoRigma\\Classes\\User $user
+    /** @var PhotoRigma::Classes::User $user
      * @brief Создание объекта класса User.
      * @details Используется для управления пользователями системы.
      * @see PhotoRigma::Classes::User Класс для управления пользователями.
@@ -186,6 +181,9 @@ try {
 
     // Передаем объект User в класс Work
     $work->set_user($user);
+
+    // Передаем объект Work в класс Template
+    $template->set_work($work);
 
     /** @var bool $header_footer
      * @brief Флаг: выводить ли заголовок и подвал страницы.
@@ -218,7 +216,7 @@ try {
      * - Если файл не существует или недоступен, используется файл по умолчанию ('main.php').
      */
     if (
-        $work->check_input($_GET, 'action', ['isset' => true, 'empty' => true]) && // Проверяем, что параметр 'action' существует и не пустой
+        $work->check_input('_GET', 'action', ['isset' => true, 'empty' => true]) && // Проверяем, что параметр 'action' существует и не пустой
         $_GET['action'] !== 'index' &&                                             // Исключаем значение 'index'
         !$work->url_check()                                                        // Проверяем URL на наличие вредоносного кода
     ) {
@@ -228,10 +226,11 @@ try {
         $action_file = $work->config['site_dir'] . 'action/' . basename($action) . '.php';
         // Проверяем существование файла перед подключением
         if (!is_file($action_file) || !is_readable($action_file)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: {$action_file}"
             );
             $action_file = $work->config['site_dir'] . 'action/main.php'; // Подключаем файл по умолчанию
+            $action = 'main';
         }
     } else {
         // Если $action остается равным значению по умолчанию ('main'), формируем путь к файлу по умолчанию
@@ -249,7 +248,7 @@ try {
     // Создание шаблона
     $template->create_template();
     if ($header_footer) {
-        $template->page_header($title);
+        $template->page_header($title, $action);
         $template->page_footer();
     }
     if ($template_output) {
@@ -298,8 +297,8 @@ handle_exception:
 $remote_ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 $message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage() . PHP_EOL;
 
-if (function_exists('log_in_file')) {
-    log_in_file($message, true);
+if (function_exists('\PhotoRigma\Include\log_in_file')) {
+    \PhotoRigma\Include\log_in_file($message, true);
 } else {
     // Добавление трассировки, если DEBUG_GALLERY включен
     if (defined('DEBUG_GALLERY')) {

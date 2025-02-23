@@ -1,0 +1,7 @@
+<map id="url_mod_rewrite" name="url_mod_rewrite">
+<area shape="rect" id="Node000001" title="Метод преобразует URL в более читаемый вид с использованием правил mod_rewrite, если они включены." alt="" coords="319,5,432,30"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Метод обрабатывает шаблон, наполняя его данными: рекурсивно обрабатывает объектные блоки,..." alt="" coords="168,5,271,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="303,20,271,20,271,15,303,15"/>
+<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="5,5,120,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="152,20,120,20,120,15,152,15"/>
+</map>

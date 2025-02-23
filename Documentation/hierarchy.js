@@ -3,7 +3,7 @@ var hierarchy =
     [ "Database_Interface", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html", [
       [ "Database", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html", null ]
     ] ],
-    [ "template", "d5/d26/classPhotoRigma_1_1Classes_1_1template.html", null ],
+    [ "Template", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html", null ],
     [ "User_Interface", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html", [
       [ "User", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html", null ]
     ] ],

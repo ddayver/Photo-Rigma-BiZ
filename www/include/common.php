@@ -58,15 +58,15 @@ if (!defined('PHP_EOL')) {
     define('PHP_EOL', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? "\r\n" : "\n");
 }
 
-define('TBL_CONFIG', 'config'); ///< Таблица с настройками сервера
-define('TBL_MENU', 'menu'); ///< Таблица с пунктами меню
-define('TBL_NEWS', 'news'); ///< Таблица с новостями
-define('TBL_CATEGORY', 'category'); ///< Таблица с списком категорий на сервере
-define('TBL_PHOTO', 'photo'); ///< Таблица с списком фотографий на сервере
-define('TBL_RATE_USER', 'rate_user'); ///< Таблица с оценками фотографий от пользователей
-define('TBL_RATE_MODER', 'rate_moder'); ///< Таблица с оценками фотографий от модераторов
-define('TBL_USERS', 'user'); ///< Таблица пользователей
-define('TBL_GROUP', 'group'); ///< Таблица групп пользователей с их правами
+define('TBL_CONFIG', '`config`'); ///< Таблица с настройками сервера
+define('TBL_MENU', '`menu`'); ///< Таблица с пунктами меню
+define('TBL_NEWS', '`news`'); ///< Таблица с новостями
+define('TBL_CATEGORY', '`category`'); ///< Таблица с списком категорий на сервере
+define('TBL_PHOTO', '`photo`'); ///< Таблица с списком фотографий на сервере
+define('TBL_RATE_USER', '`rate_user`'); ///< Таблица с оценками фотографий от пользователей
+define('TBL_RATE_MODER', '`rate_moder`'); ///< Таблица с оценками фотографий от модераторов
+define('TBL_USERS', '`user`'); ///< Таблица пользователей
+define('TBL_GROUP', '`group`'); ///< Таблица групп пользователей с их правами
 define('DEFAULT_GROUP', 1); ///< Группа по-умолчанию для новых пользователей
 
 /**

@@ -330,8 +330,7 @@ class Work_Template implements Work_Template_Interface
     //Свойства:
     private array $config; ///< Конфигурация приложения.
     private ?array $lang = null; ///< Языковые данные.
-    private Database_Interface $db = null; ///< Объект для работы с базой данных.
-    private Work $work = null; ///< Основной объект приложения.
+    private Database_Interface $db; ///< Объект для работы с базой данных.
     private ?User $user = null; ///< Объект пользователя.
     private const NO_USER_AVATAR = 'no_avatar.jpg'; // Аваар по-умолчанию
     private const ONLINE_USER = 900; // Время (в сек.) от последней активности пользователя которое считать оналйн.
@@ -362,8 +361,7 @@ class Work_Template implements Work_Template_Interface
      * @code
      * $config = ['temp_photo_w' => 800];
      * $db = new Database();
-     * $work = new Work();
-     * $template = new Work_Template($config, $db, $work);
+     * $template = new Work_Template($config, $db);
      * @endcode
      */
     public function __construct(Database_Interface $db, array $config)
@@ -832,8 +830,8 @@ class Work_Template implements Work_Template_Interface
             ['*'], // Все поля таблицы используются для этого запроса
             TBL_MENU,
             [
-                'where' => ':menu_type = 1',
-                'params' => [':menu_type' => $menu_type],
+                'where' => '`' . $menu_type. '` = :menu_type',
+                'params' => [':menu_type' => 1],
                 'order_by' => ['id' => 'ASC']
             ]
         );

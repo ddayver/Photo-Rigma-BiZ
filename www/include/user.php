@@ -6,7 +6,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-02-14
+ * @date        2025-02-20
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Содержит класс `User` и интерфейс `User_Interface` с набором методов для работы с пользователями, а также используется для хранения всех данных о текущем пользователе.
@@ -170,7 +170,7 @@ class User implements User_Interface
     private array $user = []; ///< Массив, содержащий все данные о текущем пользователе.
     private Database_Interface $db; ///< Объект для работы с базой данных.
     private array $session = []; ///< Массив, привязанный к глобальному массиву $_SESSION
-    private array $user_rights_fields = []; ///< Массив с полями наименований прав доступа
+    private array $user_right_fields = []; ///< Массив с полями наименований прав доступа
 
     /**
      * @brief Конструктор класса.
@@ -208,9 +208,9 @@ class User implements User_Interface
      */
     public function __construct(Database_Interface $db, array &$session)
     {
-        if (!is_array($session) || empty($session)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные данные сессии | Проверьте, что массив сессии не пуст и является корректным"
+        if (!is_array($session)) {
+            throw new \InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные данные сессии | Проверьте, что массив сессии является корректным"
             );
         }
         $this->db = $db;
@@ -327,14 +327,14 @@ class User implements User_Interface
         }
 
         if (!empty($updated_keys)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
                 "Обновление свойства '{$name}' | Изменённые ключи: " . json_encode($updated_keys)
             );
         }
 
         if (!empty($added_keys)) {
-            log_in_file(
+            \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
                 "Добавление в свойство '{$name}' | Новые ключи: " . json_encode($added_keys)
             );
@@ -352,7 +352,9 @@ class User implements User_Interface
      */
     public function add_new_user(array $user_data): void
     {
-        throw new \RuntimeException("Method 'add_new_user' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Добавление нового пользователя"
+        );
     }
 
     /**
@@ -364,7 +366,9 @@ class User implements User_Interface
      */
     public function update_user_data(int $user_id, array $user_data): void
     {
-        throw new \RuntimeException("Method 'update_user_data' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Обновление данных пользователя с ID: {$user_id}"
+        );
     }
 
     /**
@@ -375,7 +379,9 @@ class User implements User_Interface
      */
     public function delete_user(int $user_id): void
     {
-        throw new \RuntimeException("Method 'delete_user' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление пользователя с ID: {$user_id}"
+        );
     }
 
     /**
@@ -386,7 +392,9 @@ class User implements User_Interface
      */
     public function add_new_group(array $group_data): void
     {
-        throw new \RuntimeException("Method 'add_new_group' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Добавление новой группы"
+        );
     }
 
     /**
@@ -398,7 +406,9 @@ class User implements User_Interface
      */
     public function update_group_data(int $group_id, array $group_data): void
     {
-        throw new \RuntimeException("Method 'update_group_data' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Обновление данных группы с ID: {$group_id}"
+        );
     }
 
     /**
@@ -409,7 +419,9 @@ class User implements User_Interface
      */
     public function delete_group(int $group_id): void
     {
-        throw new \RuntimeException("Method 'delete_group' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление группы с ID: {$group_id}"
+        );
     }
 
     /**
@@ -421,7 +433,9 @@ class User implements User_Interface
      */
     public function login_user(string $login, string $password): void
     {
-        throw new \RuntimeException("Method 'login_user' is not implemented yet.");
+        throw new \RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Вход пользователя с логином: {$login}"
+        );
     }
 
     /**
@@ -563,6 +577,9 @@ class User implements User_Interface
             $this->load_guest_user();
             return;
         }
+
+        // Удаляем конфиденциальное поле password из данных пользователя
+        unset($guest_group['password']);
 
         // Удаляем поле user_rights из данных пользователя
         $user_rights = $user_data['user_rights'] ?? null;

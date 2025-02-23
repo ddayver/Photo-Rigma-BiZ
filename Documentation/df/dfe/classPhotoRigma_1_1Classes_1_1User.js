@@ -19,5 +19,5 @@ var classPhotoRigma_1_1Classes_1_1User =
     [ "$db", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a18e3eac65d39ced5231d9b3e3630ba75", null ],
     [ "$session", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aa4aebf7c7377e1c2823e0520d16de530", null ],
     [ "$user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a54301e4038f95a7b17247e0d674ff3d6", null ],
-    [ "$user_rights_fields", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a05b316e512bf8982b0ae6408f28d7a0a", null ]
+    [ "$user_right_fields", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f", null ]
 ];

@@ -2,7 +2,7 @@ var namespacePhotoRigma_1_1Classes =
 [
     [ "Database", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html", "d6/db6/classPhotoRigma_1_1Classes_1_1Database" ],
     [ "Database_Interface", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface" ],
-    [ "template", "d5/d26/classPhotoRigma_1_1Classes_1_1template.html", "d5/d26/classPhotoRigma_1_1Classes_1_1template" ],
+    [ "Template", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html", "de/d28/classPhotoRigma_1_1Classes_1_1Template" ],
     [ "User", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html", "df/dfe/classPhotoRigma_1_1Classes_1_1User" ],
     [ "User_Interface", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface" ],
     [ "Work", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html", "d7/d53/classPhotoRigma_1_1Classes_1_1Work" ],

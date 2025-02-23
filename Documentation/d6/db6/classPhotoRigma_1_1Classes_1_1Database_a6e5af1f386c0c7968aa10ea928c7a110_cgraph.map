@@ -1,13 +1,15 @@
 <map id="insert" name="insert">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="5,55,59,79"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="107,55,216,79"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,64,91,64,91,70,59,70"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="280,5,384,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="206,51,271,32,273,37,207,57"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="264,55,399,79"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="217,64,248,64,248,70,217,70"/>
-<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="447,80,582,105"/>
-<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="208,77,264,88,350,94,431,94,432,99,350,99,264,94,207,83"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="400,74,432,78,431,84,399,79"/>
-<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="484,81,478,72,481,62,494,56,515,53,537,56,549,63,546,68,536,61,514,59,495,61,485,65,483,71,489,78"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="5,62,59,86"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="107,62,216,86"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,71,91,71,91,77,59,77"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="280,12,384,37"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="206,58,271,39,273,44,207,64"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="264,62,399,86"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="217,71,248,71,248,77,217,77"/>
+<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="449,102,584,126"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="210,84,264,95,352,105,434,110,434,115,351,110,264,101,209,90"/>
+<area shape="rect" id="Node000004" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="447,5,586,44"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="384,22,432,22,432,27,384,27"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="393,84,442,95,441,100,392,90"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="486,103,479,93,483,83,496,77,517,75,540,78,551,85,548,89,538,83,516,80,497,82,487,87,485,92,490,100"/>
 </map>
