@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['main_2ephp_0',['main.php',['../da/d71/action_2main_8php.html',1,'(Глобальное пространство имён)'],['../d4/d40/language_2english_2main_8php.html',1,'(Глобальное пространство имён)'],['../da/d32/language_2russian_2main_8php.html',1,'(Глобальное пространство имён)']]],
-  ['max_5fimage_5fheight_1',['MAX_IMAGE_HEIGHT',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae70ec35c87dd3bc4270f743731d77bfa',1,'PhotoRigma::Classes::Work_Image']]],
-  ['max_5fimage_5fwidth_2',['MAX_IMAGE_WIDTH',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a50cced8b0f9f5fb1f5fb4fcf9595e5bf',1,'PhotoRigma::Classes::Work_Image']]],
-  ['max_5flog_5fsize_3',['MAX_LOG_SIZE',['../db/d02/namespacePhotoRigma_1_1Include.html#a53cff4e23bb5f13e5e08ca5e8b58d740',1,'PhotoRigma::Include']]],
-  ['merge_5fuser_5fwith_5fgroup_4',['merge_user_with_group',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea',1,'PhotoRigma::Classes::User']]]
+  ['news_0',['news',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#abfa7c6c53ae460403a3d0b3923e71a90',1,'PhotoRigma\Classes\Work\news()'],['../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90',1,'PhotoRigma\Classes\Work_CoreLogic_Interface\news()'],['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90',1,'PhotoRigma\Classes\Work_CoreLogic\news()']]],
+  ['news_2ephp_1',['news.php',['../d4/dad/news_8php.html',1,'']]],
+  ['no_5fphoto_2',['no_photo',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work\no_photo()'],['../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work_Image_Interface\no_photo()'],['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work_Image\no_photo()']]],
+  ['no_5fuser_5favatar_3',['NO_USER_AVATAR',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d',1,'PhotoRigma::Classes::Work_Template']]]
 ];

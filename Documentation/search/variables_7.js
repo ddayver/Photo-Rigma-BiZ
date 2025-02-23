@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['log_5fdir_0',['LOG_DIR',['../db/d02/namespacePhotoRigma_1_1Include.html#a1c3394673d867f3293d98eb77f069fd1',1,'PhotoRigma::Include']]],
-  ['log_5flifetime_5fdays_1',['LOG_LIFETIME_DAYS',['../db/d02/namespacePhotoRigma_1_1Include.html#a97db6f3e6431bb4ff9a3521a93dbacaf',1,'PhotoRigma::Include']]]
+  ['no_5fuser_5favatar_0',['NO_USER_AVATAR',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d',1,'PhotoRigma::Classes::Work_Template']]]
 ];

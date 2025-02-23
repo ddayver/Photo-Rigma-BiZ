@@ -646,7 +646,7 @@ class Database implements Database_Interface
                 );
             } else {
                 try {
-                    $dsn = "{$db_config['dbtype']}:unix_socket={$db_config['dbsock']};dbname={$db_config['dbname']}";
+                    $dsn = "{$db_config['dbtype']}:unix_socket={$db_config['dbsock']};dbname={$db_config['dbname']};charset=utf8mb4";
                     $this->pdo = new \PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
                         \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
                         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
@@ -673,7 +673,7 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный хост базы данных | Значение: {$db_config['dbhost']}"
             );
         }
-        $dsn = "{$db_config['dbtype']}:host={$db_config['dbhost']};dbname={$db_config['dbname']}";
+        $dsn = "{$db_config['dbtype']}:host={$db_config['dbhost']};dbname={$db_config['dbname']};charset=utf8mb4";
         if (!empty($db_config['dbport'])) {
             if (!is_numeric($db_config['dbport']) || $db_config['dbport'] < 1 || $db_config['dbport'] > 65535) {
                 throw new \InvalidArgumentException(

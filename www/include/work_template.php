@@ -23,8 +23,6 @@
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в формировании данных для шаблонов.
  *
- * @todo        Вынести время, за которое считать пользователей онлайн, в настройки через БД.
- *
  * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
  *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
@@ -210,10 +208,6 @@ interface Work_Template_Interface
      *
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
-     * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
-     *
-     * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код: константа ONLINE_USER.
-     *
      * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER)
      *          содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректной статистике.
      *
@@ -297,7 +291,6 @@ interface Work_Template_Interface
  *
  * @note Использованы константы:
  *       - NO_USER_AVATAR - Аваар по-умолчанию,
- *       - ONLINE_USER - Время (в сек.) от последней активности пользователя которое считать оналйн.
  *
  * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
  *
@@ -333,7 +326,6 @@ class Work_Template implements Work_Template_Interface
     private Database_Interface $db; ///< Объект для работы с базой данных.
     private ?User $user = null; ///< Объект пользователя.
     private const NO_USER_AVATAR = 'no_avatar.jpg'; // Аваар по-умолчанию
-    private const ONLINE_USER = 900; // Время (в сек.) от последней активности пользователя которое считать оналйн.
 
     /**
      * @brief Конструктор класса.
@@ -672,10 +664,6 @@ class Work_Template implements Work_Template_Interface
      *
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
-     * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
-     *
-     * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.
-     *
      * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER)
      *          содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректной статистике.
      *
@@ -958,7 +946,7 @@ class Work_Template implements Work_Template_Interface
             }
         }
         // Проверка статуса авторизации через match
-        $array_data = match ($this->user->session['login_id']) {
+        $array_data = match ($this->user->session['login_id'] ?? 0) {
             0 => [
                 'NAME_BLOCK'        => $this->lang['main']['user_block'],
                 'L_LOGIN'           => $this->lang['main']['login'],
@@ -1022,10 +1010,6 @@ class Work_Template implements Work_Template_Interface
      *               - D_STAT_ONLINE: Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии онлайн-пользователей.
      *
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
-     *
-     * @todo Вынести время за которое считать пользователей онлайн в настройки через БД.
-     *
-     * @note Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.
      *
      * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER)
      *          содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректной статистике.
@@ -1095,7 +1079,7 @@ class Work_Template implements Work_Template_Interface
             TBL_USERS,
             [
                 'where'  => '`date_last_activ` >= (CURRENT_TIMESTAMP - :online_user)',
-                'params' => [':online_user' => self::ONLINE_USER]
+                'params' => [':online_user' => $this->config['time_user_online']]
             ]
         );
         $online_users_data = $this->db->res_arr();
@@ -1210,19 +1194,26 @@ class Work_Template implements Work_Template_Interface
         );
         $user_data = $this->db->res_arr();
         // Проверка: $user_data может быть массивом (если данные есть) или false (если запрос не вернул данных).
+        // Обработка данных пользователей
         $array_data = ($user_data !== false)
-            ? array_map(function ($current_user, $idx) {
+            ? array_map(function ($current_user) {
                 return [
                     'user_url'   => sprintf('%s?action=profile&amp;subact=profile&amp;uid=%d', $this->config['site_url'], $current_user['id']),
                     'user_name'  => Work::clean_field($current_user['real_name']),
                     'user_photo' => (int)$current_user['user_photo']
                 ];
-            }, $user_data, array_keys($user_data))
-            : [[
-                'user_url'   => null,
+            }, $user_data)
+            : [];
+
+        // Добавление данных для пустого пользователя
+        if (empty($array_data)) {
+            $array_data[1] = [
+                'user_url'   => '',
                 'user_name'  => '---',
                 'user_photo' => '-'
-            ]];
+            ];
+        }
+
         // Блок формирования метаданных для шаблона
         $array_data[0] = [
             'NAME_BLOCK'   => sprintf($this->lang['main']['best_user'], $best_user),

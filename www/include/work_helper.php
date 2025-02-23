@@ -694,7 +694,7 @@ class Work_Helper implements Work_Helper_Interface
             $field = (string)$field;
         }
         // Гарантируем корректную кодировку UTF-8
-        $field = mb_convert_encoding($field, 'UTF-8', 'UTF-8');
+        $field = mb_convert_encoding($field, 'UTF-8', 'auto');
         // Удаляем HTML-теги
         $field = strip_tags($field);
         // Экранируем специальные символы с использованием современных флагов

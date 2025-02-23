@@ -218,7 +218,7 @@ try {
     if (
         $work->check_input('_GET', 'action', ['isset' => true, 'empty' => true]) && // Проверяем, что параметр 'action' существует и не пустой
         $_GET['action'] !== 'index' &&                                             // Исключаем значение 'index'
-        !$work->url_check()                                                        // Проверяем URL на наличие вредоносного кода
+        $work->url_check()                                                        // Проверяем URL на наличие вредоносного кода
     ) {
         // Используем более безопасный метод фильтрации входных данных
         $action = filter_var($_GET['action'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -252,93 +252,83 @@ try {
         $template->page_footer();
     }
     if ($template_output) {
+        header('Content-Type: text/html; charset=UTF-8');
         echo $template->content;
     }
 } catch (\RuntimeException $e) {
     $type = "Ошибка времени выполнения";
-    goto handle_exception;
 } catch (\PDOException $e) {
     $type = "Ошибка базы данных";
-    goto handle_exception;
 } catch (\InvalidArgumentException $e) {
     $type = "Неверный аргумент";
-    goto handle_exception;
 } catch (\LogicException $e) {
     $type = "Логическая ошибка";
-    goto handle_exception;
 } catch (\BadMethodCallException $e) {
     $type = "Вызов несуществующего метода";
-    goto handle_exception;
 } catch (\BadFunctionCallException $e) {
     $type = "Вызов несуществующей функции";
-    goto handle_exception;
 } catch (\DomainException $e) {
     $type = "Значение вне допустимой области";
-    goto handle_exception;
 } catch (\UnexpectedValueException $e) {
     $type = "Неожиданное значение";
-    goto handle_exception;
 } catch (\LengthException $e) {
     $type = "Ошибка длины значения";
-    goto handle_exception;
 } catch (\OutOfBoundsException $e) {
     $type = "Индекс или ключ вне границ";
-    goto handle_exception;
 } catch (\RangeException $e) {
     $type = "Значение вне допустимого диапазона";
-    goto handle_exception;
 } catch (\Exception $e) {
     $type = "Общая ошибка";
-    goto handle_exception;
-}
+} finally {
+    if (isset($e) && ($e instanceof \Exception || $e instanceof \Throwable)) {
 
-handle_exception:
-// Формируем трассировку один раз
-$remote_ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-$message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage() . PHP_EOL;
+        // Формируем трассировку один раз
+        $remote_ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+        $message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage();
 
-if (function_exists('\PhotoRigma\Include\log_in_file')) {
-    \PhotoRigma\Include\log_in_file($message, true);
-} else {
-    // Добавление трассировки, если DEBUG_GALLERY включен
-    if (defined('DEBUG_GALLERY')) {
-        $trace_depth = 0;
-        if (DEBUG_GALLERY === true || (is_int(DEBUG_GALLERY) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9)) {
-            $trace_depth = is_int(DEBUG_GALLERY) ? DEBUG_GALLERY : 5;
-        }
+        if (function_exists('\PhotoRigma\Include\log_in_file')) {
+            \PhotoRigma\Include\log_in_file($message, true);
+        } else {
+            // Добавление трассировки, если DEBUG_GALLERY включен
+            if (defined('DEBUG_GALLERY')) {
+                $trace_depth = 0;
+                if (DEBUG_GALLERY === true || (is_int(DEBUG_GALLERY) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9)) {
+                    $trace_depth = is_int(DEBUG_GALLERY) ? DEBUG_GALLERY : 5;
+                }
 
-        if ($trace_depth > 0) {
-            $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, $trace_depth + 1);
-            array_shift($backtrace);
+                if ($trace_depth > 0) {
+                    $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, $trace_depth + 1);
+                    array_shift($backtrace);
 
-            $trace_info = [];
-            foreach ($backtrace as $index => $trace) {
-                $step_number = $index + 1;
-                $args = array_map(function ($arg) {
-                    $arg_str = is_string($arg) ? $arg : json_encode($arg, JSON_UNESCAPED_UNICODE);
-                    return mb_strlen($arg_str, 'UTF-8') > 80
-                        ? mb_substr($arg_str, 0, 80, 'UTF-8') . '...'
-                        : $arg_str;
-                }, $trace['args'] ?? []);
-                $trace_info[] = sprintf(
-                    "Шаг %d:" . PHP_EOL . "  Файл: %s" . PHP_EOL . "  Строка: %s" . PHP_EOL . "  Функция: %s" . PHP_EOL . "  Аргументы: %s",
-                    $step_number,
-                    $trace['file'] ?? 'неизвестный файл',
-                    $trace['line'] ?? 'неизвестная строка',
-                    $trace['function'] ?? 'неизвестная функция',
-                    json_encode($args, JSON_UNESCAPED_UNICODE)
-                );
+                    $trace_info = [];
+                    foreach ($backtrace as $index => $trace) {
+                        $step_number = $index + 1;
+                        $args = array_map(function ($arg) {
+                            $arg_str = is_string($arg) ? $arg : json_encode($arg, JSON_UNESCAPED_UNICODE);
+                            return mb_strlen($arg_str, 'UTF-8') > 80
+                                ? mb_substr($arg_str, 0, 80, 'UTF-8') . '...'
+                                : $arg_str;
+                        }, $trace['args'] ?? []);
+                        $trace_info[] = sprintf(
+                            "Шаг %d:" . PHP_EOL . "  Файл: %s" . PHP_EOL . "  Строка: %s" . PHP_EOL . "  Функция: %s" . PHP_EOL . "  Аргументы: %s",
+                            $step_number,
+                            $trace['file'] ?? 'неизвестный файл',
+                            $trace['line'] ?? 'неизвестная строка',
+                            $trace['function'] ?? 'неизвестная функция',
+                            json_encode($args, JSON_UNESCAPED_UNICODE)
+                        );
+                    }
+                    $message .= "Трассировка:\n" . implode("\n\n", $trace_info) . PHP_EOL;
+                }
             }
-            $message .= "Трассировка:\n" . implode("\n\n", $trace_info) . PHP_EOL;
+            error_log($message);
+
+            // Экранирование спецсимволов и HTML-тегов перед выводом
+            $safe_output = htmlspecialchars($message, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            die($safe_output);
         }
     }
-    error_log($message);
-
-    // Экранирование спецсимволов и HTML-тегов перед выводом
-    $safe_output = htmlspecialchars($message, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-    die($safe_output);
 }
-
 /** @dir action
  * @brief Содержит обработчики действий (например, формы, запросы).
  * @details Примеры файлов:

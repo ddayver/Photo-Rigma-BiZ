@@ -1,4 +1,9 @@
 var searchData=
 [
-  ['join_0',['join',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aa2b6c23b3a70e9ef06c22d8a4885d69a',1,'PhotoRigma\Classes\Database_Interface\join()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a',1,'PhotoRigma\Classes\Database\join()']]]
+  ['load_5fauthenticated_5fuser_0',['load_authenticated_user',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9',1,'PhotoRigma::Classes::User']]],
+  ['load_5fguest_5fuser_1',['load_guest_user',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc',1,'PhotoRigma::Classes::User']]],
+  ['log_5fdir_2',['LOG_DIR',['../db/d02/namespacePhotoRigma_1_1Include.html#a1c3394673d867f3293d98eb77f069fd1',1,'PhotoRigma::Include']]],
+  ['log_5fin_5ffile_3',['log_in_file',['../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0',1,'PhotoRigma::Include']]],
+  ['log_5flifetime_5fdays_4',['LOG_LIFETIME_DAYS',['../db/d02/namespacePhotoRigma_1_1Include.html#a97db6f3e6431bb4ff9a3521a93dbacaf',1,'PhotoRigma::Include']]],
+  ['login_5fuser_5',['login_user',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ac52837ab322293b0123a41b7f379666e',1,'PhotoRigma\Classes\User_Interface\login_user()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac52837ab322293b0123a41b7f379666e',1,'PhotoRigma\Classes\User\login_user()']]]
 ];

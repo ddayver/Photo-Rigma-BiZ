@@ -1,13 +1,20 @@
 var searchData=
 [
-  ['ubb_0',['ubb',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712',1,'PhotoRigma\Classes\Work\ubb()'],['../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html#a3163f8e7d71cad9003bf5b3efe644712',1,'PhotoRigma\Classes\Work_Helper_Interface\ubb()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712',1,'PhotoRigma\Classes\Work_Helper\ubb()']]],
-  ['update_1',['update',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e',1,'PhotoRigma\Classes\Database_Interface\update()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e',1,'PhotoRigma\Classes\Database\update()']]],
-  ['update_5fgroup_5fdata_2',['update_group_data',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ac5e8ffbb47053c27a7df5b5e7563975d',1,'PhotoRigma\Classes\User_Interface\update_group_data()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac5e8ffbb47053c27a7df5b5e7563975d',1,'PhotoRigma\Classes\User\update_group_data()']]],
-  ['update_5fuser_5fdata_3',['update_user_data',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a65f5f90596afd8e0f45b649fa5972436',1,'PhotoRigma\Classes\User_Interface\update_user_data()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a65f5f90596afd8e0f45b649fa5972436',1,'PhotoRigma\Classes\User\update_user_data()']]],
-  ['url_5fcheck_4',['url_check',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32',1,'PhotoRigma\Classes\Work\url_check()'],['../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a1e1a4ab6b213ada0d89c77a24d8ffe32',1,'PhotoRigma\Classes\Work_Security_Interface\url_check()'],['../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32',1,'PhotoRigma\Classes\Work_Security\url_check()']]],
-  ['url_5fmod_5frewrite_5',['url_mod_rewrite',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a9e34f1509bc89f404476790f164f831e',1,'PhotoRigma::Classes::Template']]],
-  ['user_6',['User',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html',1,'PhotoRigma::Classes']]],
-  ['user_2ephp_7',['user.php',['../d1/d1a/user_8php.html',1,'']]],
-  ['user_5finterface_8',['User_Interface',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html',1,'PhotoRigma::Classes']]],
-  ['utf8_5fwordwrap_9',['utf8_wordwrap',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work\utf8_wordwrap()'],['../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work_Helper_Interface\utf8_wordwrap()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32',1,'PhotoRigma\Classes\Work_Helper\utf8_wordwrap()']]]
+  ['work_0',['Work',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html',1,'PhotoRigma::Classes']]],
+  ['work_2ephp_1',['work.php',['../dc/d7a/work_8php.html',1,'']]],
+  ['work_5fcorelogic_2',['Work_CoreLogic',['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html',1,'PhotoRigma::Classes']]],
+  ['work_5fcorelogic_2ephp_3',['work_corelogic.php',['../dd/d79/work__corelogic_8php.html',1,'']]],
+  ['work_5fcorelogic_5finterface_4',['Work_CoreLogic_Interface',['../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html',1,'PhotoRigma::Classes']]],
+  ['work_5fhelper_5',['Work_Helper',['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html',1,'PhotoRigma::Classes']]],
+  ['work_5fhelper_2ephp_6',['work_helper.php',['../d2/d43/work__helper_8php.html',1,'']]],
+  ['work_5fhelper_5finterface_7',['Work_Helper_Interface',['../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html',1,'PhotoRigma::Classes']]],
+  ['work_5fimage_8',['Work_Image',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html',1,'PhotoRigma::Classes']]],
+  ['work_5fimage_2ephp_9',['work_image.php',['../de/d67/work__image_8php.html',1,'']]],
+  ['work_5fimage_5finterface_10',['Work_Image_Interface',['../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html',1,'PhotoRigma::Classes']]],
+  ['work_5fsecurity_11',['Work_Security',['../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html',1,'PhotoRigma::Classes']]],
+  ['work_5fsecurity_2ephp_12',['work_security.php',['../d6/dc1/work__security_8php.html',1,'']]],
+  ['work_5fsecurity_5finterface_13',['Work_Security_Interface',['../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html',1,'PhotoRigma::Classes']]],
+  ['work_5ftemplate_14',['Work_Template',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html',1,'PhotoRigma::Classes']]],
+  ['work_5ftemplate_2ephp_15',['work_template.php',['../d9/d2a/work__template_8php.html',1,'']]],
+  ['work_5ftemplate_5finterface_16',['Work_Template_Interface',['../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html',1,'PhotoRigma::Classes']]]
 ];

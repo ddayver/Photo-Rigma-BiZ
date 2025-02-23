@@ -405,14 +405,14 @@ class Work
         //    );
         // }
         // Обрабатываем массив через clean_field
-        $changes = $this->sanitize_array($lang);
+        // $changes = $this->sanitize_array($lang);
         // Логируем изменения, если они есть
-        if (!empty($changes)) {
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
-                "Очищенные значения | Значения: " . json_encode($changes)
-            );
-        }
+        // if (!empty($changes)) {
+        //    \PhotoRigma\Include\log_in_file(
+        //        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+        //        "Очищенные значения | Значения: " . json_encode($changes)
+        //    );
+        // }
         // Передаём языковые данные в свойство и подклассы
         $this->lang = $lang;
         $this->template->set_lang($lang);
@@ -512,7 +512,7 @@ class Work
      */
     public function check_post(string $field, bool $isset = false, bool $empty = false, string|false $regexp = false, bool $not_zero = false): bool
     {
-        return $this->security->check_input($_POST, $field, [
+        return $this->security->check_input('_POST', $field, [
             'isset' => $isset,
             'empty' => $empty,
             'regexp' => $regexp,
@@ -565,7 +565,7 @@ class Work
      */
     public function check_get(string $field, bool $isset = false, bool $empty = false, string|false $regexp = false, bool $not_zero = false): bool
     {
-        return $this->security->check_input($_GET, $field, [
+        return $this->security->check_input('_GET', $field, [
             'isset' => $isset,
             'empty' => $empty,
             'regexp' => $regexp,
@@ -618,7 +618,7 @@ class Work
      */
     public function check_session(string $field, bool $isset = false, bool $empty = false, string|false $regexp = false, bool $not_zero = false): bool
     {
-        return $this->security->check_input($_SESSION, $field, [
+        return $this->security->check_input('_SESSION', $field, [
             'isset' => $isset,
             'empty' => $empty,
             'regexp' => $regexp,
@@ -1491,17 +1491,20 @@ class Work
      * @see PhotoRigma::Classes::Work_Image::no_photo()
      *      Публичный метод-редирект для вызова этой логики.
      *
-     * @return array{
-     *     url: string, // URL полноразмерного изображения.
-     *     thumbnail_url: string, // URL эскиза изображения.
-     *     name: string, // Название изображения.
-     *     description: string, // Описание изображения.
-     *     category_name: string, // Название категории.
-     *     category_description: string, // Описание категории.
-     *     rate: string, // Рейтинг изображения.
-     *     url_user: null, // URL пользователя (если доступен).
-     *     real_name: string // Имя пользователя.
-     * } Массив с данными об отсутствующем изображении. Значения по умолчанию используются для отсутствующих данных.
+     * @return array Массив данных об изображении или его отсутствии:
+     *               - `'url'` (string): URL полноразмерного изображения.
+     *               - `'thumbnail_url'` (string): URL эскиза изображения.
+     *               - `'name'` (string): Название изображения.
+     *               - `'description'` (string): Описание изображения.
+     *               - `'category_name'` (string): Название категории.
+     *               - `'category_description'` (string): Описание категории.
+     *               - `'rate'` (string): Рейтинг изображения.
+     *               - `'url_user'` (string): URL пользователя (пустая строка '').
+     *               - `'real_name'` (string): Имя пользователя.
+     *               - `'full_path'` (string): Полный путь к изображению.
+     *               - `'thumbnail_path'` (string): Полный путь к эскизу.
+     *               - `'file'` (string): Имя файла.
+     *               Значения по умолчанию используются для отсутствующих данных.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`site_url`).
      *          Если этот параметр некорректен, результат может быть непредсказуемым.

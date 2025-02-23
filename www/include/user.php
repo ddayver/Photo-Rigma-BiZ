@@ -460,7 +460,7 @@ class User implements User_Interface
     private function initialize_user(): void
     {
         $login_id = (int)($this->session['login_id'] ?? 0);
-
+        $this->session['login_id'] = $login_id;
         if ($login_id === 0) {
             $this->load_guest_user();
         } else {

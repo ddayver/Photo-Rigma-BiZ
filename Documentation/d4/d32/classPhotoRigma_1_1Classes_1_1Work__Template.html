@@ -203,8 +203,6 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <tr class="separator:a35c45cc33d8d420da794514df59466b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13745a6536499d5589da42ea46b1535d" id="r_a13745a6536499d5589da42ea46b1535d"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13745a6536499d5589da42ea46b1535d">NO_USER_AVATAR</a> = 'no_avatar.jpg'</td></tr>
 <tr class="separator:a13745a6536499d5589da42ea46b1535d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69b368bb85b4b2b88d547a943c9ec83d" id="r_a69b368bb85b4b2b88d547a943c9ec83d"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69b368bb85b4b2b88d547a943c9ec83d">ONLINE_USER</a> = 900</td></tr>
-<tr class="separator:a69b368bb85b4b2b88d547a943c9ec83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс Work_Template отвечает за формирование данных для шаблонов. </p>
@@ -216,10 +214,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типа файла.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Использованы константы:<ul>
 <li>NO_USER_AVATAR - Аваар по-умолчанию,</li>
-<li>ONLINE_USER - Время (в сек.) от последней активности пользователя которое считать оналйн.</li>
 </ul>
 </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000022">Необходимо сделать</a></b></dt><dd>Вынести время за которое считать пользователей онлайн в настройки через БД.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000021">Необходимо сделать</a></b></dt><dd>Вынести время за которое считать пользователей онлайн в настройки через БД.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что передаваемые параметры в методы корректны, так как это может привести к ошибкам.</dd></dl>
 <p>Пример использования класса: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Template</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma::Classes::Work_Template</a>();</div>
@@ -239,10 +236,10 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <div class="line"><span class="comment">// Генерация списка лучших пользователей</span></div>
 <div class="line">$best_users = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a>-&gt;template_best_user(3);</div>
 <div class="line">print_r($best_users);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma\Classes\Work_Template</a></div><div class="ttdoc">Класс Work_Template отвечает за формирование данных для шаблонов.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00328">work_template.php:329</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma\Classes\Work_Template</a></div><div class="ttdoc">Класс Work_Template отвечает за формирование данных для шаблонов.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00321">work_template.php:322</a></div></div>
 <div class="ttc" id="anamespacePhotoRigma_html_aa3e9534005fd516d941f6a5569896e01"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">PhotoRigma\$template</a></div><div class="ttdeci">$template</div><div class="ttdoc">Создание объекта класса Template.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00168">index.php:168</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00328">328</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00321">321</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="aebda93a95626971f99ba32c8ac7b4f30" name="aebda93a95626971f99ba32c8ac7b4f30"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aebda93a95626971f99ba32c8ac7b4f30">&#9670;&#160;</a></span>__construct()</h2>
@@ -289,12 +286,12 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <div class="line"><a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">Work_Template</a>(<a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>);</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">PhotoRigma\Classes\Database</a></div><div class="ttdoc">Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00562">db.php:563</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work_Template\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00333">work_template.php:333</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Template\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Конфигурация приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00331">work_template.php:331</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work_Template\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00326">work_template.php:326</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Template\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Конфигурация приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00324">work_template.php:324</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00367">367</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00359">359</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00331">$config</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00333">$db</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00324">$config</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00326">$db</a>.</p>
 
 </div>
 </div>
@@ -340,9 +337,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <div class="line">echo <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a>-&gt;config[<span class="stringliteral">&#39;temp_photo_w&#39;</span>]; <span class="comment">// Выведет: 800</span></div>
 <div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00147">index.php:147</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00407">407</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00399">399</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00331">$config</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00324">$config</a>.</p>
 
 </div>
 </div>
@@ -393,7 +390,7 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = new \PhotoRigma\Classes\Work_Template([], <a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>);</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a>-&gt;config = [<span class="stringliteral">&#39;temp_photo_w&#39;</span> =&gt; 1024];</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00445">445</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00437">437</a></p>
 
 </div>
 </div>
@@ -469,13 +466,13 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <div class="line"> </div>
 <div class="line">$long_menu = $this-&gt;<a class="code hl_function" href="#a44160f09c7dbb17349602f0862c95d62">_create_menu_internal</a>(<span class="stringliteral">&#39;profile&#39;</span>, 1); <span class="comment">// Создание вертикального меню</span></div>
 <div class="line">print_r($long_menu);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a44160f09c7dbb17349602f0862c95d62"><div class="ttname"><a href="#a44160f09c7dbb17349602f0862c95d62">PhotoRigma\Classes\Work_Template\_create_menu_internal</a></div><div class="ttdeci">_create_menu_internal(string $action, int $menu)</div><div class="ttdoc">Метод формирует массив данных для меню в зависимости от типа и активного пункта.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00806">work_template.php:806</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a44160f09c7dbb17349602f0862c95d62"><div class="ttname"><a href="#a44160f09c7dbb17349602f0862c95d62">PhotoRigma\Classes\Work_Template\_create_menu_internal</a></div><div class="ttdeci">_create_menu_internal(string $action, int $menu)</div><div class="ttdoc">Метод формирует массив данных для меню в зависимости от типа и активного пункта.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00794">work_template.php:794</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00806">806</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00794">794</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00210">PhotoRigma\$action</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01635">Work\clean_field()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00062">PhotoRigma\Include\TBL_MENU</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00210">PhotoRigma\$action</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01638">Work\clean_field()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00062">PhotoRigma\Include\TBL_MENU</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00583">create_menu()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00575">create_menu()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -570,13 +567,13 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода внутри класса</span></div>
 <div class="line">$best_users = $this-&gt;<a class="code hl_function" href="#a7c272bd5112b72e9047a6dafdd9cfd8c">_template_best_user_internal</a>(3);</div>
 <div class="line">print_r($best_users);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a7c272bd5112b72e9047a6dafdd9cfd8c"><div class="ttname"><a href="#a7c272bd5112b72e9047a6dafdd9cfd8c">PhotoRigma\Classes\Work_Template\_template_best_user_internal</a></div><div class="ttdeci">_template_best_user_internal(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l01185">work_template.php:1185</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a7c272bd5112b72e9047a6dafdd9cfd8c"><div class="ttname"><a href="#a7c272bd5112b72e9047a6dafdd9cfd8c">PhotoRigma\Classes\Work_Template\_template_best_user_internal</a></div><div class="ttdeci">_template_best_user_internal(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l01169">work_template.php:1169</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01185">1185</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01169">1169</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01635">Work\clean_field()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00065">PhotoRigma\Include\TBL_PHOTO</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01638">Work\clean_field()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00065">PhotoRigma\Include\TBL_PHOTO</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00743">template_best_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00731">template_best_user()</a>.</p>
 <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
@@ -666,19 +663,17 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000025">Необходимо сделать</a></b></dt><dd>Вынести время за которое считать пользователей онлайн в настройки через БД.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER) содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректной статистике.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода внутри класса</span></div>
 <div class="line">$stat_data = $this-&gt;<a class="code hl_function" href="#ad1a946d518250f1085369cfad3719cc3">_template_stat_internal</a>();</div>
 <div class="line">print_r($stat_data);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ad1a946d518250f1085369cfad3719cc3"><div class="ttname"><a href="#ad1a946d518250f1085369cfad3719cc3">PhotoRigma\Classes\Work_Template\_template_stat_internal</a></div><div class="ttdeci">_template_stat_internal()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l01040">work_template.php:1040</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ad1a946d518250f1085369cfad3719cc3"><div class="ttname"><a href="#ad1a946d518250f1085369cfad3719cc3">PhotoRigma\Classes\Work_Template\_template_stat_internal</a></div><div class="ttdeci">_template_stat_internal()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l01024">work_template.php:1024</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01040">1040</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01024">1024</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00334">$user</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01635">Work\clean_field()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00064">PhotoRigma\Include\TBL_CATEGORY</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00065">PhotoRigma\Include\TBL_PHOTO</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00067">PhotoRigma\Include\TBL_RATE_MODER</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00066">PhotoRigma\Include\TBL_RATE_USER</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00327">$user</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01638">Work\clean_field()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00064">PhotoRigma\Include\TBL_CATEGORY</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00065">PhotoRigma\Include\TBL_PHOTO</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00067">PhotoRigma\Include\TBL_RATE_MODER</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00066">PhotoRigma\Include\TBL_RATE_USER</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00692">template_stat()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00680">template_stat()</a>.</p>
 <div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
@@ -776,13 +771,13 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода внутри класса</span></div>
 <div class="line">$array_data = $this-&gt;<a class="code hl_function" href="#a4c85b7dc68591aedd8df9848c1a08dd0">_template_user_internal</a>();</div>
 <div class="line">print_r($array_data);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a4c85b7dc68591aedd8df9848c1a08dd0"><div class="ttname"><a href="#a4c85b7dc68591aedd8df9848c1a08dd0">PhotoRigma\Classes\Work_Template\_template_user_internal</a></div><div class="ttdeci">_template_user_internal()</div><div class="ttdoc">Формирование блока пользователя.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00934">work_template.php:934</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a4c85b7dc68591aedd8df9848c1a08dd0"><div class="ttname"><a href="#a4c85b7dc68591aedd8df9848c1a08dd0">PhotoRigma\Classes\Work_Template\_template_user_internal</a></div><div class="ttdeci">_template_user_internal()</div><div class="ttdoc">Формирование блока пользователя.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00922">work_template.php:922</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00934">934</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00922">922</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01635">Work\clean_field()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01881">Work\validate_mime_type()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01638">Work\clean_field()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01884">Work\validate_mime_type()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00634">template_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00626">template_user()</a>.</p>
 <div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
@@ -890,9 +885,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 </div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00583">583</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00575">575</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00210">PhotoRigma\$action</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00806">_create_menu_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00210">PhotoRigma\$action</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00794">_create_menu_internal()</a>.</p>
 <div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
@@ -956,9 +951,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = new \PhotoRigma\Classes\Work_Template(<a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>);</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a>-&gt;set_lang([<span class="stringliteral">&#39;key&#39;</span> =&gt; <span class="stringliteral">&#39;value&#39;</span>]);</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00485">485</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00477">477</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00332">$lang</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00325">$lang</a>.</p>
 
 </div>
 </div>
@@ -1003,11 +998,11 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = new \PhotoRigma\Classes\Work_Template(<a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>);</div>
 <div class="line"><a class="code hl_variable" href="#a35c45cc33d8d420da794514df59466b7">$user</a> = new \PhotoRigma\Classes\User();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a>-&gt;set_user(<a class="code hl_variable" href="#a35c45cc33d8d420da794514df59466b7">$user</a>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a35c45cc33d8d420da794514df59466b7"><div class="ttname"><a href="#a35c45cc33d8d420da794514df59466b7">PhotoRigma\Classes\Work_Template\$user</a></div><div class="ttdeci">User $user</div><div class="ttdoc">Объект пользователя.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00334">work_template.php:334</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a35c45cc33d8d420da794514df59466b7"><div class="ttname"><a href="#a35c45cc33d8d420da794514df59466b7">PhotoRigma\Classes\Work_Template\$user</a></div><div class="ttdeci">User $user</div><div class="ttdoc">Объект пользователя.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/d2a/work__template_8php_source.html#l00327">work_template.php:327</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00524">524</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00516">516</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00334">$user</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00327">$user</a>.</p>
 
 </div>
 </div>
@@ -1070,9 +1065,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 </div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">Work_Template_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00743">743</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00731">731</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01185">_template_best_user_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01169">_template_best_user_internal()</a>.</p>
 <div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-11-summary" class="dynsummary" style="display:block;">
@@ -1142,8 +1137,6 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000024">Необходимо сделать</a></b></dt><dd>Вынести время за которое считать пользователей онлайн в настройки через БД.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Время онлайна жестко закодировано как 900 секунд (15 минут). Для изменения требуется ручное внесение изменений в код.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER) содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректной статистике.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание экземпляра класса Work_Template</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">$template</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">Work_Template</a>();</div>
@@ -1154,9 +1147,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 </div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">Work_Template_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00692">692</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00680">680</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01040">_template_stat_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01024">_template_stat_internal()</a>.</p>
 <div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-12-summary" class="dynsummary" style="display:block;">
@@ -1238,9 +1231,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 </div><!-- fragment --> 
 <p>Замещает <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">Work_Template_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00634">634</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00626">626</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00934">_template_user_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00922">_template_user_internal()</a>.</p>
 <div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-13-summary" class="dynsummary" style="display:block;">
@@ -1294,9 +1287,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 
 <p>Конфигурация приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00331">331</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00324">324</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00367">__construct()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00407">__get()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00359">__construct()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00399">__get()</a>.</p>
 
 </div>
 </div>
@@ -1322,9 +1315,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 
 <p>Объект для работы с базой данных. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00333">333</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00326">326</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00367">__construct()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00359">__construct()</a>.</p>
 
 </div>
 </div>
@@ -1350,9 +1343,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 
 <p>Языковые данные. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00332">332</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00325">325</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00485">set_lang()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00477">set_lang()</a>.</p>
 
 </div>
 </div>
@@ -1378,9 +1371,9 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 
 <p>Объект пользователя. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00334">334</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00327">327</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01040">_template_stat_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00524">set_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01024">_template_stat_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00516">set_user()</a>.</p>
 
 </div>
 </div>
@@ -1404,31 +1397,7 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00335">335</a></p>
-
-</div>
-</div>
-<a id="a69b368bb85b4b2b88d547a943c9ec83d" name="a69b368bb85b4b2b88d547a943c9ec83d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69b368bb85b4b2b88d547a943c9ec83d">&#9670;&#160;</a></span>ONLINE_USER</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const ONLINE_USER = 900</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00336">336</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/d2a/work__template_8php_source.html">work_template.php</a> строка <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00328">328</a></p>
 
 </div>
 </div>

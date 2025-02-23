@@ -1,4 +1,4 @@
-/doc_gen.sh
+doc_gen.sh
 doxygen_*.*
 doc_gen.bat
 *.session
@@ -6,3 +6,4 @@ doc_gen.bat
 *.php~
 /templates/
 /toolbars/
+*.html~

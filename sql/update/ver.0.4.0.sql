@@ -45,3 +45,8 @@ SET `user_rights` = JSON_OBJECT(
 -- 7. Удаление старых полей в таблице `group`
 -- ALTER TABLE users DROP COLUMN pic_view, DROP COLUMN pic_rate_user, DROP COLUMN pic_rate_moder, DROP COLUMN pic_upload, DROP COLUMN pic_moderate, DROP COLUMN cat_moderate, DROP COLUMN cat_user, DROP COLUMN comment_view, DROP COLUMN comment_add, DROP COLUMN comment_moderate, DROP COLUMN news_view, DROP COLUMN news_add, DROP COLUMN news_moderate, DROP COLUMN admin;
 
+-- 8. Изменение описания по-умолчанию.
+UPDATE `config` SET `value` = 'Фотогалерея Rigma и Co' WHERE `config`.`name` = 'title_description' 
+
+-- 9. Добавляем настройку - сколько секунд от оследней активности польователя его считать онлайн.
+INSERT INTO `config` (`name`, `value`) VALUES ('time_user_online', '900'); 

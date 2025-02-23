@@ -1,7 +1,19 @@
 var searchData=
 [
-  ['news_0',['news',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#abfa7c6c53ae460403a3d0b3923e71a90',1,'PhotoRigma\Classes\Work\news()'],['../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90',1,'PhotoRigma\Classes\Work_CoreLogic_Interface\news()'],['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90',1,'PhotoRigma\Classes\Work_CoreLogic\news()']]],
-  ['news_2ephp_1',['news.php',['../d4/dad/news_8php.html',1,'']]],
-  ['no_5fphoto_2',['no_photo',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work\no_photo()'],['../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work_Image_Interface\no_photo()'],['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work_Image\no_photo()']]],
-  ['no_5fuser_5favatar_3',['NO_USER_AVATAR',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d',1,'PhotoRigma::Classes::Work_Template']]]
+  ['page_5ffooter_0',['page_footer',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#add2bf9bc51d5f40d33f8c3fec6f0491e',1,'PhotoRigma::Classes::Template']]],
+  ['page_5fheader_1',['page_header',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd',1,'PhotoRigma::Classes::Template']]],
+  ['pars_5ftemplate_2',['pars_template',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4',1,'PhotoRigma::Classes::Template']]],
+  ['photo_20rigma_20biz_3',['Photo Rigma BiZ',['../index.html',1,'']]],
+  ['photo_2ephp_4',['photo.php',['../dc/d71/photo_8php.html',1,'']]],
+  ['photorigma_5',['PhotoRigma',['../de/d90/namespacePhotoRigma.html',1,'']]],
+  ['photorigma_3a_3aaction_6',['Action',['../de/d8e/namespacePhotoRigma_1_1Action.html',1,'PhotoRigma']]],
+  ['photorigma_3a_3aclasses_7',['Classes',['../d6/dc3/namespacePhotoRigma_1_1Classes.html',1,'PhotoRigma']]],
+  ['photorigma_3a_3ainclude_8',['Include',['../db/d02/namespacePhotoRigma_1_1Include.html',1,'PhotoRigma']]],
+  ['photorigma_3a_3alanguage_9',['Language',['../dc/d7a/namespacePhotoRigma_1_1Language.html',1,'PhotoRigma']]],
+  ['prepare_5finsert_5fdata_10',['prepare_insert_data',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899',1,'PhotoRigma::Classes::Database']]],
+  ['process_5fimage_5fresize_5fgd_11',['process_image_resize_gd',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce',1,'PhotoRigma::Classes::Work_Image']]],
+  ['process_5fimage_5fresize_5fgmagick_12',['process_image_resize_gmagick',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c',1,'PhotoRigma::Classes::Work_Image']]],
+  ['process_5fimage_5fresize_5fimagick_13',['process_image_resize_imagick',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74',1,'PhotoRigma::Classes::Work_Image']]],
+  ['process_5fuser_5frights_14',['process_user_rights',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7b22f0ff3047191231f20b97f25833f0',1,'PhotoRigma::Classes::User']]],
+  ['profile_2ephp_15',['profile.php',['../dd/df8/profile_8php.html',1,'']]]
 ];

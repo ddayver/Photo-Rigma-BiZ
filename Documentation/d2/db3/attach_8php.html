@@ -106,31 +106,40 @@ $(function(){initNavTree('d2/db3/attach_8php.html','../../'); initResizable(true
 </div><!--header-->
 <div class="contents">
 
-<p>Вывод фото из галлереи по идентификатору.  
+<p>Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей.  
 <a href="#details">Подробнее...</a></p>
 
 <p><a href="../../d2/db3/attach_8php_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">PhotoRigma\Action</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
 <tr class="memitem:aa696e8bb5d10e0b7e3a14a8bbb738c95" id="r_aa696e8bb5d10e0b7e3a14a8bbb738c95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(!defined('<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#aa696e8bb5d10e0b7e3a14a8bbb738c95">$header_footer</a> = false</td></tr>
-<tr class="memdesc:aa696e8bb5d10e0b7e3a14a8bbb738c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запретить вывод шапки страницы  <br /></td></tr>
 <tr class="separator:aa696e8bb5d10e0b7e3a14a8bbb738c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a565b8336923ef5ec8f122c2b41c5eef1" id="r_a565b8336923ef5ec8f122c2b41c5eef1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a565b8336923ef5ec8f122c2b41c5eef1">$template_output</a> = false</td></tr>
-<tr class="memdesc:a565b8336923ef5ec8f122c2b41c5eef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запретить вывод подвала страницы  <br /></td></tr>
 <tr class="separator:a565b8336923ef5ec8f122c2b41c5eef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bad25917126a7b32c2523e42f42b572" id="r_a9bad25917126a7b32c2523e42f42b572"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(! $work-&gt;check_input('_GET', 'foto',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a9bad25917126a7b32c2523e42f42b572">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '^[0-9]+$', 'not_zero'=&gt; true])|| $user-&gt;user['pic_view']==false)</td></tr>
+<tr class="separator:a9bad25917126a7b32c2523e42f42b572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0b3dacf5d65d8f2293ffa78561fe31" id="r_ade0b3dacf5d65d8f2293ffa78561fe31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ade0b3dacf5d65d8f2293ffa78561fe31">$query_result</a> = $db-&gt;res_row()</td></tr>
+<tr class="separator:ade0b3dacf5d65d8f2293ffa78561fe31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1abd674afc1ccfc20aca3c95243cd3" id="r_a9e1abd674afc1ccfc20aca3c95243cd3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a9e1abd674afc1ccfc20aca3c95243cd3">$real_mime_type</a> = finfo_file($finfo, $real_path)</td></tr>
+<tr class="separator:a9e1abd674afc1ccfc20aca3c95243cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22d87432587ad25822da5534c2bed0ab" id="r_a22d87432587ad25822da5534c2bed0ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(!<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">Work::validate_mime_type</a>( $real_mime_type)) <a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(empty($photo_data['full_path']))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a22d87432587ad25822da5534c2bed0ab">$final_real_path</a> = realpath($photo_data['full_path'])</td></tr>
+<tr class="separator:a22d87432587ad25822da5534c2bed0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b9a00a735dba9694b1d50a169d5033" id="r_af0b9a00a735dba9694b1d50a169d5033"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>( $final_real_path===false||!is_file( $final_real_path)||!is_readable( $final_real_path)) <a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>($work-&gt;check_input('_GET', 'thumbnail',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#af0b9a00a735dba9694b1d50a169d5033">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-1]+$/']) &amp;&amp; $_GET['thumbnail']=='1')</td></tr>
+<tr class="separator:af0b9a00a735dba9694b1d50a169d5033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Вывод фото из галлереи по идентификатору. </p>
+<div class="textblock"><p>Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей. </p>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.2.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>28/03-2012</dd></dl>
-<p>Используется для вывод фото из галлереи по идентификатору и скрытия настоящего пути к файлу. </p>
+<dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-02-23 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d2/db3/attach_8php_source.html">attach.php</a></p>
 </div></div><!-- contents -->

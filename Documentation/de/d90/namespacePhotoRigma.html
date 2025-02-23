@@ -184,19 +184,40 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:aa698a3e72116e8e778be0e95d908ee30" id="r_aa698a3e72116e8e778be0e95d908ee30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa698a3e72116e8e778be0e95d908ee30">$action</a> = 'main'</td></tr>
 <tr class="memdesc:aa698a3e72116e8e778be0e95d908ee30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Действие, которое необходимо выполнить.  <br /></td></tr>
 <tr class="separator:aa698a3e72116e8e778be0e95d908ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f7d10890238dc99756a75a58e561c4b" id="r_a7f7d10890238dc99756a75a58e561c4b"><td class="memItemLeft" align="right" valign="top">if( $work-&gt;check_input('_GET', 'action', ['isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp;$_GET['action'] !=='index' &amp;&amp;! $work-&gt;url_check())&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f7d10890238dc99756a75a58e561c4b">else</a></td></tr>
-<tr class="separator:a7f7d10890238dc99756a75a58e561c4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acefb76e2bff32b4d1b4605e70795a704" id="r_acefb76e2bff32b4d1b4605e70795a704"><td class="memItemLeft" align="right" valign="top">if( $header_footer) if($template_output) catch(\RuntimeException $e) catch(\PDOException $e) catch(\InvalidArgumentException $e) catch(\LogicException $e) catch(\BadMethodCallException $e) catch(\BadFunctionCallException $e) catch(\DomainException $e) catch(\UnexpectedValueException $e) catch(\LengthException $e) catch(\OutOfBoundsException $e) catch(\RangeException $e) catch(\Exception $e)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acefb76e2bff32b4d1b4605e70795a704">handle_exception</a></td></tr>
-<tr class="separator:acefb76e2bff32b4d1b4605e70795a704"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07beac783fdab08b691bb38425a6771" id="r_ae07beac783fdab08b691bb38425a6771"><td class="memItemLeft" align="right" valign="top">if( $header_footer) if($template_output) catch(\RuntimeException $e) catch(\PDOException $e) catch(\InvalidArgumentException $e) catch(\LogicException $e) catch(\BadMethodCallException $e) catch(\BadFunctionCallException $e) catch(\DomainException $e) catch(\UnexpectedValueException $e) catch(\LengthException $e) catch(\OutOfBoundsException $e) catch(\RangeException $e) catch(\Exception $e&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae07beac783fdab08b691bb38425a6771">FILTER_VALIDATE_IP</a></td></tr>
-<tr class="separator:ae07beac783fdab08b691bb38425a6771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf17cb2dba2ed17cb28aa5f37deb5293" id="r_abf17cb2dba2ed17cb28aa5f37deb5293"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf17cb2dba2ed17cb28aa5f37deb5293">$message</a> = date('H:i:s') . &quot; [ERROR] | &quot; . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e-&gt;getMessage() . PHP_EOL</td></tr>
-<tr class="separator:abf17cb2dba2ed17cb28aa5f37deb5293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7843e7143af5311d18183f4d9a9e425e" id="r_a7843e7143af5311d18183f4d9a9e425e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7843e7143af5311d18183f4d9a9e425e">$safe_output</a> = htmlspecialchars($message, ENT_QUOTES | ENT_HTML5, 'UTF-8')</td></tr>
-<tr class="separator:a7843e7143af5311d18183f4d9a9e425e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa355238e5cfbf4556dccf2f8a2b68926" id="r_aa355238e5cfbf4556dccf2f8a2b68926"><td class="memItemLeft" align="right" valign="top">if( $work-&gt;check_input('_GET', 'action', ['isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp;$_GET['action'] !=='index' &amp;&amp;$work-&gt;url_check())&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa355238e5cfbf4556dccf2f8a2b68926">else</a></td></tr>
+<tr class="separator:aa355238e5cfbf4556dccf2f8a2b68926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>\<a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">Action</a></p>
+<div class="textblock"><p>\Action</p>
+<p>Файл используется для вывода фото из галереи по идентификатору, переданному через параметр &lsquo;$_GET['foto&rsquo;]<code>. Реализованы следующие особенности:</p><ul>
+<li>Проверка прав пользователя на просмотр изображений (</li>
+</ul>
+<p></code>$user-&gt;user['pic_view']<code>).</p><ul>
+<li>Ограничение доступа к файлам только внутри директории галереи.</li>
+<li>Проверка MIME-типа файла для предотвращения несанкционированного доступа.</li>
+<li>Поддержка создания миниатюр при наличии параметра</li>
+</ul>
+<p></code>$_GET['thumbnail']`. Если файл недоступен, возвращаются данные об отсутствующем изображении.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения различных операций. </dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+file index.php Этот файл подключает <a class="el" href="../../d2/db3/attach_8php.html" title="Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением ...">action/attach.php</a> по запросу из <code>$_GET</code>.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа к файлам.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>Если не удалось определить путь к фото или файл недоступен. Пример сообщения: "Не удалось определить путь к фото | Путь: {$photo_data['full_path']}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникла ошибка при создании миниатюры. Пример сообщения: "Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}".</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">Action</a></p>
 <p>Формирует и выводит последние 5 новостей проекта. В работе используются все ресурсы из пространства имён <code><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></code>.</p>
 <dl class="section see"><dt>См. также</dt><dd>index.php Файл, который подключает main.php.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>, отвечает за формирование главной страницы сайта.</dd></dl>
@@ -406,7 +427,6 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 index.php Файл, который подключает <a class="el" href="../../d9/d2a/work__template_8php.html" title="Файл содержит класс Work_Template, который отвечает за формирование данных для шаблонов.">work_template.php</a>.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в формировании данных для шаблонов.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000021">Необходимо сделать</a></b></dt><dd>Вынести время, за которое считать пользователей онлайн, в настройки через БД.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -471,7 +491,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00210">210</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00806">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01226">Work\create_menu()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00583">Work_Template\create_menu()</a>, <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a> и <a class="el" href="../../d6/dd6/template_8php_source.html#l00854">Template\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00794">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01226">Work\create_menu()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00575">Work_Template\create_menu()</a>, <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a> и <a class="el" href="../../d6/dd6/template_8php_source.html#l00854">Template\page_header()</a>.</p>
 
 </div>
 </div>
@@ -711,7 +731,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00105">105</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00278">Work\__set()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01935">Work\validate_array()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00278">Work\__set()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01938">Work\validate_array()</a>.</p>
 
 </div>
 </div>
@@ -751,22 +771,6 @@ index.php Файл, который подключает <a class="el" href="../.
 </ul>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00147">147</a></p>
-
-</div>
-</div>
-<a id="abf17cb2dba2ed17cb28aa5f37deb5293" name="abf17cb2dba2ed17cb28aa5f37deb5293"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf17cb2dba2ed17cb28aa5f37deb5293">&#9670;&#160;</a></span>$message</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">$message = date('H:i:s') . &quot; [ERROR] | &quot; . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e-&gt;getMessage() . PHP_EOL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00298">298</a></p>
 
 </div>
 </div>
@@ -823,24 +827,6 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Содержит пути к файлам, которые необходимы для работы приложения. </p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00091">91</a></p>
-
-</div>
-</div>
-<a id="a7843e7143af5311d18183f4d9a9e425e" name="a7843e7143af5311d18183f4d9a9e425e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7843e7143af5311d18183f4d9a9e425e">&#9670;&#160;</a></span>$safe_output</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">$safe_output = htmlspecialchars($message, ENT_QUOTES | ENT_HTML5, 'UTF-8')</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00338">338</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -1011,14 +997,14 @@ index.php Файл, который подключает <a class="el" href="../.
 
 </div>
 </div>
-<a id="a7f7d10890238dc99756a75a58e561c4b" name="a7f7d10890238dc99756a75a58e561c4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f7d10890238dc99756a75a58e561c4b">&#9670;&#160;</a></span>else</h2>
+<a id="aa355238e5cfbf4556dccf2f8a2b68926" name="aa355238e5cfbf4556dccf2f8a2b68926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa355238e5cfbf4556dccf2f8a2b68926">&#9670;&#160;</a></span>else</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if (function_exists('\<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a>')) else</td>
+          <td class="memname">if (is_file( $action_file) &amp;&amp;is_readable( $action_file)) else</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1032,40 +1018,6 @@ index.php Файл, который подключает <a class="el" href="../.
 </ul>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00235">235</a></p>
-
-</div>
-</div>
-<a id="ae07beac783fdab08b691bb38425a6771" name="ae07beac783fdab08b691bb38425a6771"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae07beac783fdab08b691bb38425a6771">&#9670;&#160;</a></span>FILTER_VALIDATE_IP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">if($header_footer) if( $template_output) catch(\RuntimeException $e) catch(\PDOException $e) catch(\InvalidArgumentException $e) catch(\LogicException $e) catch(\BadMethodCallException $e) catch(\BadFunctionCallException $e) catch(\DomainException $e) catch(\UnexpectedValueException $e) catch(\LengthException $e) catch(\OutOfBoundsException $e) catch(\RangeException $e) catch (\Exception $e FILTER_VALIDATE_IP</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00297">297</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00626">Database\__construct()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">PhotoRigma\Include\archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a>.</p>
-
-</div>
-</div>
-<a id="acefb76e2bff32b4d1b4605e70795a704" name="acefb76e2bff32b4d1b4605e70795a704"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acefb76e2bff32b4d1b4605e70795a704">&#9670;&#160;</a></span>handle_exception</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">if($header_footer) if( $template_output) catch(\RuntimeException $e) catch(\PDOException $e) catch(\InvalidArgumentException $e) catch(\LogicException $e) catch(\BadMethodCallException $e) catch(\BadFunctionCallException $e) catch(\DomainException $e) catch(\UnexpectedValueException $e) catch(\LengthException $e) catch(\OutOfBoundsException $e) catch(\RangeException $e) catch (\Exception $e) handle_exception</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00295">295</a></p>
 
 </div>
 </div>

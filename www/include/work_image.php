@@ -172,17 +172,20 @@ interface Work_Image_Interface
      * @see PhotoRigma::Classes::Work_Image::no_photo()
      *      Публичный метод-редирект для вызова этой логики.
      *
-     * @return array{
-     *     url: string, // URL полноразмерного изображения.
-     *     thumbnail_url: string, // URL эскиза изображения.
-     *     name: string, // Название изображения.
-     *     description: string, // Описание изображения.
-     *     category_name: string, // Название категории.
-     *     category_description: string, // Описание категории.
-     *     rate: string, // Рейтинг изображения.
-     *     url_user: null, // URL пользователя (если доступен).
-     *     real_name: string // Имя пользователя.
-     * } Массив с данными об отсутствующем изображении. Значения по умолчанию используются для отсутствующих данных.
+     * @return array Массив данных об изображении или его отсутствии:
+     *               - `'url'` (string): URL полноразмерного изображения.
+     *               - `'thumbnail_url'` (string): URL эскиза изображения.
+     *               - `'name'` (string): Название изображения.
+     *               - `'description'` (string): Описание изображения.
+     *               - `'category_name'` (string): Название категории.
+     *               - `'category_description'` (string): Описание категории.
+     *               - `'rate'` (string): Рейтинг изображения.
+     *               - `'url_user'` (string): URL пользователя (пустая строка '').
+     *               - `'real_name'` (string): Имя пользователя.
+     *               - `'full_path'` (string): Полный путь к изображению.
+     *               - `'thumbnail_path'` (string): Полный путь к эскизу.
+     *               - `'file'` (string): Имя файла.
+     *               Значения по умолчанию используются для отсутствующих данных.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`site_url`).
      *          Если этот параметр некорректен, результат может быть непредсказуемым.
@@ -563,17 +566,20 @@ class Work_Image implements Work_Image_Interface
      * @see PhotoRigma::Classes::Work_Image::_no_photo_internal() Защищённый метод, выполняющий основную логику.
      * @see PhotoRigma::Classes::Work::no_photo() Этот метод вызывается через класс Work.
      *
-     * @return array{
-     *     url: string, // URL полноразмерного изображения.
-     *     thumbnail_url: string, // URL эскиза изображения.
-     *     name: string, // Название изображения.
-     *     description: string, // Описание изображения.
-     *     category_name: string, // Название категории.
-     *     category_description: string, // Описание категории.
-     *     rate: string, // Рейтинг изображения.
-     *     url_user: null, // URL пользователя (если доступен).
-     *     real_name: string // Имя пользователя.
-     * } Массив с данными об отсутствующем изображении. Значения по умолчанию используются для отсутствующих данных.
+     * @return array Массив данных об изображении или его отсутствии:
+     *               - `'url'` (string): URL полноразмерного изображения.
+     *               - `'thumbnail_url'` (string): URL эскиза изображения.
+     *               - `'name'` (string): Название изображения.
+     *               - `'description'` (string): Описание изображения.
+     *               - `'category_name'` (string): Название категории.
+     *               - `'category_description'` (string): Описание категории.
+     *               - `'rate'` (string): Рейтинг изображения.
+     *               - `'url_user'` (string): URL пользователя (пустая строка '').
+     *               - `'real_name'` (string): Имя пользователя.
+     *               - `'full_path'` (string): Полный путь к изображению.
+     *               - `'thumbnail_path'` (string): Полный путь к эскизу.
+     *               - `'file'` (string): Имя файла.
+     *               Значения по умолчанию используются для отсутствующих данных.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`site_url`).
      *          Если этот параметр некорректен, результат может быть непредсказуемым.
@@ -914,17 +920,20 @@ class Work_Image implements Work_Image_Interface
      * @see PhotoRigma::Classes::Work_Image::$config
      *      Свойство конфигурации проекта в классе.
      *
-     * @return array{
-     *     url: string, // URL полноразмерного изображения.
-     *     thumbnail_url: string, // URL эскиза изображения.
-     *     name: string, // Название изображения.
-     *     description: string, // Описание изображения.
-     *     category_name: string, // Название категории.
-     *     category_description: string, // Описание категории.
-     *     rate: string, // Рейтинг изображения.
-     *     url_user: null, // URL пользователя (если доступен).
-     *     real_name: string // Имя пользователя.
-     * } Массив с данными об отсутствующем изображении. Значения по умолчанию используются для отсутствующих данных.
+     * @return array Массив данных об изображении или его отсутствии:
+     *               - `'url'` (string): URL полноразмерного изображения.
+     *               - `'thumbnail_url'` (string): URL эскиза изображения.
+     *               - `'name'` (string): Название изображения.
+     *               - `'description'` (string): Описание изображения.
+     *               - `'category_name'` (string): Название категории.
+     *               - `'category_description'` (string): Описание категории.
+     *               - `'rate'` (string): Рейтинг изображения.
+     *               - `'url_user'` (string): URL пользователя (пустая строка '').
+     *               - `'real_name'` (string): Имя пользователя.
+     *               - `'full_path'` (string): Полный путь к изображению.
+     *               - `'thumbnail_path'` (string): Полный путь к эскизу.
+     *               - `'file'` (string): Имя файла.
+     *               Значения по умолчанию используются для отсутствующих данных.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`site_url`).
      *          Если этот параметр некорректен, результат может быть непредсказуемым.
@@ -947,8 +956,11 @@ class Work_Image implements Work_Image_Interface
             'category_name' => 'No category',
             'category_description' => 'No category available',
             'rate' => 'Rate: 0/0',
-            'url_user' => null,
-            'real_name' => 'No user'
+            'url_user' => '',
+            'real_name' => 'No user',
+            'full_path' => $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png',
+            'thumbnail_path' => $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/no_foto.png',
+            'file' => 'no_foto.png'
         ];
     }
 
@@ -1370,7 +1382,9 @@ class Work_Image implements Work_Image_Interface
         // Получение формата GraphicsMagick
         $format = $gmagick_formats[$original_data['type']];
         // Проверка поддержки формата через GraphicsMagick
-        $supported_formats = \Gmagick::queryFormats();
+        $gmagick_instance = new \Gmagick(); // Создаем экземпляр Gmagick
+        $supported_formats = $gmagick_instance->queryFormats(); // Вызываем метод queryFormats()
+        unset($gmagick_instance);
         if (!in_array($format, $supported_formats)) {
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$format} не поддерживается GraphicsMagick"
@@ -1378,12 +1392,12 @@ class Work_Image implements Work_Image_Interface
             return false;
         }
         // Ограничение памяти
-        $available_memory = (int)ini_get('memory_limit'); // Например, '128M' → 128 * 1024 * 1024
+        $available_memory = (int)ini_get('memory_limit') * 1024 * 1024; // Например, '128M' → 128 * 1024 * 1024
         $max_memory_usage = 0.25 * $available_memory; // 25% от доступной памяти
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
             \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GraphicsMagick"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GraphicsMagick | Доступная память: " . ini_get('memory_limit')
             );
             return false;
         }
@@ -1406,7 +1420,8 @@ class Work_Image implements Work_Image_Interface
             // Настройка прозрачности для PNG и WebP
             if ($original_data['type'] === 'image/png' || $original_data['type'] === 'image/webp') {
                 $image->setImageFormat($format);
-                $image->setImageAlphaChannel(\Gmagick::ALPHACHANNEL_ACTIVATE);
+                $image->setImageBackgroundColor('transparent'); // Установка прозрачного фона
+                // $image = $image->flattenImages(); // Объединение слоев с учетом прозрачности
             }
             // Масштабирование изображения
             $image->resizeImage(
@@ -1536,7 +1551,9 @@ class Work_Image implements Work_Image_Interface
         // Получение формата ImageMagick
         $format = $imagick_formats[$original_data['type']];
         // Проверка поддержки формата через ImageMagick
-        $supported_formats = \Imagick::queryFormats();
+        $imagick_instance = new \Imagick(); // Создаем экземпляр Imagick
+        $supported_formats = $imagick_instance->queryFormats(); // Вызываем метод queryFormats()
+        unset($imagick_instance);
         if (!in_array($format, $supported_formats)) {
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$format} не поддерживается ImageMagick"
@@ -1544,12 +1561,12 @@ class Work_Image implements Work_Image_Interface
             return false;
         }
         // Ограничение памяти
-        $available_memory = (int)ini_get('memory_limit'); // Например, '128M' → 128 * 1024 * 1024
+        $available_memory = (int)ini_get('memory_limit') * 1024 * 1024; // Например, '128M' → 128 * 1024 * 1024
         $max_memory_usage = 0.25 * $available_memory; // 25% от доступной памяти
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
             \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через ImageMagick"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через ImageMagick | Доступная память: " . ini_get('memory_limit')
             );
             return false;
         }
@@ -1701,12 +1718,12 @@ class Work_Image implements Work_Image_Interface
             return false;
         }
         // Ограничение памяти
-        $available_memory = (int)ini_get('memory_limit'); // Например, '128M' → 128 * 1024 * 1024
+        $available_memory = (int)ini_get('memory_limit') * 1024 * 1024; // Например, '128M' → 128 * 1024 * 1024
         $max_memory_usage = 0.25 * $available_memory; // 25% от доступной памяти
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
             \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GD"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GD | Доступная память: " . ini_get('memory_limit')
             );
             return false;
         }
