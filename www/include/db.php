@@ -2067,7 +2067,7 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype($params)
             );
         }
-        // Начало замера времени
+        // echo $this->txt_query . PHP_EOL;        // Начало замера времени
         $start_time = microtime(true);
         $this->res_query = $this->pdo->prepare($this->txt_query);
         $this->res_query->execute($params);

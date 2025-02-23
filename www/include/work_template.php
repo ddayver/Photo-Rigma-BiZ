@@ -842,22 +842,29 @@ class Work_Template implements Work_Template_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные из базы данных"
             );
         }
-        // Формирование массива меню
+
         $menu_items = [];
         foreach ($menu_data as $key => $menu_item) {
             $is_visible = true;
+
             // Проверяем права доступа для текущего пользователя
-            // user_login: 0 - гость, 1 - не гость.
-            // user_access: 0 - нельзя смотреть, 1 - можно смотреть.
-            if (($menu_item['user_login'] !== '') && (
-                ($menu_item['user_login'] == 0 && $this->user->user['id'] > 0) ||
-                ($menu_item['user_login'] == 1 && $this->user->user['id'] == 0)
-            )) {
-                $is_visible = false;
+            if ($menu_item['user_login'] !== null) {
+                // user_login: 0 - только гостям, 1 - только зарегистрированным
+                if (
+                    ($menu_item['user_login'] == 0 && $this->user->user['id'] > 0) || // Гость пытается получить доступ к пункту для зарегистрированных
+                    ($menu_item['user_login'] == 1 && $this->user->user['id'] == 0)  // Зарегистрированный пытается получить доступ к пункту для гостей
+                ) {
+                    $is_visible = false;
+                }
             }
-            if ($menu_item['user_access'] !== '' && $this->user->user[$menu_item['user_access']] != 1) {
-                $is_visible = false;
+
+            if ($menu_item['user_access'] !== null) {
+                // user_access: NULL - всем, иначе проверяем значение в $this->user->user
+                if (!isset($this->user->user[$menu_item['user_access']]) || $this->user->user[$menu_item['user_access']] != 1) {
+                    $is_visible = false;
+                }
             }
+
             // Если пункт меню видим, добавляем его в результат
             if ($is_visible) {
                 // Очищаем данные с использованием Work::clean_field() (статический метод с расширенными проверками)
@@ -943,7 +950,7 @@ class Work_Template implements Work_Template_Interface
                 $finfo = new \finfo(FILEINFO_MIME_TYPE);
                 $mime_type = $finfo->file($full_avatar_path);
                 if (!Work::validate_mime_type($mime_type)) {
-                    log_in_file(
+                    \PhotoRigma\Include\log_in_file(
                         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: {$full_avatar_path}"
                     );
                     $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], self::NO_USER_AVATAR);
@@ -1048,15 +1055,26 @@ class Work_Template implements Work_Template_Interface
         $stat['user_admin'] = $user_stats ? (int)$user_stats['user_admin'] : 0;
         $stat['user_moder'] = $user_stats ? (int)$user_stats['user_moder'] : 0;
         // Получение статистики категорий
-        $this->db->select(
+        $this->db->join(
             [
-                'COUNT(*) AS category',
-                'COUNT(DISTINCT CASE WHEN `category` = 0 THEN `user_upload` END) AS category_user'
+                'COUNT(DISTINCT c.id) AS category',
+                'COUNT(DISTINCT CASE WHEN p.category = 0 THEN p.user_upload END) AS category_user'
             ],
-            TBL_CATEGORY,
-            ['where' => '`id` != 0']
+            TBL_CATEGORY . ' AS c', // Основная таблица (category)
+            [
+                [
+                    'type' => 'LEFT', // Тип JOIN
+                    'table' => TBL_PHOTO . ' AS p', // Присоединяемая таблица (photo)
+                    'on' => 'c.id = p.category' // Условие JOIN
+                ]
+            ],
+            [
+                'where' => 'c.id != 0' // Условие WHERE
+            ]
         );
         $category_stats = $this->db->res_row();
+
+        // Обработка результатов
         $stat['category'] = $category_stats ? (int)$category_stats['category'] : 0;
         $stat['category_user'] = $category_stats ? (int)$category_stats['category_user'] : 0;
         $stat['category'] += $stat['category_user'];
@@ -1075,7 +1093,10 @@ class Work_Template implements Work_Template_Interface
         $this->db->select(
             ['id', 'real_name'],
             TBL_USERS,
-            ['where' => '`date_last_activ` >= (CURRENT_TIMESTAMP - ' . ONLINE_USER . ')']
+            [
+                'where'  => '`date_last_activ` >= (CURRENT_TIMESTAMP - :online_user)',
+                'params' => [':online_user' => self::ONLINE_USER]
+            ]
         );
         $online_users_data = $this->db->res_arr();
         $stat['online'] = $online_users_data
@@ -1093,19 +1114,19 @@ class Work_Template implements Work_Template_Interface
         return [
             'NAME_BLOCK'        => $this->lang['main']['stat_title'],
             'L_STAT_REGIST'     => $this->lang['main']['stat_regist'],
-            'D_STAT_REGIST'     => $stat['regist'],
+            'D_STAT_REGIST'     => (string)$stat['regist'],
             'L_STAT_PHOTO'      => $this->lang['main']['stat_photo'],
-            'D_STAT_PHOTO'      => $stat['photo'],
+            'D_STAT_PHOTO'      => (string)$stat['photo'],
             'L_STAT_CATEGORY'   => $this->lang['main']['stat_category'],
             'D_STAT_CATEGORY'   => $stat['category'] . '(' . $stat['category_user'] . ')',
             'L_STAT_USER_ADMIN' => $this->lang['main']['stat_user_admin'],
-            'D_STAT_USER_ADMIN' => $stat['user_admin'],
+            'D_STAT_USER_ADMIN' => (string)$stat['user_admin'],
             'L_STAT_USER_MODER' => $this->lang['main']['stat_user_moder'],
-            'D_STAT_USER_MODER' => $stat['user_moder'],
+            'D_STAT_USER_MODER' => (string)$stat['user_moder'],
             'L_STAT_RATE_USER'  => $this->lang['main']['stat_rate_user'],
-            'D_STAT_RATE_USER'  => $stat['rate_user'],
+            'D_STAT_RATE_USER'  => (string)$stat['rate_user'],
             'L_STAT_RATE_MODER' => $this->lang['main']['stat_rate_moder'],
-            'D_STAT_RATE_MODER' => $stat['rate_moder'],
+            'D_STAT_RATE_MODER' => (string)$stat['rate_moder'],
             'L_STAT_ONLINE'     => $this->lang['main']['stat_online'],
             'D_STAT_ONLINE'     => $stat['online']
         ];
@@ -1172,15 +1193,19 @@ class Work_Template implements Work_Template_Interface
         $array_data = [];
         // Блок получения данных через join()
         $this->db->join(
-            ['users.id', 'users.real_name', 'COUNT(photos.id) AS user_photo'],
-            TBL_USERS,
+            ['user.id', 'user.real_name', 'COUNT(photo.id) AS user_photo'],
+            TBL_USERS, // Основная таблица (user)
             [
-                ['type' => 'INNER', 'table' => TBL_PHOTO, 'on' => 'users.id = photos.user_upload']
+                [
+                    'type' => 'INNER', // Тип JOIN
+                    'table' => TBL_PHOTO, // Присоединяемая таблица (photo)
+                    'on' => 'user.id = photo.user_upload' // Условие JOIN
+                ]
             ],
             [
-                'group' => 'users.id',
-                'order' => 'user_photo DESC',
-                'limit' => $best_user
+                'group' => 'user.id', // Группировка по ID пользователя
+                'order' => 'user_photo DESC', // Сортировка по количеству фотографий
+                'limit' => $best_user // Лимит на количество результатов
             ]
         );
         $user_data = $this->db->res_arr();

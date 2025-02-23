@@ -894,7 +894,7 @@ class Template
             $header_template->add_if('SHORT_MENU', true);
             foreach ($short_menu as $id => $value) {
                 $header_template->add_string_ar([
-                    'U_SHORT_MENU' => $value['url'],
+                    'U_SHORT_MENU' => $value['url'] ?? '',
                     'L_SHORT_MENU' => $value['name']
                 ], 'SHORT_MENU[' . $id . ']');
                 $header_template->add_if('SHORT_MENU_URL', !empty($value['url']), 'SHORT_MENU[' . $id . ']');
@@ -909,7 +909,7 @@ class Template
             $header_template->add_string('LONG_MENU_NAME_BLOCK', $this->lang['menu']['name_block'], 'LEFT_PANEL[0]');
             foreach ($long_menu as $id => $value) {
                 $header_template->add_string_ar([
-                    'U_LONG_MENU' => $value['url'],
+                    'U_LONG_MENU' => $value['url'] ?? '',
                     'L_LONG_MENU' => $value['name']
                 ], 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
                 $header_template->add_if('LONG_MENU_URL', !empty($value['url']), 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
@@ -1035,9 +1035,9 @@ class Template
         $footer_template->add_case('RIGHT_BLOCK', 'RANDOM_PHOTO', 'RIGHT_PANEL[3]');
         $footer_template->add_string_ar([
             'NAME_BLOCK'             => $rand_photo['name_block'],
-            'PHOTO_WIDTH'            => $rand_photo['width'],
-            'PHOTO_HEIGHT'           => $rand_photo['height'],
-            'MAX_FOTO_HEIGHT'        => $this->work->config['temp_photo_h'] + 10,
+            'PHOTO_WIDTH'            => (string)$rand_photo['width'],
+            'PHOTO_HEIGHT'           => (string)$rand_photo['height'],
+            'MAX_FOTO_HEIGHT'        => (string)($this->work->config['temp_photo_h'] + 10),
             'D_NAME_PHOTO'           => $rand_photo['name'],
             'D_DESCRIPTION_PHOTO'    => $rand_photo['description'],
             'D_NAME_CATEGORY'        => $rand_photo['category_name'],

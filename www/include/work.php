@@ -178,9 +178,9 @@ class Work
         // Инициализация подклассов
         $this->helper = new Work_Helper();
         $this->security = new Work_Security();
-        $this->image = new Work_Image($config);
-        $this->template = new Work_Template($db, $config);
-        $this->core_logic = new Work_CoreLogic($db, $config, $this);
+        $this->image = new Work_Image($this->config);
+        $this->template = new Work_Template($this->db, $this->config);
+        $this->core_logic = new Work_CoreLogic($this->db, $this->config, $this);
         // Устанавливаем кодировку для работы с мультибайтовыми строками
         mb_regex_encoding('UTF-8');
     }
