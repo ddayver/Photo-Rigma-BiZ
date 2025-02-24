@@ -365,7 +365,7 @@ $lang += [
         'news_moderate' => 'Moderate News',
         'admin' => 'Admin Rights',
         'help_edit_user' => 'When changing a user\'s group, the user\'s rights will be updated to match the group\'s rights',
-        'help_search_user' => 'To display all users, use "*" as a search pattern',
+        'help_search_user' => 'To display all users, use `*` as a search pattern',
         'save_user' => 'Save User',
         'select_group' => 'Select the group to modify',
         'edit_group' => 'Edit Group',
@@ -375,3 +375,8 @@ $lang += [
 ];
 /*@}*/
 /*@}*/
+
+return [
+    'lang_name' => $lang_name,
+    'lang' => $lang,
+];

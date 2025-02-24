@@ -579,7 +579,7 @@ class User implements User_Interface
         }
 
         // Удаляем конфиденциальное поле password из данных пользователя
-        unset($guest_group['password']);
+        unset($user_data['password']);
 
         // Удаляем поле user_rights из данных пользователя
         $user_rights = $user_data['user_rights'] ?? null;
@@ -604,6 +604,10 @@ class User implements User_Interface
             $this->load_guest_user();
             return;
         }
+
+
+        // Устанавливаем язык сайта
+        $this->session['language'] = $this->user['language'];
 
         // Удаляем поле user_rights из данных группы
         $group_rights = $group_data['user_rights'] ?? null;

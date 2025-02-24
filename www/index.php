@@ -144,7 +144,7 @@ try {
      * @see PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
      * @see PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
      */
-    $work = new Work($db, $config);
+    $work = new Work($db, $config, $_SESSION);
 
     /**
      * Очищаем значение массива $config[], чтобы предотвратить его использование напрямую.
@@ -184,6 +184,11 @@ try {
 
     // Передаем объект Work в класс Template
     $template->set_work($work);
+
+    // Загружаем языковый массив в классе Work и передаем его в класс Template
+    $work->set_lang();
+    $template->set_lang($work->lang);
+
 
     /** @var bool $header_footer
      * @brief Флаг: выводить ли заголовок и подвал страницы.

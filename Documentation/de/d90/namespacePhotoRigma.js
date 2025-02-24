@@ -54,7 +54,9 @@ var namespacePhotoRigma =
     ] ],
     [ "Language", "dc/d7a/namespacePhotoRigma_1_1Language.html", [
       [ "$lang", "dc/d7a/namespacePhotoRigma_1_1Language.html#a7714b111b644017933931ec69a154102", null ],
-      [ "$lang_name", "dc/d7a/namespacePhotoRigma_1_1Language.html#aaac542e9d3d45bc170bae6775a413a9d", null ]
+      [ "$lang_name", "dc/d7a/namespacePhotoRigma_1_1Language.html#aaac542e9d3d45bc170bae6775a413a9d", null ],
+      [ "return", "dc/d7a/namespacePhotoRigma_1_1Language.html#ab59cf4cc5f471415872c7d688fb827f7", null ],
+      [ "return", "dc/d7a/namespacePhotoRigma_1_1Language.html#ab59cf4cc5f471415872c7d688fb827f7", null ]
     ] ],
     [ "$action", "de/d90/namespacePhotoRigma.html#aa698a3e72116e8e778be0e95d908ee30", null ],
     [ "$base_path", "de/d90/namespacePhotoRigma.html#a0eb0a189bae04261ab41ac974f8eb757", null ],

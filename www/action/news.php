@@ -4,12 +4,15 @@
  * @file        action/news.php
  * @brief       Новости сайта.
  * @author      Dark Dayver
- * @version     0.2.0
- * @date        28/03-2012
+ * @version     0.4.0
+ * @date        2025-02-24
  * @details     Вывод и обработка новостей сайта.
  */
 
+
 namespace PhotoRigma\Action;
+
+use PhotoRigma\Classes\Work;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
@@ -22,11 +25,9 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die("HACK!");
 }
 
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
-
 $template->template_file = 'news.html';
 
-$title = $lang['news']['title'];
+$title = $work->lang['news']['title'];
 $action = '';
 
 if (!$work->check_get('news', true, true, '^[0-9]+\$', true)) {
@@ -98,7 +99,7 @@ if ($subact == 'save') {
 }
 
 if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $temp['user_post']))) {
-    $title = $lang['main']['edit_news'];
+    $title = $work->lang['main']['edit_news'];
 
     if ($db->select('*', TBL_NEWS, '`id` = ' . $news)) {
         $temp = $db->res_row();
@@ -115,9 +116,9 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
                         'D_REAL_NAME_USER_POST' => $user_add['real_name'],
                         'U_PROFILE_USER_POST'   => $work->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $temp['user_post']
                     ));
-                    $user_add = $lang['main']['user_add'];
+                    $user_add = $work->lang['main']['user_add'];
                 } else {
-                    $user_add = $lang['main']['user_add'] . ': ' . $lang['main']['no_user_add'];
+                    $user_add = $work->lang['main']['user_add'] . ': ' . $work->lang['main']['no_user_add'];
                 }
             } else {
                 log_in_file($db->error, DIE_IF_ERROR);
@@ -125,11 +126,11 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
 
             $template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
             $template->add_string_ar(array(
-                'NAME_BLOCK'  => $lang['main']['edit_news'] . ' - ' . $temp['name_post'],
+                'NAME_BLOCK'  => $work->lang['main']['edit_news'] . ' - ' . $temp['name_post'],
                 'L_NAME_USER' => $user_add,
-                'L_NAME_POST' => $lang['news']['name_post'],
-                'L_TEXT_POST' => $lang['news']['text_post'],
-                'L_SAVE_NEWS' => $lang['news']['edit_post'],
+                'L_NAME_POST' => $work->lang['news']['name_post'],
+                'L_TEXT_POST' => $work->lang['news']['text_post'],
+                'L_SAVE_NEWS' => $work->lang['news']['edit_post'],
 
                 'D_NAME_POST' => $temp['name_post'],
                 'D_TEXT_POST' => $temp['text_post'],
@@ -154,17 +155,17 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
     header('Location: ' . $redirect_url);
     log_in_file('Hack attempt!');
 } elseif ($subact == 'add' && $news === false && $user->user['news_add'] == true) {
-    $title = $lang['news']['add_post'];
+    $title = $work->lang['news']['add_post'];
     $action = 'news_add';
 
     $template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
     $template->add_if('NEED_USER', false);
     $template->add_string_ar(array(
-        'NAME_BLOCK'  => $lang['news']['add_post'],
+        'NAME_BLOCK'  => $work->lang['news']['add_post'],
         'L_NAME_USER' => '',
-        'L_NAME_POST' => $lang['news']['name_post'],
-        'L_TEXT_POST' => $lang['news']['text_post'],
-        'L_SAVE_NEWS' => $lang['news']['edit_post'],
+        'L_NAME_POST' => $work->lang['news']['name_post'],
+        'L_TEXT_POST' => $work->lang['news']['text_post'],
+        'L_SAVE_NEWS' => $work->lang['news']['edit_post'],
 
         'D_NAME_USER' => '',
         'D_NAME_POST' => '',
@@ -178,8 +179,8 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
         foreach ($news as $key => $val) {
             $template->add_case('NEWS_BLOCK', 'LAST_NEWS');
             $template->add_string_ar(array(
-                'L_TITLE_NEWS_BLOCK' => $lang['main']['title_news'] . ' - ' . $val['name_post'],
-                'L_NEWS_DATA'        => $lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
+                'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . $val['name_post'],
+                'L_NEWS_DATA'        => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
                 'L_TEXT_POST'        => trim(nl2br($work->ubb($val['text_post'])))
             ), 'LAST_NEWS[0]');
             $template->add_if_ar(array(
@@ -192,7 +193,7 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
                 if ($user_add) {
                     $template->add_if('USER_EXISTS', true, 'LAST_NEWS[0]');
                     $template->add_string_ar(array(
-                        'L_USER_ADD'            => $lang['main']['user_add'],
+                        'L_USER_ADD'            => $work->lang['main']['user_add'],
                         'U_PROFILE_USER_POST'   => $work->config['site_url'] . '?action=profile&amp;subact=profile&amp;uid=' . $val['user_post'],
                         'D_REAL_NAME_USER_POST' => $user_add['real_name']
                     ), 'LAST_NEWS[0]');
@@ -204,16 +205,16 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
             if ($user->user['news_moderate'] == true || ($user->user['id'] != 0 && $user->user['id'] == $val['user_post'])) {
                 $template->add_if('EDIT_LONG', true, 'LAST_NEWS[0]');
                 $template->add_string_ar(array(
-                    'L_EDIT_BLOCK'           => $lang['main']['edit_news'],
-                    'L_DELETE_BLOCK'         => $lang['main']['delete_news'],
-                    'L_CONFIRM_DELETE_BLOCK' => $lang['main']['confirm_delete_news'] . ' ' . $val['name_post'] . '?',
+                    'L_EDIT_BLOCK'           => $work->lang['main']['edit_news'],
+                    'L_DELETE_BLOCK'         => $work->lang['main']['delete_news'],
+                    'L_CONFIRM_DELETE_BLOCK' => $work->lang['main']['confirm_delete_news'] . ' ' . $val['name_post'] . '?',
                     'U_EDIT_BLOCK'           => $work->config['site_url'] . '?action=news&amp;subact=edit&amp;news=' . $val['id'],
                     'U_DELETE_BLOCK'         => $work->config['site_url'] . '?action=news&amp;subact=delete&amp;news=' . $val['id']
                 ), 'LAST_NEWS[0]');
             }
         }
         $action = '';
-        $title = $lang['main']['title_news'] . ' - ' . $val['name_post'];
+        $title = $work->lang['main']['title_news'] . ' - ' . $val['name_post'];
     } else {
         $template->add_case('NEWS_BLOCK', 'LIST_NEWS');
         if (!$work->check_get('y', true, true, '^[0-9]{4}\$', true)) {
@@ -237,15 +238,15 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
                         }
                         $template->add_string_ar(array(
                                 'L_LIST_DATA'  => $val['year'] . ' (' . $temp2 . ')',
-                                'L_LIST_TITLE' => $val['year'] . ' (' . $lang['news']['num_news'] . ': ' . $temp2 . ')',
+                                'L_LIST_TITLE' => $val['year'] . ' (' . $work->lang['news']['num_news'] . ': ' . $temp2 . ')',
                                 'U_LIST_URL'   => $work->config['site_url'] . '?action=news&amp;y=' . $val['year']
                             ), 'LIST_NEWS[' . $key . ']');
                     }
                     $template->add_string_ar(array(
-                        'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
-                        'L_NEWS_DATA'        => $lang['news']['news'] . ' ' . $lang['news']['on_years']
+                        'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
+                        'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years']
                     ));
-                    $title = $lang['news']['news'] . ' ' . $lang['news']['on_years'];
+                    $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'];
                 }
             } else {
                 log_in_file($db->error, DIE_IF_ERROR);
@@ -272,16 +273,16 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
                                 log_in_file($db->error, DIE_IF_ERROR);
                             }
                             $template->add_string_ar(array(
-                                    'L_LIST_DATA'  => $lang['news'][$val['month']] . ' (' . $temp2 . ')',
-                                    'L_LIST_TITLE' => $lang['news'][$val['month']] . ' (' . $lang['news']['num_news'] . ': ' . $temp2 . ')',
+                                    'L_LIST_DATA'  => $work->lang['news'][$val['month']] . ' (' . $temp2 . ')',
+                                    'L_LIST_TITLE' => $work->lang['news'][$val['month']] . ' (' . $work->lang['news']['num_news'] . ': ' . $temp2 . ')',
                                     'U_LIST_URL'   => $work->config['site_url'] . '?action=news&amp;y=' . $year . '&amp;m=' . $val['month']
                                 ), 'LIST_NEWS[' . $key . ']');
                         }
                         $template->add_string_ar(array(
-                            'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
-                            'L_NEWS_DATA'        => $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $year . ' ' . $lang['news']['on_month']
+                            'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
+                            'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month']
                         ));
-                        $title = $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $year . ' ' . $lang['news']['on_month'];
+                        $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'];
                     }
                 } else {
                     log_in_file($db->error, DIE_IF_ERROR);
@@ -303,10 +304,10 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
                                 ), 'LIST_NEWS[' . $key . ']');
                         }
                         $template->add_string_ar(array(
-                            'L_TITLE_NEWS_BLOCK' => $lang['news']['news'],
-                            'L_NEWS_DATA'        => $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news']['years']
+                            'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
+                            'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years']
                         ));
-                        $title = $lang['news']['news'] . ' ' . $lang['news']['on'] . ' ' . $lang['news'][$month] . ' ' . $year . ' ' . $lang['news']['years'];
+                        $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'];
                     }
                 } else {
                     log_in_file($db->error, DIE_IF_ERROR);
@@ -315,4 +316,3 @@ if ($subact == 'edit' && $news !== false && ($user->user['news_moderate'] == tru
         }
     }
 }
-/// @endcond

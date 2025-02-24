@@ -113,6 +113,7 @@ class Work
     private Work_Helper $helper; ///< Объект для очистки строк, преобразования размеров и проверки MIME-типов.
     private Work_CoreLogic $core_logic; ///< Объект для основной логики приложения.
     private array $lang = []; ///< Массив с языковыми переменными
+    private array $session = []; ///< Массив, привязанный к глобальному массиву $_SESSION
 
     /**
      * @brief Конструктор класса.
@@ -158,8 +159,14 @@ class Work
      * $work = new \PhotoRigma\Classes\Work($db, $config);
      * @endcode
      */
-    public function __construct(Database_Interface $db, array $config)
+    public function __construct(Database_Interface $db, array $config, array &$session)
     {
+        if (!is_array($session)) {
+            throw new \InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные данные сессии | Проверьте, что массив сессии является корректным"
+            );
+        }
+        $this->session = &$session;
         $this->db = $db;
         $this->config = $config;
         // Загружаем конфигурацию из базы данных
@@ -342,81 +349,116 @@ class Work
     }
 
     /**
-     * @brief Установка массива языковых данных через сеттер.
+     * @brief Устанавливает языковые данные из файла и передаёт их в дочерние классы.
      *
-     * @details Этот метод позволяет установить массив языковых данных ($lang).
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что массив не пустой.
-     *          2. Рекурсивно проверяет корректность ключей и значений с помощью метода validate_array.
-     *          3. Обрабатывает массив через метод sanitize_array, который использует Work::clean_field.
-     *          4. Логирует изменения, если они были выполнены.
-     *          5. Передаёт обработанные данные в дочерние классы (Work_Template и Work_CoreLogic)
-     *             через их методы set_lang.
+     * @details Этот метод используется для установки массива языковых данных ($lang) из файла.
+     *          Выполняются следующие шаги:
+     *          1. Формируется путь к файлу языковых данных на основе текущего языка сессии или конфигурации.
+     *          2. Проверяется существование и доступность файла для чтения.
+     *          3. Загружаются данные из файла, которые должны быть массивом с ключом `'lang'`.
+     *          4. Проверяется корректность массива через метод `process_lang_array()`.
+     *          5. Логируются изменения (если они есть).
+     *          6. Обновляются языковые данные в текущем классе и передаются в дочерние классы (`Work_Template` и `Work_CoreLogic`).
      *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work::validate_array Рекурсивная проверка массива на корректность ключей и значений.
-     * @see PhotoRigma::Classes::Work::sanitize_array Рекурсивная обработка массива через Work::clean_field.
+     * @see PhotoRigma::Classes::Work::$lang Свойство класса Work, которое изменяется.
      * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство дочернего класса Work_CoreLogic.
      * @see PhotoRigma::Classes::Work_Template::$lang Свойство дочернего класса Work_Template.
-     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
+     * @see PhotoRigma::Include::log_in_file() Внешняя функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::process_lang_array() Метод для проверки корректности массива языковых данных.
      *
-     * @param array $lang Массив языковых данных:
-     *                    - Не должен быть пустым.
-     *                    - Ключи и значения должны соответствовать ограничениям (глубина до 4 уровней).
+     * @param string $lang Имя файла языковых данных:
+     *                     - Должен быть непустой строкой.
+     *                     - Должен соответствовать имени файла в директории языковых данных.
+     *                     - По умолчанию: `'main'`.
      *
-     * @throws InvalidArgumentException Если массив некорректен (пустой или содержит некорректные ключи/значения).
-     *
-     * @note Метод рекурсивно проверяет и обрабатывает массив языковых данных.
-     *       Изменения логируются только при наличии изменений.
-     *
-     * @warning Некорректные данные (пустой массив или некорректные ключи/значения) вызывают исключение.
-     *          Массив должен соответствовать ограничению глубины до 4 уровней.
+     * @throws InvalidArgumentException Если имя файла некорректно (пустое или не существует).
+     *                                  Пример сообщения: "Некорректное имя языкового файла | Поле не должно быть пустым".
+     *                                  Если массив языковых данных некорректен (не содержит ключ `'lang'` или содержит ошибки).
+     *                                  Пример сообщения: "Обнаружены ошибки в массиве языковых данных | Ошибки: [список ошибок]".
+     * @throws RuntimeException         Если файл языковых данных недоступен для чтения.
+     *                                  Пример сообщения: "Файл языковых данных недоступен для чтения | Путь: [путь к файлу]".
      *
      * @todo Интегрировать в систему кеширования языковых переменных.
+     *
+     * @note Файл языковых данных должен быть доступен для чтения.
+     *       Массив языковых данных должен содержать ключ `'lang'`.
+     *
+     * @warning Если файл языковых данных отсутствует или содержит ошибки, метод выбрасывает исключение.
      *
      * Пример использования метода:
      * @code
      * $work = new \PhotoRigma\Classes\Work();
-     * $lang = [
-     *     'key1' => 'value1',
-     *     'key2' => [
-     *         'subkey1' => 'subvalue1'
-     *     ]
-     * ];
-     * $work->set_lang($lang);
+     * $work->set_lang('main');
      * @endcode
      */
-    public function set_lang(array $lang)
+    public function set_lang(string $lang = 'main')
     {
         if (empty($lang)) {
             throw new \InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
-                "Некорректный массив языковых данных | Массив не должен быть пустым"
+                "Некорректное имя языкового файла | Поле не должно быть пустым"
             );
         }
+
+        // Устанавливаем язык из сессии или конфигурации
+        if (!isset($this->session['language']) || empty($this->session['language'])) {
+            $this->session['language'] = $this->config['language'];
+        }
+
+        // Формируем путь к файлу языковых данных
+        $lang_file_path = $this->config['site_dir'] . '/language/' . $this->session['language'] . '/' . $lang . '.php';
+
+        // Проверяем существование файла
+        if (!file_exists($lang_file_path)) {
+            throw new \InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Файл языковых данных не найден | Путь: {$lang_file_path}"
+            );
+        }
+
+        // Проверяем доступность файла для чтения
+        if (!is_readable($lang_file_path)) {
+            throw new \RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Файл языковых данных недоступен для чтения | Путь: {$lang_file_path}"
+            );
+        }
+
+        // Загружаем данные из файла
+        $data = include($lang_file_path);
+        if (!is_array($data) || !isset($data['lang'])) {
+            throw new \RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Файл языковых данных не возвращает массив с ключом 'lang' | Путь: {$lang_file_path}"
+            );
+        }
+
+        // Извлекаем данные
+        $lang_data = $data['lang'];
+
         // Проверяем массив на корректность
-        // $errors = $this->validate_array($lang, 4); // Ограничение глубины до 4 уровней
-        // if (!empty($errors)) {
-        //    throw new \InvalidArgumentException(
-        //        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
-        //        "Обнаружены ошибки в массиве языковых данных | Ошибки: " . json_encode($errors)
-        //    );
-        // }
-        // Обрабатываем массив через clean_field
-        // $changes = $this->sanitize_array($lang);
+        $result = $this->process_lang_array($lang_data);
+        if (!empty($result['errors'])) {
+            throw new \InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Обнаружены ошибки в массиве языковых данных | Ошибки: " . json_encode($result['errors'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+            );
+        }
+
         // Логируем изменения, если они есть
-        // if (!empty($changes)) {
-        //    \PhotoRigma\Include\log_in_file(
-        //        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
-        //        "Очищенные значения | Значения: " . json_encode($changes)
-        //    );
-        // }
+        if (!empty($result['changes'])) {
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Очищенные значения | Значения: " . json_encode($result['changes'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+            );
+        }
+
+        // Обновляем языковые данные
+        $this->lang = array_merge($this->lang ?? [], $result['result']);
+
         // Передаём языковые данные в свойство и подклассы
-        $this->lang = $lang;
-        $this->template->set_lang($lang);
-        $this->core_logic->set_lang($lang);
+        $this->template->set_lang($this->lang);
+        $this->core_logic->set_lang($this->lang);
     }
 
     /**
@@ -1889,143 +1931,104 @@ class Work
     // Внутренние методы класса Work.
 
     /**
-     * @brief Рекурсивная проверка массива на корректность ключей и значений.
+     * @brief Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.
      *
-     * @details Метод выполняет рекурсивную проверку массива на соответствие следующим условиям:
-     *          1. Все ключи должны быть строками.
-     *          2. Все значения должны быть либо строками, либо вложенными массивами.
-     *          3. Глубина массива не должна превышать указанное значение `$max_depth`.
+     * @details Этот метод выполняет следующие шаги:
+     *          1. Проверяет, что ключи первого уровня массива являются строками.
+     *          2. Проверяет, что значения первого уровня являются массивами.
+     *          3. Проверяет, что ключи второго уровня являются строками.
+     *          4. Проверяет, что значения второго уровня являются строками.
+     *          5. Очищает значения второго уровня через метод `clean_field()` для защиты от XSS.
+     *          6. Возвращает массив с результатами обработки, включая ошибки, изменения и обработанный массив.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
      * @callergraph
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Work::set_lang
-     *      Сеттер для установки массива $lang.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки и экранирования полей (защита от XSS).
      *
-     * @param array $array Массив для проверки. Пустые массивы недопустимы.
-     * @param int $max_depth Максимальная допустимая глубина массива (должна быть положительным целым числом).
-     * @param int $current_depth Текущая глубина рекурсии (используется внутренне для контроля максимальной глубины).
+     * @param array $lang Массив языковых переменных для обработки:
+     *                    - Ключи первого уровня должны быть строками.
+     *                    - Значения первого уровня должны быть массивами.
+     *                    - Ключи второго уровня должны быть строками.
+     *                    - Значения второго уровня должны быть строками.
      *
-     * @return array Массив ошибок. Каждый элемент представляет собой строку с описанием проблемы.
-     *               Пример: ['Ключ должен быть строкой', 'Глубина превышена'].
+     * @return array Массив с результатами обработки:
+     *               - `'errors'` (array): Массив ошибок, если они есть (например, некорректные ключи или значения).
+     *               - `'changes'` (array): Массив изменений, если значения были очищены (содержит оригинальные и очищенные значения).
+     *               - `'result'` (array): Обработанный массив языковых переменных.
      *
-     * @warning Метод чувствителен к глубине массива. Убедитесь, что параметр `$max_depth` установлен корректно.
-     * @warning Не используйте метод для очень больших массивов из-за риска переполнения стека.
+     * @note Используется метод `clean_field()` для очистки значений (защита от XSS).
      *
-     * @todo Планируется интеграция в систему кеширования языковых параметров.
+     * @warning Метод чувствителен к структуре входного массива. Некорректная структура может привести к ошибкам.
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса
      * @code
-     * $data = [
-     *     'key1' => 'value1',
-     *     'key2' => [
-     *         'nested_key' => 'nested_value',
+     * $result = $this->process_lang_array([
+     *     'greeting' => [
+     *         'hello' => 'Hello, World!',
+     *         'goodbye' => 'Goodbye, World!',
      *     ],
-     * ];
-     * $errors = $this->validate_array($data, 2);
-     * if (!empty($errors)) {
-     *     echo "Обнаружены ошибки:\n";
-     *     foreach ($errors as $error) {
-     *         echo "- {$error}\n";
-     *     }
-     * } else {
-     *     echo "Массив прошёл проверку успешно.";
-     * }
+     * ]);
+     * print_r($result);
      * @endcode
      */
-    private function validate_array(array $array, int $max_depth, int $current_depth = 1): array
+    private function process_lang_array(array $lang): array
     {
-        $errors = [];
-        foreach ($array as $key => $value) {
-            if (!is_string($key)) {
-                $errors[] = "Ключ '{$key}' на уровне {$current_depth} должен быть строкой.";
-            }
-            if (is_array($value)) {
-                if ($current_depth >= $max_depth) {
-                    $errors[] = "Глубина массива превышает допустимое значение ({$max_depth}).";
-                } else {
-                    $nested_errors = $this->validate_array($value, $max_depth, $current_depth + 1);
-                    $errors = array_merge($errors, $nested_errors);
-                }
-            } elseif (!is_string($value)) {
-                $errors[] = "Значение для ключа '{$key}' на уровне {$current_depth} должно быть строкой.";
-            }
-        }
-        return $errors;
-    }
+        $result = [
+            'errors' => [],
+            'changes' => [],
+            'result' => $lang, // Инициализируем результат исходным массивом
+        ];
 
-    /**
-     * @brief Рекурсивная обработка массива для безопасного вывода через HTML.
-     *
-     * @details Метод выполняет рекурсивную обработку массива, вызывая `Work::clean_field` для каждого строкового значения.
-     *          Если значение изменяется в процессе очистки, фиксируются изменения в массиве `$changes`.
-     *          Исходный массив модифицируется по ссылке.
-     *
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work::set_lang
-     *      Сеттер для установки массива $lang.
-     * @see PhotoRigma::Classes::Work::clean_field()
-     *      Обработка значений для безопасного вывода через HTML.
-     *
-     * @param array $array Массив для обработки. Пустые массивы недопустимы.
-     *
-     * @return array Массив изменений. Каждый элемент представляет собой ассоциативный массив с ключами:
-     *               - 'original' (string): Исходное значение.
-     *               - 'cleaned' (string): Очищенное значение.
-     *               Пример: ['key' => ['original' => 'unsafe', 'cleaned' => 'safe']].
-     *
-     * @warning Метод изменяет исходный массив по ссылке. Убедитесь, что это допустимо в контексте использования.
-     * @warning Не используйте метод для очень больших массивов из-за риска переполнения стека.
-     *
-     * @todo Планируется интеграция в систему кеширования языковых параметров.
-     *
-     * Пример вызова метода внутри класса:
-     * @code
-     * $data = [
-     *     'title' => '<script>alert("XSS")</script>',
-     *     'description' => 'Безопасное описание',
-     *     'nested' => [
-     *         'unsafe_key' => '<img src=x onerror=alert(1)>',
-     *     ],
-     * ];
-     * $changes = $this->sanitize_array($data);
-     * if (!empty($changes)) {
-     *     echo "Обнаружены изменения:\n";
-     *     foreach ($changes as $key => $change) {
-     *         echo "- Ключ '{$key}':\n";
-     *         echo "  Исходное значение: {$change['original']}\n";
-     *         echo "  Очищенное значение: {$change['cleaned']}\n";
-     *     }
-     * } else {
-     *     echo "Массив не требует очистки.";
-     * }
-     * @endcode
-     */
-    private function sanitize_array(array $array): array
-    {
-        $changes = [];
-        foreach ($array as $key => &$value) {
-            if (is_array($value)) {
-                $nested_changes = $this->sanitize_array($value);
-                $changes = array_merge($changes, $nested_changes);
-            } elseif (is_string($value)) {
+        foreach ($lang as $name => $keys) {
+            // Проверка ключей первого уровня
+            if (!is_string($name)) {
+                $result['errors'][] = "Ключ первого уровня должен быть строкой. Получено: " . gettype($name);
+                continue;
+            }
+
+            // Проверка второго уровня
+            if (!is_array($keys)) {
+                $result['errors'][] = "Значение для ключа '{$name}' должно быть массивом.";
+                continue;
+            }
+
+            foreach ($keys as $key => $value) {
+                // Преобразование ключа в строку
+                $test_key = (string)$key;
+                if (empty($test_key)) {
+                    $result['errors'][] = "Ключ второго уровня для '{$name}' должен быть строкой. Получено: {$key} - " . gettype($key);
+                    continue;
+                }
+
+                // Удаление старого ключа и добавление нового
+                unset($result['result'][$name][$key]);
+                $key = $test_key;
+
+                // Проверка значений второго уровня
+                if (!is_string($value)) {
+                    $result['errors'][] = "Значение для ключа '{$name}['{$key}']' должно быть строкой. Получено: " . gettype($value);
+                    continue;
+                }
+
+                // Очистка значения
                 $original_value = $value;
-                $cleaned_value = Work::clean_field($value);
+                $cleaned_value = self::clean_field($value);
                 if ($original_value !== $cleaned_value) {
-                    $changes["{$key}"] = [
+                    $result['changes']["{$name}['{$key}']"] = [
                         'original' => $original_value,
                         'cleaned' => $cleaned_value,
                     ];
-                    $value = $cleaned_value;
+                    $value = $cleaned_value; // Обновляем значение
                 }
+
+                // Добавляем обработанный ключ и значение в результирующий массив
+                $result['result'][$name][$key] = $value;
             }
         }
-        return $changes;
+
+        return $result;
     }
 }

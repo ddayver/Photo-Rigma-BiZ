@@ -1576,8 +1576,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 continue;
             }
             // Безопасное подключение файла
-            $lang_name = null;
-            include($main_php_path);
+            $lang_data = include($main_php_path);
+            $lang_name = $lang_data['lang_name'];
+            unset($lang_data);
             if (!is_string($lang_name) || trim($lang_name) === '') {
                 \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"

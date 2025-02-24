@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"de/d20/index_8php_source.html":[6,0,10],
+"de/d28/classPhotoRigma_1_1Classes_1_1Template.html":[4,0,0,1,2],
 "de/d28/classPhotoRigma_1_1Classes_1_1Template.html":[5,0,0,0,2],
 "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a019276d6ea456268f3f48be5b53e07b6":[4,0,0,1,2,35],
 "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a019276d6ea456268f3f48be5b53e07b6":[5,0,0,0,2,35],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "index.html#autotoc_md19":[0,5,2],
 "index.html#autotoc_md20":[0,5,3],
 "index.html#autotoc_md22":[0,6],
-"index.html#autotoc_md24":[0,7],
-"index.html#autotoc_md26":[0,8],
-"index.html#autotoc_md6":[0,0]
+"index.html#autotoc_md24":[0,7]
 };
