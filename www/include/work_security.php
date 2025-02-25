@@ -866,8 +866,8 @@ class Work_Security implements Work_Security_Interface
     protected function _check_field_internal(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
         if ($regexp !== false) {
-            $isValidRegexp = preg_match($regexp, '') !== false;
-            if (!$isValidRegexp) {
+            $is_valid_regexp = preg_match($regexp, '') !== false;
+            if (!$is_valid_regexp) {
                 $errorMessage = match (preg_last_error()) {
                     PREG_INTERNAL_ERROR => "Внутренняя ошибка регулярного выражения.",
                     PREG_BACKTRACK_LIMIT_ERROR => "Превышен лимит обратного отслеживания.",

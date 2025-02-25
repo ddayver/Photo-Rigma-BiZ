@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['и_20описаний_0',['Список устаревших определений и описаний',['../da/d58/deprecated.html',1,'']]]
+  ['rigma_20biz_0',['Photo Rigma BiZ',['../index.html',1,'']]]
 ];

@@ -7,3 +7,4 @@ doc_gen.bat
 /templates/
 /toolbars/
 *.html~
+*.md~

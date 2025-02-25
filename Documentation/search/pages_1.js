@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['photo_20rigma_20biz_0',['Photo Rigma BiZ',['../index.html',1,'']]]
+  ['lists_0',['Users of these lists',['../d2/d0c/md_badword_2USERS.html',1,'']]]
 ];

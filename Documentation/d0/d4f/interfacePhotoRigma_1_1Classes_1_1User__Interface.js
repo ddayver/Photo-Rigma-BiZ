@@ -6,5 +6,5 @@ var interfacePhotoRigma_1_1Classes_1_1User__Interface =
     [ "delete_user", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab2ab959808354af438bd760ef89d09eb", null ],
     [ "login_user", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ac52837ab322293b0123a41b7f379666e", null ],
     [ "update_group_data", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ac5e8ffbb47053c27a7df5b5e7563975d", null ],
-    [ "update_user_data", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a65f5f90596afd8e0f45b649fa5972436", null ]
+    [ "update_user_data", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab142b3405ddc1bbb89b84a97dc89d8dc", null ]
 ];

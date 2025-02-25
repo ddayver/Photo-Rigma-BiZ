@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['задач_0',['Список задач',['../dd/da0/todo.html',1,'']]]
+  ['photo_20rigma_20biz_0',['Photo Rigma BiZ',['../index.html',1,'']]]
 ];

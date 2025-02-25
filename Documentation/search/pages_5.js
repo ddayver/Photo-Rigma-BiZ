@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['описаний_0',['Список устаревших определений и описаний',['../da/d58/deprecated.html',1,'']]],
-  ['определений_20и_20описаний_1',['Список устаревших определений и описаний',['../da/d58/deprecated.html',1,'']]]
+  ['these_20lists_0',['Users of these lists',['../d2/d0c/md_badword_2USERS.html',1,'']]]
 ];

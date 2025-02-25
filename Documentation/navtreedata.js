@@ -26,6 +26,11 @@ var NAVTREE =
 [
   [ "Photo-Rigma-BiZ", "index.html", [
     [ "Photo Rigma BiZ", "index.html", "index" ],
+    [ "Users of these lists", "d2/d0c/md_badword_2USERS.html", [
+      [ "Projects", "d2/d0c/md_badword_2USERS.html#autotoc_md5", null ],
+      [ "Documents", "d2/d0c/md_badword_2USERS.html#autotoc_md6", null ],
+      [ "Organizations", "d2/d0c/md_badword_2USERS.html#autotoc_md7", null ]
+    ] ],
     [ "Список задач", "dd/da0/todo.html", null ],
     [ "Список устаревших определений и описаний", "da/d58/deprecated.html", null ],
     [ "Разделы", "topics.html", "topics" ],
@@ -60,9 +65,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeb13fee613cd87923546463495400380",
-"de/d20/index_8php_source.html",
-"index.html#autotoc_md26"
+"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1",
+"dd/da0/todo.html",
+"index.html#autotoc_md17"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

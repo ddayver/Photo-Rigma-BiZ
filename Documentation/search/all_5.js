@@ -9,5 +9,6 @@ var searchData=
   ['delete_6',['delete',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a73d8e6acdfb996002f980ab7c9c18515',1,'PhotoRigma\Classes\Database_Interface\delete()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515',1,'PhotoRigma\Classes\Database\delete()']]],
   ['delete_5fgroup_7',['delete_group',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a4045f753ad732e5f01bafd4b6c04d961',1,'PhotoRigma\Classes\User_Interface\delete_group()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961',1,'PhotoRigma\Classes\User\delete_group()']]],
   ['delete_5fuser_8',['delete_user',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab2ab959808354af438bd760ef89d09eb',1,'PhotoRigma\Classes\User_Interface\delete_user()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb',1,'PhotoRigma\Classes\User\delete_user()']]],
-  ['die_5fif_5ferror_9',['DIE_IF_ERROR',['../db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c',1,'PhotoRigma::Include']]]
+  ['die_5fif_5ferror_9',['DIE_IF_ERROR',['../db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c',1,'PhotoRigma::Include']]],
+  ['documents_10',['Documents',['../d2/d0c/md_badword_2USERS.html#autotoc_md6',1,'']]]
 ];

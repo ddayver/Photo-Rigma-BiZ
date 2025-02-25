@@ -9,7 +9,6 @@
  * @details     Вывод и обработка новостей сайта.
  */
 
-
 namespace PhotoRigma\Action;
 
 use PhotoRigma\Classes\Work;

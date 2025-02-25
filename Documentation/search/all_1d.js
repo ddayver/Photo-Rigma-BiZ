@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['новостей_20сайта_0',['новостей сайта',['../df/dc9/group__LanguageEnglishNews.html',1,'Переменные для новостей сайта'],['../d8/da1/group__LanguageRussianNews.html',1,'Переменные для новостей сайта']]]
+  ['меню_20сайта_0',['меню сайта',['../d3/db1/group__LanguageEnglishMenu.html',1,'Переменные для пунктов меню сайта'],['../d9/d53/group__LanguageRussianMenu.html',1,'Переменные для пунктов меню сайта']]]
 ];

@@ -49,4 +49,8 @@ SET `user_rights` = JSON_OBJECT(
 UPDATE `config` SET `value` = 'Фотогалерея Rigma и Co' WHERE `config`.`name` = 'title_description' 
 
 -- 9. Добавляем настройку - сколько секунд от оследней активности польователя его считать онлайн.
-INSERT INTO `config` (`name`, `value`) VALUES ('time_user_online', '900'); 
+INSERT INTO `config` (`name`, `value`) VALUES ('time_user_online', '900');
+
+-- 10. Увеличиваем поле для хранения пароля в связи с переходом на password_hash(..., PASSWORD_BCRYPT)
+ALTER TABLE `user` CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Пароль пользователя';
+ 
