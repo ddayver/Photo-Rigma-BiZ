@@ -188,8 +188,6 @@ class Work
         $this->image = new Work_Image($this->config);
         $this->template = new Work_Template($this->db, $this->config);
         $this->core_logic = new Work_CoreLogic($this->db, $this->config, $this);
-        // Устанавливаем кодировку для работы с мультибайтовыми строками
-        mb_regex_encoding('UTF-8');
     }
 
     /**

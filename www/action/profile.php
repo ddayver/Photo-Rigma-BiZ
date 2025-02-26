@@ -60,6 +60,14 @@ if ($subact == 'saveprofile') {
         } else {
             $user_id = $user->session['login_id'];
         }
+
+        // Проверяем CSRF-токен
+        if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+            throw new \RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
         // Проверяем права доступа
         if ($user_id === $user->session['login_id'] || $user->user['admin'] == true) {
             // Запрос с плейсхолдерами
@@ -193,8 +201,11 @@ if ($subact == 'saveprofile') {
                     // - $rows (количество затронутых строк в базе данных)
                     // Конец метода update_user_data
                     if ($rows > 0) {
-                        $user = new User($db, $user->session);
+                        $user = new User($db, $_SESSION);
                         $work->set_user($user);
+                        $work->set_lang();
+                        $template->set_lang($work->lang);
+                        $template->set_work($work);
                         header('Location: ' . $redirect_url);
                         \PhotoRigma\Include\log_in_file(
                             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
@@ -221,16 +232,43 @@ if ($subact == 'logout') {
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout, Пользователь ID: {$user->session['login_id']}"
         );
     } else {
-        if (!$db->update(array('date_last_activ' => null, 'date_last_logout' => date('Y-m-d H:m:s')), TBL_USERS, '`id` = ' . $user->session['login_id'])) {
-            log_in_file($db->error, DIE_IF_ERROR);
+        // Обновление данных пользователя через плейсхолдеры
+        $db->update([
+            'date_last_activ' => null,
+            'date_last_logout' => date('Y-m-d H:i:s')
+        ], TBL_USERS, [
+            'where' => '`id` = :user_id',
+            'params' => [':user_id' => $user->session['login_id']]
+        ]);
+
+        // Проверка успешности обновления
+        $rows = $db->get_affected_rows();
+        if ($rows === 0) {
+            throw new \RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные пользователя при выходе | ID: {$user->session['login_id']}"
+            );
         }
+
+        // Безопасное завершение сессии
         $user->session['login_id'] = 0;
         $user->session['admin_on'] = false;
-        $user = new user();
-        @session_destroy();
+
+        // Регенерация session_id для безопасности
+        session_regenerate_id(true);
+
+        $user = new User($db, $_SESSION);
+        $work->set_user($user);
+        $work->set_lang();
+        $template->set_lang($work->lang);
+        $template->set_work($work);
+
+        // Уничтожение сессии
+        session_destroy();
+
+        // Перенаправление и логирование
         header('Location: ' . $work->config['site_url']);
         \PhotoRigma\Include\log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout, Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout"
         );
     }
 } /* elseif ($subact == 'forgot') // Восстановление пароля будет готово после реализации работы с почтой
@@ -238,17 +276,34 @@ if ($subact == 'logout') {
     $redirect_time = 3;
     $redirect_message = $work->lang['main']['redirect_title'];
 } */ elseif ($subact == 'regist') {
-    if ($work->check_session('login_id', true, true, '^[0-9]+\$', true)) {
+    // Проверяем, авторизован ли пользователь через check_input
+    if ($work->check_input('_SESSION', 'login_id', [
+        'isset' => true,
+        'empty' => true,
+        'regexp' => '/^[0-9]+$/',
+        'not_zero' => true
+    ])) {
+        // Если пользователь уже авторизован, перенаправляем на главную страницу
         header('Location: ' . $work->config['site_url']);
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: regist, Пользователь ID: {$user->session['login_id']}"
         );
     } else {
+        // Устанавливаем блок шаблона для регистрации
         $template->add_case('PROFILE_BLOCK', 'REGIST');
+
+        // Задаем заголовок страницы
         $title = $work->lang['profile']['regist'];
         $action = 'regist';
+
+        // Генерируем CAPTCHA и сохраняем её ответ в сессии (хэшированный)
         $captcha = $work->gen_captcha();
-        $user->session['captcha'] = $captcha['answer'];
+        $user->session['captcha'] = password_hash($captcha['answer'], PASSWORD_BCRYPT);
+
+        // Генерируем CSRF-токен для защиты от атак типа CSRF
+        $template->add_string('CSRF_TOKEN', $user->csrf_token());
+
+        // Инициализируем флаги ошибок для всех полей формы
         $template->add_if_ar(array(
             'ERROR_LOGIN'       => false,
             'ERROR_PASSWORD'    => false,
@@ -257,6 +312,8 @@ if ($subact == 'logout') {
             'ERROR_REAL_NAME'   => false,
             'ERROR_CAPTCHA'     => false
         ));
+
+        // Добавляем строки для шаблона, включая метки, URL и данные CAPTCHA
         $template->add_string_ar(array(
             'NAME_BLOCK'         => $work->lang['profile']['regist'],
             'L_LOGIN'            => $work->lang['profile']['login'],
@@ -266,194 +323,193 @@ if ($subact == 'logout') {
             'L_REAL_NAME'        => $work->lang['profile']['real_name'],
             'L_REGISTER'         => $work->lang['profile']['register'],
             'L_CAPTCHA'          => $work->lang['profile']['captcha'],
-            'U_REGISTER'         => $work->config['site_url'] . '?action=profile&amp;subact=register',
+            'U_REGISTER'         => sprintf('%s?action=profile&subact=register', $work->config['site_url']),
             'D_CAPTCHA_QUESTION' => $captcha['question'],
             'D_LOGIN'            => '',
             'D_EMAIL'            => '',
             'D_REAL_NAME'        => ''
         ));
+
+        // Если есть ошибки в сессии, добавляем их в шаблон
         if (isset($user->session['error']) && !empty($user->session['error']) && is_array($user->session['error'])) {
-            foreach ($user->session['error'] as $key => $val) {
-                $template->add_if('ERROR_' . strtoupper($key), $val['if']);
+            foreach ($user->session['error'] as $key => $value) {
+                // Добавляем флаг ошибки для поля
+                $template->add_if('ERROR_' . strtoupper($key), $value['if'] ?? false);
+
+                // Добавляем данные ошибки в шаблон
                 $template->add_string_ar(array(
-                    'D_' . strtoupper($key)       => $val['data'],
-                    'D_ERROR_' . strtoupper($key) => (isset($val['text']) ? $val['text'] : '')
+                    'D_' . strtoupper($key)       => Work::clean_field($value['data']) ?? '',
+                    'D_ERROR_' . strtoupper($key) => Work::clean_field($value['text']) ?? ''
                 ));
             }
-            unset($user->session['error']);
+            // Очищаем ошибки из сессии после использования
+            $user->unset_property_key('session', 'error');
         }
     }
 } elseif ($subact == 'register') {
-    if ($work->check_session('login_id', true, true, '^[0-9]+\$', true)) {
+    // Проверяем, авторизован ли пользователь через check_input
+    // Если пользователь уже авторизован, перенаправляем его на другую страницу
+    if ($work->check_input('_SESSION', 'login_id', [
+        'isset' => true,
+        'empty' => true,
+        'regexp' => '/^[0-9]+$/',
+        'not_zero' => true
+    ])) {
         header('Location: ' . $redirect_url);
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: register, Пользователь ID: {$user->session['login_id']}"
         );
     } else {
+        // Проверяем CSRF-токен для защиты от CSRF-атак
+        if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+            throw new \RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
+
+        // Будущий метод add_user_data
+        // Входные данные:
+        // - $_POST (данные из формы: логин, пароль, email, имя, CAPTCHA)
+        // - $work (класс вспомогательных методов)
+        // - $redirect_url (URL для перенаправления в случае ошибок)
+
         $error = false;
-        if ($work->check_post('login', true, true, REG_LOGIN)) {
-            $user->session['error']['login']['if'] = false;
-            $user->session['error']['login']['data'] = $_POST['login'];
-            $register['login'] = $_POST['login'];
-        } else {
-            $error = true;
-            $user->session['error']['login']['if'] = true;
-            $user->session['error']['login']['data'] = '';
-            $user->session['error']['login']['text'] = $work->lang['profile']['error_login'];
-        }
-
-        if ($work->check_post('password', true, true)) {
-            $user->session['error']['password']['if'] = false;
-            $user->session['error']['password']['data'] = '';
-            $register['password'] = $_POST['password'];
-        } else {
-            $error = true;
-            $user->session['error']['password']['if'] = true;
-            $user->session['error']['password']['data'] = '';
-            $user->session['error']['password']['text'] = $work->lang['profile']['error_password'];
-        }
-
-        if ($work->check_post('re_password', true, true) && $_POST['re_password'] === $register['password']) {
-            $user->session['error']['re_password']['if'] = false;
-            $user->session['error']['re_password']['data'] = '';
-            $register['password'] = md5($register['password']);
-        } else {
-            $error = true;
-            $user->session['error']['re_password']['if'] = true;
-            $user->session['error']['re_password']['data'] = '';
-            if ($user->session['error']['password']['if']) {
-                $user->session['error']['password']['text'] = $work->lang['profile']['error_password'];
-                $user->session['error']['re_password']['text'] = $work->lang['profile']['error_password'];
+        // Массив правил валидации для полей формы
+        // Ключи - имена полей, значения - параметры проверки
+        $field_validators = [
+            'login' => ['isset' => true, 'empty' => true, 'regexp' => REG_LOGIN],
+            'password' => ['isset' => true, 'empty' => true],
+            're_password' => ['isset' => true, 'empty' => true],
+            'email' => ['isset' => true, 'empty' => true, 'regexp' => REG_EMAIL],
+            'real_name' => ['isset' => true, 'empty' => true, 'regexp' => REG_NAME],
+            'captcha' => ['isset' => true, 'empty' => true, 'regexp' => '/^[0-9]+$/']
+        ];
+        // Применяем правила валидации для каждого поля формы
+        foreach ($field_validators as $field => $options) {
+            if (!$work->check_input('_POST', $field, $options)) {
+                $user->session['error'][$field]['if'] = true;
+                $user->session['error'][$field]['text'] = match ($field) {
+                    'login' => $work->lang['profile']['error_login'],
+                    'password' => $work->lang['profile']['error_password'],
+                    're_password' => $work->lang['profile']['error_re_password'],
+                    'email' => $work->lang['profile']['error_email'],
+                    'real_name' => $work->lang['profile']['error_real_name'],
+                    'captcha' => $work->lang['profile']['error_captcha'],
+                    default => 'Unknown error',
+                };
+                $error = true;
             } else {
-                $user->session['error']['password']['text'] = $work->lang['profile']['error_re_password'];
-                $user->session['error']['re_password']['text'] = $work->lang['profile']['error_re_password'];
-                $user->session['error']['password']['if'] = true;
-            }
-        }
-
-        if ($work->check_post('email', true, true, REG_EMAIL)) {
-            $user->session['error']['email']['if'] = false;
-            $user->session['error']['email']['data'] = $_POST['email'];
-            $register['email'] = $_POST['email'];
-        } else {
-            $error = true;
-            $user->session['error']['email']['if'] = true;
-            $user->session['error']['email']['data'] = '';
-            $user->session['error']['email']['text'] = $work->lang['profile']['error_email'];
-        }
-
-        if ($work->check_post('real_name', true, true, REG_NAME)) {
-            $user->session['error']['real_name']['if'] = false;
-            $user->session['error']['real_name']['data'] = $_POST['real_name'];
-            $register['real_name'] = $_POST['real_name'];
-        } else {
-            $error = true;
-            $user->session['error']['real_name']['if'] = true;
-            $user->session['error']['real_name']['data'] = '';
-            $user->session['error']['real_name']['text'] = $work->lang['profile']['error_real_name'];
-        }
-
-        if ($work->check_post('captcha', true, true, '^[0-9]+\$') && $_POST['captcha'] == $user->session['captcha']) {
-            $user->session['error']['captcha']['if'] = false;
-            $user->session['error']['captcha']['data'] = '';
-        } else {
-            $error = true;
-            $user->session['error']['captcha']['if'] = true;
-            $user->session['error']['captcha']['data'] = '';
-            $user->session['error']['captcha']['text'] = $work->lang['profile']['error_captcha'];
-        }
-        unset($user->session['captcha']);
-
-        if ($db->select('COUNT(*) as `login_count`', TBL_USERS, '`login` = \'' . $register['login'] . '\'')) {
-            $temp = $db->res_row();
-            if (isset($temp['login_count']) && $temp['login_count'] > 0) {
-                $error = true;
-                if ($user->session['error']['login']['if']) {
-                    $user->session['error']['login']['text'] .= ' ' . $work->lang['profile']['error_login_exists'];
-                } else {
-                    $user->session['error']['login']['if'] = true;
-                    $user->session['error']['login']['data'] = '';
-                    $user->session['error']['login']['text'] = $work->lang['profile']['error_login_exists'];
+                // Дополнительные проверки для re_password и captcha
+                if ($field === 're_password' && $_POST['re_password'] !== $_POST['password']) {
+                    $user->session['error']['re_password']['if'] = true;
+                    $user->session['error']['re_password']['text'] = $work->lang['profile']['error_re_password'];
+                    $error = true;
+                }
+                if ($field === 'captcha' && !password_verify($_POST['captcha'], $user->session['captcha'])) {
+                    $user->session['error']['captcha']['if'] = true;
+                    $user->session['error']['captcha']['text'] = $work->lang['profile']['error_captcha'];
+                    $error = true;
                 }
             }
-        } else {
-            log_in_file($db->error, DIE_IF_ERROR);
         }
-
-        if ($db->select('COUNT(*) as `email_count`', TBL_USERS, '`email` = \'' . $register['email'] . '\'')) {
-            $temp = $db->res_row();
-            if (isset($temp['email_count']) && $temp['email_count'] > 0) {
+        $user->unset_property_key('session', 'captcha');
+        // Проверка уникальности login, email и real_name в одном запросе
+        // Используется агрегация данных через COUNT(CASE ...) для каждого поля
+        $db->select(
+            'COUNT(CASE WHEN `login` = :login THEN 1 END) as login_count,
+             COUNT(CASE WHEN `email` = :email THEN 1 END) as email_count,
+             COUNT(CASE WHEN `real_name` = :real_name THEN 1 END) as real_count',
+            TBL_USERS,
+            [
+                'params' => [
+                    ':login' => $_POST['login'],
+                    ':email' => $_POST['email'],
+                    ':real_name' => $_POST['real_name']
+                ]
+            ]
+        );
+        $unique_check_result = $db->res_row();
+        if ($unique_check_result) {
+            // Если login уже существует, добавляем ошибку
+            if ($unique_check_result['login_count'] > 0) {
                 $error = true;
-                if ($user->session['error']['email']['if']) {
-                    $user->session['error']['email']['text'] .= ' ' . $work->lang['profile']['error_email_exists'];
-                } else {
-                    $user->session['error']['email']['if'] = true;
-                    $user->session['error']['email']['data'] = '';
-                    $user->session['error']['email']['text'] = $work->lang['profile']['error_email_exists'];
-                }
+                $user->session['error']['login']['if'] = true;
+                $user->session['error']['login']['text'] = $work->lang['profile']['error_login_exists'];
             }
-        } else {
-            log_in_file($db->error, DIE_IF_ERROR);
-        }
-
-        if ($db->select('COUNT(*) as `real_count`', TBL_USERS, '`real_name` = \'' . $register['real_name'] . '\'')) {
-            $temp = $db->res_row();
-            if (isset($temp['real_count']) && $temp['real_count'] > 0) {
+            // Если email уже существует, добавляем ошибку
+            if ($unique_check_result['email_count'] > 0) {
                 $error = true;
-                if ($user->session['error']['real_name']['if']) {
-                    $user->session['error']['real_name']['text'] .= ' ' . $work->lang['profile']['error_real_name_exists'];
-                } else {
-                    $user->session['error']['real_name']['if'] = true;
-                    $user->session['error']['real_name']['data'] = '';
-                    $user->session['error']['real_name']['text'] = $work->lang['profile']['error_real_name_exists'];
-                }
+                $user->session['error']['email']['if'] = true;
+                $user->session['error']['email']['text'] = $work->lang['profile']['error_email_exists'];
             }
-        } else {
-            log_in_file($db->error, DIE_IF_ERROR);
+            // Если real_name уже существует, добавляем ошибку
+            if ($unique_check_result['real_count'] > 0) {
+                $error = true;
+                $user->session['error']['real_name']['if'] = true;
+                $user->session['error']['real_name']['text'] = $work->lang['profile']['error_real_name_exists'];
+            }
         }
-
+        // Если возникли ошибки, сохраняем их в сессии и перенаправляем пользователя
         if ($error) {
             header('Location: ' . $redirect_url);
             \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: register, Пользователь ID: {$user->session['login_id']}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка регистрации"
             );
         } else {
-            unset($user->session['error']);
-            $query = array();
+            $user->unset_property_key('session', 'error');
             $query = $register;
             $query['group'] = DEFAULT_GROUP;
-
-            if ($db->select('*', TBL_GROUP, '`id` = ' . DEFAULT_GROUP)) {
-                $temp = $db->res_row();
-                if ($temp) {
-                    foreach ($temp as $key => $value) {
-                        if ($key != 'id' && $key != 'name') {
-                            $query[$key] = $value;
-                        }
+            // Получение данных группы по умолчанию
+            // Группа необходима для назначения прав доступа новому пользователю
+            $db->select(
+                '*',
+                TBL_GROUP,
+                [
+                    'where' => '`id` = :group_id',
+                    'params' => [':group_id' => DEFAULT_GROUP]
+                ]
+            );
+            $group_data = $db->res_row();
+            if ($group_data) {
+                // Добавляем данные группы в массив для вставки нового пользователя
+                foreach ($group_data as $key => $value) {
+                    if ($key != 'id' && $key != 'name') {
+                        $query[$key] = $value;
                     }
-                    if ($db->insert($query, TBL_USERS)) {
-                        $new_user = $db->insert_id;
-                        if ($new_user != 0) {
-                            $user->session['login_id'] = $new_user;
-                            header('Location: ' . $work->config['site_url'] . '?action=profile&amp;subact=profile');
-                            \PhotoRigma\Include\log_in_file(
-                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: register, Пользователь ID: {$user->session['login_id']}"
-                            );
-                        } else {
-                            header('Location: ' . $redirect_url);
-                            \PhotoRigma\Include\log_in_file(
-                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: register, Пользователь ID: {$user->session['login_id']}"
-                            );
-                        }
-                    } else {
-                        log_in_file($db->error, DIE_IF_ERROR);
-                    }
-                } else {
-                    log_in_file('Unable to get the default group', DIE_IF_ERROR);
                 }
+                // Формируем массив плейсхолдеров для подготовленного выражения
+                $placeholders = array_map(fn ($key) => ["`$key`" => ":$key"], array_keys($query));
+                // Вставка нового пользователя в базу данных
+                $db->insert(
+                    $placeholders,
+                    TBL_USERS,
+                    '',
+                    ['params' => $query]
+                );
+                $new_user = $db->get_last_insert_id();
             } else {
-                log_in_file($db->error, DIE_IF_ERROR);
+                // Группа по умолчанию не найдена - выбрасываем исключение
+                throw new \RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы по умолчанию"
+                );
             }
+        }
+
+        // Результаты на выходе:
+        // - $new_user (результат добавления пользователя в БД)
+        // Конец метода add_user_data
+        if ($new_user != 0) {
+            $user->session['login_id'] = $new_user;
+            header('Location: ' . sprintf('%s?action=profile&subact=profile', $work->config['site_url']));
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешная регистрация | Пользователь ID: {$user->session['login_id']}"
+            );
+        } else {
+            header('Location: ' . $redirect_url);
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка регистрации"
+            );
         }
     }
 } elseif ($subact == 'login') {

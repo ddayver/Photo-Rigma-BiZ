@@ -50,6 +50,11 @@ use PhotoRigma\Classes\Language;
 use PhotoRigma\Classes\Action;
 use PhotoRigma\Include;
 
+// Устанавливаем кодировку для работы с мультибайтовыми строками
+mb_regex_encoding('UTF-8');
+mb_internal_encoding('UTF-8');
+
+
 /** @def IN_GALLERY
  * @brief Используется для проверки, что файлы подключены через index.php, а не вызваны напрямую.
  */
@@ -182,13 +187,12 @@ try {
     // Передаем объект User в класс Work
     $work->set_user($user);
 
-    // Передаем объект Work в класс Template
-    $template->set_work($work);
-
     // Загружаем языковый массив в классе Work и передаем его в класс Template
     $work->set_lang();
     $template->set_lang($work->lang);
 
+    // Передаем объект Work в класс Template
+    $template->set_work($work);
 
     /** @var bool $header_footer
      * @brief Флаг: выводить ли заголовок и подвал страницы.

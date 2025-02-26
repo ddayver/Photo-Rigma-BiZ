@@ -14,7 +14,7 @@
 												<table border="0" cellspacing="0" cellpadding="0" class="regist_data">
 													<tr>
 														<td>{L_LOGIN}:</td>
-														<td><input type="text" name="login" value="{D_LOGIN}" size="40" maxlength="32" class="form ui-corner-all" /></td>
+														<td><input type="text" name="login" value="{D_LOGIN}" size="40" maxlength="32" class="form ui-corner-all" /><input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
 														<td class="error">
 <!-- IF_ERROR_LOGIN_BEGIN -->
 															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_LOGIN}" />
@@ -109,7 +109,7 @@
 												<table border="0" cellspacing="0" cellpadding="0" class="regist_data">
 													<tr>
 														<td>{L_LOGIN}:</td>
-														<td>{D_LOGIN}</td>
+														<td>{D_LOGIN}<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
 													</tr>
 													<tr>
 														<td>{L_GROUP}:</td>

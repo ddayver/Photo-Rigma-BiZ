@@ -65,9 +65,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1",
-"dd/da0/todo.html",
-"index.html#autotoc_md17"
+"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac632034f4e83ba35a7b3e2124829e0c2",
+"dd/d71/search_8php_source.html",
+"functions_vars.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

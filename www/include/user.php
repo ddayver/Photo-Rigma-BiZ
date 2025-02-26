@@ -77,12 +77,84 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 interface User_Interface
 {
     /**
-     * Добавление нового пользователя.
-     *
-     * @param array $user_data Данные нового пользователя.
-     * @return void
-     */
-    public function add_new_user(array $user_data): void;
+    * @brief Удаляет ключ из указанного свойства объекта (user или session).
+    *        Метод является частью контракта интерфейса для управления данными пользователя и сессии при взаимодействии с пользователями.
+    *
+    * @details Этот метод выполняет следующие действия:
+    *          - Проверяет, какой массив изменять (`$this->user` или `$this->session`).
+    *          - Удаляет ключ, если он существует.
+    *          - Выбрасывает исключение, если указано недопустимое свойство.
+    *
+    * @callgraph
+    *
+    * @see PhotoRigma::Classes::User::unset_property_key Реализация метода в классе User.
+    *
+    * @param string $name Имя свойства, из которого удаляется ключ ('user' или 'session').
+    * @param string|int $key Ключ, который нужно удалить. Может быть строкой или целым числом.
+    *
+    * @throws InvalidArgumentException Если указано недопустимое свойство.
+    *                                  Пример сообщения: "Недопустимое свойство | Свойство: [значение]."
+    *                                  Условия выброса: Если `$name` не равно 'user' или 'session'.
+    *
+    * @note Метод изменяет только свойства 'user' и 'session'.
+    *
+    * @warning Не используйте этот метод для удаления ключей из других свойств.
+    *
+    * Пример вызова метода:
+    * @code
+    * $user = new \PhotoRigma\Classes\User();
+    * $user->unset_property_key('user', 'email');
+    * @endcode
+    */
+    public function unset_property_key(string $name, string|int $key): void;
+
+    /**
+    * @brief Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.
+    *
+    * @details Этот метод выполняет следующие действия:
+    *          - Проверяет корректность входных данных с использованием `$work->check_input()`.
+    *          - Проверяет уникальность логина, email и имени пользователя в базе данных.
+    *          - Добавляет нового пользователя в базу данных, назначая ему группу по умолчанию.
+    *          - При возникновении ошибок сохраняет их в сессии и перенаправляет пользователя на указанный URL.
+    *          - Использует CAPTCHA для защиты от автоматической регистрации.
+    *
+    * @callgraph
+    *
+    * @see PhotoRigma::Classes::User::add_new_user Реализация метода в классе User.
+    *
+    * @param array $post_data Массив данных из формы ($_POST), содержащий новые значения для полей пользователя:
+    *                         - string $login: Логин пользователя (должен соответствовать регулярному выражению REG_LOGIN).
+    *                         - string $password: Пароль пользователя (не должен быть пустым).
+    *                         - string $re_password: Повтор пароля (должен совпадать с $password).
+    *                         - string $email: Email пользователя (должен соответствовать регулярному выражению REG_EMAIL).
+    *                         - string $real_name: Реальное имя пользователя (должно соответствовать регулярному выражению REG_NAME).
+    *                         - string $captcha: Значение CAPTCHA (должно быть числом).
+    * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
+    * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
+    *
+    * @return int ID нового пользователя, если регистрация успешна, или 0 в случае ошибки.
+    *
+    * @throws RuntimeException Если группа по умолчанию не найдена в базе данных.
+    *                           Пример сообщения: "Не удалось получить данные группы по умолчанию."
+    *
+    * @note Используется CAPTCHA для защиты от автоматической регистрации.
+    *
+    * @warning Метод зависит от корректной конфигурации базы данных и таблицы групп.
+    *
+    * Пример использования метода:
+    * @code
+    * $user = new \PhotoRigma\Classes\User();
+    * $work = new \PhotoRigma\Classes\Work();
+    * $redirectUrl = '/register/error';
+    * $userId = $user->add_new_user($_POST, $work, $redirectUrl);
+    * if ($userId > 0) {
+    *     echo "Пользователь успешно зарегистрирован! ID: {$userId}";
+    * } else {
+    *     echo "Ошибка регистрации.";
+    * }
+    * @endcode
+    */
+    public function add_new_user(array $post_data, Work $work, string $redirect_url): int;
 
     /**
     * Обновление данных существующего пользователя.
@@ -166,6 +238,34 @@ interface User_Interface
      * @return void
      */
     public function login_user(string $login, string $password): void;
+
+    /**
+    * @brief Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов.
+    *        Метод является частью контракта интерфейса для обеспечения безопасности форм при взаимодействии с пользователями.
+    *
+    * @details Этот метод выполняет следующие действия:
+    *          - Если CSRF-токен отсутствует в сессии, он генерируется с использованием `random_bytes(32)` (64 символа).
+    *          - Если токен уже существует, он возвращается без повторной генерации.
+    *          - Токен хранится в сессии и используется для защиты форм от CSRF-атак.
+    *
+    * @callgraph
+    *
+    * @see PhotoRigma::Classes::User::csrf_token() Реализация метода в классе User.
+    *
+    * @return string CSRF-токен длиной 64 символа, сгенерированный с использованием безопасного источника случайных данных.
+    *
+    * @note Токен хранится в сессии и используется для защиты форм от CSRF-атак.
+    *
+    * @warning Не используйте этот метод для генерации токенов, если сессия недоступна.
+    *
+    * Пример вызова метода:
+    * @code
+    * $user = new \PhotoRigma\Classes\User();
+    * $csrfToken = $user->csrf_token();
+    * echo "CSRF Token: {$csrfToken}";
+    * @endcode
+    */
+    public function csrf_token(): string;
 }
 
 /**
@@ -377,12 +477,108 @@ class User implements User_Interface
     }
 
     /**
-     * Добавление нового пользователя.
+     * @brief Удаляет ключ из указанного свойства объекта (user или session).
      *
-     * @param array $user_data Данные нового пользователя.
-     * @return void
+     * @details Этот метод выполняет следующие действия:
+     *          - Проверяет, какой массив изменять (`$this->user` или `$this->session`).
+     *          - Удаляет ключ, если он существует.
+     *          - Выбрасывает исключение, если указано недопустимое свойство.
+     *
+     *          Этот метод является публичным и предназначен для прямого использования извне.
+     *
+     * @see PhotoRigma::Classes::User::$user Свойство класса User, содержащее данные пользователя.
+     * @see PhotoRigma::Classes::User::$session Свойство класса User, содержащее данные сессии.
+     *
+     * @param string $name Имя свойства, из которого удаляется ключ ('user' или 'session').
+     * @param string|int $key Ключ, который нужно удалить. Может быть строкой или целым числом.
+     *
+     * @throws InvalidArgumentException Если указано недопустимое свойство.
+     *                                  Пример сообщения: "Недопустимое свойство | Свойство: [значение]."
+     *
+     * @note Метод изменяет только свойства 'user' и 'session'.
+     *
+     * @warning Не используйте этот метод для удаления ключей из других свойств.
+     *
+     * Пример вызова метода:
+     * @code
+     * $user = new \PhotoRigma\Classes\User();
+     * $user->unset_property_key('user', 'email');
+     * @endcode
      */
-    public function add_new_user(array $user_data): void
+    public function unset_property_key(string $name, string|int $key): void
+    {
+        // Проверяем, какой массив нужно изменить
+        switch ($name) {
+            case 'user':
+                if (isset($this->user[$key])) {
+                    unset($this->user[$key]);
+                }
+                break;
+
+            case 'session':
+                if (isset($this->session[$key])) {
+                    unset($this->session[$key]);
+                }
+                break;
+
+            default:
+                throw new \InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    "Недопустимое свойство | Свойство: {$name}"
+                );
+        }
+    }
+
+    /**
+    * @brief Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.
+    *
+    * @details Этот метод выполняет следующие действия:
+    *          - Проверяет корректность входных данных с использованием `$work->check_input()`.
+    *          - Проверяет уникальность логина, email и имени пользователя в базе данных.
+    *          - Добавляет нового пользователя в базу данных, назначая ему группу по умолчанию.
+    *          - При возникновении ошибок сохраняет их в сессии и перенаправляет пользователя на указанный URL.
+    *          - Использует CAPTCHA для защиты от автоматической регистрации.
+    *
+    * @callgraph
+    *
+    * @see PhotoRigma::Classes::User::$session Свойство класса User, связанное с $_SESSION.
+    * @see PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных.
+    * @see PhotoRigma::Classes::Work Класс, объект которого передается в аргументах.
+    * @see PhotoRigma::Include::log_in_file() Функция логирования ошибок.
+    *
+    * @param array $post_data Массив данных из формы ($_POST), содержащий новые значения для полей пользователя:
+    *                         - string $login: Логин пользователя (должен соответствовать регулярному выражению REG_LOGIN).
+    *                         - string $password: Пароль пользователя (не должен быть пустым).
+    *                         - string $re_password: Повтор пароля (должен совпадать с $password).
+    *                         - string $email: Email пользователя (должен соответствовать регулярному выражению REG_EMAIL).
+    *                         - string $real_name: Реальное имя пользователя (должно соответствовать регулярному выражению REG_NAME).
+    *                         - string $captcha: Значение CAPTCHA (должно быть числом).
+    * @param object $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
+    * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
+    *
+    * @return int ID нового пользователя, если регистрация успешна, или 0 в случае ошибки.
+    *
+    * @throws RuntimeException Если группа по умолчанию не найдена в базе данных.
+    *                           Пример сообщения: "Не удалось получить данные группы по умолчанию."
+    *
+    * @note Используется CAPTCHA для защиты от автоматической регистрации.
+    *
+    * @warning Метод зависит от корректной конфигурации базы данных и таблицы групп.
+    *
+    * Пример использования метода:
+    * @code
+    * $user = new \PhotoRigma\Classes\User();
+    * $work = new \PhotoRigma\Classes\Work();
+    * $redirectUrl = '/register/error';
+    * $userId = $user->add_user_data($_POST, $work, $redirectUrl);
+    * if ($userId > 0) {
+    *     echo "Пользователь успешно зарегистрирован! ID: {$userId}";
+    * } else {
+    *     echo "Ошибка регистрации.";
+    * }
+    * @endcode
+    */
+    public function add_new_user(array $post_data, Work $work, string $redirect_url): int
     {
         throw new \RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Добавление нового пользователя"
@@ -500,6 +696,39 @@ class User implements User_Interface
         throw new \RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Вход пользователя с логином: {$login}"
         );
+    }
+
+    /**
+     * @brief Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов.
+     *
+     * @details Этот метод выполняет следующие действия:
+     *          - Если CSRF-токен отсутствует в сессии, он генерируется с использованием `random_bytes(32)` (64 символа).
+     *          - Если токен уже существует, он возвращается без повторной генерации.
+     *          - Токен хранится в сессии и используется для защиты форм от CSRF-атак.
+     *
+     *          Этот метод является публичным и предназначен для прямого использования извне.
+     *
+     * @see PhotoRigma::Classes::User::$session Свойство класса User, содержащее данные сессии.
+     *
+     * @return string CSRF-токен длиной 64 символа (генерируется с использованием `random_bytes(32)`).
+     *
+     * @note Токен хранится в сессии и используется для защиты форм от CSRF-атак.
+     *
+     * @warning Не используйте этот метод для генерации токенов, если сессия недоступна.
+     *
+     * Пример вызова метода:
+     * @code
+     * $user = new \PhotoRigma\Classes\User();
+     * $csrfToken = $user->csrf_token();
+     * echo "CSRF Token: {$csrfToken}";
+     * @endcode
+     */
+    public function csrf_token(): string
+    {
+        if (empty($this->session['csrf_token'])) {
+            $this->session['csrf_token'] = bin2hex(random_bytes(32)); // 64 символа
+        }
+        return $this->session['csrf_token'];
     }
 
     /**
