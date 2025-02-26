@@ -513,45 +513,133 @@ if ($subact == 'logout') {
         }
     }
 } elseif ($subact == 'login') {
-    if ($work->check_session('login_id', true, true, '^[0-9]+\$', true)) {
+    // Проверяем, авторизован ли пользователь через сессию
+    if ($work->check_input('_SESSION', 'login_id', [
+        'isset' => true,
+        'empty' => true,
+        'regexp' => '/^[0-9]+$/',
+        'not_zero' => true
+    ])) {
+        // Если пользователь уже авторизован, перенаправляем его на главную страницу
         header('Location: ' . $work->config['site_url']);
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
         );
     } else {
+        // Сбрасываем ID пользователя в сессии
         $user->session['login_id'] = 0;
-        if ($work->check_post('login', true, true, REG_LOGIN) && $work->check_post('password', true, true)) {
-            if ($db->select(array('id', 'login', 'password'), TBL_USERS, '`login` = \'' . $_POST['login'] . '\'')) {
-                $temp_user = $db->res_row();
-                if ($temp_user) {
-                    if (md5($_POST['password']) === $temp_user['password']) {
-                        $user->session['login_id'] = $temp_user['id'];
-                        $user = new user();
-                        header('Location: ' . $redirect_url);
-                        \PhotoRigma\Include\log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
-                        );
-                    } else {
-                        header('Location: ' . $redirect_url);
-                        \PhotoRigma\Include\log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
-                        );
-                    }
-                } else {
-                    header('Location: ' . $redirect_url);
-                    \PhotoRigma\Include\log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
-                    );
-                }
-            } else {
-                log_in_file($db->error, DIE_IF_ERROR);
-            }
-        } else {
-            header('Location: ' . $redirect_url);
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
+
+        // Проверяем CSRF-токен для защиты от CSRF-атак
+        if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+            throw new \RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
         }
+        $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
+
+        // Будущий метод login_user
+        // Входные данные:
+        // - $_POST (Данные из $_POST: login, password)
+        // - $work (класс вспомогательных методов)
+        // - $redirect_url (URL для перенаправления в случае ошибок)
+
+        // Проверяем входные данные (логин и пароль)
+        if (!$work->check_input('_POST', 'login', [
+                'isset' => true,
+                'empty' => true,
+                'regexp' => REG_LOGIN
+            ]) || !$work->check_input('_POST', 'password', [
+                'isset' => true,
+                'empty' => true
+            ])) {
+            // Входные данные формы невалидны
+            header('Location: ' . $redirect_url);
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверные данные формы | Действие: login, Пользователь ID: {$user->session['login_id']}"
+            );
+        } else {
+            // Выполняем запрос к базе данных для поиска пользователя по логину
+            $db->select(
+                ['id', 'login', 'password'], // Список полей для выборки
+                TBL_USERS, // Имя таблицы
+                [
+                    'where' => 'login = :login', // Условие WHERE
+                    'params' => [':login' => $_POST['login']] // Параметры для prepared statements
+                ]
+            );
+
+            // Получаем данные пользователя из базы данных
+            $user_data = $db->res_row();
+            if ($user_data === false) {
+                // Пользователь с указанным логином не найден
+                header('Location: ' . $redirect_url);
+                \PhotoRigma\Include\log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь с логином '{$_POST['login']}' не найден"
+                );
+            } else {
+                // Проверяем пароль через password_verify()
+                if (!password_verify($_POST['password'], $user_data['password'])) {
+                    // Если проверка через password_verify() не прошла, проверяем пароль через md5
+                    if (md5($_POST['password']) !== $user_data['password']) {
+                        // Пароль неверный
+                        header('Location: ' . $redirect_url);
+                        \PhotoRigma\Include\log_in_file(
+                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный пароль | Действие: login, Пользователь ID: {$user->session['login_id']}"
+                        );
+                    } else {
+                        // Пароль верный, но хранится в формате md5. Преобразуем его в формат password_hash()
+                        $new_password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+                        // Обновляем пароль в базе данных
+                        $db->update(
+                            ['password' => ':password'], // Данные для обновления
+                            TBL_USERS, // Таблица
+                            [
+                                'where' => 'id = :id', // Условие WHERE
+                                'params' => [
+                                    ':password' => $new_password_hash,
+                                    ':id' => $user_data['id']
+                                ]
+                            ]
+                        );
+
+                        // Проверяем результат обновления
+                        $rows = $db->get_affected_rows();
+                        if ($rows > 0) {
+                            // Пароль успешно обновлён
+                            \PhotoRigma\Include\log_in_file(
+                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$user->session['login_id']}"
+                            );
+                        } else {
+                            // Ошибка при обновлении пароля
+                            \PhotoRigma\Include\log_in_file(
+                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$user->session['login_id']}"
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        // Результаты на выходе:
+        // - $user_data['id'] (результат проверки пользователя на вход)
+        // Конец метода login_user
+
+        // Авторизуем пользователя
+        $user->session['login_id'] = $user_data['id'] ?? 0; // Устанавливаем ID или 0, если пользователь не найден
+
+        // Инициализация ядра для пользователя (включая гостя)
+        $user = new User($db, $_SESSION);
+        $work->set_user($user);
+        $work->set_lang();
+        $template->set_lang($work->lang);
+        $template->set_work($work);
+
+        // Перенаправляем пользователя на целевую страницу
+        header('Location: ' . $redirect_url);
+        \PhotoRigma\Include\log_in_file(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешный вход | Действие: login, Пользователь ID: {$user->session['login_id']}"
+        );
     }
 } elseif ($subact == 'profile') {
     if (((isset($user->session['login_id']) && $user->session['login_id'] == 0) || !isset($user->session['login_id'])) && (!isset($_GET['uid']) || empty($_GET['uid']))) {

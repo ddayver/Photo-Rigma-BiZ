@@ -949,6 +949,7 @@ class Work_Template implements Work_Template_Interface
         $array_data = match ($this->user->session['login_id'] ?? 0) {
             0 => [
                 'NAME_BLOCK'        => $this->lang['main']['user_block'],
+                'CSRF_TOKEN'        => $this->user->csrf_token(),
                 'L_LOGIN'           => $this->lang['main']['login'],
                 'L_PASSWORD'        => $this->lang['main']['pass'],
                 'L_ENTER'           => $this->lang['main']['enter'],

@@ -231,13 +231,47 @@ interface User_Interface
     public function delete_group(int $group_id): void;
 
     /**
-     * Вход пользователя.
+     * @brief Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.
      *
-     * @param string $login Логин пользователя.
-     * @param string $password Пароль пользователя.
-     * @return void
+     * @details Этот метод выполняет следующие действия:
+     *          - Проверяет корректность входных данных (логин и пароль) с использованием `$work->check_input()`.
+     *          - Ищет пользователя в базе данных по логину.
+     *          - Проверяет пароль через `password_verify()` и, при необходимости, через `md5`.
+     *          - Если пароль хранится в старом формате (md5), он обновляется до формата `password_hash()`.
+     *          - Возвращает ID пользователя или 0 в случае ошибки.
+     *
+     * @callgraph
+     *
+     * @see PhotoRigma::Classes::User::login_user Метод реализации в классе User.
+     * @see PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных.
+     * @see PhotoRigma::Include::log_in_file() Функция логирования событий.
+     *
+     * @param array $post Массив данных из формы ($_POST), содержащий ключи:
+     *                    - string $login: Логин пользователя (должен соответствовать регулярному выражению REG_LOGIN).
+     *                    - string $password: Пароль пользователя (не должен быть пустым).
+     * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
+     * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
+     *
+     * @return int ID пользователя, если авторизация успешна, или 0 в случае ошибки.
+     *
+     * @note Поддерживается совместимость со старым форматом хранения паролей (md5).
+     *
+     * @warning Метод зависит от корректной конфигурации базы данных.
+     *
+     * Пример использования метода:
+     * @code
+     * $user = new \PhotoRigma\Classes\User();
+     * $work = new \PhotoRigma\Classes\Work();
+     * $redirectUrl = '/login/error';
+     * $userId = $user->login_user($_POST, $work, $redirectUrl);
+     * if ($userId > 0) {
+     *     echo "Вход выполнен успешно! ID пользователя: {$userId}";
+     * } else {
+     *     echo "Ошибка входа.";
+     * }
+     * @endcode
      */
-    public function login_user(string $login, string $password): void;
+    public function login_user(array $post, Work $work, string $redirect_url): int;
 
     /**
     * @brief Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов.
@@ -685,13 +719,47 @@ class User implements User_Interface
     }
 
     /**
-     * Вход пользователя.
-     *
-     * @param string $login Логин пользователя.
-     * @param string $password Пароль пользователя.
-     * @return void
-     */
-    public function login_user(string $login, string $password): void
+    * @brief Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.
+    *
+    * @details Этот метод выполняет следующие действия:
+    *          - Проверяет корректность входных данных (логин и пароль) с использованием `$work->check_input()`.
+    *          - Ищет пользователя в базе данных по логину.
+    *          - Проверяет пароль через `password_verify()` и, при необходимости, через `md5`.
+    *          - Если пароль хранится в старом формате (md5), он обновляется до формата `password_hash()`.
+    *          - Возвращает ID пользователя или 0 в случае ошибки.
+    *
+    * @callgraph
+    *
+    * @see PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных.
+    * @see PhotoRigma::Classes::User::$db Свойство, содержащее объект класса Database.
+    * @see PhotoRigma::Include::log_in_file() Функция логирования событий.
+    *
+    * @param array $post Массив данных из формы ($_POST), содержащий ключи:
+    *                    - string $login: Логин пользователя (должен соответствовать регулярному выражению REG_LOGIN).
+    *                    - string $password: Пароль пользователя (не должен быть пустым).
+    * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
+    * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
+    *
+    * @return int ID пользователя, если авторизация успешна, или 0 в случае ошибки.
+    *
+    * @note Поддерживается совместимость со старым форматом хранения паролей (md5).
+    *
+    * @warning Метод зависит от корректной конфигурации базы данных.
+    *
+    * Пример использования метода:
+    * @code
+    * $user = new \PhotoRigma\Classes\User();
+    * $work = new \PhotoRigma\Classes\Work();
+    * $redirectUrl = '/login/error';
+    * $userId = $user->login_user($_POST, $work, $redirectUrl);
+    * if ($userId > 0) {
+    *     echo "Вход выполнен успешно! ID пользователя: {$userId}";
+    * } else {
+    *     echo "Ошибка входа.";
+    * }
+    * @endcode
+    */
+    public function login_user(array $post, Work $work, string $redirect_url): int
     {
         throw new \RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Вход пользователя с логином: {$login}"
