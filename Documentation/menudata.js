@@ -99,6 +99,7 @@ var menudata={children:[
 {text:"v",url:"functions_func_v.html#index_v"}]},
 {text:"Переменные",url:"functions_vars.html",children:[
 {text:"$",url:"functions_vars.html#index__24"},
+{text:"d",url:"functions_vars.html#index_d"},
 {text:"m",url:"functions_vars.html#index_m"},
 {text:"n",url:"functions_vars.html#index_n"}]}]}]},
 {text:"Файлы",url:"files.html",children:[

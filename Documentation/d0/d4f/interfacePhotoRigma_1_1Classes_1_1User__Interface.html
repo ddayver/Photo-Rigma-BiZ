@@ -130,6 +130,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <tr class="memdesc:abc4c7a4c4f01e32b4540c3d03f45aeb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.  <br /></td></tr>
 <tr class="separator:abc4c7a4c4f01e32b4540c3d03f45aeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab142b3405ddc1bbb89b84a97dc89d8dc" id="r_ab142b3405ddc1bbb89b84a97dc89d8dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab142b3405ddc1bbb89b84a97dc89d8dc">update_user_data</a> (int $user_id, array $post_data, array $files_data, int $max_size, <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> $work)</td></tr>
+<tr class="memdesc:ab142b3405ddc1bbb89b84a97dc89d8dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.  <br /></td></tr>
 <tr class="separator:ab142b3405ddc1bbb89b84a97dc89d8dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2ab959808354af438bd760ef89d09eb" id="r_ab2ab959808354af438bd760ef89d09eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2ab959808354af438bd760ef89d09eb">delete_user</a> (int $user_id)</td></tr>
 <tr class="separator:ab2ab959808354af438bd760ef89d09eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,7 +167,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">}</div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html"><div class="ttname"><a href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html">PhotoRigma\Classes\User_Interface</a></div><div class="ttdoc">Интерфейс для работы с пользователями и группами.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00077">user.php:78</a></div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_a4045f753ad732e5f01bafd4b6c04d961"><div class="ttname"><a href="#a4045f753ad732e5f01bafd4b6c04d961">PhotoRigma\Classes\User_Interface\delete_group</a></div><div class="ttdeci">delete_group(int $group_id)</div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab142b3405ddc1bbb89b84a97dc89d8dc"><div class="ttname"><a href="#ab142b3405ddc1bbb89b84a97dc89d8dc">PhotoRigma\Classes\User_Interface\update_user_data</a></div><div class="ttdeci">update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work)</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab142b3405ddc1bbb89b84a97dc89d8dc"><div class="ttname"><a href="#ab142b3405ddc1bbb89b84a97dc89d8dc">PhotoRigma\Classes\User_Interface\update_user_data</a></div><div class="ttdeci">update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work)</div><div class="ttdoc">Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab2ab959808354af438bd760ef89d09eb"><div class="ttname"><a href="#ab2ab959808354af438bd760ef89d09eb">PhotoRigma\Classes\User_Interface\delete_user</a></div><div class="ttdeci">delete_user(int $user_id)</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab6cad9b0038673d591c0dd84575bc777"><div class="ttname"><a href="#ab6cad9b0038673d591c0dd84575bc777">PhotoRigma\Classes\User_Interface\login_user</a></div><div class="ttdeci">login_user(array $post, Work $work, string $redirect_url)</div><div class="ttdoc">Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_abc4c7a4c4f01e32b4540c3d03f45aeb2"><div class="ttname"><a href="#abc4c7a4c4f01e32b4540c3d03f45aeb2">PhotoRigma\Classes\User_Interface\add_new_user</a></div><div class="ttdeci">add_new_user(array $post_data, Work $work, string $redirect_url)</div><div class="ttdoc">Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.</div></div>
@@ -397,7 +398,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <li>Если пароль хранится в старом формате (md5), он обновляется до формата <code>password_hash()</code>.</li>
 <li>Возвращает ID пользователя или 0 в случае ошибки.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6cad9b0038673d591c0dd84575bc777" title="Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...">PhotoRigma\Classes\User\login_user</a> Метод реализации в классе User. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a" title="Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...">PhotoRigma\Classes\User\login_user</a> Метод реализации в классе User. </dd>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
 <dd>
@@ -427,7 +428,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка входа.&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6cad9b0038673d591c0dd84575bc777">User</a>.</p>
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a">User</a>.</p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>.</p>
 
@@ -546,45 +547,65 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Обновление данных существующего пользователя.</p>
-<p>Метод выполняет проверку входных данных, обновляет информацию о пользователе в базе данных и возвращает количество затронутых строк. Также метод может обрабатывать загрузку аватара, если соответствующие данные переданы.</p>
+
+<p>Обновляет данные существующего пользователя, включая пароль, email, имя и аватар. </p>
+<p>Этот метод выполняет следующие действия:</p><ul>
+<li>Проверяет существование пользователя с указанным <code>$user_id</code> в базе данных.</li>
+<li>Валидирует и обновляет пароль через <code>password_verify()</code> и <code>password_hash()</code>.</li>
+<li>Проверяет уникальность email и имени пользователя в базе данных.</li>
+<li>Обрабатывает загрузку нового аватара через метод <code>edit_avatar()</code>.</li>
+<li>Удаляет старый аватар при необходимости.</li>
+<li>Обновляет данные пользователя в базе данных. Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.">PhotoRigma\Classes\User\update_user_data()</a> Метод реализации в классе User. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки корректности входных данных. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, передаваемый в качестве объекта аргументом.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя, данные которого необходимо обновить. Должен быть положительным целым числом, существующим в базе данных.</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя, данные которого необходимо обновить. Должен быть положительным целым числом и существовать в базе данных. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$post_data</td><td>Массив данных из формы ($_POST), содержащий новые значения для полей пользователя:<ul>
-<li>'password' (string): Текущий пароль пользователя (необязательно).</li>
+<li>'password' (string): Текущий пароль пользователя (обязательно для изменения пароля).</li>
 <li>'edit_password' (string): Новый пароль пользователя (необязательно).</li>
-<li>'re_password' (string): Повторный ввод нового пароля (необязательно).</li>
-<li>'email' (string): Новый email пользователя (необязательно).</li>
-<li>'real_name' (string): Новое имя пользователя (необязательно). Все поля проходят валидацию перед использованием.</li>
+<li>'re_password' (string): Повторный ввод нового пароля (должен совпадать с 'edit_password').</li>
+<li>'email' (string): Новый email пользователя (должен соответствовать регулярному выражению REG_EMAIL).</li>
+<li>'real_name' (string): Новое имя пользователя (должно быть строкой). Все поля проходят валидацию перед использованием. </li>
 </ul>
 </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$files_data</td><td>Массив данных загруженного файла ($_FILES), содержащий информацию об аватаре:<ul>
-<li>'file_avatar' (array): Информация о загруженном файле (необязательно). Если файл не передан или не проходит валидацию, аватар остается без изменений.</li>
+<li>'file_avatar' (array): Информация о загруженном файле (необязательно). Если файл не передан или не проходит валидацию, аватар остается без изменений. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramtype">int</td><td class="paramname">$max_size</td><td>Максимальный размер файла для аватара в байтах. Определяется на основе конфигурации приложения и ограничений PHP (например, post_max_size). Если размер файла превышает это значение, загрузка аватара отклоняется.</td></tr>
-    <tr><td class="paramtype">Work</td><td class="paramname">$work</td><td>Экземпляр класса Work, предоставляющий вспомогательные методы для работы с данными:<ul>
-<li>check_input(): Валидация входных данных.</li>
-<li>encodename(): Генерация уникального имени файла.</li>
-<li>fix_file_extension(): Корректировка расширения файла на основе его MIME-типа. Класс используется для выполнения вспомогательных операций внутри метода.</li>
+    <tr><td class="paramtype">int</td><td class="paramname">$max_size</td><td>Максимальный размер файла для аватара в байтах. Определяется на основе конфигурации приложения и ограничений PHP (например, post_max_size). Если размер файла превышает это значение, загрузка аватара отклоняется. Пример: 5 * 1024 * 1024 (5 MB). </td></tr>
+    <tr><td class="paramtype">Work</td><td class="paramname">$work</td><td>Экземпляр класса <code>Work</code>, предоставляющий вспомогательные методы для работы с данными:<ul>
+<li><code>check_input()</code>: Валидация входных данных. Класс используется для выполнения вспомогательных операций внутри метода.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>int Количество затронутых строк в базе данных после выполнения обновления. Если данные не изменились или запрос завершился ошибкой, возвращается 0.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>int Количество затронутых строк в базе данных после выполнения обновления. Возвращается 0, если данные не изменились или запрос завершился ошибкой.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
-<p>RuntimeException Выбрасывается исключение в следующих случаях:</p><ul>
-<li>Если пользователь с указанным $user_id не найден в базе данных.</li>
-<li>Если произошла ошибка при обновлении данных. </li>
-</ul>
-
+<p>RuntimeException Выбрасывается исключение если пользователь с указанным <code>$user_id</code> не найден в базе данных.</p>
+<dl class="section note"><dt>Заметки</dt><dd>Метод зависит от корректной конфигурации базы данных.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот метод для массового обновления данных.</dd></dl>
+<p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
+<div class="line">$userId = 1;</div>
+<div class="line">$maxSize = 5 * 1024 * 1024; <span class="comment">// 5 MB</span></div>
+<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
+<div class="line">$affectedRows = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;update_user_data($userId, $_POST, $_FILES, $maxSize, <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>);</div>
+<div class="line"><span class="keywordflow">if</span> ($affectedRows &gt; 0) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Данные успешно обновлены!&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Ошибка при обновлении данных.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc">User</a>.</p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>.</p>

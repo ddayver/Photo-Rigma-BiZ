@@ -58,7 +58,7 @@ if ($subact == 'saveprofile') {
             'regexp' => '/^[0-9]+$/',
             'not_zero' => true
         ])) {
-            $user_id = $_GET['uid'];
+            $user_id = (int)$_GET['uid'];
         } else {
             $user_id = $user->session['login_id'];
         }
@@ -70,6 +70,7 @@ if ($subact == 'saveprofile') {
             );
         }
         $user->unset_property_key('session', 'csrf_token');
+
         // Проверяем права доступа
         if ($user_id === $user->session['login_id'] || $user->user['admin'] == true) {
             // Запрос с плейсхолдерами
@@ -83,146 +84,27 @@ if ($subact == 'saveprofile') {
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID: {$user_id}"
                 );
             } else {
+                // Определяем максимальный размер файла для аватара
                 $max_size_php = Work::return_bytes(ini_get('post_max_size'));
                 $max_size = Work::return_bytes($work->config['max_file_size']);
                 if ($max_size > $max_size_php) {
                     $max_size = $max_size_php;
                 }
-                // Будущий метод update_user_data
-                // Входные данные:
-                // - $user_id (ID редактируемого пользователя)
-                // - $_POST (данные из формы: пароль, email, имя)
-                // - $_FILES (данные загруженного аватара)
-                // - $max_size (максимальный размер файла для аватара)
-                // - $work - (класс вспомогательных методов)
-                $new_user_data = [];
 
-                // Проверяем пароль
-                if ($user_id !== $user->session['login_id'] || (
-                    $work->check_input('_POST', 'password', [
-                        'isset' => true,
-                        'empty' => true
-                    ]) && password_verify($_POST['password'], $user_data['password'])
-                )) {
-                    if ($work->check_input('_POST', 'edit_password', [
-                        'isset' => true,
-                        'empty' => true
-                    ])) {
-                        $new_user_data['password'] = match (true) {
-                            $_POST['re_password'] !== $_POST['edit_password'] => $user_data['password'],
-                            default => password_hash($_POST['re_password'], PASSWORD_BCRYPT),
-                        };
-                    } else {
-                        $new_user_data['password'] = $user_data['password'];
-                    }
+                // Вызываем метод update_user_data для обновления данных пользователя
+                $rows = $user->update_user_data($user_id, $_POST, $_FILES, $max_size, $work);
 
-                    // Проверяем email
-                    if ($work->check_input('_POST', 'email', [
-                        'isset' => true,
-                        'empty' => true,
-                        'regexp' => REG_EMAIL
-                    ])) {
-                        $filtered_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-
-                        // Объединяем проверку email и real_name в один запрос
-                        $db->select('SUM(`email` = :email) as `email_count`, SUM(`real_name` = :real_name) as `real_count`', TBL_USERS, [
-                            'where' => '`id` != :user_id',
-                            'params' => [':user_id' => $user_id, ':email' => $filtered_email, ':real_name' => $_POST['real_name']]
-                        ]);
-                        $counts = $db->res_row();
-
-                        $new_user_data['email'] = match (true) {
-                            $counts && isset($counts['email_count']) && $counts['email_count'] > 0 => $user_data['email'],
-                            default => $filtered_email,
-                        };
-
-                        $new_user_data['real_name'] = match (true) {
-                            $counts && isset($counts['real_count']) && $counts['real_count'] > 0 => $user_data['real_name'],
-                            default => $_POST['real_name'],
-                        };
-                    } else {
-                        $new_user_data['email'] = $user_data['email'];
-                        $new_user_data['real_name'] = $user_data['real_name'];
-                    }
-
-                    // Обработка аватара через check_input
-                    if (!$work->check_input('_POST', 'delete_avatar', [
-                        'isset' => true,
-                        'empty' => true
-                    ]) || $_POST['delete_avatar'] != 'true') {
-                        // Будущий приват-метод edit_avatar
-                        // Входные данные:
-                        // - $_FILES (данные загруженного аватара)
-                        // - $max_size (максимальный размер файла для аватара)
-                        // - $work - (класс вспомогательных методов)
-                        if ($work->check_input('_FILES', 'file_avatar', [
-                            'isset' => true,
-                            'empty' => true,
-                            'max_size' => $max_size
-                        ])) {
-                            // Генерация имени файла
-                            $original_name = basename($_FILES['file_avatar']['name']);
-                            $file_info = pathinfo($original_name);
-                            $file_name = $file_info['filename'];
-                            $file_extension = isset($file_info['extension']) ? '.' . $file_info['extension'] : '';
-                            $encoded_name = Work::encodename($file_name);
-                            $file_avatar = time() . '_' . $encoded_name . $file_extension;
-                            $path_avatar = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $file_avatar;
-                            // Перемещение загруженного файла
-                            if (move_uploaded_file($_FILES['file_avatar']['tmp_name'], $path_avatar)) {
-                                // Корректировка расширения файла
-                                $fixed_path = $work->fix_file_extension($path_avatar);
-                                // Если расширение изменилось, обновляем имя файла
-                                if ($fixed_path !== $path_avatar) {
-                                    rename($path_avatar, $fixed_path);
-                                    $file_avatar = basename($fixed_path);
-                                }
-                                $new_user_data['avatar'] = $file_avatar;
-                                if ($user_data['avatar'] != 'no_avatar.jpg') {
-                                    @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar']);
-                                }
-                            } else {
-                                $new_user_data['avatar'] = $user_data['avatar'];
-                            }
-                        } else {
-                            $new_user_data['avatar'] = $user_data['avatar'];
-                        }
-                        // Результаты на выходе:
-                        // - $user_data['avatar'] (Новый аватар пользователя)
-                        // Конец приват-метода edit_avatar
-                    } else {
-                        if ($user_data['avatar'] != 'no_avatar.jpg') {
-                            @unlink($work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar']);
-                        }
-                        $new_user_data['avatar'] = 'no_avatar.jpg';
-                    }
-
-                    // Обновление данных пользователя
-                    $db->update($new_user_data, TBL_USERS, [
-                        'where' => '`id` = :user_id',
-                        'params' => [':user_id' => $user_id]
-                    ]);
-                    $rows = $db->get_affected_rows();
-                    // Результаты на выходе:
-                    // - $rows (количество затронутых строк в базе данных)
-                    // Конец метода update_user_data
-                    if ($rows > 0) {
-                        $user = new User($db, $_SESSION);
-                        $work->set_user($user);
-                        $work->set_lang();
-                        $template->set_lang($work->lang);
-                        $template->set_work($work);
-                        header('Location: ' . $redirect_url);
-                        exit();
-                        \PhotoRigma\Include\log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
-                        );
-                    } else {
-                        throw new \RuntimeException(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные пользователя | ID: {$user_id}"
-                        );
-                    }
-                }
+                // Переинициируем класс User для обновления данных в сессии.
+                $user = new User($db, $_SESSION);
+                $work->set_user($user);
+                $work->set_lang();
+                $template->set_lang($work->lang);
+                $template->set_work($work);
+                header('Location: ' . $redirect_url);
+                exit();
+                \PhotoRigma\Include\log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
+                );
             }
         } else {
             throw new \RuntimeException(
@@ -358,7 +240,6 @@ if ($subact == 'logout') {
     }
 } elseif ($subact == 'register') {
     // Проверяем, авторизован ли пользователь через check_input
-    // Если пользователь уже авторизован, перенаправляем его на другую страницу
     if ($work->check_input('_SESSION', 'login_id', [
         'isset' => true,
         'empty' => true,
@@ -379,152 +260,10 @@ if ($subact == 'logout') {
         }
         $user->unset_property_key('session', 'csrf_token');
 
-        // Будущий метод add_user_data
-        // Входные данные:
-        // - $_POST (данные из формы: логин, пароль, email, имя, CAPTCHA)
-        // - $work (класс вспомогательных методов)
-        // - $redirect_url (URL для перенаправления в случае ошибок)
+        // Вызываем метод add_user_data
+        $new_user = $user->add_new_user($_POST, $work, $redirect_url);
 
-        $error = false;
-        // Массив правил валидации для полей формы
-        // Ключи - имена полей, значения - параметры проверки
-        $field_validators = [
-            'login' => ['isset' => true, 'empty' => true, 'regexp' => REG_LOGIN],
-            'password' => ['isset' => true, 'empty' => true],
-            're_password' => ['isset' => true, 'empty' => true],
-            'email' => ['isset' => true, 'empty' => true, 'regexp' => REG_EMAIL],
-            'real_name' => ['isset' => true, 'empty' => true, 'regexp' => REG_NAME],
-            'captcha' => ['isset' => true, 'empty' => true, 'regexp' => '/^[0-9]+$/']
-        ];
-        // Применяем правила валидации для каждого поля формы
-        foreach ($field_validators as $field => $options) {
-            if (!$work->check_input('_POST', $field, $options)) {
-                $user->session['error'][$field]['if'] = true;
-                $user->session['error'][$field]['text'] = match ($field) {
-                    'login' => $work->lang['profile']['error_login'],
-                    'password' => $work->lang['profile']['error_password'],
-                    're_password' => $work->lang['profile']['error_re_password'],
-                    'email' => $work->lang['profile']['error_email'],
-                    'real_name' => $work->lang['profile']['error_real_name'],
-                    'captcha' => $work->lang['profile']['error_captcha'],
-                    default => 'Unknown error',
-                };
-                $error = true;
-            } else {
-                // Дополнительные проверки для re_password и captcha
-                if ($field === 're_password' && $_POST['re_password'] !== $_POST['password']) {
-                    $user->session['error']['re_password']['if'] = true;
-                    $user->session['error']['re_password']['text'] = $work->lang['profile']['error_re_password'];
-                    $error = true;
-                }
-                if ($field === 'captcha' && !password_verify($_POST['captcha'], $user->session['captcha'])) {
-                    $user->session['error']['captcha']['if'] = true;
-                    $user->session['error']['captcha']['text'] = $work->lang['profile']['error_captcha'];
-                    $error = true;
-                }
-            }
-        }
-        $user->unset_property_key('session', 'captcha');
-        // Проверка уникальности login, email и real_name в одном запросе
-        // Используется агрегация данных через COUNT(CASE ...) для каждого поля
-        $db->select(
-            'COUNT(CASE WHEN `login` = :login THEN 1 END) as login_count,
-             COUNT(CASE WHEN `email` = :email THEN 1 END) as email_count,
-             COUNT(CASE WHEN `real_name` = :real_name THEN 1 END) as real_count',
-            TBL_USERS,
-            [
-                'params' => [
-                    ':login' => $_POST['login'],
-                    ':email' => $_POST['email'],
-                    ':real_name' => $_POST['real_name']
-                ]
-            ]
-        );
-        $unique_check_result = $db->res_row();
-        if ($unique_check_result) {
-            // Если login уже существует, добавляем ошибку
-            if ($unique_check_result['login_count'] > 0) {
-                $error = true;
-                $user->session['error']['login']['if'] = true;
-                $user->session['error']['login']['text'] = $work->lang['profile']['error_login_exists'];
-            }
-            // Если email уже существует, добавляем ошибку
-            if ($unique_check_result['email_count'] > 0) {
-                $error = true;
-                $user->session['error']['email']['if'] = true;
-                $user->session['error']['email']['text'] = $work->lang['profile']['error_email_exists'];
-            }
-            // Если real_name уже существует, добавляем ошибку
-            if ($unique_check_result['real_count'] > 0) {
-                $error = true;
-                $user->session['error']['real_name']['if'] = true;
-                $user->session['error']['real_name']['text'] = $work->lang['profile']['error_real_name_exists'];
-            }
-        }
-        // Если возникли ошибки, сохраняем их в сессии и перенаправляем пользователя
-        if ($error) {
-            header('Location: ' . $redirect_url);
-            exit();
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка регистрации"
-            );
-        } else {
-            $user->unset_property_key('session', 'error');
-            $query = [
-                'login' => $_POST['login'],
-                'password' => password_hash($_POST['re_password'], PASSWORD_BCRYPT),
-                'email' => $_POST['email'],
-                'real_name' => $_POST['real_name'],
-                'group' => DEFAULT_GROUP
-            ];
-            // Получение данных группы по умолчанию
-            // Группа необходима для назначения прав доступа новому пользователю
-            $db->select(
-                '*',
-                TBL_GROUP,
-                [
-                    'where' => '`id` = :group_id',
-                    'params' => [':group_id' => DEFAULT_GROUP]
-                ]
-            );
-            $group_data = $db->res_row();
-            if ($group_data) {
-                // Добавляем данные группы в массив для вставки нового пользователя
-                foreach ($group_data as $key => $value) {
-                    if ($key != 'id' && $key != 'name') {
-                        $query[$key] = $value;
-                    }
-                }
-
-                // Формируем плоский массив плейсхолдеров и ассоциативный массив для вставки
-                $insert_data = array_map(fn ($key) => "`$key`", array_keys($query)); // Экранируем имена столбцов
-                $placeholders = array_map(fn ($key) => ":$key", array_keys($query)); // Формируем плейсхолдеры
-
-                // Преобразуем массив $query в формат с префиксом ':' для ключей
-                $params = array_combine(
-                    array_map(fn ($key) => ":$key", array_keys($query)), // Добавляем префикс ':' к каждому ключу
-                    array_values($query) // Значения остаются без изменений
-                );
-
-                // Вставка нового пользователя в базу данных
-                $db->insert(
-                    array_combine($insert_data, $placeholders), // Передаём ассоциативный массив (имена столбцов => плейсхолдеры)
-                    TBL_USERS,
-                    '',
-                    ['params' => $params] // Передаём преобразованный массив параметров
-                );
-                $new_user = $db->get_last_insert_id();
-            } else {
-                // Группа по умолчанию не найдена - выбрасываем исключение
-                throw new \RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы по умолчанию"
-                );
-            }
-        }
-
-        // Результаты на выходе:
-        // - $new_user (результат добавления пользователя в БД)
-        // Конец метода add_user_data
+        // Обработка результата
         if ($new_user != 0) {
             $user->session['login_id'] = $new_user;
             header('Location: ' . sprintf('%s?action=profile&subact=profile', $work->config['site_url']));
@@ -557,7 +296,8 @@ if ($subact == 'logout') {
     } else {
         // Сбрасываем ID пользователя в сессии
         $user->session['login_id'] = 0;
-        //  для защиты от CSRF-атак
+
+        // Проверяем CSRF-токен
         if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
@@ -565,100 +305,11 @@ if ($subact == 'logout') {
         }
         $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
 
-        // Будущий метод login_user
-        // Входные данные:
-        // - $_POST (Данные из $_POST: login, password)
-        // - $work (класс вспомогательных методов)
-        // - $redirect_url (URL для перенаправления в случае ошибок)
-
-        // Проверяем входные данные (логин и пароль)
-        if (!$work->check_input('_POST', 'login', [
-                'isset' => true,
-                'empty' => true,
-                'regexp' => REG_LOGIN
-            ]) || !$work->check_input('_POST', 'password', [
-                'isset' => true,
-                'empty' => true
-            ])) {
-            // Входные данные формы невалидны
-            header('Location: ' . $redirect_url);
-            exit();
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверные данные формы | Действие: login, Пользователь ID: {$user->session['login_id']}"
-            );
-        } else {
-            // Выполняем запрос к базе данных для поиска пользователя по логину
-            $db->select(
-                ['id', 'login', 'password'], // Список полей для выборки
-                TBL_USERS, // Имя таблицы
-                [
-                    'where' => 'login = :login', // Условие WHERE
-                    'params' => [':login' => $_POST['login']] // Параметры для prepared statements
-                ]
-            );
-
-            // Получаем данные пользователя из базы данных
-            $user_data = $db->res_row();
-            if ($user_data === false) {
-                // Пользователь с указанным логином не найден
-                header('Location: ' . $redirect_url);
-                exit();
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь с логином '{$_POST['login']}' не найден"
-                );
-            } else {
-                // Проверяем пароль через password_verify()
-                if (!password_verify($_POST['password'], $user_data['password'])) {
-                    // Если проверка через password_verify() не прошла, проверяем пароль через md5
-                    if (md5($_POST['password']) !== $user_data['password']) {
-                        // Пароль неверный
-                        header('Location: ' . $redirect_url);
-                        exit();
-                        \PhotoRigma\Include\log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный пароль | Действие: login, Пользователь ID: {$user->session['login_id']}"
-                        );
-                    } else {
-                        // Пароль верный, но хранится в формате md5. Преобразуем его в формат password_hash()
-                        $new_password_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-                        // Обновляем пароль в базе данных
-                        $db->update(
-                            ['`password`' => ':password'], // Данные для обновления
-                            TBL_USERS, // Таблица
-                            [
-                                'where' => '`id` = :id', // Условие WHERE
-                                'params' => [
-                                    ':password' => $new_password_hash,
-                                    ':id' => $user_data['id']
-                                ]
-                            ]
-                        );
-
-                        // Проверяем результат обновления
-                        $rows = $db->get_affected_rows();
-                        if ($rows > 0) {
-                            // Пароль успешно обновлён
-                            \PhotoRigma\Include\log_in_file(
-                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$user->session['login_id']}"
-                            );
-                        } else {
-                            // Ошибка при обновлении пароля
-                            \PhotoRigma\Include\log_in_file(
-                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$user->session['login_id']}"
-                            );
-                        }
-                    }
-                }
-            }
-        }
-
-        // Результаты на выходе:
-        // - $user_data['id'] (результат проверки пользователя на вход)
-        // Конец метода login_user
+        // Вызываем метод login_user
+        $user_id = $user->login_user($_POST, $work, $redirect_url);
 
         // Авторизуем пользователя
-        $user->session['login_id'] = $user_data['id'] ?? 0; // Устанавливаем ID или 0, если пользователь не найден
-
+        $user->session['login_id'] = $user_id; // Устанавливаем ID или 0, если пользователь не найден
         // Инициализация ядра для пользователя (включая гостя)
         $user = new User($db, $_SESSION);
         $work->set_user($user);

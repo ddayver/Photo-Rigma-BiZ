@@ -166,6 +166,8 @@ var NAVTREEINDEX2 =
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7b22f0ff3047191231f20b97f25833f0":[6,0,0,0,3,15],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7bac0b0462dbce26194a9f412cc07c4c":[5,0,0,1,3,5],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7bac0b0462dbce26194a9f412cc07c4c":[6,0,0,0,3,5],
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a834e1bd7ce0d2d35485d68dff3f8c594":[5,0,0,1,3,23],
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a834e1bd7ce0d2d35485d68dff3f8c594":[6,0,0,0,3,23],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc":[5,0,0,1,3,12],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc":[6,0,0,0,3,12],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a93574eaa3191f6cb217b7342793eec34":[5,0,0,1,3,9],
@@ -178,10 +180,10 @@ var NAVTREEINDEX2 =
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc":[6,0,0,0,3,18],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb":[5,0,0,1,3,8],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb":[6,0,0,0,3,8],
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6cad9b0038673d591c0dd84575bc777":[5,0,0,1,3,13],
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6cad9b0038673d591c0dd84575bc777":[6,0,0,0,3,13],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2":[5,0,0,1,3,4],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2":[6,0,0,0,3,4],
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a":[5,0,0,1,3,13],
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a":[6,0,0,0,3,13],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac5e8ffbb47053c27a7df5b5e7563975d":[5,0,0,1,3,17],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac5e8ffbb47053c27a7df5b5e7563975d":[6,0,0,0,3,17],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd":[5,0,0,1,3,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "functions_p.html":[6,3,0,14],
 "functions_r.html":[6,3,0,15],
 "functions_s.html":[6,3,0,16],
-"functions_t.html":[6,3,0,17],
-"functions_u.html":[6,3,0,18],
-"functions_v.html":[6,3,0,19]
+"functions_t.html":[6,3,0,17]
 };
