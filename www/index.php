@@ -204,10 +204,10 @@ try {
      */
     $template_output = true;
 
-    /** @var string|null $title
+    /** @var string $title
      * @brief Добавление текста к заголовку страницы.
      */
-    $title = null;
+    $title = '';
 
     /**
      * @var string $action

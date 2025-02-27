@@ -401,10 +401,11 @@ class Work_Image implements Work_Image_Interface
      * echo $workImage->config['temp_photo_w']; // Выведет: 800
      * @endcode
      */
-    public function __get(string $name)
+    public function &__get(string $name)
     {
         if ($name === 'config') {
-            return $this->config;
+            $result = &$this->config;
+            return $result;
         }
         throw new \InvalidArgumentException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"

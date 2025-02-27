@@ -762,7 +762,8 @@ class Work_Helper implements Work_Helper_Interface
         }
         // Извлекаем последний символ (суффикс)
         $last = strtolower($val[-1]);
-        $number = rtrim($val, 'kmg');
+        // Извлекаем числовую часть (все символы, кроме последнего)
+        $number = substr($val, 0, -1);
         // Проверяем, является ли числовая часть корректной
         if (!is_numeric($number)) {
             return 0; // Возвращаем 0 для некорректных данных
@@ -855,7 +856,7 @@ class Work_Helper implements Work_Helper_Interface
             $string = str_replace(array_keys($table), array_values($table), $string);
         }
         // Замена специальных символов на "_" и удаление лишних подчёркиваний
-        $string = preg_replace('/[^a-zA-Z0-9\s]/', '_', $string); // Заменяем все символы, кроме букв, цифр и пробелов, на "_"
+        $string = preg_replace('/[^a-zA-Z0-9]/', '_', $string); // Заменяем все символы, кроме букв и цифр  на "_"
         $string = preg_replace('/_{2,}/', '_', $string); // Заменяем множественные подчёркивания на одно
         $string = trim($string, '_'); // Удаляем подчёркивания в начале и конце строки
         // Если после обработки строка пустая, генерируем уникальную последовательность

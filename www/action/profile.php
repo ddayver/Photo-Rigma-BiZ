@@ -12,6 +12,7 @@
 namespace PhotoRigma\Action;
 
 use PhotoRigma\Classes\Work;
+use PhotoRigma\Classes\User;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
@@ -45,6 +46,7 @@ if ($subact == 'saveprofile') {
     $subact = 'profile';
     if ($user->session['login_id'] == 0) {
         header('Location: ' . $redirect_url);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
         );
@@ -62,7 +64,7 @@ if ($subact == 'saveprofile') {
         }
 
         // Проверяем CSRF-токен
-        if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
@@ -81,8 +83,8 @@ if ($subact == 'saveprofile') {
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID: {$user_id}"
                 );
             } else {
-                $max_size_php = $work->return_bytes(ini_get('post_max_size'));
-                $max_size = $work->return_bytes($work->config['max_file_size']);
+                $max_size_php = Work::return_bytes(ini_get('post_max_size'));
+                $max_size = Work::return_bytes($work->config['max_file_size']);
                 if ($max_size > $max_size_php) {
                     $max_size = $max_size_php;
                 }
@@ -159,9 +161,13 @@ if ($subact == 'saveprofile') {
                             'max_size' => $max_size
                         ])) {
                             // Генерация имени файла
-                            $file_avatar = time() . '_' . $work->encodename(basename($_FILES['file_avatar']['name']));
+                            $original_name = basename($_FILES['file_avatar']['name']);
+                            $file_info = pathinfo($original_name);
+                            $file_name = $file_info['filename'];
+                            $file_extension = isset($file_info['extension']) ? '.' . $file_info['extension'] : '';
+                            $encoded_name = Work::encodename($file_name);
+                            $file_avatar = time() . '_' . $encoded_name . $file_extension;
                             $path_avatar = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $file_avatar;
-
                             // Перемещение загруженного файла
                             if (move_uploaded_file($_FILES['file_avatar']['tmp_name'], $path_avatar)) {
                                 // Корректировка расширения файла
@@ -207,6 +213,7 @@ if ($subact == 'saveprofile') {
                         $template->set_lang($work->lang);
                         $template->set_work($work);
                         header('Location: ' . $redirect_url);
+                        exit();
                         \PhotoRigma\Include\log_in_file(
                             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
                         );
@@ -228,6 +235,7 @@ if ($subact == 'saveprofile') {
 if ($subact == 'logout') {
     if ($user->session['login_id'] == 0) {
         header('Location: ' . $redirect_url);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout, Пользователь ID: {$user->session['login_id']}"
         );
@@ -267,6 +275,7 @@ if ($subact == 'logout') {
 
         // Перенаправление и логирование
         header('Location: ' . $work->config['site_url']);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout"
         );
@@ -285,6 +294,7 @@ if ($subact == 'logout') {
     ])) {
         // Если пользователь уже авторизован, перенаправляем на главную страницу
         header('Location: ' . $work->config['site_url']);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: regist, Пользователь ID: {$user->session['login_id']}"
         );
@@ -356,12 +366,13 @@ if ($subact == 'logout') {
         'not_zero' => true
     ])) {
         header('Location: ' . $redirect_url);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: register, Пользователь ID: {$user->session['login_id']}"
         );
     } else {
-        // Проверяем CSRF-токен для защиты от CSRF-атак
-        if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+        // Проверяем CSRF-токен
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
@@ -453,13 +464,19 @@ if ($subact == 'logout') {
         // Если возникли ошибки, сохраняем их в сессии и перенаправляем пользователя
         if ($error) {
             header('Location: ' . $redirect_url);
+            exit();
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка регистрации"
             );
         } else {
             $user->unset_property_key('session', 'error');
-            $query = $register;
-            $query['group'] = DEFAULT_GROUP;
+            $query = [
+                'login' => $_POST['login'],
+                'password' => password_hash($_POST['re_password'], PASSWORD_BCRYPT),
+                'email' => $_POST['email'],
+                'real_name' => $_POST['real_name'],
+                'group' => DEFAULT_GROUP
+            ];
             // Получение данных группы по умолчанию
             // Группа необходима для назначения прав доступа новому пользователю
             $db->select(
@@ -478,14 +495,23 @@ if ($subact == 'logout') {
                         $query[$key] = $value;
                     }
                 }
-                // Формируем массив плейсхолдеров для подготовленного выражения
-                $placeholders = array_map(fn ($key) => ["`$key`" => ":$key"], array_keys($query));
+
+                // Формируем плоский массив плейсхолдеров и ассоциативный массив для вставки
+                $insert_data = array_map(fn ($key) => "`$key`", array_keys($query)); // Экранируем имена столбцов
+                $placeholders = array_map(fn ($key) => ":$key", array_keys($query)); // Формируем плейсхолдеры
+
+                // Преобразуем массив $query в формат с префиксом ':' для ключей
+                $params = array_combine(
+                    array_map(fn ($key) => ":$key", array_keys($query)), // Добавляем префикс ':' к каждому ключу
+                    array_values($query) // Значения остаются без изменений
+                );
+
                 // Вставка нового пользователя в базу данных
                 $db->insert(
-                    $placeholders,
+                    array_combine($insert_data, $placeholders), // Передаём ассоциативный массив (имена столбцов => плейсхолдеры)
                     TBL_USERS,
                     '',
-                    ['params' => $query]
+                    ['params' => $params] // Передаём преобразованный массив параметров
                 );
                 $new_user = $db->get_last_insert_id();
             } else {
@@ -502,11 +528,13 @@ if ($subact == 'logout') {
         if ($new_user != 0) {
             $user->session['login_id'] = $new_user;
             header('Location: ' . sprintf('%s?action=profile&subact=profile', $work->config['site_url']));
+            exit();
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешная регистрация | Пользователь ID: {$user->session['login_id']}"
             );
         } else {
             header('Location: ' . $redirect_url);
+            exit();
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка регистрации"
             );
@@ -522,14 +550,14 @@ if ($subact == 'logout') {
     ])) {
         // Если пользователь уже авторизован, перенаправляем его на главную страницу
         header('Location: ' . $work->config['site_url']);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
         );
     } else {
         // Сбрасываем ID пользователя в сессии
         $user->session['login_id'] = 0;
-
-        // Проверяем CSRF-токен для защиты от CSRF-атак
+        //  для защиты от CSRF-атак
         if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
@@ -554,6 +582,7 @@ if ($subact == 'logout') {
             ])) {
             // Входные данные формы невалидны
             header('Location: ' . $redirect_url);
+            exit();
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверные данные формы | Действие: login, Пользователь ID: {$user->session['login_id']}"
             );
@@ -573,6 +602,7 @@ if ($subact == 'logout') {
             if ($user_data === false) {
                 // Пользователь с указанным логином не найден
                 header('Location: ' . $redirect_url);
+                exit();
                 \PhotoRigma\Include\log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь с логином '{$_POST['login']}' не найден"
                 );
@@ -583,19 +613,20 @@ if ($subact == 'logout') {
                     if (md5($_POST['password']) !== $user_data['password']) {
                         // Пароль неверный
                         header('Location: ' . $redirect_url);
+                        exit();
                         \PhotoRigma\Include\log_in_file(
                             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный пароль | Действие: login, Пользователь ID: {$user->session['login_id']}"
                         );
                     } else {
                         // Пароль верный, но хранится в формате md5. Преобразуем его в формат password_hash()
-                        $new_password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                        $new_password_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
                         // Обновляем пароль в базе данных
                         $db->update(
-                            ['password' => ':password'], // Данные для обновления
+                            ['`password`' => ':password'], // Данные для обновления
                             TBL_USERS, // Таблица
                             [
-                                'where' => 'id = :id', // Условие WHERE
+                                'where' => '`id` = :id', // Условие WHERE
                                 'params' => [
                                     ':password' => $new_password_hash,
                                     ':id' => $user_data['id']
@@ -637,146 +668,180 @@ if ($subact == 'logout') {
 
         // Перенаправляем пользователя на целевую страницу
         header('Location: ' . $redirect_url);
+        exit();
         \PhotoRigma\Include\log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешный вход | Действие: login, Пользователь ID: {$user->session['login_id']}"
         );
     }
 } elseif ($subact == 'profile') {
-    if (((isset($user->session['login_id']) && $user->session['login_id'] == 0) || !isset($user->session['login_id'])) && (!isset($_GET['uid']) || empty($_GET['uid']))) {
-        header('Location: ' . $work->config['site_url']);
-        \PhotoRigma\Include\log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
-        );
+    // Проверка и установка $uid
+    if ($work->check_input('_GET', 'uid', [
+        'isset' => true,
+        'empty' => false,
+        'regexp' => '^[0-9]+$',
+        'not_zero' => true,
+    ])) {
+        $uid = (int)$_GET['uid'];
     } else {
-        $action = 'profile';
-        if ($work->check_get('uid', true, true, '^[0-9]+\$', true)) {
-            $uid = $_GET['uid'];
-        } else {
-            $uid = $user->session['login_id'];
+        // Если $_GET['uid'] не прошёл проверку, используем ID из сессии
+        if (!isset($user->session['login_id']) || $user->session['login_id'] == 0) {
+            header('Location: ' . $work->config['site_url']);
+            exit();
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
+            );
         }
-
-        if ($uid === $user->session['login_id'] || $user->user['admin'] == true) {
-            if ($db->select('*', TBL_USERS, '`id` = ' . $uid)) {
-                $temp = $db->res_row();
-                if ($temp) {
-                    $name_block = $work->lang['profile']['edit_profile'] . ' ' . $temp['real_name'];
-                    $max_size_php = $work->return_bytes(ini_get('post_max_size'));
-                    $max_size = $work->return_bytes($work->config['max_file_size']);
-                    if ($max_size > $max_size_php) {
-                        $max_size = $max_size_php;
-                    }
-
-                    if ($uid === $user->session['login_id']) {
-                        $confirm_password = true;
-                    } else {
-                        $confirm_password = false;
-                    }
-
-                    if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group'])) {
-                        $temp2 = $db->res_row();
-                        if (!$temp2) {
-                            $temp['group'] = 0;
-                            if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group'])) {
-                                $temp2 = $db->res_row();
-                                if (!$temp2) {
-                                    log_in_file('Unable to get the guest group', DIE_IF_ERROR);
-                                }
-                            } else {
-                                log_in_file($db->error, DIE_IF_ERROR);
-                            }
-                        }
-                    } else {
-                        log_in_file($db->error, DIE_IF_ERROR);
-                    }
-
-                    $template->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
-                    $title = $name_block;
-                    $template->add_if('NEED_PASSWORD', $confirm_password);
-                    $template->add_string_ar(array(
-                        'NAME_BLOCK'      => $name_block,
-                        'L_LOGIN'         => $work->lang['profile']['login'],
-                        'L_EDIT_PASSWORD' => $work->lang['profile']['password'],
-                        'L_RE_PASSWORD'   => $work->lang['profile']['re_password'],
-                        'L_EMAIL'         => $work->lang['profile']['email'],
-                        'L_REAL_NAME'     => $work->lang['profile']['real_name'],
-                        'L_PASSWORD'      => $work->lang['profile']['confirm_password'],
-                        'L_SAVE_PROFILE'  => $work->lang['profile']['save_profile'],
-                        'L_HELP_EDIT'     => $work->lang['profile']['help_edit'],
-                        'L_AVATAR'        => $work->lang['profile']['avatar'],
-                        'L_GROUP'         => $work->lang['main']['group'],
-                        'L_DELETE_AVATAR' => $work->lang['profile']['delete_avatar'],
-
-                        'D_LOGIN'         => $temp['login'],
-                        'D_EMAIL'         => $temp['email'],
-                        'D_REAL_NAME'     => $temp['real_name'],
-                        'D_MAX_FILE_SIZE' => $max_size,
-                        'D_GROUP'         => $temp2['name'],
-
-                        'U_AVATAR'        => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar'],
-                        'U_PROFILE_EDIT'  => $work->config['site_url'] . '?action=profile&amp;subact=saveprofile&amp;uid=' . $uid
-                    ));
-                } else {
-                    header('Location: ' . $work->config['site_url']);
-                    \PhotoRigma\Include\log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
-                    );
-                }
-            } else {
-                log_in_file($db->error, DIE_IF_ERROR);
-            }
-        } else {
-            if ($db->select('*', TBL_USERS, '`id` = ' . $uid)) {
-                $temp = $db->res_row();
-                if ($temp) {
-                    $name_block = $work->lang['profile']['profile'] . ' ' . $temp['real_name'];
-                    $action = '';
-
-                    if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group'])) {
-                        $temp2 = $db->res_row();
-                        if (!$temp2) {
-                            $temp['group'] = 0;
-                            if ($db->select('*', TBL_GROUP, '`id` = ' . $temp['group'])) {
-                                $temp2 = $db->res_row();
-                                if (!$temp2) {
-                                    log_in_file('Unable to get the guest group', DIE_IF_ERROR);
-                                }
-                            } else {
-                                log_in_file($db->error, DIE_IF_ERROR);
-                            }
-                        }
-                    } else {
-                        log_in_file($db->error, DIE_IF_ERROR);
-                    }
-                    $template->add_case('PROFILE_BLOCK', 'PROFILE_VIEW');
-                    $title = $name_block;
-                    $template->add_string_ar(array(
-                        'NAME_BLOCK'  => $name_block,
-                        'L_EMAIL'     => $work->lang['profile']['email'],
-                        'L_REAL_NAME' => $work->lang['profile']['real_name'],
-                        'L_AVATAR'    => $work->lang['profile']['avatar'],
-                        'L_GROUP'     => $work->lang['main']['group'],
-
-                        'D_EMAIL'     => $work->filt_email($temp['email']),
-                        'D_REAL_NAME' => $temp['real_name'],
-                        'D_GROUP'     => $temp2['name'],
-
-                        'U_AVATAR'    => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
-                    ));
-                    $array_data = array();
-                    $array_data = array();
-                } else {
-                    header('Location: ' . $work->config['site_url']);
-                    \PhotoRigma\Include\log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
-                    );
-                }
-            } else {
-                log_in_file($db->error, DIE_IF_ERROR);
+        $uid = (int)$user->session['login_id'];
+    }
+    // Проверка прав доступа
+    if ($uid === $user->session['login_id'] || (bool)$user->user['admin'] === true) {
+        // Получение данных пользователя
+        $db->select(
+            ['*'],
+            TBL_USERS,
+            [
+                'where' => 'id = :id',
+                'params' => [':id' => $uid]
+            ]
+        );
+        $user_data = $db->res_row();
+        if (!$user_data) {
+            header('Location: ' . $work->config['site_url']);
+            exit();
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $name_block = $work->lang['profile']['edit_profile'] . ' ' . Work::clean_field($user_data['real_name']);
+        $max_size_php = Work::return_bytes(ini_get('post_max_size'));
+        $max_size = Work::return_bytes($work->config['max_file_size']);
+        if ($max_size > $max_size_php) {
+            $max_size = $max_size_php;
+        }
+        $confirm_password = ($uid === $user->session['login_id']);
+        // Получение данных группы
+        $db->select(
+            ['*'],
+            TBL_GROUP,
+            [
+                'where' => 'id = :id',
+                'params' => [':id' => $user_data['group']]
+            ]
+        );
+        $group_data = $db->res_row();
+        if (!$group_data) {
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует группа для пользователя | Группа {$user_data['group']} для пользователя {$uid}. Вызов от пользователя с ID: {$user->session['login_id']}"
+            );
+            $user_data['group'] = 0; // Устанавливаем группу по умолчанию (гости)
+            $db->select(
+                ['*'],
+                TBL_GROUP,
+                [
+                    'where' => 'id = :id',
+                    'params' => [':id' => $user_data['group']]
+                ]
+            );
+            $group_data = $db->res_row();
+            if (!$group_data) {
+                throw new \LogicException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}"
+                );
             }
         }
+        // Настройка шаблона для редактирования профиля
+        $template->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
+        $title = $name_block;
+        $template->add_if('NEED_PASSWORD', $confirm_password);
+        $template->add_string_ar(array(
+            'NAME_BLOCK'      => $name_block,
+            'CSRF_TOKEN'      => $user->csrf_token(),
+            'L_LOGIN'         => $work->lang['profile']['login'],
+            'L_EDIT_PASSWORD' => $work->lang['profile']['password'],
+            'L_RE_PASSWORD'   => $work->lang['profile']['re_password'],
+            'L_EMAIL'         => $work->lang['profile']['email'],
+            'L_REAL_NAME'     => $work->lang['profile']['real_name'],
+            'L_PASSWORD'      => $work->lang['profile']['confirm_password'],
+            'L_SAVE_PROFILE'  => $work->lang['profile']['save_profile'],
+            'L_HELP_EDIT'     => $work->lang['profile']['help_edit'],
+            'L_AVATAR'        => $work->lang['profile']['avatar'],
+            'L_GROUP'         => $work->lang['main']['group'],
+            'L_DELETE_AVATAR' => $work->lang['profile']['delete_avatar'],
+            'D_LOGIN'         => $user_data['login'],
+            'D_EMAIL'         => $user_data['email'],
+            'D_REAL_NAME'     => $user_data['real_name'],
+            'D_MAX_FILE_SIZE' => (string)$max_size,
+            'D_GROUP'         => Work::clean_field($group_data['name']),
+            'U_AVATAR'        => sprintf('%s%s/%s', $work->config['site_url'], $work->config['avatar_folder'], $user_data['avatar']),
+            'U_PROFILE_EDIT'  => sprintf('%s?action=profile&amp;subact=saveprofile&amp;uid=%d', $work->config['site_url'], $uid)
+        ));
+    } else {
+        // Получение данных пользователя для просмотра
+        $db->select(
+            ['*'],
+            TBL_USERS,
+            [
+                'where' => 'id = :id',
+                'params' => [':id' => $uid]
+            ]
+        );
+        $user_data = $db->res_row();
+        if (!$user_data) {
+            header('Location: ' . $work->config['site_url']);
+            exit();
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $name_block = $work->lang['profile']['profile'] . ' ' . Work::clean_field($user_data['real_name']);
+        // Получение данных группы
+        $db->select(
+            ['*'],
+            TBL_GROUP,
+            [
+                'where' => 'id = :id',
+                'params' => [':id' => $user_data['group']]
+            ]
+        );
+        $group_data = $db->res_row();
+        if (!$group_data) {
+            \PhotoRigma\Include\log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует группа для пользователя | Группа {$user_data['group']} для пользователя {$uid}. Вызов от пользователя с ID: {$user->session['login_id']}"
+            );
+            $user_data['group'] = 0; // Устанавливаем группу по умолчанию (гости)
+            $db->select(
+                ['*'],
+                TBL_GROUP,
+                [
+                    'where' => 'id = :id',
+                    'params' => [':id' => $user_data['group']]
+                ]
+            );
+            $group_data = $db->res_row();
+            if (!$group_data) {
+                throw new \LogicException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}"
+                );
+            }
+        }
+        // Настройка шаблона для просмотра профиля
+        $template->add_case('PROFILE_BLOCK', 'PROFILE_VIEW');
+        $title = $name_block;
+        $template->add_string_ar(array(
+            'NAME_BLOCK'  => $name_block,
+            'L_EMAIL'     => $work->lang['profile']['email'],
+            'L_REAL_NAME' => $work->lang['profile']['real_name'],
+            'L_AVATAR'    => $work->lang['profile']['avatar'],
+            'L_GROUP'     => $work->lang['main']['group'],
+            'D_EMAIL'     => $work->filt_email($user_data['email']),
+            'D_REAL_NAME' => Work::clean_field($user_data['real_name']),
+            'D_GROUP'     => Work::clean_field($group_data['name']),
+            'U_AVATAR'    => sprintf('%s%s/%s', $work->config['site_url'], $work->config['avatar_folder'], $user_data['avatar'])
+        ));
     }
 } else {
     header('Location: ' . $work->config['site_url']);
+    exit();
     \PhotoRigma\Include\log_in_file(
         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: неопределено, Пользователь ID: {$user->session['login_id']}"
     );

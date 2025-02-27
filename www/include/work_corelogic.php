@@ -525,10 +525,11 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * echo $corelogic->config['temp_photo_w']; // Выведет: 800
      * @endcode
      */
-    public function __get(string $name): array
+    public function &__get(string $name): array
     {
         if ($name === 'config') {
-            return $this->config;
+            $result = &$this->config;
+            return $result;
         }
         throw new \InvalidArgumentException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"

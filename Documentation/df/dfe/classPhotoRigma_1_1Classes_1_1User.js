@@ -1,7 +1,7 @@
 var classPhotoRigma_1_1Classes_1_1User =
 [
     [ "__construct", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0524c883699d2510258de9ed3b7b3194", null ],
-    [ "__get", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0acd7052f38245fd3723ea29c83bf3f3", null ],
+    [ "__get", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a96d631a05b563f91f5494b409b357cbc", null ],
     [ "__set", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2c4e9c30cf213decde815cdcb37e1ac8", null ],
     [ "add_new_group", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd", null ],
     [ "add_new_user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2", null ],

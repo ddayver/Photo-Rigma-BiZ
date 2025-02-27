@@ -224,15 +224,24 @@ class Work
      * echo $work->lang['message']; // Выведет значение ключа 'message' из языковых данных
      * @endcode
      */
-    public function __get(string $name): array
+    public function &__get(string $name): array
     {
-        return match ($name) {
-            'config' => $this->config,
-            'lang'   => $this->lang,
-            default  => throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
-            ),
-        };
+        $result = null;
+
+        switch ($name) {
+            case 'config':
+                $result = &$this->config;
+                break;
+            case 'lang':
+                $result = &$this->lang;
+                break;
+            default:
+                throw new \InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+                );
+        }
+
+        return $result;
     }
 
     /**

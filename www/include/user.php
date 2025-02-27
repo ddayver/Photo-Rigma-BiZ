@@ -417,15 +417,24 @@ class User implements User_Interface
      * echo $user->session['user_id']; // Выведет: ID пользователя из сессии
      * @endcode
      */
-    public function __get(string $name): array
+    public function &__get(string $name): array
     {
-        return match ($name) {
-            'user' => $this->user,
-            'session' => $this->session,
-            default => throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
-            ),
-        };
+        $result = null;
+
+        switch ($name) {
+            case 'user':
+                $result = &$this->user;
+                break;
+            case 'session':
+                $result = &$this->session;
+                break;
+            default:
+                throw new \InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+                );
+        }
+
+        return $result;
     }
 
     /**
@@ -479,18 +488,17 @@ class User implements User_Interface
             );
         }
 
-        // Логирование изменений
-        $current_value = $this->$name; // Текущее значение свойства
-        $updated_keys = [];
-        $added_keys = [];
+        // Получаем текущее значение свойства
+        $current_value = $this->$name;
 
+        // Обновляем только те ключи, которые переданы в $value
         foreach ($value as $key => $val) {
-            if (array_key_exists($key, $current_value)) {
-                $updated_keys[$key] = $val;
-            } else {
-                $added_keys[$key] = $val;
-            }
+            $current_value[$key] = $val;
         }
+
+        // Логируем изменения
+        $updated_keys = array_intersect_key($value, $this->$name); // Ключи, которые были обновлены
+        $added_keys = array_diff_key($value, $this->$name); // Новые ключи
 
         if (!empty($updated_keys)) {
             \PhotoRigma\Include\log_in_file(
@@ -498,7 +506,6 @@ class User implements User_Interface
                 "Обновление свойства '{$name}' | Изменённые ключи: " . json_encode($updated_keys)
             );
         }
-
         if (!empty($added_keys)) {
             \PhotoRigma\Include\log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
@@ -507,7 +514,7 @@ class User implements User_Interface
         }
 
         // Обновляем свойство
-        $this->$name = $value;
+        $this->$name = $current_value;
     }
 
     /**

@@ -1,7 +1,7 @@
 var classPhotoRigma_1_1Classes_1_1Work__CoreLogic =
 [
     [ "__construct", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4609bb638e265ca95f28d20758fc195b", null ],
-    [ "__get", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a0acd7052f38245fd3723ea29c83bf3f3", null ],
+    [ "__get", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a96d631a05b563f91f5494b409b357cbc", null ],
     [ "__set", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
     [ "_category_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433", null ],
     [ "_create_photo_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179", null ],

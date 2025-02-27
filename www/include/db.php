@@ -1640,7 +1640,7 @@ class Database implements Database_Interface
         $from_tbl = $this->sanitize_expression($from_tbl);
 
         // === 4. Формирование списка полей для обновления ===
-        [$set_fields, $set_placeholders, $params] = $this->prepare_insert_data($update, 'update_');
+        [$set_fields, $set_placeholders, $params] = $this->prepare_insert_data($update, 'update_', $options['params'] ?? []);
         $set_clause = implode(', ', array_map(
             fn ($field, $placeholder) => "$field = $placeholder",
             explode(', ', $set_fields),
@@ -1762,7 +1762,7 @@ class Database implements Database_Interface
             $query_type = 'INSERT INTO '; // По умолчанию или если указано 'into'
         }
         // === 4. Подготовка данных для запроса ===
-        [$fields_clause, $placeholders_clause, $params] = $this->prepare_insert_data($insert, $options['params'] ?? []);
+        [$fields_clause, $placeholders_clause, $params] = $this->prepare_insert_data($insert, 'insert_', $options['params'] ?? []);
         // === 5. Формирование базового запроса ===
         $this->txt_query = "$query_type$to_tbl ($fields_clause) VALUES ($placeholders_clause)";
         // === 6. Выполнение запроса ===

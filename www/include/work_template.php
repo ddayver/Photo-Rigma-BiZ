@@ -396,10 +396,11 @@ class Work_Template implements Work_Template_Interface
      * echo $template->config['temp_photo_w']; // Выведет: 800
      * @endcode
      */
-    public function __get(string $name)
+    public function &__get(string $name)
     {
         if ($name === 'config') {
-            return $this->config;
+            $result = &$this->config;
+            return $result;
         }
         throw new \InvalidArgumentException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
@@ -945,11 +946,12 @@ class Work_Template implements Work_Template_Interface
                 }
             }
         }
+        $csrf = $this->user->csrf_token();
         // Проверка статуса авторизации через match
         $array_data = match ($this->user->session['login_id'] ?? 0) {
             0 => [
                 'NAME_BLOCK'        => $this->lang['main']['user_block'],
-                'CSRF_TOKEN'        => $this->user->csrf_token(),
+                'CSRF_TOKEN'        => $csrf,
                 'L_LOGIN'           => $this->lang['main']['login'],
                 'L_PASSWORD'        => $this->lang['main']['pass'],
                 'L_ENTER'           => $this->lang['main']['enter'],

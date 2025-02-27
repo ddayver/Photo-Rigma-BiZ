@@ -806,6 +806,7 @@ class Work_Security implements Work_Security_Interface
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип для загруженного файла | Поле: {$field}, MIME-тип: {$real_mime_type}"
                 );
             }
+            return true;
         }
         return $this->_check_field_internal(
             $source[$field] ?? null,
