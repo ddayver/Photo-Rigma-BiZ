@@ -1,9 +1,15 @@
 var searchData=
 [
-  ['main_2ephp_0',['main.php',['../da/d71/action_2main_8php.html',1,'(Глобальное пространство имён)'],['../d4/d40/language_2english_2main_8php.html',1,'(Глобальное пространство имён)'],['../da/d32/language_2russian_2main_8php.html',1,'(Глобальное пространство имён)']]],
-  ['max_5fimage_5fheight_1',['MAX_IMAGE_HEIGHT',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae70ec35c87dd3bc4270f743731d77bfa',1,'PhotoRigma::Classes::Work_Image']]],
-  ['max_5fimage_5fwidth_2',['MAX_IMAGE_WIDTH',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a50cced8b0f9f5fb1f5fb4fcf9595e5bf',1,'PhotoRigma::Classes::Work_Image']]],
-  ['max_5flog_5fsize_3',['MAX_LOG_SIZE',['../db/d02/namespacePhotoRigma_1_1Include.html#a53cff4e23bb5f13e5e08ca5e8b58d740',1,'PhotoRigma::Include']]],
-  ['merge_5fuser_5fwith_5fgroup_4',['merge_user_with_group',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea',1,'PhotoRigma::Classes::User']]],
-  ['module_5',['Node Module',['..//home/victoria/Photo-Rigma-BiZ/www/badword/README.md#autotoc_md3',1,'']]]
+  ['database_0',['Database',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html',1,'PhotoRigma::Classes']]],
+  ['database_5finterface_1',['Database_Interface',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html',1,'PhotoRigma::Classes']]],
+  ['db_2ephp_2',['db.php',['../dc/d82/db_8php.html',1,'']]],
+  ['debug_5fgallery_3',['DEBUG_GALLERY',['../de/d90/namespacePhotoRigma.html#a62b7f878abcac93af0f81464c8d008d7',1,'PhotoRigma']]],
+  ['default_5favatar_4',['DEFAULT_AVATAR',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a834e1bd7ce0d2d35485d68dff3f8c594',1,'PhotoRigma::Classes::User']]],
+  ['default_5fgroup_5',['DEFAULT_GROUP',['../db/d02/namespacePhotoRigma_1_1Include.html#a2790a51795c400a411236e4651f1b3f1',1,'PhotoRigma::Include']]],
+  ['del_5fphoto_6',['del_photo',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a84a1eeee53079a8e60fea1d1e0d94639',1,'PhotoRigma\Classes\Work\del_photo()'],['../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639',1,'PhotoRigma\Classes\Work_CoreLogic_Interface\del_photo()'],['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639',1,'PhotoRigma\Classes\Work_CoreLogic\del_photo()']]],
+  ['delete_7',['delete',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a73d8e6acdfb996002f980ab7c9c18515',1,'PhotoRigma\Classes\Database_Interface\delete()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515',1,'PhotoRigma\Classes\Database\delete()']]],
+  ['delete_5fgroup_8',['delete_group',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a4045f753ad732e5f01bafd4b6c04d961',1,'PhotoRigma\Classes\User_Interface\delete_group()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961',1,'PhotoRigma\Classes\User\delete_group()']]],
+  ['delete_5fuser_9',['delete_user',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab2ab959808354af438bd760ef89d09eb',1,'PhotoRigma\Classes\User_Interface\delete_user()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb',1,'PhotoRigma\Classes\User\delete_user()']]],
+  ['die_5fif_5ferror_10',['DIE_IF_ERROR',['../db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c',1,'PhotoRigma::Include']]],
+  ['documents_11',['Documents',['../d2/d0c/md_badword_2USERS.html#autotoc_md6',1,'']]]
 ];

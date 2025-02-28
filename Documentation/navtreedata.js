@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "Photo-Rigma-BiZ", "index.html", [
-    [ "Photo Rigma BiZ", "index.html", "index" ],
+    [ "Photo Rigma BiZ 📸", "index.html", "index" ],
     [ "Users of these lists", "d2/d0c/md_badword_2USERS.html", [
       [ "Projects", "d2/d0c/md_badword_2USERS.html#autotoc_md5", null ],
       [ "Documents", "d2/d0c/md_badword_2USERS.html#autotoc_md6", null ],

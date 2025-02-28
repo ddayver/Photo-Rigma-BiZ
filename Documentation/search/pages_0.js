@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['biz_0',['Photo Rigma BiZ',['../index.html',1,'']]]
+  ['biz_20📸_0',['Photo Rigma BiZ 📸',['../index.html',1,'']]]
 ];
