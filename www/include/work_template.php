@@ -964,7 +964,7 @@ class Work_Template implements Work_Template_Interface
             default => [
                 'NAME_BLOCK' => $this->lang['main']['user_block'],
                 'L_HI_USER'  => $this->lang['main']['hi_user'] . ', ' . Work::clean_field($this->user->user['real_name']),
-                'L_GROUP'    => $this->lang['main']['group'] . ': ' . $this->user->user['group'],
+                'L_GROUP'    => $this->lang['main']['group'] . ': ' . $this->user->user['group_name'],
                 'U_AVATAR'   => $this->config['site_url'] . $avatar_path,
             ],
         };
@@ -1031,8 +1031,8 @@ class Work_Template implements Work_Template_Interface
         $this->db->select(
             [
                 'COUNT(*) AS regist_user',
-                'SUM(CASE WHEN `group` = 3 THEN 1 ELSE 0 END) AS user_admin',
-                'SUM(CASE WHEN `group` = 2 THEN 1 ELSE 0 END) AS user_moder'
+                'SUM(CASE WHEN `group_id` = 3 THEN 1 ELSE 0 END) AS user_admin',
+                'SUM(CASE WHEN `group_id` = 2 THEN 1 ELSE 0 END) AS user_moder'
             ],
             TBL_USERS,
             []
@@ -1078,11 +1078,14 @@ class Work_Template implements Work_Template_Interface
         $stat['rate_moder'] = $rate_moder_stats ? (int)$rate_moder_stats['rate_moder'] : 0;
         // Получение онлайн-пользователей
         $this->db->select(
-            ['id', 'real_name'],
+            ['`id`', '`real_name`'],
             TBL_USERS,
             [
-                'where'  => '`date_last_activ` >= (CURRENT_TIMESTAMP - :online_user)',
-                'params' => [':online_user' => $this->config['time_user_online']]
+                'where'  => '`date_last_activ` >= (:current_time - INTERVAL :online_user SECOND)',
+                'params' => [
+                    ':current_time' => date('Y-m-d H:i:s'),
+                    ':online_user' => (int)$this->config['time_user_online']
+                ]
             ]
         );
         $online_users_data = $this->db->res_arr();
@@ -1180,18 +1183,18 @@ class Work_Template implements Work_Template_Interface
         $array_data = [];
         // Блок получения данных через join()
         $this->db->join(
-            ['user.id', 'user.real_name', 'COUNT(photo.id) AS user_photo'],
+            [TBL_USERS . '.`id`', TBL_USERS.'.`real_name`', 'COUNT(' . TBL_PHOTO . '.`id`) AS `user_photo`'],
             TBL_USERS, // Основная таблица (user)
             [
                 [
                     'type' => 'INNER', // Тип JOIN
                     'table' => TBL_PHOTO, // Присоединяемая таблица (photo)
-                    'on' => 'user.id = photo.user_upload' // Условие JOIN
+                    'on' => TBL_USERS . '.`id` = ' . TBL_PHOTO . '.`user_upload`' // Условие JOIN
                 ]
             ],
             [
-                'group' => 'user.id', // Группировка по ID пользователя
-                'order' => 'user_photo DESC', // Сортировка по количеству фотографий
+                'group' => TBL_USERS . '.`id`', // Группировка по ID пользователя
+                'order' => '`user_photo` DESC', // Сортировка по количеству фотографий
                 'limit' => $best_user // Лимит на количество результатов
             ]
         );

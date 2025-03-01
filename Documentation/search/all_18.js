@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['readme_2emd_0',['README.md',['../da/ddd/README_8md.html',1,'(Глобальное пространство имён)'],['../d6/db0/www_2avatar_2README_8md.html',1,'(Глобальное пространство имён)'],['../d9/d1f/www_2badword_2README_8md.html',1,'(Глобальное пространство имён)'],['../df/d92/www_2gallery_2README_8md.html',1,'(Глобальное пространство имён)'],['../d1/d64/www_2thumbnail_2README_8md.html',1,'(Глобальное пространство имён)']]],
+  ['readme_2emd_0',['README.md',['../da/ddd/README_8md.html',1,'(Глобальное пространство имён)'],['../d6/db0/www_2avatar_2README_8md.html',1,'(Глобальное пространство имён)'],['../d9/d1f/www_2badword_2README_8md.html',1,'(Глобальное пространство имён)'],['../db/d59/www_2cache_2README_8md.html',1,'(Глобальное пространство имён)'],['../df/d92/www_2gallery_2README_8md.html',1,'(Глобальное пространство имён)'],['../d8/d7e/www_2log_2README_8md.html',1,'(Глобальное пространство имён)'],['../d1/d64/www_2thumbnail_2README_8md.html',1,'(Глобальное пространство имён)']]],
   ['reg_5femail_1',['REG_EMAIL',['../db/d02/namespacePhotoRigma_1_1Include.html#ae61eeb74d6e738c902452868f3b3ca32',1,'PhotoRigma::Include']]],
   ['reg_5flogin_2',['REG_LOGIN',['../db/d02/namespacePhotoRigma_1_1Include.html#abcaad3156cca5ada2c3a8df418291208',1,'PhotoRigma::Include']]],
   ['reg_5fname_3',['REG_NAME',['../db/d02/namespacePhotoRigma_1_1Include.html#a328f2af671059a9d73b0cfef6c3a644f',1,'PhotoRigma::Include']]],

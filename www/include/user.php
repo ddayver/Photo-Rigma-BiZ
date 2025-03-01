@@ -729,7 +729,7 @@ class User implements User_Interface
             'password' => password_hash($post_data['re_password'], PASSWORD_BCRYPT),
             'email' => $post_data['email'],
             'real_name' => $post_data['real_name'],
-            'group' => DEFAULT_GROUP
+            'group_id' => DEFAULT_GROUP
         ];
 
         // Получение данных группы по умолчанию
@@ -1200,7 +1200,7 @@ class User implements User_Interface
     private function load_guest_user(): void
     {
         // Выполняем запрос к базе данных для получения данных группы гостя
-        if (!$this->db->select('*', TBL_GROUP, ['where' => '`id` = :group_id', 'params' => ['group_id' => 0]])) {
+        if (!$this->db->select('`user_rights`', TBL_GROUP, ['where' => '`id` = :group_id', 'params' => ['group_id' => 0]])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные группы гостя"
             );
@@ -1294,7 +1294,7 @@ class User implements User_Interface
         $this->user = array_merge($user_data, $processed_rights);
 
         // Загружаем данные группы пользователя
-        if (!$this->db->select('*', TBL_GROUP, ['where' => '`id` = :group_id', 'params' => ['group_id' => $this->user['group']]])) {
+        if (!$this->db->select('*', TBL_GROUP, ['where' => '`id` = :group_id', 'params' => ['group_id' => $this->user['group_id']]])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные группы пользователя с ID: {$this->user['group']}"
             );
@@ -1322,7 +1322,7 @@ class User implements User_Interface
         $this->merge_user_with_group(array_merge($group_data, $processed_rights));
 
         // Обновляем данные о последней активности пользователя
-        if (!$this->db->update(['date_last_activ' => date('Y-m-d H:i:s')], TBL_USERS, ['where' => '`id` = :user_id', 'params' => ['user_id' => $user_id]])) {
+        if (!$this->db->update(['date_last_activ' => ':current_time'], TBL_USERS, ['where' => '`id` = :user_id', 'params' => ['user_id' => $user_id, ':current_time' => date('Y-m-d H:i:s')]])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось обновить дату последней активности пользователя с ID: {$user_id}"
             );
@@ -1365,8 +1365,7 @@ class User implements User_Interface
         foreach ($group_data as $key => $value) {
             match ($key) {
                 'name' => [
-                    $this->user['group_id'] = $this->user['group'],
-                    $this->user['group'] = $value,
+                    $this->user['group_name'] = $value,
                 ],
                 'id' => null, // Пропускаем ключ 'id'
                 default => $this->user[$key] = isset($this->user[$key])
