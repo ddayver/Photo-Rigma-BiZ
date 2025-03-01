@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['a_20добавление_20нового_20обработчика_0',['a) Добавление нового обработчика',['../index.html#autotoc_md56',1,'']]],
-  ['a_20создайте_20базу_20данных_20и_20пользователя_1',['a) Создайте базу данных и пользователя',['../index.html#autotoc_md35',1,'']]],
+  ['a_20добавление_20нового_20обработчика_0',['a) Добавление нового обработчика',['../index.html#autotoc_md58',1,'']]],
+  ['a_20создайте_20базу_20данных_20и_20пользователя_1',['a) Создайте базу данных и пользователя',['../index.html#autotoc_md37',1,'']]],
   ['add_5fcase_2',['add_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a47bd6b3290e92943a380a494a29c981e',1,'PhotoRigma::Classes::Template']]],
   ['add_5fcase_5far_3',['add_case_ar',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a8f10b76fef019d4088ccb49439b71319',1,'PhotoRigma::Classes::Template']]],
   ['add_5fif_4',['add_if',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1c5d5f804563b88462ee58e079ce528d',1,'PhotoRigma::Classes::Template']]],

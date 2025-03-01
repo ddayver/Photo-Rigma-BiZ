@@ -10,7 +10,7 @@ var searchData=
   ['photorigma_3a_3aclasses_7',['Classes',['../d6/dc3/namespacePhotoRigma_1_1Classes.html',1,'PhotoRigma']]],
   ['photorigma_3a_3ainclude_8',['Include',['../db/d02/namespacePhotoRigma_1_1Include.html',1,'PhotoRigma']]],
   ['photorigma_3a_3alanguage_9',['Language',['../dc/d7a/namespacePhotoRigma_1_1Language.html',1,'PhotoRigma']]],
-  ['php_3a_10',['Расширения PHP:',['../index.html#autotoc_md25',1,'']]],
+  ['php_3a_10',['Расширения PHP:',['../index.html#autotoc_md27',1,'']]],
   ['prepare_5finsert_5fdata_11',['prepare_insert_data',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899',1,'PhotoRigma::Classes::Database']]],
   ['process_5fimage_5fresize_5fgd_12',['process_image_resize_gd',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce',1,'PhotoRigma::Classes::Work_Image']]],
   ['process_5fimage_5fresize_5fgmagick_13',['process_image_resize_gmagick',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c',1,'PhotoRigma::Classes::Work_Image']]],

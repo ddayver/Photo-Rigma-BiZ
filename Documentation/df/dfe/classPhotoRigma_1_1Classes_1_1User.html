@@ -296,7 +296,7 @@ $(function(){initNavTree('df/dfe/classPhotoRigma_1_1Classes_1_1User.html','../..
 </div><!-- fragment --> 
 <p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l00398">398</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l00358">$db</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l00359">$session</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01467">all_right_fields()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01162">initialize_user()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l00358">$db</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l00359">$session</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01466">all_right_fields()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01162">initialize_user()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -617,11 +617,11 @@ User::$session Свойство, привязанное к глобальном�
 <dl class="section note"><dt>Заметки</dt><dd>Метод сохраняет имена полей прав пользователей и групп в свойство <code>$user_right_fields</code>. Если данные отсутствуют, сохраняются пустые массивы. Используются константы <code>TBL_USERS</code> и <code>TBL_GROUP</code> для указания таблиц базы данных.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Поле <code>user_rights</code> должно содержать валидный JSON. Невалидные данные могут привести к исключению.</dd></dl>
 <p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line">$this-&gt;<a class="code hl_function" href="#a7bac0b0462dbce26194a9f412cc07c4c">all_right_fields</a>();</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a7bac0b0462dbce26194a9f412cc07c4c"><div class="ttname"><a href="#a7bac0b0462dbce26194a9f412cc07c4c">PhotoRigma\Classes\User\all_right_fields</a></div><div class="ttdeci">all_right_fields()</div><div class="ttdoc">Метод загружает права первого пользователя и первой группы из базы данных, извлекает имена полей (клю...</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l01467">user.php:1467</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a7bac0b0462dbce26194a9f412cc07c4c"><div class="ttname"><a href="#a7bac0b0462dbce26194a9f412cc07c4c">PhotoRigma\Classes\User\all_right_fields</a></div><div class="ttdeci">all_right_fields()</div><div class="ttdoc">Метод загружает права первого пользователя и первой группы из базы данных, извлекает имена полей (клю...</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l01466">user.php:1466</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01467">1467</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01466">1466</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l01408">process_user_rights()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">PhotoRigma\Include\TBL_GROUP</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l01407">process_user_rights()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">PhotoRigma\Include\TBL_GROUP</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00398">__construct()</a>.</p>
 <div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -828,9 +828,9 @@ User::$session Свойство, привязанное к глобальном�
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Загрузка аватара не удалась.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a93574eaa3191f6cb217b7342793eec34"><div class="ttname"><a href="#a93574eaa3191f6cb217b7342793eec34">PhotoRigma\Classes\User\edit_avatar</a></div><div class="ttdeci">edit_avatar(array $files_data, int $max_size, Work $work)</div><div class="ttdoc">Обрабатывает загрузку аватара пользователя.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l01558">user.php:1558</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a93574eaa3191f6cb217b7342793eec34"><div class="ttname"><a href="#a93574eaa3191f6cb217b7342793eec34">PhotoRigma\Classes\User\edit_avatar</a></div><div class="ttdeci">edit_avatar(array $files_data, int $max_size, Work $work)</div><div class="ttdoc">Обрабатывает загрузку аватара пользователя.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l01557">user.php:1557</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01558">1558</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01557">1557</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01775">Work\encodename()</a>.</p>
 
@@ -1000,7 +1000,7 @@ User::$session Свойство, привязанное к глобальном�
 </div><!-- fragment --> 
 <p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01267">1267</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l01200">load_guest_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01363">merge_user_with_group()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01408">process_user_rights()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">PhotoRigma\Include\TBL_GROUP</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l01200">load_guest_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01363">merge_user_with_group()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01407">process_user_rights()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">PhotoRigma\Include\TBL_GROUP</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l01162">initialize_user()</a>.</p>
 <div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -1081,7 +1081,7 @@ User::$session Свойство, привязанное к глобальном�
 </div><!-- fragment --> 
 <p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01200">1200</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l01408">process_user_rights()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">PhotoRigma\Include\TBL_GROUP</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/d1a/user_8php_source.html#l01407">process_user_rights()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">PhotoRigma\Include\TBL_GROUP</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l01162">initialize_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01267">load_authenticated_user()</a>.</p>
 <div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -1320,11 +1320,11 @@ User::$session Свойство, привязанное к глобальном�
 <dl class="section note"><dt>Заметки</dt><dd>Метод возвращает пустой массив, если поле <code>user_rights</code> отсутствует или содержит некорректные данные. </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Поле <code>user_rights</code> должно содержать валидный JSON. Невалидные данные могут привести к исключению.</dd></dl>
 <p>Пример вызова метода внутри класса: </p><div class="fragment"><div class="line">$rights = $this-&gt;<a class="code hl_function" href="#a7b22f0ff3047191231f20b97f25833f0">process_user_rights</a>(<span class="stringliteral">&#39;{&quot;edit&quot;: 1, &quot;delete&quot;: 0}&#39;</span>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a7b22f0ff3047191231f20b97f25833f0"><div class="ttname"><a href="#a7b22f0ff3047191231f20b97f25833f0">PhotoRigma\Classes\User\process_user_rights</a></div><div class="ttdeci">process_user_rights($user_rights)</div><div class="ttdoc">Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l01408">user.php:1408</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a7b22f0ff3047191231f20b97f25833f0"><div class="ttname"><a href="#a7b22f0ff3047191231f20b97f25833f0">PhotoRigma\Classes\User\process_user_rights</a></div><div class="ttdeci">process_user_rights($user_rights)</div><div class="ttdoc">Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l01407">user.php:1407</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01408">1408</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l01407">1407</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l01467">all_right_fields()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01267">load_authenticated_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01200">load_guest_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l01466">all_right_fields()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01267">load_authenticated_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01200">load_guest_user()</a>.</p>
 <div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-17-summary" class="dynsummary" style="display:block;">
@@ -1548,7 +1548,7 @@ User::$session Свойство, привязанное к глобальном�
 
 <p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l00837">837</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01558">edit_avatar()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00108">PhotoRigma\Include\REG_EMAIL</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01557">edit_avatar()</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00108">PhotoRigma\Include\REG_EMAIL</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">PhotoRigma\Include\TBL_USERS</a>.</p>
 <div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-19-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-19-summary" class="dynsummary" style="display:block;">

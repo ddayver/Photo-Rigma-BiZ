@@ -65,8 +65,8 @@ define('TBL_CATEGORY', '`category`'); ///< Таблица с списком ка
 define('TBL_PHOTO', '`photo`'); ///< Таблица с списком фотографий на сервере
 define('TBL_RATE_USER', '`rate_user`'); ///< Таблица с оценками фотографий от пользователей
 define('TBL_RATE_MODER', '`rate_moder`'); ///< Таблица с оценками фотографий от модераторов
-define('TBL_USERS', '`user`'); ///< Таблица пользователей
-define('TBL_GROUP', '`group`'); ///< Таблица групп пользователей с их правами
+define('TBL_USERS', '`users`'); ///< Таблица пользователей
+define('TBL_GROUP', '`groups`'); ///< Таблица групп пользователей с их правами
 define('DEFAULT_GROUP', 1); ///< Группа по-умолчанию для новых пользователей
 
 /**

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['c_20подключение_20нового_20кода_0',['c) Подключение нового кода',['../index.html#autotoc_md58',1,'']]],
+  ['c_20подключение_20нового_20кода_0',['c) Подключение нового кода',['../index.html#autotoc_md60',1,'']]],
   ['calculate_5fthumbnail_5fsize_1',['calculate_thumbnail_size',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c',1,'PhotoRigma::Classes::Work_Image']]],
   ['category_2',['category',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4dfb943f9b750ec6e1e2924a9620c7f5',1,'PhotoRigma\Classes\Work\category()'],['../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5',1,'PhotoRigma\Classes\Work_CoreLogic_Interface\category()'],['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5',1,'PhotoRigma\Classes\Work_CoreLogic\category()']]],
   ['category_2ephp_3',['category.php',['../d6/d25/category_8php.html',1,'']]],

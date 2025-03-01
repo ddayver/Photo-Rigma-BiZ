@@ -390,7 +390,7 @@ if ($subact == 'logout') {
                 TBL_GROUP,
                 [
                     'where' => 'id = :id',
-                    'params' => [':id' => $user_data['group']]
+                    'params' => [':id' => $user_data['group_id']]
                 ]
             );
             $group_data = $db->res_row();
