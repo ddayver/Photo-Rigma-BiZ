@@ -138,9 +138,10 @@ var NAVTREEINDEX2 =
 "de/d90/namespacePhotoRigma.html#aa698a3e72116e8e778be0e95d908ee30":[5,0,0,4],
 "de/d90/namespacePhotoRigma.html#ab24faf4aa647cdcee494fc48524ad4ff":[5,0,0,16],
 "de/d90/namespacePhotoRigma.html#ab2d0bc152db0769c22005f821caf29e8":[5,0,0,19],
-"de/d90/namespacePhotoRigma.html#abe4cc9788f52e49485473dc699537388":[5,0,0,30],
+"de/d90/namespacePhotoRigma.html#abe4cc9788f52e49485473dc699537388":[5,0,0,31],
 "de/d90/namespacePhotoRigma.html#ad8f0eaf2324e66fe919da857ccbe33e7":[5,0,0,11],
 "de/d90/namespacePhotoRigma.html#ada57e7bb7c152edad18fe2f166188691":[5,0,0,24],
+"de/d90/namespacePhotoRigma.html#adb6cc58d5735a7f6aa966e727899e7e9":[5,0,0,30],
 "de/d90/namespacePhotoRigma.html#af6d626b28fccda802400c748c0d7a42e":[5,0,0,17],
 "de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6":[5,0,0,29],
 "df/d6b/group__LanguageRussianLogin.html":[4,13],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "functions_m.html":[6,3,0,12],
 "functions_n.html":[6,3,0,13],
 "functions_p.html":[6,3,0,14],
-"functions_r.html":[6,3,0,15],
-"functions_s.html":[6,3,0,16]
+"functions_r.html":[6,3,0,15]
 };

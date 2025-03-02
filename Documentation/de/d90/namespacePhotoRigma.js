@@ -85,5 +85,6 @@ var namespacePhotoRigma =
     [ "DEBUG_GALLERY", "de/d90/namespacePhotoRigma.html#a62b7f878abcac93af0f81464c8d008d7", null ],
     [ "else", "de/d90/namespacePhotoRigma.html#aa355238e5cfbf4556dccf2f8a2b68926", null ],
     [ "IN_GALLERY", "de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6", null ],
+    [ "LOCALHOST_SERVER", "de/d90/namespacePhotoRigma.html#adb6cc58d5735a7f6aa966e727899e7e9", null ],
     [ "try", "de/d90/namespacePhotoRigma.html#abe4cc9788f52e49485473dc699537388", null ]
 ];

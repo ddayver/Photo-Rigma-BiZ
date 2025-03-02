@@ -1,14 +1,16 @@
 @charset "utf-8";
 
+:root { color-scheme: dark; }
+
 body {
 background:#141519;
-font:12px Helvetica, sans-serif;
+font:14px Helvetica, sans-serif;
 color:#CCCCCC
 }
 
 .my {
 background:#141519;
-font:12px Helvetica, sans-serif;
+font:14px Helvetica, sans-serif;
 border:#414b57 ridge 2px;
 color:#CCCCCC;
 text-align:left;
@@ -150,12 +152,12 @@ margin:0 50px
 }
 
 .form {
-font:10px "Courier New",Courier,monospace;
+font:14px "Courier New",Courier,monospace;
 height:14px
 }
 
 .form_textarea {
-font:12px "Courier New", Courier, monospace
+font:14px "Courier New", Courier, monospace
 }
 
 .category,.category_center {

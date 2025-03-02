@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" data-theme="dark">
 
 <head>
 	<title>{TITLE}</title>
@@ -8,32 +8,22 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	{INSERT_HEADER}
-	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
-	<link href="{THEME_URL}jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<!-- IF_LOCALHOST_SERVER_BEGIN -->
+	<link href="{THEME_URL}semantic.min.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="{THEME_URL}js/jquery.min.js"></script>
-	<script type="text/javascript" src="{THEME_URL}js/jquery-ui.min.js"></script>
- <script type="text/javascript">
-$(function () {
-	$("input[type=submit]").removeClass("no_jquery");
-	$("button, input[type=submit]").button();
-	$("#set").buttonset();
-	$(".button_long")
-		.removeClass("ui-corner-all")
-		.filter(":first")
-			.addClass("ui-corner-top")
-		.end()
-		.filter(":last")
-			.addClass("ui-corner-bottom")
-		.end()
-		.button("option", "icons", {primary: "ui-icon-radio-on"});
-	$(".select").button({ disabled: true });
-	$(".vselect").button({ disabled: true }).button("option", "icons", {primary: "ui-icon-bullet"});
-	$(".edit").button({icons: {primary: "ui-icon-pencil"}, text: false});
-	$(".delete").button("option", "icons", {primary: "ui-icon-trash"}).button("option", "text", false);
-	$(".edit_delete").buttonset();
-	$(".long_edit_delete").buttonset();
-});
-</script>
+	<script type="text/javascript" src="{THEME_URL}js/semantic.min.js"></script>
+<!-- IF_LOCALHOST_SERVER_ELSE -->
+    <link href="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.js"></script>
+<!-- IF_LOCALHOST_SERVER_END -->
+    <link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
+    <script>
+        $(document).ready(function() {
+          $('.ui.checkbox').checkbox();
+          $('.ui.icon.button').popup();
+        });
+    </script>
 </head>
 
 <body bgcolor="#141519;"{INSERT_BODY}>
@@ -53,13 +43,13 @@ $(function () {
 							<table cellpadding="0" cellspacing="0" border="0">
 								<tr>
 									<td>
-										<div id="set">
+										<div class="ui black stackable buttons">
 <!-- ARRAY_SHORT_MENU_BEGIN -->
 <!-- IF_SHORT_MENU_URL_BEGIN -->
-											<button class="ui-corner-all" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+											<button class="small ui button" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
 <!-- IF_SHORT_MENU_URL_ELSE -->
 
-											<button class="select ui-corner-all" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+											<button class="small ui active button" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
 <!-- IF_SHORT_MENU_URL_END -->
 <!-- ARRAY_SHORT_MENU_END -->
 										</div>
@@ -74,8 +64,8 @@ $(function () {
 							<form name="search" action="{U_SEARCH}" method="post">
 								<table align="right" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input class="form ui-corner-all" size="50" type="text" name="search_main_text" /></td>
-										<td><input class="ui-corner-all no_jquery" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
+										<td><div class="small ui inverted icon input"><input type="text" name="search_main_text" placeholder="{L_SEARCH}..." /><i class="search icon"></i></div></td>
+										<td><input class="small ui black inverted button" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
 									</tr>
 								</table>
 							</form>
@@ -106,19 +96,23 @@ $(function () {
 <!-- CASE_MENU -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{LONG_MENU_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+									<td>
+                                        <div class="large ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="large ui top black attached centered label">
+                                                <i class="bars icon"></i> {LONG_MENU_NAME_BLOCK}
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 <!-- IF_LONG_MENU_BEGIN -->
 								<tr>
-									<td colspan="3">
-										<div id="vset">
+									<td>
+										<div class="ui buttons vertical" style="width:100%;">
 <!-- ARRAY_LONG_MENU_BEGIN -->
 <!-- IF_LONG_MENU_URL_BEGIN -->
-											<button style="width:100%; text-align: left;" class="button_long ui-corner-all" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
+											<button style="width:100%; text-align: left;" class="small ui inverted button" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}"><i class="folder outline icon"></i> {L_LONG_MENU}</button><br />
 <!-- IF_LONG_MENU_URL_ELSE -->
-											<button style="width:100%; text-align: left;" class="vselect button_long ui-corner-all" id="vselect" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
+											<button style="width:100%; text-align: left;" class="small ui secondary active button" title="{L_LONG_MENU}"><i class="folder open outline icon"></i> {L_LONG_MENU}</button><br />
 <!-- IF_LONG_MENU_URL_END -->
 <!-- ARRAY_LONG_MENU_END -->
 										</div>
@@ -130,22 +124,21 @@ $(function () {
 <!-- CASE_TOP_LAST_PHOTO -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+									<td>
+                                        <div class="large ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="large ui top black attached centered label">
+                                                <i class="camera retro icon"></i> {NAME_BLOCK}
+                                            </div>
+                                        </div>
+									</td>
 								</tr>
 								<tr>
-                                	<td class="mini_photo"></td>
 									<td class="mini_photo"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
-                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_photo"></td>
 									<td class="mini_photo"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_photo"></td>
 									<td class="mini_photo">
 <!-- IF_USER_EXISTS_BEGIN -->
 										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
@@ -153,21 +146,22 @@ $(function () {
 										{D_REAL_NAME_USER_ADD}
 <!-- IF_USER_EXISTS_END -->
 									</td>
-                                    <td class="mini_photo"></td>
 								</tr>
 								<tr>
-                                	<td class="mini_photo"></td>
 									<td class="mini_photo">{PHOTO_RATE}</td>
-                                    <td class="mini_photo"></td>
 								</tr>
 							</table>
 <!-- BREAK_TOP_LAST_PHOTO -->
 <!-- CASE_DEFAULT -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">ERROR_CASE_BLOCK</td>
-									<td class="name_block_right">&nbsp;</td>
+                                    <td>
+                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="ui top black attached centered label">
+                                                <i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 							</table>
 <!-- BREAK_DEFAULT -->

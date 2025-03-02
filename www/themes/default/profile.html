@@ -2,68 +2,91 @@
 <!-- CASE_REGIST -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+                                    <td>
+                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="ui top black attached centered label">
+                                                <i class="signup icon"></i> {NAME_BLOCK}
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 								<tr>
-									<td class="regist"></td>
 									<td class="regist">
 										<div align="center">
 											<form action="{U_REGISTER}" method="post" name="regist">
 												<table border="0" cellspacing="0" cellpadding="0" class="regist_data">
 													<tr>
-														<td>{L_LOGIN}:</td>
-														<td><input type="text" name="login" value="{D_LOGIN}" size="40" maxlength="32" class="form ui-corner-all" /><input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
+														<td>{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="text" name="login" size="40" maxlength="32" placeholder="{L_LOGIN}..." /><i class="user icon"></i></div></td>
 														<td class="error">
 <!-- IF_ERROR_LOGIN_BEGIN -->
-															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_LOGIN}" />
+                                                            <div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_LOGIN}" data-position="right center" data-variation="red small">
+                                                                <i class="red exclamation circle icon"></i>
+                                                            </div>
 <!-- IF_ERROR_LOGIN_ELSE -->
-															<img src="{THEME_URL}images/spacer.gif" border="0" height="14" width="14" alt="" />
+                                                            <div class="ui icon">
+                                                                <i class="exclamation circle icon" style="opacity: 0;"></i>
+                                                            </div>
 <!-- IF_ERROR_LOGIN_END -->
 														</td>
 													</tr>
 													<tr>
 														<td>{L_PASSWORD}:</td>
-														<td><input type="password" name="password" size="40" maxlength="50" class="form ui-corner-all" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="password" name="password" size="40" maxlength="50" placeholder="{L_PASSWORD}..." /><i class="unlock icon"></i></div></td>
 														<td class="error">
 <!-- IF_ERROR_PASSWORD_BEGIN -->
-															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_PASSWORD}" />
+                                                            <div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_PASSWORD}" data-position="right center" data-variation="red small">
+                                                                <i class="red exclamation circle icon"></i>
+                                                            </div>
 <!-- IF_ERROR_PASSWORD_ELSE -->
-															<img src="{THEME_URL}images/spacer.gif" border="0" height="14" width="14" alt="" />
+                                                            <div class="ui icon">
+                                                                <i class="exclamation circle icon" style="opacity: 0;"></i>
+                                                            </div>
 <!-- IF_ERROR_PASSWORD_END -->
 														</td>
 													</tr>
 													<tr>
 														<td>{L_RE_PASSWORD}:</td>
-														<td><input type="password" name="re_password" size="40" maxlength="50" class="form ui-corner-all" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="password" name="re_password" size="40" maxlength="50" placeholder="{L_RE_PASSWORD}..." /><i class="unlock alternate icon"></i></div></td>
 														<td class="error">
 <!-- IF_ERROR_RE_PASSWORD_BEGIN -->
-															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_RE_PASSWORD}" />
+                                                            <div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_RE_PASSWORD}" data-position="right center" data-variation="red small">
+                                                                <i class="red exclamation circle icon"></i>
+                                                            </div>
 <!-- IF_ERROR_RE_PASSWORD_ELSE -->
-															<img src="{THEME_URL}images/spacer.gif" border="0" height="14" width="14" alt="" />
+                                                            <div class="ui icon">
+                                                                <i class="exclamation circle icon" style="opacity: 0;"></i>
+                                                            </div>
 <!-- IF_ERROR_RE_PASSWORD_END -->
 														</td>
 													</tr>
 													<tr>
 														<td>{L_EMAIL}:</td>
-														<td><input type="text" name="email" value="{D_EMAIL}" size="40" maxlength="50" class="form ui-corner-all" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="text" name="email" size="40" maxlength="50" placeholder="{L_EMAIL}..." /><i class="envelope outline icon"></i></div></td>
 														<td class="error">
 <!-- IF_ERROR_EMAIL_BEGIN -->
-															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_EMAIL}" />
+                                                            <div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_EMAIL}" data-position="right center" data-variation="red small">
+                                                                <i class="red exclamation circle icon"></i>
+                                                            </div>
 <!-- IF_ERROR_EMAIL_ELSE -->
-															<img src="{THEME_URL}images/spacer.gif" border="0" height="14" width="14" alt="" />
+                                                            <div class="ui icon">
+                                                                <i class="exclamation circle icon" style="opacity: 0;"></i>
+                                                            </div>
 <!-- IF_ERROR_EMAIL_END -->
 														</td>
 													</tr>
 													<tr>
 														<td>{L_REAL_NAME}:</td>
-														<td><input type="text" name="real_name" value="{D_REAL_NAME}" size="40" maxlength="50" class="form ui-corner-all" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="text" name="real_name" size="40" maxlength="50" placeholder="{L_REAL_NAME}..." /><i class="id card icon"></i></div></td>
 														<td class="error">
 <!-- IF_ERROR_REAL_NAME_BEGIN -->
-															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_REAL_NAME}" />
+                                                            <div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_REAL_NAME}" data-position="right center" data-variation="red small">
+                                                                <i class="red exclamation circle icon"></i>
+                                                            </div>
 <!-- IF_ERROR_REAL_NAME_ELSE -->
-															<img src="{THEME_URL}images/spacer.gif" border="0" height="14" width="14" alt="" />
+                                                            <div class="ui icon">
+                                                                <i class="exclamation circle icon" style="opacity: 0;"></i>
+                                                            </div>
 <!-- IF_ERROR_REAL_NAME_END -->
 														</td>
 													</tr>
@@ -72,64 +95,71 @@
 													</tr>
 													<tr>
 														<td>{D_CAPTCHA_QUESTION}&nbsp;=</td>
-														<td><input type="text" name="captcha" size="40" maxlength="50" class="form ui-corner-all" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="text" name="captcha" size="40" maxlength="50" /><i class="puzzle piece icon"></i></div></td>
 														<td class="error">
 <!-- IF_ERROR_CAPTCHA_BEGIN -->
-															<img src="{THEME_URL}images/error.png" border="0" height="14" width="14" alt="(!)" title="{D_ERROR_CAPTCHA}" />
+                                                            <div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_CAPTCHA}" data-position="right center" data-variation="red small">
+                                                                <i class="red exclamation circle icon"></i>
+                                                            </div>
 <!-- IF_ERROR_CAPTCHA_ELSE -->
-															<img src="{THEME_URL}images/spacer.gif" border="0" height="14" width="14" alt="" />
+                                                            <div class="ui icon">
+                                                                <i class="exclamation circle icon" style="opacity: 0;"></i>
+                                                            </div>
 <!-- IF_ERROR_CAPTCHA_END -->
 														</td>
 													</tr>
 													<tr>
 														<td class="regist" colspan="3">
-                                                            <br /><input class="ui-corner-all no_jquery" type="submit" name="submit" value="{L_REGISTER}" />
+                                                            <br />
+                                                            <button class="small ui primary basic inverted button" name="submit" type="submit" title="{L_REGISTER}"><i class="user plus icon"></i> {L_REGISTER}</button>
 														</td>
 													</tr>
 												</table>
 											</form>
 										</div>
 									</td>
-									<td class="regist"></td>
 								</tr>
 							</table>
 <!-- BREAK_REGIST -->
 <!-- CASE_PROFILE_EDIT -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+                                    <td>
+                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="ui top black attached centered label">
+                                                <i class="user edit icon"></i> {NAME_BLOCK}
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 								<tr>
-									<td class="regist"></td>
 									<td class="regist">
 										<div align="center">
 											<form action="{U_PROFILE_EDIT}" method="post" name="profile" enctype="multipart/form-data">
-												<table border="0" cellspacing="0" cellpadding="0" class="regist_data">
+												<table border="0" cellspacing="2" cellpadding="0" class="regist_data">
 													<tr>
-														<td>{L_LOGIN}:</td>
-														<td>{D_LOGIN}<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
+														<td>{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
+														<td><div class="small ui black inverted basic tag label">{D_LOGIN} <i class="user icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_GROUP}:</td>
-														<td>{D_GROUP}</td>
+														<td><div class="small ui black inverted basic tag label">{D_GROUP} <i class="users icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_EDIT_PASSWORD}<b>*</b>:</td>
-														<td><input class="form" name="edit_password" type="password" size="40" maxlength="50" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" name="edit_password" type="password" size="40" maxlength="50" placeholder="{L_EDIT_PASSWORD}..." /><i class="unlock icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_RE_PASSWORD}<b>*</b>:</td>
-														<td><input class="form" name="re_password" type="password" size="40" maxlength="50" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" type="password" name="re_password" size="40" maxlength="50" placeholder="{L_RE_PASSWORD}..." /><i class="unlock alternate icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_EMAIL}:</td>
-														<td><input class="form" name="email" type="text" size="40" maxlength="50" value="{D_EMAIL}"/></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" name="email" type="text" size="40" maxlength="50" value="{D_EMAIL}" /><i class="envelope outline icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_REAL_NAME}:</td>
-														<td><input class="form" name="real_name" type="text" size="40" maxlength="50" value="{D_REAL_NAME}"/></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" name="real_name" type="text" size="40" maxlength="50" value="{D_REAL_NAME}"/><i class="id card icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_AVATAR}<b>*</b>:</td>
@@ -139,11 +169,11 @@
 													</tr>
 													<tr>
 														<td>{L_DELETE_AVATAR}:</td>
-														<td><input class="form" name="delete_avatar" type="checkbox" value="true" /></td>
+														<td><div class="ui slider black checkbox"><input name="delete_avatar" type="checkbox" value="true" /></div></td>
 													</tr>
 													<tr>
 														<td class="regist" colspan="2">
-															<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}" /><input name="file_avatar" value="" type="file" size="20" />
+															<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}" /><div class="mini ui black inverted file input"><input name="file_avatar" value="" type="file" size="20" /></div>
 															<hr class="line" />
 														</td>
 													</tr>
@@ -155,31 +185,33 @@
 <!-- IF_NEED_PASSWORD_BEGIN -->
 													<tr>
 														<td>{L_PASSWORD}:</td>
-														<td><input class="form" name="password" type="password" size="40" maxlength="50" /></td>
+														<td><div class="mini ui inverted icon input"><input class="ui input" name="password" type="password" size="40" maxlength="50" placeholder="{L_PASSWORD}..." /><i class="key icon"></i></div></td>
 													</tr>
 <!-- IF_NEED_PASSWORD_END -->
 													<tr>
 														<td class="regist" colspan="2">
-															<input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SAVE_PROFILE}" title="{L_SAVE_PROFILE}" />
+                                                            <button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_PROFILE}"><i class="upload icon"></i> {L_SAVE_PROFILE}</button>
 														</td>
 													</tr>
 												</table>
 											</form>
 										</div>
 									</td>
-									<td class="regist"></td>
 								</tr>
 							</table>
 <!-- BREAK_PROFILE_EDIT -->
 <!-- CASE_PROFILE_VIEW -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+                                    <td>
+                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="ui top black attached centered label">
+                                                <i class="user icon"></i> {NAME_BLOCK}
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 								<tr>
-									<td class="regist"></td>
 									<td class="regist">
 										<div align="center">
 											<table border="0" cellspacing="0" cellpadding="0" class="regist_data">
@@ -204,16 +236,19 @@
 											</table>
 										</div>
 									</td>
-									<td class="regist"></td>
 								</tr>
 							</table>
 <!-- BREAK_PROFILE_VIEW -->
 <!-- CASE_DEFAULT -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">ERROR_CASE_BLOCK</td>
-									<td class="name_block_right">&nbsp;</td>
+                                    <td>
+                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="ui top black attached centered label">
+                                                <i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 							</table>
 <!-- BREAK_DEFAULT -->

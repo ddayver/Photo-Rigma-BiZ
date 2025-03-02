@@ -1,12 +1,15 @@
 <!-- ARRAY_LAST_NEWS_BEGIN -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_TITLE_NEWS_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+                                    <td>
+                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+                                            <div class="ui top black attached centered label">
+                                                <i class="newspaper icon"></i> {L_TITLE_NEWS_BLOCK}
+                                            </div>
+                                        </div>
+                                    </td>
 								</tr>
 								<tr>
-									<td class="news_data"></td>
 									<td class="news_data">
 <!-- IF_EDIT_SHORT_BEGIN -->
 										<div class="edit_delete"><button class="edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">&nbsp;</button><button class="delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}?')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">&nbsp;</button></div>
@@ -20,14 +23,11 @@
 <!-- IF_EDIT_LONG_END -->
 										<hr class="line" />
 									</td>
-									<td class="news_data"></td>
 								</tr>
 								<tr>
-									<td class="news"></td>
 									<td class="news">
 										{L_TEXT_POST}
 									</td>
-									<td class="news"></td>
 								</tr>
 							</table>
 <!-- ARRAY_LAST_NEWS_END -->

@@ -872,6 +872,9 @@ class Template
             $this->ins_body = ' ' . $this->ins_body;
         }
 
+        // Добавление условия, что скрипты и CSS требуется использовать локальные.
+        $header_template->add_if('LOCALHOST_SERVER', LOCALHOST_SERVER);
+
         // Добавление строковых данных в шаблон
         $header_template->add_string_ar([
             'TITLE'             => empty($title) ? $this->work->config['title_name'] : Work::clean_field($this->work->config['title_name']) . ' - ' . Work::clean_field($title),

@@ -230,8 +230,8 @@ if ($subact == 'logout') {
 
                 // Добавляем данные ошибки в шаблон
                 $template->add_string_ar(array(
-                    'D_' . strtoupper($key)       => Work::clean_field($value['data']) ?? '',
-                    'D_ERROR_' . strtoupper($key) => Work::clean_field($value['text']) ?? ''
+                    'D_' . strtoupper($key)       => Work::clean_field($value['data'] ?? '') ?? '',
+                    'D_ERROR_' . strtoupper($key) => Work::clean_field($value['text'] ?? '') ?? ''
                 ));
             }
             // Очищаем ошибки из сессии после использования
@@ -376,7 +376,7 @@ if ($subact == 'logout') {
             TBL_GROUP,
             [
                 'where' => 'id = :id',
-                'params' => [':id' => $user_data['group']]
+                'params' => [':id' => $user_data['group_id']]
             ]
         );
         $group_data = $db->res_row();

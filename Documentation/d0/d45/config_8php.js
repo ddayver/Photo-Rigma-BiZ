@@ -12,5 +12,6 @@ var config_8php =
     [ "PhotoRigma\\$config", "de/d90/namespacePhotoRigma.html#a97536661153bec04cfa8c9437f7dac4a", null ],
     [ "PhotoRigma\\$http_host", "de/d90/namespacePhotoRigma.html#a1063c700c9559e7928a1dc6ef5abe15f", null ],
     [ "PhotoRigma\\$required_directories", "de/d90/namespacePhotoRigma.html#ab2d0bc152db0769c22005f821caf29e8", null ],
-    [ "PhotoRigma\\$script_name", "de/d90/namespacePhotoRigma.html#a271f5d9c110c98ece73bec3151bf1a90", null ]
+    [ "PhotoRigma\\$script_name", "de/d90/namespacePhotoRigma.html#a271f5d9c110c98ece73bec3151bf1a90", null ],
+    [ "PhotoRigma\\LOCALHOST_SERVER", "de/d90/namespacePhotoRigma.html#adb6cc58d5735a7f6aa966e727899e7e9", null ]
 ];

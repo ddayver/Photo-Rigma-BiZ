@@ -8,3 +8,8 @@ doc_gen.bat
 /toolbars/
 *.html~
 *.md~
+*.buildpath
+*.project
+*.eclipse.*
+/.settings/
+*.css~

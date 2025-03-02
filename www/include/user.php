@@ -1200,7 +1200,7 @@ class User implements User_Interface
     private function load_guest_user(): void
     {
         // Выполняем запрос к базе данных для получения данных группы гостя
-        if (!$this->db->select('`user_rights`', TBL_GROUP, ['where' => '`id` = :group_id', 'params' => ['group_id' => 0]])) {
+        if (!$this->db->select('`id`, `user_rights`', TBL_GROUP, ['where' => '`id` = :group_id', 'params' => ['group_id' => 0]])) {
             throw new \RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные группы гостя"
             );
