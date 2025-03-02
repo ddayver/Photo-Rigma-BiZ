@@ -13,3 +13,4 @@ doc_gen.bat
 *.eclipse.*
 /.settings/
 *.css~
+.gitconfig-*
