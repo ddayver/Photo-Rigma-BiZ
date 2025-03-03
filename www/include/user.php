@@ -894,6 +894,10 @@ class User implements User_Interface
             }
             $new_user_data['avatar'] = static::DEFAULT_AVATAR;
         }
+        // === Проверка языка сайта ===
+        $new_user_data['language'] = $work->check_input('_POST', 'language', ['isset' => true, 'empty' => true])
+            ? $post_data['language']
+            : $user_data['language'];
         // === ОБНОВЛЕНИЕ ДАННЫХ В БАЗЕ ===
         // === Формирование данных для обновления с плейсхолдерами ===
         $update_data = [];

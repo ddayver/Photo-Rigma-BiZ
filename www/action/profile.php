@@ -403,6 +403,7 @@ if ($subact == 'logout') {
         // Настройка шаблона для редактирования профиля
         $template->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
         $title = $name_block;
+        $language = $work->get_languages();
         $template->add_if('NEED_PASSWORD', $confirm_password);
         $template->add_string_ar(array(
             'NAME_BLOCK'      => $name_block,
@@ -418,6 +419,7 @@ if ($subact == 'logout') {
             'L_AVATAR'        => $work->lang['profile']['avatar'],
             'L_GROUP'         => $work->lang['main']['group'],
             'L_DELETE_AVATAR' => $work->lang['profile']['delete_avatar'],
+            'L_CHANGE_LANGUAGE' => $work->lang['admin']['language'],
             'D_LOGIN'         => $user_data['login'],
             'D_EMAIL'         => $user_data['email'],
             'D_REAL_NAME'     => $user_data['real_name'],
@@ -426,6 +428,24 @@ if ($subact == 'logout') {
             'U_AVATAR'        => sprintf('%s%s/%s', $work->config['site_url'], $work->config['avatar_folder'], $user_data['avatar']),
             'U_PROFILE_EDIT'  => sprintf('%s?action=profile&amp;subact=saveprofile&amp;uid=%d', $work->config['site_url'], $uid)
         ));
+        foreach ($language as $key => $val) {
+            $template->add_string_ar(
+                [
+                    'D_DIR_LANG'  => $val['value'],
+                    'D_NAME_LANG' => $val['name'],
+                ],
+                'SELECT_LANGUAGE[' . $key . ']'
+            );
+
+            if ($val['value'] === $user_data['language']) {
+                $template->add_string_ar(
+                    [
+                        'D_SELECTED_LANG' => $val['value'],
+                        'L_SELECTED_LANG' => $val['name'],
+                    ]
+                );
+            }
+        }
     } else {
         // Получение данных пользователя для просмотра
         $db->select(

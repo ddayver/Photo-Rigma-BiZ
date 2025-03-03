@@ -169,7 +169,7 @@
 													</tr>
 													<tr>
 														<td>{L_DELETE_AVATAR}:</td>
-														<td><div class="ui slider black checkbox"><input name="delete_avatar" type="checkbox" value="true" /></div></td>
+														<td><div class="ui slider checkbox"><input name="delete_avatar" type="checkbox" value="true" /></div></td>
 													</tr>
 													<tr>
 														<td class="regist" colspan="2">
@@ -177,6 +177,20 @@
 															<hr class="line" />
 														</td>
 													</tr>
+                                                    <tr>
+                                                        <td>{L_CHANGE_LANGUAGE}:</td>
+                                                        <td>
+                                                            <div class="ui small dropdown selection">
+                                                                <input type="hidden" name="language" value="{D_SELECTED_LANG}">
+                                                                <i class="dropdown icon"></i>
+                                                                <div class="default text">{L_SELECTED_LANG}</div>
+                                                                <div class="menu">
+<!-- ARRAY_SELECT_LANGUAGE_BEGIN -->
+                                                                    <div class="item" data-value="{D_DIR_LANG}">{D_NAME_LANG}</div>
+<!-- ARRAY_SELECT_LANGUAGE_END -->
+                                                                </div>
+                                                            </div>
+                                                    </tr>
 													<tr>
 														<td class="regist" colspan="2">
 															<b>*</b> {L_HELP_EDIT}<hr class="line" />
