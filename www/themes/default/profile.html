@@ -147,40 +147,42 @@
 													</tr>
 													<tr>
 														<td>{L_EDIT_PASSWORD}<b>*</b>:</td>
-														<td><div class="mini ui inverted icon input"><input class="ui input" name="edit_password" type="password" size="40" maxlength="50" placeholder="{L_EDIT_PASSWORD}..." /><i class="unlock icon"></i></div></td>
+														<td><div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small"><input class="small ui bordered input" name="edit_password" type="password" maxlength="50" placeholder="{L_EDIT_PASSWORD}..." /><i class="unlock icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_RE_PASSWORD}<b>*</b>:</td>
-														<td><div class="mini ui inverted icon input"><input class="ui input" type="password" name="re_password" size="40" maxlength="50" placeholder="{L_RE_PASSWORD}..." /><i class="unlock alternate icon"></i></div></td>
+														<td><div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small"><input class="small ui bordered input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}..." /><i class="unlock alternate icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_EMAIL}:</td>
-														<td><div class="mini ui inverted icon input"><input class="ui input" name="email" type="text" size="40" maxlength="50" value="{D_EMAIL}" /><i class="envelope outline icon"></i></div></td>
+														<td><div class="small ui icon input custom-input"><input class="small ui bordered input custom-input" name="email" type="text" maxlength="50" value="{D_EMAIL}" /><i class="envelope outline icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_REAL_NAME}:</td>
-														<td><div class="mini ui inverted icon input"><input class="ui input" name="real_name" type="text" size="40" maxlength="50" value="{D_REAL_NAME}"/><i class="id card icon"></i></div></td>
+														<td><div class="small ui icon input custom-input"><input class="small ui bordered input" name="real_name" type="text" maxlength="50" value="{D_REAL_NAME}"/><i class="id card icon"></i></div></td>
 													</tr>
 													<tr>
 														<td>{L_AVATAR}<b>*</b>:</td>
 														<td>
-															<img src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0" class="image" />
+															<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0" class="image" />
 														</td>
-													</tr>
-													<tr>
-														<td>{L_DELETE_AVATAR}:</td>
-														<td><div class="ui slider checkbox"><input name="delete_avatar" type="checkbox" value="true" /></div></td>
 													</tr>
 													<tr>
 														<td class="regist" colspan="2">
-															<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}" /><div class="mini ui black inverted file input"><input name="file_avatar" value="" type="file" size="20" /></div>
-															<hr class="line" />
+															<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}" /><div class="small ui file input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="top center" data-variation="black small"><input class="small ui black inverted file input" name="file_avatar" value="" type="file" /></div>
 														</td>
 													</tr>
                                                     <tr>
-                                                        <td>{L_CHANGE_LANGUAGE}:</td>
+                                                        <td>{L_DELETE_AVATAR}:</td>
+                                                        <td><div class="small ui toggle checkbox"><input name="delete_avatar" type="checkbox" value="true" /></div></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="regist" colspan="2"><hr class="line" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{L_CHANGE_LANG}:</td>
                                                         <td>
-                                                            <div class="ui small dropdown selection">
+                                                            <div class="ui inverted small dropdown selection">
                                                                 <input type="hidden" name="language" value="{D_SELECTED_LANG}">
                                                                 <i class="dropdown icon"></i>
                                                                 <div class="default text">{L_SELECTED_LANG}</div>
@@ -188,6 +190,20 @@
 <!-- ARRAY_SELECT_LANGUAGE_BEGIN -->
                                                                     <div class="item" data-value="{D_DIR_LANG}">{D_NAME_LANG}</div>
 <!-- ARRAY_SELECT_LANGUAGE_END -->
+                                                                </div>
+                                                            </div>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{L_CHANGE_THEME}:</td>
+                                                        <td>
+                                                            <div class="ui inverted small dropdown selection">
+                                                                <input type="hidden" name="language" value="{D_SELECTED_THEME}">
+                                                                <i class="dropdown icon"></i>
+                                                                <div class="default text">{L_SELECTED_THEME}</div>
+                                                                <div class="menu">
+<!-- ARRAY_SELECT_THEME_BEGIN -->
+                                                                    <div class="item" data-value="{D_DIR_THEME}">{D_NAME_THEME}</div>
+<!-- ARRAY_SELECT_THEME_END -->
                                                                 </div>
                                                             </div>
                                                     </tr>
@@ -199,7 +215,7 @@
 <!-- IF_NEED_PASSWORD_BEGIN -->
 													<tr>
 														<td>{L_PASSWORD}:</td>
-														<td><div class="mini ui inverted icon input"><input class="ui input" name="password" type="password" size="40" maxlength="50" placeholder="{L_PASSWORD}..." /><i class="key icon"></i></div></td>
+														<td><div class="small ui icon input  custom-input"><input class="small ui bordered input" name="password" type="password" maxlength="50" placeholder="{L_PASSWORD}..." /><i class="key icon"></i></div></td>
 													</tr>
 <!-- IF_NEED_PASSWORD_END -->
 													<tr>

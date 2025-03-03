@@ -79,6 +79,7 @@ var namespacePhotoRigma =
     [ "$script_name", "de/d90/namespacePhotoRigma.html#a271f5d9c110c98ece73bec3151bf1a90", null ],
     [ "$template", "de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01", null ],
     [ "$template_output", "de/d90/namespacePhotoRigma.html#a565b8336923ef5ec8f122c2b41c5eef1", null ],
+    [ "$themes_config", "de/d90/namespacePhotoRigma.html#aba5fcdd0bc47aeaa710f5ff7cf567777", null ],
     [ "$title", "de/d90/namespacePhotoRigma.html#ada57e7bb7c152edad18fe2f166188691", null ],
     [ "$user", "de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5", null ],
     [ "$work", "de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48", null ],

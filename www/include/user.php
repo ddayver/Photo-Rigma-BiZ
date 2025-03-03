@@ -894,10 +894,13 @@ class User implements User_Interface
             }
             $new_user_data['avatar'] = static::DEFAULT_AVATAR;
         }
-        // === Проверка языка сайта ===
+        // === Проверка языка и темы сайта ===
         $new_user_data['language'] = $work->check_input('_POST', 'language', ['isset' => true, 'empty' => true])
             ? $post_data['language']
             : $user_data['language'];
+        $new_user_data['theme'] = $work->check_input('_POST', 'theme', ['isset' => true, 'empty' => true])
+            ? $post_data['theme']
+            : $user_data['theme'];
         // === ОБНОВЛЕНИЕ ДАННЫХ В БАЗЕ ===
         // === Формирование данных для обновления с плейсхолдерами ===
         $update_data = [];
@@ -1312,8 +1315,9 @@ class User implements User_Interface
         }
 
 
-        // Устанавливаем язык сайта
+        // Устанавливаем язык и тему сайта
         $this->session['language'] = $this->user['language'];
+        $this->session['theme'] = $this->user['theme'];
 
         // Удаляем поле user_rights из данных группы
         $group_rights = $group_data['user_rights'] ?? null;

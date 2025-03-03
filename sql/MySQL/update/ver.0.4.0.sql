@@ -60,8 +60,11 @@ TRUNCATE `db_version`;
 INSERT INTO `db_version` (`ver`) VALUES ('0.4.0');
 
 -- 12. Переименование таблицы `group` в `groups` для избежание совпадений с зарезервированным словом GROUP
- RENAME TABLE `group` TO `groups`;
+RENAME TABLE `group` TO `groups`;
 
- -- 13. Переименование таблицы `user` в `users`, а так же столбца `group` в `group_id` для избежание совпадений с зарезервированным словом GROUP
- RENAME TABLE `user` TO `users`;
- ALTER TABLE `users` CHANGE `group` `group_id` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Идентификатор группы пользователя';
+-- 13. Переименование таблицы `user` в `users`, а так же столбца `group` в `group_id` для избежание совпадений с зарезервированным словом GROUP
+RENAME TABLE `user` TO `users`;
+ALTER TABLE `users` CHANGE `group` `group_id` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Идентификатор группы пользователя';
+
+-- 14. Добавление нового столбца `theme` после чтолбца `language` в группе в таблице `users` (с значением по-умолчанию 'default')
+ALTER TABLE `users` ADD `theme` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'default' COMMENT 'Тема сайта' AFTER `language`;

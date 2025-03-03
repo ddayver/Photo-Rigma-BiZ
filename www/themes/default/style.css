@@ -2,6 +2,30 @@
 
 :root { color-scheme: dark; }
 
+/* Стиль для элементов с классом custom-menu */
+.custom-menu:hover {
+  background-color: white !important;
+  color: black !important;
+}
+
+/* Изменение цвета текста и фона */
+.custom-input input {
+    background-color: #1e1e1e !important; /* Тёмный фон */
+    color: #ffffff !important; /* Белый текст */
+    border-color: #333333 !important; /* Цвет границы */
+}
+
+/* Изменение цвета при наведении */
+.custom-input input:hover {
+    background-color: #333333 !important; /* Темнее при наведении */
+}
+
+/* Изменение цвета при фокусе */
+.custom-input input:focus {
+    background-color: #2a2a2a !important; /* Фон при фокусе */
+    border-color: #ff6347 !important; /* Оранжевая граница */
+}
+
 body {
 background:#141519;
 font:14px Helvetica, sans-serif;

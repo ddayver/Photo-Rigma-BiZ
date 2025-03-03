@@ -44,13 +44,13 @@
 							<table cellpadding="0" cellspacing="0" border="0">
 								<tr>
 									<td>
-										<div class="ui black stackable buttons">
+										<div class="small ui black inverted menu">
 <!-- ARRAY_SHORT_MENU_BEGIN -->
 <!-- IF_SHORT_MENU_URL_BEGIN -->
-											<button class="small ui button" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+											<a class="item custom-menu" href="{U_SHORT_MENU}"  title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
 <!-- IF_SHORT_MENU_URL_ELSE -->
 
-											<button class="small ui active button" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+											<a class="item active" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
 <!-- IF_SHORT_MENU_URL_END -->
 <!-- ARRAY_SHORT_MENU_END -->
 										</div>
@@ -65,8 +65,8 @@
 							<form name="search" action="{U_SEARCH}" method="post">
 								<table align="right" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><div class="small ui inverted icon input"><input type="text" name="search_main_text" placeholder="{L_SEARCH}..." /><i class="search icon"></i></div></td>
-										<td><input class="small ui black inverted button" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
+										<td colspan="2"><div class="small ui inverted icon input custom-input"><input type="text" name="search_main_text" placeholder="{L_SEARCH}..." /><i class="search icon"></i></div></td>
+										<td><input class="small ui basic inverted button custom-input" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
 									</tr>
 								</table>
 							</form>

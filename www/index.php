@@ -158,6 +158,19 @@ try {
      */
     unset($config);
 
+    /** @var PhotoRigma::Classes::User $user
+     * @brief Создание объекта класса User.
+     * @details Используется для управления пользователями системы.
+     * @see PhotoRigma::Classes::User Класс для управления пользователями.
+     * @see include/user.php Файл, содержащий реализацию класса User.
+     */
+    $user = new User($db, $_SESSION);
+
+    // Проверяем есть ли настройки темы у пользователя.
+    $themes_config = isset($user->session['theme'])
+        ? $user->session['theme']
+        : $work->config['themes'];
+
     /** @var PhotoRigma::Classes::Template $template
      * @brief Создание объекта класса Template.
      * @details Используется для генерации HTML-контента страниц.
@@ -173,16 +186,8 @@ try {
     $template = new Template(
         $work->config['site_url'],
         $work->config['site_dir'],
-        $work->config['themes']
+        $themes_config
     );
-
-    /** @var PhotoRigma::Classes::User $user
-     * @brief Создание объекта класса User.
-     * @details Используется для управления пользователями системы.
-     * @see PhotoRigma::Classes::User Класс для управления пользователями.
-     * @see include/user.php Файл, содержащий реализацию класса User.
-     */
-    $user = new User($db, $_SESSION);
 
     // Передаем объект User в класс Work
     $work->set_user($user);

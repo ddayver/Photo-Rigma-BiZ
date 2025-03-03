@@ -404,6 +404,7 @@ if ($subact == 'logout') {
         $template->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
         $title = $name_block;
         $language = $work->get_languages();
+        $themes = $work->get_themes();
         $template->add_if('NEED_PASSWORD', $confirm_password);
         $template->add_string_ar(array(
             'NAME_BLOCK'      => $name_block,
@@ -419,7 +420,8 @@ if ($subact == 'logout') {
             'L_AVATAR'        => $work->lang['profile']['avatar'],
             'L_GROUP'         => $work->lang['main']['group'],
             'L_DELETE_AVATAR' => $work->lang['profile']['delete_avatar'],
-            'L_CHANGE_LANGUAGE' => $work->lang['admin']['language'],
+            'L_CHANGE_LANG'   => $work->lang['admin']['language'],
+            'L_CHANGE_THEME'  => $work->lang['admin']['themes'],
             'D_LOGIN'         => $user_data['login'],
             'D_EMAIL'         => $user_data['email'],
             'D_REAL_NAME'     => $user_data['real_name'],
@@ -442,6 +444,24 @@ if ($subact == 'logout') {
                     [
                         'D_SELECTED_LANG' => $val['value'],
                         'L_SELECTED_LANG' => $val['name'],
+                    ]
+                );
+            }
+        }
+        foreach ($themes as $key => $val) {
+            $template->add_string_ar(
+                [
+                    'D_DIR_THEME'  => $val,
+                    'D_NAME_THEME' => ucfirst($val),
+                ],
+                'SELECT_THEME[' . $key . ']'
+            );
+
+            if ($val === $user_data['theme']) {
+                $template->add_string_ar(
+                    [
+                        'D_SELECTED_THEME' => $val,
+                        'L_SELECTED_THEME' => ucfirst($val),
                     ]
                 );
             }
