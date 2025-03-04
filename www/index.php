@@ -42,16 +42,28 @@ declare(strict_types=1);
 namespace PhotoRigma;
 
 // Импорт пространств имён
+use BadFunctionCallException;
+use BadMethodCallException;
+use DomainException;
+use Exception;
+use InvalidArgumentException;
+use LengthException;
+use LogicException;
+use OutOfBoundsException;
+use PDOException;
 use PhotoRigma\Classes\Database;
 use PhotoRigma\Classes\Work;
 use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
-use PhotoRigma\Classes\Language;
-use PhotoRigma\Classes\Action;
-use PhotoRigma\Include;
+use RangeException;
+use RuntimeException;
+use Throwable;
+use UnexpectedValueException;
+
+use function PhotoRigma\Include\log_in_file;
 
 // Устанавливаем кодировку для работы с мультибайтовыми строками
-mb_regex_encoding('UTF-8');
+$encoding = mb_regex_encoding('UTF-8');
 mb_internal_encoding('UTF-8');
 
 
@@ -68,7 +80,6 @@ define('IN_GALLERY', true);
 define('DEBUG_GALLERY', false);
 
 try {
-
     /**
      * Безопасное подключение конфигурационного файла.
      * @details Файл config.php содержит настройки, редактируемые пользователем, такие как параметры подключения к базе данных,
@@ -77,12 +88,12 @@ try {
      * @see $config Массив, инициализируемый в файле config.php, содержащий все настройки приложения.
      */
     if (!is_file('config.php')) {
-        throw new \RuntimeException(
+        throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Конфигурационный файл отсутствует или не является файлом | Путь: config.php"
         );
     }
     if (!is_readable('config.php')) {
-        throw new \RuntimeException(
+        throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Конфигурационный файл существует, но недоступен для чтения | Путь: config.php"
         );
     }
@@ -121,7 +132,7 @@ try {
     // Если есть ошибки, логируем их и завершаем выполнение скрипта
     if (!empty($errors)) {
         $error_details = implode(PHP_EOL, $errors); // Подробности ошибок
-        throw new \RuntimeException(
+        throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Проверка обязательных файлов завершилась ошибкой | Ошибки:" . PHP_EOL . $error_details
         );
     }
@@ -154,7 +165,7 @@ try {
     /**
      * Очищаем значение массива $config[], чтобы предотвратить его использование напрямую.
      * Все настройки теперь доступны только через свойство \PhotoRigma\Classes\Work::$config.
-     * @see \PhotoRigma\Classes\Work::$config
+     * @see PhotoRigma::Classes::Work::$config Свойство для хранения конфигурации проекта
      */
     unset($config);
 
@@ -167,9 +178,7 @@ try {
     $user = new User($db, $_SESSION);
 
     // Проверяем есть ли настройки темы у пользователя.
-    $themes_config = isset($user->session['theme'])
-        ? $user->session['theme']
-        : $work->config['themes'];
+    $themes_config = isset($user->session['theme']) ? $user->session['theme'] : $work->config['themes'];
 
     /** @var PhotoRigma::Classes::Template $template
      * @brief Создание объекта класса Template.
@@ -229,10 +238,14 @@ try {
      * - Формируется путь к файлу действия.
      * - Если файл не существует или недоступен, используется файл по умолчанию ('main.php').
      */
-    if (
-        $work->check_input('_GET', 'action', ['isset' => true, 'empty' => true]) && // Проверяем, что параметр 'action' существует и не пустой
+    if ($work->check_input(
+        '_GET',
+        'action',
+        ['isset' => true, 'empty' => true]
+    ) && // Проверяем, что параметр 'action' существует и не пустой
         $_GET['action'] !== 'index' &&                                             // Исключаем значение 'index'
-        $work->url_check()                                                        // Проверяем URL на наличие вредоносного кода
+        $work->url_check(
+        )                                                        // Проверяем URL на наличие вредоносного кода
     ) {
         // Используем более безопасный метод фильтрации входных данных
         $action = filter_var($_GET['action'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -240,7 +253,7 @@ try {
         $action_file = $work->config['site_dir'] . 'action/' . basename($action) . '.php';
         // Проверяем существование файла перед подключением
         if (!is_file($action_file) || !is_readable($action_file)) {
-            \PhotoRigma\Include\log_in_file(
+            log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: {$action_file}"
             );
             $action_file = $work->config['site_dir'] . 'action/main.php'; // Подключаем файл по умолчанию
@@ -254,7 +267,7 @@ try {
     if (is_file($action_file) && is_readable($action_file)) {
         include_once $action_file;
     } else {
-        throw new \RuntimeException(
+        throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действий не найден или недоступен для чтения | Путь: {$action_file}"
         );
     }
@@ -269,39 +282,39 @@ try {
         header('Content-Type: text/html; charset=UTF-8');
         echo $template->content;
     }
-} catch (\RuntimeException $e) {
+} catch (RuntimeException $e) {
     $type = "Ошибка времени выполнения";
-} catch (\PDOException $e) {
+} catch (PDOException $e) {
     $type = "Ошибка базы данных";
-} catch (\InvalidArgumentException $e) {
+} catch (InvalidArgumentException $e) {
     $type = "Неверный аргумент";
-} catch (\LogicException $e) {
+} catch (LogicException $e) {
     $type = "Логическая ошибка";
-} catch (\BadMethodCallException $e) {
+} catch (BadMethodCallException $e) {
     $type = "Вызов несуществующего метода";
-} catch (\BadFunctionCallException $e) {
+} catch (BadFunctionCallException $e) {
     $type = "Вызов несуществующей функции";
-} catch (\DomainException $e) {
+} catch (DomainException $e) {
     $type = "Значение вне допустимой области";
-} catch (\UnexpectedValueException $e) {
+} catch (UnexpectedValueException $e) {
     $type = "Неожиданное значение";
-} catch (\LengthException $e) {
+} catch (LengthException $e) {
     $type = "Ошибка длины значения";
-} catch (\OutOfBoundsException $e) {
+} catch (OutOfBoundsException $e) {
     $type = "Индекс или ключ вне границ";
-} catch (\RangeException $e) {
+} catch (RangeException $e) {
     $type = "Значение вне допустимого диапазона";
-} catch (\Exception $e) {
+} catch (Exception $e) {
     $type = "Общая ошибка";
 } finally {
-    if (isset($e) && ($e instanceof \Exception || $e instanceof \Throwable)) {
-
+    if (isset($e) && ($e instanceof Exception || $e instanceof Throwable)) {
         // Формируем трассировку один раз
         $remote_ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-        $message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage();
+        $message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage(
+        );
 
         if (function_exists('\PhotoRigma\Include\log_in_file')) {
-            \PhotoRigma\Include\log_in_file($message, true);
+            log_in_file($message, true);
         } else {
             // Добавление трассировки, если DEBUG_GALLERY включен
             if (defined('DEBUG_GALLERY')) {
@@ -319,9 +332,12 @@ try {
                         $step_number = $index + 1;
                         $args = array_map(function ($arg) {
                             $arg_str = is_string($arg) ? $arg : json_encode($arg, JSON_UNESCAPED_UNICODE);
-                            return mb_strlen($arg_str, 'UTF-8') > 80
-                                ? mb_substr($arg_str, 0, 80, 'UTF-8') . '...'
-                                : $arg_str;
+                            return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
+                                $arg_str,
+                                0,
+                                80,
+                                'UTF-8'
+                            ) . '...' : $arg_str;
                         }, $trace['args'] ?? []);
                         $trace_info[] = sprintf(
                             "Шаг %d:" . PHP_EOL . "  Файл: %s" . PHP_EOL . "  Строка: %s" . PHP_EOL . "  Функция: %s" . PHP_EOL . "  Аргументы: %s",

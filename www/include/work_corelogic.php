@@ -35,12 +35,20 @@
 namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
+use DirectoryIterator;
+use InvalidArgumentException;
+use PDOException;
+use RuntimeException;
+
+use function PhotoRigma\Include\log_in_file;
+
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') .
-        " [ERROR] | " .
-        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-        " | " . __FILE__ . " | Попытка прямого вызова файла"
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
     );
     die("HACK!");
 }
@@ -88,9 +96,6 @@ interface Work_CoreLogic_Interface
      *
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Work_CoreLogic::category() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
-     *
      * @param int $cat_id Идентификатор категории или пользователя (если `$user_flag = 1`). По умолчанию: `0`.
      *                    Должен быть целым числом >= `0`.
      * @param int $user_flag Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском альбоме (`1`).
@@ -128,6 +133,9 @@ interface Work_CoreLogic_Interface
      * $user_album_data = $object->category(123, 1);
      * print_r($user_album_data);
      * @endcode
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::category() Публичный метод-редирект для вызова этой логики.
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array;
 
@@ -143,20 +151,6 @@ interface Work_CoreLogic_Interface
      * Этот метод содержит основную логику, вызываемую через публичный метод del_photo().
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     *
-     * @note Используются константы:
-     *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
-     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
-     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
-     *       Конфигурационные ключи:
-     *       - site_dir: Базовый путь к директории сайта.
-     *       - thumbnail_folder: Путь к каталогу эскизов.
-     *       - gallery_folder: Путь к каталогу полноразмерных изображений.
      *
      * @param int $photo_id Идентификатор удаляемого изображения (обязательное поле).
      *                      Должен быть положительным целым числом.
@@ -184,6 +178,20 @@ interface Work_CoreLogic_Interface
      *     echo "Не удалось удалить изображение.";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
+     * @note Используются константы:
+     *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
+     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
+     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
+     *       Конфигурационные ключи:
+     *       - site_dir: Базовый путь к директории сайта.
+     *       - thumbnail_folder: Путь к каталогу эскизов.
+     *       - gallery_folder: Путь к каталогу полноразмерных изображений.
+     *
      */
     public function del_photo(int $photo_id): bool;
 
@@ -201,12 +209,9 @@ interface Work_CoreLogic_Interface
      *
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Work_CoreLogic::news()
-     *      Публичный метод-редирект для вызова этой логики.
-     *
-     * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
+     * @param int $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
      *                                 Должен быть положительным целым числом.
-     * @param string $act              Тип запроса:
+     * @param string $act Тип запроса:
      *                                 - 'id': Получение новости по её ID.
      *                                 - 'last': Получение списка новостей с сортировкой по дате последнего редактирования.
      *
@@ -237,6 +242,9 @@ interface Work_CoreLogic_Interface
      * $news_list = $coreLogic->news(10, 'last');
      * print_r($news_list);
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::news()
+     *      Публичный метод-редирект для вызова этой логики.
+     *
      */
     public function news(int $news_id_or_limit, string $act): array;
 
@@ -254,11 +262,6 @@ interface Work_CoreLogic_Interface
      * Основная логика метода вызывается через публичный метод get_languages().
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
      *
      * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
      *               - `value`: Имя директории языка (строка).
@@ -284,6 +287,11 @@ interface Work_CoreLogic_Interface
      *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
      */
     public function get_languages(): array;
 
@@ -301,11 +309,6 @@ interface Work_CoreLogic_Interface
      * Основная логика метода вызывается через публичный метод get_themes().
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
      *
      * @return array Массив строк с именами доступных тем. Если темы не найдены, возвращается пустой массив.
      *
@@ -329,6 +332,11 @@ interface Work_CoreLogic_Interface
      *     echo "Доступная тема: $theme\n";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
      */
     public function get_themes(): array;
 
@@ -349,11 +357,6 @@ interface Work_CoreLogic_Interface
      *          Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::create_photo() Метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work::size_image() Метод, используемый для вычисления размеров изображения.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      *
      * @param string $type Тип изображения:
      *                     - `'top'`: Лучшее изображение (по рейтингу).
@@ -404,6 +407,11 @@ interface Work_CoreLogic_Interface
      * $category_photo = $coreLogic->create_photo('cat', 5);
      * print_r($category_photo);
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::create_photo() Метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::size_image() Метод, используемый для вычисления размеров изображения.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     *
      */
     public function create_photo(string $type = 'top', int $id_photo = 0): array;
 }
@@ -461,11 +469,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Work Родительский класс, через который передаются зависимости.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$work Свойство, содержащее основной объект приложения.
-     *
      * @param array $config Конфигурация приложения.
      *                      Должен быть массивом. Если передан некорректный тип, выбрасывается исключение.
      * @param Database_Interface $db Объект для работы с базой данных.
@@ -483,12 +486,19 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $work = new Work();
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic($config, $db, $work);
      * @endcode
+     * @see PhotoRigma::Classes::Work Родительский класс, через который передаются зависимости.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$work Свойство, содержащее основной объект приложения.
+     *
      */
     public function __construct(Database_Interface $db, array $config, Work $work)
     {
         if (!is_array($config)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип конфигурации | Ожидался массив, получено: " . gettype($config)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип конфигурации | Ожидался массив, получено: " . gettype(
+                    $config
+                )
             );
         }
         $this->config = $config;
@@ -506,8 +516,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, к которому обращается метод.
-     *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
      *                     - Если указано другое имя, выбрасывается исключение.
@@ -524,6 +532,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic(['temp_photo_w' => 800], $db, $work);
      * echo $corelogic->config['temp_photo_w']; // Выведет: 800
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, к которому обращается метод.
+     *
      */
     public function &__get(string $name): array
     {
@@ -531,7 +541,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             $result = &$this->config;
             return $result;
         }
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
         );
     }
@@ -544,8 +554,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, которое изменяет метод.
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -563,13 +571,15 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic([], $db, $work);
      * $corelogic->config = ['temp_photo_w' => 1024];
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, которое изменяет метод.
+     *
      */
     public function __set(string $name, array $value): void
     {
         if ($name === 'config') {
             $this->config = $value;
         } else {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '{$name}'"
             );
         }
@@ -583,9 +593,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство, которое изменяет метод.
-     * @see PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
      *
      * @param array $lang Языковые данные:
      *                    - Должен быть массивом.
@@ -603,12 +610,17 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic($config, $db, $work);
      * $corelogic->set_lang(['key' => 'value']);
      * @endcode
+     * @see PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство, которое изменяет метод.
      */
     public function set_lang(array $lang): void
     {
         if (!is_array($lang)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для языковых строк | Ожидался массив, получено: " . gettype($lang)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для языковых строк | Ожидался массив, получено: " . gettype(
+                    $lang
+                )
             );
         }
         $this->lang = $lang;
@@ -622,9 +634,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, которое изменяет метод.
-     * @see PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
      *
      * @param User $user Объект пользователя:
      *                   - Должен быть экземпляром класса User.
@@ -642,6 +651,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $user = new \PhotoRigma\Classes\User();
      * $corelogic->set_user($user);
      * @endcode
+     * @see PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, которое изменяет метод.
      */
     public function set_user(User $user): void
     {
@@ -659,13 +671,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work::_category_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work::$db Свойство, содержащее объект для работы с базой данных.
-     * @see PhotoRigma::Classes::Work::$lang Свойство, содержащее языковые строки.
-     * @see PhotoRigma::Classes::Work::$user Свойство, содержащее данные текущего пользователя.
-     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
-     * @see PhotoRigma::Classes::Work::category() Метод из другого класса, используемый как редирект.
      *
      * @param int $cat_id Идентификатор категории или пользователя (если `$user_flag = 1`). По умолчанию: `0`.
      *                    Должен быть целым числом >= `0`.
@@ -704,10 +709,284 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $user_album_data = $object->category(123, 1);
      * print_r($user_album_data);
      * @endcode
+     * @see PhotoRigma::Classes::Work::_category_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work::$lang Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work::category() Метод из другого класса, используемый как редирект.
+     *
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array
     {
         return $this->_category_internal($cat_id, $user_flag);
+    }
+
+    /**
+     * @brief Формирует информационную строку для категории или пользовательского альбома.
+     *
+     * @details Метод выполняет запросы к базе данных для получения информации о категории или пользовательском альбоме.
+     *          Процесс включает следующие шаги:
+     *          1. Получение данных о категории из таблицы `TBL_CATEGORY` или данных пользователя из таблицы `TBL_USERS`
+     *             (если `$user_flag = 1`).
+     *          2. Подсчет количества фотографий в таблице `TBL_PHOTO` с использованием JOIN-запросов.
+     *          3. Получение данных о последней и лучшей фотографии (если разрешено отображение фотографий).
+     *          4. Для корневой категории (`$cat_id = 0`) подсчет количества уникальных пользователей, загрузивших фотографии.
+     *          5. Формирование результирующего массива с информацией о категории или альбоме, включая название, описание,
+     *             количество фотографий, данные о последней и лучшей фотографии, а также ссылки на них.
+     *
+     *          Этот метод является защищенным и вызывается через публичный метод `category()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param int $cat_id Идентификатор категории или пользователя (если `$user_flag = 1`). По умолчанию: `0`.
+     *                          Должен быть целым числом >= `0`.
+     * @param int $user_flag Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском альбоме (`1`).
+     *                          По умолчанию: `0`. Допустимые значения: `0` или `1`.
+     *
+     * @return array Информационная строка для категории или пользовательского альбома:
+     *               - 'name'           (string): Название категории или альбома.
+     *               - 'description'    (string): Описание категории или альбома.
+     *               - 'count_photo'    (int):    Количество фотографий.
+     *               - 'last_photo'     (string): Форматированное название последней фотографии (например, "Название (Описание)").
+     *               - 'top_photo'      (string): Форматированное название лучшей фотографии (например, "Название (Описание)").
+     *               - 'url_cat'        (string): Ссылка на категорию или альбом.
+     *               - 'url_last_photo' (string): Ссылка на последнюю фотографию.
+     *               - 'url_top_photo'  (string): Ссылка на лучшую фотографию.
+     *
+     * @throws InvalidArgumentException Если входные параметры имеют некорректный тип или значение.
+     * @throws PDOException            Если возникают ошибки при получении данных из базы данных.
+     *
+     * @note Используются константы:
+     *       - TBL_CATEGORY: Таблица для хранения данных о категориях.
+     *       - TBL_USERS:    Таблица для хранения данных о пользователях.
+     *       - TBL_PHOTO:    Таблица для хранения данных о фотографиях.
+     *
+     *       Конфигурационные ключи:
+     *       - site_url: URL сайта, используемый для формирования ссылок на категории и фотографии.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * // Получение данных о категории с ID = 5
+     * $category_data = $this->_category_internal(5, 0);
+     * print_r($category_data);
+     *
+     * // Получение данных о пользовательском альбоме с ID = 123
+     * $user_album_data = $this->_category_internal(123, 1);
+     * print_r($user_album_data);
+     * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::category()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db
+     *      Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang
+     *      Свойство, содержащее языковые строки.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user
+     *      Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work::clean_field()
+     *      Метод для очистки данных.
+     *
+     */
+    protected function _category_internal(int $cat_id = 0, int $user_flag = 0): array
+    {
+        // Проверка аргументов
+        if ($cat_id < 0 || $user_flag < 0) {
+            throw new InvalidArgumentException(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Неверный аргумент | ' . 'cat_id и user_flag должны быть 0 или положительным целым числом'
+            );
+        }
+
+        $photo_info = [];
+        $category_data = [];
+        $user_data = [];
+        $photo_count_data = [];
+        $latest_photo_data = [];
+        $top_rated_photo_data = [];
+        $user_upload_count_data = [];
+
+        // Получение данных категории
+        if ($user_flag == 1) {
+            // Получение категории с id = 0
+            $category_data = $this->db->select(
+                ['`id`', '`name`'],
+                TBL_CATEGORY,
+                ['where' => '`id` = :id', 'params' => [':id' => 0]]
+            )->res_row();
+            if (!$category_data) {
+                throw new PDOException(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные категории'
+                );
+            }
+
+            // Получение данных пользователя
+            $user_data = $this->db->select(
+                '`real_name`',
+                TBL_USERS,
+                ['where' => '`id` = :id', 'params' => [':id' => $cat_id]]
+            )->res_row();
+            if (!$user_data) {
+                throw new PDOException(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные пользователя с ID: ' . $cat_id
+                );
+            }
+
+            // Обновление данных категории с учетом данных пользователя
+            $category_data['description'] = $category_data['name'] . ' ' . $user_data['real_name'];
+            $category_data['name'] = $user_data['real_name'];
+        } else {
+            // Получение категории по id
+            $category_data = $this->db->select(
+                ['`id`', '`name`', '`description`'],
+                TBL_CATEGORY,
+                ['where' => '`id` = :id', 'params' => [':id' => $cat_id]]
+            )->res_row();
+            if (!$category_data) {
+                throw new PDOException(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные категории'
+                );
+            }
+        }
+
+        // Экранирование текстовых данных
+        $category_data['name'] = Work::clean_field($category_data['name']);
+        $category_data['description'] = Work::clean_field($category_data['description']);
+
+        // Получение данных о фотографиях
+        $select = [
+            'COUNT(DISTINCT `p`.`id`) AS `num_photo`',
+            '`p1`.`id` AS `latest_photo_id`',
+            '`p1`.`name` AS `latest_photo_name`',
+            '`p1`.`description` AS `latest_photo_description`',
+            '`p2`.`id` AS `top_rated_photo_id`',
+            '`p2`.`name` AS `top_rated_photo_name`',
+            '`p2`.`description` AS `top_rated_photo_description`',
+        ];
+
+        $from_tbl = TBL_PHOTO . ' p';
+        $join = [
+            [
+                'table' => TBL_PHOTO . ' p1',
+                'type' => 'LEFT',
+                'on' => '`p`.`category` = `p1`.`category` AND `p1`.`date_upload` = (SELECT MAX(`date_upload`) FROM ' . TBL_PHOTO . ' WHERE `category` = `p`.`category`)',
+            ],
+            [
+                'table' => TBL_PHOTO . ' p2',
+                'type' => 'LEFT',
+                'on' => '`p`.`category` = `p2`.`category` AND `p2`.`rate_user` = (SELECT MAX(`rate_user`) FROM ' . TBL_PHOTO . ' WHERE `category` = `p`.`category` AND `rate_user` != 0)',
+            ],
+        ];
+
+        $options = [
+            'where' => ['`p`.`category`' => $category_data['id']],
+            'params' => [],
+        ];
+
+        if ($user_flag == 1) {
+            $options['where']['`p`.`user_upload`'] = $cat_id;
+        }
+
+        $photo_data = $this->db->join($select, $from_tbl, $join, $options)->res_row();
+        if (!$photo_data) {
+            throw new PDOException(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные фотографий для категории с ID: ' . $category_data['id']
+            );
+        }
+
+        $photo_count_data = false;
+        $latest_photo_data = false;
+        $top_rated_photo_data = false;
+        $photo_info['count'] = 0;
+
+        if ($photo_data) {
+            $photo_info['count'] = $photo_data['num_photo'];
+
+            if ($photo_data['latest_photo_id']) {
+                $latest_photo_data = [
+                    'id' => $photo_data['latest_photo_id'],
+                    'name' => Work::clean_field($photo_data['latest_photo_name']),
+                    'description' => Work::clean_field($photo_data['latest_photo_description']),
+                ];
+            } else {
+                $latest_photo_data = false;
+            }
+
+            if ($photo_data['top_rated_photo_id']) {
+                $top_rated_photo_data = [
+                    'id' => $photo_data['top_rated_photo_id'],
+                    'name' => Work::clean_field($photo_data['top_rated_photo_name']),
+                    'description' => Work::clean_field($photo_data['top_rated_photo_description']),
+                ];
+            } else {
+                $top_rated_photo_data = false;
+            }
+        }
+
+        // Инициализация информации о фотографиях
+        $photo_info['last_name'] = $this->lang['main']['no_foto'];
+        $photo_info['last_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
+        $photo_info['top_name'] = $this->lang['main']['no_foto'];
+        $photo_info['top_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
+
+        // Обновление информации о фотографиях, если пользователь имеет права на просмотр
+        if ($this->user->user['pic_view'] == true || $this->user->user['pic_view'] == 1) {
+            if ($latest_photo_data) {
+                $photo_info['last_name'] = Work::clean_field($latest_photo_data['name']) . ' (' . Work::clean_field(
+                    $latest_photo_data['description']
+                ) . ')';
+                $photo_info['last_url'] = sprintf(
+                    '%s?action=photo&amp;id=%d',
+                    $this->config['site_url'],
+                    $latest_photo_data['id']
+                );
+            }
+
+            if ($top_rated_photo_data) {
+                $photo_info['top_name'] = Work::clean_field($top_rated_photo_data['name']) . ' (' . Work::clean_field(
+                    $top_rated_photo_data['description']
+                ) . ')';
+                $photo_info['top_url'] = sprintf(
+                    '%s?action=photo&amp;id=%d',
+                    $this->config['site_url'],
+                    $top_rated_photo_data['id']
+                );
+            }
+        }
+
+        // Обработка категорий с id = 0
+        if ($cat_id == 0) {
+            $user_upload_count_data = $this->db->select(
+                'COUNT(DISTINCT `user_upload`) AS `num_user_upload`',
+                TBL_PHOTO,
+                ['where' => '`category` = :category', 'params' => [':category' => 0]]
+            )->res_row();
+            if ($user_upload_count_data) {
+                $category_data['id'] = 'user';
+                $category_data['name'] .= ' (' . $this->lang['category']['count_user_category'] . ': ' . $user_upload_count_data['num_user_upload'] . ')';
+            } else {
+                // Исключаем <br /> из экранирования
+                $category_data['name'] .= '<br />(' . $this->lang['category']['no_user_category'] . ')';
+            }
+        }
+
+        // Обновление id категории для пользовательских альбомов
+        if ($user_flag == 1) {
+            $category_data['id'] = 'user&amp;id=' . $cat_id;
+        }
+
+        // Формирование итоговой информации о категории
+        $category_info = [
+            'name' => $category_data['name'],
+            'description' => $category_data['description'],
+            'count_photo' => $photo_info['count'],
+            'last_photo' => $photo_info['last_name'],
+            'top_photo' => $photo_info['top_name'],
+            'url_cat' => sprintf('%s?action=category&amp;cat=%s', $this->config['site_url'], $category_data['id']),
+            'url_last_photo' => $photo_info['last_url'],
+            'url_top_photo' => $photo_info['top_url'],
+        ];
+
+        return $category_info;
     }
 
     /**
@@ -718,15 +997,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work::del_photo() Метод из родительского класса.
-     * @see PhotoRigma::Classes::Work_CoreLogic::_del_photo_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Database::join() Метод, используемый для объединения данных из нескольких таблиц.
-     * @see PhotoRigma::Classes::Database::delete() Метод, используемый для удаления записей из таблиц базы данных.
-     * @see PhotoRigma::Classes::Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param int $photo_id Идентификатор удаляемого изображения (обязательное поле).
      *                      Должен быть положительным целым числом.
@@ -763,10 +1033,142 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Не удалось удалить изображение.";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work::del_photo() Метод из родительского класса.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_del_photo_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Database::join() Метод, используемый для объединения данных из нескольких таблиц.
+     * @see PhotoRigma::Classes::Database::delete() Метод, используемый для удаления записей из таблиц базы данных.
+     * @see PhotoRigma::Classes::Database::aff_rows Свойство, содержащее количество затронутых строк после выполнения запроса.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
      */
     public function del_photo(int $photo_id): bool
     {
         return $this->_del_photo_internal($photo_id);
+    }
+
+    /**
+     * @brief Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.
+     *
+     * @details Метод выполняет удаление изображения с указанным идентификатором, включая следующие шаги:
+     * 1. Удаляет файлы из каталогов полноразмерных изображений и эскизов, используя пути, заданные в конфигурации (`$this->config`).
+     *    Перед удалением проверяется существование файлов.
+     * 2. Удаляет запись об изображении из таблицы `TBL_PHOTO`.
+     * 3. Удаляет связанные записи из таблиц `TBL_RATE_USER` и `TBL_RATE_MODER`.
+     * 4. Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью функции `log_in_file()`.
+     * Этот метод содержит основную логику, вызываемую через публичный метод del_photo().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param int $photo_id Идентификатор удаляемого изображения (обязательное поле).
+     *                      Должен быть положительным целым числом.
+     *
+     * @return bool True, если удаление успешно, иначе False.
+     *
+     * @throws InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение.
+     *      Пример сообщения:
+     *          Неверное значение параметра $photo_id | Ожидалось положительное целое число
+     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
+     *      Пример сообщения:
+     *          Не удалось найти изображение | Переменная $photo_id = [значение]
+     *
+     * @note Используются константы:
+     *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
+     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
+     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
+     *       Конфигурационные ключи:
+     *       - site_dir: Базовый путь к директории сайта.
+     *       - thumbnail_folder: Путь к каталогу эскизов.
+     *       - gallery_folder: Путь к каталогу полноразмерных изображений.
+     *
+     * @warning Метод чувствителен к правам доступа при удалении файлов. Убедитесь, что скрипт имеет необходимые права на запись и чтение.
+     * @warning Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор изображения.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * // Удаление изображения с ID = 42
+     * $result = $this->_del_photo_internal(42);
+     * if ($result) {
+     *     echo "Изображение успешно удалено.";
+     * } else {
+     *     echo "Не удалось удалить изображение.";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db
+     *      Свойство, содержащее объект для работы с базой данных.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
+     *      Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Database::join()
+     *      Метод, используемый для объединения данных из нескольких таблиц.
+     * @see PhotoRigma::Classes::Database::delete()
+     *      Метод, используемый для удаления записей из таблиц базы данных.
+     * @see PhotoRigma::Classes::Database::aff_rows
+     *      Свойство, содержащее количество затронутых строк после выполнения запроса.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
+     */
+    protected function _del_photo_internal(int $photo_id): bool
+    {
+        // Проверка входного параметра
+        if (!is_int($photo_id) || $photo_id <= 0) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение параметра \$photo_id | Ожидалось положительное целое число"
+            );
+        }
+        // Получение данных об изображении и категории через JOIN
+        $this->db->join(
+            ['p.*', 'c.folder'],
+            TBL_PHOTO . ' p',
+            [
+                'table' => TBL_CATEGORY . ' c',
+                'on' => 'p.category = c.id'
+            ],
+            [
+                'where' => 'p.id = :photo_id',
+                'params' => [':photo_id' => $photo_id]
+            ]
+        );
+        $temp_data = $this->db->res_row();
+        if (!$temp_data) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось найти изображение | Переменная \$photo_id = $photo_id"
+            );
+        }
+        // Определение путей к файлам
+        $path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
+        $path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
+        // Удаление записи об изображении из таблицы
+        $this->db->delete(TBL_PHOTO, ['where' => '`id` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
+        $aff_rows = $this->db->get_affected_rows();
+        if ($aff_rows !== 1) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить запись об изображении | Переменная \$photo_id = $photo_id"
+            );
+        }
+        // Удаление файлов
+        if (file_exists($path_thumbnail)) {
+            if (!unlink($path_thumbnail)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл эскиза | Путь: $path_thumbnail"
+                );
+            }
+        }
+        if (file_exists($path_photo)) {
+            if (!unlink($path_photo)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
+                );
+            }
+        }
+        // Удаление связанных записей из других таблиц
+        $this->db->delete(TBL_RATE_USER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
+        $this->db->delete(TBL_RATE_MODER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
+        return true;
     }
 
     /**
@@ -779,13 +1181,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Work::news() Метод из родительского класса.
-     * @see PhotoRigma::Classes::Work_CoreLogic::_news_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
-     *
-     * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
+     * @param int $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
      *                                 Должен быть положительным целым числом.
-     * @param string $act              Тип запроса:
+     * @param string $act Тип запроса:
      *                                 - 'id': Получение новости по её ID.
      *                                 - 'last': Получение списка новостей с сортировкой по дате последнего редактирования.
      *
@@ -816,10 +1214,125 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $news_list = $core_logic->news(10, 'last');
      * print_r($news_list);
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db Свойство, содержащее объект для работы с базой данных.
+     *
+     * @see PhotoRigma::Classes::Work::news() Метод из родительского класса.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_news_internal() Защищённый метод, реализующий основную логику.
      */
     public function news(int $news_id_or_limit, string $act): array
     {
         return $this->_news_internal($news_id_or_limit, $act);
+    }
+
+    /**
+     * @brief Получает данные о новостях в зависимости от типа запроса.
+     *
+     * @details Метод выполняет запросы к базе данных для получения данных о новостях, включая следующие шаги:
+     * 1. Проверяет входные параметры $news_id_or_limit и $act на корректность.
+     * 2. Формирует параметры запроса через match():
+     *    - Для $act = 'id': Получает новость по её ID.
+     *    - Для $act = 'last': Получает список новостей с сортировкой по дате последнего редактирования.
+     * 3. Выполняет запрос к таблице TBL_NEWS с использованием параметров.
+     * 4. Возвращает массив с данными о новостях или пустой массив, если новости не найдены.
+     * Этот метод содержит основную логику, вызываемую через публичный метод news().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param int $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
+     *                                 Должен быть положительным целым числом.
+     * @param string $act Тип запроса:
+     *                                 - 'id': Получение новости по её ID.
+     *                                 - 'last': Получение списка новостей с сортировкой по дате последнего редактирования.
+     *
+     * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
+     *
+     * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
+     *      Пример сообщения:
+     *          Некорректный ID новости | Переменная $news_id_or_limit = [значение]
+     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
+     *      Пример сообщения:
+     *          Не удалось получить данные из базы данных | Тип запроса: '$act'
+     *
+     * @note Используются константы:
+     *       - TBL_NEWS: Таблица для хранения данных о новостях.
+     *
+     * @warning Метод чувствителен к корректности входных параметров $news_id_or_limit и $act.
+     *          Убедитесь, что передаются допустимые значения.
+     * @warning Если новости не найдены, метод возвращает пустой массив.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * // Получение новости с ID = 5
+     * $news_by_id = $this->_news_internal(5, 'id');
+     * print_r($news_by_id);
+     *
+     * // Получение 10 последних новостей
+     * $news_list = $this->_news_internal(10, 'last');
+     * print_r($news_list);
+     * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::$db
+     *      Свойство, содержащее объект для работы с базой данных.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::news()
+     *      Публичный метод-редирект для вызова этой логики.
+     */
+    protected function _news_internal(int $news_id_or_limit, string $act): array
+    {
+        // Проверка входных данных
+        if ($act === 'id') {
+            if (!filter_var($news_id_or_limit, FILTER_VALIDATE_INT)) {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ID новости | Переменная \$news_id_or_limit = $news_id_or_limit"
+                );
+            }
+        } elseif ($act === 'last') {
+            if ($news_id_or_limit <= 0 || !filter_var($news_id_or_limit, FILTER_VALIDATE_INT)) {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное количество новостей | Переменная \$news_id_or_limit = $news_id_or_limit"
+                );
+            }
+        } else {
+            // Обработка некорректного типа запроса
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип запроса | Переменная \$act = '$act'"
+            );
+        }
+        // Формирование параметров запроса через match()
+        $query_params = match ($act) {
+            'id' => [
+                // Формируем запрос для 'id'
+                'table' => TBL_NEWS,
+                'where' => '`id` = :id',
+                'params' => [':id' => $news_id_or_limit],
+            ],
+            'last' => [
+                // Формируем запрос для 'last'
+                'table' => TBL_NEWS,
+                'order_by' => ['data_last_edit' => 'DESC'],
+                'limit' => $news_id_or_limit,
+            ],
+        };
+        // Выполняем запрос по результатам match()
+        $this->db->select(
+            '*',
+            $query_params['table'],
+            array_filter([
+                'where' => $query_params['where'] ?? null,
+                'params' => $query_params['params'] ?? [],
+                'order_by' => $query_params['order_by'] ?? null,
+                'limit' => $query_params['limit'] ?? null,
+            ])
+        );
+        // Получение результатов
+        $news_results = $this->db->res_arr();
+        //        if (!$news_results) {
+        //            throw new \RuntimeException(
+        //                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные из базы данных | Тип запроса: '$act'"
+        //            );
+        //        }
+        // Возврат результата
+        return $news_results ?: [];
     }
 
     /**
@@ -831,11 +1344,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::_get_languages_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::get_languages() Публичный метод-редирект из класса Work.
      *
      * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
      *               - `value`: Имя директории языка (строка).
@@ -861,10 +1369,139 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
      * }
      * @endcode
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::get_languages() Публичный метод-редирект из класса Work.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::_get_languages_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
      */
     public function get_languages(): array
     {
         return $this->_get_languages_internal();
+    }
+
+    /**
+     * @brief Загружает доступные языки из директории /language/.
+     *
+     * @details Метод выполняет загрузку доступных языков, включая следующие шаги:
+     * 1. Нормализует путь к директории `/language/` и проверяет её существование.
+     * 2. Перебирает все поддиректории в `/language/` и проверяет наличие файла `main.php`.
+     * 3. Для каждой поддиректории:
+     *    - Проверяет доступность файла `main.php`.
+     *    - Безопасно подключает файл и проверяет наличие переменной `$lang_name`.
+     *    - Если переменная `$lang_name` определена и корректна, добавляет язык в список доступных.
+     * 4. Возвращает массив с данными о доступных языках или выбрасывает исключение, если языки не найдены.
+     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     * Основная логика метода вызывается через публичный метод get_languages().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
+     *               - `value`: Имя директории языка (строка).
+     *               - `name`: Название языка из файла `main.php` (строка).
+     *
+     * @throws RuntimeException Если:
+     *                           - Директория `/language/` недоступна или не существует.
+     *                           - Ни один язык не найден в указанной директории.
+     *
+     * @note Используются следующие параметры из свойства $this->config:
+     *       - site_dir: Базовый путь к директории сайта, содержащей поддиректорию `/language/`.
+     *
+     * @warning Метод чувствителен к структуре директории `/language/` и содержимому файла `main.php`.
+     *          Убедитесь, что файл `main.php` содержит корректную переменную `$lang_name`.
+     * @warning Если директория `/language/` недоступна или пуста, метод выбрасывает исключение.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * // Получение списка доступных языков
+     * $languages = $this->_get_languages_internal();
+     * foreach ($languages as $language) {
+     *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
+     * }
+     * @endcode
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
+     *      Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
+     */
+    protected function _get_languages_internal(): array
+    {
+        $list_languages = [];
+        // Нормализуем путь к site_dir и проверяем его существование
+        $site_dir = realpath(rtrim($this->config['site_dir'], '/'));
+        $language_dir = $site_dir . '/language/';
+        if (!is_dir($language_dir) || !is_readable($language_dir)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков недоступна или не существует | Путь: $language_dir"
+            );
+        }
+        // Проверяем, что директория не пуста
+        $iterator = new DirectoryIterator($language_dir);
+        $has_subdirs = false;
+        foreach ($iterator as $file) {
+            if (!$file->isDot() && $file->isDir()) {
+                $has_subdirs = true;
+                break;
+            }
+        }
+        if (!$has_subdirs) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков пуста | Путь: $language_dir"
+            );
+        }
+        // Перебираем поддиректории
+        foreach ($iterator as $file) {
+            if ($file->isDot() || !$file->isDir()) {
+                continue;
+            }
+            $lang_subdir = $file->getPathname();
+            // Проверяем, что директория существует и доступна для чтения
+            if (!is_dir($lang_subdir) || !is_readable($lang_subdir)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория языка недоступна для чтения | Директория: $lang_subdir"
+                );
+                continue;
+            }
+            // Формируем полный путь к main.php и нормализуем его
+            $main_php_path = realpath($lang_subdir . '/main.php');
+            if ($main_php_path === false || !is_file($main_php_path) || !is_readable($main_php_path)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл main.php отсутствует или недоступен | Директория: $lang_subdir"
+                );
+                continue;
+            }
+            // Проверяем, что файл находится внутри разрешенной директории
+            if (strncmp($main_php_path, $language_dir, strlen($language_dir)) !== 0) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
+                );
+                continue;
+            }
+            // Безопасное подключение файла
+            $lang_data = include($main_php_path);
+            $lang_name = $lang_data['lang_name'];
+            unset($lang_data);
+            if (!is_string($lang_name) || trim($lang_name) === '') {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"
+                );
+                continue;
+            }
+            $list_languages[] = [
+                'value' => $file->getFilename(),
+                'name' => mb_trim($lang_name),
+            ];
+        }
+        if (empty($list_languages)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни один язык не найден | Путь: $language_dir"
+            );
+        }
+        return $list_languages;
     }
 
     /**
@@ -876,10 +1513,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::_get_themes_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::get_themes() Публичный метод-редирект из класса Work.
      *
      * @return array Массив с именами доступных тем.
      *
@@ -903,10 +1536,120 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Доступная тема: $theme\n";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work::get_themes() Публичный метод-редирект из класса Work.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::_get_themes_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      */
     public function get_themes(): array
     {
         return $this->_get_themes_internal();
+    }
+
+    /**
+     * @brief Загружает доступные темы из директории /themes/.
+     *
+     * @details Метод выполняет загрузку доступных тем, включая следующие шаги:
+     * 1. Нормализует путь к директории `/themes/` и проверяет её существование.
+     * 2. Перебирает все поддиректории в `/themes/`.
+     * 3. Для каждой поддиректории:
+     *    - Проверяет доступность директории.
+     *    - Проверяет, что директория находится внутри разрешенной директории `/themes/`.
+     *    - Добавляет имя поддиректории в список доступных тем.
+     * 4. Возвращает массив с именами доступных тем или выбрасывает исключение, если темы не найдены.
+     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     * Основная логика метода вызывается через публичный метод get_themes().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return array Массив с именами доступных тем.
+     *
+     * @throws RuntimeException Если:
+     *                           - Директория `/themes/` не существует или недоступна для чтения.
+     *                           - Ни одна тема не найдена в указанной директории.
+     *
+     * @note Используются следующие параметры из свойства $this->config:
+     *       - site_dir: Базовый путь к директории сайта, содержащей поддиректорию `/themes/`.
+     *
+     * @warning Метод чувствителен к структуре директории `/themes/`.
+     *          Убедитесь, что директория существует и содержит хотя бы одну поддиректорию.
+     * @warning Если директория `/themes/` недоступна или пуста, метод выбрасывает исключение.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * // Получение списка доступных тем
+     * $themes = $this->_get_themes_internal();
+     * foreach ($themes as $theme) {
+     *     echo "Доступная тема: $theme\n";
+     * }
+     * @endcode
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     *
+     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
+     *      Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
+     */
+    protected function _get_themes_internal(): array
+    {
+        $list_themes = [];
+        // Нормализуем путь к site_dir
+        $site_dir = realpath(rtrim($this->config['site_dir'], '/'));
+        $themes_dir = $site_dir . '/themes/';
+        // Проверяем существование и доступность директории /themes/
+        if (!is_dir($themes_dir) || !is_readable($themes_dir)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем недоступна | Путь: $themes_dir"
+            );
+        }
+        // Проверяем, что директория не пуста
+        $iterator = new DirectoryIterator($themes_dir);
+        $has_subdirs = false;
+        foreach ($iterator as $file) {
+            if (!$file->isDot() && $file->isDir()) {
+                $has_subdirs = true;
+                break;
+            }
+        }
+        if (!$has_subdirs) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем пуста | Путь: $themes_dir"
+            );
+        }
+        // Перебираем поддиректории
+        foreach ($iterator as $file) {
+            // Пропускаем точки (.) и файлы
+            if ($file->isDot() || !$file->isDir()) {
+                continue;
+            }
+            // Получаем нормализованный путь к поддиректории
+            $theme_dir = $file->getRealPath();
+            // Проверяем, что директория доступна для чтения
+            if (!is_readable($theme_dir)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория темы недоступна для чтения | Директория: $theme_dir"
+                );
+                continue;
+            }
+            // Проверяем, что директория находится внутри $themes_dir
+            if (strncmp($theme_dir, $themes_dir, strlen($themes_dir)) !== 0) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
+                );
+                continue;
+            }
+            // Добавляем имя папки в список тем
+            $list_themes[] = $file->getFilename();
+        }
+        // Если ни одна тема не найдена, выбрасываем исключение
+        if (empty($list_themes)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни одна тема не найдена | Путь: $themes_dir"
+            );
+        }
+        return $list_themes;
     }
 
     /**
@@ -928,15 +1671,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя.
-     * @see PhotoRigma::Classes::Work_CoreLogic::generate_photo_data() Приватный метод для формирования массива данных по умолчанию.
-     * @see PhotoRigma::Classes::Work::size_image() Метод, используемый для вычисления размеров изображения.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
-     * @see PhotoRigma::Classes::Work::create_photo() Публичный метод-редирект из класса `Work`.
      *
      * @param string $type Тип изображения:
      *                     - `'top'`: Лучшее изображение (по рейтингу).
@@ -992,717 +1726,19 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $category_photo = $core_logic->create_photo('cat', 5);
      * print_r($category_photo);
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work_CoreLogic::generate_photo_data() Приватный метод для формирования массива данных по умолчанию.
+     * @see PhotoRigma::Classes::Work::size_image() Метод, используемый для вычисления размеров изображения.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     * @see PhotoRigma::Classes::Work::create_photo() Публичный метод-редирект из класса `Work`.
+     *
      */
     public function create_photo(string $type = 'top', int $id_photo = 0): array
     {
         return $this->_create_photo_internal($type, $id_photo);
-    }
-
-    /**
-     * @brief Формирует информационную строку для категории или пользовательского альбома.
-     *
-     * @details Метод выполняет запросы к базе данных для получения информации о категории или пользовательском альбоме.
-     *          Процесс включает следующие шаги:
-     *          1. Получение данных о категории из таблицы `TBL_CATEGORY` или данных пользователя из таблицы `TBL_USERS`
-     *             (если `$user_flag = 1`).
-     *          2. Подсчет количества фотографий в таблице `TBL_PHOTO` с использованием JOIN-запросов.
-     *          3. Получение данных о последней и лучшей фотографии (если разрешено отображение фотографий).
-     *          4. Для корневой категории (`$cat_id = 0`) подсчет количества уникальных пользователей, загрузивших фотографии.
-     *          5. Формирование результирующего массива с информацией о категории или альбоме, включая название, описание,
-     *             количество фотографий, данные о последней и лучшей фотографии, а также ссылки на них.
-     *
-     *          Этот метод является защищенным и вызывается через публичный метод `category()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::category()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$db
-     *      Свойство, содержащее объект для работы с базой данных.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$lang
-     *      Свойство, содержащее языковые строки.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$user
-     *      Свойство, содержащее данные текущего пользователя.
-     * @see PhotoRigma::Classes::Work::clean_field()
-     *      Метод для очистки данных.
-     *
-     * @param int    $cat_id    Идентификатор категории или пользователя (если `$user_flag = 1`). По умолчанию: `0`.
-     *                          Должен быть целым числом >= `0`.
-     * @param int    $user_flag Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском альбоме (`1`).
-     *                          По умолчанию: `0`. Допустимые значения: `0` или `1`.
-     *
-     * @return array Информационная строка для категории или пользовательского альбома:
-     *               - 'name'           (string): Название категории или альбома.
-     *               - 'description'    (string): Описание категории или альбома.
-     *               - 'count_photo'    (int):    Количество фотографий.
-     *               - 'last_photo'     (string): Форматированное название последней фотографии (например, "Название (Описание)").
-     *               - 'top_photo'      (string): Форматированное название лучшей фотографии (например, "Название (Описание)").
-     *               - 'url_cat'        (string): Ссылка на категорию или альбом.
-     *               - 'url_last_photo' (string): Ссылка на последнюю фотографию.
-     *               - 'url_top_photo'  (string): Ссылка на лучшую фотографию.
-     *
-     * @throws InvalidArgumentException Если входные параметры имеют некорректный тип или значение.
-     * @throws PDOException            Если возникают ошибки при получении данных из базы данных.
-     *
-     * @note Используются константы:
-     *       - TBL_CATEGORY: Таблица для хранения данных о категориях.
-     *       - TBL_USERS:    Таблица для хранения данных о пользователях.
-     *       - TBL_PHOTO:    Таблица для хранения данных о фотографиях.
-     *
-     *       Конфигурационные ключи:
-     *       - site_url: URL сайта, используемый для формирования ссылок на категории и фотографии.
-     *
-     * Пример вызова метода внутри класса или наследника:
-     * @code
-     * // Получение данных о категории с ID = 5
-     * $category_data = $this->_category_internal(5, 0);
-     * print_r($category_data);
-     *
-     * // Получение данных о пользовательском альбоме с ID = 123
-     * $user_album_data = $this->_category_internal(123, 1);
-     * print_r($user_album_data);
-     * @endcode
-     */
-    protected function _category_internal(int $cat_id = 0, int $user_flag = 0): array
-    {
-        // Проверка аргументов
-        if ($cat_id < 0 || $user_flag < 0) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Неверный аргумент | '
-                . 'cat_id и user_flag должны быть 0 или положительным целым числом'
-            );
-        }
-
-        $photo_info = [];
-        $category_data = [];
-        $user_data = [];
-        $photo_count_data = [];
-        $latest_photo_data = [];
-        $top_rated_photo_data = [];
-        $user_upload_count_data = [];
-
-        // Получение данных категории
-        if ($user_flag == 1) {
-            // Получение категории с id = 0
-            $category_data = $this->db->select(['`id`', '`name`'], TBL_CATEGORY, ['where' => '`id` = :id', 'params' => [':id' => 0]])->res_row();
-            if (!$category_data) {
-                throw new \PDOException(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | '
-                    . 'Не удалось получить данные категории'
-                );
-            }
-
-            // Получение данных пользователя
-            $user_data = $this->db->select('`real_name`', TBL_USERS, ['where' => '`id` = :id', 'params' => [':id' => $cat_id]])->res_row();
-            if (!$user_data) {
-                throw new \PDOException(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | '
-                    . 'Не удалось получить данные пользователя с ID: ' . $cat_id
-                );
-            }
-
-            // Обновление данных категории с учетом данных пользователя
-            $category_data['description'] = $category_data['name'] . ' ' . $user_data['real_name'];
-            $category_data['name'] = $user_data['real_name'];
-        } else {
-            // Получение категории по id
-            $category_data = $this->db->select(['`id`', '`name`', '`description`'], TBL_CATEGORY, ['where' => '`id` = :id', 'params' => [':id' => $cat_id]])->res_row();
-            if (!$category_data) {
-                throw new \PDOException(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | '
-                    . 'Не удалось получить данные категории'
-                );
-            }
-        }
-
-        // Экранирование текстовых данных
-        $category_data['name'] = Work::clean_field($category_data['name']);
-        $category_data['description'] = Work::clean_field($category_data['description']);
-
-        // Получение данных о фотографиях
-        $select = [
-            'COUNT(DISTINCT `p`.`id`) AS `num_photo`',
-            '`p1`.`id` AS `latest_photo_id`',
-            '`p1`.`name` AS `latest_photo_name`',
-            '`p1`.`description` AS `latest_photo_description`',
-            '`p2`.`id` AS `top_rated_photo_id`',
-            '`p2`.`name` AS `top_rated_photo_name`',
-            '`p2`.`description` AS `top_rated_photo_description`',
-        ];
-
-        $from_tbl = TBL_PHOTO . ' p';
-        $join = [
-            [
-                'table' => TBL_PHOTO . ' p1',
-                'type' => 'LEFT',
-                'on' => '`p`.`category` = `p1`.`category` AND `p1`.`date_upload` = (SELECT MAX(`date_upload`) FROM ' . TBL_PHOTO . ' WHERE `category` = `p`.`category`)',
-            ],
-            [
-                'table' => TBL_PHOTO . ' p2',
-                'type' => 'LEFT',
-                'on' => '`p`.`category` = `p2`.`category` AND `p2`.`rate_user` = (SELECT MAX(`rate_user`) FROM ' . TBL_PHOTO . ' WHERE `category` = `p`.`category` AND `rate_user` != 0)',
-            ],
-        ];
-
-        $options = [
-            'where' => ['`p`.`category`' => $category_data['id']],
-            'params' => [],
-        ];
-
-        if ($user_flag == 1) {
-            $options['where']['`p`.`user_upload`'] = $cat_id;
-        }
-
-        $photo_data = $this->db->join($select, $from_tbl, $join, $options)->res_row();
-        if (!$photo_data) {
-            throw new \PDOException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | '
-                . 'Не удалось получить данные фотографий для категории с ID: ' . $category_data['id']
-            );
-        }
-
-        $photo_count_data = false;
-        $latest_photo_data = false;
-        $top_rated_photo_data = false;
-        $photo_info['count'] = 0;
-
-        if ($photo_data) {
-            $photo_info['count'] = $photo_data['num_photo'];
-
-            if ($photo_data['latest_photo_id']) {
-                $latest_photo_data = [
-                    'id' => $photo_data['latest_photo_id'],
-                    'name' => Work::clean_field($photo_data['latest_photo_name']),
-                    'description' => Work::clean_field($photo_data['latest_photo_description']),
-                ];
-            } else {
-                $latest_photo_data = false;
-            }
-
-            if ($photo_data['top_rated_photo_id']) {
-                $top_rated_photo_data = [
-                    'id' => $photo_data['top_rated_photo_id'],
-                    'name' => Work::clean_field($photo_data['top_rated_photo_name']),
-                    'description' => Work::clean_field($photo_data['top_rated_photo_description']),
-                ];
-            } else {
-                $top_rated_photo_data = false;
-            }
-        }
-
-        // Инициализация информации о фотографиях
-        $photo_info['last_name'] = $this->lang['main']['no_foto'];
-        $photo_info['last_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
-        $photo_info['top_name'] = $this->lang['main']['no_foto'];
-        $photo_info['top_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
-
-        // Обновление информации о фотографиях, если пользователь имеет права на просмотр
-        if ($this->user->user['pic_view'] == true || $this->user->user['pic_view'] == 1) {
-            if ($latest_photo_data) {
-                $photo_info['last_name'] = Work::clean_field($latest_photo_data['name']) . ' (' . Work::clean_field($latest_photo_data['description']) . ')';
-                $photo_info['last_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], $latest_photo_data['id']);
-            }
-
-            if ($top_rated_photo_data) {
-                $photo_info['top_name'] = Work::clean_field($top_rated_photo_data['name']) . ' (' . Work::clean_field($top_rated_photo_data['description']) . ')';
-                $photo_info['top_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], $top_rated_photo_data['id']);
-            }
-        }
-
-        // Обработка категорий с id = 0
-        if ($cat_id == 0) {
-            $user_upload_count_data = $this->db->select('COUNT(DISTINCT `user_upload`) AS `num_user_upload`', TBL_PHOTO, ['where' => '`category` = :category', 'params' => [':category' => 0]])->res_row();
-            if ($user_upload_count_data) {
-                $category_data['id'] = 'user';
-                $category_data['name'] .= ' (' . $this->lang['category']['count_user_category'] . ': ' . $user_upload_count_data['num_user_upload'] . ')';
-            } else {
-                // Исключаем <br /> из экранирования
-                $category_data['name'] .= '<br />(' . $this->lang['category']['no_user_category'] . ')';
-            }
-        }
-
-        // Обновление id категории для пользовательских альбомов
-        if ($user_flag == 1) {
-            $category_data['id'] = 'user&amp;id=' . $cat_id;
-        }
-
-        // Формирование итоговой информации о категории
-        $category_info = [
-            'name'           => $category_data['name'],
-            'description'    => $category_data['description'],
-            'count_photo'    => $photo_info['count'],
-            'last_photo'     => $photo_info['last_name'],
-            'top_photo'      => $photo_info['top_name'],
-            'url_cat'        => sprintf('%s?action=category&amp;cat=%s', $this->config['site_url'], $category_data['id']),
-            'url_last_photo' => $photo_info['last_url'],
-            'url_top_photo'  => $photo_info['top_url'],
-        ];
-
-        return $category_info;
-    }
-
-    /**
-     * @brief Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.
-     *
-     * @details Метод выполняет удаление изображения с указанным идентификатором, включая следующие шаги:
-     * 1. Удаляет файлы из каталогов полноразмерных изображений и эскизов, используя пути, заданные в конфигурации (`$this->config`).
-     *    Перед удалением проверяется существование файлов.
-     * 2. Удаляет запись об изображении из таблицы `TBL_PHOTO`.
-     * 3. Удаляет связанные записи из таблиц `TBL_RATE_USER` и `TBL_RATE_MODER`.
-     * 4. Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью функции `log_in_file()`.
-     * Этот метод содержит основную логику, вызываемую через публичный метод del_photo().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$db
-     *      Свойство, содержащее объект для работы с базой данных.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config
-     *      Свойство, содержащее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Database::join()
-     *      Метод, используемый для объединения данных из нескольких таблиц.
-     * @see PhotoRigma::Classes::Database::delete()
-     *      Метод, используемый для удаления записей из таблиц базы данных.
-     * @see PhotoRigma::Classes::Database::aff_rows
-     *      Свойство, содержащее количество затронутых строк после выполнения запроса.
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     *
-     * @param int $photo_id Идентификатор удаляемого изображения (обязательное поле).
-     *                      Должен быть положительным целым числом.
-     *
-     * @return bool True, если удаление успешно, иначе False.
-     *
-     * @throws InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение.
-     *      Пример сообщения:
-     *          Неверное значение параметра $photo_id | Ожидалось положительное целое число
-     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
-     *      Пример сообщения:
-     *          Не удалось найти изображение | Переменная $photo_id = [значение]
-     *
-     * @note Используются константы:
-     *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
-     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
-     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
-     *       Конфигурационные ключи:
-     *       - site_dir: Базовый путь к директории сайта.
-     *       - thumbnail_folder: Путь к каталогу эскизов.
-     *       - gallery_folder: Путь к каталогу полноразмерных изображений.
-     *
-     * @warning Метод чувствителен к правам доступа при удалении файлов. Убедитесь, что скрипт имеет необходимые права на запись и чтение.
-     * @warning Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор изображения.
-     *
-     * Пример вызова метода внутри класса или наследника:
-     * @code
-     * // Удаление изображения с ID = 42
-     * $result = $this->_del_photo_internal(42);
-     * if ($result) {
-     *     echo "Изображение успешно удалено.";
-     * } else {
-     *     echo "Не удалось удалить изображение.";
-     * }
-     * @endcode
-     */
-    protected function _del_photo_internal(int $photo_id): bool
-    {
-        // Проверка входного параметра
-        if (!is_int($photo_id) || $photo_id <= 0) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение параметра \$photo_id | Ожидалось положительное целое число"
-            );
-        }
-        // Получение данных об изображении и категории через JOIN
-        $this->db->join(
-            ['p.*', 'c.folder'],
-            TBL_PHOTO . ' p',
-            [
-                'table' => TBL_CATEGORY . ' c',
-                'on' => 'p.category = c.id'
-            ],
-            [
-                'where' => 'p.id = :photo_id',
-                'params' => [':photo_id' => $photo_id]
-            ]
-        );
-        $temp_data = $this->db->res_row();
-        if (!$temp_data) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось найти изображение | Переменная \$photo_id = $photo_id"
-            );
-        }
-        // Определение путей к файлам
-        $path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
-        $path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
-        // Удаление записи об изображении из таблицы
-        $this->db->delete(TBL_PHOTO, ['where' => '`id` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
-        if ($this->db->aff_rows !== 1) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить запись об изображении | Переменная \$photo_id = $photo_id"
-            );
-        }
-        // Удаление файлов
-        if (file_exists($path_thumbnail)) {
-            if (!unlink($path_thumbnail)) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл эскиза | Путь: $path_thumbnail"
-                );
-            }
-        }
-        if (file_exists($path_photo)) {
-            if (!unlink($path_photo)) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
-                );
-            }
-        }
-        // Удаление связанных записей из других таблиц
-        $this->db->delete(TBL_RATE_USER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
-        $this->db->delete(TBL_RATE_MODER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
-        return true;
-    }
-
-    /**
-     * @brief Получает данные о новостях в зависимости от типа запроса.
-     *
-     * @details Метод выполняет запросы к базе данных для получения данных о новостях, включая следующие шаги:
-     * 1. Проверяет входные параметры $news_id_or_limit и $act на корректность.
-     * 2. Формирует параметры запроса через match():
-     *    - Для $act = 'id': Получает новость по её ID.
-     *    - Для $act = 'last': Получает список новостей с сортировкой по дате последнего редактирования.
-     * 3. Выполняет запрос к таблице TBL_NEWS с использованием параметров.
-     * 4. Возвращает массив с данными о новостях или пустой массив, если новости не найдены.
-     * Этот метод содержит основную логику, вызываемую через публичный метод news().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::news()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$db
-     *      Свойство, содержащее объект для работы с базой данных.
-     *
-     * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
-     *                                 Должен быть положительным целым числом.
-     * @param string $act              Тип запроса:
-     *                                 - 'id': Получение новости по её ID.
-     *                                 - 'last': Получение списка новостей с сортировкой по дате последнего редактирования.
-     *
-     * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
-     *
-     * @throws InvalidArgumentException Если передан некорректный $act или $news_id_or_limit.
-     *      Пример сообщения:
-     *          Некорректный ID новости | Переменная $news_id_or_limit = [значение]
-     * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
-     *      Пример сообщения:
-     *          Не удалось получить данные из базы данных | Тип запроса: '$act'
-     *
-     * @note Используются константы:
-     *       - TBL_NEWS: Таблица для хранения данных о новостях.
-     *
-     * @warning Метод чувствителен к корректности входных параметров $news_id_or_limit и $act.
-     *          Убедитесь, что передаются допустимые значения.
-     * @warning Если новости не найдены, метод возвращает пустой массив.
-     *
-     * Пример вызова метода внутри класса или наследника:
-     * @code
-     * // Получение новости с ID = 5
-     * $news_by_id = $this->_news_internal(5, 'id');
-     * print_r($news_by_id);
-     *
-     * // Получение 10 последних новостей
-     * $news_list = $this->_news_internal(10, 'last');
-     * print_r($news_list);
-     * @endcode
-     */
-    protected function _news_internal(int $news_id_or_limit, string $act): array
-    {
-        // Проверка входных данных
-        if ($act === 'id') {
-            if (!filter_var($news_id_or_limit, FILTER_VALIDATE_INT)) {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ID новости | Переменная \$news_id_or_limit = $news_id_or_limit"
-                );
-            }
-        } elseif ($act === 'last') {
-            if ($news_id_or_limit <= 0 || !filter_var($news_id_or_limit, FILTER_VALIDATE_INT)) {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное количество новостей | Переменная \$news_id_or_limit = $news_id_or_limit"
-                );
-            }
-        } else {
-            // Обработка некорректного типа запроса
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип запроса | Переменная \$act = '$act'"
-            );
-        }
-        // Формирование параметров запроса через match()
-        $query_params = match ($act) {
-            'id' => [
-                // Формируем запрос для 'id'
-                'table' => TBL_NEWS,
-                'where' => '`id` = :id',
-                'params' => [':id' => $news_id_or_limit],
-            ],
-            'last' => [
-                // Формируем запрос для 'last'
-                'table' => TBL_NEWS,
-                'order_by' => ['data_last_edit' => 'DESC'],
-                'limit' => $news_id_or_limit,
-            ],
-        };
-        // Выполняем запрос по результатам match()
-        $this->db->select(
-            '*',
-            $query_params['table'],
-            array_filter([
-                'where' => $query_params['where'] ?? null,
-                'params' => $query_params['params'] ?? [],
-                'order_by' => $query_params['order_by'] ?? null,
-                'limit' => $query_params['limit'] ?? null,
-            ])
-        );
-        // Получение результатов
-        $news_results = $this->db->res_arr();
-        //        if (!$news_results) {
-        //            throw new \RuntimeException(
-        //                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные из базы данных | Тип запроса: '$act'"
-        //            );
-        //        }
-        // Возврат результата
-        return $news_results ?: [];
-    }
-
-    /**
-     * @brief Загружает доступные языки из директории /language/.
-     *
-     * @details Метод выполняет загрузку доступных языков, включая следующие шаги:
-     * 1. Нормализует путь к директории `/language/` и проверяет её существование.
-     * 2. Перебирает все поддиректории в `/language/` и проверяет наличие файла `main.php`.
-     * 3. Для каждой поддиректории:
-     *    - Проверяет доступность файла `main.php`.
-     *    - Безопасно подключает файл и проверяет наличие переменной `$lang_name`.
-     *    - Если переменная `$lang_name` определена и корректна, добавляет язык в список доступных.
-     * 4. Возвращает массив с данными о доступных языках или выбрасывает исключение, если языки не найдены.
-     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     * Основная логика метода вызывается через публичный метод get_languages().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config
-     *      Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     *
-     * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
-     *               - `value`: Имя директории языка (строка).
-     *               - `name`: Название языка из файла `main.php` (строка).
-     *
-     * @throws RuntimeException Если:
-     *                           - Директория `/language/` недоступна или не существует.
-     *                           - Ни один язык не найден в указанной директории.
-     *
-     * @note Используются следующие параметры из свойства $this->config:
-     *       - site_dir: Базовый путь к директории сайта, содержащей поддиректорию `/language/`.
-     *
-     * @warning Метод чувствителен к структуре директории `/language/` и содержимому файла `main.php`.
-     *          Убедитесь, что файл `main.php` содержит корректную переменную `$lang_name`.
-     * @warning Если директория `/language/` недоступна или пуста, метод выбрасывает исключение.
-     *
-     * Пример вызова метода внутри класса или наследника:
-     * @code
-     * // Получение списка доступных языков
-     * $languages = $this->_get_languages_internal();
-     * foreach ($languages as $language) {
-     *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
-     * }
-     * @endcode
-     */
-    protected function _get_languages_internal(): array
-    {
-        $list_languages = [];
-        // Нормализуем путь к site_dir и проверяем его существование
-        $site_dir = realpath(rtrim($this->config['site_dir'], '/'));
-        $language_dir = $site_dir . '/language/';
-        if (!is_dir($language_dir) || !is_readable($language_dir)) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков недоступна или не существует | Путь: $language_dir"
-            );
-        }
-        // Проверяем, что директория не пуста
-        $iterator = new \DirectoryIterator($language_dir);
-        $has_subdirs = false;
-        foreach ($iterator as $file) {
-            if (!$file->isDot() && $file->isDir()) {
-                $has_subdirs = true;
-                break;
-            }
-        }
-        if (!$has_subdirs) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков пуста | Путь: $language_dir"
-            );
-        }
-        // Перебираем поддиректории
-        foreach ($iterator as $file) {
-            if ($file->isDot() || !$file->isDir()) {
-                continue;
-            }
-            $lang_subdir = $file->getPathname();
-            // Проверяем, что директория существует и доступна для чтения
-            if (!is_dir($lang_subdir) || !is_readable($lang_subdir)) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория языка недоступна для чтения | Директория: $lang_subdir"
-                );
-                continue;
-            }
-            // Формируем полный путь к main.php и нормализуем его
-            $main_php_path = realpath($lang_subdir . '/main.php');
-            if ($main_php_path === false || !is_file($main_php_path) || !is_readable($main_php_path)) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл main.php отсутствует или недоступен | Директория: $lang_subdir"
-                );
-                continue;
-            }
-            // Проверяем, что файл находится внутри разрешенной директории
-            if (strncmp($main_php_path, $language_dir, strlen($language_dir)) !== 0) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
-                );
-                continue;
-            }
-            // Безопасное подключение файла
-            $lang_data = include($main_php_path);
-            $lang_name = $lang_data['lang_name'];
-            unset($lang_data);
-            if (!is_string($lang_name) || trim($lang_name) === '') {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"
-                );
-                continue;
-            }
-            $list_languages[] = [
-                'value' => $file->getFilename(),
-                'name' => mb_trim($lang_name),
-            ];
-        }
-        if (empty($list_languages)) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни один язык не найден | Путь: $language_dir"
-            );
-        }
-        return $list_languages;
-    }
-
-    /**
-     * @brief Загружает доступные темы из директории /themes/.
-     *
-     * @details Метод выполняет загрузку доступных тем, включая следующие шаги:
-     * 1. Нормализует путь к директории `/themes/` и проверяет её существование.
-     * 2. Перебирает все поддиректории в `/themes/`.
-     * 3. Для каждой поддиректории:
-     *    - Проверяет доступность директории.
-     *    - Проверяет, что директория находится внутри разрешенной директории `/themes/`.
-     *    - Добавляет имя поддиректории в список доступных тем.
-     * 4. Возвращает массив с именами доступных тем или выбрасывает исключение, если темы не найдены.
-     * Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     * Основная логика метода вызывается через публичный метод get_themes().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config
-     *      Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     *
-     * @return array Массив с именами доступных тем.
-     *
-     * @throws RuntimeException Если:
-     *                           - Директория `/themes/` не существует или недоступна для чтения.
-     *                           - Ни одна тема не найдена в указанной директории.
-     *
-     * @note Используются следующие параметры из свойства $this->config:
-     *       - site_dir: Базовый путь к директории сайта, содержащей поддиректорию `/themes/`.
-     *
-     * @warning Метод чувствителен к структуре директории `/themes/`.
-     *          Убедитесь, что директория существует и содержит хотя бы одну поддиректорию.
-     * @warning Если директория `/themes/` недоступна или пуста, метод выбрасывает исключение.
-     *
-     * Пример вызова метода внутри класса или наследника:
-     * @code
-     * // Получение списка доступных тем
-     * $themes = $this->_get_themes_internal();
-     * foreach ($themes as $theme) {
-     *     echo "Доступная тема: $theme\n";
-     * }
-     * @endcode
-     */
-    protected function _get_themes_internal(): array
-    {
-        $list_themes = [];
-        // Нормализуем путь к site_dir
-        $site_dir = realpath(rtrim($this->config['site_dir'], '/'));
-        $themes_dir = $site_dir . '/themes/';
-        // Проверяем существование и доступность директории /themes/
-        if (!is_dir($themes_dir) || !is_readable($themes_dir)) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем недоступна | Путь: $themes_dir"
-            );
-        }
-        // Проверяем, что директория не пуста
-        $iterator = new \DirectoryIterator($themes_dir);
-        $has_subdirs = false;
-        foreach ($iterator as $file) {
-            if (!$file->isDot() && $file->isDir()) {
-                $has_subdirs = true;
-                break;
-            }
-        }
-        if (!$has_subdirs) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем пуста | Путь: $themes_dir"
-            );
-        }
-        // Перебираем поддиректории
-        foreach ($iterator as $file) {
-            // Пропускаем точки (.) и файлы
-            if ($file->isDot() || !$file->isDir()) {
-                continue;
-            }
-            // Получаем нормализованный путь к поддиректории
-            $theme_dir = $file->getRealPath();
-            // Проверяем, что директория доступна для чтения
-            if (!is_readable($theme_dir)) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория темы недоступна для чтения | Директория: $theme_dir"
-                );
-                continue;
-            }
-            // Проверяем, что директория находится внутри $themes_dir
-            if (strncmp($theme_dir, $themes_dir, strlen($themes_dir)) !== 0) {
-                \PhotoRigma\Include\log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
-                );
-                continue;
-            }
-            // Добавляем имя папки в список тем
-            $list_themes[] = $file->getFilename();
-        }
-        // Если ни одна тема не найдена, выбрасываем исключение
-        if (empty($list_themes)) {
-            throw new \RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни одна тема не найдена | Путь: $themes_dir"
-            );
-        }
-        return $list_themes;
     }
 
     /**
@@ -1724,21 +1760,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::create_photo()
-     *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config
-     *      Свойство, содержащее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$user
-     *      Свойство, содержащее данные текущего пользователя.
-     * @see PhotoRigma::Classes::Work_CoreLogic::generate_photo_data()
-     *      Приватный метод для формирования массива данных по умолчанию.
-     * @see PhotoRigma::Classes::Work::size_image()
-     *      Метод, используемый для вычисления размеров изображения.
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field()
-     *      Метод для очистки данных.
      *
      * @param string $type Тип изображения:
      *                     - `'top'`: Лучшее изображение (по рейтингу).
@@ -1793,12 +1814,27 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $category_photo = $this->_create_photo_internal('cat', 5);
      * print_r($category_photo);
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::create_photo()
+     *      Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config
+     *      Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$user
+     *      Свойство, содержащее данные текущего пользователя.
+     * @see PhotoRigma::Classes::Work_CoreLogic::generate_photo_data()
+     *      Приватный метод для формирования массива данных по умолчанию.
+     * @see PhotoRigma::Classes::Work::size_image()
+     *      Метод, используемый для вычисления размеров изображения.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::clean_field()
+     *      Метод для очистки данных.
+     *
      */
     protected function _create_photo_internal(string $type = 'top', int $id_photo = 0): array
     {
         // Валидация входных данных $id_photo
         if ($id_photo < 0) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный идентификатор фотографии | Значение: {$id_photo}"
             );
         }
@@ -1823,8 +1859,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                     'limit' => 1,
                 ],
                 'cat' => [
-                    'where'  => '`id` = :id_photo',
-                    'limit'  => 1,
+                    'where' => '`id` = :id_photo',
+                    'limit' => 1,
                     'params' => [':id_photo' => $id_photo],
                 ],
                 'rand' => [
@@ -1835,7 +1871,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
             // Выполнение запроса к базе данных
             $this->db->select(
-                ['`id`', '`file`', '`name`', '`description`', '`category`', '`rate_user`', '`rate_moder`', '`user_upload`'],
+                [
+                    '`id`',
+                    '`file`',
+                    '`name`',
+                    '`description`',
+                    '`category`',
+                    '`rate_user`',
+                    '`rate_moder`',
+                    '`user_upload`'
+                ],
                 TBL_PHOTO,
                 $options
             );
@@ -1843,11 +1888,15 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
             // Если изображение не найдено, возвращаем данные по умолчанию
             if (!$photo_data) {
-                $size = $this->work->size_image($this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png');
+                $size = $this->work->size_image(
+                    $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png'
+                );
                 return $this->generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
             }
         } else {
-            $size = $this->work->size_image($this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png');
+            $size = $this->work->size_image(
+                $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png'
+            );
             return $this->generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
         }
 
@@ -1856,13 +1905,13 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             ['*'],
             TBL_CATEGORY,
             [
-                'where'  => '`id` = :category_id',
+                'where' => '`id` = :category_id',
                 'params' => [':category_id' => $photo_data['category']],
             ]
         );
         $category_data = $this->db->res_row();
         if (!$category_data) {
-            throw new \PDOException(
+            throw new PDOException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}"
             );
         }
@@ -1874,7 +1923,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $base_dir = realpath($this->config['site_dir'] . $this->config['gallery_folder']);
         $resolved_path = realpath($image_path);
         if (!$resolved_path || strpos($resolved_path, $base_dir) !== 0) {
-            \PhotoRigma\Include\log_in_file(
+            log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: {$image_path}"
             );
             $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
@@ -1882,7 +1931,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Проверка существования файла
         if (!file_exists($image_path) || !is_readable($image_path)) {
-            \PhotoRigma\Include\log_in_file(
+            log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: {$image_path}, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
             );
             $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
@@ -1896,7 +1945,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             ['`real_name`'],
             TBL_USERS,
             [
-                'where'  => '`id` = :user_id',
+                'where' => '`id` = :user_id',
                 'params' => [':user_id' => $photo_data['user_upload']],
             ]
         );
@@ -1904,19 +1953,35 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Формирование массива данных для передачи в generate_photo_data
         $photo_data_for_generate = [
-            'name_block'         => $this->lang['main'][$type . '_foto'],
-            'url'                => sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], $photo_data['id']),
-            'thumbnail_url'      => sprintf('%s?action=attach&amp;foto=%d&amp;thumbnail=1', $this->config['site_url'], $photo_data['id']),
-            'name'               => Work::clean_field($photo_data['name']),
-            'description'        => Work::clean_field($photo_data['description']),
-            'category_name'      => $category_data ? Work::clean_field($category_data['name']) : $this->lang['main']['no_category'],
-            'category_description' => $category_data ? Work::clean_field($category_data['description']) : $this->lang['main']['no_category'],
-            'rate'               => $this->lang['main']['rate'] . ': ' . $photo_data['rate_user'] . '/' . $photo_data['rate_moder'],
-            'url_user'           => $user_data ? sprintf('%s?action=profile&amp;subact=profile&amp;uid=%d', $this->config['site_url'], $photo_data['user_upload']) : '',
-            'real_name'          => $user_data ? Work::clean_field($user_data['real_name']) : $this->lang['main']['no_user_add'],
-            'category_url'       => $category_data ? sprintf('%s?action=category&amp;cat=%d', $this->config['site_url'], $category_data['id']) : $this->config['site_url'],
-            'width'              => $size['width'],
-            'height'             => $size['height'],
+            'name_block' => $this->lang['main'][$type . '_foto'],
+            'url' => sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], $photo_data['id']),
+            'thumbnail_url' => sprintf(
+                '%s?action=attach&amp;foto=%d&amp;thumbnail=1',
+                $this->config['site_url'],
+                $photo_data['id']
+            ),
+            'name' => Work::clean_field($photo_data['name']),
+            'description' => Work::clean_field($photo_data['description']),
+            'category_name' => $category_data ? Work::clean_field(
+                $category_data['name']
+            ) : $this->lang['main']['no_category'],
+            'category_description' => $category_data ? Work::clean_field(
+                $category_data['description']
+            ) : $this->lang['main']['no_category'],
+            'rate' => $this->lang['main']['rate'] . ': ' . $photo_data['rate_user'] . '/' . $photo_data['rate_moder'],
+            'url_user' => $user_data ? sprintf(
+                '%s?action=profile&amp;subact=profile&amp;uid=%d',
+                $this->config['site_url'],
+                $photo_data['user_upload']
+            ) : '',
+            'real_name' => $user_data ? Work::clean_field($user_data['real_name']) : $this->lang['main']['no_user_add'],
+            'category_url' => $category_data ? sprintf(
+                '%s?action=category&amp;cat=%d',
+                $this->config['site_url'],
+                $category_data['id']
+            ) : $this->config['site_url'],
+            'width' => $size['width'],
+            'height' => $size['height'],
         ];
 
         // Генерация данных изображения
@@ -1934,10 +1999,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство, содержащее языковые переменные.
-     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот приватный метод.
      *
      * @param array $photo_data Массив данных изображения, полученных из базы данных.
      *                          Может быть пустым, если требуется сгенерировать массив только со значениями по умолчанию.
@@ -1979,6 +2040,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $photo_block = $this->generate_photo_data($photo_data, 'top');
      * print_r($photo_block);
      * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство, содержащее конфигурацию приложения.
+     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство, содержащее языковые переменные.
+     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот приватный метод.
+     *
      */
     private function generate_photo_data(array $photo_data = [], string $type = 'top'): array
     {

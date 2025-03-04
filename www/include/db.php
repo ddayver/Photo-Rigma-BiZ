@@ -36,12 +36,20 @@
 namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
+use InvalidArgumentException;
+use PDO;
+use PDOException;
+use PDOStatement;
+
+use function PhotoRigma\Include\log_in_file;
+
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') .
-        " [ERROR] | " .
-        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-        " | " . __FILE__ . " | Попытка прямого вызова файла"
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
     );
     die("HACK!");
 }
@@ -87,8 +95,6 @@ interface Database_Interface
      *
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Database::select() Метод, который реализует в классе заявленную логику.
-     *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
      *                              Каждое поле экранируется методом `sanitize_expression`.
@@ -123,6 +129,8 @@ interface Database_Interface
      *     'limit' => 10,
      * ]);
      * @endcode
+     * @see PhotoRigma::Classes::Database::select() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function select(string|array $select, string $from_tbl, array $options = []): bool;
 
@@ -143,8 +151,6 @@ interface Database_Interface
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::join() Метод, который реализует в классе заявленную логику.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -190,6 +196,8 @@ interface Database_Interface
      *     ]
      * );
      * @endcode
+     * @see PhotoRigma::Classes::Database::join() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function join(string|array $select, string $from_tbl, array $join, array $options = []): bool;
 
@@ -208,9 +216,6 @@ interface Database_Interface
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::delete() Метод, который реализует в классе заявленную логику.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -244,8 +249,12 @@ interface Database_Interface
      *     'where' => ['id' => 1],
      * ]);
      * @endcode
+     * @see PhotoRigma::Classes::Database::delete() Метод, который реализует в классе заявленную логику.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
      */
     public function delete(string $from_tbl, array $options = []): bool;
+
     /**
      * @brief Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве `$txt_query` и выполняет.
      *
@@ -256,8 +265,6 @@ interface Database_Interface
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::truncate() Метод, который реализует в классе заявленную логику.
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -276,6 +283,8 @@ interface Database_Interface
      * @code
      * $db->truncate('users');
      * @endcode
+     * @see PhotoRigma::Classes::Database::truncate() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function truncate(string $from_tbl): bool;
 
@@ -293,9 +302,6 @@ interface Database_Interface
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::update() Метод, который реализует в классе заявленную логику.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
      *                       Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -332,6 +338,9 @@ interface Database_Interface
      *     'where' => ['id' => 1],
      * ]);
      * @endcode
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
+     * @see PhotoRigma::Classes::Database::update() Метод, который реализует в классе заявленную логику.
      */
     public function update(array $update, string $from_tbl, array $options = []): bool;
 
@@ -354,8 +363,6 @@ interface Database_Interface
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::insert() Метод, который реализует в классе заявленную логику.
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
      *                       Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
@@ -392,6 +399,8 @@ interface Database_Interface
      * @code
      * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * @endcode
+     * @see PhotoRigma::Classes::Database::insert() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function insert(array $insert, string $to_tbl, string $type = '', array $options = []): bool;
 
@@ -405,8 +414,6 @@ interface Database_Interface
      *          - В противном случае возвращает ассоциативный массив, содержащий данные строки.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::res_row() Метод, который реализует в классе заявленную логику.
      *
      * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
      *                      Если результатов нет, возвращает `false`.
@@ -425,6 +432,8 @@ interface Database_Interface
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Database::res_row() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function res_row(): array|false;
 
@@ -438,8 +447,6 @@ interface Database_Interface
      *          - В противном случае возвращает массив, содержащий все строки результата.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::res_arr() Метод, который реализует в классе заявленную логику.
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
      *                      Если результатов нет, возвращает `false`.
@@ -463,6 +470,8 @@ interface Database_Interface
      *     echo "No results found.";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Database::res_arr() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function res_arr(): array|false;
 
@@ -475,8 +484,6 @@ interface Database_Interface
      *          - Возвращает значение свойства `$aff_rows`, которое представляет собой количество строк, затронутых последним SQL-запросом.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::get_affected_rows() Метод, который реализует в классе заявленную логику.
      *
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
@@ -492,6 +499,8 @@ interface Database_Interface
      * $db->delete('users', ['where' => 'status = 0']);
      * echo "Affected rows: " . $db->get_affected_rows();
      * @endcode
+     * @see PhotoRigma::Classes::Database::get_affected_rows() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function get_affected_rows(): int;
 
@@ -504,8 +513,6 @@ interface Database_Interface
      *          - Возвращает значение свойства `$insert_id`, которое представляет собой ID последней вставленной строки.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::get_last_insert_id() Метод, который реализует в классе заявленную логику.
      *
      * @return int ID последней вставленной строки.
      *
@@ -521,6 +528,8 @@ interface Database_Interface
      * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      * echo "Last insert ID: " . $db->get_last_insert_id();
      * @endcode
+     * @see PhotoRigma::Classes::Database::get_last_insert_id() Метод, который реализует в классе заявленную логику.
+     *
      */
     public function get_last_insert_id(): int;
 }
@@ -584,9 +593,6 @@ class Database implements Database_Interface
      *
      * @callgraph
      *
-     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
-     * @see PhotoRigma::Classes::Database::$pdo Свойство, хранящее объект PDO для подключения к базе данных.
-     *
      * @param array $db_config Массив с конфигурацией подключения:
      *   - dbtype (string): Тип базы данных (mysql, pgsql). Обязательный параметр.
      *                      Если передан недопустимый тип, выбрасывается исключение InvalidArgumentException.
@@ -608,6 +614,9 @@ class Database implements Database_Interface
      *
      * @warning Если параметр 'dbsock' указан, но файл сокета не существует, выполняется попытка подключения через хост и порт.
      *
+     * @see PhotoRigma::Classes::Database::$pdo Свойство, хранящее объект PDO для подключения к базе данных.
+     *
+     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
      * @todo Добавить поддержку SQLite.
      *
      * Пример использования конструктора:
@@ -628,35 +637,38 @@ class Database implements Database_Interface
         // Проверка допустимых значений dbtype
         $allowed_dbtypes = ['mysql', 'pgsql'];
         if (!in_array($db_config['dbtype'], $allowed_dbtypes, true)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип базы данных | Значение: {$db_config['dbtype']}"
             );
         }
         // Проверка корректности dbname и dbuser
         if (empty($db_config['dbname']) || empty($db_config['dbuser'])) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указано имя базы данных или пользователь | Конфигурация: " . json_encode($db_config)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указано имя базы данных или пользователь | Конфигурация: " . json_encode(
+                    $db_config
+                )
             );
         }
         // Проверка dbsock (первая попытка подключения через сокет)
         if (!empty($db_config['dbsock'])) {
             if (!is_string($db_config['dbsock']) || !file_exists($db_config['dbsock'])) {
-                \PhotoRigma\Include\log_in_file(
+                log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный или несуществующий путь к сокету | Путь: {$db_config['dbsock']}"
                 );
             } else {
                 try {
                     $dsn = "{$db_config['dbtype']}:unix_socket={$db_config['dbsock']};dbname={$db_config['dbname']};charset=utf8mb4";
-                    $this->pdo = new \PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
-                        \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                        \PDO::ATTR_EMULATE_PREPARES   => false,
-                        \PDO::ATTR_STRINGIFY_FETCHES  => false,
+                    $this->pdo = new PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_EMULATE_PREPARES => false,
+                        PDO::ATTR_STRINGIFY_FETCHES => false,
                     ]);
                     return; // Подключение успешно, завершаем выполнение метода
-                } catch (\PDOException $e) {
-                    \PhotoRigma\Include\log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через сокет | Сокет: {$db_config['dbsock']} | Сообщение: " . $e->getMessage()
+                } catch (PDOException $e) {
+                    log_in_file(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через сокет | Сокет: {$db_config['dbsock']} | Сообщение: " . $e->getMessage(
+                        )
                     );
                     // Переходим к следующему варианту подключения
                 }
@@ -664,34 +676,40 @@ class Database implements Database_Interface
         }
         // Проверка dbhost и dbport (вторая попытка подключения через хост и порт)
         if (empty($db_config['dbhost'])) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан хост базы данных | Конфигурация: " . json_encode($db_config)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан хост базы данных | Конфигурация: " . json_encode(
+                    $db_config
+                )
             );
         }
-        if (!filter_var($db_config['dbhost'], FILTER_VALIDATE_IP) && !preg_match('/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $db_config['dbhost']) && strtolower($db_config['dbhost']) !== 'localhost') {
-            throw new \InvalidArgumentException(
+        if (!filter_var($db_config['dbhost'], FILTER_VALIDATE_IP) && !preg_match(
+            '/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+            $db_config['dbhost']
+        ) && strtolower($db_config['dbhost']) !== 'localhost') {
+            throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный хост базы данных | Значение: {$db_config['dbhost']}"
             );
         }
         $dsn = "{$db_config['dbtype']}:host={$db_config['dbhost']};dbname={$db_config['dbname']};charset=utf8mb4";
         if (!empty($db_config['dbport'])) {
             if (!is_numeric($db_config['dbport']) || $db_config['dbport'] < 1 || $db_config['dbport'] > 65535) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный порт базы данных | Значение: {$db_config['dbport']}"
                 );
             }
             $dsn .= ";port={$db_config['dbport']}";
         }
         try {
-            $this->pdo = new \PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
-                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                \PDO::ATTR_EMULATE_PREPARES   => false,
-                \PDO::ATTR_STRINGIFY_FETCHES  => false,
+            $this->pdo = new PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::ATTR_STRINGIFY_FETCHES => false,
             ]);
-        } catch (\PDOException $e) {
-            throw new \PDOException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через хост и порт | Хост: {$db_config['dbhost']}, Порт: {$db_config['dbport']} | Сообщение: " . $e->getMessage()
+        } catch (PDOException $e) {
+            throw new PDOException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через хост и порт | Хост: {$db_config['dbhost']}, Порт: {$db_config['dbport']} | Сообщение: " . $e->getMessage(
+                )
             );
         }
     }
@@ -704,12 +722,6 @@ class Database implements Database_Interface
      *          Редиректов из внешних классов нет.
      *
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_select_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -744,425 +756,16 @@ class Database implements Database_Interface
      *     'limit' => 10,
      * ]);
      * @endcode
+     * @see PhotoRigma::Classes::Database::_select_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
      */
     public function select(string|array $select, string $from_tbl, array $options = []): bool
     {
         return $this->_select_internal($select, $from_tbl, $options);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_join_internal()`, который реализует основную логику формирования и выполнения SQL-запроса с использованием JOIN.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_join_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
-     *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
-     *                              Пример: "id", ["id", "name"].
-     * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
-     * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
-     *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
-     *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
-     *                    - on (string): Условие для JOIN. Должно быть строкой с допустимым условием сравнения полей.
-     *                                   Если условие отсутствует, выбрасывается исключение.
-     *                    Пример: [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
-     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
-     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
-     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$from_tbl` не является строкой.
-     *                                    - `$join` не является массивом.
-     *                                    - `$select` не является строкой или массивом.
-     *                                    - Отсутствует имя таблицы (`table`) или условие (`on`) в описании JOIN.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *
-     * Пример использования метода join():
-     * @code
-     * $db = new \\PhotoRigma\\Classes\\Database();
-     * $db->join(
-     *     ['users.id', 'users.name', 'orders.order_date'],
-     *     'users',
-     *     [
-     *         ['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id'],
-     *     ],
-     *     [
-     *         'where' => ['users.status' => 1],
-     *     ]
-     * );
-     * @endcode
-     */
-    public function join(string|array $select, string $from_tbl, array $join, array $options = []): bool
-    {
-        return $this->_join_internal($select, $from_tbl, $join, $options);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_delete_internal()`, который реализует основную логику формирования и выполнения SQL-запроса на удаление данных.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_delete_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     *
-     * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
-     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
-     *                              Может использоваться только вместе с `limit`. Если указан только один из этих ключей, оба игнорируются.
-     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
-     *                              Может использоваться только вместе с `order`. Если указан только один из этих ключей, оба игнорируются.
-     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и удаляется с записью в лог.
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$from_tbl` не является строкой.
-     *                                    - `$options` не является массивом.
-     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
-     *          Ключи `group`, `order` и `limit` проверяются на корректность. Недопустимые ключи удаляются с записью в лог.
-     *
-     * Пример использования метода delete():
-     * @code
-     * $db = new \\PhotoRigma\\Classes\\Database();
-     * $db->delete('users', [
-     *     'where' => ['id' => 1],
-     * ]);
-     * @endcode
-     */
-    public function delete(string $from_tbl, array $options = []): bool
-    {
-        return $this->_delete_internal($from_tbl, $options);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_truncate_internal()`, который реализует основную логику формирования и выполнения SQL-запроса TRUNCATE.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_truncate_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param string $from_tbl Имя таблицы, которую необходимо очистить.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$from_tbl` не является строкой.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
-     *
-     * Пример использования метода truncate()
-     * @code
-     * $db = new \\PhotoRigma\\Classes\\Database();
-     * $db->truncate('users');
-     * @endcode
-     */
-    public function truncate(string $from_tbl): bool
-    {
-        return $this->_truncate_internal($from_tbl);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_update_internal()`, который реализует основную логику формирования и выполнения SQL-запроса UPDATE.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_update_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'status' => 1].
-     * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
-     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
-     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
-     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и удаляется с записью в лог.
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$update` не является массивом.
-     *                                    - `$from_tbl` не является строкой.
-     *                                    - `$options` не является массивом.
-     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
-     *          Ключ `group` не поддерживается в запросах UPDATE и удаляется с записью в лог.
-     *
-     * Пример использования метода update()
-     * @code
-     * $db = new \\PhotoRigma\\Classes\\Database();
-     * $db->update(['name' => 'John Doe'], 'users', [
-     *     'where' => ['id' => 1],
-     * ]);
-     * @endcode
-     */
-    public function update(array $update, string $from_tbl, array $options = []): bool
-    {
-        return $this->_update_internal($update, $from_tbl, $options);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_insert_internal()`, который реализует основную логику формирования и выполнения SQL-запроса INSERT.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_insert_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
-     *                      Если передан пустой массив, выбрасывается исключение.
-     * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
-     *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
-     *                     - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
-     *                     - 'replace': Формирует запрос типа "REPLACE INTO".
-     *                     - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
-     *                     - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     *                     Если указан недопустимый тип, выбрасывается исключение.
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                       - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":name" => "John Doe", ":email" => "john@example.com"]).
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$insert` не является массивом или является пустым массивом.
-     *                                    - `$to_tbl` не является строкой.
-     *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
-     *                                    - `$options` не является массивом.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
-     *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
-     *
-     * Пример использования метода insert():
-     * @code
-     * $db = new \\PhotoRigma\\Classes\\Database();
-     * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
-     * @endcode
-     */
-    public function insert(array $insert, string $to_tbl, string $type = '', array $options = []): bool
-    {
-        return $this->_insert_internal($insert, $to_tbl, $type, $options);
-    }
-
-    /**
-     * @brief Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве `$res_query`.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_res_row_internal()`, который реализует основную логику извлечения строки результата.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_res_row_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `res_row()` для получения результатов SELECT-запроса.
-     *
-     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
-     *                     Если результатов нет, возвращает `false`.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$res_query` не установлено.
-     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
-     *
-     * Пример использования метода res_row()
-     * @code
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
-     * while ($row = $db->res_row()) {
-     *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
-     * }
-     * @endcode
-     */
-    public function res_row(): array|false
-    {
-        return $this->_res_row_internal();
-    }
-
-    /**
-     * @brief Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве `$res_query`, и возвращает их как массив.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_res_arr_internal()`, который реализует основную логику извлечения всех строк результата.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_res_arr_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса.
-     * @see PhotoRigma::Classes::Database::join() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса с использованием JOIN.
-     *
-     * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
-     *                     Если результатов нет, возвращает `false`.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$res_query` не установлено.
-     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
-     *
-     * Пример использования метода res_arr():
-     * @code
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
-     * $results = $db->res_arr();
-     * if ($results) {
-     *     foreach ($results as $row) {
-     *         echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
-     *     }
-     * } else {
-     *     echo "No results found.";
-     * }
-     * @endcode
-     */
-    public function res_arr(): array|false
-    {
-        return $this->_res_arr_internal();
-    }
-
-    /**
-     * @brief Возвращает количество строк, затронутых последним запросом.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_get_affected_rows_internal()`, который реализует основную логику получения количества затронутых строк.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_get_affected_rows_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::$aff_rows Свойство, хранящее количество затронутых строк.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
-     * @see PhotoRigma::Classes::Database::delete() Метод, который может изменять значение `$aff_rows`.
-     * @see PhotoRigma::Classes::Database::update() Метод, который может изменять значение `$aff_rows`.
-     * @see PhotoRigma::Classes::Database::insert() Метод, который может изменять значение `$aff_rows`.
-     *
-     * @return int Количество строк, затронутых последним SQL-запросом.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$aff_rows` не установлено.
-     *                                    - Значение свойства `$aff_rows` не является целым числом.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
-     *
-     * Пример использования метода get_affected_rows():
-     * @code
-     * $db->delete('users', ['where' => 'status = 0']);
-     * echo "Affected rows: " . $db->get_affected_rows();
-     * @endcode
-     */
-    public function get_affected_rows(): int
-    {
-        return $this->_get_affected_rows_internal();
-    }
-
-    /**
-     * @brief Возвращает ID последней вставленной строки.
-     *
-     * @details Метод является публичным редиректом для защищённого метода `_get_last_insert_id_internal()`, который реализует основную логику получения ID последней вставленной строки.
-     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
-     *          Редиректов из внешних классов нет.
-     *
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::_get_last_insert_id_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Database::$insert_id Свойство, хранящее ID последней вставленной строки.
-     * @see PhotoRigma::Classes::Database::insert() Метод, который устанавливает значение `$insert_id`.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
-     *
-     * @return int ID последней вставленной строки.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$insert_id` не установлено.
-     *                                    - Значение свойства `$insert_id` не является целым числом.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
-     *
-     * Пример использования метода get_last_insert_id():
-     * @code
-     * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
-     * echo "Last insert ID: " . $db->get_last_insert_id();
-     * @endcode
-     */
-    public function get_last_insert_id(): int
-    {
-        return $this->_get_last_insert_id_internal();
     }
 
     /**
@@ -1181,12 +784,6 @@ class Database implements Database_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::select() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
@@ -1221,18 +818,28 @@ class Database implements Database_Interface
      *     'limit' => 10,
      * ]);
      * @endcode
+     * @see PhotoRigma::Classes::Database::select() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
      */
     protected function _select_internal(string|array $select, string $from_tbl, array $options = []): bool
     {
         // === 1. Валидация аргументов ===
         if (!is_string($from_tbl)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype($from_tbl)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
+                    $from_tbl
+                )
             );
         }
         if (!is_array($options)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype($options)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype(
+                    $options
+                )
             );
         }
 
@@ -1245,8 +852,10 @@ class Database implements Database_Interface
         // Проверяем каждую часть выборки на корректность
         foreach ($select as $field) {
             if (!is_string($field)) {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый элемент в выборке | Ожидалась строка, получено: " . gettype($field)
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый элемент в выборке | Ожидалась строка, получено: " . gettype(
+                        $field
+                    )
                 );
             }
         }
@@ -1263,829 +872,6 @@ class Database implements Database_Interface
 
         // === 6. Выполнение запроса ===
         return $this->execute_query($params);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$join` (массив), `$options` (массив).
-     * - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с экранированными именами полей.
-     *   Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * - Экранирует имя основной таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
-     * - Обрабатывает массив JOIN-операций (`$join`):
-     *   - Для каждой операции проверяется наличие имени таблицы (`table`) и условия (`on`).
-     *   - Если тип JOIN не указан, используется `INNER` по умолчанию.
-     *   - Условия JOIN формируются с использованием метода `sanitize_expression`.
-     * - Формирует базовый SQL-запрос с использованием JOIN-операций.
-     * - Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
-     * - Выполняет сформированный запрос через метод `execute_query`.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `join()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::join() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
-     *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
-     *                              Пример: "id", ["id", "name"].
-     * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
-     * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
-     *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
-     *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
-     *                    - on (string): Условие для JOIN. Должно быть строкой с допустимым условием сравнения полей.
-     *                                   Если условие отсутствует, выбрасывается исключение.
-     *                    Пример: [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
-     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
-     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
-     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *               В случае ошибки выбрасывается исключение.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$from_tbl` не является строкой.
-     *                                    - `$join` не является массивом.
-     *                                    - `$select` не является строкой или массивом.
-     *                                    - Отсутствует имя таблицы (`table`) или условие (`on`) в описании JOIN.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *
-     * Пример использования метода _join_internal():
-     * @code
-     * $this->_join_internal(
-     *     ['users.id', 'users.name', 'orders.order_date'],
-     *     'users',
-     *     [
-     *         ['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id'],
-     *     ],
-     *     [
-     *         'where' => ['users.status' => 1],
-     *     ]
-     * );
-     * @endcode
-     */
-    protected function _join_internal(string|array $select, string $from_tbl, array $join, array $options = []): bool
-    {
-        // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени основной таблицы | Ожидалась строка, получено: " . gettype($from_tbl)
-            );
-        }
-        if (!is_array($join)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип описания JOIN | Ожидался массив, получено: " . gettype($join)
-            );
-        }
-        // === 2. Обработка $select ===
-        if (!is_array($select)) {
-            $select = [$select];
-        }
-        $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
-        // === 3. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
-        // === 4. Обработка $join ===
-        $join_clauses = [];
-        foreach ($join as $j) {
-            if (empty($j['table'])) {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует имя таблицы в описании JOIN | Проверьте структуру массива \$join"
-                );
-            }
-            if (empty($j['on'])) {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует условие 'on' для таблицы '{$j['table']}' в описании JOIN | Проверьте структуру массива \$join"
-                );
-            }
-            $table = $this->sanitize_expression($j['table']);
-            $on_condition = $this->sanitize_expression($j['on']);
-            $type = !empty($j['type']) ? strtoupper($j['type']) . ' ' : 'INNER ';
-            $join_clauses[] = "{$type}JOIN $table ON $on_condition";
-        }
-        // === 5. Формирование базового запроса ===
-        $this->txt_query = "SELECT $select FROM $from_tbl " . implode(' ', $join_clauses);
-        // === 6. Добавление условий ===
-        [$conditions, $params] = $this->build_conditions($options);
-        $this->txt_query .= $conditions;
-        // === 7. Выполнение запроса ===
-        return $this->execute_query($params);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет типы входных данных: `$from_tbl` (строка), `$options` (массив).
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
-     * - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного удаления всех данных.
-     * - Проверяет и удаляет недопустимые ключи из массива `$options`:
-     *   - Ключ `group` не поддерживается в запросах DELETE и удаляется с записью в лог.
-     *   - Ключи `order` и `limit` должны использоваться совместно. Если указан только один из них, оба удаляются с записью в лог.
-     * - Формирует базовый SQL-запрос на удаление данных.
-     * - Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод `build_conditions`.
-     * - Выполняет сформированный запрос через метод `execute_query`.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `delete()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::delete() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     *
-     * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
-     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
-     *                              Может использоваться только вместе с `limit`. Если указан только один из этих ключей, оба игнорируются.
-     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
-     *                              Может использоваться только вместе с `order`. Если указан только один из этих ключей, оба игнорируются.
-     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и удаляется с записью в лог.
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *               В случае ошибки выбрасывается исключение.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$from_tbl` не является строкой.
-     *                                    - `$options` не является массивом.
-     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
-     *          Ключи `group`, `order` и `limit` проверяются на корректность. Недопустимые ключи удаляются с записью в лог.
-     *
-     * Пример использования метода _delete_internal():
-     * @code
-     * $this->_delete_internal('users', [
-     *     'where' => ['id' => 1],
-     * ]);
-     * @endcode
-     */
-    protected function _delete_internal(string $from_tbl, array $options = []): bool
-    {
-        // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype($from_tbl)
-            );
-        }
-        if (!is_array($options)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype($options)
-            );
-        }
-        if (empty($options['where'])) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности"
-            );
-        }
-
-        // === 2. Проверка и удаление недопустимых ключей ===
-        if (isset($options['group'])) {
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в DELETE | Переданные опции: " . json_encode($options)
-            );
-            unset($options['group']); // Удаляем ключ 'group'
-        }
-
-        if ((isset($options['order']) && !isset($options['limit'])) ||
-            (!isset($options['order']) && isset($options['limit']))) {
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: " . json_encode($options)
-            );
-            unset($options['order'], $options['limit']); // Удаляем ключи 'order' и 'limit'
-        }
-
-        // === 3. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
-
-        // === 4. Формирование базового запроса ===
-        $this->txt_query = "DELETE FROM $from_tbl";
-
-        // === 5. Добавление условий ===
-        [$conditions, $params] = $this->build_conditions($options);
-        $this->txt_query .= $conditions;
-
-        // === 6. Выполнение запроса ===
-        return $this->execute_query($params);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет тип входных данных: `$from_tbl` должен быть строкой. Если передан неверный тип, выбрасывается исключение.
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
-     * - Формирует базовый SQL-запрос TRUNCATE TABLE.
-     * - Выполняет сформированный запрос через метод `execute_query`.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `truncate()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::truncate() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param string $from_tbl Имя таблицы, которую необходимо очистить.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *               В случае ошибки выбрасывается исключение.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$from_tbl` не является строкой.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
-     *
-     * Пример использования метода _truncate_internal():
-     * @code
-     * $this->_truncate_internal('users');
-     * @endcode
-     */
-    protected function _truncate_internal(string $from_tbl): bool
-    {
-        // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype($from_tbl)
-            );
-        }
-        // === 2. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
-        // === 3. Формирование базового запроса ===
-        $this->txt_query = "TRUNCATE TABLE $from_tbl";
-        // === 4. Выполнение запроса ===
-        return $this->execute_query();
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет типы входных данных: `$update` (ассоциативный массив), `$from_tbl` (строка), `$options` (массив).
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
-     * - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного обновления всех данных.
-     * - Удаляет недопустимый ключ `group` из массива `$options` с записью в лог, так как GROUP BY не поддерживается в запросах UPDATE.
-     * - Преобразует массив `$update` в строку формата "поле = значение" с использованием метода `prepare_insert_data`, который заменяет значения на плейсхолдеры для подготовленного выражения.
-     * - Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.
-     * - Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре `$options`.
-     * - Выполняет сформированный запрос через метод `execute_query`.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `update()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::update() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'status' => 1].
-     * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
-     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
-     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
-     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
-     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и удаляется с записью в лог.
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *               В случае ошибки выбрасывается исключение.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$update` не является массивом.
-     *                                    - `$from_tbl` не является строкой.
-     *                                    - `$options` не является массивом.
-     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
-     *          Ключ `group` не поддерживается в запросах UPDATE и удаляется с записью в лог.
-     *
-     * Пример использования метода _update_internal():
-     * @code
-     * $this->_update_internal(['name' => 'John Doe'], 'users', [
-     *     'where' => ['id' => 1],
-     * ]);
-     * @endcode
-     */
-    protected function _update_internal(array $update, string $from_tbl, array $options = []): bool
-    {
-        // === 1. Валидация аргументов ===
-        if (!is_array($update)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для обновления | Ожидался массив, получено: " . gettype($update)
-            );
-        }
-        if (!is_string($from_tbl)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype($from_tbl)
-            );
-        }
-        if (!is_array($options)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype($options)
-            );
-        }
-        if (empty($options['where'])) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос UPDATE без условия WHERE запрещён | Причина: Соображения безопасности"
-            );
-        }
-
-        // === 2. Удаление недопустимого ключа `group` ===
-        if (isset($options['group'])) {
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в UPDATE | Переданные опции: " . json_encode($options)
-            );
-            unset($options['group']); // Удаляем ключ 'group'
-        }
-
-        // === 3. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
-
-        // === 4. Формирование списка полей для обновления ===
-        [$set_fields, $set_placeholders, $params] = $this->prepare_insert_data($update, 'update_', $options['params'] ?? []);
-        $set_clause = implode(', ', array_map(
-            fn ($field, $placeholder) => "$field = $placeholder",
-            explode(', ', $set_fields),
-            explode(', ', $set_placeholders)
-        ));
-
-        // === 5. Формирование базового запроса ===
-        $this->txt_query = "UPDATE $from_tbl SET $set_clause";
-
-        // === 6. Добавление условий ===
-        [$conditions, $condition_params] = $this->build_conditions($options);
-        $this->txt_query .= $conditions;
-
-        // === 7. Подготовка параметров ===
-        $params = array_merge($params, $condition_params);
-
-        // === 8. Выполнение запроса ===
-        return $this->execute_query($params);
-    }
-
-    /**
-     * @brief Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет типы входных данных: `$insert` (ассоциативный массив), `$to_tbl` (строка), `$type` (строка), `$options` (массив).
-     * - Проверяет, что массив `$insert` не пустой. Если массив пустой, выбрасывается исключение.
-     * - Экранирует имя таблицы (`$to_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
-     * - Нормализует параметр `$type`, приводя его к нижнему регистру, и проверяет на допустимые значения: `'ignore'`, `'replace'`, `'into'`, `''`.
-     *   Если указан недопустимый тип, выбрасывается исключение.
-     * - Определяет тип запроса на основе параметра `$type`:
-     *   - `'ignore'`: Формирует запрос типа "INSERT IGNORE INTO".
-     *   - `'replace'`: Формирует запрос типа "REPLACE INTO".
-     *   - `'into'` или пустая строка (`''`): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     * - Подготавливает данные для запроса с использованием метода `prepare_insert_data`, который преобразует массив `$insert` в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     *   Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     * - Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.
-     * - Выполняет сформированный запрос через метод `execute_query`.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `insert()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::insert() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
-     *
-     * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
-     *                      Если передан пустой массив, выбрасывается исключение.
-     * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
-     *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
-     *                     - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
-     *                     - 'replace': Формирует запрос типа "REPLACE INTO".
-     *                     - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
-     *                     - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     *                     Если указан недопустимый тип, выбрасывается исключение.
-     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                       - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":name" => "John Doe", ":email" => "john@example.com"]).
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *               В случае ошибки выбрасывается исключение.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - `$insert` не является массивом или является пустым массивом.
-     *                                    - `$to_tbl` не является строкой.
-     *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
-     *                                    - `$options` не является массивом.
-     *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
-     *          Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
-     *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
-     *
-     * Пример использования метода _insert_internal():
-     * @code
-     * $this->_insert_internal(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
-     * @endcode
-     */
-    protected function _insert_internal(array $insert, string $to_tbl, string $type = '', array $options = []): bool
-    {
-        // === 1. Валидация аргументов ===
-        if (!is_array($insert)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для вставки | Ожидался массив, получено: " . gettype($insert)
-            );
-        }
-        if (!is_string($to_tbl)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype($to_tbl)
-            );
-        }
-        if (empty($insert)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Данные для вставки не могут быть пустыми | Причина: Пустой массив данных"
-            );
-        }
-        // Нормализация $type (приведение к нижнему регистру)
-        $type = strtolower($type);
-        // Проверка допустимых значений для $type
-        if (!in_array($type, ['', 'ignore', 'replace', 'into'], true)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace', 'into'. Получено: '$type'"
-            );
-        }
-        // === 2. Обработка $to_tbl ===
-        $to_tbl = $this->sanitize_expression($to_tbl);
-        // === 3. Определение типа запроса ===
-        if ($type === 'ignore') {
-            $query_type = 'INSERT IGNORE INTO ';
-        } elseif ($type === 'replace') {
-            $query_type = 'REPLACE INTO ';
-        } else {
-            $query_type = 'INSERT INTO '; // По умолчанию или если указано 'into'
-        }
-        // === 4. Подготовка данных для запроса ===
-        [$fields_clause, $placeholders_clause, $params] = $this->prepare_insert_data($insert, 'insert_', $options['params'] ?? []);
-        // === 5. Формирование базового запроса ===
-        $this->txt_query = "$query_type$to_tbl ($fields_clause) VALUES ($placeholders_clause)";
-        // === 6. Выполнение запроса ===
-        return $this->execute_query($params);
-    }
-
-    /**
-     * @brief Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве `$res_query`.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет, что свойство `$res_query` установлено и является объектом типа `\PDOStatement`. Если это не так, выбрасывается исключение.
-     * - Использует метод `fetch(\PDO::FETCH_ASSOC)` для извлечения одной строки результата в виде ассоциативного массива.
-     * - Если результатов нет (метод `fetch` возвращает `false`), явно возвращает `false`.
-     * - В противном случае возвращает ассоциативный массив, содержащий данные строки.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `res_row()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::res_row() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
-     *
-     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
-     *                     Если результатов нет, возвращает `false`.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$res_query` не установлено.
-     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
-     *
-     * Пример использования метода _res_row_internal()
-     * @code
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
-     * while ($row = $this->_res_row_internal()) {
-     *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
-     * }
-     * @endcode
-     */
-    protected function _res_row_internal(): array|false
-    {
-        // === 1. Валидация состояния запроса ===
-        if (!isset($this->res_query) || !($this->res_query instanceof \PDOStatement)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement"
-            );
-        }
-        // === 2. Извлечение строки результата ===
-        $row = $this->res_query->fetch(\PDO::FETCH_ASSOC);
-        if ($row === false) {
-            return false; // Явно возвращаем false, если результатов нет
-        }
-        return $row;
-    }
-
-    /**
-     * @brief Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве `$res_query`, и возвращает их как массив.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет, что свойство `$res_query` установлено и является объектом типа `\PDOStatement`. Если это не так, выбрасывается исключение.
-     * - Использует метод `fetchAll(\PDO::FETCH_ASSOC)` для извлечения всех строк результата в виде массива ассоциативных массивов.
-     * - Если результатов нет (метод `fetchAll` возвращает пустой массив), явно возвращает `false`.
-     * - В противном случае возвращает массив, содержащий все строки результата.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `res_arr()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::res_arr() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
-     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
-     * @see PhotoRigma::Classes::Database::join() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с использованием JOIN.
-     *
-     * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
-     *                     Если результатов нет, возвращает `false`.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$res_query` не установлено.
-     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
-     *
-     * Пример использования метода _res_arr_internal():
-     * @code
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
-     * $results = $this->_res_arr_internal();
-     * if ($results) {
-     *     foreach ($results as $row) {
-     *         echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
-     *     }
-     * } else {
-     *     echo "No results found.";
-     * }
-     * @endcode
-     */
-    protected function _res_arr_internal(): array|false
-    {
-        // === 1. Валидация состояния запроса ===
-        if (!isset($this->res_query) || !($this->res_query instanceof \PDOStatement)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement"
-            );
-        }
-        // === 2. Извлечение всех строк результата ===
-        $rows = $this->res_query->fetchAll(\PDO::FETCH_ASSOC);
-        if (empty($rows)) {
-            return false; // Явно возвращаем false, если результатов нет
-        }
-        return $rows;
-    }
-
-    /**
-     * @brief Возвращает количество строк, затронутых последним запросом.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет, что свойство `$aff_rows` установлено. Если это не так, выбрасывается исключение.
-     * - Проверяет, что значение свойства `$aff_rows` является целым числом. Если это не так, выбрасывается исключение.
-     * - Возвращает значение свойства `$aff_rows`, которое представляет собой количество строк, затронутых последним SQL-запросом.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `get_affected_rows()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::get_affected_rows() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::$aff_rows Свойство, хранящее количество затронутых строк.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
-     * @see PhotoRigma::Classes::Database::delete() Метод, который может изменять значение `$aff_rows`.
-     * @see PhotoRigma::Classes::Database::update() Метод, который может изменять значение `$aff_rows`.
-     * @see PhotoRigma::Classes::Database::insert() Метод, который может изменять значение `$aff_rows`.
-     *
-     * @return int Количество строк, затронутых последним SQL-запросом.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$aff_rows` не установлено.
-     *                                    - Значение свойства `$aff_rows` не является целым числом.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
-     *
-     * Пример использования метода _get_affected_rows_internal():
-     * @code
-     * $this->delete('users', ['where' => 'status = 0']);
-     * echo "Affected rows: " . $this->_get_affected_rows_internal();
-     * @endcode
-     */
-    protected function _get_affected_rows_internal(): int
-    {
-        // === 1. Валидация состояния ===
-        if (!isset($this->aff_rows)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Количество затронутых строк не установлено | Причина: Свойство aff_rows не определено"
-            );
-        }
-        if (!is_int($this->aff_rows)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение количества затронутых строк | Причина: Ожидалось целое число"
-            );
-        }
-        // === 2. Возврат значения ===
-        return $this->aff_rows;
-    }
-
-    /**
-     * @brief Возвращает ID последней вставленной строки.
-     *
-     * @details Метод выполняет следующие шаги:
-     * - Проверяет, что свойство `$insert_id` установлено. Если это не так, выбрасывается исключение.
-     * - Проверяет, что значение свойства `$insert_id` является целым числом. Если это не так, выбрасывается исключение.
-     * - Возвращает значение свойства `$insert_id`, которое представляет собой ID последней вставленной строки.
-     *
-     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `get_last_insert_id()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::get_last_insert_id() Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Database::$insert_id Свойство, хранящее ID последней вставленной строки.
-     * @see PhotoRigma::Classes::Database::insert() Метод, который устанавливает значение `$insert_id`.
-     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
-     *
-     * @return int ID последней вставленной строки.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                    - Свойство `$insert_id` не установлено.
-     *                                    - Значение свойства `$insert_id` не является целым числом.
-     *
-     * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
-     *
-     * Пример использования метода _get_last_insert_id_internal():
-     * @code
-     * $this->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
-     * echo "Last insert ID: " . $this->_get_last_insert_id_internal();
-     * @endcode
-     */
-    protected function _get_last_insert_id_internal(): int
-    {
-        // === 1. Валидация состояния ===
-        if (!isset($this->insert_id)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ID последней вставленной строки не установлен | Причина: Свойство insert_id не определено"
-            );
-        }
-        if (!is_int($this->insert_id)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение ID последней вставленной строки | Причина: Ожидалось целое число"
-            );
-        }
-        // === 2. Возврат значения ===
-        return $this->insert_id;
-    }
-
-    /**
-     * @brief Выполняет SQL-запрос с использованием подготовленных выражений.
-     *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет состояние результата запроса и тип аргументов:
-     *             - Убедитесь, что `$res_query` является экземпляром `\PDOStatement`.
-     *             - Проверяется, что `$txt_query` является строкой.
-     *             - Проверяется, что `$params` является массивом.
-     *          2. Очищает внутренние свойства для вывода результата запроса:
-     *             - Обнуляет `$res_query`, `$aff_rows`, `$insert_id`.
-     *          3. Подготавливает и выполняет SQL-запрос с использованием PDO:
-     *             - Использует `$pdo->prepare()` для подготовки запроса.
-     *             - Выполняет запрос с переданными параметрами.
-     *             - Получает количество затронутых строк (`$aff_rows`) и ID последней вставленной записи (`$insert_id`).
-     *          4. Логирует медленные запросы:
-     *             - Измеряет время выполнения запроса.
-     *             - Если время выполнения превышает пороговое значение (200 мс), логирует запрос с помощью `log_in_file()`.
-     *          5. Возвращает результат выполнения запроса:
-     *             - Возвращает `true`, если запрос успешно выполнен.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @see PhotoRigma::Include::log_in_file()
-     *      Логирует медленные запросы.
-     * @see PhotoRigma::Classes::Database::$pdo
-     *      Объект PDO, используемый для выполнения запроса.
-     * @see PhotoRigma::Classes::Database::$res_query
-     *      Результат подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::$aff_rows
-     *      Количество затронутых строк после выполнения запроса.
-     * @see PhotoRigma::Classes::Database::$insert_id
-     *      ID последней вставленной записи.
-     * @see PhotoRigma::Classes::Database::$txt_query
-     *      Свойство, в которое помещается текст SQL-запроса.
-     * @see PhotoRigma::Classes::Database::delete()
-     *      Метод, который вызывает execute_query() для выполнения DELETE-запроса.
-     * @see PhotoRigma::Classes::Database::truncate()
-     *      Метод, который вызывает execute_query() для выполнения TRUNCATE-запроса.
-     * @see PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает execute_query() для выполнения UPDATE-запроса.
-     * @see PhotoRigma::Classes::Database::insert()
-     *      Метод, который вызывает execute_query() для выполнения INSERT-запроса.
-     * @see PhotoRigma::Classes::Database::select()
-     *      Метод, который вызывает execute_query() для выполнения SELECT-запроса.
-     * @see PhotoRigma::Classes::Database::join()
-     *      Метод, который вызывает execute_query() для выполнения JOIN-запроса.
-     *
-     * @param array $params Массив параметров для подготовленного выражения (необязательно).
-     *                      Если параметры не соответствуют плейсхолдерам, выбрасывается исключение
-     *                      \\PDOException.
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен.
-     *
-     * @throws InvalidArgumentException Если аргументы неверного типа.
-     * @throws PDOException Если возникает ошибка при выполнении запроса.
-     *
-     * Пример использования метода execute_query():
-     * @code
-     * $query = "SELECT * FROM users WHERE id = :id";
-     * $params = [':id' => 1];
-     * $this->execute_query($query, $params);
-     * echo "Запрос выполнен успешно!";
-     * @endcode
-     */
-    private function execute_query(array $params = []): bool
-    {
-        // Валидация состояния запроса и аргументов
-        if (isset($this->res_query) && !($this->res_query instanceof \PDOStatement)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное состояние результата запроса | Текущее значение: " . gettype($this->res_query)
-            );
-        }
-        // Очистка внутренних свойств для вывода результата запроса
-        $this->res_query = null;
-        $this->aff_rows = 0;
-        $this->insert_id = 0;
-        // Валидация аргументов
-        if (!is_string($this->txt_query)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип SQL-запроса | Ожидалась строка, получено: " . gettype($this->txt_query)
-            );
-        }
-        if (!is_array($params)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype($params)
-            );
-        }
-        // echo $this->txt_query . PHP_EOL;        // Начало замера времени
-        $start_time = microtime(true);
-        $this->res_query = $this->pdo->prepare($this->txt_query);
-        $this->res_query->execute($params);
-        $this->aff_rows = $this->res_query->rowCount();
-        $this->insert_id = (int)$this->pdo->lastInsertId();
-        // Конец замера времени
-        $end_time = microtime(true);
-        $execution_time = ($end_time - $start_time) * 1000; // Время в миллисекундах
-        // Логирование медленных запросов
-        $slow_query_threshold = 200; // Порог в миллисекундах
-        if ($execution_time > $slow_query_threshold) {
-            \PhotoRigma\Include\log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Обнаружен медленный запрос | Время выполнения: {$execution_time} мс | SQL: $this->txt_query"
-            );
-        }
-        // Очистка строки запроса после её выполнения
-        $this->txt_query = null;
-        return true;
     }
 
     /**
@@ -2107,19 +893,6 @@ class Database implements Database_Interface
      *
      * @callergraph
      * @callgraph
-     *
-     * @see PhotoRigma::Classes::Database::sanitize_expression()
-     *      Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see PhotoRigma::Classes::Database::prepare_insert_data()
-     *      Подготавливает данные для формирования условий WHERE.
-     * @see PhotoRigma::Classes::Database::delete()
-     *      Метод, который вызывает build_conditions() для формирования DELETE-запроса.
-     * @see PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
-     * @see PhotoRigma::Classes::Database::select()
-     *      Метод, который вызывает build_conditions() для формирования SELECT-запроса.
-     * @see PhotoRigma::Classes::Database::join()
-     *      Метод, который вызывает build_conditions() для формирования JOIN-запроса.
      *
      * @param array $options Опции запроса:
      *   - where (string|array): Условие WHERE.
@@ -2158,6 +931,19 @@ class Database implements Database_Interface
      * echo "Условия: $conditions\n";
      * print_r($params);
      * @endcode
+     * @see PhotoRigma::Classes::Database::update()
+     *      Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
+     * @see PhotoRigma::Classes::Database::select()
+     *      Метод, который вызывает build_conditions() для формирования SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::join()
+     *      Метод, который вызывает build_conditions() для формирования JOIN-запроса.
+     *
+     * @see PhotoRigma::Classes::Database::sanitize_expression()
+     *      Экранирует и обрабатывает входные данные для SQL-запроса.
+     * @see PhotoRigma::Classes::Database::prepare_insert_data()
+     *      Подготавливает данные для формирования условий WHERE.
+     * @see PhotoRigma::Classes::Database::delete()
+     *      Метод, который вызывает build_conditions() для формирования DELETE-запроса.
      */
     private function build_conditions(array $options): array
     {
@@ -2172,14 +958,19 @@ class Database implements Database_Interface
             } elseif (is_array($options['where'])) {
                 // Если where — массив, обрабатываем его через prepare_insert_data
                 [$where_fields, $where_placeholders, $params] = $this->prepare_insert_data($options['where'], 'where_');
-                $conditions .= ' WHERE ' . implode(' AND ', array_map(
-                    fn ($field, $placeholder) => "$field = $placeholder",
-                    explode(', ', $where_fields),
-                    explode(', ', $where_placeholders)
-                ));
+                $conditions .= ' WHERE ' . implode(
+                    ' AND ',
+                    array_map(
+                        fn ($field, $placeholder) => "$field = $placeholder",
+                        explode(', ', $where_fields),
+                        explode(', ', $where_placeholders)
+                    )
+                );
             } else {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype($options['where'])
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
+                        $options['where']
+                    )
                 );
             }
         }
@@ -2189,8 +980,10 @@ class Database implements Database_Interface
             if (is_string($options['group'])) {
                 $conditions .= ' GROUP BY ' . $this->sanitize_expression($options['group']);
             } else {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype($options['group'])
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype(
+                        $options['group']
+                    )
                 );
             }
         }
@@ -2200,8 +993,10 @@ class Database implements Database_Interface
             if (is_string($options['order'])) {
                 $conditions .= ' ORDER BY ' . $this->sanitize_expression($options['order']);
             } else {
-                throw new \InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype($options['order'])
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype(
+                        $options['order']
+                    )
                 );
             }
         }
@@ -2214,8 +1009,10 @@ class Database implements Database_Interface
                 [$offset, $count] = array_map('intval', explode(',', $options['limit']));
                 $conditions .= ' LIMIT ' . $offset . ', ' . $count;
             } else {
-                throw new \InvalidArgumentException(
-                    "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype($options['limit']) . " ($options[limit])"
+                throw new InvalidArgumentException(
+                    "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
+                        $options['limit']
+                    ) . " ($options[limit])"
                 );
             }
         }
@@ -2241,6 +1038,20 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
+     * @param string $expression SQL-выражение (например, условие WHERE, ON или SELECT).
+     *                           Должно быть строкой. Если передан неверный тип, выбрасывается исключение
+     *                           InvalidArgumentException.
+     *
+     * @return string Очищенное и безопасное выражение.
+     *
+     * @throws InvalidArgumentException Если выражение имеет недопустимый тип или содержит некорректные части.
+     *
+     * Пример использования метода sanitize_expression():
+     * @code
+     * $unsafe_expression = "users.id = 1 AND users.status = 'active'";
+     * $safe_expression = $this->sanitize_expression($unsafe_expression);
+     * echo "Безопасное выражение: $safe_expression";
+     * @endcode
      * @see PhotoRigma::Classes::Database::build_conditions()
      *      Метод, который вызывает sanitize_expression() для обработки условий WHERE, GROUP BY, ORDER BY и других частей запроса.
      * @see PhotoRigma::Classes::Database::delete()
@@ -2256,20 +1067,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::join()
      *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и условий JOIN.
      *
-     * @param string $expression SQL-выражение (например, условие WHERE, ON или SELECT).
-     *                           Должно быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *
-     * @return string Очищенное и безопасное выражение.
-     *
-     * @throws InvalidArgumentException Если выражение имеет недопустимый тип или содержит некорректные части.
-     *
-     * Пример использования метода sanitize_expression():
-     * @code
-     * $unsafe_expression = "users.id = 1 AND users.status = 'active'";
-     * $safe_expression = $this->sanitize_expression($unsafe_expression);
-     * echo "Безопасное выражение: $safe_expression";
-     * @endcode
      */
     private function sanitize_expression(string $expression): string
     {
@@ -2279,8 +1076,10 @@ class Database implements Database_Interface
 
         // === 1. Валидация аргументов ===
         if (!is_string($expression)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип выражения | Ожидалась строка, получено: " . gettype($expression)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип выражения | Ожидалась строка, получено: " . gettype(
+                    $expression
+                )
             );
         }
 
@@ -2288,7 +1087,7 @@ class Database implements Database_Interface
         if (preg_match('/^[A-Z_]+\(/i', $expression)) {
             // Улучшенное регулярное выражение для функций
             if (!preg_match('/^[A-Z_]+\((?:[^()]*(?:\([^()]*\)[^()]*)*)\)(\s+AS\s+[a-zA-Z0-9_]+)?$/i', $expression)) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая SQL-функция | Получено: $expression"
                 );
             }
@@ -2296,7 +1095,10 @@ class Database implements Database_Interface
         }
 
         // === 3. Обработка условий с операторами ===
-        if (preg_match('/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i', $expression)) {
+        if (preg_match(
+            '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i',
+            $expression
+        )) {
             // Разбиваем условие на части
             $pattern = '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i';
             if (preg_match($pattern, $expression, $matches)) {
@@ -2357,7 +1159,7 @@ class Database implements Database_Interface
         }
 
         // Если часть — это что-то другое, выбрасываем исключение
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая часть выражения | Получено: $expression"
         );
     }
@@ -2383,15 +1185,6 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @see PhotoRigma::Classes::Database::sanitize_expression()
-     *      Экранирует и обрабатывает имена полей.
-     * @see PhotoRigma::Classes::Database::insert()
-     *      Метод, который вызывает prepare_insert_data() для подготовки данных для INSERT-запроса.
-     * @see PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает prepare_insert_data() для подготовки данных для UPDATE-запроса.
-     * @see PhotoRigma::Classes::Database::build_conditions()
-     *      Метод, который вызывает prepare_insert_data() для подготовки данных для условий WHERE.
-     *
      * @param array $data Массив данных для обработки в формате 'имя_поля' => 'значение'.
      *                    Если передан неверный тип или пустой массив, выбрасывается исключение
      *                    InvalidArgumentException.
@@ -2414,27 +1207,42 @@ class Database implements Database_Interface
      * $data = ['name' => 'John Doe', 'email' => 'john@example.com'];
      * [$fields_clause, $placeholders_clause, $final_params] = $this->prepare_insert_data($data, 'insert_');
      * @endcode
+     * @see PhotoRigma::Classes::Database::insert()
+     *      Метод, который вызывает prepare_insert_data() для подготовки данных для INSERT-запроса.
+     * @see PhotoRigma::Classes::Database::update()
+     *      Метод, который вызывает prepare_insert_data() для подготовки данных для UPDATE-запроса.
+     * @see PhotoRigma::Classes::Database::build_conditions()
+     *      Метод, который вызывает prepare_insert_data() для подготовки данных для условий WHERE.
+     *
+     * @see PhotoRigma::Classes::Database::sanitize_expression()
+     *      Экранирует и обрабатывает имена полей.
      */
     private function prepare_insert_data(array $data, string $prefix = '', array $params = []): array
     {
         // === 1. Валидация аргументов ===
         if (!is_array($data)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных | Ожидался массив, получено: " . gettype($data)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных | Ожидался массив, получено: " . gettype(
+                    $data
+                )
             );
         }
         if (!is_string($prefix)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип префикса | Ожидалась строка, получено: " . gettype($prefix)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип префикса | Ожидалась строка, получено: " . gettype(
+                    $prefix
+                )
             );
         }
         if (!is_array($params)) {
-            throw new \InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype($params)
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype(
+                    $params
+                )
             );
         }
         if (empty($data)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Массив данных не может быть пустым | Причина: Отсутствуют данные для обработки"
             );
         }
@@ -2449,7 +1257,7 @@ class Database implements Database_Interface
                 $placeholder = $value;
                 // Проверяем, есть ли значение для этого плейсхолдера в $params
                 if (!isset($final_params[$placeholder])) {
-                    throw new \InvalidArgumentException(
+                    throw new InvalidArgumentException(
                         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует значение для плейсхолдера | Получено: '$placeholder'"
                     );
                 }
@@ -2465,5 +1273,1285 @@ class Database implements Database_Interface
         $fields_clause = implode(', ', $fields);
         $placeholders_clause = implode(', ', $placeholders);
         return [$fields_clause, $placeholders_clause, $final_params];
+    }
+
+    /**
+     * @brief Выполняет SQL-запрос с использованием подготовленных выражений.
+     *
+     * @details Этот метод выполняет следующие шаги:
+     *          1. Проверяет состояние результата запроса и тип аргументов:
+     *             - Убедитесь, что `$res_query` является экземпляром `\PDOStatement`.
+     *             - Проверяется, что `$txt_query` является строкой.
+     *             - Проверяется, что `$params` является массивом.
+     *          2. Очищает внутренние свойства для вывода результата запроса:
+     *             - Обнуляет `$res_query`, `$aff_rows`, `$insert_id`.
+     *          3. Подготавливает и выполняет SQL-запрос с использованием PDO:
+     *             - Использует `$pdo->prepare()` для подготовки запроса.
+     *             - Выполняет запрос с переданными параметрами.
+     *             - Получает количество затронутых строк (`$aff_rows`) и ID последней вставленной записи (`$insert_id`).
+     *          4. Логирует медленные запросы:
+     *             - Измеряет время выполнения запроса.
+     *             - Если время выполнения превышает пороговое значение (200 мс), логирует запрос с помощью `log_in_file()`.
+     *          5. Возвращает результат выполнения запроса:
+     *             - Возвращает `true`, если запрос успешно выполнен.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $params Массив параметров для подготовленного выражения (необязательно).
+     *                      Если параметры не соответствуют плейсхолдерам, выбрасывается исключение
+     *                      \\PDOException.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен.
+     *
+     * @throws InvalidArgumentException Если аргументы неверного типа.
+     * @throws PDOException Если возникает ошибка при выполнении запроса.
+     *
+     * Пример использования метода execute_query():
+     * @code
+     * $query = "SELECT * FROM users WHERE id = :id";
+     * $params = [':id' => 1];
+     * $this->execute_query($query, $params);
+     * echo "Запрос выполнен успешно!";
+     * @endcode
+     * @see PhotoRigma::Include::log_in_file()
+     *      Логирует медленные запросы.
+     * @see PhotoRigma::Classes::Database::$pdo
+     *      Объект PDO, используемый для выполнения запроса.
+     * @see PhotoRigma::Classes::Database::$res_query
+     *      Результат подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::$aff_rows
+     *      Количество затронутых строк после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::$insert_id
+     *      ID последней вставленной записи.
+     * @see PhotoRigma::Classes::Database::$txt_query
+     *      Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Classes::Database::delete()
+     *      Метод, который вызывает execute_query() для выполнения DELETE-запроса.
+     * @see PhotoRigma::Classes::Database::truncate()
+     *      Метод, который вызывает execute_query() для выполнения TRUNCATE-запроса.
+     * @see PhotoRigma::Classes::Database::update()
+     *      Метод, который вызывает execute_query() для выполнения UPDATE-запроса.
+     * @see PhotoRigma::Classes::Database::insert()
+     *      Метод, который вызывает execute_query() для выполнения INSERT-запроса.
+     * @see PhotoRigma::Classes::Database::select()
+     *      Метод, который вызывает execute_query() для выполнения SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::join()
+     *      Метод, который вызывает execute_query() для выполнения JOIN-запроса.
+     *
+     */
+    private function execute_query(array $params = []): bool
+    {
+        // Валидация состояния запроса и аргументов
+        if (isset($this->res_query) && !($this->res_query instanceof PDOStatement)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное состояние результата запроса | Текущее значение: " . gettype(
+                    $this->res_query
+                )
+            );
+        }
+        // Очистка внутренних свойств для вывода результата запроса
+        $this->res_query = null;
+        $this->aff_rows = 0;
+        $this->insert_id = 0;
+        // Валидация аргументов
+        if (!is_string($this->txt_query)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип SQL-запроса | Ожидалась строка, получено: " . gettype(
+                    $this->txt_query
+                )
+            );
+        }
+        if (!is_array($params)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype(
+                    $params
+                )
+            );
+        }
+        // echo $this->txt_query . PHP_EOL;        // Начало замера времени
+        $start_time = microtime(true);
+        $this->res_query = $this->pdo->prepare($this->txt_query);
+        $this->res_query->execute($params);
+        $this->aff_rows = $this->res_query->rowCount();
+        $this->insert_id = (int)$this->pdo->lastInsertId();
+        // Конец замера времени
+        $end_time = microtime(true);
+        $execution_time = ($end_time - $start_time) * 1000; // Время в миллисекундах
+        // Логирование медленных запросов
+        $slow_query_threshold = 200; // Порог в миллисекундах
+        if ($execution_time > $slow_query_threshold) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Обнаружен медленный запрос | Время выполнения: {$execution_time} мс | SQL: $this->txt_query"
+            );
+        }
+        // Очистка строки запроса после её выполнения
+        $this->txt_query = null;
+        return true;
+    }
+
+    /**
+     * @brief Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_join_internal()`, который реализует основную логику формирования и выполнения SQL-запроса с использованием JOIN.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
+     *                              Если передан массив, он преобразуется в строку с разделителем `, `.
+     *                              Каждое поле экранируется методом `sanitize_expression`.
+     *                              Пример: "id", ["id", "name"].
+     * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression`.
+     * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
+     *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
+     *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
+     *                    - on (string): Условие для JOIN. Должно быть строкой с допустимым условием сравнения полей.
+     *                                   Если условие отсутствует, выбрасывается исключение.
+     *                    Пример: [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
+     *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
+     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
+     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$from_tbl` не является строкой.
+     *                                    - `$join` не является массивом.
+     *                                    - `$select` не является строкой или массивом.
+     *                                    - Отсутствует имя таблицы (`table`) или условие (`on`) в описании JOIN.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *
+     * Пример использования метода join():
+     * @code
+     * $db = new \\PhotoRigma\\Classes\\Database();
+     * $db->join(
+     *     ['users.id', 'users.name', 'orders.order_date'],
+     *     'users',
+     *     [
+     *         ['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id'],
+     *     ],
+     *     [
+     *         'where' => ['users.status' => 1],
+     *     ]
+     * );
+     * @endcode
+     * @see PhotoRigma::Classes::Database::_join_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     */
+    public function join(string|array $select, string $from_tbl, array $join, array $options = []): bool
+    {
+        return $this->_join_internal($select, $from_tbl, $join, $options);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$join` (массив), `$options` (массив).
+     * - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с экранированными именами полей.
+     *   Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * - Экранирует имя основной таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     * - Обрабатывает массив JOIN-операций (`$join`):
+     *   - Для каждой операции проверяется наличие имени таблицы (`table`) и условия (`on`).
+     *   - Если тип JOIN не указан, используется `INNER` по умолчанию.
+     *   - Условия JOIN формируются с использованием метода `sanitize_expression`.
+     * - Формирует базовый SQL-запрос с использованием JOIN-операций.
+     * - Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
+     * - Выполняет сформированный запрос через метод `execute_query`.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `join()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
+     *                              Если передан массив, он преобразуется в строку с разделителем `, `.
+     *                              Каждое поле экранируется методом `sanitize_expression`.
+     *                              Пример: "id", ["id", "name"].
+     * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression`.
+     * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
+     *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
+     *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
+     *                    - on (string): Условие для JOIN. Должно быть строкой с допустимым условием сравнения полей.
+     *                                   Если условие отсутствует, выбрасывается исключение.
+     *                    Пример: [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
+     *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
+     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
+     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *               В случае ошибки выбрасывается исключение.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$from_tbl` не является строкой.
+     *                                    - `$join` не является массивом.
+     *                                    - `$select` не является строкой или массивом.
+     *                                    - Отсутствует имя таблицы (`table`) или условие (`on`) в описании JOIN.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *
+     * Пример использования метода _join_internal():
+     * @code
+     * $this->_join_internal(
+     *     ['users.id', 'users.name', 'orders.order_date'],
+     *     'users',
+     *     [
+     *         ['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id'],
+     *     ],
+     *     [
+     *         'where' => ['users.status' => 1],
+     *     ]
+     * );
+     * @endcode
+     * @see PhotoRigma::Classes::Database::join() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     */
+    protected function _join_internal(string|array $select, string $from_tbl, array $join, array $options = []): bool
+    {
+        // === 1. Валидация аргументов ===
+        if (!is_string($from_tbl)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени основной таблицы | Ожидалась строка, получено: " . gettype(
+                    $from_tbl
+                )
+            );
+        }
+        if (!is_array($join)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип описания JOIN | Ожидался массив, получено: " . gettype(
+                    $join
+                )
+            );
+        }
+        // === 2. Обработка $select ===
+        if (!is_array($select)) {
+            $select = [$select];
+        }
+        $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
+        // === 3. Обработка $from_tbl ===
+        $from_tbl = $this->sanitize_expression($from_tbl);
+        // === 4. Обработка $join ===
+        $join_clauses = [];
+        foreach ($join as $j) {
+            if (empty($j['table'])) {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует имя таблицы в описании JOIN | Проверьте структуру массива \$join"
+                );
+            }
+            if (empty($j['on'])) {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует условие 'on' для таблицы '{$j['table']}' в описании JOIN | Проверьте структуру массива \$join"
+                );
+            }
+            $table = $this->sanitize_expression($j['table']);
+            $on_condition = $this->sanitize_expression($j['on']);
+            $type = !empty($j['type']) ? strtoupper($j['type']) . ' ' : 'INNER ';
+            $join_clauses[] = "{$type}JOIN $table ON $on_condition";
+        }
+        // === 5. Формирование базового запроса ===
+        $this->txt_query = "SELECT $select FROM $from_tbl " . implode(' ', $join_clauses);
+        // === 6. Добавление условий ===
+        [$conditions, $params] = $this->build_conditions($options);
+        $this->txt_query .= $conditions;
+        // === 7. Выполнение запроса ===
+        return $this->execute_query($params);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_delete_internal()`, который реализует основную логику формирования и выполнения SQL-запроса на удаление данных.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression`.
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
+     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
+     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
+     *                              Может использоваться только вместе с `limit`. Если указан только один из этих ключей, оба игнорируются.
+     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
+     *                              Может использоваться только вместе с `order`. Если указан только один из этих ключей, оба игнорируются.
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
+     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и удаляется с записью в лог.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$from_tbl` не является строкой.
+     *                                    - `$options` не является массивом.
+     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
+     *          Ключи `group`, `order` и `limit` проверяются на корректность. Недопустимые ключи удаляются с записью в лог.
+     *
+     * Пример использования метода delete():
+     * @code
+     * $db = new \\PhotoRigma\\Classes\\Database();
+     * $db->delete('users', [
+     *     'where' => ['id' => 1],
+     * ]);
+     * @endcode
+     * @see PhotoRigma::Classes::Database::_delete_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
+     */
+    public function delete(string $from_tbl, array $options = []): bool
+    {
+        return $this->_delete_internal($from_tbl, $options);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет типы входных данных: `$from_tbl` (строка), `$options` (массив).
+     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     * - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного удаления всех данных.
+     * - Проверяет и удаляет недопустимые ключи из массива `$options`:
+     *   - Ключ `group` не поддерживается в запросах DELETE и удаляется с записью в лог.
+     *   - Ключи `order` и `limit` должны использоваться совместно. Если указан только один из них, оба удаляются с записью в лог.
+     * - Формирует базовый SQL-запрос на удаление данных.
+     * - Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод `build_conditions`.
+     * - Выполняет сформированный запрос через метод `execute_query`.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `delete()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression`.
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
+     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
+     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
+     *                              Может использоваться только вместе с `limit`. Если указан только один из этих ключей, оба игнорируются.
+     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
+     *                              Может использоваться только вместе с `order`. Если указан только один из этих ключей, оба игнорируются.
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
+     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и удаляется с записью в лог.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *               В случае ошибки выбрасывается исключение.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$from_tbl` не является строкой.
+     *                                    - `$options` не является массивом.
+     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
+     *          Ключи `group`, `order` и `limit` проверяются на корректность. Недопустимые ключи удаляются с записью в лог.
+     *
+     * Пример использования метода _delete_internal():
+     * @code
+     * $this->_delete_internal('users', [
+     *     'where' => ['id' => 1],
+     * ]);
+     * @endcode
+     * @see PhotoRigma::Classes::Database::delete() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
+     */
+    protected function _delete_internal(string $from_tbl, array $options = []): bool
+    {
+        // === 1. Валидация аргументов ===
+        if (!is_string($from_tbl)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
+                    $from_tbl
+                )
+            );
+        }
+        if (!is_array($options)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype(
+                    $options
+                )
+            );
+        }
+        if (empty($options['where'])) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности"
+            );
+        }
+
+        // === 2. Проверка и удаление недопустимых ключей ===
+        if (isset($options['group'])) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в DELETE | Переданные опции: " . json_encode(
+                    $options
+                )
+            );
+            unset($options['group']); // Удаляем ключ 'group'
+        }
+
+        if ((isset($options['order']) && !isset($options['limit'])) || (!isset($options['order']) && isset($options['limit']))) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: " . json_encode(
+                    $options
+                )
+            );
+            unset($options['order'], $options['limit']); // Удаляем ключи 'order' и 'limit'
+        }
+
+        // === 3. Обработка $from_tbl ===
+        $from_tbl = $this->sanitize_expression($from_tbl);
+
+        // === 4. Формирование базового запроса ===
+        $this->txt_query = "DELETE FROM $from_tbl";
+
+        // === 5. Добавление условий ===
+        [$conditions, $params] = $this->build_conditions($options);
+        $this->txt_query .= $conditions;
+
+        // === 6. Выполнение запроса ===
+        return $this->execute_query($params);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_truncate_internal()`, который реализует основную логику формирования и выполнения SQL-запроса TRUNCATE.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @param string $from_tbl Имя таблицы, которую необходимо очистить.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$from_tbl` не является строкой.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
+     *
+     * Пример использования метода truncate()
+     * @code
+     * $db = new \\PhotoRigma\\Classes\\Database();
+     * $db->truncate('users');
+     * @endcode
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     * @see PhotoRigma::Classes::Database::_truncate_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     */
+    public function truncate(string $from_tbl): bool
+    {
+        return $this->_truncate_internal($from_tbl);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет тип входных данных: `$from_tbl` должен быть строкой. Если передан неверный тип, выбрасывается исключение.
+     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     * - Формирует базовый SQL-запрос TRUNCATE TABLE.
+     * - Выполняет сформированный запрос через метод `execute_query`.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `truncate()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $from_tbl Имя таблицы, которую необходимо очистить.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *               В случае ошибки выбрасывается исключение.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$from_tbl` не является строкой.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.
+     *
+     * Пример использования метода _truncate_internal():
+     * @code
+     * $this->_truncate_internal('users');
+     * @endcode
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     * @see PhotoRigma::Classes::Database::truncate() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     */
+    protected function _truncate_internal(string $from_tbl): bool
+    {
+        // === 1. Валидация аргументов ===
+        if (!is_string($from_tbl)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
+                    $from_tbl
+                )
+            );
+        }
+        // === 2. Обработка $from_tbl ===
+        $from_tbl = $this->sanitize_expression($from_tbl);
+        // === 3. Формирование базового запроса ===
+        $this->txt_query = "TRUNCATE TABLE $from_tbl";
+        // === 4. Выполнение запроса ===
+        return $this->execute_query();
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_update_internal()`, который реализует основную логику формирования и выполнения SQL-запроса UPDATE.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
+     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
+     *                      Пример: ['name' => 'John Doe', 'status' => 1].
+     * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
+     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
+     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
+     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
+     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и удаляется с записью в лог.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$update` не является массивом.
+     *                                    - `$from_tbl` не является строкой.
+     *                                    - `$options` не является массивом.
+     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
+     *          Ключ `group` не поддерживается в запросах UPDATE и удаляется с записью в лог.
+     *
+     * Пример использования метода update()
+     * @code
+     * $db = new \\PhotoRigma\\Classes\\Database();
+     * $db->update(['name' => 'John Doe'], 'users', [
+     *     'where' => ['id' => 1],
+     * ]);
+     * @endcode
+     * @see PhotoRigma::Classes::Database::_update_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     */
+    public function update(array $update, string $from_tbl, array $options = []): bool
+    {
+        return $this->_update_internal($update, $from_tbl, $options);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет типы входных данных: `$update` (ассоциативный массив), `$from_tbl` (строка), `$options` (массив).
+     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     * - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного обновления всех данных.
+     * - Удаляет недопустимый ключ `group` из массива `$options` с записью в лог, так как GROUP BY не поддерживается в запросах UPDATE.
+     * - Преобразует массив `$update` в строку формата "поле = значение" с использованием метода `prepare_insert_data`, который заменяет значения на плейсхолдеры для подготовленного выражения.
+     * - Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.
+     * - Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре `$options`.
+     * - Выполняет сформированный запрос через метод `execute_query`.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `update()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
+     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
+     *                      Пример: ['name' => 'John Doe', 'status' => 1].
+     * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
+     *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
+     *                        - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").
+     *                        - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
+     *                        - group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и удаляется с записью в лог.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *               В случае ошибки выбрасывается исключение.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$update` не является массивом.
+     *                                    - `$from_tbl` не является строкой.
+     *                                    - `$options` не является массивом.
+     *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Безопасность обеспечивается обязательным указанием условия `where`. Запрос без условия `where` не будет выполнен.
+     *          Ключ `group` не поддерживается в запросах UPDATE и удаляется с записью в лог.
+     *
+     * Пример использования метода _update_internal():
+     * @code
+     * $this->_update_internal(['name' => 'John Doe'], 'users', [
+     *     'where' => ['id' => 1],
+     * ]);
+     * @endcode
+     * @see PhotoRigma::Classes::Database::update() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     */
+    protected function _update_internal(array $update, string $from_tbl, array $options = []): bool
+    {
+        // === 1. Валидация аргументов ===
+        if (!is_array($update)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для обновления | Ожидался массив, получено: " . gettype(
+                    $update
+                )
+            );
+        }
+        if (!is_string($from_tbl)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
+                    $from_tbl
+                )
+            );
+        }
+        if (!is_array($options)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype(
+                    $options
+                )
+            );
+        }
+        if (empty($options['where'])) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос UPDATE без условия WHERE запрещён | Причина: Соображения безопасности"
+            );
+        }
+
+        // === 2. Удаление недопустимого ключа `group` ===
+        if (isset($options['group'])) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в UPDATE | Переданные опции: " . json_encode(
+                    $options
+                )
+            );
+            unset($options['group']); // Удаляем ключ 'group'
+        }
+
+        // === 3. Обработка $from_tbl ===
+        $from_tbl = $this->sanitize_expression($from_tbl);
+
+        // === 4. Формирование списка полей для обновления ===
+        [$set_fields, $set_placeholders, $params] = $this->prepare_insert_data(
+            $update,
+            'update_',
+            $options['params'] ?? []
+        );
+        $set_clause = implode(
+            ', ',
+            array_map(
+                fn ($field, $placeholder) => "$field = $placeholder",
+                explode(', ', $set_fields),
+                explode(', ', $set_placeholders)
+            )
+        );
+
+        // === 5. Формирование базового запроса ===
+        $this->txt_query = "UPDATE $from_tbl SET $set_clause";
+
+        // === 6. Добавление условий ===
+        [$conditions, $condition_params] = $this->build_conditions($options);
+        $this->txt_query .= $conditions;
+
+        // === 7. Подготовка параметров ===
+        $params = array_merge($params, $condition_params);
+
+        // === 8. Выполнение запроса ===
+        return $this->execute_query($params);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_insert_internal()`, который реализует основную логику формирования и выполнения SQL-запроса INSERT.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
+     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
+     *                      Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
+     *                      Если передан пустой массив, выбрасывается исключение.
+     * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
+     *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
+     *                     - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
+     *                     - 'replace': Формирует запрос типа "REPLACE INTO".
+     *                     - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
+     *                     - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
+     *                     Если указан недопустимый тип, выбрасывается исключение.
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                       - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":name" => "John Doe", ":email" => "john@example.com"]).
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$insert` не является массивом или является пустым массивом.
+     *                                    - `$to_tbl` не является строкой.
+     *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
+     *                                    - `$options` не является массивом.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
+     *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
+     *
+     * Пример использования метода insert():
+     * @code
+     * $db = new \\PhotoRigma\\Classes\\Database();
+     * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * @endcode
+     * @see PhotoRigma::Classes::Database::_insert_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     */
+    public function insert(array $insert, string $to_tbl, string $type = '', array $options = []): bool
+    {
+        return $this->_insert_internal($insert, $to_tbl, $type, $options);
+    }
+
+    /**
+     * @brief Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве `$txt_query` и выполняет.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет типы входных данных: `$insert` (ассоциативный массив), `$to_tbl` (строка), `$type` (строка), `$options` (массив).
+     * - Проверяет, что массив `$insert` не пустой. Если массив пустой, выбрасывается исключение.
+     * - Экранирует имя таблицы (`$to_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     * - Нормализует параметр `$type`, приводя его к нижнему регистру, и проверяет на допустимые значения: `'ignore'`, `'replace'`, `'into'`, `''`.
+     *   Если указан недопустимый тип, выбрасывается исключение.
+     * - Определяет тип запроса на основе параметра `$type`:
+     *   - `'ignore'`: Формирует запрос типа "INSERT IGNORE INTO".
+     *   - `'replace'`: Формирует запрос типа "REPLACE INTO".
+     *   - `'into'` или пустая строка (`''`): Формирует запрос типа "INSERT INTO" (по умолчанию).
+     * - Подготавливает данные для запроса с использованием метода `prepare_insert_data`, который преобразует массив `$insert` в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
+     *   Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     * - Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.
+     * - Выполняет сформированный запрос через метод `execute_query`.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `insert()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
+     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
+     *                      Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
+     *                      Если передан пустой массив, выбрасывается исключение.
+     * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
+     *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
+     * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
+     *                     - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
+     *                     - 'replace': Формирует запрос типа "REPLACE INTO".
+     *                     - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
+     *                     - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
+     *                     Если указан недопустимый тип, выбрасывается исключение.
+     * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                       - params (array): Параметры для подготовленного выражения. Ассоциативный массив значений, используемых в запросе (например, [":name" => "John Doe", ":email" => "john@example.com"]).
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     *               В случае ошибки выбрасывается исключение.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - `$insert` не является массивом или является пустым массивом.
+     *                                    - `$to_tbl` не является строкой.
+     *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
+     *                                    - `$options` не является массивом.
+     *
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
+     *          Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
+     *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
+     *
+     * Пример использования метода _insert_internal():
+     * @code
+     * $this->_insert_internal(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * @endcode
+     * @see PhotoRigma::Classes::Database::insert() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
+     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
+     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
+     * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
+     *
+     */
+    protected function _insert_internal(array $insert, string $to_tbl, string $type = '', array $options = []): bool
+    {
+        // === 1. Валидация аргументов ===
+        if (!is_array($insert)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для вставки | Ожидался массив, получено: " . gettype(
+                    $insert
+                )
+            );
+        }
+        if (!is_string($to_tbl)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
+                    $to_tbl
+                )
+            );
+        }
+        if (empty($insert)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Данные для вставки не могут быть пустыми | Причина: Пустой массив данных"
+            );
+        }
+        // Нормализация $type (приведение к нижнему регистру)
+        $type = strtolower($type);
+        // Проверка допустимых значений для $type
+        if (!in_array($type, ['', 'ignore', 'replace', 'into'], true)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace', 'into'. Получено: '$type'"
+            );
+        }
+        // === 2. Обработка $to_tbl ===
+        $to_tbl = $this->sanitize_expression($to_tbl);
+        // === 3. Определение типа запроса ===
+        if ($type === 'ignore') {
+            $query_type = 'INSERT IGNORE INTO ';
+        } elseif ($type === 'replace') {
+            $query_type = 'REPLACE INTO ';
+        } else {
+            $query_type = 'INSERT INTO '; // По умолчанию или если указано 'into'
+        }
+        // === 4. Подготовка данных для запроса ===
+        [$fields_clause, $placeholders_clause, $params] = $this->prepare_insert_data(
+            $insert,
+            'insert_',
+            $options['params'] ?? []
+        );
+        // === 5. Формирование базового запроса ===
+        $this->txt_query = "$query_type$to_tbl ($fields_clause) VALUES ($placeholders_clause)";
+        // === 6. Выполнение запроса ===
+        return $this->execute_query($params);
+    }
+
+    /**
+     * @brief Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве `$res_query`.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_res_row_internal()`, который реализует основную логику извлечения строки результата.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
+     *                     Если результатов нет, возвращает `false`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$res_query` не установлено.
+     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
+     *
+     * Пример использования метода res_row()
+     * @code
+     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * while ($row = $db->res_row()) {
+     *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `res_row()` для получения результатов SELECT-запроса.
+     *
+     * @see PhotoRigma::Classes::Database::_res_row_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     */
+    public function res_row(): array|false
+    {
+        return $this->_res_row_internal();
+    }
+
+    /**
+     * @brief Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве `$res_query`.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет, что свойство `$res_query` установлено и является объектом типа `\PDOStatement`. Если это не так, выбрасывается исключение.
+     * - Использует метод `fetch(\PDO::FETCH_ASSOC)` для извлечения одной строки результата в виде ассоциативного массива.
+     * - Если результатов нет (метод `fetch` возвращает `false`), явно возвращает `false`.
+     * - В противном случае возвращает ассоциативный массив, содержащий данные строки.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `res_row()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны.
+     *                     Если результатов нет, возвращает `false`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$res_query` не установлено.
+     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
+     *
+     * Пример использования метода _res_row_internal()
+     * @code
+     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * while ($row = $this->_res_row_internal()) {
+     *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
+     *
+     * @see PhotoRigma::Classes::Database::res_row() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     */
+    protected function _res_row_internal(): array|false
+    {
+        // === 1. Валидация состояния запроса ===
+        if (!isset($this->res_query) || !($this->res_query instanceof PDOStatement)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement"
+            );
+        }
+        // === 2. Извлечение строки результата ===
+        $row = $this->res_query->fetch(PDO::FETCH_ASSOC);
+        if ($row === false) {
+            return false; // Явно возвращаем false, если результатов нет
+        }
+        return $row;
+    }
+
+    /**
+     * @brief Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве `$res_query`, и возвращает их как массив.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_res_arr_internal()`, который реализует основную логику извлечения всех строк результата.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
+     *                     Если результатов нет, возвращает `false`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$res_query` не установлено.
+     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
+     *
+     * Пример использования метода res_arr():
+     * @code
+     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * $results = $db->res_arr();
+     * if ($results) {
+     *     foreach ($results as $row) {
+     *         echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
+     *     }
+     * } else {
+     *     echo "No results found.";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::join() Метод, который может использовать `res_arr()` для получения результатов SELECT-запроса с использованием JOIN.
+     *
+     * @see PhotoRigma::Classes::Database::_res_arr_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     */
+    public function res_arr(): array|false
+    {
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * @brief Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве `$res_query`, и возвращает их как массив.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет, что свойство `$res_query` установлено и является объектом типа `\PDOStatement`. Если это не так, выбрасывается исключение.
+     * - Использует метод `fetchAll(\PDO::FETCH_ASSOC)` для извлечения всех строк результата в виде массива ассоциативных массивов.
+     * - Если результатов нет (метод `fetchAll` возвращает пустой массив), явно возвращает `false`.
+     * - В противном случае возвращает массив, содержащий все строки результата.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `res_arr()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны.
+     *                     Если результатов нет, возвращает `false`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$res_query` не установлено.
+     *                                    - Свойство `$res_query` не является объектом типа `\PDOStatement`.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$res_query` как объект `\PDOStatement`.
+     *
+     * Пример использования метода _res_arr_internal():
+     * @code
+     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * $results = $this->_res_arr_internal();
+     * if ($results) {
+     *     foreach ($results as $row) {
+     *         echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
+     *     }
+     * } else {
+     *     echo "No results found.";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который устанавливает значение `$res_query`.
+     * @see PhotoRigma::Classes::Database::select() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
+     * @see PhotoRigma::Classes::Database::join() Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с использованием JOIN.
+     *
+     * @see PhotoRigma::Classes::Database::res_arr() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$res_query Свойство, хранящее результат подготовленного выражения.
+     */
+    protected function _res_arr_internal(): array|false
+    {
+        // === 1. Валидация состояния запроса ===
+        if (!isset($this->res_query) || !($this->res_query instanceof PDOStatement)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement"
+            );
+        }
+        // === 2. Извлечение всех строк результата ===
+        $rows = $this->res_query->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($rows)) {
+            return false; // Явно возвращаем false, если результатов нет
+        }
+        return $rows;
+    }
+
+    /**
+     * @brief Возвращает количество строк, затронутых последним запросом.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_get_affected_rows_internal()`, который реализует основную логику получения количества затронутых строк.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @return int Количество строк, затронутых последним SQL-запросом.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$aff_rows` не установлено.
+     *                                    - Значение свойства `$aff_rows` не является целым числом.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
+     *
+     * Пример использования метода get_affected_rows():
+     * @code
+     * $db->delete('users', ['where' => 'status = 0']);
+     * echo "Affected rows: " . $db->get_affected_rows();
+     * @endcode
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::delete() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::update() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который может изменять значение `$aff_rows`.
+     *
+     * @see PhotoRigma::Classes::Database::_get_affected_rows_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$aff_rows Свойство, хранящее количество затронутых строк.
+     */
+    public function get_affected_rows(): int
+    {
+        return $this->_get_affected_rows_internal();
+    }
+
+    /**
+     * @brief Возвращает количество строк, затронутых последним запросом.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет, что свойство `$aff_rows` установлено. Если это не так, выбрасывается исключение.
+     * - Проверяет, что значение свойства `$aff_rows` является целым числом. Если это не так, выбрасывается исключение.
+     * - Возвращает значение свойства `$aff_rows`, которое представляет собой количество строк, затронутых последним SQL-запросом.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `get_affected_rows()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return int Количество строк, затронутых последним SQL-запросом.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$aff_rows` не установлено.
+     *                                    - Значение свойства `$aff_rows` не является целым числом.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$aff_rows` как целое число.
+     *
+     * Пример использования метода _get_affected_rows_internal():
+     * @code
+     * $this->delete('users', ['where' => 'status = 0']);
+     * echo "Affected rows: " . $this->_get_affected_rows_internal();
+     * @endcode
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$aff_rows` после выполнения запроса.
+     * @see PhotoRigma::Classes::Database::delete() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::update() Метод, который может изменять значение `$aff_rows`.
+     * @see PhotoRigma::Classes::Database::insert() Метод, который может изменять значение `$aff_rows`.
+     *
+     * @see PhotoRigma::Classes::Database::get_affected_rows() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$aff_rows Свойство, хранящее количество затронутых строк.
+     */
+    protected function _get_affected_rows_internal(): int
+    {
+        // === 1. Валидация состояния ===
+        if (!isset($this->aff_rows)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Количество затронутых строк не установлено | Причина: Свойство aff_rows не определено"
+            );
+        }
+        if (!is_int($this->aff_rows)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение количества затронутых строк | Причина: Ожидалось целое число"
+            );
+        }
+        // === 2. Возврат значения ===
+        return $this->aff_rows;
+    }
+
+    /**
+     * @brief Возвращает ID последней вставленной строки.
+     *
+     * @details Метод является публичным редиректом для защищённого метода `_get_last_insert_id_internal()`, который реализует основную логику получения ID последней вставленной строки.
+     *          Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований.
+     *          Редиректов из внешних классов нет.
+     *
+     * @callgraph
+     *
+     * @return int ID последней вставленной строки.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$insert_id` не установлено.
+     *                                    - Значение свойства `$insert_id` не является целым числом.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
+     *
+     * Пример использования метода get_last_insert_id():
+     * @code
+     * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * echo "Last insert ID: " . $db->get_last_insert_id();
+     * @endcode
+     * @see PhotoRigma::Classes::Database::insert() Метод, который устанавливает значение `$insert_id`.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
+     *
+     * @see PhotoRigma::Classes::Database::_get_last_insert_id_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Database::$insert_id Свойство, хранящее ID последней вставленной строки.
+     */
+    public function get_last_insert_id(): int
+    {
+        return $this->_get_last_insert_id_internal();
+    }
+
+    /**
+     * @brief Возвращает ID последней вставленной строки.
+     *
+     * @details Метод выполняет следующие шаги:
+     * - Проверяет, что свойство `$insert_id` установлено. Если это не так, выбрасывается исключение.
+     * - Проверяет, что значение свойства `$insert_id` является целым числом. Если это не так, выбрасывается исключение.
+     * - Возвращает значение свойства `$insert_id`, которое представляет собой ID последней вставленной строки.
+     *
+     * Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект `get_last_insert_id()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return int ID последней вставленной строки.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                    - Свойство `$insert_id` не установлено.
+     *                                    - Значение свойства `$insert_id` не является целым числом.
+     *
+     * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение `$insert_id` как целое число.
+     *
+     * Пример использования метода _get_last_insert_id_internal():
+     * @code
+     * $this->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * echo "Last insert ID: " . $this->_get_last_insert_id_internal();
+     * @endcode
+     * @see PhotoRigma::Classes::Database::insert() Метод, который устанавливает значение `$insert_id`.
+     * @see PhotoRigma::Classes::Database::execute_query() Метод, который обновляет значение `$insert_id` после выполнения запроса.
+     *
+     * @see PhotoRigma::Classes::Database::get_last_insert_id() Публичный метод-редирект для вызова этой логики.
+     * @see PhotoRigma::Classes::Database::$insert_id Свойство, хранящее ID последней вставленной строки.
+     */
+    protected function _get_last_insert_id_internal(): int
+    {
+        // === 1. Валидация состояния ===
+        if (!isset($this->insert_id)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ID последней вставленной строки не установлен | Причина: Свойство insert_id не определено"
+            );
+        }
+        if (!is_int($this->insert_id)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение ID последней вставленной строки | Причина: Ожидалось целое число"
+            );
+        }
+        // === 2. Возврат значения ===
+        return $this->insert_id;
     }
 }

@@ -35,12 +35,15 @@
 namespace PhotoRigma;
 
 // Предотвращение прямого вызова файла
+use RuntimeException;
+
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') .
-        " [ERROR] | " .
-        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-        " | " . __FILE__ . " | Попытка прямого вызова файла"
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
     );
     die("HACK!");
 }
@@ -74,21 +77,21 @@ $config = [];
  * @see include/db.php Файл, где используется этот массив для подключения к БД.
  */
 $config['db'] = [
-    'dbtype' => 'mysql',       ///< Тип базы данных (по умолчанию: mysql, можно использовать pgsql)
-    'dbhost' => 'localhost',   ///< Сервер основной базы данных (по умолчанию: localhost)
-    'dbport' => '',            ///< Порт сервера основной базы данных (оставить пустым для значения по умолчанию, например: 3306 для MySQL)
+    'dbtype' => 'mysql',                       ///< Тип базы данных (по умолчанию: mysql, можно использовать pgsql)
+    'dbhost' => 'localhost',                   ///< Сервер основной базы данных (по умолчанию: localhost)
+    'dbport' => '',                            ///< Порт сервера основной базы данных (оставить пустым для значения по умолчанию, например: 3306 для MySQL)
     'dbsock' => '/var/run/mysqld/mysqld.sock', ///< Путь к сокету (используется, если хост не указан, например: /var/run/mysqld/mysqld.sock)
-    'dbuser' => 'root',        ///< Имя пользователя в БД (например: root)
-    'dbpass' => '',            ///< Пароль пользователя БД (например: my_secure_password)
-    'dbname' => 'photorigma',  ///< Имя базы данных (например: photorigma)
+    'dbuser' => 'root',                        ///< Имя пользователя в БД (например: root)
+    'dbpass' => '',                            ///< Пароль пользователя БД (например: my_secure_password)
+    'dbname' => 'photorigma',                  ///< Имя базы данных (например: photorigma)
 ];
 
 // =============================================================================
 // Настройки папок проекта
 // =============================================================================
-$config['gallery_folder']   = 'gallery';     ///< Имя папки для хранения фотографий (указывается относительно корня проекта).
-$config['thumbnail_folder'] = 'thumbnail';   ///< Имя папки для хранения эскизов фотографий (указывается относительно корня проекта).
-$config['avatar_folder']    = 'avatar';      ///< Имя папки для хранения аватаров пользователей (указывается относительно корня проекта).
+$config['gallery_folder']   = 'gallery';   ///< Имя папки для хранения фотографий (указывается относительно корня проекта).
+$config['thumbnail_folder'] = 'thumbnail'; ///< Имя папки для хранения эскизов фотографий (указывается относительно корня проекта).
+$config['avatar_folder']    = 'avatar';    ///< Имя папки для хранения аватаров пользователей (указывается относительно корня проекта).
 
 // =============================================================================
 // Настройки папок проекта
@@ -117,31 +120,21 @@ define('LOCALHOST_SERVER', false);
 $config['site_url'] = 'http://'; // Резервное значение
 
 // Проверка $_SERVER['HTTPS']
-if (
-    (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on') || // Стандартное значение
+if ((!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on') || // Стандартное значение
     (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === '1')                // Числовое значение
 ) {
     $config['site_url'] = 'https://';
-}
-
-// Проверка заголовка X-Forwarded-Proto
-elseif (
-    !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-    in_array(strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']), ['https', 'h2'])
-) {
+} // Проверка заголовка X-Forwarded-Proto
+elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && in_array(
+    strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']),
+    ['https', 'h2']
+)) {
     $config['site_url'] = 'https://';
-}
-
-// Проверка порта сервера
+} // Проверка порта сервера
 elseif (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) {
     $config['site_url'] = 'https://';
-}
-
-// Проверка $_SERVER['REQUEST_SCHEME']
-elseif (
-    !empty($_SERVER['REQUEST_SCHEME']) &&
-    strtolower($_SERVER['REQUEST_SCHEME']) === 'https'
-) {
+} // Проверка $_SERVER['REQUEST_SCHEME']
+elseif (!empty($_SERVER['REQUEST_SCHEME']) && strtolower($_SERVER['REQUEST_SCHEME']) === 'https') {
     $config['site_url'] = 'https://';
 }
 
@@ -161,12 +154,12 @@ if (!$http_host) {
 
 // Если HTTP_HOST всё ещё не установлен, выбрасываем исключение
 if (!$http_host) {
-    throw new \RuntimeException("config.php(): Не удалось определить HTTP_HOST. Проверьте настройки сервера.");
+    throw new RuntimeException("config.php(): Не удалось определить HTTP_HOST. Проверьте настройки сервера.");
 }
 
 // Валидация формата домена
 if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $http_host)) {
-    throw new \RuntimeException("config.php(): Некорректный формат HTTP_HOST: {$http_host}");
+    throw new RuntimeException("config.php(): Некорректный формат HTTP_HOST: {$http_host}");
 }
 
 /**
@@ -185,12 +178,12 @@ if (!$script_name) {
 
 // Если SCRIPT_NAME всё ещё не установлен, выбрасываем исключение
 if (!$script_name) {
-    throw new \RuntimeException("config.php(): Не удалось определить SCRIPT_NAME. Проверьте настройки сервера.");
+    throw new RuntimeException("config.php(): Не удалось определить SCRIPT_NAME. Проверьте настройки сервера.");
 }
 
 // Валидация формата пути
 if (!preg_match('/^\/[a-zA-Z0-9._\-\/]*$/', $script_name)) {
-    throw new \RuntimeException("config.php(): Некорректный формат SCRIPT_NAME: {$script_name}");
+    throw new RuntimeException("config.php(): Некорректный формат SCRIPT_NAME: {$script_name}");
 }
 
 /**
@@ -223,20 +216,22 @@ $config['site_dir'] = realpath(dirname(__FILE__));
 
 // Если realpath вернул false, выбрасываем исключение
 if ($config['site_dir'] === false) {
-    throw new \RuntimeException("config.php(): Не удалось определить директорию сайта. Проверьте права доступа или корректность пути.");
+    throw new RuntimeException(
+        "config.php(): Не удалось определить директорию сайта. Проверьте права доступа или корректность пути."
+    );
 }
 
 // Убедимся, что путь является директорией
 if (!is_dir($config['site_dir'])) {
-    throw new \RuntimeException("config.php(): Указанный путь не является директорией: {$config['site_dir']}");
+    throw new RuntimeException("config.php(): Указанный путь не является директорией: {$config['site_dir']}");
 }
 
 // Проверяем доступность директории для чтения и записи
 if (!is_readable($config['site_dir'])) {
-    throw new \RuntimeException("config.php(): Директория недоступна для чтения: {$config['site_dir']}");
+    throw new RuntimeException("config.php(): Директория недоступна для чтения: {$config['site_dir']}");
 }
 if (!is_writable($config['site_dir'])) {
-    throw new \RuntimeException("config.php(): Директория недоступна для записи: {$config['site_dir']}");
+    throw new RuntimeException("config.php(): Директория недоступна для записи: {$config['site_dir']}");
 }
 
 // Добавляем завершающий слеш
@@ -262,7 +257,7 @@ $required_directories = [
 ];
 foreach ($required_directories as $dir) {
     if (!is_dir($dir) || !is_writable($dir)) {
-        throw new \RuntimeException("config.php(): Директория отсутствует или недоступна для записи: {$dir}");
+        throw new RuntimeException("config.php(): Директория отсутствует или недоступна для записи: {$dir}");
     }
 }
 // =============================================================================

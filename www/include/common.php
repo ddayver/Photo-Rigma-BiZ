@@ -36,12 +36,16 @@
 namespace PhotoRigma\Include;
 
 // Предотвращение прямого вызова файла
+use Exception;
+use RuntimeException;
+
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') .
-        " [ERROR] | " .
-        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-        " | " . __FILE__ . " | Попытка прямого вызова файла"
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
     );
     die("HACK!");
 }
@@ -61,8 +65,8 @@ if (!defined('PHP_EOL')) {
 define('TBL_CONFIG', '`config`'); ///< Таблица с настройками сервера
 define('TBL_MENU', '`menu`'); ///< Таблица с пунктами меню
 define('TBL_NEWS', '`news`'); ///< Таблица с новостями
-define('TBL_CATEGORY', '`category`'); ///< Таблица с списком категорий на сервере
-define('TBL_PHOTO', '`photo`'); ///< Таблица с списком фотографий на сервере
+define('TBL_CATEGORY', '`category`'); ///< Таблица со списком категорий на сервере
+define('TBL_PHOTO', '`photo`'); ///< Таблица со списком фотографий на сервере
 define('TBL_RATE_USER', '`rate_user`'); ///< Таблица с оценками фотографий от пользователей
 define('TBL_RATE_MODER', '`rate_moder`'); ///< Таблица с оценками фотографий от модераторов
 define('TBL_USERS', '`users`'); ///< Таблица пользователей
@@ -80,7 +84,10 @@ define('DEFAULT_GROUP', 1); ///< Группа по-умолчанию для н�
  * @see include/user.php Файл, где используется для валидации логина при регистрации.
  * @see PhotoRigma\Classes\User Класс для управления пользователями.
  */
-define('REG_LOGIN', '/^[\x30-\x39\x41-\x5A\x61-\x7A][\x30-\x39\x41-\x5A\x61-\x7A\x5F\x2D]{0,30}[\x30-\x39\x41-\x5A\x61-\x7A\x5F]$/u');
+define(
+    'REG_LOGIN',
+    '/^[\x30-\x39\x41-\x5A\x61-\x7A][\x30-\x39\x41-\x5A\x61-\x7A\x5F\x2D]{0,30}[\x30-\x39\x41-\x5A\x61-\x7A\x5F]$/u'
+);
 
 /**
  * @def REG_NAME
@@ -105,7 +112,10 @@ define('REG_NAME', '/^[\p{L}\p{N}\p{Zs}\-\.\,\!\?]{1,100}$/u');
  * @see include/user.php Файл, где используется для валидации email при регистрации.
  * @see PhotoRigma\Classes\User Класс для управления пользователями.
  */
-define('REG_EMAIL', '/^[\x30-\x39\x41-\x5A\x61-\x7A\x2E\x2D\x5F\x25\x2B]+@[\x30-\x39\x41-\x5A\x61-\x7A\x2E\x2D]+\.[\x41-\x5A\x61-\x7A\xC0-\xFF]{2,}$/u');
+define(
+    'REG_EMAIL',
+    '/^[\x30-\x39\x41-\x5A\x61-\x7A\x2E\x2D\x5F\x25\x2B]+@[\x30-\x39\x41-\x5A\x61-\x7A\x2E\x2D]+\.[\x41-\x5A\x61-\x7A\xC0-\xFF]{2,}$/u'
+);
 
 /**
  * @brief Безопасная проверка HTTP_HOST.
@@ -128,13 +138,13 @@ if (!$cookie_domain) {
 
 // Если HTTP_HOST всё ещё не установлен, выбрасываем исключение
 if (!$cookie_domain) {
-    throw new \RuntimeException(
+    throw new RuntimeException(
         __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Не удалось определить HTTP_HOST | Проверьте настройки сервера"
     );
 }
 // Валидация формата домена
 if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $cookie_domain)) {
-    throw new \RuntimeException(
+    throw new RuntimeException(
         __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: {$cookie_domain}"
     );
 }
@@ -144,7 +154,7 @@ if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $cookie_
  * @details Используются текущие параметры куков, полученные через session_get_cookie_params().
  *          Эти параметры применяются для настройки сессий с помощью session_set_cookie_params().
  *
- * @var array $cur_cookie
+ *
  * @brief Текущие параметры куков, полученные через session_get_cookie_params().
  * @details Содержит следующие ключи:
  *          - lifetime: Время жизни куки в секундах.
@@ -211,8 +221,9 @@ function archive_old_logs(): void
     // Проверяем, подключено ли расширение zlib
     if (!extension_loaded('zlib')) {
         error_log(
-            date('H:i:s') .
-            " [ERROR] | UNKNOWN_IP | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Расширение zlib не подключено"
+            date(
+                'H:i:s'
+            ) . " [ERROR] | UNKNOWN_IP | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Расширение zlib не подключено"
         );
         return;
     }
@@ -220,10 +231,11 @@ function archive_old_logs(): void
     // Проверяем существование директории логов
     if (!is_dir(LOG_DIR) || !is_writable(LOG_DIR)) {
         error_log(
-            date('H:i:s') .
-            " [ERROR] | " .
-            (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-            " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Директория логов отсутствует или недоступна для записи | Путь: " . LOG_DIR
+            date('H:i:s') . " [ERROR] | " . (filter_input(
+                INPUT_SERVER,
+                'REMOTE_ADDR',
+                FILTER_VALIDATE_IP
+            ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Директория логов отсутствует или недоступна для записи | Путь: " . LOG_DIR
         );
         return;
     }
@@ -251,10 +263,11 @@ function archive_old_logs(): void
                 $file_content = file_get_contents($file);
                 if ($file_content === false) {
                     error_log(
-                        date('H:i:s') .
-                        " [ERROR] | " .
-                        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-                        " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать файл | Путь: {$file}"
+                        date('H:i:s') . " [ERROR] | " . (filter_input(
+                            INPUT_SERVER,
+                            'REMOTE_ADDR',
+                            FILTER_VALIDATE_IP
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать файл | Путь: {$file}"
                     );
                     continue; // Пропускаем этот файл и переходим к следующему
                 }
@@ -263,10 +276,11 @@ function archive_old_logs(): void
                 $gz_handle = gzopen($archive_file, 'w' . COMPRESSION_LEVEL);
                 if ($gz_handle === false) {
                     error_log(
-                        date('H:i:s') .
-                        " [ERROR] | " .
-                        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-                        " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: {$archive_file}"
+                        date('H:i:s') . " [ERROR] | " . (filter_input(
+                            INPUT_SERVER,
+                            'REMOTE_ADDR',
+                            FILTER_VALIDATE_IP
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: {$archive_file}"
                     );
                     continue; // Пропускаем этот файл и переходим к следующему
                 }
@@ -274,10 +288,11 @@ function archive_old_logs(): void
                 if (gzwrite($gz_handle, $file_content) === false) {
                     gzclose($gz_handle);
                     error_log(
-                        date('H:i:s') .
-                        " [ERROR] | " .
-                        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-                        " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в архив | Путь: {$archive_file}"
+                        date('H:i:s') . " [ERROR] | " . (filter_input(
+                            INPUT_SERVER,
+                            'REMOTE_ADDR',
+                            FILTER_VALIDATE_IP
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в архив | Путь: {$archive_file}"
                     );
                     continue; // Пропускаем этот файл и переходим к следующему
                 }
@@ -286,10 +301,11 @@ function archive_old_logs(): void
                 // Удаляем исходный файл
                 if (!unlink($file)) {
                     error_log(
-                        date('H:i:s') .
-                        " [ERROR] | " .
-                        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-                        " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось удалить исходный файл | Путь: {$file}"
+                        date('H:i:s') . " [ERROR] | " . (filter_input(
+                            INPUT_SERVER,
+                            'REMOTE_ADDR',
+                            FILTER_VALIDATE_IP
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось удалить исходный файл | Путь: {$file}"
                     );
                 }
             }
@@ -348,14 +364,14 @@ function log_in_file(string $txt, bool $die = false): bool
     try {
         // Проверка существования директории для логов
         if (!is_dir(LOG_DIR)) {
-            if (!mkdir(LOG_DIR, 0755, true)) {
-                throw new \RuntimeException(
+            if (!mkdir($concurrent_directory = LOG_DIR, 0755, true) && !is_dir($concurrent_directory)) {
+                throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать директорию | Путь: " . LOG_DIR
                 );
             }
             // Проверяем права доступа после создания
             if (!is_writable(LOG_DIR)) {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Созданная директория недоступна для записи | Путь: " . LOG_DIR
                 );
             }
@@ -363,7 +379,7 @@ function log_in_file(string $txt, bool $die = false): bool
 
         // Проверка прав доступа к директории логов
         if (!is_writable(LOG_DIR)) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Директория недоступна для записи | Путь: " . LOG_DIR
             );
         }
@@ -379,7 +395,7 @@ function log_in_file(string $txt, bool $die = false): bool
                 if ($gz_handle) {
                     $file_content = file_get_contents($log_file);
                     if ($file_content === false) {
-                        throw new \RuntimeException(
+                        throw new RuntimeException(
                             __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать содержимое файла | Путь: {$log_file}"
                         );
                     }
@@ -389,13 +405,16 @@ function log_in_file(string $txt, bool $die = false): bool
                 }
             } else {
                 // Меняем расширение файла с .gz на .txt
-                $backup_file = pathinfo($backup_file, PATHINFO_DIRNAME) . '/' . pathinfo($backup_file, PATHINFO_FILENAME) . '.txt';
+                $backup_file = pathinfo($backup_file, PATHINFO_DIRNAME) . '/' . pathinfo(
+                    $backup_file,
+                    PATHINFO_FILENAME
+                ) . '.txt';
                 rename($log_file, $backup_file); // Без сжатия
             }
 
             // Проверяем успешность создания архива
             if (!file_exists($backup_file)) {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: {$backup_file}"
                 );
             }
@@ -417,16 +436,15 @@ function log_in_file(string $txt, bool $die = false): bool
                     $step_number = $index + 1;
                     $args = array_map(function ($arg) {
                         $arg_str = is_string($arg) ? $arg : json_encode($arg, JSON_UNESCAPED_UNICODE);
-                        return mb_strlen($arg_str, 'UTF-8') > 80
-                            ? mb_substr($arg_str, 0, 80, 'UTF-8') . '...'
-                            : $arg_str;
+                        return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
+                            $arg_str,
+                            0,
+                            80,
+                            'UTF-8'
+                        ) . '...' : $arg_str;
                     }, $trace['args'] ?? []);
                     $trace_info[] = sprintf(
-                        "Шаг %d:" . PHP_EOL .
-                        "  Файл: %s" . PHP_EOL .
-                        "  Строка: %s" . PHP_EOL .
-                        "  Функция: %s" . PHP_EOL .
-                        "  Аргументы: %s",
+                        "Шаг %d:" . PHP_EOL . "  Файл: %s" . PHP_EOL . "  Строка: %s" . PHP_EOL . "  Функция: %s" . PHP_EOL . "  Аргументы: %s",
                         $step_number,
                         $trace['file'] ?: 'неизвестный файл',
                         $trace['line'] ?: 'неизвестная строка',
@@ -443,14 +461,14 @@ function log_in_file(string $txt, bool $die = false): bool
         if ($handle) {
             flock($handle, LOCK_EX);
             if (fwrite($handle, $write_txt) === false) {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в файл | Путь: {$log_file}"
                 );
             }
             flock($handle, LOCK_UN);
             fclose($handle);
         } else {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось открыть файл для записи | Путь: {$log_file}"
             );
         }
@@ -460,21 +478,25 @@ function log_in_file(string $txt, bool $die = false): bool
             $safe_output = htmlspecialchars($write_txt, ENT_QUOTES | ENT_HTML5, 'UTF-8');
             die($safe_output);
         }
-    } catch (\RuntimeException $e) {
+    } catch (RuntimeException $e) {
         error_log(
-            date('H:i:s') .
-            " [ERROR] | " .
-            (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-            " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Ошибка во время выполнения | Сообщение: " . $e->getMessage()
+            date('H:i:s') . " [ERROR] | " . (filter_input(
+                INPUT_SERVER,
+                'REMOTE_ADDR',
+                FILTER_VALIDATE_IP
+            ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Ошибка во время выполнения | Сообщение: " . $e->getMessage(
+            )
         );
         $log_in_process = false;
         return false;
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         error_log(
-            date('H:i:s') .
-            " [ERROR] | " .
-            (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-            " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Непредвиденная ошибка | Сообщение: " . $e->getMessage()
+            date('H:i:s') . " [ERROR] | " . (filter_input(
+                INPUT_SERVER,
+                'REMOTE_ADDR',
+                FILTER_VALIDATE_IP
+            ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Непредвиденная ошибка | Сообщение: " . $e->getMessage(
+            )
         );
         $log_in_process = false;
         return false;

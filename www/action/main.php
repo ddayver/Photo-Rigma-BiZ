@@ -4,6 +4,9 @@
  * @file        action/main.php
  * @brief       Главная страница. Формирует и выводит последние новости проекта, проверяя права пользователя на их просмотр.
  *
+ * @throws      RuntimeException Если возникают ошибки при получении данных пользователя из базы данных.
+ *              Пример сообщения: "Ошибка базы данных | Не удалось найти пользователя с ID: [ID пользователя]".
+ *
  * @author      Dark Dayver
  * @version     0.4.0
  * @date        2025-02-24
@@ -25,9 +28,6 @@
  * @note        Этот файл является частью системы PhotoRigma и отвечает за формирование главной страницы сайта.
  *              Используется конфигурация `last_news` для определения количества новостей.
  *
- * @throws      RuntimeException Если возникают ошибки при получении данных пользователя из базы данных.
- *              Пример сообщения: "Ошибка базы данных | Не удалось найти пользователя с ID: [ID пользователя]".
- *
  * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
  *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
@@ -40,14 +40,16 @@
 namespace PhotoRigma\Action;
 
 use PhotoRigma\Classes\Work;
+use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') .
-        " [ERROR] | " .
-        (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) ?: 'UNKNOWN_IP') .
-        " | " . __FILE__ . " | Попытка прямого вызова файла"
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
     );
     die("HACK!");
 }
@@ -68,21 +70,21 @@ if (!empty($news) && $user->user['news_view'] == true) {
         // Добавляем строки для шаблона: заголовок, дата и текст новости
         $template->add_string_ar([
             'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field($value['name_post']),
-            'L_NEWS_DATA'        => $work->lang['main']['data_add'] . ': ' . $value['data_post'] . ' (' . $value['data_last_edit'] . ').',
-            'L_TEXT_POST'        => trim(nl2br($work->ubb($value['text_post'])))
+            'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $value['data_post'] . ' (' . $value['data_last_edit'] . ').',
+            'L_TEXT_POST' => trim(nl2br($work->ubb($value['text_post'])))
         ], 'LAST_NEWS[' . $key . ']');
 
         // Устанавливаем флаги для условных блоков шаблона
         $template->add_if_ar([
             'USER_EXISTS' => false,
-            'EDIT_SHORT'  => false,
-            'EDIT_LONG'   => false
+            'EDIT_SHORT' => false,
+            'EDIT_LONG' => false
         ], 'LAST_NEWS[' . $key . ']');
 
-        // Проверяем, существует ли пользователь, добавивший новость
-        // Выполняем запрос с использованием плейсхолдеров
+        // Проверяем, существует ли пользователь, добавивший новость.
+        // Выполняем запрос с использованием плейсхолдеров.
         $db->select('real_name', TBL_USERS, [
-            'where'  => '`id` = :user_id',
+            'where' => '`id` = :user_id',
             'params' => [':user_id' => $value['user_post']]
         ]);
 
@@ -90,7 +92,7 @@ if (!empty($news) && $user->user['news_view'] == true) {
         $user_add = $db->res_row();
         if ($user_add === false) {
             // Если пользователь не найден, выбрасываем исключение
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось найти пользователя с ID: {$value['user_post']}"
             );
         }
@@ -98,13 +100,17 @@ if (!empty($news) && $user->user['news_view'] == true) {
         // Если пользователь найден, добавляем данные о нем в шаблон
         $template->add_if('USER_EXISTS', true, 'LAST_NEWS[' . $key . ']');
         $template->add_string_ar([
-            'L_USER_ADD'            => $work->lang['main']['user_add'],
-            'U_PROFILE_USER_POST'   => sprintf('%s?action=profile&amp;subact=profile&amp;uid=%d', $work->config['site_url'], $value['user_post']),
+            'L_USER_ADD' => $work->lang['main']['user_add'],
+            'U_PROFILE_USER_POST' => sprintf(
+                '%s?action=profile&amp;subact=profile&amp;uid=%d',
+                $work->config['site_url'],
+                $value['user_post']
+            ),
             'D_REAL_NAME_USER_POST' => Work::clean_field($user_add['real_name'])
         ], 'LAST_NEWS[' . $key . ']');
 
-        // Проверяем права пользователя на редактирование или удаление новости
-        // Используем match для проверки прав
+        // Проверяем права пользователя на редактирование или удаление новости.
+        // Используем match для проверки прав.
         $can_edit = match (true) {
             $user->user['news_moderate'] => true,
             $user->user['id'] != 0 && $user->user['id'] == $value['user_post'] => true,
@@ -114,15 +120,23 @@ if (!empty($news) && $user->user['news_view'] == true) {
         if ($can_edit) {
             $template->add_if('EDIT_SHORT', true, 'LAST_NEWS[' . $key . ']');
             $template->add_string_ar([
-                'L_EDIT_BLOCK'           => $work->lang['main']['edit_news'],
-                'L_DELETE_BLOCK'         => $work->lang['main']['delete_news'],
+                'L_EDIT_BLOCK' => $work->lang['main']['edit_news'],
+                'L_DELETE_BLOCK' => $work->lang['main']['delete_news'],
                 'L_CONFIRM_DELETE_BLOCK' => sprintf(
                     '%s %s?',
                     $work->lang['main']['confirm_delete_news'],
                     Work::clean_field($value['name_post'])
                 ),
-                'U_EDIT_BLOCK'           => sprintf('%s?action=news&amp;subact=edit&amp;news=%d', $work->config['site_url'], $value['id']),
-                'U_DELETE_BLOCK'         => sprintf('%s?action=news&amp;subact=delete&amp;news=%d', $work->config['site_url'], $value['id'])
+                'U_EDIT_BLOCK' => sprintf(
+                    '%s?action=news&amp;subact=edit&amp;news=%d',
+                    $work->config['site_url'],
+                    $value['id']
+                ),
+                'U_DELETE_BLOCK' => sprintf(
+                    '%s?action=news&amp;subact=delete&amp;news=%d',
+                    $work->config['site_url'],
+                    $value['id']
+                )
             ], 'LAST_NEWS[' . $key . ']');
         }
     }
@@ -130,13 +144,13 @@ if (!empty($news) && $user->user['news_view'] == true) {
     // Если новостей нет или пользователь не имеет права их просматривать, добавляем сообщение об отсутствии новостей
     $template->add_if_ar([
         'USER_EXISTS' => false,
-        'EDIT_SHORT'  => false,
-        'EDIT_LONG'   => false
+        'EDIT_SHORT' => false,
+        'EDIT_LONG' => false
     ], 'LAST_NEWS[0]');
 
     $template->add_string_ar([
         'L_TITLE_NEWS_BLOCK' => $work->lang['main']['no_news'],
-        'L_NEWS_DATA'        => '',
-        'L_TEXT_POST'        => $work->lang['main']['no_news']
+        'L_NEWS_DATA' => '',
+        'L_TEXT_POST' => $work->lang['main']['no_news']
     ], 'LAST_NEWS[0]');
 }

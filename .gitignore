@@ -14,3 +14,4 @@ doc_gen.bat
 /.settings/
 *.css~
 .gitconfig-*
+/.idea/
