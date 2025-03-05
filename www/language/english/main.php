@@ -2,26 +2,32 @@
 
 /**
  * @file        language/english/main.php
- * @brief       Содержит локализованные строки для основного ядра сайта на английском языке.
+ * @brief       Localized strings for the core of the site in English.
  *
  * @author      Dark Dayver
  * @version     0.4.0
  * @date        2025-02-17
  * @namespace   PhotoRigma\\Language
  *
- * @details     Содержит строки английского языка, используемые в ядре проекта сайта.
+ * @details     This file contains English language strings used in the core of the project.
+ *              It includes texts for the interface, menus, forms, notifications, and other elements.
  *
- * @see         @ref LanguageEnglish Группа для английской локализации.
+ * @see         @ref LanguageEnglish Group for English localization.
  *
- * @note        Этот файл является частью системы PhotoRigma и содержит локализацию проекта на английском языке.
+ * @note        This file is part of the PhotoRigma system and provides localization for the project in English.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @todo        Add support for additional languages.
+ *
+ * @copyright   Copyright (c) 2025 Dark Dayver. All rights reserved.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Permission is hereby granted, free of charge, to any person obtaining a copy
+ *              of this software and associated documentation files (the "Software"), to deal
+ *              in the Software without restriction, including without limitation the rights
+ *              to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *              copies of the Software, and to permit persons to whom the Software is
+ *              furnished to do so, subject to the following conditions:
+ *              - The above copyright notice and this permission notice shall be included in all
+ *                copies or substantial portions of the Software.
  */
 
 namespace PhotoRigma\Language;

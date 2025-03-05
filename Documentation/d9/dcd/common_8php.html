@@ -107,7 +107,7 @@ $(function(){initNavTree('d9/dcd/common_8php.html','../../'); initResizable(true
 </div><!--header-->
 <div class="contents">
 
-<p>Общие настройки, константы и функции для работы приложения. Файл содержит глобальные константы и функции для работы с базой данных, сессиями и логированием.  
+<p>Общие настройки, константы и функции для работы приложения.  
 <a href="#details">Подробнее...</a></p>
 
 <p><a href="../../d9/dcd/common_8php_source.html">См. исходные тексты.</a></p>
@@ -186,7 +186,15 @@ $(function(){initNavTree('d9/dcd/common_8php.html','../../'); initResizable(true
 <tr class="separator:a53cff4e23bb5f13e5e08ca5e8b58d740"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Общие настройки, константы и функции для работы приложения. Файл содержит глобальные константы и функции для работы с базой данных, сессиями и логированием. </p>
+<div class="textblock"><p>Общие настройки, константы и функции для работы приложения. </p>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось определить HTTP_HOST или его формат некорректен. Пример сообщения: "Некорректный формат HTTP_HOST | Значение: {$cookie_domain}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось создать директорию для логов или она недоступна для записи. Пример сообщения: "Директория недоступна для записи | Путь: " . LOG_DIR. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось записать данные в лог-файл. Пример сообщения: "Не удалось записать данные в файл | Путь: {$log_file}".</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
 <dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
 <dl class="section date"><dt>Дата</dt><dd>2025-02-07 </dd></dl>

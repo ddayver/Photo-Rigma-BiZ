@@ -20,10 +20,11 @@ var namespacePhotoRigma =
       [ "$subact", "de/d8e/namespacePhotoRigma_1_1Action.html#a7015c06ea9534c7d526663a1482e258b", null ],
       [ "$template_output", "de/d8e/namespacePhotoRigma_1_1Action.html#a565b8336923ef5ec8f122c2b41c5eef1", null ],
       [ "$title", "de/d8e/namespacePhotoRigma_1_1Action.html#ada57e7bb7c152edad18fe2f166188691", null ],
-      [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#adb4ef047794a7232a5d97fba5c552535", null ],
+      [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a99a8500d2fed172d231751d304034a0d", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#af0b9a00a735dba9694b1d50a169d5033", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a9bad25917126a7b32c2523e42f42b572", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a660379ed56239d22cfe2383d6d3373a7", null ],
+      [ "exit", "de/d8e/namespacePhotoRigma_1_1Action.html#a6733eb5f605d09eaede9845835d71c4e", null ],
       [ "if", "de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7", null ],
       [ "template_file", "de/d8e/namespacePhotoRigma_1_1Action.html#aa37f49d8322221dbe6f1bffe6c3640a9", null ]
     ] ],

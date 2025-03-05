@@ -2,11 +2,44 @@
 
 /**
  * @file        action/news.php
- * @brief       Новости сайта.
+ * @brief       Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.
+ *
+ * @throws      RuntimeException Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление).
+ *              Пример сообщения: "Ошибка добавления новости | Данные: " . json_encode($query_news).
+ * @throws      RuntimeException Если новость не найдена.
+ *              Пример сообщения: "Новость не найдена | ID: {$news}".
+ * @throws      RuntimeException Если CSRF-токен неверен.
+ *              Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
+ *
  * @author      Dark Dayver
  * @version     0.4.0
  * @date        2025-02-24
- * @details     Вывод и обработка новостей сайта.
+ * @namespace   PhotoRigma\Action
+ *
+ * @details     Файл реализует функциональность работы с новостями, включая:
+ *              - Добавление новой новости (при наличии прав `$user->user['news_add']`).
+ *              - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если пользователь является автором новости).
+ *              - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является автором новости).
+ *              - Отображение списка новостей с фильтрацией по годам и месяцам.
+ *              - Защита от CSRF-атак при добавлении и редактировании новостей.
+ *              - Логирование ошибок и подозрительных действий.
+ *
+ * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
+ * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
+ * @see         PhotoRigma::Classes::User Класс для управления пользователями.
+ * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ * @see         file index.php Этот файл подключает action/news.php по запросу из `$_GET`.
+ *
+ * @note        Этот файл является частью системы PhotoRigma.
+ *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ *
+ * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @license     MIT License (https://opensource.org/licenses/MIT)
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
+ *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
+ *              программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
+ *                программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -66,6 +99,17 @@ $subact = match (true) {
 if ($subact === 'save') {
     // Добавление новой новости
     if ($news === false && (bool)$user->user['news_add']) {
+        // Проверяем CSRF-токен
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals(
+            $user->session['csrf_token'],
+            $_POST['csrf_token']
+        )) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
+
         if (!$work->check_input('_POST', 'name_post', ['isset' => true, 'empty' => true]) || !$work->check_input(
             '_POST',
             'text_post',
@@ -111,6 +155,17 @@ if ($subact === 'save') {
         }
     } // Обновление существующей новости
     elseif ($news !== false && (bool)$user->user['news_moderate']) {
+        // Проверяем CSRF-токен
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals(
+            $user->session['csrf_token'],
+            $_POST['csrf_token']
+        )) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
+
         $query_news = [];
         $has_changes = false;
 
@@ -202,6 +257,8 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
 
         // Передача данных в шаблонизатор
         $template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
+        // Генерируем CSRF-токен для защиты от атак типа CSRF
+        $template->add_string('CSRF_TOKEN', $user->csrf_token());
         $template->add_string_ar([
             'NAME_BLOCK' => $work->lang['main']['edit_news'] . ' - ' . Work::clean_field($news_data['name_post']),
             'L_NAME_USER' => $user_add,
@@ -263,6 +320,8 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
 
     $template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
     $template->add_if('NEED_USER', false);
+    // Генерируем CSRF-токен для защиты от атак типа CSRF
+    $template->add_string('CSRF_TOKEN', $user->csrf_token());
     $template->add_string_ar([
         'NAME_BLOCK' => $work->lang['news']['add_post'],
         'L_NAME_USER' => '',

@@ -203,7 +203,17 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Проверка MIME-типа файла для предотвращения несанкционированного доступа.</li>
 <li>Поддержка создания миниатюр при наличии параметра</li>
 </ul>
-<p></code>$_GET['thumbnail']`. Если файл недоступен, возвращаются данные об отсутствующем изображении.</p>
+<p></code>$_GET['thumbnail']`.</p><ul>
+<li>Возврат данных об отсутствующем изображении, если файл недоступен.</li>
+</ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Получение данных о фотографии из базы данных.</li>
+<li>Проверка прав доступа и безопасности пути к файлу.</li>
+<li>Создание миниатюр изображений.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения различных операций. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
@@ -211,7 +221,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
 file index.php Этот файл подключает <a class="el" href="../../d2/db3/attach_8php.html" title="Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением ...">action/attach.php</a> по запросу из <code>$_GET</code>.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа к файлам.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа к файлам. Используются подготовленные выражения для защиты от SQL-инъекций.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -219,21 +229,79 @@ file index.php Этот файл подключает <a class="el" href="../../
 <p>\Action</p>
 <p>Этот файл отвечает за формирование главной страницы сайта. Основная логика включает:</p><ul>
 <li>Загрузку последних новостей (количество определяется конфигурацией <code>last_news</code>).</li>
-<li>Проверку прав пользователя на просмотр новостей.</li>
-<li>Обработку ошибок при получении данных из базы данных.</li>
-<li>Формирование ссылок для редактирования или удаления новостей (если пользователь имеет соответствующие права).</li>
-<li>Использование всех ресурсов из пространства имён <code><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></code>.</li>
+<li>Проверку прав пользователя на просмотр новостей (&lsquo;$user-&gt;user['news_view&rsquo;]<code>).</code></li>
+<li><code>Обработку ошибок при получении данных из базы данных.</code></li>
+<li><code>Формирование ссылок для редактирования или удаления новостей (если пользователь имеет соответствующие права).</code></li>
+<li><code>Использование всех ресурсов из пространства имён</code><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes`.</li>
+</ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Загрузка последних новостей.</li>
+<li>Проверка прав пользователя на просмотр новостей.</li>
+<li>Формирование ссылок для редактирования или удаления новостей.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
 </ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, содержащий основные методы для работы с данными. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для управления пользователями. </dd>
+<dd>
+<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с шаблонами. </dd>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки и экранирования полей. </dd>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work\news()</a> Метод для загрузки новостей. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и отвечает за формирование главной страницы сайта. Используется конфигурация <code>last_news</code> для определения количества новостей.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и отвечает за формирование главной страницы сайта. Используется конфигурация <code>last_news</code> для определения количества новостей. Реализованы меры безопасности для предотвращения прямого вызова файла и SQL-инъекций.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\Action</p>
+<p>Файл реализует функциональность работы с новостями, включая:</p><ul>
+<li>Добавление новой новости (при наличии прав &lsquo;$user-&gt;user['news_add&rsquo;]<code>).</code></li>
+<li><code>Редактирование существующей новости (при наличии прав</code>$user-&gt;user['news_moderate']<code>или если пользователь является автором новости).</code></li>
+<li><code>Удаление новости (при наличии прав</code>$user-&gt;user['news_moderate']` или если пользователь является автором новости).</li>
+<li>Отображение списка новостей с фильтрацией по годам и месяцам.</li>
+<li>Защита от CSRF-атак при добавлении и редактировании новостей.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения вспомогательных операций. </dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для управления пользователями. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+file index.php Этот файл подключает <a class="el" href="../../d4/dad/news_8php.html" title="Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.">action/news.php</a> по запросу из <code>$_GET</code>.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\Action</p>
+<p>Файл реализует функциональность работы с пользователями, включая:</p><ul>
+<li>Вход и выход пользователя.</li>
+<li>Регистрацию нового пользователя.</li>
+<li>Редактирование профиля (включая изменение аватара, языка и темы).</li>
+<li>Просмотр профиля другого пользователя.</li>
+<li>Защиту от CSRF-атак при изменении данных.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения вспомогательных операций. </dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для управления пользователями. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+file index.php Этот файл подключает <a class="el" href="../../dd/df8/profile_8php.html" title="Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.">action/profile.php</a> по запросу из <code>$_GET</code>.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -244,18 +312,26 @@ file index.php Этот файл подключает <a class="el" href="../../
 <li>Файл используется для централизованного управления конфигурацией приложения.</li>
 </ul>
 <p>Важно: Этот файл должен быть защищён от прямого доступа через веб-сервер.</p>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Настройка подключения к базе данных.</li>
+<li>Определение путей к директориям проекта.</li>
+<li>Автоматическое определение протокола (HTTP/HTTPS) и URL сайта.</li>
+<li>Проверка доступности и корректности путей к директориям.</li>
+</ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Массив, куда копируются настройки из <a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a>. </dd>
 <dd>
 index.php Файл, который подключает <a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a>.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в настройке приложения.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в настройке приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000001">Необходимо сделать</a></b></dt><dd>Добавить защиту файла через <code>.htaccess</code> или проверку константы.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
 </dd></dl>
-<p>\<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html">Include</a></p>
+<p>\Include</p>
 <p>Этот файл содержит общие настройки, константы и функции, которые используются в приложении:</p><ul>
-<li>Настройка сессий и куков для управления состоянием пользователя. После настройки куков запускает сессию.</li>
+<li>Настройка сессий и куков для управления состоянием пользователя.</li>
 <li>Константы для таблиц базы данных, упрощающие работу с SQL-запросами.</li>
 <li>Регулярные выражения для валидации входных данных (логин, отображаемое имя, e-mail).</li>
 <li>Функции для логирования ошибок и архивации старых логов:<ul>
@@ -264,12 +340,20 @@ index.php Файл, который подключает <a class="el" href="../.
 </ul>
 </li>
 </ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Настройка сессий и куков.</li>
+<li>Определение констант для таблиц базы данных.</li>
+<li>Валидация входных данных с использованием регулярных выражений.</li>
+<li>Логирование ошибок и архивация старых логов.</li>
+</ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#af8032313a2eb1344b860a29c714f1a72" title="Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.">PhotoRigma\Include\archive_old_logs</a> Функция для архивации старых логов. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок. </dd>
 <dd>
-index.php Файл, который подключает <a class="el" href="../../d9/dcd/common_8php.html" title="Общие настройки, константы и функции для работы приложения. Файл содержит глобальные константы и функ...">common.php</a>.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и предоставляет базовые инструменты для работы приложения.</dd></dl>
+index.php Файл, который подключает <a class="el" href="../../d9/dcd/common_8php.html" title="Общие настройки, константы и функции для работы приложения.">common.php</a>.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и предоставляет базовые инструменты для работы приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -440,15 +524,24 @@ index.php Файл, который подключает <a class="el" href="../.
 </dd></dl>
 <p>Этот файл является точкой входа в приложение и выполняет следующие задачи:</p><ul>
 <li>Подключает конфигурационный файл (<code><a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a></code>) и проверяет его доступность.</li>
-<li>Проверяет наличие и доступность обязательных файлов (например, <code><a class="el" href="../../d9/dcd/common_8php.html" title="Общие настройки, константы и функции для работы приложения. Файл содержит глобальные константы и функ...">common.php</a></code>, <code><a class="el" href="../../dc/d82/db_8php.html" title="Работа с базами данных через класс Database и интерфейс Database_Interface.">db.php</a></code>).</li>
+<li>Проверяет наличие и доступность обязательных файлов (например, <code><a class="el" href="../../d9/dcd/common_8php.html" title="Общие настройки, константы и функции для работы приложения.">common.php</a></code>, <code><a class="el" href="../../dc/d82/db_8php.html" title="Работа с базами данных через класс Database и интерфейс Database_Interface.">db.php</a></code>).</li>
 <li>Создаёт объекты основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">Database</a></code>, <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">User</a></code>).</li>
 <li>Обрабатывает действия пользователя через параметр <code>action</code>. Значение, получаемое из запроса в URL, указывает на действие, которое должно выполнить приложение.</li>
 <li>Выводит шаблонные элементы страницы (шапку, подвал и содержимое).</li>
 <li>Реализует централизованную систему обработки ошибок и их логирования на уровне ядра приложения.</li>
 </ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Подключение конфигурации и обязательных файлов.</li>
+<li>Инициализация основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">Database</a></code>, <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">User</a></code>).</li>
+<li>Обработка действий пользователя через параметр <code>action</code>.</li>
+<li>Генерация HTML-контента страницы.</li>
+<li>Логирование ошибок и обработка исключений.</li>
+</ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a> Файл конфигурации, содержащий параметры приложения. </dd>
 <dd>
-<a class="el" href="../../d9/dcd/common_8php.html" title="Общие настройки, константы и функции для работы приложения. Файл содержит глобальные константы и функ...">include/common.php</a> Файл, содержащий глобальные константы и функции. </dd>
+<a class="el" href="../../d9/dcd/common_8php.html" title="Общие настройки, константы и функции для работы приложения.">include/common.php</a> Файл, содержащий глобальные константы и функции. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
 <dd>
@@ -458,24 +551,28 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для управления пользователями. </dd>
 <dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#af8032313a2eb1344b860a29c714f1a72" title="Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.">PhotoRigma\Include\archive_old_logs</a> Функция для архивации старых логов.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в запуске и работе приложения.</dd></dl>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#af8032313a2eb1344b860a29c714f1a72" title="Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.">PhotoRigma\Include\archive_old_logs</a> Функция для архивации старых логов. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в запуске и работе приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
 </dd></dl>
 <p>\<a class="el" href="../../dc/d7a/namespacePhotoRigma_1_1Language.html">Language</a></p>
-<p>Содержит строки английского языка, используемые в ядре проекта сайта.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d8e/group__LanguageEnglish.html">Языковые переменные английского языка</a> Группа для английской локализации.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и содержит локализацию проекта на английском языке.</dd></dl>
-<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
-<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+<p>This file contains English language strings used in the core of the project. It includes texts for the interface, menus, forms, notifications, and other elements.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d8e/group__LanguageEnglish.html">Языковые переменные английского языка</a> Group for English localization.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>This file is part of the <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> system and provides localization for the project in English.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000015">Необходимо сделать</a></b></dt><dd>Add support for additional languages.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. All rights reserved. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<ul>
+<li>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</li>
 </ul>
 </dd></dl>
 <p>\<a class="el" href="../../dc/d7a/namespacePhotoRigma_1_1Language.html">Language</a></p>
-<p>Содержит строки русского языка, используемые в ядре проекта сайта.</p>
+<p>Этот файл содержит строки русского языка, используемые в ядре проекта сайта. Включает тексты для интерфейса, меню, форм, уведомлений и других элементов.</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../dd/d84/group__LanguageRussian.html">Языковые переменные русского языка</a> Группа для русской локализации.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и содержит локализацию проекта на русском языке.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и обеспечивает локализацию проекта на русском языке.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000016">Необходимо сделать</a></b></dt><dd>Добавить поддержку дополнительных языков.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения. </li>
 </ul>
@@ -496,7 +593,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Действие, которое необходимо выполнить. </p>
 <p>Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'. Пример вызова действия 'profile': $_GET['action'] = 'profile'; </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00233">233</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00253">253</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00646">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01682">Work\create_menu()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00583">Work_Template\create_menu()</a>, <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a> и <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a>.</p>
 
@@ -516,7 +613,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Генерация полного URL сайта.</p>
 <p>Формируется на основе протокола, HTTP_HOST и SCRIPT_NAME. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00193">193</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00207">207</a></p>
 
 </div>
 </div>
@@ -535,7 +632,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Массив с настройками сервера. </p>
 <p>Содержит как редактируемые пользователем параметры (например, параметры БД), так и автоматически генерируемые параметры (например, URL сайта). После инициализации массив $config передаётся в свойство <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a>. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00058">58</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00072">72</a></p>
 
 </div>
 </div>
@@ -553,7 +650,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Имя папки для хранения аватаров пользователей (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00094">94</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00108">108</a></p>
 
 </div>
 </div>
@@ -590,7 +687,7 @@ index.php Файл, который подключает <a class="el" href="../.
 </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00079">79</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00093">93</a></p>
 
 </div>
 </div>
@@ -608,7 +705,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Имя папки для хранения фотографий (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00092">92</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00106">106</a></p>
 
 </div>
 </div>
@@ -626,7 +723,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Определение inc_dir.</p>
 <p>Указывает путь к директории include/, содержащей вспомогательные классы и функции. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00246">246</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00260">260</a></p>
 
 </div>
 </div>
@@ -647,7 +744,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>Доступна ли директория для чтения и записи. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00215">215</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00229">229</a></p>
 
 </div>
 </div>
@@ -670,7 +767,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>Переменная $_SERVER['REQUEST_SCHEME']. Если ни один из способов не дал результата, используется HTTP. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00120">120</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00134">134</a></p>
 
 </div>
 </div>
@@ -686,7 +783,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00206">206</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00220">220</a></p>
 
 </div>
 </div>
@@ -704,7 +801,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Имя папки для хранения эскизов фотографий (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00093">93</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00107">107</a></p>
 
 </div>
 </div>
@@ -720,7 +817,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00152">152</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00172">172</a></p>
 
 </div>
 </div>
@@ -736,7 +833,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00066">66</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00086">86</a></p>
 
 </div>
 </div>
@@ -752,7 +849,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00121">121</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00141">141</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00545">Work\__set()</a>.</p>
 
@@ -772,7 +869,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Флаг: выводить ли заголовок и подвал страницы. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00214">214</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00234">234</a></p>
 
 </div>
 </div>
@@ -793,7 +890,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>$_SERVER['SERVER_NAME'] (резервный источник). Выполняется валидация формата домена для предотвращения атак через заголовки. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00148">148</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00162">162</a></p>
 
 </div>
 </div>
@@ -814,11 +911,11 @@ index.php Файл, который подключает <a class="el" href="../.
 <div class="line">    <a class="code hl_variable" href="#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code hl_variable" href="#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>[<span class="stringliteral">&#39;avatar_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span>,</div>
 <div class="line">    <a class="code hl_variable" href="#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>[<span class="stringliteral">&#39;inc_dir&#39;</span>],</div>
 <div class="line">]</div>
-<div class="ttc" id="anamespacePhotoRigma_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="#a49c7011be9c979d9174c52a8b83e5d8e">PhotoRigma\$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Массив с настройками сервера.</div><div class="ttdef"><b>Определения</b> <a href="../../d0/d45/config_8php_source.html#l00058">config.php:58</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="#a49c7011be9c979d9174c52a8b83e5d8e">PhotoRigma\$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Массив с настройками сервера.</div><div class="ttdef"><b>Определения</b> <a href="../../d0/d45/config_8php_source.html#l00072">config.php:72</a></div></div>
 </div><!-- fragment --><p>Проверка существования и доступности директорий.</p>
 <p>Проверяются директории, указанные в настройках ($gallery_folder, $thumbnail_folder, $avatar_folder). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00252">252</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00266">266</a></p>
 
 </div>
 </div>
@@ -849,7 +946,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Список обязательных файлов для подключения. </p>
 <p>Содержит пути к файлам, которые необходимы для работы приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00107">107</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00127">127</a></p>
 
 </div>
 </div>
@@ -870,7 +967,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>$_SERVER['PHP_SELF'] (резервный источник). Выполняется валидация формата пути для предотвращения атак через заголовки. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00172">172</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00186">186</a></p>
 
 </div>
 </div>
@@ -891,8 +988,8 @@ index.php Файл, который подключает <a class="el" href="../.
 <div class="line">        <a class="code hl_variable" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a></div>
 <div class="line">    )</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Template_html"><div class="ttname"><a href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html">PhotoRigma\Classes\Template</a></div><div class="ttdoc">Класс для работы с шаблонами.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dd6/template_8php_source.html#l00052">template.php:53</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00163">index.php:163</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_aba5fcdd0bc47aeaa710f5ff7cf567777"><div class="ttname"><a href="#aba5fcdd0bc47aeaa710f5ff7cf567777">PhotoRigma\$themes_config</a></div><div class="ttdeci">$themes_config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00181">index.php:181</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00183">index.php:183</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_aba5fcdd0bc47aeaa710f5ff7cf567777"><div class="ttname"><a href="#aba5fcdd0bc47aeaa710f5ff7cf567777">PhotoRigma\$themes_config</a></div><div class="ttdeci">$themes_config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00201">index.php:201</a></div></div>
 </div><!-- fragment -->
 <p>Создание объекта класса <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a>. </p>
 <p>Используется для генерации HTML-контента страниц. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с HTML-шаблонами. </dd>
@@ -911,7 +1008,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="#ada57e7bb7c152edad18fe2f166188691" title="Добавление текста к заголовку страницы.">$title</a> Переменная, используемая для добавления текста к заголовку страницы. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00195">195</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00215">215</a></p>
 
 </div>
 </div>
@@ -929,7 +1026,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Флаг: выводить ли обработанный шаблон. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00219">219</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00239">239</a></p>
 
 </div>
 </div>
@@ -945,7 +1042,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00181">181</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00201">201</a></p>
 
 </div>
 </div>
@@ -963,7 +1060,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Добавление текста к заголовку страницы. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00224">224</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00244">244</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a>.</p>
 
@@ -986,7 +1083,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../d1/d1a/user_8php.html" title="Класс для управления пользователями, включая регистрацию, аутентификацию, управление профилем и хране...">include/user.php</a> Файл, содержащий реализацию класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">User</a>. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00178">178</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00198">198</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l01494">Template\page_footer()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00900">Work\set_user()</a>.</p>
 
@@ -1015,7 +1112,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода.">PhotoRigma\Classes\Work\url_check()</a> Метод для проверки URL на наличие вредоносного кода. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00163">163</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00183">183</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00970">User\add_new_user()</a>, <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#abc4c7a4c4f01e32b4540c3d03f45aeb2">User_Interface\add_new_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01383">User\edit_avatar()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01521">User\login_user()</a>, <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab6cad9b0038673d591c0dd84575bc777">User_Interface\login_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01215">User\update_user_data()</a> и <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab142b3405ddc1bbb89b84a97dc89d8dc">User_Interface\update_user_data()</a>.</p>
 
@@ -1033,9 +1130,9 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00080">80</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00100">100</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">PhotoRigma\Include\log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00366">PhotoRigma\Include\log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -1059,7 +1156,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>Если файл не существует или недоступен, используется файл по умолчанию ('main.php'). </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00262">262</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00282">282</a></p>
 
 </div>
 </div>
@@ -1075,7 +1172,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00073">73</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00093">93</a></p>
 
 </div>
 </div>
@@ -1091,7 +1188,7 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00102">102</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00116">116</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a>.</p>
 
@@ -1122,7 +1219,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <div class="line">    }</div>
 <div class="line">    require_once <span class="stringliteral">&#39;config.php&#39;</span></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00082">82</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00102">102</a></p>
 
 </div>
 </div>

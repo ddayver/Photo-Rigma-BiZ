@@ -2,11 +2,42 @@
 
 /**
  * @file        action/profile.php
- * @brief       Работа с пользователями.
+ * @brief       Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.
+ *
+ * @throws      RuntimeException Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование).
+ *              Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
+ * @throws      LogicException Если не удалось получить данные группы пользователя.
+ *              Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}".
+ *
  * @author      Dark Dayver
  * @version     0.4.0
  * @date        2025-02-25
- * @details     Обработка процедур входа/выхода/регистрации/изменения и просмотра профиля пользователя.
+ * @namespace   PhotoRigma\Action
+ *
+ * @details     Файл реализует функциональность работы с пользователями, включая:
+ *              - Вход и выход пользователя.
+ *              - Регистрацию нового пользователя.
+ *              - Редактирование профиля (включая изменение аватара, языка и темы).
+ *              - Просмотр профиля другого пользователя.
+ *              - Защиту от CSRF-атак при изменении данных.
+ *              - Логирование ошибок и подозрительных действий.
+ *
+ * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
+ * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
+ * @see         PhotoRigma::Classes::User Класс для управления пользователями.
+ * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ * @see         file index.php Этот файл подключает action/profile.php по запросу из `$_GET`.
+ *
+ * @note        Этот файл является частью системы PhotoRigma.
+ *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ *
+ * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @license     MIT License (https://opensource.org/licenses/MIT)
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
+ *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
+ *              программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
+ *                программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -46,11 +77,11 @@ $redirect_url = !empty($_SERVER['HTTP_REFERER']) ? filter_var(
     FILTER_VALIDATE_URL
 ) ?: $work->config['site_url'] : $work->config['site_url'];
 
-if ($subact == 'saveprofile') {
+if ($subact === 'saveprofile') {
     $subact = 'profile';
     if ($user->session['login_id'] == 0) {
         header('Location: ' . $redirect_url);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
         );
@@ -108,7 +139,7 @@ if ($subact == 'saveprofile') {
                 $template->set_lang($work->lang);
                 $template->set_work($work);
                 header('Location: ' . $redirect_url);
-                exit();
+                exit;
                 log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: saveprofile, Пользователь ID: {$user->session['login_id']}"
                 );
@@ -121,10 +152,10 @@ if ($subact == 'saveprofile') {
     }
 }
 
-if ($subact == 'logout') {
+if ($subact === 'logout') {
     if ($user->session['login_id'] == 0) {
         header('Location: ' . $redirect_url);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout, Пользователь ID: {$user->session['login_id']}"
         );
@@ -164,7 +195,7 @@ if ($subact == 'logout') {
 
         // Перенаправление и логирование
         header('Location: ' . $work->config['site_url']);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: logout"
         );
@@ -173,7 +204,7 @@ if ($subact == 'logout') {
 {
     $redirect_time = 3;
     $redirect_message = $work->lang['main']['redirect_title'];
-} */ elseif ($subact == 'regist') {
+} */ elseif ($subact === 'regist') {
     // Проверяем, авторизован ли пользователь через check_input
     if ($work->check_input('_SESSION', 'login_id', [
         'isset' => true,
@@ -183,7 +214,7 @@ if ($subact == 'logout') {
     ])) {
         // Если пользователь уже авторизован, перенаправляем на главную страницу
         header('Location: ' . $work->config['site_url']);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: regist, Пользователь ID: {$user->session['login_id']}"
         );
@@ -230,7 +261,7 @@ if ($subact == 'logout') {
         ));
 
         // Если есть ошибки в сессии, добавляем их в шаблон
-        if (isset($user->session['error']) && !empty($user->session['error']) && is_array($user->session['error'])) {
+        if (!empty($user->session['error']) && is_array($user->session['error'])) {
             foreach ($user->session['error'] as $key => $value) {
                 // Добавляем флаг ошибки для поля
                 $template->add_if('ERROR_' . strtoupper($key), $value['if'] ?? false);
@@ -245,7 +276,7 @@ if ($subact == 'logout') {
             $user->unset_property_key('session', 'error');
         }
     }
-} elseif ($subact == 'register') {
+} elseif ($subact === 'register') {
     // Проверяем, авторизован ли пользователь через check_input
     if ($work->check_input('_SESSION', 'login_id', [
         'isset' => true,
@@ -254,7 +285,7 @@ if ($subact == 'logout') {
         'not_zero' => true
     ])) {
         header('Location: ' . $redirect_url);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: register, Пользователь ID: {$user->session['login_id']}"
         );
@@ -277,19 +308,19 @@ if ($subact == 'logout') {
         if ($new_user != 0) {
             $user->session['login_id'] = $new_user;
             header('Location: ' . sprintf('%s?action=profile&subact=profile', $work->config['site_url']));
-            exit();
+            exit;
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешная регистрация | Пользователь ID: {$user->session['login_id']}"
             );
         } else {
             header('Location: ' . $redirect_url);
-            exit();
+            exit;
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка регистрации"
             );
         }
     }
-} elseif ($subact == 'login') {
+} elseif ($subact === 'login') {
     // Проверяем, авторизован ли пользователь через сессию
     if ($work->check_input('_SESSION', 'login_id', [
         'isset' => true,
@@ -299,7 +330,7 @@ if ($subact == 'logout') {
     ])) {
         // Если пользователь уже авторизован, перенаправляем его на главную страницу
         header('Location: ' . $work->config['site_url']);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: login, Пользователь ID: {$user->session['login_id']}"
         );
@@ -329,12 +360,12 @@ if ($subact == 'logout') {
 
         // Перенаправляем пользователя на целевую страницу
         header('Location: ' . $redirect_url);
-        exit();
+        exit;
         log_in_file(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешный вход | Действие: login, Пользователь ID: {$user->session['login_id']}"
         );
     }
-} elseif ($subact == 'profile') {
+} elseif ($subact === 'profile') {
     // Проверка и установка $uid
     if ($work->check_input('_GET', 'uid', [
         'isset' => true,
@@ -347,7 +378,7 @@ if ($subact == 'logout') {
         // Если $_GET['uid'] не прошёл проверку, используем ID из сессии
         if (!isset($user->session['login_id']) || $user->session['login_id'] == 0) {
             header('Location: ' . $work->config['site_url']);
-            exit();
+            exit;
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
             );
@@ -368,7 +399,7 @@ if ($subact == 'logout') {
         $user_data = $db->res_row();
         if (!$user_data) {
             header('Location: ' . $work->config['site_url']);
-            exit();
+            exit;
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
             );
@@ -498,7 +529,7 @@ if ($subact == 'logout') {
         $user_data = $db->res_row();
         if (!$user_data) {
             header('Location: ' . $work->config['site_url']);
-            exit();
+            exit;
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: profile, Пользователь ID: {$user->session['login_id']}"
             );
@@ -556,7 +587,7 @@ if ($subact == 'logout') {
     }
 } else {
     header('Location: ' . $work->config['site_url']);
-    exit();
+    exit;
     log_in_file(
         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: неопределено, Пользователь ID: {$user->session['login_id']}"
     );

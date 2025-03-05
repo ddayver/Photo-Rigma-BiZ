@@ -106,13 +106,15 @@ $(function(){initNavTree('d4/dad/news_8php.html','../../'); initResizable(true);
 </div><!--header-->
 <div class="contents">
 
-<p>Новости сайта.  
+<p>Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.  
 <a href="#details">Подробнее...</a></p>
 
 <p><a href="../../d4/dad/news_8php_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">PhotoRigma\Action</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -124,11 +126,18 @@ $(function(){initNavTree('d4/dad/news_8php.html','../../'); initResizable(true);
 <tr class="separator:a7015c06ea9534c7d526663a1482e258b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Новости сайта. </p>
+<div class="textblock"><p>Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение. </p>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление). Пример сообщения: "Ошибка добавления новости | Данные: " . json_encode($query_news). </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если новость не найдена. Пример сообщения: "Новость не найдена | ID: {$news}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если CSRF-токен неверен. Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user-&gt;session['login_id']}".</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
 <dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-02-24</dd></dl>
-<p>Вывод и обработка новостей сайта. </p>
+<dl class="section date"><dt>Дата</dt><dd>2025-02-24 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d4/dad/news_8php_source.html">news.php</a></p>
 </div></div><!-- contents -->
