@@ -153,7 +153,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс, который реализует интерфейс. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000009">Необходимо сделать</a></b></dt><dd>Внедрить ряд методов по работе с группами и пользователями (добавление, изменение, удаление, вход). </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000008">Необходимо сделать</a></b></dt><dd>Внедрить ряд методов по работе с группами и пользователями (добавление, изменение, удаление, вход). </dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Используются константы с именами таблиц в базе данных. </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Класс зависит от глобального массива $_SESSION.</dd></dl>
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span>MyClass <span class="keyword">implements</span> <a class="code hl_interface" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html">\PhotoRigma\Classes\User_Interface</a> {</div>
@@ -165,7 +165,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">    public function <a class="code hl_function" href="#a4045f753ad732e5f01bafd4b6c04d961">delete_group</a>(int $group_id): void {}</div>
 <div class="line">    public function <a class="code hl_function" href="#ab6cad9b0038673d591c0dd84575bc777">login_user</a>(string $login, string $password): void {}</div>
 <div class="line">}</div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html"><div class="ttname"><a href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html">PhotoRigma\Classes\User_Interface</a></div><div class="ttdoc">Интерфейс для работы с пользователями и группами.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00077">user.php:78</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html"><div class="ttname"><a href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html">PhotoRigma\Classes\User_Interface</a></div><div class="ttdoc">Интерфейс для работы с пользователями и группами.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00083">user.php:84</a></div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_a4045f753ad732e5f01bafd4b6c04d961"><div class="ttname"><a href="#a4045f753ad732e5f01bafd4b6c04d961">PhotoRigma\Classes\User_Interface\delete_group</a></div><div class="ttdeci">delete_group(int $group_id)</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab142b3405ddc1bbb89b84a97dc89d8dc"><div class="ttname"><a href="#ab142b3405ddc1bbb89b84a97dc89d8dc">PhotoRigma\Classes\User_Interface\update_user_data</a></div><div class="ttdeci">update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work)</div><div class="ttdoc">Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab2ab959808354af438bd760ef89d09eb"><div class="ttname"><a href="#ab2ab959808354af438bd760ef89d09eb">PhotoRigma\Classes\User_Interface\delete_user</a></div><div class="ttdeci">delete_user(int $user_id)</div></div>
@@ -174,7 +174,7 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ac5e8ffbb47053c27a7df5b5e7563975d"><div class="ttname"><a href="#ac5e8ffbb47053c27a7df5b5e7563975d">PhotoRigma\Classes\User_Interface\update_group_data</a></div><div class="ttdeci">update_group_data(int $group_id, array $group_data)</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_acb35e2058e1fa1189a515873e76e62dd"><div class="ttname"><a href="#acb35e2058e1fa1189a515873e76e62dd">PhotoRigma\Classes\User_Interface\add_new_group</a></div><div class="ttdeci">add_new_group(array $group_data)</div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l00077">77</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l00083">83</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="acb35e2058e1fa1189a515873e76e62dd" name="acb35e2058e1fa1189a515873e76e62dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb35e2058e1fa1189a515873e76e62dd">&#9670;&#160;</a></span>add_new_group()</h2>
@@ -235,7 +235,6 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <li>При возникновении ошибок сохраняет их в сессии и перенаправляет пользователя на указанный URL.</li>
 <li>Использует CAPTCHA для защиты от автоматической регистрации.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2" title="Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.">PhotoRigma\Classes\User\add_new_user</a> Реализация метода в классе User.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$post_data</td><td>Массив данных из формы ($_POST), содержащий новые значения для полей пользователя:<ul>
@@ -270,12 +269,13 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка регистрации.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00152">index.php:152</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00167">index.php:167</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00163">index.php:163</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00178">index.php:178</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2" title="Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.">PhotoRigma\Classes\User\add_new_user</a> Реализация метода в классе User. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2">User</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00163">PhotoRigma\$work</a>.</p>
 
 </div>
 </div>
@@ -300,14 +300,14 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <li>Если токен уже существует, он возвращается без повторной генерации.</li>
 <li>Токен хранится в сессии и используется для защиты форм от CSRF-атак.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5e5917c41be4155a54de5e90827dc57" title="Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов.">PhotoRigma\Classes\User\csrf_token()</a> Реализация метода в классе User.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>string CSRF-токен длиной 64 символа, сгенерированный с использованием безопасного источника случайных данных.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Токен хранится в сессии и используется для защиты форм от CSRF-атак.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот метод для генерации токенов, если сессия недоступна.</dd></dl>
 <p>Пример вызова метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
 <div class="line">$csrfToken = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;csrf_token();</div>
 <div class="line">echo <span class="stringliteral">&quot;CSRF Token: {$csrfToken}&quot;</span>;</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5e5917c41be4155a54de5e90827dc57" title="Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов.">PhotoRigma\Classes\User\csrf_token()</a> Реализация метода в классе User. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5e5917c41be4155a54de5e90827dc57">User</a>.</p>
 
 </div>
@@ -398,11 +398,6 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <li>Если пароль хранится в старом формате (md5), он обновляется до формата <code>password_hash()</code>.</li>
 <li>Возвращает ID пользователя или 0 в случае ошибки.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a" title="Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...">PhotoRigma\Classes\User\login_user</a> Метод реализации в классе User. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция логирования событий.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$post</td><td>Массив данных из формы ($_POST), содержащий ключи:<ul>
@@ -427,10 +422,15 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка входа.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция логирования событий.</dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a" title="Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...">PhotoRigma\Classes\User\login_user</a> Метод реализации в классе User. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a">User</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00163">PhotoRigma\$work</a>.</p>
 
 </div>
 </div>
@@ -459,7 +459,6 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <li>Удаляет ключ, если он существует.</li>
 <li>Выбрасывает исключение, если указано недопустимое свойство.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acd25145f48c04385645c77ce03ebd9bc" title="Удаляет ключ из указанного свойства объекта (user или session).">PhotoRigma\Classes\User\unset_property_key</a> Реализация метода в классе User.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$name</td><td>Имя свойства, из которого удаляется ключ ('user' или 'session'). </td></tr>
@@ -477,7 +476,8 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот метод для удаления ключей из других свойств.</dd></dl>
 <p>Пример вызова метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;unset_property_key(<span class="stringliteral">&#39;user&#39;</span>, <span class="stringliteral">&#39;email&#39;</span>);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acd25145f48c04385645c77ce03ebd9bc" title="Удаляет ключ из указанного свойства объекта (user или session).">PhotoRigma\Classes\User\unset_property_key</a> Реализация метода в классе User. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acd25145f48c04385645c77ce03ebd9bc">User</a>.</p>
 
 </div>
@@ -557,11 +557,6 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <li>Удаляет старый аватар при необходимости.</li>
 <li>Обновляет данные пользователя в базе данных. Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.">PhotoRigma\Classes\User\update_user_data()</a> Метод реализации в классе User. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки корректности входных данных. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, передаваемый в качестве объекта аргументом.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя, данные которого необходимо обновить. Должен быть положительным целым числом и существовать в базе данных. </td></tr>
@@ -588,11 +583,10 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <dl class="section return"><dt>Возвращает</dt><dd>int Количество затронутых строк в базе данных после выполнения обновления. Возвращается 0, если данные не изменились или запрос завершился ошибкой.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается исключение если пользователь с указанным <code>$user_id</code> не найден в базе данных.</td></tr>
   </table>
   </dd>
 </dl>
-<p>RuntimeException Выбрасывается исключение если пользователь с указанным <code>$user_id</code> не найден в базе данных.</p>
 <dl class="section note"><dt>Заметки</dt><dd>Метод зависит от корректной конфигурации базы данных.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте этот метод для массового обновления данных.</dd></dl>
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
@@ -605,10 +599,15 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка при обновлении данных.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.">PhotoRigma\Classes\User\update_user_data()</a> Метод реализации в классе User. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки корректности входных данных. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, передаваемый в качестве объекта аргументом. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc">User</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00152">PhotoRigma\$work</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00163">PhotoRigma\$work</a>.</p>
 
 </div>
 </div>

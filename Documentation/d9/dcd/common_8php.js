@@ -3,7 +3,7 @@ var common_8php =
     [ "PhotoRigma\\Include\\archive_old_logs", "db/d02/namespacePhotoRigma_1_1Include.html#af8032313a2eb1344b860a29c714f1a72", null ],
     [ "PhotoRigma\\Include\\log_in_file", "db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0", null ],
     [ "PhotoRigma\\Include\\$cookie_domain", "db/d02/namespacePhotoRigma_1_1Include.html#abec6ae06ad5526172520fb1ccb7c6806", null ],
-    [ "PhotoRigma\\Include\\$cur_cookie", "db/d02/namespacePhotoRigma_1_1Include.html#adaa1882ba8ff3a56afbb18d186724f64", null ],
+    [ "PhotoRigma\\Include\\$cur_cookie", "db/d02/namespacePhotoRigma_1_1Include.html#ab408c4099149d8137d6693a245d2c34e", null ],
     [ "PhotoRigma\\Include\\COMPRESSION_LEVEL", "db/d02/namespacePhotoRigma_1_1Include.html#a897408179e814597df3eb0c708611873", null ],
     [ "PhotoRigma\\Include\\DEFAULT_GROUP", "db/d02/namespacePhotoRigma_1_1Include.html#a2790a51795c400a411236e4651f1b3f1", null ],
     [ "PhotoRigma\\Include\\DIE_IF_ERROR", "db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c", null ],

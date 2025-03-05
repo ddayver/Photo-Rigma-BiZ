@@ -159,10 +159,10 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html">Work_Helper</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html">\PhotoRigma\Classes\Work_Helper_Interface</a> {</div>
 <div class="line">    <span class="comment">// Реализация методов интерфейса</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html">PhotoRigma\Classes\Work_Helper</a></div><div class="ttdoc">Класс для вспомогательных методов.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00380">work_helper.php:381</a></div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface_html"><div class="ttname"><a href="../../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html">PhotoRigma\Classes\Work_Helper_Interface</a></div><div class="ttdoc">Интерфейс для вспомогательных методов.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00075">work_helper.php:76</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html">PhotoRigma\Classes\Work_Helper</a></div><div class="ttdoc">Класс для вспомогательных методов.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00385">work_helper.php:386</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface_html"><div class="ttname"><a href="../../d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper__Interface.html">PhotoRigma\Classes\Work_Helper_Interface</a></div><div class="ttdoc">Интерфейс для вспомогательных методов.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00080">work_helper.php:81</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d43/work__helper_8php_source.html">work_helper.php</a> строка <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00075">75</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d43/work__helper_8php_source.html">work_helper.php</a> строка <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00080">80</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="ab73ba07b8376dd2e1764240c73a338ea" name="ab73ba07b8376dd2e1764240c73a338ea"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab73ba07b8376dd2e1764240c73a338ea">&#9670;&#160;</a></span>clean_field()</h2>
@@ -189,7 +189,6 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 
 <p>Очистка строки от HTML-тегов и специальных символов. </p>
 <p>Этот метод удаляет HTML-теги и экранирует специальные символы, такие как <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot</code>, <code>&amp;#039;</code>. Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов (публичная обёртка).">PhotoRigma\Classes\Work_Helper\clean_field()</a> Метод очистки строк и экранирования.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">mixed</td><td class="paramname">$field</td><td>Строка или данные, которые могут быть преобразованы в строку. Если входные данные пусты (null или пустая строка), метод вернёт null.</td></tr>
@@ -202,8 +201,9 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <div class="line">$dirty_input = <span class="stringliteral">&#39;&amp;lt;script&amp;gt;alert(&amp;quotXSS&amp;quot)&amp;lt;/script&amp;gt;&#39;</span>;</div>
 <div class="line">$cleaned = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">Work_Helper::clean_field</a>($dirty_input);</div>
 <div class="line">echo $cleaned; <span class="comment">// Выведет: &amp;lt;script&amp;gt;alert(&amp;quot;XSS&amp;quot;)&amp;lt;/script&amp;gt;</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work_Helper\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdoc">Очистка строки от HTML-тегов и специальных символов (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00410">work_helper.php:410</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work_Helper\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdoc">Очистка строки от HTML-тегов и специальных символов (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00979">work_helper.php:979</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов (публичная обёртка).">PhotoRigma\Classes\Work_Helper\clean_field()</a> Метод очистки строк и экранирования. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea">Work_Helper</a>.</p>
 
 </div>
@@ -232,11 +232,10 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 </div><div class="memdoc">
 
 <p>Транслитерация строки и замена знаков пунктуации на "_". </p>
-<p>Этот метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_". Используется для создания "безопасных" имен файлов или URL. Если входная строка пустая, она возвращается без обработки. Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).">PhotoRigma\Classes\Work_Helper\encodename()</a> Публичный метод, вызывающий этот метод.</dd></dl>
+<p>Этот метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_". Используется для создания "безопасных" имен файлов или URL. Если входная строка пустая - она возвращается без обработки. Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$string</td><td>Исходная строка. Если строка пустая, она возвращается без обработки. Рекомендуется использовать строки в кодировке UTF-8.</td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$string</td><td>Исходная строка. Если строка пустая - она возвращается без обработки. Рекомендуется использовать строки в кодировке UTF-8.</td></tr>
   </table>
   </dd>
 </dl>
@@ -253,8 +252,9 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <div class="line"><span class="comment">// Обработка строки без кириллицы и знаков пунктуации</span></div>
 <div class="line">$encoded = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">\PhotoRigma\Classes\Work_Helper::encodename</a>(<span class="stringliteral">&#39;12345&#39;</span>);</div>
 <div class="line">echo $encoded; <span class="comment">// Выведет: 12345</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work_Helper\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00505">work_helper.php:505</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work_Helper\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00554">work_helper.php:554</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).">PhotoRigma\Classes\Work_Helper\encodename()</a> Публичный метод, вызывающий этот метод. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e">Work_Helper</a>.</p>
 
 </div>
@@ -288,7 +288,6 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <li>M (мегабайты): умножается на 1024².</li>
 <li>G (гигабайты): умножается на 1024³. Если суффикс отсутствует или недопустим, значение считается в байтах. Отрицательные числа преобразуются в положительные. Если входные данные некорректны, возвращается 0.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30" title="Преобразование размера в байты (публичная обёртка).">PhotoRigma\Classes\Work_Helper\return_bytes()</a> Публичный метод, вызывающий этот метод.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string&#160;|&#160;int</td><td class="paramname">$val</td><td>Размер в формате "число[K|M|G]" или число. Если суффикс недопустим, он игнорируется, и значение преобразуется в число. Отрицательные числа преобразуются в положительные.</td></tr>
@@ -312,8 +311,9 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <div class="line"><span class="comment">// Преобразование некорректных данных</span></div>
 <div class="line">$bytes = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">Work_Helper::return_bytes</a>(<span class="stringliteral">&#39;abc&#39;</span>);</div>
 <div class="line">echo $bytes; <span class="comment">// Выведет: 0</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work_Helper\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdoc">Преобразование размера в байты (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00461">work_helper.php:461</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work_Helper\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdoc">Преобразование размера в байты (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00433">work_helper.php:433</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30" title="Преобразование размера в байты (публичная обёртка).">PhotoRigma\Classes\Work_Helper\return_bytes()</a> Публичный метод, вызывающий этот метод. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30">Work_Helper</a>.</p>
 
 </div>
@@ -358,9 +358,6 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <li>[left], [center], [right] — выравнивание текста</li>
 <li>[img]Изображение[/img] Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных тегов.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
-<dd>
-<a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка).">PhotoRigma\Classes\Work_Helper\ubb()</a> Публичный метод, вызывающий этот защищённый метод.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$text</td><td>Текст с BBCode. Рекомендуется использовать строки в кодировке UTF-8. Если строка пустая, она возвращается без обработки.</td></tr>
@@ -378,8 +375,11 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <div class="line"><span class="comment">// Преобразование ссылки</span></div>
 <div class="line">$html = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">Work_Helper::ubb</a>(<span class="stringliteral">&#39;[url=https://example.com]Example[/url]&#39;</span>);</div>
 <div class="line">echo $html; <span class="comment">// Выведет: &lt;a href=&quot;https://example.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; title=&quot;Example&quot;&gt;Example&lt;/a&gt;</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work_Helper\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразование BBCode в HTML (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00560">work_helper.php:560</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work_Helper\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразование BBCode в HTML (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00745">work_helper.php:745</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка).">PhotoRigma\Classes\Work_Helper\ubb()</a> Публичный метод, вызывающий этот защищённый метод. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712">Work_Helper</a>.</p>
 
 </div>
@@ -418,9 +418,6 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 
 <p>Разбивка строки на несколько строк ограниченной длины. </p>
 <p>Этот метод разбивает строку на несколько строк, каждая из которых имеет длину не более указанной. Разрыв строки выполняется только по пробелам, чтобы сохранить читаемость текста. Поддерживается работа с UTF-8 символами. Если параметры некорректны (например, $width &lt;= 0 или $break пустой), возвращается исходная строка.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивка строки на несколько строк ограниченной длины (публичная обёртка).">PhotoRigma\Classes\Work_Helper\utf8_wordwrap()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$str</td><td>Исходная строка. Рекомендуется использовать строки в кодировке UTF-8. Если строка пустая или её длина меньше или равна $width, она возвращается без изменений. </td></tr>
@@ -442,8 +439,11 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <div class="line"><span class="comment">// string that</span></div>
 <div class="line"><span class="comment">// needs to be</span></div>
 <div class="line"><span class="comment">// wrapped.</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work_Helper\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивка строки на несколько строк ограниченной длины (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00608">work_helper.php:608</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work_Helper\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивка строки на несколько строк ограниченной длины (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l01075">work_helper.php:1075</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивка строки на несколько строк ограниченной длины (публичная обёртка).">PhotoRigma\Classes\Work_Helper\utf8_wordwrap()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32">Work_Helper</a>.</p>
 
 </div>
@@ -477,9 +477,6 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <li>Gmagick</li>
 <li>Встроенные функции PHP по работе с изображениями (GD) Если MIME-тип не поддерживается ни одной библиотекой, возвращается false. Поддерживаются MIME-типы для изображений, таких как JPEG, PNG, GIF, WebP и другие.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).">PhotoRigma\Classes\Work_Helper\validate_mime_type()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$real_mime_type</td><td>Реальный MIME-тип файла. Должен быть корректным MIME-типом для изображений.</td></tr>
@@ -495,8 +492,11 @@ $(function(){initNavTree('d1/d3c/interfacePhotoRigma_1_1Classes_1_1Work__Helper_
 <div class="line"><span class="comment">// Проверка неподдерживаемого MIME-типа</span></div>
 <div class="line">$is_supported = <a class="code hl_function" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">Work_Helper::validate_mime_type</a>(<span class="stringliteral">&#39;application/pdf&#39;</span>);</div>
 <div class="line">var_dump($is_supported); <span class="comment">// Выведет: false</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work_Helper\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l00652">work_helper.php:652</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work_Helper\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d43/work__helper_8php_source.html#l01192">work_helper.php:1192</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).">PhotoRigma\Classes\Work_Helper\validate_mime_type()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff">Work_Helper</a>.</p>
 
 </div>

@@ -1,17 +1,14 @@
 <map id="_delete_internal" name="_delete_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="5,131,118,155"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="5,105,118,130"/>
 <area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="166,55,280,79"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,128,180,84,182,89,91,133"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="514,55,649,79"/>
-<area shape="poly" id="edge9_Node000001_Node000004" title=" " alt="" coords="118,132,498,76,499,82,119,138"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,102,166,82,167,87,104,107"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="511,55,646,79"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="118,110,496,72,496,78,118,115"/>
 <area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="171,155,275,179"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="119,149,155,154,155,160,118,154"/>
-<area shape="rect" id="Node000006" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="328,176,466,214"/>
-<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="85,153,122,173,166,188,241,198,312,199,312,205,240,204,165,194,120,178,82,158"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="330,5,465,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="269,51,336,32,337,37,270,57"/>
-<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="281,64,499,64,499,70,281,70"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="447,28,519,48,517,53,446,33"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="551,56,544,46,548,36,561,30,582,28,604,31,616,38,613,42,603,36,581,33,562,35,552,40,550,45,555,53"/>
-<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="276,173,313,179,312,184,275,178"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="105,128,167,147,165,152,104,133"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899" title="Подготавливает данные для SQL&#45;запроса." alt="" coords="328,5,463,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="268,51,335,32,336,37,270,57"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="280,64,495,64,495,70,280,70"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="445,28,516,48,515,53,444,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="548,56,542,46,545,36,558,30,579,28,601,31,613,38,610,42,600,36,578,33,559,35,549,40,547,45,553,53"/>
 </map>

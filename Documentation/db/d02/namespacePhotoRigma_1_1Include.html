@@ -133,10 +133,10 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memdesc:a26ebc544afff0aad8a2ae5ca6005ed08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица с новостями  <br /></td></tr>
 <tr class="separator:a26ebc544afff0aad8a2ae5ca6005ed08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7d24f8d6208f91370d570179ecc7588" id="r_af7d24f8d6208f91370d570179ecc7588"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7d24f8d6208f91370d570179ecc7588">TBL_CATEGORY</a> '`category`'</td></tr>
-<tr class="memdesc:af7d24f8d6208f91370d570179ecc7588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица с списком категорий на сервере  <br /></td></tr>
+<tr class="memdesc:af7d24f8d6208f91370d570179ecc7588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица со списком категорий на сервере  <br /></td></tr>
 <tr class="separator:af7d24f8d6208f91370d570179ecc7588"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9e6d56867d93f4ff111db359d732510" id="r_ad9e6d56867d93f4ff111db359d732510"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9e6d56867d93f4ff111db359d732510">TBL_PHOTO</a> '`photo`'</td></tr>
-<tr class="memdesc:ad9e6d56867d93f4ff111db359d732510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица с списком фотографий на сервере  <br /></td></tr>
+<tr class="memdesc:ad9e6d56867d93f4ff111db359d732510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица со списком фотографий на сервере  <br /></td></tr>
 <tr class="separator:ad9e6d56867d93f4ff111db359d732510"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ece13b85e14fdb7d1a6b62a6933fe89" id="r_a1ece13b85e14fdb7d1a6b62a6933fe89"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ece13b85e14fdb7d1a6b62a6933fe89">TBL_RATE_USER</a> '`rate_user`'</td></tr>
 <tr class="memdesc:a1ece13b85e14fdb7d1a6b62a6933fe89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица с оценками фотографий от пользователей  <br /></td></tr>
@@ -162,8 +162,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memitem:abec6ae06ad5526172520fb1ccb7c6806" id="r_abec6ae06ad5526172520fb1ccb7c6806"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abec6ae06ad5526172520fb1ccb7c6806">$cookie_domain</a> = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
 <tr class="memdesc:abec6ae06ad5526172520fb1ccb7c6806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Безопасная проверка HTTP_HOST.  <br /></td></tr>
 <tr class="separator:abec6ae06ad5526172520fb1ccb7c6806"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adaa1882ba8ff3a56afbb18d186724f64" id="r_adaa1882ba8ff3a56afbb18d186724f64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adaa1882ba8ff3a56afbb18d186724f64">$cur_cookie</a> = session_get_cookie_params()</td></tr>
-<tr class="separator:adaa1882ba8ff3a56afbb18d186724f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab408c4099149d8137d6693a245d2c34e" id="r_ab408c4099149d8137d6693a245d2c34e"><td class="memItemLeft" align="right" valign="top">if(! $cookie_domain) if(! $cookie_domain) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab408c4099149d8137d6693a245d2c34e">$cur_cookie</a> = session_get_cookie_params()</td></tr>
+<tr class="memdesc:ab408c4099149d8137d6693a245d2c34e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Настройка параметров куков для сессий.  <br /></td></tr>
+<tr class="separator:ab408c4099149d8137d6693a245d2c34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a897408179e814597df3eb0c708611873" id="r_a897408179e814597df3eb0c708611873"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a897408179e814597df3eb0c708611873">COMPRESSION_LEVEL</a> = 9</td></tr>
 <tr class="separator:a897408179e814597df3eb0c708611873"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97db6f3e6431bb4ff9a3521a93dbacaf" id="r_a97db6f3e6431bb4ff9a3521a93dbacaf"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97db6f3e6431bb4ff9a3521a93dbacaf">LOG_LIFETIME_DAYS</a> = '-7 days'</td></tr>
@@ -205,11 +206,11 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <dl class="section warning"><dt>Предупреждения</dt><dd>Функция может пропустить файлы при возникновении ошибок (например, если файл недоступен для чтения или записи).</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>void Функция ничего не возвращает.</dd></dl>
 <p>"Тихая" архивация старых логов: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#af8032313a2eb1344b860a29c714f1a72">archive_old_logs</a>();</div>
-<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_af8032313a2eb1344b860a29c714f1a72"><div class="ttname"><a href="#af8032313a2eb1344b860a29c714f1a72">PhotoRigma\Include\archive_old_logs</a></div><div class="ttdeci">archive_old_logs()</div><div class="ttdoc">Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00209">common.php:209</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_af8032313a2eb1344b860a29c714f1a72"><div class="ttname"><a href="#af8032313a2eb1344b860a29c714f1a72">PhotoRigma\Include\archive_old_logs</a></div><div class="ttdeci">archive_old_logs()</div><div class="ttdoc">Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00215">common.php:215</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">209</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00215">215</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00168">COMPRESSION_LEVEL</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">LOG_DIR</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00169">LOG_LIFETIME_DAYS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00174">COMPRESSION_LEVEL</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00058">LOG_DIR</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00175">LOG_LIFETIME_DAYS</a>.</p>
 
 </div>
 </div>
@@ -264,126 +265,34 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Функция может завершить выполнение скрипта, если установлен флаг $die и константа DIE_IF_ERROR.</dd></dl>
 <p>Логирование ошибки без завершения скрипта: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(<span class="stringliteral">&quot;Ошибка при обработке данных.&quot;</span>);</div>
-<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdoc">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00341">common.php:341</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdoc">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.</div><div class="ttdef"><b>Определения</b> <a href="../../d9/dcd/common_8php_source.html#l00353">common.php:353</a></div></div>
 </div><!-- fragment --><p> Логирование критической ошибки с завершением скрипта (deprecated!): </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(<span class="stringliteral">&quot;Критическая ошибка!&quot;</span>, <span class="keyword">true</span>);</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">341</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">353</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00168">COMPRESSION_LEVEL</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00068">PhotoRigma\DEBUG_GALLERY</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00053">DIE_IF_ERROR</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">LOG_DIR</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00170">MAX_LOG_SIZE</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d9/dcd/common_8php_source.html#l00174">COMPRESSION_LEVEL</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00080">PhotoRigma\DEBUG_GALLERY</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00057">DIE_IF_ERROR</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00058">LOG_DIR</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">log_in_file()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00176">MAX_LOG_SIZE</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00626">Database\__construct()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00162">Work\__construct()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l00496">User\__set()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00292">Work\__set()</a>, <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00867">Work_Security\_check_field_internal()</a>, <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00752">Work_Security\_check_input_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01797">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01309">Work_CoreLogic\_del_photo_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01445">Database\_delete_internal()</a>, <a class="el" href="../../d6/dc1/work__security_8php_source.html#l01009">Work_Security\_filt_email_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01099">Work_Image\_fix_file_extension_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01526">Work_CoreLogic\_get_languages_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01648">Work_CoreLogic\_get_themes_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01004">Work_Image\_image_attach_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l00805">Work_Image\_image_resize_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00921">Work_Template\_template_user_internal()</a>, <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00920">Work_Helper\_ubb_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01607">Database\_update_internal()</a>, <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00680">Work_Security\_url_check_internal()</a>, <a class="el" href="../../d2/d43/work__helper_8php_source.html#l01070">Work_Helper\_utf8_wordwrap_internal()</a>, <a class="el" href="../../d2/d43/work__helper_8php_source.html#l01137">Work_Helper\_validate_mime_type_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l02047">Database\execute_query()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01031">User\login_user()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01693">Work_Image\process_image_resize_gd()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01361">Work_Image\process_image_resize_gmagick()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01524">Work_Image\process_image_resize_imagick()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00401">Work\set_lang()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">log_in_file()</a>.</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph.png" border="0" usemap="#adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph" alt=""/></div>
+<map name="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph" id="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_cgraph">
+<area shape="rect" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="5,29,84,54"/>
+<area shape="poly" title=" " alt="" coords="30,29,29,12,35,5,45,3,55,6,61,13,56,16,52,10,44,8,37,10,34,14,35,29"/>
+</map>
+</div>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph.png" border="0" usemap="#adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph" alt=""/></div>
 <map name="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph" id="adb/d02/namespacePhotoRigma_1_1Include_a2d74c46a21e4ce612a98eee60981aef0_icgraph">
-<area shape="rect" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="731,872,810,897"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab020da18450b0c34601b4d365da6f943" title="Конструктор класса." alt="" coords="509,5,661,44"/>
-<area shape="poly" title=" " alt="" coords="765,857,757,683,740,429,729,301,715,188,699,103,690,74,681,57,660,41,664,36,685,54,695,72,704,102,720,188,734,300,746,428,762,682,771,857"/>
-<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a0cf75f058a40065de0a52d9f2037960a" title="Конструктор класса." alt="" coords="514,68,657,107"/>
-<area shape="poly" title=" " alt="" coords="765,857,756,695,738,461,713,240,698,162,690,136,681,120,670,109,656,101,658,97,673,105,685,116,695,133,703,160,718,239,744,460,761,694,770,857"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2c4e9c30cf213decde815cdcb37e1ac8" title="Устанавливает значение приватного свойства." alt="" coords="514,131,657,169"/>
-<area shape="poly" title=" " alt="" coords="767,857,766,716,757,514,747,410,731,315,710,236,696,206,681,182,670,172,656,164,658,159,673,168,685,179,701,203,715,234,737,314,752,410,762,514,772,716,772,857"/>
-<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a83c2703c91959192f759992ad5640b67" title="Устанавливает значение свойства $config." alt="" coords="514,193,657,232"/>
-<area shape="poly" title=" " alt="" coords="766,857,763,729,751,549,741,457,726,372,706,301,694,274,681,253,655,232,659,228,685,250,699,272,711,300,731,371,746,456,757,549,768,729,772,857"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a21615966844dc1457ab7186ed8ae16b2" title="Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим услов..." alt="" coords="508,308,663,360"/>
-<area shape="poly" title=" " alt="" coords="765,857,759,752,744,608,733,534,719,467,702,412,681,374,661,357,665,353,685,371,707,410,724,466,738,533,750,607,764,751,771,857"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="260,224,416,276"/>
-<area shape="poly" title=" " alt="" coords="767,857,765,736,754,566,743,480,728,402,708,339,695,315,682,297,664,285,638,276,569,262,490,255,416,252,416,247,491,250,570,257,639,271,666,281,685,293,700,312,713,337,733,401,749,480,759,566,770,735,772,857"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="501,385,669,438"/>
-<area shape="poly" title=" " alt="" coords="764,857,756,766,740,645,715,529,699,483,681,452,668,439,672,435,685,448,704,481,720,527,745,644,761,765,770,856"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a818796fb684f095ff90ef5f03a894989" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="510,462,660,515"/>
-<area shape="poly" title=" " alt="" coords="767,857,765,793,754,708,743,663,728,617,708,575,681,536,659,516,662,512,685,532,712,572,733,615,749,661,759,707,771,793,773,857"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="250,488,426,527"/>
-<area shape="poly" title=" " alt="" coords="767,857,765,800,753,727,742,689,727,652,707,618,682,588,648,574,583,557,426,525,427,520,584,552,650,569,685,584,711,615,732,650,747,688,758,726,770,800,773,857"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#aba5c862c7245a48d932400e2a28b1b63" title="Внутренний метод для замены символов в email&#45;адресах." alt="" coords="514,704,657,756"/>
-<area shape="poly" title=" " alt="" coords="753,860,724,815,704,791,682,771,656,755,659,751,685,767,708,788,728,811,758,857"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af7cd1deb24cdf852e9981eb4f2665ff1" title="Корректировка расширения файла в соответствии с его MIME&#45;типом (защищённый метод)." alt="" coords="513,781,657,834"/>
-<area shape="poly" title=" " alt="" coords="727,868,682,848,654,837,656,832,684,844,729,863"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1" title="Загружает доступные языки из директории /language/." alt="" coords="510,858,660,911"/>
-<area shape="poly" title=" " alt="" coords="716,887,661,887,661,882,716,882"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#afd6b68f8d6f551886000447b30191b6a" title="Загружает доступные темы из директории /themes/." alt="" coords="510,936,660,988"/>
-<area shape="poly" title=" " alt="" coords="729,906,684,926,656,938,654,933,682,921,727,901"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a0502831dd0f02e73d62586e4966e6a71" title="Вывод изображения через HTTP." alt="" coords="492,1013,679,1066"/>
-<area shape="poly" title=" " alt="" coords="758,912,728,958,708,982,685,1003,667,1015,664,1010,682,999,704,978,724,955,753,909"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="245,1233,430,1286"/>
-<area shape="poly" title=" " alt="" coords="771,913,767,965,754,1031,743,1065,728,1099,709,1130,685,1157,661,1176,638,1188,616,1194,593,1197,545,1198,518,1201,488,1209,411,1235,409,1230,486,1203,517,1196,545,1193,593,1191,615,1189,636,1183,658,1172,681,1153,705,1127,723,1096,738,1063,749,1029,762,964,766,912"/>
-<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="496,1373,674,1426"/>
-<area shape="poly" title=" " alt="" coords="770,913,763,1011,747,1145,736,1213,722,1275,706,1326,685,1362,673,1375,669,1371,681,1359,701,1324,717,1273,731,1212,742,1144,757,1011,765,912"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="494,1449,676,1488"/>
-<area shape="poly" title=" " alt="" coords="771,913,767,1026,754,1183,743,1263,728,1337,709,1398,685,1440,673,1451,669,1447,681,1436,704,1395,723,1335,737,1263,748,1183,761,1026,766,912"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="248,551,428,589"/>
-<area shape="poly" title=" " alt="" coords="766,857,761,808,748,746,737,714,723,683,705,655,682,631,664,620,639,610,574,595,500,584,428,578,428,572,500,579,575,590,641,605,666,615,685,627,709,652,728,680,742,712,753,744,767,807,771,857"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ab854f33e4a55413e489384fb7ad75d56" title="Внутренний метод для проверки URL на наличие вредоносного кода." alt="" coords="514,1512,657,1564"/>
-<area shape="poly" title=" " alt="" coords="772,913,768,1037,756,1212,745,1301,730,1384,710,1453,699,1480,685,1501,659,1522,655,1518,681,1498,694,1477,705,1451,725,1383,739,1301,750,1211,762,1036,766,912"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a1f0724c64151f06d211ca5d639046f5f" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="487,1589,683,1642"/>
-<area shape="poly" title=" " alt="" coords="772,912,770,1050,760,1248,749,1350,734,1445,713,1523,700,1554,685,1578,673,1590,670,1587,681,1575,695,1552,708,1521,729,1444,744,1350,755,1248,765,1050,767,912"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="507,1666,663,1719"/>
-<area shape="poly" title=" " alt="" coords="772,913,773,1064,764,1285,754,1400,738,1506,716,1594,702,1629,685,1656,666,1673,662,1669,681,1652,697,1626,711,1592,733,1505,749,1399,759,1285,767,1064,767,913"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="502,641,669,680"/>
-<area shape="poly" title=" " alt="" coords="762,857,752,820,737,776,714,732,682,693,667,683,670,678,685,689,718,729,742,774,757,819,767,856"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abfc920179ddcc067a8c10f07b02d5d9a" title="Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран..." alt="" coords="514,1743,657,1781"/>
-<area shape="poly" title=" " alt="" coords="771,913,763,1090,746,1350,735,1481,721,1596,705,1684,695,1714,685,1733,673,1745,658,1753,656,1748,670,1740,681,1730,690,1712,699,1683,715,1595,729,1480,741,1350,757,1090,765,913"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="511,1218,659,1271"/>
-<area shape="poly" title=" " alt="" coords="772,912,768,970,755,1046,744,1087,729,1128,710,1166,685,1201,661,1221,658,1217,681,1198,705,1163,725,1125,739,1086,750,1045,763,970,766,912"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="505,1296,665,1348"/>
-<area shape="poly" title=" " alt="" coords="769,913,760,997,743,1107,718,1214,703,1256,685,1285,667,1301,664,1297,681,1282,698,1253,713,1212,737,1106,754,996,764,912"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="507,1090,663,1143"/>
-<area shape="poly" title=" " alt="" coords="766,913,757,950,741,994,717,1040,685,1080,666,1095,662,1090,681,1076,713,1037,736,992,752,948,761,912"/>
-<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aed2ddce38e1559f3014f076e11a2cbe9" title="Устанавливает языковые данные из файла и передаёт их в дочерние классы." alt="" coords="514,1805,657,1844"/>
-<area shape="poly" title=" " alt="" coords="771,913,764,1102,748,1381,737,1523,723,1647,706,1742,696,1775,685,1796,673,1807,659,1816,656,1811,670,1803,681,1792,691,1773,701,1741,717,1647,731,1522,743,1381,758,1101,766,912"/>
-<area shape="poly" title=" " alt="" coords="492,305,415,279,417,274,494,300"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям." alt="" coords="249,300,427,339"/>
-<area shape="poly" title=" " alt="" coords="492,331,427,327,428,322,492,326"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных." alt="" coords="5,231,189,269"/>
-<area shape="poly" title=" " alt="" coords="245,253,189,253,189,247,245,247"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="238,363,438,401"/>
-<area shape="poly" title=" " alt="" coords="485,402,438,397,439,391,486,397"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="247,425,428,464"/>
-<area shape="poly" title=" " alt="" coords="495,475,428,463,429,458,496,470"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="25,488,169,527"/>
-<area shape="poly" title=" " alt="" coords="234,510,169,510,169,505,234,505"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email&#45;адресах для &quot;обмана&quot; ботов." alt="" coords="256,877,420,916"/>
-<area shape="poly" title=" " alt="" coords="501,761,489,771,472,794,466,818,459,842,441,867,422,879,419,875,437,863,454,840,461,816,467,792,485,767,498,757"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Корректировка расширения файла в соответствии с его MIME&#45;типом (публичный интерфейс)." alt="" coords="266,940,410,992"/>
-<area shape="poly" title=" " alt="" coords="501,839,489,848,473,868,466,888,458,908,441,929,412,948,409,943,437,925,453,906,461,886,468,865,485,844,498,835"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/." alt="" coords="266,1017,410,1070"/>
-<area shape="poly" title=" " alt="" coords="498,918,489,925,473,945,466,965,458,986,441,1007,412,1025,409,1020,437,1003,453,983,461,963,468,942,485,921,495,914"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/." alt="" coords="266,1094,410,1147"/>
-<area shape="poly" title=" " alt="" coords="498,996,489,1003,473,1022,466,1042,458,1063,441,1084,412,1102,409,1098,437,1080,453,1060,461,1040,468,1020,485,999,495,991"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aeabe138e0704bd8403da0faf894ad0df" title="Вывод изображения через HTTP." alt="" coords="248,1171,428,1209"/>
-<area shape="poly" title=" " alt="" coords="493,1077,489,1080,473,1100,466,1120,458,1141,441,1161,423,1172,420,1168,437,1157,454,1138,461,1118,468,1097,485,1076,490,1072"/>
-<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения." alt="" coords="8,1240,186,1279"/>
-<area shape="poly" title=" " alt="" coords="230,1262,187,1262,187,1257,230,1257"/>
-<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирование блока пользователя." alt="" coords="237,1380,439,1419"/>
-<area shape="poly" title=" " alt="" coords="481,1402,439,1402,439,1397,481,1397"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка)." alt="" coords="266,1449,410,1488"/>
-<area shape="poly" title=" " alt="" coords="479,1471,410,1471,410,1466,479,1466"/>
-<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML." alt="" coords="25,1449,169,1488"/>
-<area shape="poly" title=" " alt="" coords="250,1471,169,1471,169,1466,250,1466"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="25,551,169,589"/>
-<area shape="poly" title=" " alt="" coords="233,573,169,573,169,567,233,567"/>
-<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода." alt="" coords="253,1519,422,1557"/>
-<area shape="poly" title=" " alt="" coords="498,1541,423,1541,423,1535,498,1535"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивка строки на несколько строк ограниченной длины (публичная обёртка)." alt="" coords="243,1596,432,1635"/>
-<area shape="poly" title=" " alt="" coords="471,1618,433,1618,433,1613,471,1613"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME&#45;типа файла через доступные библиотеки (публичная обёртка)." alt="" coords="263,1666,412,1719"/>
-<area shape="poly" title=" " alt="" coords="491,1695,413,1695,413,1690,491,1690"/>
-<area shape="poly" title=" " alt="" coords="550,633,490,579,438,540,415,530,417,525,440,536,493,575,554,629"/>
-<area shape="poly" title=" " alt="" coords="518,638,486,624,438,603,407,592,409,587,440,598,488,620,520,633"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a" title="Формирует SQL&#45;запрос на вставку данных в таблицу, основываясь на полученных аргументах,..." alt="" coords="252,815,424,853"/>
-<area shape="poly" title=" " alt="" coords="491,691,489,693,477,707,471,720,466,748,460,777,453,791,441,805,425,816,422,812,437,801,449,788,455,775,460,747,466,718,473,704,485,689,488,687"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b" title="Формирует SQL&#45;запрос с использованием JOIN для выборки данных из нескольких таблиц,..." alt="" coords="258,613,418,652"/>
-<area shape="poly" title=" " alt="" coords="485,652,418,644,419,639,486,647"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1" title="Формирует SQL&#45;запрос на выборку данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="250,676,426,715"/>
-<area shape="poly" title=" " alt="" coords="486,677,426,686,426,680,486,672"/>
-<area shape="rect" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="266,738,410,791"/>
-<area shape="poly" title=" " alt="" coords="499,689,488,694,464,711,440,728,411,742,409,737,438,724,461,706,486,689,497,684"/>
-<area shape="poly" title=" " alt="" coords="496,1253,431,1257,431,1251,495,1247"/>
-<area shape="poly" title=" " alt="" coords="489,1301,430,1285,432,1280,491,1295"/>
-<area shape="poly" title=" " alt="" coords="504,1153,489,1164,474,1179,466,1193,456,1208,441,1223,421,1235,418,1230,437,1219,452,1204,461,1190,470,1175,485,1160,501,1149"/>
+<area shape="rect" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="5,29,84,54"/>
+<area shape="poly" title=" " alt="" coords="56,16,52,10,44,8,37,10,34,14,35,29,30,29,29,12,35,5,45,3,55,6,61,13"/>
 </map>
 </div>
 
@@ -410,23 +319,34 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <p>Домен, используемый для настройки куков.</p>
 <p>Значение извлекается из $_SERVER['HTTP_HOST'] с применением фильтрации для защиты от вредоносных данных. Если значение недоступно или некорректно, используется резервный источник $_SERVER['SERVER_NAME']. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00122">122</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00128">128</a></p>
 
 </div>
 </div>
-<a id="adaa1882ba8ff3a56afbb18d186724f64" name="adaa1882ba8ff3a56afbb18d186724f64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adaa1882ba8ff3a56afbb18d186724f64">&#9670;&#160;</a></span>$cur_cookie</h2>
+<a id="ab408c4099149d8137d6693a245d2c34e" name="ab408c4099149d8137d6693a245d2c34e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab408c4099149d8137d6693a245d2c34e">&#9670;&#160;</a></span>$cur_cookie</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$cur_cookie = session_get_cookie_params()</td>
+          <td class="memname">if(! $cookie_domain) if(! $cookie_domain) if (!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain)) $cur_cookie = session_get_cookie_params()</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00156">156</a></p>
+<p>Настройка параметров куков для сессий. </p>
+<p>Используются текущие параметры куков, полученные через session_get_cookie_params(). Эти параметры применяются для настройки сессий с помощью session_set_cookie_params().</p>
+<p>Текущие параметры куков, полученные через session_get_cookie_params().</p>
+<p>Содержит следующие ключи:</p><ul>
+<li>lifetime: Время жизни куки в секундах.</li>
+<li>path: Путь, для которого действует куки.</li>
+<li>domain: Домен, для которого действует куки.</li>
+<li>secure: Флаг, указывающий, что куки должны передаваться только по HTTPS.</li>
+<li>httponly: Флаг, указывающий, что куки доступны только через HTTP(S), но не через JavaScript. </li>
+</ul>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00162">162</a></p>
 
 </div>
 </div>
@@ -442,9 +362,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00168">168</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00174">174</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00215">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -462,9 +382,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Группа по-умолчанию для новых пользователей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00070">70</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00645">User\add_new_user()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00074">74</a></p>
 
 </div>
 </div>
@@ -485,9 +403,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Останавливать ли скрипт во время серьезных ошибок? (True - останавливать) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00053">53</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00057">57</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -505,9 +423,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Путь к директории для хранения логов </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00054">54</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00058">58</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00215">archive_old_logs()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -523,9 +441,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00169">169</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00175">175</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00209">archive_old_logs()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00215">archive_old_logs()</a>.</p>
 
 </div>
 </div>
@@ -541,9 +459,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00170">170</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00176">176</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/dcd/common_8php_source.html#l00353">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -559,9 +477,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00108">108</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00645">User\add_new_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l00837">User\update_user_data()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00114">114</a></p>
 
 </div>
 </div>
@@ -577,9 +493,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00083">83</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00645">User\add_new_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01031">User\login_user()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00088">88</a></p>
 
 </div>
 </div>
@@ -595,9 +509,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00095">95</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00645">User\add_new_user()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00100">100</a></p>
 
 </div>
 </div>
@@ -613,11 +525,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p>Таблица с списком категорий на сервере </p>
+<p>Таблица со списком категорий на сервере </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00064">64</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01067">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01797">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01309">Work_CoreLogic\_del_photo_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01025">Work_Template\_template_stat_internal()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">68</a></p>
 
 </div>
 </div>
@@ -639,9 +549,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <p>Что использовать как конец строки (для Win-серверов). </p>
 <p>Таблица с настройками сервера </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00061">61</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00162">Work\__construct()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00065">65</a></p>
 
 </div>
 </div>
@@ -659,9 +567,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица групп пользователей с их правами </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">69</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00645">User\add_new_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01474">User\all_right_fields()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01274">User\load_authenticated_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l01207">User\load_guest_user()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00073">73</a></p>
 
 </div>
 </div>
@@ -679,9 +585,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с пунктами меню </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00062">62</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00793">Work_Template\_create_menu_internal()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00066">66</a></p>
 
 </div>
 </div>
@@ -699,9 +603,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с новостями </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00063">63</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01420">Work_CoreLogic\_news_internal()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00067">67</a></p>
 
 </div>
 </div>
@@ -717,11 +619,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p>Таблица с списком фотографий на сервере </p>
+<p>Таблица со списком фотографий на сервере </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00065">65</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01067">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01797">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01309">Work_CoreLogic\_del_photo_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01173">Work_Template\_template_best_user_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01025">Work_Template\_template_stat_internal()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00069">69</a></p>
 
 </div>
 </div>
@@ -739,9 +639,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с оценками фотографий от модераторов </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00067">67</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01309">Work_CoreLogic\_del_photo_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01025">Work_Template\_template_stat_internal()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00071">71</a></p>
 
 </div>
 </div>
@@ -759,9 +657,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с оценками фотографий от пользователей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00066">66</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01309">Work_CoreLogic\_del_photo_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01025">Work_Template\_template_stat_internal()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00070">70</a></p>
 
 </div>
 </div>
@@ -779,9 +675,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица пользователей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00068">68</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01067">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01797">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01173">Work_Template\_template_best_user_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01025">Work_Template\_template_stat_internal()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l00645">User\add_new_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01474">User\all_right_fields()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01274">User\load_authenticated_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01031">User\login_user()</a> и <a class="el" href="../../d1/d1a/user_8php_source.html#l00837">User\update_user_data()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../d9/dcd/common_8php_source.html">common.php</a> строка <a class="el" href="../../d9/dcd/common_8php_source.html#l00072">72</a></p>
 
 </div>
 </div>

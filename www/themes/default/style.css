@@ -15,8 +15,18 @@
     border-color: #333333 !important; /* Цвет границы */
 }
 
+.custom-textarea textarea {
+    background-color: #1e1e1e !important; /* Тёмный фон */
+    color: #ffffff !important; /* Белый текст */
+    border-color: #333333 !important; /* Цвет границы */
+}
+
 /* Изменение цвета при наведении */
 .custom-input input:hover {
+    background-color: #333333 !important; /* Темнее при наведении */
+}
+
+.custom-textarea textarea:hover {
     background-color: #333333 !important; /* Темнее при наведении */
 }
 
@@ -24,6 +34,26 @@
 .custom-input input:focus {
     background-color: #2a2a2a !important; /* Фон при фокусе */
     border-color: #ff6347 !important; /* Оранжевая граница */
+}
+
+.custom-textarea textarea:focus {
+    background-color: #2a2a2a !important; /* Фон при фокусе */
+    border-color: #ff6347 !important; /* Оранжевая граница */
+}
+
+.no-space {
+     padding: 0 !important;
+     margin: 0 !important;
+ }
+
+#short_menu {
+    position: relative;
+    overflow: visible !important;
+}
+
+.ui.sticky {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 body {

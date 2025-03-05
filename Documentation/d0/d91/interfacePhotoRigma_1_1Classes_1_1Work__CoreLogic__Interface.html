@@ -158,10 +158,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">\PhotoRigma\Classes\Work_CoreLogic_Interface</a> {</div>
 <div class="line">    <span class="comment">// Реализация методов интерфейса</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00446">work_corelogic.php:447</a></div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00073">work_corelogic.php:74</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00454">work_corelogic.php:455</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00081">work_corelogic.php:82</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00073">73</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00081">81</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a4dfb943f9b750ec6e1e2924a9620c7f5" name="a4dfb943f9b750ec6e1e2924a9620c7f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4dfb943f9b750ec6e1e2924a9620c7f5">&#9670;&#160;</a></span>category()</h2>
@@ -191,9 +191,6 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <li>Формирование результирующего массива с информацией о категории или альбоме, включая название, описание, количество фотографий, данные о последней и лучшей фотографии, а также ссылки на них.</li>
 </ol>
 <p>Этот метод должен быть реализован в классах, использующих интерфейс, и может быть вызван через публичный метод <code>category()</code>.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$cat_id</td><td>Идентификатор категории или пользователя (если <code>$user_flag = 1</code>). По умолчанию: <code>0</code>. Должен быть целым числом &gt;= <code>0</code>. </td></tr>
@@ -236,7 +233,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line"><span class="comment">// Получение данных о пользовательском альбоме с ID = 123</span></div>
 <div class="line">$user_album_data = $object-&gt;category(123, 1);</div>
 <div class="line">print_r($user_album_data);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd>
+<dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5">Work_CoreLogic</a>.</p>
 
 </div>
@@ -275,13 +275,6 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <li>Возвращает массив данных для вывода изображения или массив по-умолчанию в случае ошибки.</li>
 </ol>
 <p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов.">PhotoRigma\Classes\Work_CoreLogic\create_photo()</a> Метод, реализующий основную логику. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work\size_image()</a> Метод, используемый для вычисления размеров изображения. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип изображения:<ul>
@@ -322,7 +315,14 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line"><span class="comment">// Получение данных для вывода изображения из категории с ID = 5</span></div>
 <div class="line">$category_photo = $coreLogic-&gt;create_photo(<span class="stringliteral">&#39;cat&#39;</span>, 5);</div>
 <div class="line">print_r($category_photo);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов.">PhotoRigma\Classes\Work_CoreLogic\create_photo()</a> Метод, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work\size_image()</a> Метод, используемый для вычисления размеров изображения. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5">Work_CoreLogic</a>.</p>
 
 </div>
@@ -349,18 +349,6 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <li>Удаляет связанные записи из таблиц <code>TBL_RATE_USER</code> и <code>TBL_RATE_MODER</code>.</li>
 <li>Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью функции <code>log_in_file()</code>. Этот метод содержит основную логику, вызываемую через публичный метод del_photo().</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\del_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
-<li>TBL_PHOTO: Таблица для хранения данных об изображениях.</li>
-<li>TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.</li>
-<li>TBL_RATE_MODER: Таблица для хранения оценок модераторов. Конфигурационные ключи:</li>
-<li>site_dir: Базовый путь к директории сайта.</li>
-<li>thumbnail_folder: Путь к каталогу эскизов.</li>
-<li>gallery_folder: Путь к каталогу полноразмерных изображений.</li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>Идентификатор удаляемого изображения (обязательное поле). Должен быть положительным целым числом.</td></tr>
@@ -386,7 +374,19 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось удалить изображение.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\del_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>TBL_PHOTO: Таблица для хранения данных об изображениях.</li>
+<li>TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.</li>
+<li>TBL_RATE_MODER: Таблица для хранения оценок модераторов. Конфигурационные ключи:</li>
+<li>site_dir: Базовый путь к директории сайта.</li>
+<li>thumbnail_folder: Путь к каталогу эскизов.</li>
+<li>gallery_folder: Путь к каталогу полноразмерных изображений. </li>
+</ul>
+</dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639">Work_CoreLogic</a>.</p>
 
 </div>
@@ -418,9 +418,6 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </li>
 <li>Возвращает массив с данными о доступных языках или выбрасывает исключение, если языки не найдены. Основная логика метода вызывается через публичный метод get_languages().</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/.">PhotoRigma\Classes\Work_CoreLogic\get_languages()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о доступных языках. Каждый элемент массива содержит:<ul>
 <li><code>value</code>: Имя директории языка (строка).</li>
 <li><code>name</code>: Название языка из файла <code>main.php</code> (строка).</li>
@@ -449,7 +446,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line"><span class="keywordflow">foreach</span> ($languages as $language) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Язык: &quot;</span> . $language[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&quot; (ID: &quot;</span> . $language[<span class="stringliteral">&#39;value&#39;</span>] . <span class="stringliteral">&quot;)\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/.">PhotoRigma\Classes\Work_CoreLogic\get_languages()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66">Work_CoreLogic</a>.</p>
 
 </div>
@@ -481,9 +481,6 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </li>
 <li>Возвращает массив с именами доступных тем или выбрасывает исключение, если темы не найдены. Основная логика метода вызывается через публичный метод get_themes().</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/.">PhotoRigma\Classes\Work_CoreLogic\get_themes()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив строк с именами доступных тем. Если темы не найдены, возвращается пустой массив.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
@@ -508,7 +505,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line"><span class="keywordflow">foreach</span> ($themes as $theme) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Доступная тема: $theme\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/.">PhotoRigma\Classes\Work_CoreLogic\get_themes()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613">Work_CoreLogic</a>.</p>
 
 </div>
@@ -543,7 +543,6 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <li>Выполняет запрос к таблице TBL_NEWS с использованием параметров.</li>
 <li>Возвращает массив с данными о новостях или пустой массив, если новости не найдены. Этот метод содержит основную логику, вызываемую через публичный метод news().</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\news()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$news_id_or_limit</td><td>Количество новостей или ID новости (в зависимости от параметра $act). Должен быть положительным целым числом. </td></tr>
@@ -578,7 +577,8 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line"><span class="comment">// Получение 10 последних новостей</span></div>
 <div class="line">$news_list = $coreLogic-&gt;news(10, <span class="stringliteral">&#39;last&#39;</span>);</div>
 <div class="line">print_r($news_list);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\news()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic</a>.</p>
 
 </div>

@@ -150,10 +150,10 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <dl class="section warning"><dt>Предупреждения</dt><dd>Не используйте классы, реализующие этот интерфейс, напрямую. Все вызовы должны выполняться через класс Work.</dd></dl>
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">Work_Security</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html">\PhotoRigma\Classes\Work_Security_Interface</a> {</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html"><div class="ttname"><a href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">PhotoRigma\Classes\Work_Security</a></div><div class="ttdoc">Класс для обеспечения безопасности приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00318">work_security.php:319</a></div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Security__Interface_html"><div class="ttname"><a href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html">PhotoRigma\Classes\Work_Security_Interface</a></div><div class="ttdoc">Интерфейс для работы с безопасностью.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00072">work_security.php:73</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Security_html"><div class="ttname"><a href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html">PhotoRigma\Classes\Work_Security</a></div><div class="ttdoc">Класс для обеспечения безопасности приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00323">work_security.php:324</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Security__Interface_html"><div class="ttname"><a href="../../da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html">PhotoRigma\Classes\Work_Security_Interface</a></div><div class="ttdoc">Интерфейс для работы с безопасностью.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/dc1/work__security_8php_source.html#l00077">work_security.php:78</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00072">72</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d6/dc1/work__security_8php_source.html">work_security.php</a> строка <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00077">77</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a7fd7e97a953487a9422281b97bd6f083" name="a7fd7e97a953487a9422281b97bd6f083"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7fd7e97a953487a9422281b97bd6f083">&#9670;&#160;</a></span>check_field()</h2>
@@ -186,9 +186,6 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <li>Проверяет, что значение не содержит запрещённых паттернов из Work_Security::compiled_rules.</li>
 </ul>
 <p>Метод зависит от корректности данных в свойстве Work_Security::compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.">PhotoRigma\Classes\Work_Security\check_field()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Значение поля для проверки. Указывается строковое значение, которое необходимо проверить. </td></tr>
@@ -208,7 +205,10 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Поле не прошло проверку.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.">PhotoRigma\Classes\Work_Security\check_field()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083">Work_Security</a>.</p>
 
 </div>
@@ -246,11 +246,6 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <li>Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа.</li>
 </ul>
 <p>Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки поддерживаемых MIME-типов. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$source_name</td><td>Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'. </td></tr>
@@ -284,7 +279,12 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Поле username не прошло проверку.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
+<dd>
+<a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки поддерживаемых MIME-типов. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d">Work_Security</a>.</p>
 
 </div>
@@ -306,9 +306,6 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 
 <p>Заменяет символы в email-адресах для "обмана" ботов. </p>
 <p>Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами. Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст, метод возвращает пустую строку.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email-адресах для &quot;обмана&quot; ботов.">PhotoRigma\Classes\Work_Security\filt_email()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$email</td><td>Email-адрес для обработки. Должен быть непустым и соответствовать формату email (например, "example@example.com"). Если email некорректен или пуст, метод возвращает пустую строку.</td></tr>
@@ -328,7 +325,10 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Email некорректен или пуст.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email-адресах для &quot;обмана&quot; ботов.">PhotoRigma\Classes\Work_Security\filt_email()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972">Work_Security</a>.</p>
 
 </div>
@@ -351,7 +351,6 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <p>Генерирует математический CAPTCHA-вопрос и ответ. </p>
 <p>Метод создаёт случайное математическое выражение (сложение или умножение) и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов. Выражение может включать комбинацию сложения и умножения с использованием скобок.</p>
 <p>Метод использует функцию rand() для генерации случайных чисел. Если требуется криптографическая безопасность, следует заменить её на random_int().</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46" title="Генерирует математический CAPTCHA-вопрос и ответ.">PhotoRigma\Classes\Work_Security\gen_captcha()</a> Публичный метод, который вызывает этот внутренний метод.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с ключами 'question' и 'answer':<ul>
 <li>'question': строка математического выражения (например, "2 x (3 + 4)").</li>
 <li>'answer': целочисленный результат вычисления (например, 14).</li>
@@ -362,7 +361,8 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <div class="line">$captcha = $security-&gt;gen_captcha();</div>
 <div class="line">echo <span class="stringliteral">&quot;Вопрос: {$captcha[&#39;question&#39;]}\n&quot;</span>;</div>
 <div class="line">echo <span class="stringliteral">&quot;Ответ: {$captcha[&#39;answer&#39;]}\n&quot;</span>;</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46" title="Генерирует математический CAPTCHA-вопрос и ответ.">PhotoRigma\Classes\Work_Security\gen_captcha()</a> Публичный метод, который вызывает этот внутренний метод. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46">Work_Security</a>.</p>
 
 </div>
@@ -384,9 +384,6 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 
 <p>Проверяет URL на наличие вредоносного кода. </p>
 <p>Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов, определяемых в массиве Work_Security::compiled_rules. Если формат URL некорректен или найден запрещённый паттерн, метод возвращает false.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода.">PhotoRigma\Classes\Work_Security\url_check()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в свойстве Work_Security::compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</dd></dl>
@@ -398,7 +395,10 @@ $(function(){initNavTree('da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Securit
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;URL содержит запрещённые паттерны.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
+<dd>
+<a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода.">PhotoRigma\Classes\Work_Security\url_check()</a> Публичный метод, который вызывает этот внутренний метод. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">Work_Security</a>.</p>
 
 </div>

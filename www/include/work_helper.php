@@ -915,9 +915,9 @@ class Work_Helper implements Work_Helper_Interface
                     $depth + 1
                 ) . '</details>',
                 // Горизонтальная линия
-                '[hr]' => '<hr />',
+                '[hr]' => fn () => '<hr />', // Исправлено: строка заменена на анонимную функцию
                 // Перенос строки
-                '[br]' => '<br />',
+                '[br]' => fn () => '<br />', // Исправлено: строка заменена на анонимную функцию
                 // Выравнивание текста
                 '#\[left\](.*?)\[/left\]#si' => fn ($matches) => '<p style="text-align:left;">' . $process_recursively(
                     $matches[1],

@@ -12,28 +12,80 @@
                                     </td>
 								</tr>
 								<tr>
-									<td class="news_data"></td>
 									<td class="news_data">
 <!-- IF_EDIT_SHORT_BEGIN -->
-										<div class="edit_delete"><button class="edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">&nbsp;</button><button class="delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}?')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">&nbsp;</button></div>
+										<div class="ui mini compact buttons">
+											<button class="circular ui orange basic icon button" title="{L_EDIT_BLOCK}" onclick="window.location.href='{U_EDIT_BLOCK}'"><i class="edit icon"></i></button>
+											<button class="circular ui red basic icon button" id="delete-button" title="{L_DELETE_BLOCK}"><i class="trash alternate icon"></i></button>
+										</div>
+										<script>
+											$('#delete-button').on('click', function() {
+												$('.ui.basic.modal')
+														.modal({
+															closable: false,
+															onApprove: function() {
+																window.location.href = '{U_DELETE_BLOCK}';
+															}
+														})
+														.modal('show');
+											});
+										</script>
+
+										<div class="ui basic modal">
+											<div class="header">{L_DELETE_BLOCK}</div>
+											<div class="content">
+												<p>{L_CONFIRM_DELETE_BLOCK}</p>
+											</div>
+											<div class="actions">
+												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+											</div>
+										</div>
 <!-- IF_EDIT_SHORT_END -->
 										{L_NEWS_DATA}
 <!-- IF_USER_EXISTS_BEGIN -->
 										<br />{L_USER_ADD}: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
 <!-- IF_USER_EXISTS_END -->
 <!-- IF_EDIT_LONG_BEGIN -->
-										<br /><div class="long_edit_delete"><button class="long_edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">{L_EDIT_BLOCK}</button><button class="long_delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">{L_DELETE_BLOCK}</button></div>
+										<br /><div class="tiny ui buttons">
+										<button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
+											<i class="edit icon"></i> {L_EDIT_BLOCK}
+										</button>
+										<button class="ui inverted circular red basic icon button" id="delete-button">
+											<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
+										</button>
+										</div>
+										<script>
+											$('#delete-button').on('click', function() {
+												$('.ui.basic.modal')
+														.modal({
+															closable: false,
+															onApprove: function() {
+																window.location.href = '{U_DELETE_BLOCK}';
+															}
+														})
+														.modal('show');
+											});
+										</script>
+
+										<div class="ui basic modal">
+											<div class="header">{L_DELETE_BLOCK}</div>
+											<div class="content">
+												<p>{L_CONFIRM_DELETE_BLOCK}</p>
+											</div>
+											<div class="actions">
+												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+											</div>
+										</div>
 <!-- IF_EDIT_LONG_END -->
 										<hr class="line" />
 									</td>
-									<td class="news_data"></td>
 								</tr>
 								<tr>
-									<td class="news"></td>
 									<td class="news">
 										{L_TEXT_POST}
 									</td>
-									<td class="news"></td>
 								</tr>
 							</table>
 <!-- ARRAY_LAST_NEWS_END -->
@@ -41,36 +93,40 @@
 <!-- CASE_LIST_NEWS -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_TITLE_NEWS_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="news_data"></td>
-									<td class="news_data">{L_NEWS_DATA}<hr class="line" /></td>
-									<td class="news_data"></td>
-								</tr>
-								<tr>
-									<td class="news"></td>
-									<td class="news">
-<!-- ARRAY_LIST_NEWS_BEGIN -->
-										<br />&bull;&nbsp;<a href="{U_LIST_URL}" title="{L_LIST_TITLE}">{L_LIST_DATA}</a><br />
-<!-- ARRAY_LIST_NEWS_END -->
-										<br />
+									<td>
+										<div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+											<div class="ui top black attached centered label">
+												<i class="newspaper icon"></i> {L_TITLE_NEWS_BLOCK}
+											</div>
+										</div>
 									</td>
-									<td class="news"></td>
+								</tr>
+								<tr>
+									<td class="news_data">{L_NEWS_DATA}<hr class="line" /></td>
+								</tr>
+								<tr>
+									<td class="news">
+										<div class="ui middle aligned animated bulleted list list">
+<!-- ARRAY_LIST_NEWS_BEGIN -->
+											<div class="item"><a href="{U_LIST_URL}" title="{L_LIST_TITLE}">{L_LIST_DATA}</a></div>
+<!-- ARRAY_LIST_NEWS_END -->
+										</div>
+									</td>
 								</tr>
 							</table>
 <!-- BREAK_LIST_NEWS -->
 <!-- CASE_NEWS_SAVE -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
+									<td>
+										<div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+											<div class="ui top black attached centered label">
+												<i class="newspaper icon"></i> {NAME_BLOCK}
+											</div>
+										</div>
+									</td>
 								</tr>
 								<tr>
-									<td class="news_data"></td>
 									<td class="category_center" align="center">
 										<form action="{U_SAVE_NEWS}" method="post" name="news">
 											<table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -85,27 +141,44 @@
 												</tr>
 <!-- IF_NEED_USER_END -->
 												<tr>
-													<td class="category_center">{L_NAME_POST}<br /><input class="form_textarea" name="name_post" type="text" size="50" maxlength="50" value="{D_NAME_POST}"/></td>
+													<td class="category_center">
+														<div class="inline field">
+															<div class="ui black inverted basic right pointing label">
+																{L_NAME_POST}
+															</div>
+															<div class="tiny ui input custom-input">
+																<input class="ui input" name="name_post" type="text" maxlength="50" value="{D_NAME_POST}" placeholder="{L_NAME_POST}" />
+															</div>
+														</div>
+													</td>
 												</tr>
 												<tr>
-													<td class="category_center">{L_TEXT_POST}<br /><textarea class="form_textarea" name="text_post" rows="30" cols="50">{D_TEXT_POST}</textarea></td>
+													<td class="category_center">
+														<div class="tiny ui input custom-textarea">
+															<div class="ui black inverted basic top attached label">{L_TEXT_POST}</div>
+															<textarea class="ui input" name="text_post" rows="30" cols="50">{D_TEXT_POST}</textarea>
+														</div>
+													</td>
 												</tr>
 												<tr>
-													<td class="category_center"><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SAVE_NEWS}" title="{L_SAVE_NEWS}" /></td>
+													<td class="category_center"><button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_NEWS}"><i class="upload icon"></i>{L_SAVE_NEWS}</button></td>
 												</tr>
 											</table>
 										</form>
 									</td>
-									<td class="news_data"></td>
 								</tr>
 							</table>
 <!-- BREAK_NEWS_SAVE -->
 <!-- CASE_DEFAULT -->
 							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
 								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">ERROR_CASE_BLOCK</td>
-									<td class="name_block_right">&nbsp;</td>
+									<td>
+										<div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
+											<div class="ui top black attached centered label">
+												<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+											</div>
+										</div>
+									</td>
 								</tr>
 							</table>
 <!-- BREAK_DEFAULT -->

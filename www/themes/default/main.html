@@ -12,14 +12,70 @@
 								<tr>
 									<td class="news_data">
 <!-- IF_EDIT_SHORT_BEGIN -->
-										<div class="edit_delete"><button class="edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">&nbsp;</button><button class="delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}?')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">&nbsp;</button></div>
+										<div class="ui right floated mini compact buttons">
+											<button class="circular ui orange basic icon button" title="{L_EDIT_BLOCK}" onclick="window.location.href='{U_EDIT_BLOCK}'"><i class="edit icon"></i></button>
+											<button class="circular ui red basic icon button" id="delete-button" title="{L_DELETE_BLOCK}"><i class="trash alternate icon"></i></button>
+										</div>
+										<script>
+											$('#delete-button').on('click', function() {
+												$('.ui.basic.modal')
+														.modal({
+															closable: false,
+															onApprove: function() {
+																window.location.href = '{U_DELETE_BLOCK}';
+															}
+														})
+														.modal('show');
+											});
+										</script>
+
+										<div class="ui basic modal">
+											<div class="header">{L_DELETE_BLOCK}</div>
+											<div class="content">
+												<p>{L_CONFIRM_DELETE_BLOCK}</p>
+											</div>
+											<div class="actions">
+												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+											</div>
+										</div>
 <!-- IF_EDIT_SHORT_END -->
 										{L_NEWS_DATA}
 <!-- IF_USER_EXISTS_BEGIN -->
 										<br />{L_USER_ADD}: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
 <!-- IF_USER_EXISTS_END -->
 <!-- IF_EDIT_LONG_BEGIN -->
-										<br /><div class="long_edit_delete"><button class="long_edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">{L_EDIT_BLOCK}</button><button class="long_delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">{L_DELETE_BLOCK}</button></div>
+										<br /><div class="tiny ui buttons">
+										<button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
+											<i class="edit icon"></i> {L_EDIT_BLOCK}
+										</button>
+										<button class="ui inverted circular red basic icon button" id="delete-button">
+											<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
+										</button>
+									</div>
+										<script>
+											$('#delete-button').on('click', function() {
+												$('.ui.basic.modal')
+														.modal({
+															closable: false,
+															onApprove: function() {
+																window.location.href = '{U_DELETE_BLOCK}';
+															}
+														})
+														.modal('show');
+											});
+										</script>
+
+										<div class="ui basic modal">
+											<div class="header">{L_DELETE_BLOCK}</div>
+											<div class="content">
+												<p>{L_CONFIRM_DELETE_BLOCK}</p>
+											</div>
+											<div class="actions">
+												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+											</div>
+										</div>
 <!-- IF_EDIT_LONG_END -->
 										<hr class="line" />
 									</td>

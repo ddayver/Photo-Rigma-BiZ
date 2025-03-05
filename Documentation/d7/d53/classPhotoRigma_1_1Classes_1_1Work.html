@@ -177,6 +177,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <tr class="memitem:aeb13fee613cd87923546463495400380" id="r_aeb13fee613cd87923546463495400380"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb13fee613cd87923546463495400380">check_post</a> (string $field, bool $isset=false, bool $empty=false, string|false $regexp=false, bool $not_zero=false)</td></tr>
 <tr class="memdesc:aeb13fee613cd87923546463495400380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Метод-редирект для проверки данных из POST-запроса.  <br /></td></tr>
 <tr class="separator:aeb13fee613cd87923546463495400380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e6ea2a212c3c2dee206a1753b673b7d" id="r_a6e6ea2a212c3c2dee206a1753b673b7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e6ea2a212c3c2dee206a1753b673b7d">check_input</a> (string $source_name, string $field, array $options=[])</td></tr>
+<tr class="memdesc:a6e6ea2a212c3c2dee206a1753b673b7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Универсальная проверка входных данных.  <br /></td></tr>
+<tr class="separator:a6e6ea2a212c3c2dee206a1753b673b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2274d881c2d51e38c452a2ebaacaa9e7" id="r_a2274d881c2d51e38c452a2ebaacaa9e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2274d881c2d51e38c452a2ebaacaa9e7">check_get</a> (string $field, bool $isset=false, bool $empty=false, string|false $regexp=false, bool $not_zero=false)</td></tr>
 <tr class="memdesc:a2274d881c2d51e38c452a2ebaacaa9e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Метод-редирект для проверки данных из GET-запроса.  <br /></td></tr>
 <tr class="separator:a2274d881c2d51e38c452a2ebaacaa9e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,9 +189,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <tr class="memitem:a1e1a4ab6b213ada0d89c77a24d8ffe32" id="r_a1e1a4ab6b213ada0d89c77a24d8ffe32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e1a4ab6b213ada0d89c77a24d8ffe32">url_check</a> ()</td></tr>
 <tr class="memdesc:a1e1a4ab6b213ada0d89c77a24d8ffe32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет URL на наличие вредоносного кода.  <br /></td></tr>
 <tr class="separator:a1e1a4ab6b213ada0d89c77a24d8ffe32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e6ea2a212c3c2dee206a1753b673b7d" id="r_a6e6ea2a212c3c2dee206a1753b673b7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e6ea2a212c3c2dee206a1753b673b7d">check_input</a> (string $source_name, string $field, array $options=[])</td></tr>
-<tr class="memdesc:a6e6ea2a212c3c2dee206a1753b673b7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Универсальная проверка входных данных.  <br /></td></tr>
-<tr class="separator:a6e6ea2a212c3c2dee206a1753b673b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fd7e97a953487a9422281b97bd6f083" id="r_a7fd7e97a953487a9422281b97bd6f083"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fd7e97a953487a9422281b97bd6f083">check_field</a> (string $field, string|false $regexp=false, bool $not_zero=false)</td></tr>
 <tr class="memdesc:a7fd7e97a953487a9422281b97bd6f083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.  <br /></td></tr>
 <tr class="separator:a7fd7e97a953487a9422281b97bd6f083"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,9 +246,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Открытые статические члены</h2></td></tr>
-<tr class="memitem:ab73ba07b8376dd2e1764240c73a338ea" id="r_ab73ba07b8376dd2e1764240c73a338ea"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea">clean_field</a> ($field)</td></tr>
-<tr class="memdesc:ab73ba07b8376dd2e1764240c73a338ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очистка строки от HTML-тегов и специальных символов.  <br /></td></tr>
-<tr class="separator:ab73ba07b8376dd2e1764240c73a338ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08089badb76485629afe2c4d9f766a30" id="r_a08089badb76485629afe2c4d9f766a30"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08089badb76485629afe2c4d9f766a30">return_bytes</a> ($val)</td></tr>
 <tr class="memdesc:a08089badb76485629afe2c4d9f766a30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразование размера в байты.  <br /></td></tr>
 <tr class="separator:a08089badb76485629afe2c4d9f766a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,6 +261,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <tr class="memitem:a41518918c225073130bc7a73983d72ff" id="r_a41518918c225073130bc7a73983d72ff"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41518918c225073130bc7a73983d72ff">validate_mime_type</a> (string $real_mime_type)</td></tr>
 <tr class="memdesc:a41518918c225073130bc7a73983d72ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверка MIME-типа файла через доступные библиотеки.  <br /></td></tr>
 <tr class="separator:a41518918c225073130bc7a73983d72ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab73ba07b8376dd2e1764240c73a338ea" id="r_ab73ba07b8376dd2e1764240c73a338ea"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea">clean_field</a> ($field)</td></tr>
+<tr class="memdesc:ab73ba07b8376dd2e1764240c73a338ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очистка строки от HTML-тегов и специальных символов.  <br /></td></tr>
+<tr class="separator:ab73ba07b8376dd2e1764240c73a338ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
@@ -342,16 +342,16 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><span class="comment">// Установка пользователя</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;set_user(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">PhotoRigma\Classes\Database</a></div><div class="ttdoc">Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00562">db.php:563</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html"><div class="ttname"><a href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">PhotoRigma\Classes\User</a></div><div class="ttdoc">Класс по работе с пользователями и хранению данных о текущем пользователе.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00354">user.php:355</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00105">work.php:106</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00109">work.php:109</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a9fd8978d2c6cbdcfdd6be875be161b7b"><div class="ttname"><a href="#a9fd8978d2c6cbdcfdd6be875be161b7b">PhotoRigma\Classes\Work\$lang</a></div><div class="ttdeci">array $lang</div><div class="ttdoc">Массив с языковыми переменными</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00115">work.php:115</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Массив, хранящий конфигурацию приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00108">work.php:108</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00152">index.php:152</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00167">index.php:167</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">PhotoRigma\Classes\Database</a></div><div class="ttdoc">Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00571">db.php:572</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html"><div class="ttname"><a href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">PhotoRigma\Classes\User</a></div><div class="ttdoc">Класс по работе с пользователями и хранению данных о текущем пользователе.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00360">user.php:361</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00111">work.php:112</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00115">work.php:115</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a9fd8978d2c6cbdcfdd6be875be161b7b"><div class="ttname"><a href="#a9fd8978d2c6cbdcfdd6be875be161b7b">PhotoRigma\Classes\Work\$lang</a></div><div class="ttdeci">array $lang</div><div class="ttdoc">Массив с языковыми переменными</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00121">work.php:121</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Массив, хранящий конфигурацию приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00114">work.php:114</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00163">index.php:163</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00178">index.php:178</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00105">105</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00111">111</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a0cf75f058a40065de0a52d9f2037960a" name="a0cf75f058a40065de0a52d9f2037960a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0cf75f058a40065de0a52d9f2037960a">&#9670;&#160;</a></span>__construct()</h2>
@@ -383,21 +383,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Инициализация дочерних классов: Work_Helper, Work_Security, Work_Image, Work_Template, Work_CoreLogic.</li>
 <li>Установка кодировки UTF-8 для работы с мультибайтовыми строками.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd>
-<dd>
-<a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75" title="Объект для работы с базой данных.">PhotoRigma\Classes\Work\$db</a> Объект для работы с базой данных. </dd>
-<dd>
-<a class="el" href="#a82d7359ac20005ddda09f8a9bb46afbe" title="Объект для работы с безопасностью.">PhotoRigma\Classes\Work\$security</a> Свойство, содержащее объект Work_Security. </dd>
-<dd>
-<a class="el" href="#aaa91e6962b68bc0c0896341f680f1770" title="Объект класса Work_Image для работы с изображениями.">PhotoRigma\Classes\Work\$image</a> Свойство, содержащее объект Work_Image. </dd>
-<dd>
-<a class="el" href="#aca87a58e031a0d778d2db06aa29601a6" title="Объект для работы с шаблонами.">PhotoRigma\Classes\Work\$template</a> Свойство, содержащее объект Work_Template. </dd>
-<dd>
-<a class="el" href="#a1302bab9161235940ceaa4221e2be70e" title="Объект для очистки строк, преобразования размеров и проверки MIME-типов.">PhotoRigma\Classes\Work\$helper</a> Свойство, содержащее объект для очистки строк, преобразования размеров и проверки MIME-типов. </dd>
-<dd>
-<a class="el" href="#a8b6a35b7140ba93f44fa12a2247ba8b5" title="Объект для основной логики приложения.">PhotoRigma\Classes\Work\$core_logic</a> Свойство, содержащее объект Work_CoreLogic. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">Database_Interface</td><td class="paramname">$db</td><td>Объект для работы с базой данных. </td></tr>
@@ -420,22 +405,25 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">    <span class="stringliteral">&#39;debug_mode&#39;</span> =&gt; <span class="keyword">true</span>,</div>
 <div class="line">];</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work(<a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, <a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00162">162</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd>
+<dd>
+<a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75" title="Объект для работы с базой данных.">PhotoRigma\Classes\Work\$db</a> Объект для работы с базой данных. </dd>
+<dd>
+<a class="el" href="#a82d7359ac20005ddda09f8a9bb46afbe" title="Объект для работы с безопасностью.">PhotoRigma\Classes\Work\$security</a> Свойство, содержащее объект Work_Security. </dd>
+<dd>
+<a class="el" href="#aaa91e6962b68bc0c0896341f680f1770" title="Объект класса Work_Image для работы с изображениями.">PhotoRigma\Classes\Work\$image</a> Свойство, содержащее объект Work_Image. </dd>
+<dd>
+<a class="el" href="#aca87a58e031a0d778d2db06aa29601a6" title="Объект для работы с шаблонами.">PhotoRigma\Classes\Work\$template</a> Свойство, содержащее объект Work_Template. </dd>
+<dd>
+<a class="el" href="#a1302bab9161235940ceaa4221e2be70e" title="Объект для очистки строк, преобразования размеров и проверки MIME-типов.">PhotoRigma\Classes\Work\$helper</a> Свойство, содержащее объект для очистки строк, преобразования размеров и проверки MIME-типов. </dd>
+<dd>
+<a class="el" href="#a8b6a35b7140ba93f44fa12a2247ba8b5" title="Объект для основной логики приложения.">PhotoRigma\Classes\Work\$core_logic</a> Свойство, содержащее объект Work_CoreLogic. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00108">$config</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00109">$db</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00116">$session</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00061">PhotoRigma\Include\TBL_CONFIG</a>.</p>
-<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a0cf75f058a40065de0a52d9f2037960a_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a0cf75f058a40065de0a52d9f2037960a_cgraph" alt=""/></div>
-<map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a0cf75f058a40065de0a52d9f2037960a_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a0cf75f058a40065de0a52d9f2037960a_cgraph">
-<area shape="rect" title="Конструктор класса." alt="" coords="5,12,95,37"/>
-<area shape="rect" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="143,5,281,44"/>
-<area shape="poly" title=" " alt="" coords="95,22,127,22,127,27,95,27"/>
-</map>
-</div>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00168">168</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00114">$config</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00115">$db</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00122">$session</a>.</p>
 
 </div>
 </div>
@@ -457,9 +445,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Магический метод для получения значений свойств <code>$config</code> и <code>$lang</code>. </p>
 <p>Этот метод вызывается автоматически при попытке получить значение недоступного свойства. Доступ разрешён только к свойствам <code>$config</code> и <code>$lang</code>. Если запрашивается другое свойство, выбрасывается исключение InvalidArgumentException.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd>
-<dd>
-<a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Массив с языковыми переменными">PhotoRigma\Classes\Work\$lang</a> Свойство, содержащее языковые данные.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$name</td><td>Имя свойства:<ul>
@@ -482,10 +467,13 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">echo <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;config[<span class="stringliteral">&#39;key&#39;</span>]; <span class="comment">// Выведет значение ключа &#39;key&#39; из конфигурации</span></div>
 <div class="line">echo <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;lang[<span class="stringliteral">&#39;message&#39;</span>]; <span class="comment">// Выведет значение ключа &#39;message&#39; из языковых данных</span></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00227">227</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Массив с языковыми переменными">PhotoRigma\Classes\Work\$lang</a> Свойство, содержащее языковые данные.</dd>
+<dd>
+<a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00108">$config</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00115">$lang</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00480">480</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00114">$config</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00121">$lang</a>.</p>
 
 </div>
 </div>
@@ -513,15 +501,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Изменения логируются с помощью функции log_in_file (за исключением ключей из списка exclude_from_logging).</li>
 <li>Обновлённая конфигурация передаётся в дочерние классы ($this-&gt;image, $this-&gt;template, $this-&gt;core_logic) через их свойства config.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd>
-<dd>
-<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство дочернего класса Work_CoreLogic. </dd>
-<dd>
-<a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Image\$config</a> Свойство дочернего класса Work_Image. </dd>
-<dd>
-<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Template\$config</a> Свойство дочернего класса Work_Template. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$name</td><td>Имя свойства:<ul>
@@ -539,10 +518,12 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname">InvalidArgumentException</td><td>Если значение некорректно (не массив или содержатся некорректные ключи/значения). </td></tr>
-    <tr><td class="paramname">Exception</td><td>Если запрашивается несуществующее свойство.</td></tr>
+    <tr><td class="paramname">Exception</td><td>Если запрашивается несуществующее свойство.*</td></tr>
+    <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
+<p>Exception</p>
 <dl class="section note"><dt>Заметки</dt><dd>Этот метод предназначен только для изменения свойства <code>$config</code>. Логирование изменений выполняется только для определённых ключей.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Некорректные данные (не массив, нестроковые ключи или значения) вызывают исключение. Попытка установки значения для несуществующего свойства также вызывает исключение.</dd></dl>
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
@@ -550,22 +531,19 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">    <span class="stringliteral">&#39;theme&#39;</span> =&gt; <span class="stringliteral">&#39;dark&#39;</span>,</div>
 <div class="line">    <span class="stringliteral">&#39;language&#39;</span> =&gt; <span class="stringliteral">&#39;en&#39;</span></div>
 <div class="line">];</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00292">292</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd>
+<dd>
+<a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, содержащее конфигурацию. </dd>
+<dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство дочернего класса Work_CoreLogic. </dd>
+<dd>
+<a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Свойство дочернего класса Work_Image. </dd>
+<dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Языковые данные.">PhotoRigma\Classes\Work_Template\$config</a> Свойство дочернего класса Work_Template. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00108">$config</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00110">PhotoRigma\$errors</a> и <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a>.</p>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a83c2703c91959192f759992ad5640b67_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a83c2703c91959192f759992ad5640b67_cgraph" alt=""/></div>
-<map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a83c2703c91959192f759992ad5640b67_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a83c2703c91959192f759992ad5640b67_cgraph">
-<area shape="rect" title="Устанавливает значение свойства $config." alt="" coords="5,12,59,37"/>
-<area shape="rect" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="107,5,245,44"/>
-<area shape="poly" title=" " alt="" coords="59,22,91,22,91,27,59,27"/>
-</map>
-</div>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00545">545</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00114">$config</a> и <a class="el" href="../../de/d20/index_8php_source.html#l00121">PhotoRigma\$errors</a>.</p>
 
 </div>
 </div>
@@ -596,9 +574,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Для корневой категории (<code>$cat_id = 0</code>) подсчет количества уникальных пользователей, загрузивших фотографии.</li>
 <li>Формирование результирующего массива с информацией о категории или альбоме.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Метод из дочернего класса, реализующий основную логику. </dd>
-<dd>
-<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$cat_id</td><td>Идентификатор категории или пользователя (если <code>$user_flag = 1</code>). По умолчанию: <code>0</code>. Должен быть целым числом &gt;= <code>0</code>. </td></tr>
@@ -637,8 +612,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$categoryData = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;category(123, 0);</div>
 <div class="line">print_r($categoryData);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00946">946</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd>
+<dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Метод из дочернего класса, реализующий основную логику. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01353">1353</a></p>
 
 </div>
 </div>
@@ -672,9 +650,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Если флаг $not_zero установлен, проверяет, что значение не является числом 0.</li>
 <li>Проверяет, что значение не содержит запрещённых паттернов из Work_Security::compiled_rules.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.">PhotoRigma\Classes\Work_Security\check_field()</a> Реализация метода внутри класса Work_Security. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Значение поля для проверки. Указывается строковое значение, которое необходимо проверить. </td></tr>
@@ -691,8 +666,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><span class="keywordflow">if</span> ($result) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Поле прошло проверку!&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00817">817</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a7fd7e97a953487a9422281b97bd6f083" title="Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.">PhotoRigma\Classes\Work_Security\check_field()</a> Реализация метода внутри класса Work_Security. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01224">1224</a></p>
 
 </div>
 </div>
@@ -737,7 +715,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Соответствие регулярному выражению (параметр $regexp).</li>
 <li>Ненулевое значение (параметр $not_zero). Этот метод устарел. Рекомендуется использовать Work::check_input().</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Метод, который проверяет входные данные.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Поле для проверки. Указывается имя ключа в массиве $_GET, которое необходимо проверить. </td></tr>
@@ -749,6 +726,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если данные прошли проверку, иначе False.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Метод, который проверяет входные данные.</dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000003">Уст.</a></b></dt><dd>Этот метод устарел. Используйте Work::check_input() вместо него.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода через родительский класс Work</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
@@ -759,7 +737,21 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">    echo <span class="stringliteral">&quot;Данные не прошли проверку.&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00615">615</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01071">1071</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01023">check_input()</a>.</p>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a2274d881c2d51e38c452a2ebaacaa9e7_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a2274d881c2d51e38c452a2ebaacaa9e7_cgraph" alt=""/></div>
+<map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a2274d881c2d51e38c452a2ebaacaa9e7_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a2274d881c2d51e38c452a2ebaacaa9e7_cgraph">
+<area shape="rect" title="Метод&#45;редирект для проверки данных из GET&#45;запроса." alt="" coords="5,5,87,30"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных." alt="" coords="135,5,226,30"/>
+<area shape="poly" title=" " alt="" coords="87,15,119,15,119,20,87,20"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -795,11 +787,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Проверка, что значение поля не равно нулю (параметр 'not_zero').</li>
 <li>Проверка размера файла для $_FILES (параметр 'max_size') и его MIME-типа.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Реализация метода внутри класса Work_Security. </dd>
-<dd>
-<a class="el" href="#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки поддерживаемых MIME-типов. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$source_name</td><td>Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'. </td></tr>
@@ -827,8 +814,31 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><span class="keywordflow">if</span> ($result) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Проверка пройдена!&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00768">768</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки поддерживаемых MIME-типов. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
+<dd>
+<a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Реализация метода внутри класса Work_Security. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01023">1023</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l01071">check_get()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00954">check_post()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01129">check_session()</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a6e6ea2a212c3c2dee206a1753b673b7d_icgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a6e6ea2a212c3c2dee206a1753b673b7d_icgraph" alt=""/></div>
+<map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a6e6ea2a212c3c2dee206a1753b673b7d_icgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a6e6ea2a212c3c2dee206a1753b673b7d_icgraph">
+<area shape="rect" title="Универсальная проверка входных данных." alt="" coords="162,55,253,79"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a2274d881c2d51e38c452a2ebaacaa9e7" title="Метод&#45;редирект для проверки данных из GET&#45;запроса." alt="" coords="19,5,100,30"/>
+<area shape="poly" title=" " alt="" coords="153,52,98,33,100,28,155,47"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeb13fee613cd87923546463495400380" title="Метод&#45;редирект для проверки данных из POST&#45;запроса." alt="" coords="15,55,104,79"/>
+<area shape="poly" title=" " alt="" coords="146,70,104,70,104,64,146,64"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a66530d233d955a715024b02a75043179" title="Метод&#45;редирект для проверки данных из сессии." alt="" coords="5,104,114,129"/>
+<area shape="poly" title=" " alt="" coords="155,87,100,106,98,101,153,82"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -873,7 +883,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Соответствие регулярному выражению (параметр $regexp).</li>
 <li>Ненулевое значение (параметр $not_zero). Этот метод устарел. Рекомендуется использовать Work::check_input().</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Метод, который проверяет входные данные.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Поле для проверки. Указывается имя ключа в массиве $_POST, которое необходимо проверить. </td></tr>
@@ -885,6 +894,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если данные прошли проверку, иначе False.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Метод, который проверяет входные данные.</dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000002">Уст.</a></b></dt><dd>Этот метод устарел. Используйте Work::check_input() вместо него.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода через родительский класс Work</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
@@ -895,7 +905,21 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">    echo <span class="stringliteral">&quot;Данные не прошли проверку.&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00562">562</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00954">954</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01023">check_input()</a>.</p>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_aeb13fee613cd87923546463495400380_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aeb13fee613cd87923546463495400380_cgraph" alt=""/></div>
+<map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aeb13fee613cd87923546463495400380_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aeb13fee613cd87923546463495400380_cgraph">
+<area shape="rect" title="Метод&#45;редирект для проверки данных из POST&#45;запроса." alt="" coords="5,5,94,30"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных." alt="" coords="142,5,233,30"/>
+<area shape="poly" title=" " alt="" coords="94,15,126,15,126,20,94,20"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -940,7 +964,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Соответствие регулярному выражению (параметр $regexp).</li>
 <li>Ненулевое значение (параметр $not_zero). Этот метод устарел. Рекомендуется использовать Work::check_input().</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Метод, который проверяет входные данные.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Поле для проверки. Указывается имя ключа в массиве $_SESSION, которое необходимо проверить. </td></tr>
@@ -952,6 +975,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если данные прошли проверку, иначе False.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных.">PhotoRigma\Classes\Work_Security\check_input()</a> Метод, который проверяет входные данные.</dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="../../da/d58/deprecated.html#_deprecated000004">Уст.</a></b></dt><dd>Этот метод устарел. Используйте Work::check_input() вместо него.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода через родительский класс Work</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
@@ -962,7 +986,21 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">    echo <span class="stringliteral">&quot;Данные не прошли проверку.&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00668">668</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01129">1129</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l01023">check_input()</a>.</p>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a66530d233d955a715024b02a75043179_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a66530d233d955a715024b02a75043179_cgraph" alt=""/></div>
+<map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a66530d233d955a715024b02a75043179_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a66530d233d955a715024b02a75043179_cgraph">
+<area shape="rect" title="Метод&#45;редирект для проверки данных из сессии." alt="" coords="5,5,114,30"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных." alt="" coords="162,5,253,30"/>
+<area shape="poly" title=" " alt="" coords="114,15,146,15,146,20,114,20"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -991,7 +1029,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Очистка строки от HTML-тегов и специальных символов. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода clean_field() класса Work_Helper. Метод удаляет HTML-теги и экранирует специальные символы, такие как <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code>, <code>&amp;#039;</code>. Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов (публичная обёртка).">PhotoRigma\Classes\Work_Helper\clean_field()</a> Публичный метод в классе Work_Helper.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">mixed</td><td class="paramname">$field</td><td>Строка или данные, которые могут быть преобразованы в строку. Если входные данные пусты (null или пустая строка), метод вернёт null.</td></tr>
@@ -1004,18 +1041,19 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">$dirty_input = <span class="stringliteral">&#39;&amp;lt;script&amp;gt;alert(&amp;quotXSS&amp;quot)&amp;lt;/script&amp;gt;&#39;</span>;</div>
 <div class="line">$cleaned = <a class="code hl_function" href="#ab73ba07b8376dd2e1764240c73a338ea">Work::clean_field</a>($dirty_input);</div>
 <div class="line">echo $cleaned; <span class="comment">// Выведет: &amp;lt;script&amp;gt;alert(&amp;quot;XSS&amp;quot;)&amp;lt;/script&amp;gt;</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdoc">Очистка строки от HTML-тегов и специальных символов.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01678">work.php:1678</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01678">1678</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ab73ba07b8376dd2e1764240c73a338ea"><div class="ttname"><a href="#ab73ba07b8376dd2e1764240c73a338ea">PhotoRigma\Classes\Work\clean_field</a></div><div class="ttdeci">static clean_field($field)</div><div class="ttdoc">Очистка строки от HTML-тегов и специальных символов.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00861">work.php:861</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов (публичная обёртка).">PhotoRigma\Classes\Work_Helper\clean_field()</a> Публичный метод в классе Work_Helper. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00410">Work_Helper\clean_field()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00861">861</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01067">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00793">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01797">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01004">Work_Image\_image_attach_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01173">Work_Template\_template_best_user_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01025">Work_Template\_template_stat_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00921">Work_Template\_template_user_internal()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l00357">Template\create_template()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l00997">Template\page_footer()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l00854">Template\page_header()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01975">process_lang_array()</a>.</p>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00979">Work_Helper\clean_field()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00791">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00646">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01833">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01634">Work_Image\_image_attach_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01185">Work_Template\_template_best_user_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00988">Work_Template\_template_stat_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00824">Work_Template\_template_user_internal()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l01089">Template\create_template()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l01494">Template\page_footer()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00771">process_lang_array()</a>.</p>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_cgraph">
 <area shape="rect" title="Очистка строки от HTML&#45;тегов и специальных символов." alt="" coords="5,19,88,44"/>
@@ -1025,11 +1063,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="301,29,334,29,334,34,301,34"/>
 </map>
 </div>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_icgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_icgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_icgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ab73ba07b8376dd2e1764240c73a338ea_icgraph">
 <area shape="rect" title="Очистка строки от HTML&#45;тегов и специальных символов." alt="" coords="491,406,573,431"/>
@@ -1100,9 +1138,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>0: Горизонтальное краткое меню.</li>
 <li>1: Вертикальное боковое меню. Для каждого пункта меню проверяются права доступа текущего пользователя (на основе свойств User). Если пункт меню видим, он добавляется в результат с очисткой данных через Work::clean_field().</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта.">PhotoRigma\Classes\Work_Template\create_menu()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Статический метод для очистки данных.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$action</td><td>Активный пункт меню. Указывается строка, соответствующая активному пункту меню (например, 'home', 'profile'). </td></tr>
@@ -1134,10 +1169,13 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"> </div>
 <div class="line">$long_menu = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;create_menu(<span class="stringliteral">&#39;profile&#39;</span>, 1); <span class="comment">// Создание вертикального меню</span></div>
 <div class="line">print_r($long_menu);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01275">1275</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Статический метод для очистки данных.</dd>
+<dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта.">PhotoRigma\Classes\Work_Template\create_menu()</a> Публичный метод, который вызывает этот внутренний метод. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00224">PhotoRigma\$action</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01682">1682</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00233">PhotoRigma\$action</a>.</p>
 
 </div>
 </div>
@@ -1180,9 +1218,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li><code>Вычисление размеров изображения через метод</code>size_image()<code>.</code></li>
 <li><code>Возврат массива данных для вывода изображения или вызов</code>generate_photo_data()` в случае ошибки.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work_Image::create_photo() Метод из дочернего класса, реализующий основную логику. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип изображения:<ul>
@@ -1215,8 +1250,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$imageData = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;create_photo(<span class="stringliteral">&#39;top&#39;</span>, 0);</div>
 <div class="line">print_r($imageData);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01218">1218</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work_Image::create_photo() Метод из дочернего класса, реализующий основную логику. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01627">1627</a></p>
 
 </div>
 </div>
@@ -1242,15 +1280,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Удаляет связанные записи из таблиц <code>TBL_RATE_USER</code> и <code>TBL_RATE_MODER</code>.</li>
 <li>Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью функции <code>log_in_file()</code>.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\del_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
-<li>TBL_PHOTO: Таблица для хранения данных об изображениях.</li>
-<li>TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.</li>
-<li>TBL_RATE_MODER: Таблица для хранения оценок модераторов.</li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>Идентификатор удаляемого изображения (обязательное поле). Должен быть положительным целым числом.</td></tr>
@@ -1275,8 +1304,17 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось удалить изображение.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01000">1000</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\del_photo()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
+<li>TBL_PHOTO: Таблица для хранения данных об изображениях.</li>
+<li>TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.</li>
+<li>TBL_RATE_MODER: Таблица для хранения оценок модераторов. </li>
+</ul>
+</dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01407">1407</a></p>
 
 </div>
 </div>
@@ -1305,7 +1343,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Транслитерация строки и замена знаков пунктуации на "_". </p>
 <p>Этот метод является делегатом (метод-редирект) для метода encodename() класса Work_Helper. Метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_". Используется для создания "безопасных" имен файлов или URL. Если входная строка пустая, она возвращается без обработки. Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).">PhotoRigma\Classes\Work_Helper\encodename()</a> Публичный метод в классе Work_Helper.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$string</td><td>Исходная строка. Если строка пустая, она возвращается без обработки. Рекомендуется использовать строки в кодировке UTF-8.</td></tr>
@@ -1323,18 +1360,19 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"> </div>
 <div class="line">$encoded = <a class="code hl_function" href="#ad9ac814e0001840a4cdbf826d0d6e53e">\PhotoRigma\Classes\Work::encodename</a>(<span class="stringliteral">&#39;12345&#39;</span>);</div>
 <div class="line">echo $encoded; <span class="comment">// Выведет: 12345</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot;.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01766">work.php:1766</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01766">1766</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot;.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00281">work.php:281</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка).">PhotoRigma\Classes\Work_Helper\encodename()</a> Публичный метод в классе Work_Helper. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00505">Work_Helper\encodename()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00281">281</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l01565">User\edit_avatar()</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00554">Work_Helper\encodename()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l01383">User\edit_avatar()</a>.</p>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph">
 <area shape="rect" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot;." alt="" coords="5,19,101,44"/>
@@ -1344,11 +1382,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="328,29,359,29,359,34,328,34"/>
 </map>
 </div>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph">
 <area shape="rect" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot;." alt="" coords="405,12,500,37"/>
@@ -1378,9 +1416,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Заменяет символы в email-адресах для "обмана" ботов. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода filt_email() класса Work_Security. Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами. Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст, метод возвращает пустую строку.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email-адресах для &quot;обмана&quot; ботов.">PhotoRigma\Classes\Work_Security\filt_email()</a> Реализация метода внутри класса Work_Security. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$email</td><td>Email-адрес для обработки. Должен быть непустым и соответствовать формату email (например, "example@example.com"). Если email некорректен или пуст, метод возвращает пустую строку.</td></tr>
@@ -1393,8 +1428,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$filteredEmail = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;filt_email(<span class="stringliteral">&#39;example@example.com&#39;</span>);</div>
 <div class="line">echo $filteredEmail; <span class="comment">// Выведет: example[at]example[dot]com</span></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00889">889</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a4289bbbeca07e599a9366a812d069972" title="Заменяет символы в email-адресах для &quot;обмана&quot; ботов.">PhotoRigma\Classes\Work_Security\filt_email()</a> Реализация метода внутри класса Work_Security. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01298">1298</a></p>
 
 </div>
 </div>
@@ -1415,9 +1453,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Корректировка расширения файла в соответствии с его MIME-типом. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода fix_file_extension() класса Work_Image. Метод проверяет MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу. Если у файла отсутствует расширение, оно добавляется автоматически. Если расширение уже корректное, файл остаётся без изменений.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).">PhotoRigma\Classes\Work_Image\fix_file_extension()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения. Формат пути должен соответствовать регулярному выражению /^[a-zA-Z0-9\/.-_]+$/.</td></tr>
@@ -1437,8 +1472,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$fixed_path = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;fix_file_extension(<span class="stringliteral">&#39;/path/to/file&#39;</span>);</div>
 <div class="line">echo <span class="stringliteral">&quot;Исправленный путь: {$fixed_path}&quot;</span>;</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01643">1643</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).">PhotoRigma\Classes\Work_Image\fix_file_extension()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l02052">2052</a></p>
 
 </div>
 </div>
@@ -1459,7 +1497,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Генерирует математический CAPTCHA-вопрос и ответ. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода gen_captcha() класса Work_Security. Метод создаёт случайное математическое выражение (сложение или умножение) и возвращает его вместе с правильным ответом. Используется для защиты от спам-ботов. Выражение может включать комбинацию сложения и умножения с использованием скобок.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46" title="Генерирует математический CAPTCHA-вопрос и ответ.">PhotoRigma\Classes\Work_Security\gen_captcha()</a> Реализация метода внутри класса Work_Security.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с ключами 'question' и 'answer':<ul>
 <li>'question': строка математического выражения (например, "2 x (3 + 4)").</li>
 <li>'answer': целочисленный результат вычисления (например, 14).</li>
@@ -1471,8 +1508,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">$captcha = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;gen_captcha();</div>
 <div class="line">echo <span class="stringliteral">&quot;Вопрос: {$captcha[&#39;question&#39;]}, Ответ: {$captcha[&#39;answer&#39;]}&quot;</span>;</div>
 <div class="line"><span class="comment">// Пример вывода: Вопрос: 2 x (3 + 4), Ответ: 14</span></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00851">851</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a19ab20c34a49c9684a03c09c62f8af46" title="Генерирует математический CAPTCHA-вопрос и ответ.">PhotoRigma\Classes\Work_Security\gen_captcha()</a> Реализация метода внутри класса Work_Security. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01258">1258</a></p>
 
 </div>
 </div>
@@ -1503,9 +1541,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 </li>
 <li>Возвращает массив с данными о доступных языках или выбрасывает исключение, если языки не найдены.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/.">PhotoRigma\Classes\Work_CoreLogic\get_languages()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными о доступных языках. Каждый элемент массива содержит:<ul>
 <li><code>value</code>: Имя директории языка (строка).</li>
 <li><code>name</code>: Название языка из файла <code>main.php</code> (строка).</li>
@@ -1528,8 +1563,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$languages = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;get_languages();</div>
 <div class="line">print_r($languages);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01103">1103</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/.">PhotoRigma\Classes\Work_CoreLogic\get_languages()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01512">1512</a></p>
 
 </div>
 </div>
@@ -1560,9 +1598,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 </li>
 <li>Возвращает массив с именами доступных тем или выбрасывает исключение, если темы не найдены.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/.">PhotoRigma\Classes\Work_CoreLogic\get_themes()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив строк с именами доступных тем. Если темы не найдены, возвращается пустой массив.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
@@ -1581,8 +1616,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$themes = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;get_themes();</div>
 <div class="line">print_r($themes);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01146">1146</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/.">PhotoRigma\Classes\Work_CoreLogic\get_themes()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01555">1555</a></p>
 
 </div>
 </div>
@@ -1607,11 +1645,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Вывод изображения через HTTP. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода image_attach() класса Work_Image. Метод проверяет существование и доступность файла, определяет его MIME-тип и отправляет содержимое файла через HTTP. Если файл не найден или недоступен, возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением MIME-типа, возвращается HTTP-статус 500. Метод завершает выполнение скрипта после отправки заголовков и содержимого файла.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aeabe138e0704bd8403da0faf894ad0df" title="Вывод изображения через HTTP.">PhotoRigma\Classes\Work_Image\image_attach()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
-<dd>
-<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Публичный метод для очистки строк от HTML-тегов и специальных символов.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Полный путь к файлу. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения. </td></tr>
@@ -1624,8 +1657,13 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Пример вызова метода через родительский класс Work</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;image_attach(<span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>, <span class="stringliteral">&#39;image.jpg&#39;</span>);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01601">1601</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aeabe138e0704bd8403da0faf894ad0df" title="Вывод изображения через HTTP.">PhotoRigma\Classes\Work_Image\image_attach()</a> Публичный метод-редирект для вызова этой логики. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Публичный метод для очистки строк от HTML-тегов и специальных символов. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l02008">2008</a></p>
 
 </div>
 </div>
@@ -1650,9 +1688,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Изменяет размер изображения. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода image_resize() класса Work_Image. Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров. Размеры эскиза рассчитываются на основе конфигурации (<code>temp_photo_w</code>, <code>temp_photo_h</code>) с использованием метода <code>calculate_thumbnail_size</code>. Если файл эскиза уже существует и его размеры совпадают с рассчитанными, метод завершает работу без изменений. В противном случае создаётся новый эскиз с использованием одной из доступных библиотек: GraphicsMagick, ImageMagick или GD (в порядке приоритета).</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\image_resize()</a> Публичный метод-редирект для вызова этой логики. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$full_path</td><td>Путь к исходному изображению. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения. </td></tr>
@@ -1677,8 +1712,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01516">1516</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
+<dd>
+<a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\image_resize()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01923">1923</a></p>
 
 </div>
 </div>
@@ -1712,7 +1750,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Выполняет запрос к таблице TBL_NEWS с использованием параметров.</li>
 <li>Возвращает массив с данными о новостях или пустой массив, если новости не найдены.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\news()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$news_id_or_limit</td><td>Количество новостей или ID новости (в зависимости от параметра $act). Должен быть положительным целым числом. </td></tr>
@@ -1749,8 +1786,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><span class="comment">// Получить последние 10 новостей</span></div>
 <div class="line">$newsList = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;news(10, <span class="stringliteral">&#39;last&#39;</span>);</div>
 <div class="line">print_r($newsList);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01058">1058</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\news()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01465">1465</a></p>
 
 </div>
 </div>
@@ -1771,7 +1809,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Возвращает данные для отсутствующего изображения. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода no_photo() класса Work_Image. Метод формирует массив данных, который используется для представления информации об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено или недоступно. Метод использует конфигурацию приложения (<code>site_url</code>) для формирования URL-адресов.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\no_photo()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив данных об изображении или его отсутствии:<ul>
 <li>&lsquo;'url&rsquo;<code>(string): URL полноразмерного изображения. -</code>'thumbnail_url'<code>(string): URL эскиза изображения. -</code>'name'<code>(string): Название изображения. -</code>'description'<code>(string): Описание изображения. -</code>'category_name'<code>(string): Название категории. -</code>'category_description'<code>(string): Описание категории. -</code>'rate'<code>(string): Рейтинг изображения. -</code>'url_user'&lsquo; (string): URL пользователя (пустая строка &rsquo;').</li>
 <li>&lsquo;'real_name&rsquo;<code>(string): Имя пользователя. -</code>'full_path'<code>(string): Полный путь к изображению. -</code>'thumbnail_path'<code>(string): Полный путь к эскизу. -</code>'file'` (string): Имя файла. Значения по умолчанию используются для отсутствующих данных.</li>
@@ -1783,8 +1820,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">$noPhotoData = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;no_photo();</div>
 <div class="line">echo <span class="stringliteral">&quot;URL изображения: {$noPhotoData[&#39;url&#39;]}\n&quot;</span>;</div>
 <div class="line">echo <span class="stringliteral">&quot;Описание: {$noPhotoData[&#39;description&#39;]}\n&quot;</span>;</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01561">1561</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\no_photo()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01968">1968</a></p>
 
 </div>
 </div>
@@ -1821,7 +1859,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Возвращает массив с результатами обработки, включая ошибки, изменения и обработанный массив.</li>
 </ol>
 <p>Этот метод является приватным и предназначен только для использования внутри класса.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки и экранирования полей (защита от XSS).</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$lang</td><td>Массив языковых переменных для обработки:<ul>
@@ -1847,18 +1884,19 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line">    ],</div>
 <div class="line">]);</div>
 <div class="line">print_r($result);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aadd99c851f40cd6cfbe2d166477ab062"><div class="ttname"><a href="#aadd99c851f40cd6cfbe2d166477ab062">PhotoRigma\Classes\Work\process_lang_array</a></div><div class="ttdeci">process_lang_array(array $lang)</div><div class="ttdoc">Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01975">work.php:1975</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01975">1975</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aadd99c851f40cd6cfbe2d166477ab062"><div class="ttname"><a href="#aadd99c851f40cd6cfbe2d166477ab062">PhotoRigma\Classes\Work\process_lang_array</a></div><div class="ttdeci">process_lang_array(array $lang)</div><div class="ttdoc">Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00771">work.php:771</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки и экранирования полей (защита от XSS). </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00115">$lang</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01678">clean_field()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00771">771</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00401">set_lang()</a>.</p>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00121">$lang</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00861">clean_field()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00657">set_lang()</a>.</p>
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_cgraph">
 <area shape="rect" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения." alt="" coords="5,19,139,44"/>
@@ -1870,11 +1908,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="483,29,515,29,515,34,483,34"/>
 </map>
 </div>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_icgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_icgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_icgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aadd99c851f40cd6cfbe2d166477ab062_icgraph">
 <area shape="rect" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения." alt="" coords="124,5,257,30"/>
@@ -1914,7 +1952,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>M (мегабайты): умножается на 1024².</li>
 <li>G (гигабайты): умножается на 1024³. Если суффикс отсутствует или недопустим, значение считается в байтах. Отрицательные числа преобразуются в положительные. Если входные данные некорректны, возвращается 0.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30" title="Преобразование размера в байты (публичная обёртка).">PhotoRigma\Classes\Work_Helper\return_bytes()</a> Публичный метод в классе Work_Helper.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string&#160;|&#160;int</td><td class="paramname">$val</td><td>Размер в формате "число[K|M|G]" или число. Если суффикс недопустим, он игнорируется, и значение преобразуется в число. Отрицательные числа преобразуются в положительные.</td></tr>
@@ -1935,16 +1972,17 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"> </div>
 <div class="line">$bytes = <a class="code hl_function" href="#a08089badb76485629afe2c4d9f766a30">\PhotoRigma\Classes\Work::return_bytes</a>(<span class="stringliteral">&#39;abc&#39;</span>);</div>
 <div class="line">echo $bytes; <span class="comment">// Выведет: 0</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdoc">Преобразование размера в байты.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01725">work.php:1725</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01725">1725</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a08089badb76485629afe2c4d9f766a30"><div class="ttname"><a href="#a08089badb76485629afe2c4d9f766a30">PhotoRigma\Classes\Work\return_bytes</a></div><div class="ttdeci">static return_bytes($val)</div><div class="ttdoc">Преобразование размера в байты.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00240">work.php:240</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a08089badb76485629afe2c4d9f766a30" title="Преобразование размера в байты (публичная обёртка).">PhotoRigma\Classes\Work_Helper\return_bytes()</a> Публичный метод в классе Work_Helper. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00461">Work_Helper\return_bytes()</a>.</p>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00240">240</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00433">Work_Helper\return_bytes()</a>.</p>
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a08089badb76485629afe2c4d9f766a30_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a08089badb76485629afe2c4d9f766a30_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a08089badb76485629afe2c4d9f766a30_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a08089badb76485629afe2c4d9f766a30_cgraph">
 <area shape="rect" title="Преобразование размера в байты." alt="" coords="5,19,98,44"/>
@@ -1981,15 +2019,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li><code>Логируются изменения (если они есть).</code></li>
 <li><code>Обновляются языковые данные в текущем классе и передаются в дочерние классы (</code>Work_Template<code>и</code>Work_CoreLogic`).</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Массив с языковыми переменными">PhotoRigma\Classes\Work\$lang</a> Свойство класса Work, которое изменяется. </dd>
-<dd>
-<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Языковые данные (могут быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$lang</a> Свойство дочернего класса Work_CoreLogic. </dd>
-<dd>
-<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Языковые данные.">PhotoRigma\Classes\Work_Template\$lang</a> Свойство дочернего класса Work_Template. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Внешняя функция для логирования ошибок. </dd>
-<dd>
-<a class="el" href="#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.">PhotoRigma\Classes\Work\process_lang_array()</a> Метод для проверки корректности массива языковых данных.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$lang</td><td>Имя файла языковых данных:<ul>
@@ -2008,33 +2037,40 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000014">Необходимо сделать</a></b></dt><dd>Интегрировать в систему кеширования языковых переменных.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Внешняя функция для логирования ошибок. </dd>
+<dd>
+<a class="el" href="#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.">PhotoRigma\Classes\Work\process_lang_array()</a> Метод для проверки корректности массива языковых данных.</dd>
+<dd>
+<a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Массив с языковыми переменными">PhotoRigma\Classes\Work\$lang</a> Свойство класса Work, которое изменяется. </dd>
+<dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Языковые данные (могут быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$lang</a> Свойство дочернего класса Work_CoreLogic. </dd>
+<dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Объект для работы с базой данных.">PhotoRigma\Classes\Work_Template\$lang</a> Свойство дочернего класса Work_Template. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000013">Необходимо сделать</a></b></dt><dd>Интегрировать в систему кеширования языковых переменных.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Файл языковых данных должен быть доступен для чтения. Массив языковых данных должен содержать ключ &lsquo;'lang&rsquo;`.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Если файл языковых данных отсутствует или содержит ошибки, метод выбрасывает исключение.</dd></dl>
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;set_lang(<span class="stringliteral">&#39;main&#39;</span>);</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00401">401</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00657">657</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00115">$lang</a>, <a class="el" href="../../d9/dcd/common_8php_source.html#l00341">PhotoRigma\Include\log_in_file()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l01975">process_lang_array()</a>.</p>
-<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00121">$lang</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00771">process_lang_array()</a>.</p>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_aed2ddce38e1559f3014f076e11a2cbe9_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aed2ddce38e1559f3014f076e11a2cbe9_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aed2ddce38e1559f3014f076e11a2cbe9_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aed2ddce38e1559f3014f076e11a2cbe9_cgraph">
-<area shape="rect" title="Устанавливает языковые данные из файла и передаёт их в дочерние классы." alt="" coords="5,40,76,65"/>
-<area shape="rect" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="124,5,262,44"/>
-<area shape="poly" title=" " alt="" coords="76,44,108,38,109,43,77,49"/>
-<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения." alt="" coords="126,68,260,93"/>
-<area shape="poly" title=" " alt="" coords="77,56,111,63,110,68,76,62"/>
-<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов." alt="" coords="310,68,392,93"/>
-<area shape="poly" title=" " alt="" coords="260,78,294,78,294,83,260,83"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов (публичная обёртка)." alt="" coords="440,61,606,100"/>
-<area shape="poly" title=" " alt="" coords="393,78,425,78,425,83,393,83"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="654,54,797,107"/>
-<area shape="poly" title=" " alt="" coords="606,78,639,78,639,83,606,83"/>
+<area shape="rect" title="Устанавливает языковые данные из файла и передаёт их в дочерние классы." alt="" coords="5,19,76,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения." alt="" coords="124,19,257,44"/>
+<area shape="poly" title=" " alt="" coords="76,29,108,29,108,34,76,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов." alt="" coords="305,19,387,44"/>
+<area shape="poly" title=" " alt="" coords="258,29,289,29,289,34,258,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов (публичная обёртка)." alt="" coords="435,12,601,51"/>
+<area shape="poly" title=" " alt="" coords="388,29,420,29,420,34,388,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="649,5,792,58"/>
+<area shape="poly" title=" " alt="" coords="601,29,634,29,634,34,601,34"/>
 </map>
 </div>
 
@@ -2060,13 +2096,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Проверяет, что переданный объект является экземпляром класса User.</li>
 <li>Передаёт объект в дочерние классы (Work_Template и Work_CoreLogic) через их методы set_user.</li>
 </ol>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс с объектом пользователя. </dd>
-<dd>
-<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя (может быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$user</a> Свойство дочернего класса Work_CoreLogic. </dd>
-<dd>
-<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя.">PhotoRigma\Classes\Work_Template\$user</a> Свойство дочернего класса Work_Template. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">User</td><td class="paramname">$user</td><td>Объект пользователя:<ul>
@@ -2087,10 +2116,17 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;set_user(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00505">505</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7">PhotoRigma\Classes\Work_Template\$user</a> Свойство дочернего класса Work_Template. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует ошибки.</dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс с объектом пользователя. </dd>
+<dd>
+<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7" title="Объект пользователя (может быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$user</a> Свойство дочернего класса Work_CoreLogic. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00167">PhotoRigma\$user</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00900">900</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00178">PhotoRigma\$user</a>.</p>
 
 </div>
 </div>
@@ -2111,7 +2147,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Вычисляет размеры для вывода эскиза изображения. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода size_image() класса Work_Image. Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения и конфигурационных параметров (<code>temp_photo_w</code> и <code>temp_photo_h</code>). Если изображение меньше целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются пропорционально.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\size_image()</a> Публичный метод-редирект для вызова этой логики.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$path_image</td><td>Путь к файлу изображения. Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.</td></tr>
@@ -2134,8 +2169,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$thumbnail_size = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;size_image(<span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>);</div>
 <div class="line">echo <span class="stringliteral">&quot;Ширина: {$thumbnail_size[&#39;width&#39;]}, Высота: {$thumbnail_size[&#39;height&#39;]}&quot;</span>;</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01468">1468</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\size_image()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01875">1875</a></p>
 
 </div>
 </div>
@@ -2156,9 +2192,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Формирует список пользователей, загрузивших наибольшее количество изображений. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода template_best_user() класса Work_Template. Метод выполняет запрос к базе данных с использованием JOIN для получения списка пользователей, которые загрузили наибольшее количество фотографий. Результат формируется в виде ассоциативного массива, который используется для отображения в шаблоне. Если данные отсутствуют, добавляется запись "пустого" пользователя.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений.">PhotoRigma\Classes\Work_Template\template_best_user()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$best_user</td><td>Количество лучших пользователей для вывода. Должно быть положительным целым числом. Если передано недопустимое значение, выбрасывается исключение InvalidArgumentException.</td></tr>
@@ -2190,8 +2223,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <p>Пример использования: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$bestUsers = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;template_best_user(5);</div>
 <div class="line">print_r($bestUsers);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01425">1425</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd>
+<dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений.">PhotoRigma\Classes\Work_Template\template_best_user()</a> Публичный метод, который вызывает этот внутренний метод. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01834">1834</a></p>
 
 </div>
 </div>
@@ -2212,9 +2248,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Генерирует массив статистических данных для шаблона. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода template_stat() класса Work_Template. Метод выполняет запросы к базе данных для получения статистической информации о пользователях, категориях, фотографиях, оценках и онлайн-пользователях. Результат формируется в виде ассоциативного массива, который используется для отображения статистики на странице.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона.">PhotoRigma\Classes\Work_Template\template_stat()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Ассоциативный массив данных для вывода статистики:<ul>
 <li>NAME_BLOCK: Название блока статистики.</li>
 <li>L_STAT_REGIST: Подпись для количества зарегистрированных пользователей.</li>
@@ -2246,8 +2279,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
 <div class="line">$statData = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;template_stat();</div>
 <div class="line">print_r($statData);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01376">1376</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона.">PhotoRigma\Classes\Work_Template\template_stat()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01785">1785</a></p>
 
 </div>
 </div>
@@ -2268,14 +2304,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Формирование блока пользователя. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода template_user() класса Work_Template. Метод формирует массив данных для блока пользователя в зависимости от статуса авторизации:</p><ul>
-<li>Если пользователь не авторизован, формируется блок с ссылками на вход, восстановление пароля и регистрацию.</li>
+<li>Если пользователь не авторизован, формируется блок со ссылками на вход, восстановление пароля и регистрацию.</li>
 <li>Если пользователь авторизован, формируется блок с приветствием, группой и аватаром. Для авторизованных пользователей проверяется существование аватара и его MIME-тип через Work::validate_mime_type(). Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (NO_USER_AVATAR).</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирование блока пользователя.">PhotoRigma\Classes\Work_Template\template_user()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
-<dd>
-<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
-<dd>
-<a class="el" href="#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типа файла.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив с данными для блока пользователя:<ul>
 <li>Для неавторизованных пользователей:<ul>
 <li>'NAME_BLOCK': Название блока.</li>
@@ -2304,8 +2335,13 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;set_user(<span class="keyword">new</span> <a class="code hl_class" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>());</div>
 <div class="line">$user_block = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;template_user();</div>
 <div class="line">print_r($user_block);</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01324">1324</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типа файла.</dd>
+<dd>
+<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирование блока пользователя.">PhotoRigma\Classes\Work_Template\template_user()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
+<dd>
+<a class="el" href="#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01731">1731</a></p>
 
 </div>
 </div>
@@ -2349,9 +2385,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>[left], [center], [right] — выравнивание текста</li>
 <li>[img]Изображение[/img] Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных тегов.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка).">PhotoRigma\Classes\Work_Helper\ubb()</a> Публичный метод в классе Work_Helper. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$text</td><td>Текст с BBCode. Рекомендуется использовать строки в кодировке UTF-8. Если строка пустая, она возвращается без обработки.</td></tr>
@@ -2371,27 +2404,28 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"> </div>
 <div class="line">$html = <a class="code hl_function" href="#a3163f8e7d71cad9003bf5b3efe644712">\PhotoRigma\Classes\Work::ubb</a>(<span class="stringliteral">&#39;[invalid]Invalid tag[/invalid]&#39;</span>);</div>
 <div class="line">echo $html; <span class="comment">// Выведет: [invalid]Invalid tag[/invalid]</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразование BBCode в HTML.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01823">work.php:1823</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01823">1823</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразование BBCode в HTML.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00338">work.php:338</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка).">PhotoRigma\Classes\Work_Helper\ubb()</a> Публичный метод в классе Work_Helper. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00560">Work_Helper\ubb()</a>.</p>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00338">338</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00745">Work_Helper\ubb()</a>.</p>
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a3163f8e7d71cad9003bf5b3efe644712_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a3163f8e7d71cad9003bf5b3efe644712_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a3163f8e7d71cad9003bf5b3efe644712_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a3163f8e7d71cad9003bf5b3efe644712_cgraph">
-<area shape="rect" title="Преобразование BBCode в HTML." alt="" coords="5,51,48,76"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка)." alt="" coords="96,44,239,83"/>
-<area shape="poly" title=" " alt="" coords="48,61,80,61,80,66,48,66"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="287,44,468,83"/>
-<area shape="poly" title=" " alt="" coords="240,61,271,61,271,66,240,66"/>
+<area shape="rect" title="Преобразование BBCode в HTML." alt="" coords="5,19,48,44"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка)." alt="" coords="96,12,239,51"/>
+<area shape="poly" title=" " alt="" coords="48,29,80,29,80,34,48,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="287,12,468,51"/>
+<area shape="poly" title=" " alt="" coords="240,29,271,29,271,34,240,34"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов (публичная обёртка)." alt="" coords="516,12,682,51"/>
-<area shape="poly" title=" " alt="" coords="468,48,501,43,501,48,469,53"/>
-<area shape="rect" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="530,75,668,114"/>
-<area shape="poly" title=" " alt="" coords="469,74,515,80,514,85,468,79"/>
+<area shape="poly" title=" " alt="" coords="469,29,501,29,501,34,469,34"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a563c1e74d4b76a0cbb14073d0bf795d9" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="730,5,873,58"/>
 <area shape="poly" title=" " alt="" coords="682,29,715,29,715,34,682,34"/>
 </map>
@@ -2416,9 +2450,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Проверяет URL на наличие вредоносного кода. </p>
 <p>Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов, определяемых в массиве Work_Security::compiled_rules. Если формат URL некорректен или найден запрещённый паттерн, метод возвращает false. Этот метод является делегатом (метод-редирект) для метода url_check() класса Work_Security.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода.">PhotoRigma\Classes\Work_Security\url_check()</a> Реализация метода внутри класса Work_Security. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректности данных в свойстве Work_Security::compiled_rules. Если правила некорректны, результат может быть непредсказуемым.</dd></dl>
@@ -2427,8 +2458,11 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"><span class="keywordflow">if</span> (!<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;url_check()) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Обнаружен подозрительный URL!&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00711">711</a></p>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
+<dd>
+<a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода.">PhotoRigma\Classes\Work_Security\url_check()</a> Реализация метода внутри класса Work_Security. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01175">1175</a></p>
 
 </div>
 </div>
@@ -2466,9 +2500,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Разбивка строки на несколько строк ограниченной длины. </p>
 <p>Этот метод является делегатом (метод-редирект) для метода utf8_wordwrap() класса Work_Helper. Метод разбивает строку на несколько строк, каждая из которых имеет длину не более указанной. Разрыв строки выполняется только по пробелам, чтобы сохранить читаемость текста. Поддерживается работа с UTF-8 символами. Если параметры некорректны (например, $width &lt;= 0 или $break пустой), возвращается исходная строка.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивка строки на несколько строк ограниченной длины (публичная обёртка).">PhotoRigma\Classes\Work_Helper\utf8_wordwrap()</a> Публичный метод в классе Work_Helper. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$str</td><td>Исходная строка. Рекомендуется использовать строки в кодировке UTF-8. Если строка пустая или её длина меньше или равна $width, она возвращается без изменений. </td></tr>
@@ -2499,16 +2530,19 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"> </div>
 <div class="line">$wrapped = <a class="code hl_function" href="#aa76be87bb05ca60ff16f6d47f5a44c32">\PhotoRigma\Classes\Work::utf8_wordwrap</a>(<span class="stringliteral">&#39;Empty break&#39;</span>, 10, <span class="stringliteral">&#39;&#39;</span>);</div>
 <div class="line">echo $wrapped; <span class="comment">// Выведет: Empty break</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивка строки на несколько строк ограниченной длины.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01880">work.php:1880</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01880">1880</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивка строки на несколько строк ограниченной длины.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00395">work.php:395</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивка строки на несколько строк ограниченной длины (публичная обёртка).">PhotoRigma\Classes\Work_Helper\utf8_wordwrap()</a> Публичный метод в классе Work_Helper. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00608">Work_Helper\utf8_wordwrap()</a>.</p>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00395">395</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l01075">Work_Helper\utf8_wordwrap()</a>.</p>
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph">
 <area shape="rect" title="Разбивка строки на несколько строк ограниченной длины." alt="" coords="5,19,112,44"/>
@@ -2516,8 +2550,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="112,29,144,29,144,34,112,34"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a1f0724c64151f06d211ca5d639046f5f" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="397,5,593,58"/>
 <area shape="poly" title=" " alt="" coords="349,29,382,29,382,34,349,34"/>
-<area shape="rect" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="641,12,780,51"/>
-<area shape="poly" title=" " alt="" coords="593,29,626,29,626,34,593,34"/>
 </map>
 </div>
 
@@ -2552,9 +2584,6 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <li>Gmagick</li>
 <li>Встроенные функции PHP по работе с изображениями (GD) Если MIME-тип не поддерживается ни одной библиотекой, возвращается false. Поддерживаются MIME-типы для изображений, таких как JPEG, PNG, GIF, WebP и другие.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).">PhotoRigma\Classes\Work_Helper\validate_mime_type()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$real_mime_type</td><td>Реальный MIME-тип файла. Должен быть корректным MIME-типом для изображений.</td></tr>
@@ -2572,18 +2601,21 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <div class="line"> </div>
 <div class="line">$is_supported = <a class="code hl_function" href="#a41518918c225073130bc7a73983d72ff">\PhotoRigma\Classes\Work::validate_mime_type</a>(<span class="stringliteral">&#39;invalid/mime&#39;</span>);</div>
 <div class="line">var_dump($is_supported); <span class="comment">// Выведет: false</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверка MIME-типа файла через доступные библиотеки.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l01924">work.php:1924</a></div></div>
-</div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l01924">1924</a></p>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверка MIME-типа файла через доступные библиотеки.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d7a/work_8php_source.html#l00441">work.php:441</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки (публичная обёртка).">PhotoRigma\Classes\Work_Helper\validate_mime_type()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00652">Work_Helper\validate_mime_type()</a>.</p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00441">441</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00752">Work_Security\_check_input_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00921">Work_Template\_template_user_internal()</a>.</p>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l01192">Work_Helper\validate_mime_type()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../d6/dc1/work__security_8php_source.html#l00756">Work_Security\_check_input_internal()</a> и <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00824">Work_Template\_template_user_internal()</a>.</p>
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_cgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_cgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_cgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_cgraph">
 <area shape="rect" title="Проверка MIME&#45;типа файла через доступные библиотеки." alt="" coords="5,19,142,44"/>
@@ -2591,15 +2623,13 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="142,29,174,29,174,34,142,34"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="387,5,543,58"/>
 <area shape="poly" title=" " alt="" coords="339,29,372,29,372,34,339,34"/>
-<area shape="rect" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="591,12,730,51"/>
-<area shape="poly" title=" " alt="" coords="544,29,576,29,576,34,544,34"/>
 </map>
 </div>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_icgraph.png" border="0" usemap="#ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_icgraph" alt=""/></div>
 <map name="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_icgraph" id="ad7/d53/classPhotoRigma_1_1Classes_1_1Work_a41518918c225073130bc7a73983d72ff_icgraph">
 <area shape="rect" title="Проверка MIME&#45;типа файла через доступные библиотеки." alt="" coords="481,58,617,83"/>
@@ -2639,9 +2669,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Массив, хранящий конфигурацию приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00108">108</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00114">114</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00162">__construct()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00227">__get()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00292">__set()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00168">__construct()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00480">__get()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00545">__set()</a>.</p>
 
 </div>
 </div>
@@ -2667,7 +2697,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Объект для основной логики приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00114">114</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00120">120</a></p>
 
 </div>
 </div>
@@ -2693,9 +2723,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Объект для работы с базой данных. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00109">109</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00115">115</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00162">__construct()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00168">__construct()</a>.</p>
 
 </div>
 </div>
@@ -2721,7 +2751,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Объект для очистки строк, преобразования размеров и проверки MIME-типов. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00113">113</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00119">119</a></p>
 
 </div>
 </div>
@@ -2747,7 +2777,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Объект класса <code>Work_Image</code> для работы с изображениями. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00111">111</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00117">117</a></p>
 
 </div>
 </div>
@@ -2773,9 +2803,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Массив с языковыми переменными </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00115">115</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00121">121</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00227">__get()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01975">process_lang_array()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00401">set_lang()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00480">__get()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l00771">process_lang_array()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00657">set_lang()</a>.</p>
 
 </div>
 </div>
@@ -2801,7 +2831,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Объект для работы с безопасностью. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00110">110</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00116">116</a></p>
 
 </div>
 </div>
@@ -2827,9 +2857,9 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Массив, привязанный к глобальному массиву $_SESSION. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00116">116</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00122">122</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00162">__construct()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00168">__construct()</a>.</p>
 
 </div>
 </div>
@@ -2855,7 +2885,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p>Объект для работы с шаблонами. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00112">112</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l00118">118</a></p>
 
 </div>
 </div>

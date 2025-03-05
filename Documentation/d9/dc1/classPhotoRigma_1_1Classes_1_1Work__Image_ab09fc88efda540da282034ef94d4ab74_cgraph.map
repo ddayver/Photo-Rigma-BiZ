@@ -1,5 +1,0 @@
-<map id="process_image_resize_imagick" name="process_image_resize_imagick">
-<area shape="rect" id="Node000001" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="5,5,156,44"/>
-<area shape="rect" id="Node000002" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="204,5,342,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,22,188,22,188,27,156,27"/>
-</map>

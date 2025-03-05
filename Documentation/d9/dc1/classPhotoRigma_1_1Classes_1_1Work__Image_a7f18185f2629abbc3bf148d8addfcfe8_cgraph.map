@@ -1,16 +1,11 @@
 <map id="_image_resize_internal" name="_image_resize_internal">
-<area shape="rect" id="Node000001" title="Изменяет размер изображения." alt="" coords="5,104,159,129"/>
+<area shape="rect" id="Node000001" title="Изменяет размер изображения." alt="" coords="5,83,159,107"/>
 <area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза." alt="" coords="209,5,376,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,101,149,74,206,46,236,33,238,38,208,51,152,79,106,106"/>
-<area shape="rect" id="Node000003" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="426,125,564,164"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="133,101,185,91,246,84,313,82,379,90,414,101,447,115,445,120,412,106,377,95,312,87,247,89,186,96,134,106"/>
-<area shape="rect" id="Node000004" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="207,104,378,129"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,114,191,114,191,119,159,119"/>
-<area shape="rect" id="Node000005" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="217,153,368,192"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="132,127,203,146,202,151,131,132"/>
-<area shape="rect" id="Node000006" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="217,216,368,254"/>
-<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="100,127,147,163,208,201,220,206,217,211,205,205,144,167,97,131"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="379,126,411,130,411,135,378,131"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="367,159,410,153,411,159,368,165"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="348,213,377,201,443,169,445,173,379,205,350,217"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,80,206,41,230,32,231,38,208,45,112,85"/>
+<area shape="rect" id="Node000003" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="207,55,378,79"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,82,191,78,191,83,159,87"/>
+<area shape="rect" id="Node000004" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6154fb2649a1052f31514aed4818ad2c" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="217,104,368,142"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,103,202,108,201,114,159,108"/>
+<area shape="rect" id="Node000005" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab09fc88efda540da282034ef94d4ab74" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="217,166,368,205"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="110,106,208,151,224,158,221,163,206,156,108,110"/>
 </map>

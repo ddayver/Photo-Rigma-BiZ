@@ -1,5 +1,0 @@
-<map id="_del_photo_internal" name="_del_photo_internal">
-<area shape="rect" id="Node000001" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="5,12,139,37"/>
-<area shape="rect" id="Node000002" href="$db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог&#45;файл и, при необходимости, завершает выполнение скрипта." alt="" coords="187,5,325,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,22,171,22,171,27,139,27"/>
-</map>

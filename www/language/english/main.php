@@ -104,6 +104,8 @@ $lang = [
         'edit_news' => 'Edit news',
         'delete_news' => 'Delete news',
         'confirm_delete_news' => 'Are you sure you want to delete this news',
+        'delete' => 'Delete',
+        'cancel' => 'Cancel',
     ],
 ];
 /*@}*/

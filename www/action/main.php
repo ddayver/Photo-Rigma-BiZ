@@ -127,13 +127,15 @@ if (!empty($news) && $user->user['news_view'] == true) {
                     $work->lang['main']['confirm_delete_news'],
                     Work::clean_field($value['name_post'])
                 ),
+                'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
+                'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
                 'U_EDIT_BLOCK' => sprintf(
                     '%s?action=news&amp;subact=edit&amp;news=%d',
                     $work->config['site_url'],
                     $value['id']
                 ),
                 'U_DELETE_BLOCK' => sprintf(
-                    '%s?action=news&amp;subact=delete&amp;news=%d',
+                    '%s?action=news&subact=delete&news=%d',
                     $work->config['site_url'],
                     $value['id']
                 )

@@ -137,6 +137,13 @@ $(function(){initNavTree('d2/db3/attach_8php.html','../../'); initResizable(true
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей. </p>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>Если не удалось определить путь к фото или файл недоступен. Пример сообщения: "Не удалось определить путь к фото | Путь: {$photo_data['full_path']}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если возникла ошибка при создании миниатюры. Пример сообщения: "Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}".</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
 <dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
 <dl class="section date"><dt>Дата</dt><dd>2025-02-23 </dd></dl>

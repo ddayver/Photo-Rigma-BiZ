@@ -173,7 +173,7 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <dl class="section note"><dt>Заметки</dt><dd>Интерфейс поддерживает только MySQL (MariaDB) и PostgreSQL.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Методы интерфейса изменили свою реализацию в отличие от предыдущей версии. Убедитесь, что вы изучили новую документацию по методам перед использованием. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00074">74</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00082">82</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a73d8e6acdfb996002f980ab7c9c18515" name="a73d8e6acdfb996002f980ab7c9c18515"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a73d8e6acdfb996002f980ab7c9c18515">&#9670;&#160;</a></span>delete()</h2>
@@ -208,9 +208,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод <code>build_conditions</code>.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Метод, который реализует в классе заявленную логику. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой необходимо удалить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
@@ -241,8 +238,11 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Пример использования метода delete(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;delete(<span class="stringliteral">&#39;users&#39;</span>, [</div>
 <div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; 1],</div>
 <div class="line">]);</div>
-<div class="ttc" id="anamespacePhotoRigma_html_a1fa3127fc82f96b1436d871ef02be319"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">PhotoRigma\$db</a></div><div class="ttdeci">$db</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00141">index.php:141</a></div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="anamespacePhotoRigma_html_a1fa3127fc82f96b1436d871ef02be319"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">PhotoRigma\$db</a></div><div class="ttdeci">$db</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00152">index.php:152</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Метод, который реализует в классе заявленную логику. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515">Database</a>.</p>
 
 </div>
@@ -268,7 +268,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Проверяет, что значение свойства <code>$aff_rows</code> является целым числом. Если это не так, выбрасывается исключение.</li>
 <li>Возвращает значение свойства <code>$aff_rows</code>, которое представляет собой количество строк, затронутых последним SQL-запросом.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba" title="Возвращает количество строк, затронутых последним запросом.">PhotoRigma\Classes\Database\get_affected_rows()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>int Количество строк, затронутых последним SQL-запросом.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
@@ -283,7 +282,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$aff_rows</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$aff_rows</code> как целое число. Ранее был прямой доступ к свойству <code>$aff_rows</code>. Теперь используется метод для получения значения, чтобы обеспечить безопасность и контроль данных.</dd></dl>
 <p>Пример использования метода get_affected_rows(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;delete(<span class="stringliteral">&#39;users&#39;</span>, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;status = 0&#39;</span>]);</div>
 <div class="line">echo <span class="stringliteral">&quot;Affected rows: &quot;</span> . <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;get_affected_rows();</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba" title="Возвращает количество строк, затронутых последним запросом.">PhotoRigma\Classes\Database\get_affected_rows()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2c437dae4e310529391e7f5388b133ba">Database</a>.</p>
 
 </div>
@@ -309,7 +309,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Проверяет, что значение свойства <code>$insert_id</code> является целым числом. Если это не так, выбрасывается исключение.</li>
 <li>Возвращает значение свойства <code>$insert_id</code>, которое представляет собой ID последней вставленной строки.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c" title="Возвращает ID последней вставленной строки.">PhotoRigma\Classes\Database\get_last_insert_id()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>int ID последней вставленной строки.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
@@ -324,7 +323,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$insert_id</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$insert_id</code> как целое число. Ранее был прямой доступ к свойству <code>$insert_id</code>. Теперь используется метод для получения значения, чтобы обеспечить безопасность и контроль данных.</dd></dl>
 <p>Пример использования метода get_last_insert_id(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;insert([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>, <span class="stringliteral">&#39;email&#39;</span> =&gt; <span class="stringliteral">&#39;john@example.com&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>);</div>
 <div class="line">echo <span class="stringliteral">&quot;Last insert ID: &quot;</span> . <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;get_last_insert_id();</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c" title="Возвращает ID последней вставленной строки.">PhotoRigma\Classes\Database\get_last_insert_id()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c">Database</a>.</p>
 
 </div>
@@ -369,7 +369,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\insert()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$insert</td><td>Ассоциативный массив данных для вставки в формате: 'имя_поля' =&gt; 'значение'. Каждое имя поля экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). Значения преобразуются в плейсхолдеры методом <code>prepare_insert_data</code> для подготовленного выражения. Пример: ['name' =&gt; 'John Doe', 'email' =&gt; '<a href="#" onclick="location.href='mai'+'lto:'+'joh'+'n@'+'exa'+'mp'+'le.'+'co'+'m'; return false;">john@<span class="obfuscator">.nosp@m.</span>exam<span class="obfuscator">.nosp@m.</span>ple.c<span class="obfuscator">.nosp@m.</span>om</a>']. Если передан пустой массив, выбрасывается исключение. </td></tr>
@@ -403,7 +402,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Убедитесь, что массив <code>$insert</code> не пустой и содержит корректные данные. Параметр <code>$type</code> должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'. Ранее метод имел другую сигнатуру, где вместо выбрасывания исключений использовалась запись ошибок в свойство <code>$error</code>. Теперь метод выбрасывает исключение при ошибках. Старый способ вызова: insert($insert, $to_tbl, $type = FALSE).</dd></dl>
 <p>Пример использования метода insert(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;insert([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>, <span class="stringliteral">&#39;email&#39;</span> =&gt; <span class="stringliteral">&#39;john@example.com&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\insert()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110">Database</a>.</p>
 
 </div>
@@ -452,7 +452,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Каждое поле экранируется методом <code>sanitize_expression</code>. Пример: "id", ["id", "name"]. </td></tr>
@@ -498,7 +497,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <div class="line">        <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;users.status&#39;</span> =&gt; 1],</div>
 <div class="line">    ]</div>
 <div class="line">);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">Database</a>.</p>
 
 </div>
@@ -525,7 +525,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Если результатов нет (метод <code>fetchAll</code> возвращает пустой массив), явно возвращает <code>false</code>.</li>
 <li>В противном случае возвращает массив, содержащий все строки результата.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4" title="Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве $res_query,...">PhotoRigma\Classes\Database\res_arr()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они доступны. Если результатов нет, возвращает <code>false</code>.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
@@ -547,7 +546,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;No results found.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4" title="Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве $res_query,...">PhotoRigma\Classes\Database\res_arr()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4">Database</a>.</p>
 
 </div>
@@ -574,7 +574,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Если результатов нет (метод <code>fetch</code> возвращает <code>false</code>), явно возвращает <code>false</code>.</li>
 <li>В противном случае возвращает ассоциативный массив, содержащий данные строки.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d" title="Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.">PhotoRigma\Classes\Database\res_row()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они доступны. Если результатов нет, возвращает <code>false</code>.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
@@ -591,7 +590,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <div class="line"><span class="keywordflow">while</span> ($row = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;res_row()) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;ID: &quot;</span> . $row[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&quot;, Name: &quot;</span> . $row[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d" title="Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.">PhotoRigma\Classes\Database\res_row()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d">Database</a>.</p>
 
 </div>
@@ -629,7 +629,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Каждое поле экранируется методом <code>sanitize_expression</code>. Пример: "id", ["id", "name"]. </td></tr>
@@ -664,7 +663,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <div class="line">    <span class="stringliteral">&#39;order&#39;</span> =&gt; <span class="stringliteral">&#39;created_at DESC&#39;</span>,</div>
 <div class="line">    <span class="stringliteral">&#39;limit&#39;</span> =&gt; 10,</div>
 <div class="line">]);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e">Database</a>.</p>
 
 </div>
@@ -691,7 +691,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Формирует базовый SQL-запрос TRUNCATE TABLE.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет.">PhotoRigma\Classes\Database\truncate()</a> Метод, который реализует в классе заявленную логику.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, которую необходимо очистить. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `).</td></tr>
@@ -710,7 +709,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью. Ранее метод возвращал <code>false</code> и записывал ошибку в свойство <code>$error</code>, теперь выбрасывает исключение через <code>throw</code>.</dd></dl>
 <p>Пример использования метода truncate(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;truncate(<span class="stringliteral">&#39;users&#39;</span>);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет.">PhotoRigma\Classes\Database\truncate()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b">Database</a>.</p>
 
 </div>
@@ -750,9 +750,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <li>Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\update()</a> Метод, который реализует в классе заявленную логику. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$update</td><td>Ассоциативный массив данных для обновления в формате: 'имя_поля' =&gt; 'значение'. Каждое имя поля экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). Значения преобразуются в плейсхолдеры методом <code>prepare_insert_data</code> для подготовленного выражения. Пример: ['name' =&gt; 'John Doe', 'status' =&gt; 1]. </td></tr>
@@ -785,7 +782,10 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Пример использования метода update(): </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;update([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>, [</div>
 <div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; 1],</div>
 <div class="line">]);</div>
-</div><!-- fragment --> 
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\update()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
+
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e">Database</a>.</p>
 
 </div>

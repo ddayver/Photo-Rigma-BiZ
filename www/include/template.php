@@ -792,7 +792,7 @@ class Template
     public function page_header(string $title, string $action): void
     {
         // Проверка параметра $action
-        if (empty($action) || !preg_match('/^[a-zA-Z0-9_]+$/', $action)) {
+        if (!empty($action) && !preg_match('/^[a-zA-Z0-9_]+$/', $action)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный параметр \$action | Значение: {$action}"
             );

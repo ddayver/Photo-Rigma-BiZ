@@ -23,6 +23,7 @@
           $('.ui.checkbox').checkbox();
           $('.ui.icon.button').popup();
           $('.ui.dropdown').dropdown();
+		  $('.ui.sticky').sticky({context: '#short_menu'});
         });
     </script>
 </head>
@@ -37,42 +38,45 @@
 		</tr>
 		<tr>
 			<td class="field_small_left">
-				<table cellpadding="0" cellspacing="0" width="100%">
-					<tr>
-						<td>
+				<div class="mini ui inverted transparent segment no-space" id="short_menu">
+					<div class="mini ui inverted transparent sticky no-space">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>
 <!-- IF_SHORT_MENU_BEGIN -->
-							<table cellpadding="0" cellspacing="0" border="0">
-								<tr>
-									<td>
-										<div class="small ui black inverted menu">
+									<table cellpadding="0" cellspacing="0" border="0">
+										<tr>
+											<td>
+												<div class="small ui black inverted menu">
 <!-- ARRAY_SHORT_MENU_BEGIN -->
 <!-- IF_SHORT_MENU_URL_BEGIN -->
-											<a class="item custom-menu" href="{U_SHORT_MENU}"  title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
+													<a class="item custom-menu" href="{U_SHORT_MENU}"  title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
 <!-- IF_SHORT_MENU_URL_ELSE -->
-
-											<a class="item active" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
+													<a class="item active" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
 <!-- IF_SHORT_MENU_URL_END -->
 <!-- ARRAY_SHORT_MENU_END -->
-										</div>
-									</td>
-								</tr>
-							</table>
+												</div>
+											</td>
+										</tr>
+									</table>
 <!-- IF_SHORT_MENU_ELSE -->
 						&nbsp;
 <!-- IF_SHORT_MENU_END -->
-						</td>
-						<td>
-							<form name="search" action="{U_SEARCH}" method="post">
-								<table align="right" border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td colspan="2"><div class="small ui inverted icon input custom-input"><input type="text" name="search_main_text" placeholder="{L_SEARCH}..." /><i class="search icon"></i></div></td>
-										<td><input class="small ui basic inverted button custom-input" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
-									</tr>
-								</table>
-							</form>
-						</td>
-					</tr>
-				</table>
+								</td>
+								<td>
+									<form name="search" action="{U_SEARCH}" method="post">
+										<table align="right" border="0" cellpadding="0" cellspacing="0">
+											<tr>
+												<td colspan="2"><div class="small ui inverted icon input custom-input"><input class="ui input" type="text" name="search_main_text" placeholder="{L_SEARCH}..." /><i class="search icon"></i></div></td>
+												<td><input class="small ui basic inverted button custom-input" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
+											</tr>
+										</table>
+									</form>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</td>
 		</tr>
 		<tr>
