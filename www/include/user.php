@@ -1072,7 +1072,7 @@ class User implements User_Interface
 
         // Добавляем данные группы в массив для вставки нового пользователя
         foreach ($group_data as $key => $value) {
-            if ($key != 'id' && $key != 'name') {
+            if ($key !== 'id' && $key !== 'name') {
                 $query[$key] = $value;
             }
         }
@@ -1082,7 +1082,7 @@ class User implements User_Interface
         $placeholders = array_map(fn ($key) => ":$key", array_keys($query)); // Формируем плейсхолдеры
         $params = array_combine(
             array_map(fn ($key) => ":$key", array_keys($query)), // Добавляем префикс ':' к каждому ключу
-            array_values($query) // Значения остаются без изменений
+            $query // Значения остаются без изменений
         );
 
         // Вставка нового пользователя в базу данных
@@ -1277,7 +1277,7 @@ class User implements User_Interface
             }
         } else {
             $old_avatar_path = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'];
-            if ($user_data['avatar'] !== static::DEFAULT_AVATAR && file_exists($old_avatar_path) && is_writable(
+            if ($user_data['avatar'] !== static::DEFAULT_AVATAR && is_file($old_avatar_path) && is_writable(
                 $old_avatar_path
             )) {
                 unlink($old_avatar_path); // Безопасное удаление старого аватара
@@ -1321,7 +1321,7 @@ class User implements User_Interface
         // Если данные успешно обновлены и флаг удаления установлен, удаляем старый аватар
         if ($affected_rows > 0 && $delete_old_avatar) {
             $old_avatar_path = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'];
-            if (file_exists($old_avatar_path) && is_writable($old_avatar_path)) {
+            if (is_file($old_avatar_path) && is_writable($old_avatar_path)) {
                 unlink($old_avatar_path); // Безопасное удаление старого аватара
             }
         }
