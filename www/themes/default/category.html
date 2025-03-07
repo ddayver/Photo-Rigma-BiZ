@@ -1,154 +1,154 @@
 <!-- SELECT_CATEGORY_BLOCK_BEGIN -->
 <!-- CASE_VIEW_DIR -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="category_center"></td>
-									<td class="category_center">
-										<table cellpadding="0" cellspacing="0" border="0" width="100%">
-											<tr>
-												<td class="category">{L_NAME_CATEGORY}</td>
-												<td class="category">{L_DESCRIPTION_CATEGORY}</td>
-												<td class="category">{L_COUNT_PHOTO}</td>
-												<td class="category">{L_LAST_PHOTO}</td>
-												<td class="category">{L_TOP_PHOTO}</td>
-											</tr>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
+                                <tr>
+                                    <td class="name_block_left">&nbsp;</td>
+                                    <td class="name_block">{NAME_BLOCK}</td>
+                                    <td class="name_block_right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="category_center"></td>
+                                    <td class="category_center">
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                                <td class="category">{L_NAME_CATEGORY}</td>
+                                                <td class="category">{L_DESCRIPTION_CATEGORY}</td>
+                                                <td class="category">{L_COUNT_PHOTO}</td>
+                                                <td class="category">{L_LAST_PHOTO}</td>
+                                                <td class="category">{L_TOP_PHOTO}</td>
+                                            </tr>
 <!-- IF_ISSET_CATEGORY_BEGIN -->
 <!-- ARRAY_LIST_CATEGORY_BEGIN -->
-											<tr>
-												<td class="category_center" onclick="window.location.href='{U_CATEGORY}'" title="{D_NAME_CATEGORY}"><a href="{U_CATEGORY}" title="{D_NAME_CATEGORY}">{D_NAME_CATEGORY}</a></td>
-												<td class="category_center" onclick="window.location.href='{U_CATEGORY}'" title="{D_DESCRIPTION_CATEGORY}"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_DESCRIPTION_CATEGORY}</a></td>
-												<td class="category_center" onclick="window.location.href='{U_CATEGORY}'" title="{D_NAME_CATEGORY}">{D_COUNT_PHOTO}</td>
-												<td class="category_center" onclick="window.location.href='{U_LAST_PHOTO}'" title="{D_LAST_PHOTO}"><a href="{U_LAST_PHOTO}" title="{D_LAST_PHOTO}">{D_LAST_PHOTO}</a></td>
-												<td class="category_center" onclick="window.location.href='{U_TOP_PHOTO}'" title="{D_TOP_PHOTO}"><a href="{U_TOP_PHOTO}" title="{D_TOP_PHOTO}">{D_TOP_PHOTO}</a></td>
-											</tr>
+                                            <tr>
+                                                <td class="category_center" onclick="window.location.href='{U_CATEGORY}'" title="{D_NAME_CATEGORY}"><a href="{U_CATEGORY}" title="{D_NAME_CATEGORY}">{D_NAME_CATEGORY}</a></td>
+                                                <td class="category_center" onclick="window.location.href='{U_CATEGORY}'" title="{D_DESCRIPTION_CATEGORY}"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_DESCRIPTION_CATEGORY}</a></td>
+                                                <td class="category_center" onclick="window.location.href='{U_CATEGORY}'" title="{D_NAME_CATEGORY}">{D_COUNT_PHOTO}</td>
+                                                <td class="category_center" onclick="window.location.href='{U_LAST_PHOTO}'" title="{D_LAST_PHOTO}"><a href="{U_LAST_PHOTO}" title="{D_LAST_PHOTO}">{D_LAST_PHOTO}</a></td>
+                                                <td class="category_center" onclick="window.location.href='{U_TOP_PHOTO}'" title="{D_TOP_PHOTO}"><a href="{U_TOP_PHOTO}" title="{D_TOP_PHOTO}">{D_TOP_PHOTO}</a></td>
+                                            </tr>
 <!-- ARRAY_LIST_CATEGORY_END -->
 <!-- IF_ISSET_CATEGORY_ELSE -->
-											<tr>
-												<td class="category" colspan="5">{L_NO_PHOTO}</td>
-											</tr>
+                                            <tr>
+                                                <td class="category" colspan="5">{L_NO_PHOTO}</td>
+                                            </tr>
 <!-- IF_ISSET_CATEGORY_END -->
-										</table>
-									</td>
-									<td class="category_center"></td>
-								</tr>
-							</table>
+                                        </table>
+                                    </td>
+                                    <td class="category_center"></td>
+                                </tr>
+                            </table>
 <!-- BREAK_VIEW_DIR -->
 <!-- CASE_VIEW_PIC -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="category_center"></td>
-                                    <td class="category_center">
-										{L_DESCRIPTION_BLOCK}
-<!-- IF_EDIT_BLOCK_BEGIN -->
-										<br /><div class="long_edit_delete"><button class="long_edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">{L_EDIT_BLOCK}</button><button class="long_delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">{L_DELETE_BLOCK}</button></div>
-<!-- IF_EDIT_BLOCK_END -->
-									<hr class="line" /></td>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
+                                <tr>
+                                    <td class="name_block_left">&nbsp;</td>
+                                    <td class="name_block">{L_NAME_BLOCK}</td>
+                                    <td class="name_block_right">&nbsp;</td>
+                                </tr>
+                                <tr>
                                     <td class="category_center"></td>
-								</tr>
+                                    <td class="category_center">
+                                        {L_DESCRIPTION_BLOCK}
+<!-- IF_EDIT_BLOCK_BEGIN -->
+                                        <br /><div class="long_edit_delete"><button class="long_edit ui-corner-all" onclick="window.location.href='{U_EDIT_BLOCK}'" title="{L_EDIT_BLOCK}">{L_EDIT_BLOCK}</button><button class="long_delete ui-corner-all" onclick="if (confirm('{L_CONFIRM_DELETE_BLOCK}')) { window.location.href='{U_DELETE_BLOCK}'; }" title="{L_DELETE_BLOCK}">{L_DELETE_BLOCK}</button></div>
+<!-- IF_EDIT_BLOCK_END -->
+                                        <hr class="line" /></td>
+                                    <td class="category_center"></td>
+                                </tr>
 <!-- IF_ISSET_PIC_BEGIN -->
-								<tr>
-									<td class="category_center"></td>
+                                <tr>
+                                    <td class="category_center"></td>
                                     <td class="category_center">
 <!-- ARRAY_LIST_PIC_BEGIN -->
-										<div class="mini_photo_category">
-											<table cellpadding="1" cellspacing="0" border="0">
-												<tr>
-        	            			            	<td class="mini_photo"></td>
-													<td class="mini_photo" height="{MAX_FOTO_HEIGHT}"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-                	                    			<td class="mini_photo"></td>
-												</tr>
-												<tr>
-                            	    				<td class="mini_photo"></td>
-													<td class="mini_photo">
+                                        <div class="mini_photo_category">
+                                            <table cellpadding="1" cellspacing="0" border="0">
+                                                <tr>
+                                                    <td class="mini_photo"></td>
+                                                    <td class="mini_photo" height="{MAX_FOTO_HEIGHT}"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
+                                                    <td class="mini_photo"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="mini_photo"></td>
+                                                    <td class="mini_photo">
 <!-- IF_USER_EXISTS_BEGIN -->
-														{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
+                                                        {L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
 <!-- IF_USER_EXISTS_ELSE -->
-														{D_REAL_NAME_USER_ADD}
+                                                        {D_REAL_NAME_USER_ADD}
 <!-- IF_USER_EXISTS_END -->
-													</td>
-                                    				<td class="mini_photo"></td>
-												</tr>
-												<tr>
-        	                        				<td class="mini_photo"></td>
-													<td class="mini_photo">{D_PHOTO_RATE}</td>
-                	                    			<td class="mini_photo"></td>
-												</tr>
-											</table>
-										</div>
+                                                    </td>
+                                                    <td class="mini_photo"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="mini_photo"></td>
+                                                    <td class="mini_photo">{D_PHOTO_RATE}</td>
+                                                    <td class="mini_photo"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
 <!-- ARRAY_LIST_PIC_END -->
-									</td>
+                                    </td>
                                     <td class="category_center"></td>
-								</tr>
+                                </tr>
 <!-- IF_ISSET_PIC_ELSE -->
-								<tr>
-									<td class="category_center" colspan="3">{L_NO_PHOTO}</td>
-								</tr>
+                                <tr>
+                                    <td class="category_center" colspan="3">{L_NO_PHOTO}</td>
+                                </tr>
 <!-- IF_ISSET_PIC_END -->
-							</table>
+                            </table>
 <!-- BREAK_VIEW_PIC -->
 <!-- CASE_CATEGORY_EDIT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="category_center">&nbsp;</td>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
+                                <tr>
+                                    <td class="name_block_left">&nbsp;</td>
+                                    <td class="name_block">{L_NAME_BLOCK}</td>
+                                    <td class="name_block_right">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="category_center">&nbsp;</td>
                                     <td class="category_center">
 <!-- IF_ISSET_CATEGORY_BEGIN -->
-										<form name="edit" action="{U_EDITED}" method="post">
-											<table cellpadding="0" cellspacing="0" border="0" width="100%">
-												<tr>
-			            	                        <td class="category_center">{L_NAME_DIR}:</td>
-			                	                    <td class="category_center">
+                                        <form name="edit" action="{U_EDITED}" method="post">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td class="category_center">{L_NAME_DIR}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
+                                                    <td class="category_center">
 <!-- IF_CATEGORY_EDIT_BEGIN -->
-														{D_NAME_DIR}
+                                                        {D_NAME_DIR}
 <!-- IF_CATEGORY_EDIT_ELSE -->
-														<input name="name_dir" value="{D_NAME_DIR}" type="text" size="20" maxlength="50" />
+                                                        <input name="name_dir" value="{D_NAME_DIR}" type="text" size="20" maxlength="50" />
 <!-- IF_CATEGORY_EDIT_END -->
-													</td>
-												</tr>
-												<tr>
-			            	                        <td class="category_center">{L_NAME_CATEGORY}:</td>
-			                	                    <td class="category_center"><input class="ui-corner-all" name="name_category" value="{D_NAME_CATEGORY}" type="text" size="20" maxlength="50" /></td>
-												</tr>
-												<tr>
-                                    				<td class="category_center">{L_DESCRIPTION_CATEGORY}:</td>
-                                    				<td class="category_center"><input class="ui-corner-all" name="description_category" value="{D_DESCRIPTION_CATEGORY}" type="text" size="20" maxlength="250" /></td>
-												</tr>
-											</table>
-											<table cellpadding="0" cellspacing="0" border="0" width="100%">
-												<tr>
-													<td class="mini_photo"><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_EDIT_THIS}" /></td>
-												</tr>
-											</table>
-										</form>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="category_center">{L_NAME_CATEGORY}:</td>
+                                                    <td class="category_center"><input class="ui-corner-all" name="name_category" value="{D_NAME_CATEGORY}" type="text" size="20" maxlength="50" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="category_center">{L_DESCRIPTION_CATEGORY}:</td>
+                                                    <td class="category_center"><input class="ui-corner-all" name="description_category" value="{D_DESCRIPTION_CATEGORY}" type="text" size="20" maxlength="250" /></td>
+                                                </tr>
+                                            </table>
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td class="mini_photo"><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_EDIT_THIS}" /></td>
+                                                </tr>
+                                            </table>
+                                        </form>
 <!-- IF_ISSET_CATEGORY_ELSE -->
-										{L_NO_CATEGORY}
+                                        {L_NO_CATEGORY}
 <!-- IF_ISSET_CATEGORY_END -->
-									</td>
+                                    </td>
                                     <td class="category_center">&nbsp;</td>
-								</tr>
-							</table>
+                                </tr>
+                            </table>
 <!-- BREAK_CATEGORY_EDIT -->
 <!-- CASE_DEFAULT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">ERROR_CASE_BLOCK</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-							</table>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
+                                <tr>
+                                    <td class="name_block_left">&nbsp;</td>
+                                    <td class="name_block">ERROR_CASE_BLOCK</td>
+                                    <td class="name_block_right">&nbsp;</td>
+                                </tr>
+                            </table>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_CATEGORY_BLOCK_END -->

@@ -284,6 +284,91 @@ interface Work_Image_Interface
      *
      */
     public function fix_file_extension(string $full_path): string;
+
+    /**
+     * @brief Удаляет директорию и её содержимое, предварительно проверяя права доступа.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Он выполняет следующие действия:
+     *          - Проверяет существование указанной директории.
+     *          - Проверяет права доступа к директории (должна быть доступна для записи).
+     *          - Рекурсивно удаляет все файлы внутри директории.
+     *          - Удаляет саму директорию.
+     *          Метод может быть вызван через публичный метод-редирект `PhotoRigma::Classes::Work_Image::remove_directory()`.
+     *
+     * @callgraph
+     *
+     * @param string $path Путь к директории.
+     *                     Должен быть строкой, указывающей на существующую директорию.
+     *                     Директория должна быть доступна для записи.
+     *
+     * @return bool Возвращает `true`, если директория успешно удалена.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если директория не существует.
+     *                           - Если директория недоступна для записи.
+     *                           - Если не удалось удалить файл внутри директории.
+     *                           - Если не удалось удалить саму директорию.
+     *
+     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     *
+     * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_Image();
+     * $path = '/path/to/directory';
+     * $result = $object->remove_directory($path);
+     * if ($result) {
+     *     echo "Директория успешно удалена!";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work_Image::remove_directory() Публичный метод-редирект для вызова этой логики.
+     */
+    public function remove_directory(string $path): bool;
+
+    /**
+     * @brief Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Он выполняет следующие действия:
+     *          - Проверяет права доступа к родительским директориям.
+     *          - Рекурсивно создает директории для галереи и миниатюр.
+     *          - Копирует и модифицирует файлы `index.php` для новой директории галереи и миниатюр.
+     *          Метод может быть вызван через публичный метод-редирект `PhotoRigma::Classes::Work_Image::create_directory()`.
+     *
+     * @callgraph
+     *
+     * @param string $directory_name Имя директории.
+     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
+     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
+     *
+     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если родительская директория недоступна для записи.
+     *                           - Если не удалось создать директории.
+     *                           - Если исходные файлы `index.php` не существуют.
+     *                           - Если не удалось прочитать или записать файлы `index.php`.
+     *
+     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     *
+     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_Image();
+     * $directoryName = 'new_category';
+     * $result = $object->create_directory($directoryName);
+     * if ($result) {
+     *     echo "Директории успешно созданы!";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования путей.
+     *
+     * @see PhotoRigma::Classes::Work_Image::_create_directory_internal() Метод, который реализует в классе заявленный в интерфейсе.
+     */
+    public function create_directory(string $directory_name): bool;
 }
 
 /**
@@ -371,13 +456,6 @@ class Work_Image implements Work_Image_Interface
      */
     public function __construct(array $config)
     {
-        if (!is_array($config)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип конфигурации | Ожидался массив, получено: " . gettype(
-                    $config
-                )
-            );
-        }
         $this->config = $config;
     }
 
@@ -1788,7 +1866,7 @@ class Work_Image implements Work_Image_Interface
             );
         }
         // Проверка существования файла и прав доступа
-        if (!file_exists($normalized_path) || !is_file($normalized_path)) {
+        if (!is_file($normalized_path)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = {$full_path}"
             );
@@ -1848,5 +1926,303 @@ class Work_Image implements Work_Image_Interface
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: {$normalized_path}, Новый путь: {$new_full_path}"
         );
         return $new_full_path;
+    }
+
+    /**
+     * @brief Удаляет директорию и её содержимое через вызов защищённого метода `_remove_directory_internal()`.
+     *
+     * @details Этот публичный метод является редиректом, который вызывает защищённый метод
+     * `_remove_directory_internal()` для выполнения удаления директории и её содержимого.
+     * Также существует редирект из родительского класса `PhotoRigma::Classes::Work::remove_directory()`.
+     * Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $path Путь к директории.
+     *                     Должен быть строкой, указывающей на существующую директорию.
+     *                     Директория должна быть доступна для записи.
+     *
+     * @return bool Возвращает `true`, если директория успешно удалена.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если директория не существует.
+     *                           - Если директория недоступна для записи.
+     *                           - Если не удалось удалить файл внутри директории.
+     *                           - Если не удалось удалить саму директорию.
+     *
+     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     *
+     * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
+     *
+     * Пример внешнего вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_Image();
+     * $path = '/path/to/directory';
+     * $result = $object->remove_directory($path);
+     * if ($result) {
+     *     echo "Директория успешно удалена!";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work::remove_directory() Метод из родительского класса, используемый как редирект.
+     *
+     * @see PhotoRigma::Classes::Work_Image::_remove_directory_internal() Защищённый метод, реализующий основную логику удаления.
+     */
+    public function remove_directory(string $path): bool
+    {
+        return $this->_remove_directory_internal($path);
+    }
+
+    /**
+     * @brief Удаляет директорию и её содержимое, предварительно проверяя права доступа.
+     *
+     * @details Этот защищенный метод выполняет следующие действия:
+     *          - Проверяет существование указанной директории.
+     *          - Проверяет права доступа к директории (должна быть доступна для записи).
+     *          - Рекурсивно удаляет все файлы внутри директории.
+     *          - Удаляет саму директорию.
+     *          Метод вызывается через публичный метод-редирект `PhotoRigma::Classes::Work_Image::remove_directory()`
+     *          и предназначен для использования внутри класса или его наследников.
+     *
+     * @callergraph
+     *
+     * @param string $path Путь к директории.
+     *                     Должен быть строкой, указывающей на существующую директорию.
+     *                     Директория должна быть доступна для записи.
+     *
+     * @return bool Возвращает `true`, если директория успешно удалена.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если директория не существует.
+     *                           - Если директория недоступна для записи.
+     *                           - Если не удалось удалить файл внутри директории.
+     *                           - Если не удалось удалить саму директорию.
+     *
+     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     *
+     * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * $path = '/path/to/directory';
+     * $result = $this->_remove_directory_internal($path);
+     * if ($result) {
+     *     echo "Директория успешно удалена!";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work_Image::remove_directory() Публичный метод-редирект для вызова этой логики.
+     *
+     */
+    protected function _remove_directory_internal(string $path): bool
+    {
+        if (!is_dir($path)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория не существует | Путь: {$path}"
+            );
+        }
+
+        if (!is_writable($path)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: {$path}"
+            );
+        }
+
+        foreach (glob($path . '/*', GLOB_NOSORT) as $file) {
+            if (is_file($file)) {
+                if (!unlink($file)) {
+                    throw new RuntimeException(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл | Путь: {$file}"
+                    );
+                }
+            }
+        }
+
+        if (!rmdir($path)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить директорию | Путь: {$path}"
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * @brief Создает директории для категории и копирует файлы index.php через вызов защищённого метода.
+     *
+     * @details Этот публичный метод является редиректом, который вызывает защищённый метод
+     * `_create_directory_internal()` для выполнения создания директорий и копирования файлов `index.php`.
+     * Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют.
+     * Метод предназначен для использования вне класса.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $directory_name Имя директории.
+     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
+     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
+     *
+     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если родительская директория недоступна для записи.
+     *                           - Если не удалось создать директории.
+     *                           - Если исходные файлы `index.php` не существуют.
+     *                           - Если не удалось прочитать или записать файлы `index.php`.
+     *
+     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     *
+     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+     *
+     * Пример внешнего вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_Image();
+     * $directoryName = 'new_category';
+     * $result = $object->create_directory($directoryName);
+     * if ($result) {
+     *     echo "Директории успешно созданы!";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work::create_directory() Метод-фасад в родительском классе Work.
+     * @see PhotoRigma::Classes::Work_Image::_create_directory_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования путей.
+     *
+     */
+    public function create_directory(string $directory_name): bool
+    {
+        return $this->_create_directory_internal($directory_name);
+    }
+
+    /**
+     * @brief Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.
+     *
+     * @details Этот защищенный метод выполняет следующие действия:
+     *          - Проверяет права доступа к родительским директориям.
+     *          - Рекурсивно создает директории для галереи и миниатюр.
+     *          - Копирует и модифицирует файлы `index.php` для новой директории галереи и миниатюр.
+     *          Метод вызывается через публичный метод-редирект `PhotoRigma::Classes::Work_Image::create_directory()`
+     *          и предназначен для использования внутри класса или его наследников.
+     *
+     * @callergraph
+     *
+     * @param string $directory_name Имя директории.
+     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
+     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
+     *
+     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если родительская директория недоступна для записи.
+     *                           - Если не удалось создать директории.
+     *                           - Если исходные файлы `index.php` не существуют.
+     *                           - Если не удалось прочитать или записать файлы `index.php`.
+     *
+     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     *
+     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * $directoryName = 'new_category';
+     * $result = $this->_create_directory_internal($directoryName);
+     * if ($result) {
+     *     echo "Директории успешно созданы!";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::Work_Image::create_directory() Публичный метод-редирект для вызова этой логики.
+     *
+     * @see PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования путей.
+     */
+    protected function _create_directory_internal(string $directory_name): bool
+    {
+        // Формируем пути для галереи и миниатюр с использованием sprintf()
+        $gallery_path = sprintf(
+            '%s/%s/%s',
+            $this->config['site_dir'],
+            $this->config['gallery_folder'],
+            $directory_name
+        );
+        $thumbnail_path = sprintf(
+            '%s/%s/%s',
+            $this->config['site_dir'],
+            $this->config['thumbnail_folder'],
+            $directory_name
+        );
+
+        // Проверяем права доступа к родительским директориям
+        if (!is_writable(dirname($gallery_path))) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
+                    $gallery_path
+                )
+            );
+        }
+        if (!is_writable(dirname($thumbnail_path))) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
+                    $thumbnail_path
+                )
+            );
+        }
+
+        // Создаем директории рекурсивно
+        if (!mkdir($gallery_path, 0755, true) || !mkdir($thumbnail_path, 0755, true)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: {$directory_name}"
+            );
+        }
+
+        // Определяем пути к исходным файлам index.php
+        $gallery_index_file = sprintf('%s/%s/index.php', $this->config['site_dir'], $this->config['gallery_folder']);
+        $thumbnail_index_file = sprintf(
+            '%s/%s/index.php',
+            $this->config['site_dir'],
+            $this->config['thumbnail_folder']
+        );
+
+        // Проверяем существование исходных файлов index.php
+        if (!is_file($gallery_index_file)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: {$gallery_index_file}"
+            );
+        }
+        if (!is_file($thumbnail_index_file)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: {$thumbnail_index_file}"
+            );
+        }
+
+        // Копируем index.php в новую директорию галереи
+        $gallery_index_content = file_get_contents($gallery_index_file);
+        if ($gallery_index_content === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: {$gallery_index_file}"
+            );
+        }
+        $gallery_index_content = strtr($gallery_index_content, [
+            'gallery/index.php' => "gallery/{$directory_name}/index.php"
+        ]);
+        if (file_put_contents($gallery_path . '/index.php', $gallery_index_content) === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: {$gallery_path}/index.php"
+            );
+        }
+
+        // Копируем index.php в новую директорию миниатюр
+        $thumbnail_index_content = file_get_contents($thumbnail_index_file);
+        if ($thumbnail_index_content === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: {$thumbnail_index_file}"
+            );
+        }
+        $thumbnail_index_content = strtr($thumbnail_index_content, [
+            'thumbnail/index.php' => "thumbnail/{$directory_name}/index.php"
+        ]);
+        if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content) === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: {$thumbnail_path}/index.php"
+            );
+        }
+
+        return true;
     }
 }

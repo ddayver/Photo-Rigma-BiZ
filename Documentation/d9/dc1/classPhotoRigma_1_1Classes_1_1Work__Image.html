@@ -162,6 +162,12 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <tr class="memitem:a89d4e7cb491d0c91282d16ff5abe3138" id="r_a89d4e7cb491d0c91282d16ff5abe3138"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89d4e7cb491d0c91282d16ff5abe3138">fix_file_extension</a> (string $full_path)</td></tr>
 <tr class="memdesc:a89d4e7cb491d0c91282d16ff5abe3138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).  <br /></td></tr>
 <tr class="separator:a89d4e7cb491d0c91282d16ff5abe3138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaf358ddc8223e4a5a479f645fc43da8" id="r_aaaf358ddc8223e4a5a479f645fc43da8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaaf358ddc8223e4a5a479f645fc43da8">remove_directory</a> (string $path)</td></tr>
+<tr class="memdesc:aaaf358ddc8223e4a5a479f645fc43da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет директорию и её содержимое через вызов защищённого метода <code>_remove_directory_internal()</code>.  <br /></td></tr>
+<tr class="separator:aaaf358ddc8223e4a5a479f645fc43da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935337e705b7a1b9ea422d2e04932109" id="r_a935337e705b7a1b9ea422d2e04932109"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a935337e705b7a1b9ea422d2e04932109">create_directory</a> (string $directory_name)</td></tr>
+<tr class="memdesc:a935337e705b7a1b9ea422d2e04932109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает директории для категории и копирует файлы index.php через вызов защищённого метода.  <br /></td></tr>
+<tr class="separator:a935337e705b7a1b9ea422d2e04932109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Защищенные члены</h2></td></tr>
@@ -180,6 +186,12 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <tr class="memitem:af7cd1deb24cdf852e9981eb4f2665ff1" id="r_af7cd1deb24cdf852e9981eb4f2665ff1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7cd1deb24cdf852e9981eb4f2665ff1">_fix_file_extension_internal</a> (string $full_path)</td></tr>
 <tr class="memdesc:af7cd1deb24cdf852e9981eb4f2665ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Корректировка расширения файла в соответствии с его MIME-типом (защищённый метод).  <br /></td></tr>
 <tr class="separator:af7cd1deb24cdf852e9981eb4f2665ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c229fbb1b62aee5791544bc1086248" id="r_a16c229fbb1b62aee5791544bc1086248"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16c229fbb1b62aee5791544bc1086248">_remove_directory_internal</a> (string $path)</td></tr>
+<tr class="memdesc:a16c229fbb1b62aee5791544bc1086248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет директорию и её содержимое, предварительно проверяя права доступа.  <br /></td></tr>
+<tr class="separator:a16c229fbb1b62aee5791544bc1086248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae77f64cb663e7c3c35e7cbcdfd846cf2" id="r_ae77f64cb663e7c3c35e7cbcdfd846cf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae77f64cb663e7c3c35e7cbcdfd846cf2">_create_directory_internal</a> (string $directory_name)</td></tr>
+<tr class="memdesc:ae77f64cb663e7c3c35e7cbcdfd846cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.  <br /></td></tr>
+<tr class="separator:ae77f64cb663e7c3c35e7cbcdfd846cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
@@ -240,9 +252,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line"> </div>
 <div class="line"><span class="comment">// Вызов метода через класс Work</span></div>
 <div class="line">$image-&gt;resize_image(<span class="stringliteral">&#39;/path/to/source.jpg&#39;</span>, <span class="stringliteral">&#39;/path/to/thumbnail.jpg&#39;</span>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a></div><div class="ttdeci">array $config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00338">work_image.php:338</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a></div><div class="ttdeci">array $config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00423">work_image.php:423</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00333">333</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00418">418</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a1538e33cc82d38ead75aba61979dbcf9" name="a1538e33cc82d38ead75aba61979dbcf9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1538e33cc82d38ead75aba61979dbcf9">&#9670;&#160;</a></span>__construct()</h2>
@@ -284,9 +296,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dd>
 <a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Свойство, содержащее конфигурацию приложения. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00372">372</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00457">457</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00338">$config</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00423">$config</a>.</p>
 
 </div>
 </div>
@@ -331,9 +343,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">echo $workImage-&gt;config[<span class="stringliteral">&#39;temp_photo_w&#39;</span>]; <span class="comment">// Выведет: 800</span></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Свойство, к которому обращается метод. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00415">415</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00493">493</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00338">$config</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00423">$config</a>.</p>
 
 </div>
 </div>
@@ -385,7 +397,83 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">echo $workImage-&gt;config[<span class="stringliteral">&#39;temp_photo_w&#39;</span>]; <span class="comment">// Выведет: 1024</span></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Свойство, которое изменяет метод. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00458">458</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00536">536</a></p>
+
+</div>
+</div>
+<a id="ae77f64cb663e7c3c35e7cbcdfd846cf2" name="ae77f64cb663e7c3c35e7cbcdfd846cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae77f64cb663e7c3c35e7cbcdfd846cf2">&#9670;&#160;</a></span>_create_directory_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_create_directory_internal </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$directory_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа. </p>
+<p>Этот защищенный метод выполняет следующие действия:</p><ul>
+<li>Проверяет права доступа к родительским директориям.</li>
+<li>Рекурсивно создает директории для галереи и миниатюр.</li>
+<li>Копирует и модифицирует файлы <code>index.php</code> для новой директории галереи и миниатюр. Метод вызывается через публичный метод-редирект <code><a class="el" href="#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода.">PhotoRigma\Classes\Work_Image\create_directory()</a></code> и предназначен для использования внутри класса или его наследников.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$directory_name</td><td>Имя директории. Должен быть строкой, содержащей только допустимые символы для имён директорий. Не должен содержать запрещённых символов (например, <code>\/:*?"&lt;&gt;|&lt;/tt&gt;).
+
+@return bool Возвращает &lt;tt&gt;true&lt;/tt&gt;, если директории успешно созданы и файлы скопированы.
+
+@throws RuntimeException Выбрасывается исключение в следующих случаях:
+                          - Если родительская директория недоступна для записи.
+                          - Если не удалось создать директории.
+                          - Если исходные файлы &lt;tt&gt;index.php&lt;/tt&gt; не существуют.
+                          - Если не удалось прочитать или записать файлы &lt;tt&gt;index.php&lt;/tt&gt;.
+
+@note Метод использует конфигурационные параметры &lt;tt&gt;site_dir&lt;/tt&gt;, &lt;tt&gt;gallery_folder&lt;/tt&gt; и &lt;tt&gt;thumbnail_folder&lt;/tt&gt;.
+
+@warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+
+Пример вызова метода внутри класса или наследника:
+@code 
+$directoryName = 'new_category';
+$result = $this-&gt;_create_directory_internal($directoryName);
+if ($result) {
+    echo "Директории успешно созданы!"; }  </code></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd><code> <a class="el" href="#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода.">PhotoRigma\Classes\Work_Image\create_directory()</a> Публичный метод-редирект для вызова этой логики.</code></dd>
+<dd>
+<code> <a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Конфигурационные параметры, используемые для формирования путей. </code></dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l02135">2135</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l02090">create_directory()</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ae77f64cb663e7c3c35e7cbcdfd846cf2_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ae77f64cb663e7c3c35e7cbcdfd846cf2_icgraph" alt=""/></div>
+<map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ae77f64cb663e7c3c35e7cbcdfd846cf2_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ae77f64cb663e7c3c35e7cbcdfd846cf2_icgraph">
+<area shape="rect" title="Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа." alt="" coords="167,5,336,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода." alt="" coords="5,5,119,30"/>
+<area shape="poly" title=" " alt="" coords="151,20,119,20,119,15,151,15"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -433,19 +521,19 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">$full_path = <span class="stringliteral">&#39;/path/to/file_without_extension&#39;</span>;</div>
 <div class="line">$corrected_path = $this-&gt;<a class="code hl_function" href="#af7cd1deb24cdf852e9981eb4f2665ff1">_fix_file_extension_internal</a>($full_path);</div>
 <div class="line">echo <span class="stringliteral">&quot;Исправленный путь: {$corrected_path}&quot;</span>;</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_af7cd1deb24cdf852e9981eb4f2665ff1"><div class="ttname"><a href="#af7cd1deb24cdf852e9981eb4f2665ff1">PhotoRigma\Classes\Work_Image\_fix_file_extension_internal</a></div><div class="ttdeci">_fix_file_extension_internal(string $full_path)</div><div class="ttdoc">Корректировка расширения файла в соответствии с его MIME-типом (защищённый метод).</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01773">work_image.php:1773</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_af7cd1deb24cdf852e9981eb4f2665ff1"><div class="ttname"><a href="#af7cd1deb24cdf852e9981eb4f2665ff1">PhotoRigma\Classes\Work_Image\_fix_file_extension_internal</a></div><div class="ttdeci">_fix_file_extension_internal(string $full_path)</div><div class="ttdoc">Корректировка расширения файла в соответствии с его MIME-типом (защищённый метод).</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01851">work_image.php:1851</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a89d4e7cb491d0c91282d16ff5abe3138" title="Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).">PhotoRigma\Classes\Work_Image\fix_file_extension()</a> Публичный метод, вызывающий этот защищённый метод. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01773">1773</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01851">1851</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01730">fix_file_extension()</a>.</p>
-<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01808">fix_file_extension()</a>.</p>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af7cd1deb24cdf852e9981eb4f2665ff1_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af7cd1deb24cdf852e9981eb4f2665ff1_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af7cd1deb24cdf852e9981eb4f2665ff1_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af7cd1deb24cdf852e9981eb4f2665ff1_icgraph">
 <area shape="rect" title="Корректировка расширения файла в соответствии с его MIME&#45;типом (защищённый метод)." alt="" coords="172,5,297,44"/>
@@ -496,23 +584,23 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод завершает выполнение скрипта (<code>exit()</code>), отправляя заголовки и содержимое файла.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Вызов защищённого метода внутри класса или наследника</span></div>
 <div class="line">$this-&gt;<a class="code hl_function" href="#a0502831dd0f02e73d62586e4966e6a71">_image_attach_internal</a>(<span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>, <span class="stringliteral">&#39;example.jpg&#39;</span>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a0502831dd0f02e73d62586e4966e6a71"><div class="ttname"><a href="#a0502831dd0f02e73d62586e4966e6a71">PhotoRigma\Classes\Work_Image\_image_attach_internal</a></div><div class="ttdeci">_image_attach_internal(string $full_path, string $name_file)</div><div class="ttdoc">Вывод изображения через HTTP.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01634">work_image.php:1634</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a0502831dd0f02e73d62586e4966e6a71"><div class="ttname"><a href="#a0502831dd0f02e73d62586e4966e6a71">PhotoRigma\Classes\Work_Image\_image_attach_internal</a></div><div class="ttdeci">_image_attach_internal(string $full_path, string $name_file)</div><div class="ttdoc">Вывод изображения через HTTP.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01712">work_image.php:1712</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aeabe138e0704bd8403da0faf894ad0df" title="Вывод изображения через HTTP.">PhotoRigma\Classes\Work_Image\image_attach()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01634">1634</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01712">1712</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d7a/work_8php_source.html#l00861">Work\clean_field()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01593">image_attach()</a>.</p>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01671">image_attach()</a>.</p>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_cgraph">
 <area shape="rect" title="Вывод изображения через HTTP." alt="" coords="5,19,161,44"/>
@@ -524,11 +612,11 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <area shape="poly" title=" " alt="" coords="566,29,598,29,598,34,566,34"/>
 </map>
 </div>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a0502831dd0f02e73d62586e4966e6a71_icgraph">
 <area shape="rect" title="Вывод изображения через HTTP." alt="" coords="153,5,308,30"/>
@@ -593,7 +681,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка при создании эскиза.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a7f18185f2629abbc3bf148d8addfcfe8"><div class="ttname"><a href="#a7f18185f2629abbc3bf148d8addfcfe8">PhotoRigma\Classes\Work_Image\_image_resize_internal</a></div><div class="ttdeci">_image_resize_internal(string $full_path, string $thumbnail_path)</div><div class="ttdoc">Изменяет размер изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00794">work_image.php:794</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a7f18185f2629abbc3bf148d8addfcfe8"><div class="ttname"><a href="#a7f18185f2629abbc3bf148d8addfcfe8">PhotoRigma\Classes\Work_Image\_image_resize_internal</a></div><div class="ttdeci">_image_resize_internal(string $full_path, string $thumbnail_path)</div><div class="ttdoc">Изменяет размер изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00872">work_image.php:872</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\image_resize()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза.">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size()</a> Метод для расчёта размеров эскиза. </dd>
@@ -606,16 +694,16 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00794">794</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00872">872</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00632">calculate_thumbnail_size()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01301">process_image_resize_gd()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l00965">process_image_resize_gmagick()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l01130">process_image_resize_imagick()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00710">calculate_thumbnail_size()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01379">process_image_resize_gd()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01043">process_image_resize_gmagick()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l01208">process_image_resize_imagick()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00735">image_resize()</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00813">image_resize()</a>.</p>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_cgraph">
 <area shape="rect" title="Изменяет размер изображения." alt="" coords="5,83,159,107"/>
@@ -629,11 +717,11 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <area shape="poly" title=" " alt="" coords="110,106,208,151,224,158,221,163,206,156,108,110"/>
 </map>
 </div>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a7f18185f2629abbc3bf148d8addfcfe8_icgraph">
 <area shape="rect" title="Изменяет размер изображения." alt="" coords="151,5,304,30"/>
@@ -679,24 +767,101 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">$noPhotoData = $this-&gt;<a class="code hl_function" href="#a2b5c40822e7f0dcc8beb47dad2660286">_no_photo_internal</a>();</div>
 <div class="line">echo <span class="stringliteral">&quot;URL изображения: {$noPhotoData[&#39;url&#39;]}\n&quot;</span>;</div>
 <div class="line">echo <span class="stringliteral">&quot;Описание: {$noPhotoData[&#39;description&#39;]}\n&quot;</span>;</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a2b5c40822e7f0dcc8beb47dad2660286"><div class="ttname"><a href="#a2b5c40822e7f0dcc8beb47dad2660286">PhotoRigma\Classes\Work_Image\_no_photo_internal</a></div><div class="ttdeci">_no_photo_internal()</div><div class="ttdoc">Возвращает данные для отсутствующего изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01540">work_image.php:1540</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a2b5c40822e7f0dcc8beb47dad2660286"><div class="ttname"><a href="#a2b5c40822e7f0dcc8beb47dad2660286">PhotoRigma\Classes\Work_Image\_no_photo_internal</a></div><div class="ttdeci">_no_photo_internal()</div><div class="ttdoc">Возвращает данные для отсутствующего изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01618">work_image.php:1618</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Свойство конфигурации проекта в классе.</dd>
 <dd>
 <a class="el" href="#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\no_photo()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01540">1540</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01618">1618</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01493">no_photo()</a>.</p>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01571">no_photo()</a>.</p>
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a2b5c40822e7f0dcc8beb47dad2660286_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a2b5c40822e7f0dcc8beb47dad2660286_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a2b5c40822e7f0dcc8beb47dad2660286_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a2b5c40822e7f0dcc8beb47dad2660286_icgraph">
 <area shape="rect" title="Возвращает данные для отсутствующего изображения." alt="" coords="128,5,258,30"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения." alt="" coords="5,5,80,30"/>
 <area shape="poly" title=" " alt="" coords="112,20,80,20,80,15,112,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a16c229fbb1b62aee5791544bc1086248" name="a16c229fbb1b62aee5791544bc1086248"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16c229fbb1b62aee5791544bc1086248">&#9670;&#160;</a></span>_remove_directory_internal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_remove_directory_internal </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаляет директорию и её содержимое, предварительно проверяя права доступа. </p>
+<p>Этот защищенный метод выполняет следующие действия:</p><ul>
+<li>Проверяет существование указанной директории.</li>
+<li>Проверяет права доступа к директории (должна быть доступна для записи).</li>
+<li>Рекурсивно удаляет все файлы внутри директории.</li>
+<li>Удаляет саму директорию. Метод вызывается через публичный метод-редирект <code><a class="el" href="#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal().">PhotoRigma\Classes\Work_Image\remove_directory()</a></code> и предназначен для использования внутри класса или его наследников.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$path</td><td>Путь к директории. Должен быть строкой, указывающей на существующую директорию. Директория должна быть доступна для записи.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает <code>true</code>, если директория успешно удалена.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается исключение в следующих случаях:<ul>
+<li>Если директория не существует.</li>
+<li>Если директория недоступна для записи.</li>
+<li>Если не удалось удалить файл внутри директории.</li>
+<li>Если не удалось удалить саму директорию.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод рекурсивно удаляет все файлы внутри директории.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Используйте этот метод с осторожностью, так как удаление директории необратимо.</dd></dl>
+<p>Пример вызова метода внутри класса или наследника: </p><div class="fragment"><div class="line">$path = <span class="stringliteral">&#39;/path/to/directory&#39;</span>;</div>
+<div class="line">$result = $this-&gt;<a class="code hl_function" href="#a16c229fbb1b62aee5791544bc1086248">_remove_directory_internal</a>($path);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Директория успешно удалена!&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a16c229fbb1b62aee5791544bc1086248"><div class="ttname"><a href="#a16c229fbb1b62aee5791544bc1086248">PhotoRigma\Classes\Work_Image\_remove_directory_internal</a></div><div class="ttdeci">_remove_directory_internal(string $path)</div><div class="ttdoc">Удаляет директорию и её содержимое, предварительно проверяя права доступа.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l02016">work_image.php:2016</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal().">PhotoRigma\Classes\Work_Image\remove_directory()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l02016">2016</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l01971">remove_directory()</a>.</p>
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a16c229fbb1b62aee5791544bc1086248_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a16c229fbb1b62aee5791544bc1086248_icgraph" alt=""/></div>
+<map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a16c229fbb1b62aee5791544bc1086248_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a16c229fbb1b62aee5791544bc1086248_icgraph">
+<area shape="rect" title="Удаляет директорию и её содержимое, предварительно проверяя права доступа." alt="" coords="174,5,350,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal()." alt="" coords="5,5,126,30"/>
+<area shape="poly" title=" " alt="" coords="158,20,126,20,126,15,158,15"/>
 </map>
 </div>
 
@@ -749,21 +914,21 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">$path = <span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>;</div>
 <div class="line">$sizes = $this-&gt;<a class="code hl_function" href="#a887f702cc34cf74259c6f10365fc6c9b">_size_image_internal</a>($path);</div>
 <div class="line">echo <span class="stringliteral">&quot;Ширина: {$sizes[&#39;width&#39;]}, Высота: {$sizes[&#39;height&#39;]}&quot;</span>;</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a887f702cc34cf74259c6f10365fc6c9b"><div class="ttname"><a href="#a887f702cc34cf74259c6f10365fc6c9b">PhotoRigma\Classes\Work_Image\_size_image_internal</a></div><div class="ttdeci">_size_image_internal(string $path_image)</div><div class="ttdoc">Вычисляет размеры для вывода эскиза изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00555">work_image.php:555</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a887f702cc34cf74259c6f10365fc6c9b"><div class="ttname"><a href="#a887f702cc34cf74259c6f10365fc6c9b">PhotoRigma\Classes\Work_Image\_size_image_internal</a></div><div class="ttdeci">_size_image_internal(string $path_image)</div><div class="ttdoc">Вычисляет размеры для вывода эскиза изображения.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00633">work_image.php:633</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза.">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size()</a> Метод, используемый для расчёта размера эскиза.</dd>
 <dd>
 <a class="el" href="#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\size_image()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00555">555</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00633">633</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00632">calculate_thumbnail_size()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00710">calculate_thumbnail_size()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00511">size_image()</a>.</p>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00589">size_image()</a>.</p>
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_cgraph">
 <area shape="rect" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="5,5,148,30"/>
@@ -771,11 +936,11 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <area shape="poly" title=" " alt="" coords="148,15,180,15,180,20,148,20"/>
 </map>
 </div>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a887f702cc34cf74259c6f10365fc6c9b_icgraph">
 <area shape="rect" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="140,5,282,30"/>
@@ -858,16 +1023,16 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line"><span class="comment">// Результат</span></div>
 <div class="line">echo <span class="stringliteral">&quot;Ширина эскиза: {$thumbnailSize[&#39;width&#39;]}, Высота эскиза: {$thumbnailSize[&#39;height&#39;]}&quot;</span>;</div>
 <div class="line"><span class="comment">// Вывод: Ширина эскиза: 800, Высота эскиза: 450</span></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a87a203ec3e8e0964cd9637de5d35d22c"><div class="ttname"><a href="#a87a203ec3e8e0964cd9637de5d35d22c">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size</a></div><div class="ttdeci">calculate_thumbnail_size(array $size)</div><div class="ttdoc">Расчёт размера эскиза.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00632">work_image.php:632</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a87a203ec3e8e0964cd9637de5d35d22c"><div class="ttname"><a href="#a87a203ec3e8e0964cd9637de5d35d22c">PhotoRigma\Classes\Work_Image\calculate_thumbnail_size</a></div><div class="ttdeci">calculate_thumbnail_size(array $size)</div><div class="ttdoc">Расчёт размера эскиза.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00710">work_image.php:710</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00632">632</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00710">710</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00794">_image_resize_internal()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00555">_size_image_internal()</a>.</p>
-<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00872">_image_resize_internal()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00633">_size_image_internal()</a>.</p>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a87a203ec3e8e0964cd9637de5d35d22c_icgraph">
 <area shape="rect" title="Расчёт размера эскиза." alt="" coords="352,31,518,55"/>
@@ -879,6 +1044,75 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <area shape="poly" title=" " alt="" coords="135,20,103,20,103,15,135,15"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="11,55,97,79"/>
 <area shape="poly" title=" " alt="" coords="140,70,98,70,98,64,140,64"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a935337e705b7a1b9ea422d2e04932109" name="a935337e705b7a1b9ea422d2e04932109"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a935337e705b7a1b9ea422d2e04932109">&#9670;&#160;</a></span>create_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">create_directory </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$directory_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создает директории для категории и копирует файлы index.php через вызов защищённого метода. </p>
+<p>Этот публичный метод является редиректом, который вызывает защищённый метод <code>_create_directory_internal()</code> для выполнения создания директорий и копирования файлов <code>index.php</code>. Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют. Метод предназначен для использования вне класса.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$directory_name</td><td>Имя директории. Должен быть строкой, содержащей только допустимые символы для имён директорий. Не должен содержать запрещённых символов (например, <code>\/:*?"&lt;&gt;|&lt;/tt&gt;).
+
+@return bool Возвращает &lt;tt&gt;true&lt;/tt&gt;, если директории успешно созданы и файлы скопированы.
+
+@throws RuntimeException Выбрасывается исключение в следующих случаях:
+                          - Если родительская директория недоступна для записи.
+                          - Если не удалось создать директории.
+                          - Если исходные файлы &lt;tt&gt;index.php&lt;/tt&gt; не существуют.
+                          - Если не удалось прочитать или записать файлы &lt;tt&gt;index.php&lt;/tt&gt;.
+
+@note Метод использует конфигурационные параметры &lt;tt&gt;site_dir&lt;/tt&gt;, &lt;tt&gt;gallery_folder&lt;/tt&gt; и &lt;tt&gt;thumbnail_folder&lt;/tt&gt;.
+
+@warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+
+Пример внешнего вызова метода:
+@code 
+$object = new \PhotoRigma\Classes\Work_Image();
+$directoryName = 'new_category';
+$result = $object-&gt;create_directory($directoryName);
+if ($result) {
+    echo "Директории успешно созданы!"; }  </code></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd><code> <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов метода из дочернего класса.">PhotoRigma\Classes\Work\create_directory()</a> Метод-фасад в родительском классе Work. </code></dd>
+<dd>
+<code> <a class="el" href="#ae77f64cb663e7c3c35e7cbcdfd846cf2" title="Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.">PhotoRigma\Classes\Work_Image\_create_directory_internal()</a> Защищённый метод, реализующий основную логику. </code></dd>
+<dd>
+<code> <a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Конфигурационные параметры, используемые для формирования путей. </code></dd></dl>
+
+<p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#a935337e705b7a1b9ea422d2e04932109">Work_Image_Interface</a>.</p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l02090">2090</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l02135">_create_directory_internal()</a>.</p>
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a935337e705b7a1b9ea422d2e04932109_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a935337e705b7a1b9ea422d2e04932109_cgraph" alt=""/></div>
+<map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a935337e705b7a1b9ea422d2e04932109_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a935337e705b7a1b9ea422d2e04932109_cgraph">
+<area shape="rect" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода." alt="" coords="5,5,119,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae77f64cb663e7c3c35e7cbcdfd846cf2" title="Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа." alt="" coords="167,5,336,30"/>
+<area shape="poly" title=" " alt="" coords="119,15,151,15,151,20,119,20"/>
 </map>
 </div>
 
@@ -923,7 +1157,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">$full_path = <span class="stringliteral">&#39;/path/to/file_without_extension&#39;</span>;</div>
 <div class="line">$corrected_path = $image-&gt;fix_file_extension($full_path);</div>
 <div class="line">echo <span class="stringliteral">&quot;Исправленный путь: {$corrected_path}&quot;</span>;</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html"><div class="ttname"><a href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a></div><div class="ttdoc">Класс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00333">work_image.php:334</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html"><div class="ttname"><a href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a></div><div class="ttdoc">Класс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00418">work_image.php:419</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Корректировка расширения файла в соответствии с его MIME-типом.">PhotoRigma\Classes\Work\fix_file_extension()</a> Этот метод вызывается через класс Work. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
@@ -932,14 +1166,14 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#a89d4e7cb491d0c91282d16ff5abe3138">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01730">1730</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01808">1808</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l01773">_fix_file_extension_internal()</a>.</p>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l01851">_fix_file_extension_internal()</a>.</p>
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a89d4e7cb491d0c91282d16ff5abe3138_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a89d4e7cb491d0c91282d16ff5abe3138_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a89d4e7cb491d0c91282d16ff5abe3138_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a89d4e7cb491d0c91282d16ff5abe3138_cgraph">
 <area shape="rect" title="Корректировка расширения файла в соответствии с его MIME&#45;типом (публичный интерфейс)." alt="" coords="5,12,124,37"/>
@@ -995,14 +1229,14 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#aeabe138e0704bd8403da0faf894ad0df">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01593">1593</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01671">1671</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l01634">_image_attach_internal()</a>.</p>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l01712">_image_attach_internal()</a>.</p>
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aeabe138e0704bd8403da0faf894ad0df_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aeabe138e0704bd8403da0faf894ad0df_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aeabe138e0704bd8403da0faf894ad0df_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aeabe138e0704bd8403da0faf894ad0df_cgraph">
 <area shape="rect" title="Вывод изображения через HTTP." alt="" coords="5,19,105,44"/>
@@ -1077,14 +1311,14 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#af37eb2b0693905dd71dd677f86d47831">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00735">735</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00813">813</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00794">_image_resize_internal()</a>.</p>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00872">_image_resize_internal()</a>.</p>
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_af37eb2b0693905dd71dd677f86d47831_cgraph">
 <area shape="rect" title="Изменяет размер изображения." alt="" coords="5,83,103,107"/>
@@ -1144,14 +1378,14 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01493">1493</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01571">1571</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l01540">_no_photo_internal()</a>.</p>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l01618">_no_photo_internal()</a>.</p>
+<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_adfcd1cb7963a860013ca9ca1898f54f1_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_adfcd1cb7963a860013ca9ca1898f54f1_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_adfcd1cb7963a860013ca9ca1898f54f1_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_adfcd1cb7963a860013ca9ca1898f54f1_cgraph">
 <area shape="rect" title="Возвращает данные для отсутствующего изображения." alt="" coords="5,5,80,30"/>
@@ -1251,19 +1485,19 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_afaedd403d60cd5b36facbf5414e5b6ce"><div class="ttname"><a href="#afaedd403d60cd5b36facbf5414e5b6ce">PhotoRigma\Classes\Work_Image\process_image_resize_gd</a></div><div class="ttdeci">process_image_resize_gd(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки GD.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01301">work_image.php:1301</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_afaedd403d60cd5b36facbf5414e5b6ce"><div class="ttname"><a href="#afaedd403d60cd5b36facbf5414e5b6ce">PhotoRigma\Classes\Work_Image\process_image_resize_gd</a></div><div class="ttdeci">process_image_resize_gd(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки GD.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01379">work_image.php:1379</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd>
 <dd>
 <a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Метод, вызывающий этот приватный метод. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01301">1301</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01379">1379</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00794">_image_resize_internal()</a>.</p>
-<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00872">_image_resize_internal()</a>.</p>
+<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_afaedd403d60cd5b36facbf5414e5b6ce_icgraph">
 <area shape="rect" title="Обработка создания эскиза изображения с использованием библиотеки GD." alt="" coords="352,5,523,30"/>
@@ -1364,19 +1598,19 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a6154fb2649a1052f31514aed4818ad2c"><div class="ttname"><a href="#a6154fb2649a1052f31514aed4818ad2c">PhotoRigma\Classes\Work_Image\process_image_resize_gmagick</a></div><div class="ttdeci">process_image_resize_gmagick(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00965">work_image.php:965</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_a6154fb2649a1052f31514aed4818ad2c"><div class="ttname"><a href="#a6154fb2649a1052f31514aed4818ad2c">PhotoRigma\Classes\Work_Image\process_image_resize_gmagick</a></div><div class="ttdeci">process_image_resize_gmagick(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01043">work_image.php:1043</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Метод, вызывающий этот приватный метод. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00965">965</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01043">1043</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00794">_image_resize_internal()</a>.</p>
-<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00872">_image_resize_internal()</a>.</p>
+<div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-19-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a6154fb2649a1052f31514aed4818ad2c_icgraph">
 <area shape="rect" title="Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick." alt="" coords="352,5,502,44"/>
@@ -1475,19 +1709,19 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось создать эскиз.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_ab09fc88efda540da282034ef94d4ab74"><div class="ttname"><a href="#ab09fc88efda540da282034ef94d4ab74">PhotoRigma\Classes\Work_Image\process_image_resize_imagick</a></div><div class="ttdeci">process_image_resize_imagick(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки ImageMagick.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01130">work_image.php:1130</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_ab09fc88efda540da282034ef94d4ab74"><div class="ttname"><a href="#ab09fc88efda540da282034ef94d4ab74">PhotoRigma\Classes\Work_Image\process_image_resize_imagick</a></div><div class="ttdeci">process_image_resize_imagick(array $original_data, array $thumbnail_data)</div><div class="ttdoc">Обработка создания эскиза изображения с использованием библиотеки ImageMagick.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l01208">work_image.php:1208</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Метод, вызывающий этот приватный метод. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01130">1130</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01208">1208</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00794">_image_resize_internal()</a>.</p>
-<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00872">_image_resize_internal()</a>.</p>
+<div id="dynsection-20" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-20-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div id="dynsection-20-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_ab09fc88efda540da282034ef94d4ab74_icgraph">
 <area shape="rect" title="Обработка создания эскиза изображения с использованием библиотеки ImageMagick." alt="" coords="352,5,502,44"/>
@@ -1495,6 +1729,74 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <area shape="poly" title=" " alt="" coords="337,27,304,27,304,22,337,22"/>
 <area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения." alt="" coords="5,12,103,37"/>
 <area shape="poly" title=" " alt="" coords="135,27,103,27,103,22,135,22"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aaaf358ddc8223e4a5a479f645fc43da8" name="aaaf358ddc8223e4a5a479f645fc43da8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaf358ddc8223e4a5a479f645fc43da8">&#9670;&#160;</a></span>remove_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">remove_directory </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет директорию и её содержимое через вызов защищённого метода <code>_remove_directory_internal()</code>. </p>
+<p>Этот публичный метод является редиректом, который вызывает защищённый метод <code>_remove_directory_internal()</code> для выполнения удаления директории и её содержимого. Также существует редирект из родительского класса <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов метода из дочернего класса.">PhotoRigma\Classes\Work\remove_directory()</a></code>. Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$path</td><td>Путь к директории. Должен быть строкой, указывающей на существующую директорию. Директория должна быть доступна для записи.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает <code>true</code>, если директория успешно удалена.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается исключение в следующих случаях:<ul>
+<li>Если директория не существует.</li>
+<li>Если директория недоступна для записи.</li>
+<li>Если не удалось удалить файл внутри директории.</li>
+<li>Если не удалось удалить саму директорию.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод рекурсивно удаляет все файлы внутри директории.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Используйте этот метод с осторожностью, так как удаление директории необратимо.</dd></dl>
+<p>Пример внешнего вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$path = <span class="stringliteral">&#39;/path/to/directory&#39;</span>;</div>
+<div class="line">$result = $object-&gt;remove_directory($path);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Директория успешно удалена!&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов метода из дочернего класса.">PhotoRigma\Classes\Work\remove_directory()</a> Метод из родительского класса, используемый как редирект.</dd>
+<dd>
+<a class="el" href="#a16c229fbb1b62aee5791544bc1086248" title="Удаляет директорию и её содержимое, предварительно проверяя права доступа.">PhotoRigma\Classes\Work_Image\_remove_directory_internal()</a> Защищённый метод, реализующий основную логику удаления. </dd></dl>
+
+<p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#aaaf358ddc8223e4a5a479f645fc43da8">Work_Image_Interface</a>.</p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l01971">1971</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l02016">_remove_directory_internal()</a>.</p>
+<div id="dynsection-21" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-21-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-21-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aaaf358ddc8223e4a5a479f645fc43da8_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aaaf358ddc8223e4a5a479f645fc43da8_cgraph" alt=""/></div>
+<map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aaaf358ddc8223e4a5a479f645fc43da8_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_aaaf358ddc8223e4a5a479f645fc43da8_cgraph">
+<area shape="rect" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal()." alt="" coords="5,5,126,30"/>
+<area shape="rect" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a16c229fbb1b62aee5791544bc1086248" title="Удаляет директорию и её содержимое, предварительно проверяя права доступа." alt="" coords="174,5,350,30"/>
+<area shape="poly" title=" " alt="" coords="126,15,158,15,158,20,126,20"/>
 </map>
 </div>
 
@@ -1552,14 +1854,14 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Замещает <a class="el" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">Work_Image_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00511">511</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00589">589</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00555">_size_image_internal()</a>.</p>
-<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-18-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d67/work__image_8php_source.html#l00633">_size_image_internal()</a>.</p>
+<div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-22-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a096b7e5c3f9fb908fbb30e1adc2ac61b_cgraph.png" border="0" usemap="#ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a096b7e5c3f9fb908fbb30e1adc2ac61b_cgraph" alt=""/></div>
 <map name="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a096b7e5c3f9fb908fbb30e1adc2ac61b_cgraph" id="ad9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image_a096b7e5c3f9fb908fbb30e1adc2ac61b_cgraph">
 <area shape="rect" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="5,5,92,30"/>
@@ -1593,9 +1895,9 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00338">338</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00423">423</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00372">__construct()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00415">__get()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../de/d67/work__image_8php_source.html#l00457">__construct()</a> и <a class="el" href="../../de/d67/work__image_8php_source.html#l00493">__get()</a>.</p>
 
 </div>
 </div>
@@ -1619,7 +1921,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00337">337</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00422">422</a></p>
 
 </div>
 </div>
@@ -1645,7 +1947,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 
 <p>Конфигурация приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00336">336</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00421">421</a></p>
 
 </div>
 </div>

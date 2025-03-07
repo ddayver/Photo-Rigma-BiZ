@@ -243,6 +243,12 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <tr class="memitem:a89d4e7cb491d0c91282d16ff5abe3138" id="r_a89d4e7cb491d0c91282d16ff5abe3138"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89d4e7cb491d0c91282d16ff5abe3138">fix_file_extension</a> (string $full_path)</td></tr>
 <tr class="memdesc:a89d4e7cb491d0c91282d16ff5abe3138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Корректировка расширения файла в соответствии с его MIME-типом.  <br /></td></tr>
 <tr class="separator:a89d4e7cb491d0c91282d16ff5abe3138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaf358ddc8223e4a5a479f645fc43da8" id="r_aaaf358ddc8223e4a5a479f645fc43da8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaaf358ddc8223e4a5a479f645fc43da8">remove_directory</a> (string $path)</td></tr>
+<tr class="memdesc:aaaf358ddc8223e4a5a479f645fc43da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет директорию и её содержимое через вызов метода из дочернего класса.  <br /></td></tr>
+<tr class="separator:aaaf358ddc8223e4a5a479f645fc43da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935337e705b7a1b9ea422d2e04932109" id="r_a935337e705b7a1b9ea422d2e04932109"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a935337e705b7a1b9ea422d2e04932109">create_directory</a> (string $directory_name)</td></tr>
+<tr class="memdesc:a935337e705b7a1b9ea422d2e04932109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает директории для категории и копирует файлы index.php через вызов метода из дочернего класса.  <br /></td></tr>
+<tr class="separator:a935337e705b7a1b9ea422d2e04932109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Открытые статические члены</h2></td></tr>
@@ -1048,7 +1054,7 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d43/work__helper_8php_source.html#l00979">Work_Helper\clean_field()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00791">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00646">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01833">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01634">Work_Image\_image_attach_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01185">Work_Template\_template_best_user_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00988">Work_Template\_template_stat_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00824">Work_Template\_template_user_internal()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l01089">Template\create_template()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l01494">Template\page_footer()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00771">process_lang_array()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00791">Work_CoreLogic\_category_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00646">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l01833">Work_CoreLogic\_create_photo_internal()</a>, <a class="el" href="../../de/d67/work__image_8php_source.html#l01712">Work_Image\_image_attach_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l01185">Work_Template\_template_best_user_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00988">Work_Template\_template_stat_internal()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00824">Work_Template\_template_user_internal()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l01089">Template\create_template()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l01494">Template\page_footer()</a>, <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00771">process_lang_array()</a>.</p>
 <div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
@@ -1111,6 +1117,55 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="267,749,142,749,142,744,267,744"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="a935337e705b7a1b9ea422d2e04932109" name="a935337e705b7a1b9ea422d2e04932109"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a935337e705b7a1b9ea422d2e04932109">&#9670;&#160;</a></span>create_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">create_directory </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$directory_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создает директории для категории и копирует файлы index.php через вызов метода из дочернего класса. </p>
+<p>Этот публичный метод является редиректом, который вызывает метод <code><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода.">PhotoRigma\Classes\Work_Image\create_directory()</a></code> из дочернего класса <code>Work_Image</code>. Дополнительные проверки или преобразования данных перед вызовом дочернего метода отсутствуют. Метод предназначен для использования через родительский класс <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></code>.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$directory_name</td><td>Имя директории. Должен быть строкой, содержащей только допустимые символы для имён директорий. Не должен содержать запрещённых символов (например, <code>\/:*?"&lt;&gt;|&lt;/tt&gt;).
+
+@return bool Возвращает &lt;tt&gt;true&lt;/tt&gt;, если директории успешно созданы и файлы скопированы.
+
+@throws RuntimeException Выбрасывается исключение в следующих случаях:
+                          - Если родительская директория недоступна для записи.
+                          - Если не удалось создать директории.
+                          - Если исходные файлы &lt;tt&gt;index.php&lt;/tt&gt; не существуют.
+                          - Если не удалось прочитать или записать файлы &lt;tt&gt;index.php&lt;/tt&gt;.
+
+@note Метод использует конфигурационные параметры &lt;tt&gt;site_dir&lt;/tt&gt;, &lt;tt&gt;gallery_folder&lt;/tt&gt; и &lt;tt&gt;thumbnail_folder&lt;/tt&gt;.
+
+@warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+
+Пример вызова метода через родительский класс:
+@code 
+$object = new \PhotoRigma\Classes\Work();
+$directoryName = 'new_category';
+$result = $object-&gt;create_directory($directoryName);
+if ($result) {
+    echo "Директории успешно созданы!"; }  </code></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd><code> <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода.">PhotoRigma\Classes\Work_Image\create_directory()</a> Метод из дочернего класса, реализующий основную логику. </code></dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l02139">2139</a></p>
 
 </div>
 </div>
@@ -1920,6 +1975,56 @@ $(function(){initNavTree('d7/d53/classPhotoRigma_1_1Classes_1_1Work.html','../..
 <area shape="poly" title=" " alt="" coords="108,20,76,20,76,15,108,15"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="aaaf358ddc8223e4a5a479f645fc43da8" name="aaaf358ddc8223e4a5a479f645fc43da8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaf358ddc8223e4a5a479f645fc43da8">&#9670;&#160;</a></span>remove_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">remove_directory </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет директорию и её содержимое через вызов метода из дочернего класса. </p>
+<p>Этот публичный метод является редиректом, который вызывает метод <code><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal().">PhotoRigma\Classes\Work_Image\remove_directory()</a></code> из дочернего класса <code>Work_Image</code>. Дополнительные проверки или преобразования данных перед вызовом дочернего метода отсутствуют. Метод предназначен для использования через родительский класс <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></code>.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$path</td><td>Путь к директории. Должен быть строкой, указывающей на существующую директорию. Директория должна быть доступна для записи.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает <code>true</code>, если директория успешно удалена.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается исключение в следующих случаях:<ul>
+<li>Если директория не существует.</li>
+<li>Если директория недоступна для записи.</li>
+<li>Если не удалось удалить файл внутри директории.</li>
+<li>Если не удалось удалить саму директорию.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод рекурсивно удаляет все файлы внутри директории.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Используйте этот метод с осторожностью, так как удаление директории необратимо.</dd></dl>
+<p>Пример вызова метода через родительский класс: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Work();</div>
+<div class="line">$path = <span class="stringliteral">&#39;/path/to/directory&#39;</span>;</div>
+<div class="line">$result = $object-&gt;remove_directory($path);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Директория успешно удалена!&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal().">PhotoRigma\Classes\Work_Image\remove_directory()</a> Метод из дочернего класса, реализующий основную логику. </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d7a/work_8php_source.html">work.php</a> строка <a class="el" href="../../dc/d7a/work_8php_source.html#l02096">2096</a></p>
 
 </div>
 </div>

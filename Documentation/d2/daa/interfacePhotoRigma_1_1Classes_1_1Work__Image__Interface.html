@@ -138,6 +138,12 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
 <tr class="memitem:a89d4e7cb491d0c91282d16ff5abe3138" id="r_a89d4e7cb491d0c91282d16ff5abe3138"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89d4e7cb491d0c91282d16ff5abe3138">fix_file_extension</a> (string $full_path)</td></tr>
 <tr class="memdesc:a89d4e7cb491d0c91282d16ff5abe3138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Корректировка расширения файла в соответствии с его MIME-типом.  <br /></td></tr>
 <tr class="separator:a89d4e7cb491d0c91282d16ff5abe3138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaf358ddc8223e4a5a479f645fc43da8" id="r_aaaf358ddc8223e4a5a479f645fc43da8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaaf358ddc8223e4a5a479f645fc43da8">remove_directory</a> (string $path)</td></tr>
+<tr class="memdesc:aaaf358ddc8223e4a5a479f645fc43da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет директорию и её содержимое, предварительно проверяя права доступа.  <br /></td></tr>
+<tr class="separator:aaaf358ddc8223e4a5a479f645fc43da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935337e705b7a1b9ea422d2e04932109" id="r_a935337e705b7a1b9ea422d2e04932109"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a935337e705b7a1b9ea422d2e04932109">create_directory</a> (string $directory_name)</td></tr>
+<tr class="memdesc:a935337e705b7a1b9ea422d2e04932109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.  <br /></td></tr>
+<tr class="separator:a935337e705b7a1b9ea422d2e04932109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с изображениями. </p>
@@ -160,11 +166,66 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
 </dd></dl>
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">Work_Image</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html">\PhotoRigma\Classes\Work_Image_Interface</a> {</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html"><div class="ttname"><a href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a></div><div class="ttdoc">Класс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00333">work_image.php:334</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html"><div class="ttname"><a href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html">PhotoRigma\Classes\Work_Image</a></div><div class="ttdoc">Класс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00418">work_image.php:419</a></div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__Image__Interface_html"><div class="ttname"><a href="../../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html">PhotoRigma\Classes\Work_Image_Interface</a></div><div class="ttdoc">Интерфейс для работы с изображениями.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d67/work__image_8php_source.html#l00085">work_image.php:86</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d67/work__image_8php_source.html">work_image.php</a> строка <a class="el" href="../../de/d67/work__image_8php_source.html#l00085">85</a></p>
 </div><h2 class="groupheader">Методы</h2>
+<a id="a935337e705b7a1b9ea422d2e04932109" name="a935337e705b7a1b9ea422d2e04932109"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a935337e705b7a1b9ea422d2e04932109">&#9670;&#160;</a></span>create_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">create_directory </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$directory_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Он выполняет следующие действия:</p><ul>
+<li>Проверяет права доступа к родительским директориям.</li>
+<li>Рекурсивно создает директории для галереи и миниатюр.</li>
+<li>Копирует и модифицирует файлы <code>index.php</code> для новой директории галереи и миниатюр. Метод может быть вызван через публичный метод-редирект <code><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода.">PhotoRigma\Classes\Work_Image\create_directory()</a></code>.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$directory_name</td><td>Имя директории. Должен быть строкой, содержащей только допустимые символы для имён директорий. Не должен содержать запрещённых символов (например, <code>\/:*?"&lt;&gt;|&lt;/tt&gt;).
+
+@return bool Возвращает &lt;tt&gt;true&lt;/tt&gt;, если директории успешно созданы и файлы скопированы.
+
+@throws RuntimeException Выбрасывается исключение в следующих случаях:
+                          - Если родительская директория недоступна для записи.
+                          - Если не удалось создать директории.
+                          - Если исходные файлы &lt;tt&gt;index.php&lt;/tt&gt; не существуют.
+                          - Если не удалось прочитать или записать файлы &lt;tt&gt;index.php&lt;/tt&gt;.
+
+@note Метод использует конфигурационные параметры &lt;tt&gt;site_dir&lt;/tt&gt;, &lt;tt&gt;gallery_folder&lt;/tt&gt; и &lt;tt&gt;thumbnail_folder&lt;/tt&gt;.
+
+@warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+
+Пример вызова метода:
+@code 
+$object = new \PhotoRigma\Classes\Work_Image();
+$directoryName = 'new_category';
+$result = $object-&gt;create_directory($directoryName);
+if ($result) {
+    echo "Директории успешно созданы!"; }  </code></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd><code> <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a> Конфигурационные параметры, используемые для формирования путей.</code></dd>
+<dd>
+<code> <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae77f64cb663e7c3c35e7cbcdfd846cf2" title="Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.">PhotoRigma\Classes\Work_Image\_create_directory_internal()</a> Метод, который реализует в классе заявленный в интерфейсе. </code></dd></dl>
+
+<p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a935337e705b7a1b9ea422d2e04932109">Work_Image</a>.</p>
+
+</div>
+</div>
 <a id="a89d4e7cb491d0c91282d16ff5abe3138" name="a89d4e7cb491d0c91282d16ff5abe3138"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89d4e7cb491d0c91282d16ff5abe3138">&#9670;&#160;</a></span>fix_file_extension()</h2>
 
@@ -340,6 +401,61 @@ $(function(){initNavTree('d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\no_photo()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1">Work_Image</a>.</p>
+
+</div>
+</div>
+<a id="aaaf358ddc8223e4a5a479f645fc43da8" name="aaaf358ddc8223e4a5a479f645fc43da8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaf358ddc8223e4a5a479f645fc43da8">&#9670;&#160;</a></span>remove_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">remove_directory </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет директорию и её содержимое, предварительно проверяя права доступа. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Он выполняет следующие действия:</p><ul>
+<li>Проверяет существование указанной директории.</li>
+<li>Проверяет права доступа к директории (должна быть доступна для записи).</li>
+<li>Рекурсивно удаляет все файлы внутри директории.</li>
+<li>Удаляет саму директорию. Метод может быть вызван через публичный метод-редирект <code><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal().">PhotoRigma\Classes\Work_Image\remove_directory()</a></code>.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$path</td><td>Путь к директории. Должен быть строкой, указывающей на существующую директорию. Директория должна быть доступна для записи.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает <code>true</code>, если директория успешно удалена.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается исключение в следующих случаях:<ul>
+<li>Если директория не существует.</li>
+<li>Если директория недоступна для записи.</li>
+<li>Если не удалось удалить файл внутри директории.</li>
+<li>Если не удалось удалить саму директорию.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод рекурсивно удаляет все файлы внутри директории.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Используйте этот метод с осторожностью, так как удаление директории необратимо.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Work_Image();</div>
+<div class="line">$path = <span class="stringliteral">&#39;/path/to/directory&#39;</span>;</div>
+<div class="line">$result = $object-&gt;remove_directory($path);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Директория успешно удалена!&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов защищённого метода _remove_directory_internal().">PhotoRigma\Classes\Work_Image\remove_directory()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8">Work_Image</a>.</p>
 
 </div>
 </div>
