@@ -14,9 +14,9 @@
 								<tr>
 									<td class="news_data">
 <!-- IF_EDIT_SHORT_BEGIN -->
-										<div class="ui mini compact buttons">
-											<button class="circular ui orange basic icon button" title="{L_EDIT_BLOCK}" onclick="window.location.href='{U_EDIT_BLOCK}'"><i class="edit icon"></i></button>
-											<button class="circular ui red basic icon button" id="delete-button" title="{L_DELETE_BLOCK}"><i class="trash alternate icon"></i></button>
+										<div class="mini ui compact buttons">
+											<button class="mini circular ui orange basic icon button" title="{L_EDIT_BLOCK}" onclick="window.location.href='{U_EDIT_BLOCK}'"><i class="edit icon"></i></button>
+											<button class="mini circular ui red basic icon button" id="delete-button" title="{L_DELETE_BLOCK}"><i class="trash alternate icon"></i></button>
 										</div>
 										<script>
 											$('#delete-button').on('click', function() {
@@ -106,11 +106,12 @@
 								</tr>
 								<tr>
 									<td class="news">
-										<div class="ui middle aligned animated bulleted list list">
 <!-- ARRAY_LIST_NEWS_BEGIN -->
-											<div class="item"><a href="{U_LIST_URL}" title="{L_LIST_TITLE}">{L_LIST_DATA}</a></div>
+											<div class="ui labeled button" onclick="window.location.href='{U_LIST_URL}'" title="{L_LIST_TITLE}">
+												<div class="small ui inverted basic button">{L_LIST_DATA}</div>
+												<div class="small ui grey inverted basic left pointing label">{L_LIST_COUNT}</div>
+											</div>
 <!-- ARRAY_LIST_NEWS_END -->
-										</div>
 									</td>
 								</tr>
 							</table>
@@ -161,7 +162,7 @@
 													</td>
 												</tr>
 												<tr>
-													<td class="category_center"><button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_NEWS}"><i class="upload icon"></i>{L_SAVE_NEWS}</button></td>
+													<td class="category_center"><button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_NEWS}"><i class="upload icon"></i> {L_SAVE_NEWS}</button></td>
 												</tr>
 											</table>
 										</form>

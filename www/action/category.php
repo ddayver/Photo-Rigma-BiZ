@@ -248,7 +248,7 @@ if ($cat === 'user' || $cat === 0) {
             'empty' => true
         ]) && $_GET['subact'] === 'saveedit' && (bool)$user->user['cat_moderate'] && $cat !== 0) {
         // Проверяем CSRF-токен
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals(
+        if (empty($_POST['csrf_token'] || $_POST['csrf_token'] === null) || !hash_equals(
             $user->session['csrf_token'],
             $_POST['csrf_token']
         )) {
@@ -358,7 +358,7 @@ if ($cat === 'user' || $cat === 0) {
                 'D_NAME_DIR' => $category_data['folder'],
                 'D_NAME_CATEGORY' => $category_data['name'],
                 'D_DESCRIPTION_CATEGORY' => $category_data['description'],
-                'U_EDITED' => sprintf('%s?action=category&cat=%d', $work->config['site_url'], $cat)
+                'U_EDITED' => sprintf('%s?action=category&subact=saveedit&cat=%d', $work->config['site_url'], $cat)
                 // Используем sprintf()
             ]);
         } else {
@@ -433,10 +433,10 @@ if ($cat === 'user' || $cat === 0) {
             'params' => [':category' => $cat]
         ]);
         $photos = $db->res_arr();
+        $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 
         if ($photos && (bool)$user->user['pic_view']) {
             // Добавляем шаблон для отображения фотографий
-            $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
             $template->add_if('ISSET_PIC', true);
 
             // Проходим по всем фотографиям и добавляем их данные в шаблон
@@ -501,6 +501,8 @@ if ($cat === 'user' || $cat === 0) {
                         Work::clean_field($category_data['name']),
                         $work->lang['category']['confirm_delete2']
                     ),
+                    'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
+                    'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
                     // Подтверждение удаления
                     'U_EDIT_BLOCK' => sprintf('%s?action=category&subact=edit&cat=%d', $work->config['site_url'], $cat),
                     // Ссылка на редактирование категории
@@ -560,6 +562,8 @@ if ($cat === 'user' || $cat === 0) {
                     $category_name,
                     $work->lang['category']['confirm_delete2']
                 ),
+                'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
+                'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
                 // Подтверждение удаления
                 'U_EDIT_BLOCK' => sprintf('%s?action=category&subact=edit&cat=%d', $work->config['site_url'], $cat),
                 // Ссылка на редактирование категории
@@ -619,7 +623,7 @@ if ($cat === 'user' || $cat === 0) {
             'empty' => true
         ]) && $_GET['subact'] === 'saveadd' && (bool)$user->user['cat_moderate']) {
         // Проверяем CSRF-токен
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals(
+        if (empty($_POST['csrf_token']) || $_POST['csrf_token'] === null || !hash_equals(
             $user->session['csrf_token'],
             $_POST['csrf_token']
         )) {
@@ -680,7 +684,7 @@ if ($cat === 'user' || $cat === 0) {
             'folder' => ':folder',
             'name' => ':name',
             'description' => ':desc'
-        ], TBL_CATEGORY, [
+        ], TBL_CATEGORY, '', [
             'params' => [
                 ':folder' => $directory_name,
                 ':name' => $category_name,
@@ -695,9 +699,8 @@ if ($cat === 'user' || $cat === 0) {
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: {$directory_name}"
             );
         }
-
         // Перенаправляем пользователя после успешного добавления
-        header(sprintf('%s?action=category&cat=%d', $work->config['site_url'], $new_category_id));
+        header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $new_category_id));
         exit;
     } else {
         // Получаем список категорий
@@ -717,9 +720,9 @@ if ($cat === 'user' || $cat === 0) {
                     'D_COUNT_PHOTO' => (string)$category_data['count_photo'],
                     'D_LAST_PHOTO' => $category_data['last_photo'],
                     'D_TOP_PHOTO' => $category_data['top_photo'],
-                    'U_CATEGORY' => sprintf('%s%s', $work->config['site_url'], $category_data['url_cat']),
-                    'U_LAST_PHOTO' => sprintf('%s%s', $work->config['site_url'], $category_data['url_last_photo']),
-                    'U_TOP_PHOTO' => sprintf('%s%s', $work->config['site_url'], $category_data['url_top_photo'])
+                    'U_CATEGORY' => $category_data['url_cat'],
+                    'U_LAST_PHOTO' => $category_data['url_last_photo'],
+                    'U_TOP_PHOTO' => $category_data['url_top_photo']
                 ], 'LIST_CATEGORY[' . $key . ']');
             }
 
@@ -731,9 +734,9 @@ if ($cat === 'user' || $cat === 0) {
                 'D_COUNT_PHOTO' => (string)$all_photos_category['count_photo'],
                 'D_LAST_PHOTO' => $all_photos_category['last_photo'],
                 'D_TOP_PHOTO' => $all_photos_category['top_photo'],
-                'U_CATEGORY' => sprintf('%s%s', $work->config['site_url'], $all_photos_category['url_cat']),
-                'U_LAST_PHOTO' => sprintf('%s%s', $work->config['site_url'], $all_photos_category['url_last_photo']),
-                'U_TOP_PHOTO' => sprintf('%s%s', $work->config['site_url'], $all_photos_category['url_top_photo'])
+                'U_CATEGORY' => $all_photos_category['url_cat'],
+                'U_LAST_PHOTO' => $all_photos_category['url_last_photo'],
+                'U_TOP_PHOTO' => $all_photos_category['url_top_photo']
             ], 'LIST_CATEGORY[' . (++$key) . ']');
 
             $template->add_if('ISSET_CATEGORY', true);

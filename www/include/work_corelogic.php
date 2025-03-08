@@ -494,13 +494,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      */
     public function __construct(Database_Interface $db, array $config, Work $work)
     {
-        if (!is_array($config)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип конфигурации | Ожидался массив, получено: " . gettype(
-                    $config
-                )
-            );
-        }
         $this->config = $config;
         $this->db = $db;
         $this->work = $work;
@@ -616,13 +609,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      */
     public function set_lang(array $lang): void
     {
-        if (!is_array($lang)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для языковых строк | Ожидался массив, получено: " . gettype(
-                    $lang
-                )
-            );
-        }
         $this->lang = $lang;
     }
 
@@ -808,11 +794,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Получение данных категории
         if ($user_flag == 1) {
             // Получение категории с id = 0
-            $category_data = $this->db->select(
+            $this->db->select(
                 ['`id`', '`name`'],
                 TBL_CATEGORY,
                 ['where' => '`id` = :id', 'params' => [':id' => 0]]
-            )->res_row();
+            );
+            $category_data = $this->db->res_row();
             if (!$category_data) {
                 throw new PDOException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные категории'
@@ -820,11 +807,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             }
 
             // Получение данных пользователя
-            $user_data = $this->db->select(
+            $this->db->select(
                 '`real_name`',
                 TBL_USERS,
                 ['where' => '`id` = :id', 'params' => [':id' => $cat_id]]
-            )->res_row();
+            );
+            $user_data = $this->db->res_row();
             if (!$user_data) {
                 throw new PDOException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные пользователя с ID: ' . $cat_id
@@ -836,11 +824,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             $category_data['name'] = $user_data['real_name'];
         } else {
             // Получение категории по id
-            $category_data = $this->db->select(
+            $this->db->select(
                 ['`id`', '`name`', '`description`'],
                 TBL_CATEGORY,
                 ['where' => '`id` = :id', 'params' => [':id' => $cat_id]]
-            )->res_row();
+            );
+            $category_data = $this->db->res_row();
             if (!$category_data) {
                 throw new PDOException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные категории'
@@ -854,13 +843,13 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Получение данных о фотографиях
         $select = [
-            'COUNT(DISTINCT `p`.`id`) AS `num_photo`',
-            '`p1`.`id` AS `latest_photo_id`',
-            '`p1`.`name` AS `latest_photo_name`',
-            '`p1`.`description` AS `latest_photo_description`',
-            '`p2`.`id` AS `top_rated_photo_id`',
-            '`p2`.`name` AS `top_rated_photo_name`',
-            '`p2`.`description` AS `top_rated_photo_description`',
+            'COUNT(DISTINCT p.id) AS num_photo',
+            'p1.id AS latest_photo_id',
+            'p1.name AS latest_photo_name',
+            'p1.description AS latest_photo_description',
+            'p2.id AS top_rated_photo_id',
+            'p2.name AS top_rated_photo_name',
+            'p2.description AS top_rated_photo_description',
         ];
 
         $from_tbl = TBL_PHOTO . ' p';
@@ -868,25 +857,27 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             [
                 'table' => TBL_PHOTO . ' p1',
                 'type' => 'LEFT',
-                'on' => '`p`.`category` = `p1`.`category` AND `p1`.`date_upload` = (SELECT MAX(`date_upload`) FROM ' . TBL_PHOTO . ' WHERE `category` = `p`.`category`)',
+                'on' => 'p.category = p1.category AND p1.date_upload = (SELECT MAX(date_upload) FROM ' . TBL_PHOTO . ' WHERE category = p.category)',
             ],
             [
                 'table' => TBL_PHOTO . ' p2',
                 'type' => 'LEFT',
-                'on' => '`p`.`category` = `p2`.`category` AND `p2`.`rate_user` = (SELECT MAX(`rate_user`) FROM ' . TBL_PHOTO . ' WHERE `category` = `p`.`category` AND `rate_user` != 0)',
+                'on' => 'p.category = p2.category AND p2.rate_user = (SELECT MAX(rate_user) FROM ' . TBL_PHOTO . ' WHERE category = p.category AND rate_user != 0)',
             ],
         ];
 
         $options = [
-            'where' => ['`p`.`category`' => $category_data['id']],
-            'params' => [],
+            'where' => ['p.category = :category'],
+            'params' => [':category' => $category_data['id']],
         ];
 
         if ($user_flag == 1) {
-            $options['where']['`p`.`user_upload`'] = $cat_id;
+            $options['where'][] = 'p.user_upload = :user_upload';
+            $options['params'][':user_upload'] = $cat_id;
         }
 
-        $photo_data = $this->db->join($select, $from_tbl, $join, $options)->res_row();
+        $this->db->join($select, $from_tbl, $join, $options);
+        $photo_data = $this->db->res_row();
         if (!$photo_data) {
             throw new PDOException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные фотографий для категории с ID: ' . $category_data['id']
@@ -955,11 +946,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Обработка категорий с id = 0
         if ($cat_id == 0) {
-            $user_upload_count_data = $this->db->select(
+            $this->db->select(
                 'COUNT(DISTINCT `user_upload`) AS `num_user_upload`',
                 TBL_PHOTO,
                 ['where' => '`category` = :category', 'params' => [':category' => 0]]
-            )->res_row();
+            );
+            $user_upload_count_data = $this->db->res_row();
             if ($user_upload_count_data) {
                 $category_data['id'] = 'user';
                 $category_data['name'] .= ' (' . $this->lang['category']['count_user_category'] . ': ' . $user_upload_count_data['num_user_upload'] . ')';

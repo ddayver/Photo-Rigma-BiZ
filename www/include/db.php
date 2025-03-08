@@ -1220,27 +1220,6 @@ class Database implements Database_Interface
     private function prepare_insert_data(array $data, string $prefix = '', array $params = []): array
     {
         // === 1. Валидация аргументов ===
-        if (!is_array($data)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных | Ожидался массив, получено: " . gettype(
-                    $data
-                )
-            );
-        }
-        if (!is_string($prefix)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип префикса | Ожидалась строка, получено: " . gettype(
-                    $prefix
-                )
-            );
-        }
-        if (!is_array($params)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype(
-                    $params
-                )
-            );
-        }
         if (empty($data)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Массив данных не может быть пустым | Причина: Отсутствуют данные для обработки"
@@ -1529,29 +1508,14 @@ class Database implements Database_Interface
      */
     protected function _join_internal(string|array $select, string $from_tbl, array $join, array $options = []): bool
     {
-        // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени основной таблицы | Ожидалась строка, получено: " . gettype(
-                    $from_tbl
-                )
-            );
-        }
-        if (!is_array($join)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип описания JOIN | Ожидался массив, получено: " . gettype(
-                    $join
-                )
-            );
-        }
-        // === 2. Обработка $select ===
+        // === 1. Обработка $select ===
         if (!is_array($select)) {
             $select = [$select];
         }
         $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
-        // === 3. Обработка $from_tbl ===
+        // === 2. Обработка $from_tbl ===
         $from_tbl = $this->sanitize_expression($from_tbl);
-        // === 4. Обработка $join ===
+        // === 3. Обработка $join ===
         $join_clauses = [];
         foreach ($join as $j) {
             if (empty($j['table'])) {
@@ -1569,12 +1533,12 @@ class Database implements Database_Interface
             $type = !empty($j['type']) ? strtoupper($j['type']) . ' ' : 'INNER ';
             $join_clauses[] = "{$type}JOIN $table ON $on_condition";
         }
-        // === 5. Формирование базового запроса ===
+        // === 4. Формирование базового запроса ===
         $this->txt_query = "SELECT $select FROM $from_tbl " . implode(' ', $join_clauses);
-        // === 6. Добавление условий ===
+        // === 5. Добавление условий ===
         [$conditions, $params] = $this->build_conditions($options);
         $this->txt_query .= $conditions;
-        // === 7. Выполнение запроса ===
+        // === 6. Выполнение запроса ===
         return $this->execute_query($params);
     }
 
@@ -1693,20 +1657,6 @@ class Database implements Database_Interface
     protected function _delete_internal(string $from_tbl, array $options = []): bool
     {
         // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
-                    $from_tbl
-                )
-            );
-        }
-        if (!is_array($options)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype(
-                    $options
-                )
-            );
-        }
         if (empty($options['where'])) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности"
@@ -1959,27 +1909,6 @@ class Database implements Database_Interface
     protected function _update_internal(array $update, string $from_tbl, array $options = []): bool
     {
         // === 1. Валидация аргументов ===
-        if (!is_array($update)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для обновления | Ожидался массив, получено: " . gettype(
-                    $update
-                )
-            );
-        }
-        if (!is_string($from_tbl)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
-                    $from_tbl
-                )
-            );
-        }
-        if (!is_array($options)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype(
-                    $options
-                )
-            );
-        }
         if (empty($options['where'])) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос UPDATE без условия WHERE запрещён | Причина: Соображения безопасности"
