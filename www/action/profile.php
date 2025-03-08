@@ -370,7 +370,7 @@ if ($subact === 'logout') {
     if ($work->check_input('_GET', 'uid', [
         'isset' => true,
         'empty' => false,
-        'regexp' => '^[0-9]+$',
+        'regexp' => '/^[0-9]+$/',
         'not_zero' => true,
     ])) {
         $uid = (int)$_GET['uid'];
@@ -541,7 +541,7 @@ if ($subact === 'logout') {
             TBL_GROUP,
             [
                 'where' => 'id = :id',
-                'params' => [':id' => $user_data['group']]
+                'params' => [':id' => $user_data['group_id']]
             ]
         );
         $group_data = $db->res_row();

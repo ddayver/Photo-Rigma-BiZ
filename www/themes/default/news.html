@@ -1,186 +1,160 @@
 <!-- SELECT_NEWS_BLOCK_BEGIN -->
 <!-- CASE_LAST_NEWS -->
 <!-- ARRAY_LAST_NEWS_BEGIN -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-                                    <td>
-                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="ui top black attached centered label">
-                                                <i class="newspaper icon"></i> {L_TITLE_NEWS_BLOCK}
-                                            </div>
-                                        </div>
-                                    </td>
-								</tr>
-								<tr>
-									<td class="news_data">
+							<div class="ui segment field_big block_border" style="border-radius: 15px;">
+								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+									<div class="small ui center aligned header">
+										<i class="newspaper icon"></i> {L_TITLE_NEWS_BLOCK}
+									</div>
+								</div>
+								<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
 <!-- IF_EDIT_SHORT_BEGIN -->
-										<div class="mini ui compact buttons">
-											<button class="mini circular ui orange basic icon button" title="{L_EDIT_BLOCK}" onclick="window.location.href='{U_EDIT_BLOCK}'"><i class="edit icon"></i></button>
-											<button class="mini circular ui red basic icon button" id="delete-button" title="{L_DELETE_BLOCK}"><i class="trash alternate icon"></i></button>
+									<div class="mini ui compact buttons" style="margin-bottom: 15px;">
+										<button class="mini circular ui orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'" data-inverted="" data-tooltip="{L_EDIT_BLOCK}" data-position="top center" data-variation="small">
+											<i class="edit icon"></i>
+										</button>
+										<button class="mini circular ui red basic icon button" id="delete-button" data-inverted="" data-tooltip="{L_DELETE_BLOCK}" data-position="top center" data-variation="small">
+											<i class="trash alternate icon"></i>
+										</button>
+									</div>
+									<script>
+										$('#delete-button').on('click', function() {
+											$('.ui.basic.modal')
+													.modal({
+														closable: false,
+														onApprove: function() {
+															window.location.href = '{U_DELETE_BLOCK}';
+														}
+													})
+													.modal('show');
+										});
+									</script>
+									<div class="ui basic modal">
+										<div class="header">{L_DELETE_BLOCK}</div>
+										<div class="content">
+											<p>{L_CONFIRM_DELETE_BLOCK}</p>
 										</div>
-										<script>
-											$('#delete-button').on('click', function() {
-												$('.ui.basic.modal')
-														.modal({
-															closable: false,
-															onApprove: function() {
-																window.location.href = '{U_DELETE_BLOCK}';
-															}
-														})
-														.modal('show');
-											});
-										</script>
-
-										<div class="ui basic modal">
-											<div class="header">{L_DELETE_BLOCK}</div>
-											<div class="content">
-												<p>{L_CONFIRM_DELETE_BLOCK}</p>
-											</div>
-											<div class="actions">
-												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
-												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
-											</div>
+										<div class="actions">
+											<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+											<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
 										</div>
+									</div>
 <!-- IF_EDIT_SHORT_END -->
-										{L_NEWS_DATA}
+									<p class="form-field" style="margin-bottom: 10px;">{L_NEWS_DATA}</p>
 <!-- IF_USER_EXISTS_BEGIN -->
-										<br />{L_USER_ADD}: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
+									<p style="margin: 5px;">{L_USER_ADD}: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.</p>
 <!-- IF_USER_EXISTS_END -->
 <!-- IF_EDIT_LONG_BEGIN -->
-										<br /><div class="tiny ui buttons">
-										<button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
-											<i class="edit icon"></i> {L_EDIT_BLOCK}
-										</button>
-										<button class="ui inverted circular red basic icon button" id="delete-button">
-											<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
-										</button>
+									<div style="text-align: center; width: 95%;">
+										<div class="tiny ui center aligned buttons">
+											<button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
+												<i class="edit icon"></i> {L_EDIT_BLOCK}
+											</button>
+											<button class="ui inverted circular red basic icon button" id="delete-button">
+												<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
+											</button>
 										</div>
-										<script>
-											$('#delete-button').on('click', function() {
-												$('.ui.basic.modal')
-														.modal({
-															closable: false,
-															onApprove: function() {
-																window.location.href = '{U_DELETE_BLOCK}';
-															}
-														})
-														.modal('show');
-											});
-										</script>
-
-										<div class="ui basic modal">
-											<div class="header">{L_DELETE_BLOCK}</div>
-											<div class="content">
-												<p>{L_CONFIRM_DELETE_BLOCK}</p>
-											</div>
-											<div class="actions">
-												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
-												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
-											</div>
+									</div>
+									<script>
+										$('#delete-button').on('click', function() {
+											$('.ui.basic.modal')
+													.modal({
+														closable: false,
+														onApprove: function() {
+															window.location.href = '{U_DELETE_BLOCK}';
+														}
+													})
+													.modal('show');
+										});
+									</script>
+									<div class="ui basic modal">
+										<div class="header">{L_DELETE_BLOCK}</div>
+										<div class="content">
+											<p>{L_CONFIRM_DELETE_BLOCK}</p>
 										</div>
+										<div class="actions">
+											<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+											<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+										</div>
+									</div>
 <!-- IF_EDIT_LONG_END -->
-										<hr class="line" />
-									</td>
-								</tr>
-								<tr>
-									<td class="news">
+									<div class="custom-divider"></div>
+									<div class="news" style="margin: 5px;">
 										{L_TEXT_POST}
-									</td>
-								</tr>
-							</table>
+									</div>
+								</div>
+							</div>
 <!-- ARRAY_LAST_NEWS_END -->
 <!-- BREAK_LAST_NEWS -->
 <!-- CASE_LIST_NEWS -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td>
-										<div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-											<div class="ui top black attached centered label">
-												<i class="newspaper icon"></i> {L_TITLE_NEWS_BLOCK}
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="news_data">{L_NEWS_DATA}<hr class="line" /></td>
-								</tr>
-								<tr>
-									<td class="news">
+							<div class="ui segment field_big block_border" style="border-radius: 15px;">
+								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+									<div class="small ui center aligned header">
+										<i class="newspaper icon"></i> {L_TITLE_NEWS_BLOCK}
+									</div>
+								</div>
+								<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+									<div class="news_data field">
+										<h4 class="ui inverted header">{L_NEWS_DATA}</h4>
+									</div>
+									<div class="custom-divider"></div>
+									<div class="news">
 <!-- ARRAY_LIST_NEWS_BEGIN -->
-											<div class="ui labeled button" onclick="window.location.href='{U_LIST_URL}'" title="{L_LIST_TITLE}">
-												<div class="small ui inverted basic button">{L_LIST_DATA}</div>
-												<div class="small ui grey inverted basic left pointing label">{L_LIST_COUNT}</div>
-											</div>
+										<div class="ui labeled button" onclick="window.location.href='{U_LIST_URL}'" title="{L_LIST_TITLE}" style="margin-bottom: 10px;">
+											<div class="small ui inverted basic button">{L_LIST_DATA}</div>
+											<div class="small ui grey inverted basic left pointing label">{L_LIST_COUNT}</div>
+										</div>
 <!-- ARRAY_LIST_NEWS_END -->
-									</td>
-								</tr>
-							</table>
+									</div>
+								</div>
+							</div>
 <!-- BREAK_LIST_NEWS -->
 <!-- CASE_NEWS_SAVE -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td>
-										<div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-											<div class="ui top black attached centered label">
-												<i class="newspaper icon"></i> {NAME_BLOCK}
+							<div class="ui segment field_big block_border" style="border-radius: 15px;">
+								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+									<div class="small ui center aligned header">
+										<i class="newspaper icon"></i> {NAME_BLOCK}
+									</div>
+								</div>
+								<div class="ui center aligned attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+									<form action="{U_SAVE_NEWS}" method="post" name="news">
+<!-- IF_NEED_USER_BEGIN -->
+										<div class="field" style="text-align: center; margin-bottom: 15px;">
+											{L_NAME_USER}
+<!-- IF_USER_EXISTS_BEGIN -->
+											: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
+<!-- IF_USER_EXISTS_END -->
+										</div>
+<!-- IF_NEED_USER_END -->
+										<div class="field" style="display: flex; align-items: center; margin-bottom: 15px;">
+											<div class="ui black inverted basic right pointing label" style="flex: 1; text-align: right; margin-right: 10px;">
+												{L_NAME_POST}
+											</div>
+											<div class="tiny ui input custom-input" style="flex: 2;">
+												<input class="ui input" name="name_post" type="text" maxlength="50" value="{D_NAME_POST}" placeholder="{L_NAME_POST}" />
+												<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" />
 											</div>
 										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="category_center" align="center">
-										<form action="{U_SAVE_NEWS}" method="post" name="news">
-											<table cellpadding="0" cellspacing="0" border="0" width="100%">
-<!-- IF_NEED_USER_BEGIN -->
-												<tr>
-													<td class="category_center">
-														{L_NAME_USER}
-<!-- IF_USER_EXISTS_BEGIN -->
-														: <a href="{U_PROFILE_USER_POST}" title="{D_REAL_NAME_USER_POST}">{D_REAL_NAME_USER_POST}</a>.
-<!-- IF_USER_EXISTS_END -->
-													</td>
-												</tr>
-<!-- IF_NEED_USER_END -->
-												<tr>
-													<td class="category_center">
-														<div class="inline field">
-															<div class="ui black inverted basic right pointing label">
-																{L_NAME_POST}
-															</div>
-															<div class="tiny ui input custom-input">
-																<input class="ui input" name="name_post" type="text" maxlength="50" value="{D_NAME_POST}" placeholder="{L_NAME_POST}" /><input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" />
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="category_center">
-														<div class="tiny ui input custom-textarea">
-															<div class="ui black inverted basic top attached label">{L_TEXT_POST}</div>
-															<textarea class="ui input" name="text_post" rows="30" cols="50">{D_TEXT_POST}</textarea>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="category_center"><button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_NEWS}"><i class="upload icon"></i> {L_SAVE_NEWS}</button></td>
-												</tr>
-											</table>
-										</form>
-									</td>
-								</tr>
-							</table>
+										<div class="tiny ui input custom-textarea" style="margin-bottom: 15px; width: 90%">
+											<div class="ui black inverted basic top attached label">{L_TEXT_POST}</div>
+											<textarea class="ui input" name="text_post" style="width: 100%; height: 400px;">{D_TEXT_POST}</textarea>
+										</div>
+										<div class="field" style="text-align: center;">
+											<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_NEWS}">
+												<i class="upload icon"></i> {L_SAVE_NEWS}
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
 <!-- BREAK_NEWS_SAVE -->
 <!-- CASE_DEFAULT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td>
-										<div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-											<div class="ui top black attached centered label">
-												<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</table>
+							<div class="ui segment field_big" style="border-radius: 15px;">
+								<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+									<div class="ui center aligned header">
+										<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+									</div>
+								</div>
+							</div>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_NEWS_BLOCK_END -->

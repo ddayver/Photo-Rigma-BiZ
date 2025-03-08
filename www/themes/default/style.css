@@ -48,6 +48,11 @@
     margin: 0 !important;
 }
 
+.tiny-space {
+    padding: 1px !important;
+    margin: 2px !important;
+}
+
 #short_menu {
     position: relative;
     overflow: visible !important;
@@ -63,10 +68,9 @@
 }
 
 .custom-divider {
-    height: 1px; /* Минимальная высота */
-    background-color: #ccc; /* Цвет линии */
-    margin: 5px 5% ; /* Отступы сверху и снизу */
-    width: 100%; /* Ширина на всю доступную область */
+    height: 1px !important; /* Минимальная высота */
+    background-color: #ccc !important; /* Цвет линии */
+    margin: 5px 5% !important; /* Отступы */
 }
 
 .form-field {
@@ -76,6 +80,10 @@
 .form-field label {
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+.block_border {
+    border: #414b57 ridge 3px !important;
 }
 
 body {
@@ -180,14 +188,14 @@ body {
     text-align: left;
     text-indent: 10px;
     vertical-align: top;
-    border-width: 0
+/*    border-width: 0 */
 }
 
 .news_data {
     color: #999999;
     text-align: left;
     vertical-align: top;
-    border-width: 0
+/*    border-width: 0 */
 }
 
 .login_user {

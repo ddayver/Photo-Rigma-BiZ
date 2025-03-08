@@ -435,7 +435,7 @@ $(function(){initNavTree('dd/df8/profile_8php_source.html','../../'); initResiza
 <div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;check_input(<span class="stringliteral">&#39;_GET&#39;</span>, <span class="stringliteral">&#39;uid&#39;</span>, [</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        <span class="stringliteral">&#39;isset&#39;</span> =&gt; <span class="keyword">true</span>,</div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        <span class="stringliteral">&#39;empty&#39;</span> =&gt; <span class="keyword">false</span>,</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        <span class="stringliteral">&#39;regexp&#39;</span> =&gt; <span class="stringliteral">&#39;^[0-9]+$&#39;</span>,</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        <span class="stringliteral">&#39;regexp&#39;</span> =&gt; <span class="stringliteral">&#39;/^[0-9]+$/&#39;</span>,</div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <span class="stringliteral">&#39;not_zero&#39;</span> =&gt; <span class="keyword">true</span>,</div>
 <div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>    ])) {</div>
 <div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        $uid = (int)$_GET[<span class="stringliteral">&#39;uid&#39;</span>];</div>
@@ -606,7 +606,7 @@ $(function(){initNavTree('dd/df8/profile_8php_source.html','../../'); initResiza
 <div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>            TBL_GROUP,</div>
 <div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>            [</div>
 <div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>                <span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;id = :id&#39;</span>,</div>
-<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:id&#39;</span> =&gt; $user_data[<span class="stringliteral">&#39;group&#39;</span>]]</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:id&#39;</span> =&gt; $user_data[<span class="stringliteral">&#39;group_id&#39;</span>]]</div>
 <div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>            ]</div>
 <div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>        );</div>
 <div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>        $group_data = <a class="code hl_variable" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>-&gt;res_row();</div>

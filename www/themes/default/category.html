@@ -1,7 +1,7 @@
 <!-- SELECT_CATEGORY_BLOCK_BEGIN -->
 <!-- CASE_VIEW_DIR -->
-                            <div class="ui segment field_big" style="border-radius: 15px; border: #414b57 ridge 3px;">
-                                <div class="ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
+                                <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
                                     <div class="small ui center aligned header">
                                         <i class="images outline icon"></i> {NAME_BLOCK}
                                     </div>
@@ -16,7 +16,7 @@
                                     </div>
 <!-- IF_ISSET_CATEGORY_BEGIN -->
 <!-- ARRAY_LIST_CATEGORY_BEGIN -->
-                                    <div class="custom-divider"></div>
+                                    <div class="custom-divider" style="width: 100%;"></div>
                                     <div class="row middle aligned" onclick="window.location.href='{U_CATEGORY}'">
                                         <div class="center aligned three wide column">
                                             <a href="{U_CATEGORY}" title="{D_NAME_CATEGORY}">{D_NAME_CATEGORY}</a>
@@ -34,7 +34,7 @@
                                     </div>
 <!-- ARRAY_LIST_CATEGORY_END -->
 <!-- IF_ISSET_CATEGORY_ELSE -->
-                                    <div class="custom-divider"></div>
+                                    <div class="custom-divider" style="width: 100%;"></div>
                                     <div class="row middle aligned">
                                         <div class="center aligned sixteen wide column">{L_NO_PHOTO}</div>
                                     </div>
@@ -43,7 +43,7 @@
                             </div>
 <!-- BREAK_VIEW_DIR -->
 <!-- CASE_VIEW_PIC -->
-                            <div class="ui segment field_big" style="border-radius: 15px; border: #414b57 ridge 3px;">
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
                                 <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
                                     <div class="small ui center aligned header">
                                         <i class="images outline icon"></i> {L_NAME_BLOCK}
@@ -126,7 +126,7 @@
                             </div>
 <!-- BREAK_VIEW_PIC -->
 <!-- CASE_CATEGORY_EDIT -->
-                            <div class="ui segment field_big" style="border-radius: 15px; border: #414b57 ridge 3px;">
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
                                 <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
                                     <div class="small ui center aligned header">
                                         <i class="images outline icon"></i> {L_NAME_BLOCK}
