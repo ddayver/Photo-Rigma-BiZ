@@ -53,9 +53,9 @@ class Template
 {
     // Свойства:
     private string $ins_header = ''; ///< Данные, вставляемые в заголовок
-    private string $ins_body = ''; ///< Данные, вставляемые в тег body
+    private string $ins_body = ''; ///< Данные, вставляемые в тег "body"
     private string $content = ''; ///< Содержимое для вывода
-    private bool $mod_rewrite = false; ///< Включение читаемых URL
+    private bool $mod_rewrite; ///< Включение читаемых URL
     private string $template_file = 'main.html'; ///< Файл шаблона
     private array $block_object = []; ///< Блок массивов объектов для обработки
     private array $block_string = []; ///< Блок строковых данных для замены
@@ -112,21 +112,21 @@ class Template
         // Проверяем, что $site_url является валидным URL
         if (!filter_var($site_url, FILTER_VALIDATE_URL)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL сайта | Значение: {$site_url}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL сайта | Значение: $site_url"
             );
         }
 
         // Проверяем, что $site_dir существует и является директорией
         if (!is_dir($site_dir)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректная директория сайта | Значение: {$site_dir}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректная директория сайта | Значение: $site_dir"
             );
         }
 
         // Проверяем корректность $theme
         if (empty($theme) || !preg_match('/^[a-zA-Z0-9_-]+$/', $theme)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя темы | Значение: {$theme}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя темы | Значение: $theme"
             );
         }
 
@@ -143,14 +143,14 @@ class Template
         // Проверяем, что директория тем существует
         if (!is_dir($this->themes_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем не найдена | Путь: {$this->themes_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем не найдена | Путь: $this->themes_path"
             );
         }
 
         // Проверяем права доступа к директории тем
         if (!is_readable($this->themes_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав доступа к директории тем | Путь: {$this->themes_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав доступа к директории тем | Путь: $this->themes_path"
             );
         }
 
@@ -188,21 +188,21 @@ class Template
     {
         $full_path = $this->themes_path . $this->template_file;
         // Проверяем существование объекта по указанному пути
-        if (!file_exists($full_path)) {
+        if (!is_file($full_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл шаблона не найден | Путь: {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл шаблона не найден | Путь: $full_path"
             );
         }
         // Проверяем, является ли объект файлом
         if (!is_file($full_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Указанный путь не является файлом | Путь: {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Указанный путь не является файлом | Путь: $full_path"
             );
         }
         // Проверяем, доступен ли файл для чтения
         if (!is_readable($full_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: $full_path"
             );
         }
         // Если все проверки пройдены, сохраняем полный путь к файлу
@@ -247,7 +247,7 @@ class Template
             return $this->content;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -295,9 +295,14 @@ class Template
             $this->template_file = $this->themes_path . $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '{$name}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
+    }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->$name);
     }
 
     /**
@@ -332,11 +337,6 @@ class Template
      */
     public function set_work(Work $work): void
     {
-        if (!$work instanceof Work) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Некорректный тип аргумента | Ожидается объект класса Work"
-            );
-        }
         $this->work = $work;
     }
 
@@ -370,13 +370,6 @@ class Template
      */
     public function set_lang(array $lang): void
     {
-        if (!is_array($lang)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для языковых строк | Ожидался массив, получено: " . gettype(
-                    $lang
-                )
-            );
-        }
         $this->lang = $lang;
     }
 
@@ -434,14 +427,14 @@ class Template
 
         // Обработка массива данных
         foreach ($array_data as $key => $value) {
-            if (!is_string($key) || !preg_match('/^[a-zA-Z0-9_]+$/', $key)) {
+            if (!is_string($key) || !preg_match('/^\w+$/', $key)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ключ массива | Значение: {$key}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ключ массива | Значение: $key"
                 );
             }
             if (!is_bool($value)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: {$value}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: $value"
                 );
             }
             $this->add_if($key, $value, $path_array);
@@ -485,9 +478,9 @@ class Template
     public function add_if(string $name, bool $value, string|false $path_array = false): void
     {
         // Проверка корректности имени условия
-        if (empty($name) || !preg_match('/^[a-zA-Z0-9_]+$/', $name)) {
+        if (empty($name) || !preg_match('/^\w+$/', $name)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя условия | Значение: {$name}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя условия | Значение: $name"
             );
         }
 
@@ -499,14 +492,14 @@ class Template
         }
 
         // Если путь не указан, добавляем условие в массив block_if
-        if ($path_array == false) {
+        if (!$path_array) {
             $this->block_if['IF_' . strtoupper($name)] = $value;
         } else {
             // Разбираем путь и проверяем результат
             $parsed_path = $this->test_is_object($path_array);
             if (!isset($parsed_path['current'], $parsed_path['index'])) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: {$path_array}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: $path_array"
                 );
             }
 
@@ -562,46 +555,42 @@ class Template
      */
     private function test_is_object(string $path_array): array
     {
-        // Проверка входных данных
-        if (!is_string($path_array) || empty($path_array)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный путь | Значение: {$path_array}"
-            );
-        }
         // Разбор пути
         $path_parts = explode('->', $path_array);
         $first_part = strtoupper($path_parts[0]);
         $first_part_details = explode('[', $first_part);
         // Проверка корректности первого элемента
-        if (!preg_match(
+        if (empty($first_part_details[1]) || !preg_match(
             '/^[A-Z_]+$/',
             $first_part_details[0]
-        ) || !isset($first_part_details[1]) || empty($first_part_details[1])) {
+        )) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в пути объекта | Путь: {$path_array}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в пути объекта | Путь: $path_array"
             );
         }
         // Проверка индекса
         $index = str_replace(']', '', $first_part_details[1]);
-        if (!preg_match('/^[0-9]+$/', $index)) {
+        if (!preg_match('/^\d+$/', $index)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный индекс в пути | Путь: {$path_array}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный индекс в пути | Путь: $path_array"
             );
         }
         // Создание объекта, если он не существует
         if (!isset($this->block_object[$first_part_details[0]][$index]) || !is_object(
             $this->block_object[$first_part_details[0]][$index]
         )) {
-            $new_template = new Template($this->site_url, $this->site_dir, $this->theme);
-            $this->block_object[$first_part_details[0]][$index] = $new_template;
+            $this->block_object[$first_part_details[0]][$index] = new Template(
+                $this->site_url,
+                $this->site_dir,
+                $this->theme
+            );
         }
         // Формирование результата
-        $result = [
+        return [
             'current' => $first_part_details[0],
             'index' => $index,
             'next_path' => count($path_parts) > 1 ? implode('->', array_slice($path_parts, 1)) : false,
         ];
-        return $result;
     }
 
     /**
@@ -640,7 +629,7 @@ class Template
      * @see PhotoRigma::Classes::Template::add_case() Метод, используемый для добавления отдельных условий выбора блока.
      *
      */
-    public function add_case_ar(array $array_data, $path_array = false): void
+    public function add_case_ar(array $array_data, string|bool $path_array = false): void
     {
         // Проверка на пустой массив
         if (empty($array_data)) {
@@ -658,14 +647,14 @@ class Template
 
         // Обработка массива данных
         foreach ($array_data as $key => $value) {
-            if (!is_string($key) || !preg_match('/^[a-zA-Z0-9_]+$/', $key)) {
+            if (!is_string($key) || !preg_match('/^\w+$/', $key)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ключ массива | Значение: {$key}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ключ массива | Значение: $key"
                 );
             }
-            if (!is_string($value) || !preg_match('/^[a-zA-Z0-9_]+$/', $value)) {
+            if (!is_string($value) || !preg_match('/^\w+$/', $value)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: {$value}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: $value"
                 );
             }
             $this->add_case($key, $value, $path_array);
@@ -711,16 +700,16 @@ class Template
     public function add_case(string $name, string $value, string|false $path_array = false): void
     {
         // Проверка корректности имени условия
-        if (empty($name) || !preg_match('/^[a-zA-Z0-9_]+$/', $name)) {
+        if (empty($name) || !preg_match('/^\w+$/', $name)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя условия | Значение: {$name}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя условия | Значение: $name"
             );
         }
 
         // Проверка корректности значения условия
-        if (empty($value) || !preg_match('/^[a-zA-Z0-9_]+$/', $value)) {
+        if (empty($value) || !preg_match('/^\w+$/', $value)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение условия | Значение: {$value}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение условия | Значение: $value"
             );
         }
 
@@ -732,14 +721,14 @@ class Template
         }
 
         // Если путь не указан, добавляем условие в массив block_case
-        if ($path_array == false) {
+        if (!$path_array) {
             $this->block_case['SELECT_' . strtoupper($name)] = strtoupper($value);
         } else {
             // Разбираем путь и проверяем результат
             $parsed_path = $this->test_is_object($path_array);
             if (!isset($parsed_path['current'], $parsed_path['index'])) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: {$path_array}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: $path_array"
                 );
             }
 
@@ -792,17 +781,17 @@ class Template
     public function page_header(string $title, string $action): void
     {
         // Проверка параметра $action
-        if (!empty($action) && !preg_match('/^[a-zA-Z0-9_]+$/', $action)) {
+        if (!empty($action) && !preg_match('/^\w+$/', $action)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный параметр \$action | Значение: {$action}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный параметр \$action | Значение: $action"
             );
         }
 
         // Генерация данных для меню и фотографий
         $short_menu = $this->work->create_menu($action, 0);
         $long_menu = $this->work->create_menu($action, 1);
-        $top_photo = $this->work->create_photo('top', 0);
-        $last_photo = $this->work->create_photo('last', 0);
+        $top_photo = $this->work->create_photo();
+        $last_photo = $this->work->create_photo('last');
 
         // Создание экземпляра шаблона заголовка
         $header_template = new Template($this->site_url, $this->site_dir, $this->theme);
@@ -833,7 +822,7 @@ class Template
 
         // Обработка короткого меню
         $header_template->add_if('SHORT_MENU', false);
-        if ($short_menu && is_array($short_menu)) {
+        if ($short_menu) {
             $header_template->add_if('SHORT_MENU', true);
             foreach ($short_menu as $id => $value) {
                 $header_template->add_string_ar([
@@ -847,7 +836,7 @@ class Template
         // Обработка длинного меню
         $header_template->add_case('LEFT_BLOCK', 'MENU', 'LEFT_PANEL[0]');
         $header_template->add_if('LONG_MENU', false, 'LEFT_PANEL[0]');
-        if ($long_menu && is_array($long_menu)) {
+        if ($long_menu) {
             $header_template->add_if('LONG_MENU', true, 'LEFT_PANEL[0]');
             $header_template->add_string('LONG_MENU_NAME_BLOCK', $this->lang['menu']['name_block'], 'LEFT_PANEL[0]');
             foreach ($long_menu as $id => $value) {
@@ -966,14 +955,14 @@ class Template
 
         // Обработка массива данных
         foreach ($array_data as $key => $value) {
-            if (!is_string($key) || !preg_match('/^[a-zA-Z0-9_]+$/', $key)) {
+            if (!is_string($key) || !preg_match('/^\w+$/', $key)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ключ массива | Значение: {$key}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ключ массива | Значение: $key"
                 );
             }
             if (!is_string($value)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: {$key} = {$value}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: $key = $value"
                 );
             }
             $this->add_string($key, $value, $path_array);
@@ -1018,16 +1007,9 @@ class Template
     public function add_string(string $name, string $value, string|false $path_array = false): void
     {
         // Проверка корректности имени переменной
-        if (empty($name) || !preg_match('/^[a-zA-Z0-9_]+$/', $name)) {
+        if (empty($name) || !preg_match('/^\w+$/', $name)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя переменной | Значение: {$name}"
-            );
-        }
-
-        // Проверка типа значения
-        if (!is_string($value)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип значения | Ожидается строка"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное имя переменной | Значение: $name"
             );
         }
 
@@ -1039,14 +1021,14 @@ class Template
         }
 
         // Если путь не указан, добавляем переменную в массив block_string
-        if ($path_array == false) {
+        if (!$path_array) {
             $this->block_string[strtoupper($name)] = $value;
         } else {
             // Разбираем путь и проверяем результат
             $parsed_path = $this->test_is_object($path_array);
             if (!isset($parsed_path['current'], $parsed_path['index'])) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: {$path_array}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: $path_array"
                 );
             }
 
@@ -1093,7 +1075,7 @@ class Template
         // Проверяем, что файл не пустой и содержит данные || trim($this->content) === ''
         if (!$this->content) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл шаблона пуст или содержит только пробелы | Путь: {$this->template_file}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл шаблона пуст или содержит только пробелы | Путь: $this->template_file"
             );
         }
 
@@ -1140,7 +1122,7 @@ class Template
     private function pars_template(): void
     {
         // Проверка, что $this->content является строкой и не пустая
-        if (!is_string($this->content) || empty($this->content)) {
+        if (empty($this->content)) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное содержимое шаблона | Значение должно быть непустой строкой"
             );
@@ -1201,7 +1183,7 @@ class Template
     private function template_object(string $key, array $index): void
     {
         // Проверка, что $this->content является строкой и не пустая
-        if (!is_string($this->content) || empty($this->content)) {
+        if (empty($this->content)) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное содержимое шаблона | Значение должно быть непустой строкой"
             );
@@ -1212,14 +1194,14 @@ class Template
         // Регулярное выражение для поиска всех блоков
         $pattern = '/' . preg_quote($begin_tag, '/') . '(.*?)' . preg_quote($end_tag, '/') . '/s';
         // Поиск всех блоков
-        $this->content = preg_replace_callback($pattern, function ($matches) use ($index) {
+        $this->content = preg_replace_callback($pattern, static function ($matches) use ($index) {
             $block_content = '';
             $temp_content = $matches[1];
             // Проверка, что $index содержит только объекты с методом pars_template
             foreach ($index as $id => $value) {
                 if (!is_object($value) || !method_exists($value, 'pars_template')) {
                     throw new RuntimeException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный объект в индексе | ID: {$id}"
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный объект в индексе | ID: $id"
                     );
                 }
                 // Обработка содержимого для каждого объекта
@@ -1230,9 +1212,9 @@ class Template
             return $block_content;
         }, $this->content);
         // Если остались незакрытые теги, выбрасываем исключение
-        if (strpos($this->content, $begin_tag) !== false || strpos($this->content, $end_tag) !== false) {
+        if (str_contains($this->content, $begin_tag) || str_contains($this->content, $end_tag)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока объектов | Незакрытые или несоответствующие теги для ключа: {$key}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока объектов | Незакрытые или несоответствующие теги для ключа: $key"
             );
         }
     }
@@ -1268,7 +1250,7 @@ class Template
     private function template_if(string $key, bool $val): void
     {
         // Проверка, что $this->content является строкой и не пустая
-        if (!is_string($this->content) || empty($this->content)) {
+        if (empty($this->content)) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное содержимое шаблона | Значение должно быть непустой строкой"
             );
@@ -1283,7 +1265,7 @@ class Template
             '/'
         ) . '(.*?))?' . preg_quote($end_tag, '/') . '/s';
         // Поиск всех блоков
-        $this->content = preg_replace_callback($pattern, function ($matches) use ($val) {
+        $this->content = preg_replace_callback($pattern, static function ($matches) use ($val) {
             // $matches[1] — содержимое до ELSE или END
             // $matches[3] — содержимое после ELSE (если есть)
             $true_content = trim($matches[1]);
@@ -1292,9 +1274,9 @@ class Template
             return $val ? $true_content : $false_content;
         }, $this->content);
         // Если остались незакрытые теги, выбрасываем исключение
-        if (strpos($this->content, $begin_tag) !== false || strpos($this->content, $end_tag) !== false) {
+        if (str_contains($this->content, $begin_tag) || str_contains($this->content, $end_tag)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока условий | Незакрытые или несоответствующие теги для ключа: {$key}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока условий | Незакрытые или несоответствующие теги для ключа: $key"
             );
         }
     }
@@ -1317,7 +1299,7 @@ class Template
      * @callgraph
      *
      * @param string $key Ключ-название условия. Должен быть строкой, соответствующей имени условия в шаблоне (например, `SELECT_НАЗВАНИЕ`).
-     * @param mixed $val Значение условия. Определяет, какой блок `CASE_ЗНАЧЕНИЕ` будет выбран для вывода. Если блок не найден, используется `CASE_DEFAULT`.
+     * @param string $val Значение условия. Определяет, какой блок `CASE_ЗНАЧЕНИЕ` будет выбран для вывода. Если блок не найден, используется `CASE_DEFAULT`.
      *
      * @throws RuntimeException Если содержимое шаблона некорректно (не является непустой строкой).
      * @throws RuntimeException Если обнаружены вложенные блоки внутри `SELECT_НАЗВАНИЕ`.
@@ -1330,10 +1312,10 @@ class Template
      * @see PhotoRigma::Classes::Template::$content Свойство, содержащее содержимое шаблона.
      *
      */
-    private function template_case(string $key, $val): void
+    private function template_case(string $key, string $val): void
     {
         // Проверка, что $this->content является строкой и не пустая
-        if (!is_string($this->content) || empty($this->content)) {
+        if (empty($this->content)) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное содержимое шаблона | Значение должно быть непустой строкой"
             );
@@ -1347,16 +1329,16 @@ class Template
         $pattern = '/' . preg_quote($begin_tag, '/') . '(.*?)' . preg_quote($end_tag, '/') . '/s';
 
         // Поиск всех блоков
-        $this->content = preg_replace_callback($pattern, function ($matches) use ($key, $val) {
+        $this->content = preg_replace_callback($pattern, static function ($matches) use ($key, $val) {
             $block_content = $matches[1]; // Содержимое между BEGIN и END
 
             // Проверка на вложенность блоков SELECT_LEFT_BLOCK
-            if (strpos($block_content, '<!-- ' . $key . '_BEGIN -->') !== false || strpos(
+            if (str_contains($block_content, '<!-- ' . $key . '_BEGIN -->') || str_contains(
                 $block_content,
                 '<!-- ' . $key . '_END -->'
-            ) !== false) {
+            )) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока выбора | Вложенные блоки не допускаются для ключа: {$key}, значение: {$val}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока выбора | Вложенные блоки не допускаются для ключа: $key, значение: $val"
                 );
             }
 
@@ -1371,7 +1353,7 @@ class Template
             // Поиск нужного CASE
             $result = '';
             foreach ($case_matches as $match) {
-                if ($match[1] == $val) {
+                if ($match[1] === $val) {
                     $result = $match[2]; // Содержимое найденного CASE
                     break;
                 }
@@ -1386,9 +1368,9 @@ class Template
         }, $this->content);
 
         // Если остались незакрытые теги, выбрасываем исключение
-        if (strpos($this->content, $begin_tag) !== false || strpos($this->content, $end_tag) !== false) {
+        if (str_contains($this->content, $begin_tag) || str_contains($this->content, $end_tag)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока выбора | Незакрытые или несоответствующие теги для ключа: {$key}, значение: {$val}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обработки блока выбора | Незакрытые или несоответствующие теги для ключа: $key, значение: $val"
             );
         }
     }
@@ -1491,7 +1473,7 @@ class Template
      * $object->page_footer();
      * @endcode
      */
-    public function page_footer(): void
+    public function page_footer(int $login_id): void
     {
         // Генерация данных для подвала
         $user = $this->work->template_user();
@@ -1512,7 +1494,7 @@ class Template
         // Обработка блока информации о пользователе
         $footer_template->add_case('RIGHT_BLOCK', 'USER_INFO', 'RIGHT_PANEL[0]');
         $footer_template->add_string_ar($user, 'RIGHT_PANEL[0]');
-        $footer_template->add_if('USER_NOT_LOGIN', ($_SESSION['login_id'] == 0 ? true : false), 'RIGHT_PANEL[0]');
+        $footer_template->add_if('USER_NOT_LOGIN', ($login_id === 0), 'RIGHT_PANEL[0]');
 
         // Обработка блока статистики
         $footer_template->add_case('RIGHT_BLOCK', 'STATISTIC', 'RIGHT_PANEL[1]');
@@ -1555,7 +1537,7 @@ class Template
         // Установка файла шаблона и создание контента
         $footer_template->template_file = $this->themes_path . 'footer.html';
         $footer_template->create_template();
-        $this->content = $this->content . $footer_template->content;
+        $this->content .= $footer_template->content;
         unset($footer_template);
     }
 }

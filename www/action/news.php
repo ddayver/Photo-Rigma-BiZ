@@ -5,11 +5,11 @@
  * @brief       Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.
  *
  * @throws      RuntimeException Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление).
- *              Пример сообщения: "Ошибка добавления новости | Данные: " . json_encode($query_news).
+ *              Пример сообщения: Ошибка добавления новости | Данные: json_encode($query_news).
  * @throws      RuntimeException Если новость не найдена.
- *              Пример сообщения: "Новость не найдена | ID: {$news}".
+ *              Пример сообщения: Новость не найдена | ID: {$news}.
  * @throws      RuntimeException Если CSRF-токен неверен.
- *              Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
+ *              Пример сообщения: Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}.
  *
  * @author      Dark Dayver
  * @version     0.4.0
@@ -44,10 +44,17 @@
 
 namespace PhotoRigma\Action;
 
+use PhotoRigma\Classes\Database;
+use PhotoRigma\Classes\Template;
+use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
 use RuntimeException;
 
-use function PhotoRigma\Include\log_in_file;
+/** @var Database $db */
+/** @var Work $work */
+/** @var User $user */
+
+/** @var Template $template */
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
@@ -98,9 +105,9 @@ $subact = match (true) {
 
 if ($subact === 'save') {
     // Добавление новой новости
-    if ($news === false && (bool)$user->user['news_add']) {
+    if ($news === false && $user->user['news_add']) {
         // Проверяем CSRF-токен
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals(
+        if (empty($_POST['csrf_token']) || !hash_equals(
             $user->session['csrf_token'],
             $_POST['csrf_token']
         )) {
@@ -148,15 +155,16 @@ if ($subact === 'save') {
             if ($news === 0) {
                 throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка добавления новости | Данные: " . json_encode(
-                        $query_news
+                        $query_news,
+                        JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
                 );
             }
         }
     } // Обновление существующей новости
-    elseif ($news !== false && (bool)$user->user['news_moderate']) {
+    elseif ($news !== false && $user->user['news_moderate']) {
         // Проверяем CSRF-токен
-        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] === null || empty($_POST['csrf_token']) || !hash_equals(
+        if (empty($_POST['csrf_token']) || !hash_equals(
             $user->session['csrf_token'],
             $_POST['csrf_token']
         )) {
@@ -210,7 +218,7 @@ if ($subact === 'save') {
             $rows = $db->get_affected_rows(); // Проверяем количество затронутых строк
             if ($rows === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления новости | ID: {$news}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления новости | ID: $news"
                 );
             }
         }
@@ -219,7 +227,7 @@ if ($subact === 'save') {
     }
 }
 
-if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $news_data['user_post']))) {
+if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $news_data['user_post']))) {
     $title = $work->lang['main']['edit_news'];
 
     // Получение данных новости
@@ -277,13 +285,13 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
         ]);
     } else {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: {$news}"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
         );
     }
-} elseif ($subact === 'delete' && $news !== false && ((bool)$user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $news_data['user_post']))) {
+} elseif ($subact === 'delete' && $news !== false && ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $news_data['user_post']))) {
     // Проверка источника запроса (HTTP_REFERER)
     $referer = $_SERVER['HTTP_REFERER'] ?? '';
-    if (!empty($referer) && strpos($referer, 'action=news') !== false) {
+    if (!empty($referer) && str_contains($referer, 'action=news')) {
         $redirect_url = sprintf('%s?action=news', $work->config['site_url']);
     } else {
         $redirect_url = $work->config['site_url'];
@@ -292,7 +300,7 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
     // Проверка на возможную атаку (хитрый момент)
     if (empty($_SERVER['HTTP_REFERER'])) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная попытка удаления новости | ID: {$news}"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная попытка удаления новости | ID: $news"
         );
     }
 
@@ -302,19 +310,14 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
 
     if ($rows === 0) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена для удаления | ID: {$news}"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена для удаления | ID: $news"
         );
     }
 
     // Редирект после успешного удаления
     header('Location: ' . $redirect_url);
     exit;
-
-    // Страховочное логирование (если exit не сработал)
-    log_in_file(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома | Действие: delete, Пользователь ID: {$user->session['login_id']}"
-    );
-} elseif ($subact === 'add' && $news === false && (bool)$user->user['news_add']) {
+} elseif ($subact === 'add' && $news === false && $user->user['news_add']) {
     $title = $work->lang['news']['add_post'];
     $action = 'news_add';
 
@@ -347,7 +350,7 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
                         $val['name_post']
                     ),
                     'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
-                    'L_TEXT_POST' => trim(nl2br($work->ubb($val['text_post'])))
+                    'L_TEXT_POST' => trim(nl2br(Work::ubb($val['text_post'])))
                 ], 'LAST_NEWS[0]');
                 $template->add_if_ar([
                     'USER_EXISTS' => false,
@@ -377,7 +380,7 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
                 }
 
                 // Проверка прав на редактирование
-                if ((bool)$user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $val['user_post'])) {
+                if ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $val['user_post'])) {
                     $template->add_if('EDIT_LONG', true, 'LAST_NEWS[0]');
                     $template->add_string_ar([
                         'L_EDIT_BLOCK' => $work->lang['main']['edit_news'],
@@ -403,10 +406,12 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
 
             // Устанавливаем заголовок страницы
             $action = '';
-            $title = $work->lang['main']['title_news'] . ' - ' . Work::clean_field(end($news)['name_post']);
+            $title = $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
+                end($news)['name_post']
+            ); // TODO преобразование массива в строку
         } else {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: {$news}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
             );
         }
     } else {
@@ -550,7 +555,7 @@ if ($subact === 'edit' && $news !== false && ((bool)$user->user['news_moderate']
                 foreach ($news_list as $key => $news_data) {
                     $template->add_string_ar([
                         'L_LIST_DATA' => $news_data['name_post'],
-                        'L_LIST_COUNT' => (string)date('d.m.Y', strtotime($news_data['data_last_edit'])),
+                        'L_LIST_COUNT' => date('d.m.Y', strtotime($news_data['data_last_edit'])),
                         'L_LIST_TITLE' => Work::utf8_wordwrap(Work::clean_field($news_data['text_post']), 100),
                         'U_LIST_URL' => sprintf(
                             '%s?action=news&amp;news=%d',

@@ -36,6 +36,7 @@ namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
 use DirectoryIterator;
+use Exception;
 use InvalidArgumentException;
 use PDOException;
 use RuntimeException;
@@ -535,7 +536,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             return $result;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -573,9 +574,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             $this->config = $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '{$name}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
+    }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->$name);
     }
 
     /**
@@ -784,15 +790,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         $photo_info = [];
-        $category_data = [];
-        $user_data = [];
-        $photo_count_data = [];
-        $latest_photo_data = [];
-        $top_rated_photo_data = [];
-        $user_upload_count_data = [];
 
         // Получение данных категории
-        if ($user_flag == 1) {
+        if ($user_flag === 1) {
             // Получение категории с id = 0
             $this->db->select(
                 ['`id`', '`name`'],
@@ -871,7 +871,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'params' => [':category' => $category_data['id']],
         ];
 
-        if ($user_flag == 1) {
+        if ($user_flag === 1) {
             $options['where'][] = 'p.user_upload = :user_upload';
             $options['params'][':user_upload'] = $cat_id;
         }
@@ -884,33 +884,24 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             );
         }
 
-        $photo_count_data = false;
         $latest_photo_data = false;
         $top_rated_photo_data = false;
-        $photo_info['count'] = 0;
+        $photo_info['count'] = $photo_data['num_photo'];
 
-        if ($photo_data) {
-            $photo_info['count'] = $photo_data['num_photo'];
+        if ($photo_data['latest_photo_id']) {
+            $latest_photo_data = [
+                'id' => $photo_data['latest_photo_id'],
+                'name' => Work::clean_field($photo_data['latest_photo_name']),
+                'description' => Work::clean_field($photo_data['latest_photo_description']),
+            ];
+        }
 
-            if ($photo_data['latest_photo_id']) {
-                $latest_photo_data = [
-                    'id' => $photo_data['latest_photo_id'],
-                    'name' => Work::clean_field($photo_data['latest_photo_name']),
-                    'description' => Work::clean_field($photo_data['latest_photo_description']),
-                ];
-            } else {
-                $latest_photo_data = false;
-            }
-
-            if ($photo_data['top_rated_photo_id']) {
-                $top_rated_photo_data = [
-                    'id' => $photo_data['top_rated_photo_id'],
-                    'name' => Work::clean_field($photo_data['top_rated_photo_name']),
-                    'description' => Work::clean_field($photo_data['top_rated_photo_description']),
-                ];
-            } else {
-                $top_rated_photo_data = false;
-            }
+        if ($photo_data['top_rated_photo_id']) {
+            $top_rated_photo_data = [
+                'id' => $photo_data['top_rated_photo_id'],
+                'name' => Work::clean_field($photo_data['top_rated_photo_name']),
+                'description' => Work::clean_field($photo_data['top_rated_photo_description']),
+            ];
         }
 
         // Инициализация информации о фотографиях
@@ -920,7 +911,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $photo_info['top_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
 
         // Обновление информации о фотографиях, если пользователь имеет права на просмотр
-        if ($this->user->user['pic_view'] == true || $this->user->user['pic_view'] == 1) {
+        if ($this->user->user['pic_view']) {
             if ($latest_photo_data) {
                 $photo_info['last_name'] = Work::clean_field($latest_photo_data['name']) . ' (' . Work::clean_field(
                     $latest_photo_data['description']
@@ -945,7 +936,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         // Обработка категорий с id = 0
-        if ($cat_id == 0) {
+        if ($cat_id === 0) {
             $this->db->select(
                 'COUNT(DISTINCT `user_upload`) AS `num_user_upload`',
                 TBL_PHOTO,
@@ -962,12 +953,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         // Обновление id категории для пользовательских альбомов
-        if ($user_flag == 1) {
+        if ($user_flag === 1) {
             $category_data['id'] = 'user&amp;id=' . $cat_id;
         }
 
         // Формирование итоговой информации о категории
-        $category_info = [
+        return [
             'name' => $category_data['name'],
             'description' => $category_data['description'],
             'count_photo' => $photo_info['count'],
@@ -977,8 +968,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'url_last_photo' => $photo_info['last_url'],
             'url_top_photo' => $photo_info['top_url'],
         ];
-
-        return $category_info;
     }
 
     /**
@@ -998,7 +987,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @throws InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение.
      *      Пример сообщения:
      *          Неверное значение параметра $photo_id | Ожидалось положительное целое число
-     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
+     * @throws RuntimeException|Exception Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
      *      Пример сообщения:
      *          Не удалось найти изображение | Переменная $photo_id = [значение]
      *
@@ -1062,7 +1051,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @throws InvalidArgumentException Если параметр $photo_id имеет некорректный тип или значение.
      *      Пример сообщения:
      *          Неверное значение параметра $photo_id | Ожидалось положительное целое число
-     * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
+     * @throws RuntimeException|Exception Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
      *      Пример сообщения:
      *          Не удалось найти изображение | Переменная $photo_id = [значение]
      *
@@ -1107,7 +1096,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
     protected function _del_photo_internal(int $photo_id): bool
     {
         // Проверка входного параметра
-        if (!is_int($photo_id) || $photo_id <= 0) {
+        if ($photo_id <= 0) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение параметра \$photo_id | Ожидалось положительное целое число"
             );
@@ -1143,19 +1132,15 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             );
         }
         // Удаление файлов
-        if (file_exists($path_thumbnail)) {
-            if (!unlink($path_thumbnail)) {
-                log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл эскиза | Путь: $path_thumbnail"
-                );
-            }
+        if (is_file($path_thumbnail) && !unlink($path_thumbnail)) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл эскиза | Путь: $path_thumbnail"
+            );
         }
-        if (file_exists($path_photo)) {
-            if (!unlink($path_photo)) {
-                log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
-                );
-            }
+        if (is_file($path_photo) && !unlink($path_photo)) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
+            );
         }
         // Удаление связанных записей из других таблиц
         $this->db->delete(TBL_RATE_USER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
@@ -1341,7 +1326,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - `value`: Имя директории языка (строка).
      *               - `name`: Название языка из файла `main.php` (строка).
      *
-     * @throws RuntimeException Если:
+     * @throws RuntimeException|Exception Если:
      *                           - Директория `/language/` недоступна или не существует.
      *                           - Ни один язык не найден в указанной директории.
      *
@@ -1393,7 +1378,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - `value`: Имя директории языка (строка).
      *               - `name`: Название языка из файла `main.php` (строка).
      *
-     * @throws RuntimeException Если:
+     * @throws RuntimeException|Exception Если:
      *                           - Директория `/language/` недоступна или не существует.
      *                           - Ни один язык не найден в указанной директории.
      *
@@ -1508,7 +1493,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return array Массив с именами доступных тем.
      *
-     * @throws RuntimeException Если:
+     * @throws RuntimeException|Exception Если:
      *                           - Директория `/themes/` не существует или недоступна для чтения.
      *                           - Ни одна тема не найдена в указанной директории.
      *
@@ -1557,7 +1542,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @return array Массив с именами доступных тем.
      *
-     * @throws RuntimeException Если:
+     * @throws RuntimeException|Exception Если:
      *                           - Директория `/themes/` не существует или недоступна для чтения.
      *                           - Ни одна тема не найдена в указанной директории.
      *
@@ -1690,7 +1675,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *                                  Пример сообщения: "Некорректный идентификатор фотографии | Значение: {$id_photo}".
      * @throws PDOException            Если произошла ошибка при выборке данных из базы данных.
      *                                  Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}".
-     * @throws RuntimeException         Если файл изображения недоступен или не существует.
+     * @throws RuntimeException|Exception         Если файл изображения недоступен или не существует.
      *
      * @note Используются следующие параметры из свойства `$this->config`:
      *       - `site_dir`: Базовый путь к директории сайта.
@@ -1779,7 +1764,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *                                  Пример сообщения: "Некорректный идентификатор фотографии | Значение: {$id_photo}".
      * @throws PDOException            Если произошла ошибка при выборке данных из базы данных.
      *                                  Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}".
-     * @throws RuntimeException         Если файл изображения недоступен или не существует.
+     * @throws RuntimeException|Exception         Если файл изображения недоступен или не существует.
      *
      * @note Используются следующие параметры из свойства `$this->config`:
      *       - `site_dir`: Базовый путь к директории сайта.
@@ -1827,7 +1812,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Валидация входных данных $id_photo
         if ($id_photo < 0) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный идентификатор фотографии | Значение: {$id_photo}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный идентификатор фотографии | Значение: $id_photo"
             );
         }
 
@@ -1838,7 +1823,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         };
 
         // Проверка прав доступа
-        if ((bool)$this->user->user['pic_view'] === true) {
+        if ($this->user->user['pic_view']) {
             // Определение условий выборки
             $options = match ($type) {
                 'top' => [
@@ -1914,9 +1899,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Ограничение доступа к файлам через $image_path
         $base_dir = realpath($this->config['site_dir'] . $this->config['gallery_folder']);
         $resolved_path = realpath($image_path);
-        if (!$resolved_path || strpos($resolved_path, $base_dir) !== 0) {
+        if (!$resolved_path || !str_starts_with($resolved_path, $base_dir)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: {$image_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: $image_path"
             );
             $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
         }
@@ -1924,7 +1909,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Проверка существования файла
         if (!file_exists($image_path) || !is_readable($image_path)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: {$image_path}, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: $image_path, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
             );
             $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
         }
@@ -1954,12 +1939,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             ),
             'name' => Work::clean_field($photo_data['name']),
             'description' => Work::clean_field($photo_data['description']),
-            'category_name' => $category_data ? Work::clean_field(
-                $category_data['name']
-            ) : $this->lang['main']['no_category'],
-            'category_description' => $category_data ? Work::clean_field(
-                $category_data['description']
-            ) : $this->lang['main']['no_category'],
+            'category_name' => Work::clean_field($category_data['name']),
+            'category_description' => Work::clean_field($category_data['description']),
             'rate' => $this->lang['main']['rate'] . ': ' . $photo_data['rate_user'] . '/' . $photo_data['rate_moder'],
             'url_user' => $user_data ? sprintf(
                 '%s?action=profile&amp;subact=profile&amp;uid=%d',
@@ -1967,11 +1948,11 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 $photo_data['user_upload']
             ) : '',
             'real_name' => $user_data ? Work::clean_field($user_data['real_name']) : $this->lang['main']['no_user_add'],
-            'category_url' => $category_data ? sprintf(
+            'category_url' => sprintf(
                 '%s?action=category&amp;cat=%d',
                 $this->config['site_url'],
                 $category_data['id']
-            ) : $this->config['site_url'],
+            ),
             'width' => $size['width'],
             'height' => $size['height'],
         ];

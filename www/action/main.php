@@ -50,8 +50,17 @@
 
 namespace PhotoRigma\Action;
 
+use PhotoRigma\Classes\Database;
+use PhotoRigma\Classes\Template;
+use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
 use RuntimeException;
+
+/** @var Database $db */
+/** @var Work $work */
+/** @var User $user */
+
+/** @var Template $template */
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
@@ -75,14 +84,14 @@ $title = $work->lang['main']['main'];
 $news = $work->news((int)$work->config['last_news'], 'last');
 
 // Проверяем, есть ли новости и имеет ли пользователь право их просматривать
-if (!empty($news) && $user->user['news_view'] == true) {
+if (!empty($news) && $user->user['news_view']) {
     // Обрабатываем каждую новость
     foreach ($news as $key => $value) {
         // Добавляем строки для шаблона: заголовок, дата и текст новости
         $template->add_string_ar([
             'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field($value['name_post']),
             'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $value['data_post'] . ' (' . $value['data_last_edit'] . ').',
-            'L_TEXT_POST' => trim(nl2br($work->ubb($value['text_post'])))
+            'L_TEXT_POST' => trim(nl2br(Work::ubb($value['text_post'])))
         ], 'LAST_NEWS[' . $key . ']');
 
         // Устанавливаем флаги для условных блоков шаблона
@@ -123,8 +132,7 @@ if (!empty($news) && $user->user['news_view'] == true) {
         // Проверяем права пользователя на редактирование или удаление новости.
         // Используем match для проверки прав.
         $can_edit = match (true) {
-            $user->user['news_moderate'] => true,
-            $user->user['id'] != 0 && $user->user['id'] == $value['user_post'] => true,
+            $user->user['news_moderate'], $user->user['id'] !== 0 && $user->user['id'] === $value['user_post'] => true,
             default => false,
         };
 

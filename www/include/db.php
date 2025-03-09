@@ -36,6 +36,7 @@
 namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
+use Exception;
 use InvalidArgumentException;
 use PDO;
 use PDOException;
@@ -571,12 +572,11 @@ interface Database_Interface
 class Database implements Database_Interface
 {
     // Свойства класса
-    private $pdo = null;          ///< Объект PDO для подключения к базе данных
-    private $txt_query = null;    ///< Текст последнего SQL-запроса, сформированного методами класса
-    private $res_query = null;    ///< Результат выполнения подготовленного выражения (PDOStatement)
-    private $result = false;      ///< Массив результатов выборки или false, если результатов нет
-    private $aff_rows = 0;        ///< Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)
-    private $insert_id = 0;       ///< ID последней вставленной строки после выполнения INSERT-запроса
+    private ?PDO $pdo = null;          ///< Объект PDO для подключения к базе данных
+    private string|null $txt_query = null;    ///< Текст последнего SQL-запроса, сформированного методами класса
+    private object|null $res_query = null;    ///< Результат выполнения подготовленного выражения (PDOStatement)
+    private int $aff_rows = 0;        ///< Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)
+    private int $insert_id = 0;       ///< ID последней вставленной строки после выполнения INSERT-запроса
 
     /**
      * @brief Конструктор класса.
@@ -610,7 +610,7 @@ class Database implements Database_Interface
      *                   Если порт некорректен, выбрасывается исключение InvalidArgumentException.
      *
      * @throws InvalidArgumentException Если параметры конфигурации неверны.
-     * @throws PDOException Если произошла ошибка при подключении к базе данных.
+     * @throws PDOException|Exception Если произошла ошибка при подключении к базе данных.
      *
      * @warning Если параметр 'dbsock' указан, но файл сокета не существует, выполняется попытка подключения через хост и порт.
      *
@@ -645,7 +645,8 @@ class Database implements Database_Interface
         if (empty($db_config['dbname']) || empty($db_config['dbuser'])) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указано имя базы данных или пользователь | Конфигурация: " . json_encode(
-                    $db_config
+                    $db_config,
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
         }
@@ -678,7 +679,8 @@ class Database implements Database_Interface
         if (empty($db_config['dbhost'])) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан хост базы данных | Конфигурация: " . json_encode(
-                    $db_config
+                    $db_config,
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
         }
@@ -739,7 +741,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -802,7 +804,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -827,23 +829,7 @@ class Database implements Database_Interface
      */
     protected function _select_internal(string|array $select, string $from_tbl, array $options = []): bool
     {
-        // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
-                    $from_tbl
-                )
-            );
-        }
-        if (!is_array($options)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип опций | Ожидался массив, получено: " . gettype(
-                    $options
-                )
-            );
-        }
-
-        // === 2. Обработка $select ===
+        // Обработка $select
         if (!is_array($select)) {
             // Разбиваем строку по запятым, если это строка
             $select = array_map('trim', explode(',', $select));
@@ -860,17 +846,17 @@ class Database implements Database_Interface
             }
         }
 
-        // 3. Санитизация каждого поля выборки
+        // Санитизация каждого поля выборки
         $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
 
-        // === 4. Формирование базового запроса ===
+        // Формирование базового запроса
         $this->txt_query = "SELECT $select FROM $from_tbl";
 
-        // === 5. Добавление условий ===
+        // Добавление условий
         [$conditions, $params] = $this->build_conditions($options);
         $this->txt_query .= $conditions;
 
-        // === 6. Выполнение запроса ===
+        // Выполнение запроса
         return $this->execute_query($params);
     }
 
@@ -961,7 +947,7 @@ class Database implements Database_Interface
                 $conditions .= ' WHERE ' . implode(
                     ' AND ',
                     array_map(
-                        fn ($field, $placeholder) => "$field = $placeholder",
+                        static fn ($field, $placeholder) => "$field = $placeholder",
                         explode(', ', $where_fields),
                         explode(', ', $where_placeholders)
                     )
@@ -1004,7 +990,7 @@ class Database implements Database_Interface
         // === 4. Обработка LIMIT ===
         if (isset($options['limit'])) {
             if (is_numeric($options['limit'])) {
-                $conditions .= ' LIMIT ' . intval($options['limit']);
+                $conditions .= ' LIMIT ' . (int)$options['limit'];
             } elseif (is_string($options['limit']) && preg_match('/^\d+\s*,\s*\d+$/', $options['limit'])) {
                 [$offset, $count] = array_map('intval', explode(',', $options['limit']));
                 $conditions .= ' LIMIT ' . $offset . ', ' . $count;
@@ -1086,7 +1072,7 @@ class Database implements Database_Interface
         // === 2. Проверка на наличие сложных SQL-функций ===
         if (preg_match('/^[A-Z_]+\(/i', $expression)) {
             // Улучшенное регулярное выражение для функций
-            if (!preg_match('/^[A-Z_]+\((?:[^()]*(?:\([^()]*\)[^()]*)*)\)(\s+AS\s+[a-zA-Z0-9_]+)?$/i', $expression)) {
+            if (!preg_match('/^[A-Z_]+\((?:[^()]*(?:\([^()]*\)[^()]*)*)\)(\s+AS\s+\w+)?$/i', $expression)) {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая SQL-функция | Получено: $expression"
                 );
@@ -1096,20 +1082,18 @@ class Database implements Database_Interface
 
         // === 3. Обработка условий с операторами ===
         if (preg_match(
-            '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i',
+            '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:\w+|\'[^\']*\'|"[^"]*"|\d+)/i',
             $expression
         )) {
             // Разбиваем условие на части
-            $pattern = '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:[a-zA-Z0-9_]+|\'[^\']*\'|"[^"]*"|\d+)/i';
+            $pattern = '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:\w+|\'[^\']*\'|"[^"]*"|\d+)/i';
             if (preg_match($pattern, $expression, $matches)) {
-                $field = $matches[1]; // Поле (например, `id`)
-                $operator = $matches[2]; // Оператор (например, `=` или `!=`)
-                $value = $matches[3]; // Значение (например, `:group_id`)
+                [$field, $operator, $value] = array_slice($matches, 1, 3);
 
                 // Экранируем поле, если оно не экранировано
                 if (!preg_match('/^`.*`$/', $field)) {
-                    if (strpos($field, '.') !== false) {
-                        list($table, $column) = explode('.', $field, 2);
+                    if (str_contains($field, '.')) {
+                        [$table, $column] = explode('.', $field, 2);
                         $field = "`$table`.`$column`";
                     } else {
                         $field = "`$field`";
@@ -1134,8 +1118,8 @@ class Database implements Database_Interface
                 return $expression;
             }
             // Если имя не экранировано, добавляем обратные кавычки
-            if (strpos($expression, '.') !== false) {
-                list($table, $column) = explode('.', $expression, 2);
+            if (str_contains($expression, '.')) {
+                [$table, $column] = explode('.', $expression, 2);
                 return "`$table`.`$column`";
             }
             return "`$expression`";
@@ -1147,7 +1131,7 @@ class Database implements Database_Interface
         }
 
         // Если часть — это параметр SQL-запроса (начинается с ':'), возвращаем его без изменений
-        if (preg_match('/^:[a-zA-Z0-9_]+$/', $expression)) {
+        if (preg_match('/^:\w+$/', $expression)) {
             return $expression;
         }
 
@@ -1231,7 +1215,7 @@ class Database implements Database_Interface
         $final_params = $params;
         foreach ($data as $key => $value) {
             $sanitized_key = $this->sanitize_expression($key);
-            if (is_string($value) && strpos($value, ':') === 0) {
+            if (is_string($value) && str_starts_with($value, ':')) {
                 // Если значение уже является плейсхолдером
                 $placeholder = $value;
                 // Проверяем, есть ли значение для этого плейсхолдера в $params
@@ -1242,7 +1226,7 @@ class Database implements Database_Interface
                 }
             } else {
                 // Генерируем новый плейсхолдер
-                $placeholder = ":{$prefix}{$key}";
+                $placeholder = ":$prefix$key";
                 $final_params[$placeholder] = $value;
             }
             $fields[] = $sanitized_key;
@@ -1284,7 +1268,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен.
      *
      * @throws InvalidArgumentException Если аргументы неверного типа.
-     * @throws PDOException Если возникает ошибка при выполнении запроса.
+     * @throws PDOException|Exception Если возникает ошибка при выполнении запроса.
      *
      * Пример использования метода execute_query():
      * @code
@@ -1341,14 +1325,7 @@ class Database implements Database_Interface
                 )
             );
         }
-        if (!is_array($params)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип параметров | Ожидался массив, получено: " . gettype(
-                    $params
-                )
-            );
-        }
-        // echo $this->txt_query . PHP_EOL;        // Начало замера времени
+        // Начало замера времени
         $start_time = microtime(true);
         $this->res_query = $this->pdo->prepare($this->txt_query);
         $this->res_query->execute($params);
@@ -1361,7 +1338,7 @@ class Database implements Database_Interface
         $slow_query_threshold = 200; // Порог в миллисекундах
         if ($execution_time > $slow_query_threshold) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Обнаружен медленный запрос | Время выполнения: {$execution_time} мс | SQL: $this->txt_query"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Обнаружен медленный запрос | Время выполнения: $execution_time мс | SQL: $this->txt_query"
             );
         }
         // Очистка строки запроса после её выполнения
@@ -1400,7 +1377,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$join` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -1478,7 +1455,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$join` не является массивом.
      *                                    - `$select` не является строкой или массивом.
@@ -1567,7 +1544,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
@@ -1631,7 +1608,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
      *                                    - Отсутствует обязательное условие `where` в массиве `$options`.
@@ -1667,7 +1644,8 @@ class Database implements Database_Interface
         if (isset($options['group'])) {
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в DELETE | Переданные опции: " . json_encode(
-                    $options
+                    $options,
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
             unset($options['group']); // Удаляем ключ 'group'
@@ -1676,7 +1654,8 @@ class Database implements Database_Interface
         if ((isset($options['order']) && !isset($options['limit'])) || (!isset($options['order']) && isset($options['limit']))) {
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: " . json_encode(
-                    $options
+                    $options,
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
             unset($options['order'], $options['limit']); // Удаляем ключи 'order' и 'limit'
@@ -1712,7 +1691,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
@@ -1755,7 +1734,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$from_tbl` не является строкой.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения.
@@ -1773,19 +1752,11 @@ class Database implements Database_Interface
      */
     protected function _truncate_internal(string $from_tbl): bool
     {
-        // === 1. Валидация аргументов ===
-        if (!is_string($from_tbl)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
-                    $from_tbl
-                )
-            );
-        }
-        // === 2. Обработка $from_tbl ===
+        // Обработка $from_tbl
         $from_tbl = $this->sanitize_expression($from_tbl);
-        // === 3. Формирование базового запроса ===
+        // Формирование базового запроса
         $this->txt_query = "TRUNCATE TABLE $from_tbl";
-        // === 4. Выполнение запроса ===
+        // Выполнение запроса
         return $this->execute_query();
     }
 
@@ -1816,7 +1787,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$update` не является массивом.
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
@@ -1882,7 +1853,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$update` не является массивом.
      *                                    - `$from_tbl` не является строкой.
      *                                    - `$options` не является массивом.
@@ -1919,7 +1890,8 @@ class Database implements Database_Interface
         if (isset($options['group'])) {
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в UPDATE | Переданные опции: " . json_encode(
-                    $options
+                    $options,
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
             unset($options['group']); // Удаляем ключ 'group'
@@ -1937,7 +1909,7 @@ class Database implements Database_Interface
         $set_clause = implode(
             ', ',
             array_map(
-                fn ($field, $placeholder) => "$field = $placeholder",
+                static fn ($field, $placeholder) => "$field = $placeholder",
                 explode(', ', $set_fields),
                 explode(', ', $set_placeholders)
             )
@@ -1985,7 +1957,7 @@ class Database implements Database_Interface
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$insert` не является массивом или является пустым массивом.
      *                                    - `$to_tbl` не является строкой.
      *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
@@ -2055,7 +2027,7 @@ class Database implements Database_Interface
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
+     * @throws InvalidArgumentException|Exception Выбрасывается, если:
      *                                    - `$insert` не является массивом или является пустым массивом.
      *                                    - `$to_tbl` не является строкой.
      *                                    - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
@@ -2079,20 +2051,6 @@ class Database implements Database_Interface
     protected function _insert_internal(array $insert, string $to_tbl, string $type = '', array $options = []): bool
     {
         // === 1. Валидация аргументов ===
-        if (!is_array($insert)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для вставки | Ожидался массив, получено: " . gettype(
-                    $insert
-                )
-            );
-        }
-        if (!is_string($to_tbl)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип имени таблицы | Ожидалась строка, получено: " . gettype(
-                    $to_tbl
-                )
-            );
-        }
         if (empty($insert)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Данные для вставки не могут быть пустыми | Причина: Пустой массив данных"
@@ -2209,11 +2167,7 @@ class Database implements Database_Interface
             );
         }
         // === 2. Извлечение строки результата ===
-        $row = $this->res_query->fetch(PDO::FETCH_ASSOC);
-        if ($row === false) {
-            return false; // Явно возвращаем false, если результатов нет
-        }
-        return $row;
+        return $this->res_query->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -2393,11 +2347,6 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Количество затронутых строк не установлено | Причина: Свойство aff_rows не определено"
             );
         }
-        if (!is_int($this->aff_rows)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение количества затронутых строк | Причина: Ожидалось целое число"
-            );
-        }
         // === 2. Возврат значения ===
         return $this->aff_rows;
     }
@@ -2473,11 +2422,6 @@ class Database implements Database_Interface
         if (!isset($this->insert_id)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ID последней вставленной строки не установлен | Причина: Свойство insert_id не определено"
-            );
-        }
-        if (!is_int($this->insert_id)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение ID последней вставленной строки | Причина: Ожидалось целое число"
             );
         }
         // === 2. Возврат значения ===

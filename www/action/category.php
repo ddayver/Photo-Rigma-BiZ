@@ -11,11 +11,18 @@
 
 namespace PhotoRigma\Action;
 
-// Предотвращение прямого вызова файла
+use PhotoRigma\Classes\Database;
+use PhotoRigma\Classes\Template;
+use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
 use RuntimeException;
 
-use function PhotoRigma\Include\log_in_file;
+/** @var Database $db */
+/** @var Work $work */
+/** @var User $user */
+/** @var Template $template */
+
+// Предотвращение прямого вызова файла
 
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
@@ -182,7 +189,7 @@ if ($cat === 'user' || $cat === 0) {
 
         $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 
-        if ($photos_list && (bool)$user->user['pic_view']) {
+        if ($photos_list && $user->user['pic_view']) {
             $template->add_if('ISSET_PIC', true);
 
             foreach ($photos_list as $key => $photo_data) {
@@ -243,10 +250,10 @@ if ($cat === 'user' || $cat === 0) {
     'empty' => true,   // Проверка, что параметр не пустой
     'regexp' => '/^[0-9]+$/' // Регулярное выражение: только цифры
 ])) {
-    if ($work->check_input('_GET', 'subact', [
+    if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true
-        ]) && $_GET['subact'] === 'saveedit' && (bool)$user->user['cat_moderate'] && $cat !== 0) {
+        ]) && $_GET['subact'] === 'saveedit') {
         // Проверяем CSRF-токен
         if (empty($_POST['csrf_token'] || $_POST['csrf_token'] === null) || !hash_equals(
             $user->session['csrf_token'],
@@ -286,8 +293,8 @@ if ($cat === 'user' || $cat === 0) {
                 $description_category = Work::clean_field($_POST['description_category']);
             }
 
-            // Обновление данных категории через подготовленный запрос
-            // Используем плейсхолдеры для защиты от SQL-инъекций
+            // Обновление данных категории через подготовленный запрос.
+            // Используем плейсхолдеры для защиты от SQL-инъекций.
             $db->update(
                 ['name' => ':name', 'description' => ':desc'],
                 TBL_CATEGORY,
@@ -301,12 +308,12 @@ if ($cat === 'user' || $cat === 0) {
             $affected_rows = $db->get_affected_rows();
             if ($affected_rows === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные категории | ID: {$cat}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные категории | ID: $cat"
                 );
             }
         } else {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: {$cat}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
             );
         }
 
@@ -315,10 +322,10 @@ if ($cat === 'user' || $cat === 0) {
         exit;
     }
 
-    if ($work->check_input('_GET', 'subact', [
+    if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true
-        ]) && $_GET['subact'] === 'edit' && (bool)$user->user['cat_moderate'] && $cat !== 0) {
+        ]) && $_GET['subact'] === 'edit') {
         // Явное преобразование $cat в целое число для безопасности
         $cat = (int)$cat;
 
@@ -368,10 +375,10 @@ if ($cat === 'user' || $cat === 0) {
                 'L_NO_CATEGORY' => $work->lang['category']['error_no_category']
             ]);
         }
-    } elseif ($work->check_input('_GET', 'subact', [
+    } elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true
-        ]) && $_GET['subact'] === 'delete' && (bool)$user->user['cat_moderate'] && $cat !== 0) {
+        ]) && $_GET['subact'] === 'delete') {
         // Явное преобразование $cat в целое число для безопасности
         $cat = (int)$cat;
 
@@ -414,7 +421,7 @@ if ($cat === 'user' || $cat === 0) {
             $affected_rows = $db->get_affected_rows();
             if ($affected_rows === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить категорию из базы данных | ID: {$cat}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить категорию из базы данных | ID: $cat"
                 );
             }
 
@@ -435,7 +442,7 @@ if ($cat === 'user' || $cat === 0) {
         $photos = $db->res_arr();
         $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 
-        if ($photos && (bool)$user->user['pic_view']) {
+        if ($photos && $user->user['pic_view']) {
             // Добавляем шаблон для отображения фотографий
             $template->add_if('ISSET_PIC', true);
 
@@ -516,7 +523,7 @@ if ($cat === 'user' || $cat === 0) {
             } else {
                 // Если данные категории не найдены, выбрасываем исключение
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: {$cat}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
                 );
             }
         } else {
@@ -575,10 +582,10 @@ if ($cat === 'user' || $cat === 0) {
         }
     }
 } else {
-    if ($work->check_input('_GET', 'subact', [
+    if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true
-        ]) && $_GET['subact'] === 'add' && (bool)$user->user['cat_moderate']) {
+        ]) && $_GET['subact'] === 'add') {
         // Устанавливаем действие "добавление категории"
         $action = 'add_category';
 
@@ -618,12 +625,12 @@ if ($cat === 'user' || $cat === 0) {
             'U_EDITED' => sprintf('%s?action=category&subact=saveadd', $work->config['site_url'])
             // URL для отправки формы
         ]);
-    } elseif ($work->check_input('_GET', 'subact', [
+    } elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true
-        ]) && $_GET['subact'] === 'saveadd' && (bool)$user->user['cat_moderate']) {
+        ]) && $_GET['subact'] === 'saveadd') {
         // Проверяем CSRF-токен
-        if (empty($_POST['csrf_token']) || $_POST['csrf_token'] === null || !hash_equals(
+        if (empty($_POST['csrf_token']) || !hash_equals(
             $user->session['csrf_token'],
             $_POST['csrf_token']
         )) {
@@ -640,7 +647,7 @@ if ($cat === 'user' || $cat === 0) {
         ])) {
             $directory_name = time();
         } else {
-            $directory_name = $work->encodename(Work::clean_field($_POST['name_dir']));
+            $directory_name = Work::encodename(Work::clean_field($_POST['name_dir']));
         }
 
         // Проверяем уникальность имени директории
@@ -696,7 +703,7 @@ if ($cat === 'user' || $cat === 0) {
         $new_category_id = $db->get_last_insert_id();
         if ($new_category_id === 0) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: {$directory_name}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: $directory_name"
             );
         }
         // Перенаправляем пользователя после успешного добавления
@@ -713,7 +720,7 @@ if ($cat === 'user' || $cat === 0) {
 
         if ($categories) {
             foreach ($categories as $key => $val) {
-                $category_data = $work->category($val['id'], 0);
+                $category_data = $work->category($val['id']);
                 $template->add_string_ar([
                     'D_NAME_CATEGORY' => Work::clean_field($category_data['name']),
                     'D_DESCRIPTION_CATEGORY' => Work::clean_field($category_data['description']),

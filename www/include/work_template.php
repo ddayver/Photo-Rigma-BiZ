@@ -35,8 +35,10 @@
 namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
+use Exception;
 use finfo;
 use InvalidArgumentException;
+use Random\RandomException;
 use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
@@ -326,11 +328,11 @@ interface Work_Template_Interface
 class Work_Template implements Work_Template_Interface
 {
     //Свойства:
-    private const NO_USER_AVATAR = 'no_avatar.jpg'; ///< Конфигурация приложения.
+    private const string NO_USER_AVATAR = 'no_avatar.jpg'; ///< Конфигурация приложения.
     private array $config; ///< Языковые данные.
     private ?array $lang = null; ///< Объект для работы с базой данных.
     private Database_Interface $db; ///< Объект пользователя.
-    private ?User $user = null; // Аваар по-умолчанию
+    private ?User $user = null; // Аватар по-умолчанию
 
     /**
      * @brief Конструктор класса.
@@ -363,11 +365,6 @@ class Work_Template implements Work_Template_Interface
      */
     public function __construct(Database_Interface $db, array $config)
     {
-        if (!is_array($config)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка конструктора | Ожидается массив конфигурации"
-            );
-        }
         $this->config = $config;
         $this->db = $db;
     }
@@ -408,7 +405,7 @@ class Work_Template implements Work_Template_Interface
             return $result;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -440,15 +437,20 @@ class Work_Template implements Work_Template_Interface
      * @see PhotoRigma::Classes::Work_Template::$config Свойство, которое изменяет метод.
      *
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, array $value)
     {
         if ($name === 'config') {
             $this->config = $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '{$name}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
+    }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->$name);
     }
 
     /**
@@ -482,13 +484,6 @@ class Work_Template implements Work_Template_Interface
      */
     public function set_lang(array $lang): void
     {
-        if (!is_array($lang)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип данных для языковых строк | Ожидался массив, получено: " . gettype(
-                    $lang
-                )
-            );
-        }
         $this->lang = $lang;
     }
 
@@ -646,11 +641,6 @@ class Work_Template implements Work_Template_Interface
     protected function _create_menu_internal(string $action, int $menu): array
     {
         // Валидация входных данных.
-        if (!is_string($action)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип параметра \$action"
-            );
-        }
         if (!in_array($menu, [0, 1], true)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип меню (\$menu)"
@@ -690,8 +680,8 @@ class Work_Template implements Work_Template_Interface
             // Проверяем права доступа для текущего пользователя
             if ($menu_item['user_login'] !== null) {
                 // user_login: 0 - только гостям, 1 - только зарегистрированным
-                if (($menu_item['user_login'] == 0 && $this->user->user['id'] > 0) || // Гость пытается получить доступ к пункту для зарегистрированных
-                    ($menu_item['user_login'] == 1 && $this->user->user['id'] == 0)  // Зарегистрированный пытается получить доступ к пункту для гостей
+                if (($menu_item['user_login'] === 0 && $this->user->user['id'] > 0) || // Гость пытается получить доступ к пункту для зарегистрированных
+                    ($menu_item['user_login'] === 1 && $this->user->user['id'] === 0)  // Зарегистрированный пытается получить доступ к пункту для гостей
                 ) {
                     $is_visible = false;
                 }
@@ -699,7 +689,7 @@ class Work_Template implements Work_Template_Interface
 
             if ($menu_item['user_access'] !== null) {
                 // user_access: NULL - всем, иначе проверяем значение в $this->user->user
-                if (!isset($this->user->user[$menu_item['user_access']]) || $this->user->user[$menu_item['user_access']] != 1) {
+                if (!isset($this->user->user[$menu_item['user_access']]) || $this->user->user[$menu_item['user_access']] !== 1) {
                     $is_visible = false;
                 }
             }
@@ -710,7 +700,7 @@ class Work_Template implements Work_Template_Interface
                 $url_action = Work::clean_field($menu_item['url_action']);
                 $name_action = Work::clean_field($menu_item['name_action']);
                 $menu_items[$key] = [
-                    'url' => ($menu_item['action'] == $action ? null : $this->config['site_url'] . $url_action),
+                    'url' => ($menu_item['action'] === $action ? null : $this->config['site_url'] . $url_action),
                     'name' => $this->lang['menu'][$name_action] ?? ucfirst($name_action)
                 ];
             }
@@ -743,6 +733,7 @@ class Work_Template implements Work_Template_Interface
      *                 - 'U_AVATAR': URL аватара (или дефолтного аватара, если файл недоступен или некорректен).
      *
      * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RandomException
      *
      * @note Используется глобальная переменная $_SESSION для проверки статуса авторизации.
      *
@@ -795,6 +786,8 @@ class Work_Template implements Work_Template_Interface
      *                 - 'U_AVATAR': URL аватара (или дефолтного аватара, если файл недоступен или некорректен).
      *
      * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RandomException
+     * @throws Exception
      *
      * @note Используется глобальная переменная $_SESSION для проверки статуса авторизации.
      *
@@ -841,11 +834,10 @@ class Work_Template implements Work_Template_Interface
             if (!file_exists($full_avatar_path)) {
                 $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], self::NO_USER_AVATAR);
             } else {
-                $finfo = new finfo(FILEINFO_MIME_TYPE);
-                $mime_type = $finfo->file($full_avatar_path);
+                $mime_type = new finfo(FILEINFO_MIME_TYPE)->file($full_avatar_path);
                 if (!Work::validate_mime_type($mime_type)) {
                     log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: {$full_avatar_path}"
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: $full_avatar_path"
                     );
                     $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], self::NO_USER_AVATAR);
                 }
@@ -995,8 +987,7 @@ class Work_Template implements Work_Template_Interface
                 'SUM(CASE WHEN `group_id` = 3 THEN 1 ELSE 0 END) AS user_admin',
                 'SUM(CASE WHEN `group_id` = 2 THEN 1 ELSE 0 END) AS user_moder'
             ],
-            TBL_USERS,
-            []
+            TBL_USERS
         );
         $user_stats = $this->db->res_row();
         $stat['regist'] = $user_stats ? (int)$user_stats['regist_user'] : 0;
@@ -1027,14 +1018,14 @@ class Work_Template implements Work_Template_Interface
         $stat['category_user'] = $category_stats ? (int)$category_stats['category_user'] : 0;
         $stat['category'] += $stat['category_user'];
         // Получение статистики фотографий
-        $this->db->select(['COUNT(*) AS photo_count'], TBL_PHOTO, []);
+        $this->db->select(['COUNT(*) AS photo_count'], TBL_PHOTO);
         $photo_stats = $this->db->res_row();
         $stat['photo'] = $photo_stats ? (int)$photo_stats['photo_count'] : 0;
         // Получение статистики оценок
-        $this->db->select(['COUNT(*) AS rate_user'], TBL_RATE_USER, []);
+        $this->db->select(['COUNT(*) AS rate_user'], TBL_RATE_USER);
         $rate_user_stats = $this->db->res_row();
         $stat['rate_user'] = $rate_user_stats ? (int)$rate_user_stats['rate_user'] : 0;
-        $this->db->select(['COUNT(*) AS rate_moder'], TBL_RATE_MODER, []);
+        $this->db->select(['COUNT(*) AS rate_moder'], TBL_RATE_MODER);
         $rate_moder_stats = $this->db->res_row();
         $stat['rate_moder'] = $rate_moder_stats ? (int)$rate_moder_stats['rate_moder'] : 0;
         // Получение онлайн-пользователей
@@ -1184,13 +1175,6 @@ class Work_Template implements Work_Template_Interface
      */
     protected function _template_best_user_internal(int $best_user = 1): array
     {
-        // Проверка параметра $best_user
-        if (!is_int($best_user) || $best_user <= 0) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный параметр \$best_user | Ожидается положительное целое число, получено: {$best_user}"
-            );
-        }
-        $array_data = [];
         // Блок получения данных через join()
         $this->db->join(
             [TBL_USERS . '.`id`', TBL_USERS . '.`real_name`', 'COUNT(' . TBL_PHOTO . '.`id`) AS `user_photo`'],

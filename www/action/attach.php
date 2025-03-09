@@ -51,10 +51,19 @@
 namespace PhotoRigma\Action;
 
 use Exception;
+use PhotoRigma\Classes\Database;
+use PhotoRigma\Classes\Template;
+use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
 use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
+
+/** @var Database $db */
+/** @var Work $work */
+/** @var User $user */
+
+/** @var Template $template */
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
@@ -160,12 +169,12 @@ if ($work->check_input('_GET', 'thumbnail', [
         'regexp' => '/^[0-1]+$/'
     ]) && $_GET['thumbnail'] == '1') {
     if ($work->image_resize($photo_data['full_path'], $photo_data['thumbnail_path'])) {
-        echo $work->image_attach($photo_data['thumbnail_path'], $photo_data['file']);
+        $work->image_attach($photo_data['thumbnail_path'], $photo_data['file']);
     } else {
         throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}"
         );
     }
 } else {
-    echo $work->image_attach($photo_data['full_path'], $photo_data['file']);
+    $work->image_attach($photo_data['full_path'], $photo_data['file']);
 }

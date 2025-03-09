@@ -36,6 +36,8 @@
 namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
+use Exception;
+use Random\RandomException;
 use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
@@ -573,11 +575,12 @@ class Work_Security implements Work_Security_Interface
      *     echo "URL содержит запрещённые паттерны.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work::url_check() Этот метод вызывается через класс Work.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      * @see PhotoRigma::Classes::Work_Security::$compiled_rules Свойство, содержащее массив скомпилированных правил.
      *
      * @see PhotoRigma::Classes::Work_Security::_url_check_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::url_check() Этот метод вызывается через класс Work.
      */
     public function url_check(): bool
     {
@@ -612,13 +615,14 @@ class Work_Security implements Work_Security_Interface
      *     echo "URL содержит запрещённые паттерны.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
+     * @throws Exception
      * @see PhotoRigma::Classes::Work_Security::$compiled_rules
      *      Свойство, содержащее массив скомпилированных правил для проверки.
      *
      * @see PhotoRigma::Classes::Work_Security::url_check()
      *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      */
     protected function _url_check_internal(): bool
     {
@@ -626,7 +630,7 @@ class Work_Security implements Work_Security_Interface
         foreach ($this->compiled_rules as $rule) {
             if (preg_match($rule, $request_uri)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома: найден запрещённый паттерн | Паттерн: {$rule}, Запрос: {$request_uri}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома: найден запрещённый паттерн | Паттерн: $rule, Запрос: $request_uri"
                 );
                 return false;
             }
@@ -664,6 +668,7 @@ class Work_Security implements Work_Security_Interface
      *              Для $_FILES также учитывается корректность MIME-типа и размера файла.
      *
      * @throws RuntimeException Если MIME-тип загруженного файла не поддерживается.
+     * @throws Exception
      *
      * @warning Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
      *          Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.
@@ -726,6 +731,7 @@ class Work_Security implements Work_Security_Interface
      *              Для $_FILES также учитывается корректность MIME-типа и размера файла.
      *
      * @throws RuntimeException Если MIME-тип загруженного файла не поддерживается.
+     * @throws Exception
      *
      * @warning Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
      *          Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.
@@ -758,7 +764,7 @@ class Work_Security implements Work_Security_Interface
         $allowed_sources = ['_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'];
         if (!in_array($source_name, $allowed_sources, true)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый источник данных для check_input | Получено: {$source_name}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый источник данных для check_input | Получено: $source_name"
             );
             return false;
         }
@@ -772,7 +778,7 @@ class Work_Security implements Work_Security_Interface
         };
         if (!is_array($source)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Источник данных не является массивом | Источник: {$source_name}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Источник данных не является массивом | Источник: $source_name"
             );
             return false;
         }
@@ -787,27 +793,25 @@ class Work_Security implements Work_Security_Interface
                 return false;
             }
             $file = $source[$field];
-            $file_name = basename($file['name']);
             if ($file['error'] !== UPLOAD_ERR_OK) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка загрузки файла для поля | Поле: {$field}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка загрузки файла для поля | Поле: $field"
                 );
                 return false;
             }
             $max_size = $options['max_size'] ?? 0;
             if ($max_size > 0 && $file['size'] > $max_size) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла превышает максимально допустимый размер | Поле: {$field}, Размер: {$file['size']}, Максимальный размер: {$max_size}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла превышает максимально допустимый размер | Поле: $field, Размер: {$file['size']}, Максимальный размер: $max_size"
                 );
                 return false;
             }
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $real_mime_type = finfo_file($finfo, $file['tmp_name']);
             finfo_close($finfo);
-            $is_mime_supported = Work::validate_mime_type($real_mime_type);
-            if (!$is_mime_supported) {
+            if (!Work::validate_mime_type($real_mime_type)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип для загруженного файла | Поле: {$field}, MIME-тип: {$real_mime_type}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип для загруженного файла | Поле: $field, MIME-тип: $real_mime_type"
                 );
             }
             return true;
@@ -860,13 +864,14 @@ class Work_Security implements Work_Security_Interface
      *     echo "Поле не прошло проверку.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
+     * @throws Exception
      * @see PhotoRigma::Classes::Work_Security::$compiled_rules
      *      Свойство, содержащее массив скомпилированных правил для проверки.
      *
      * @see PhotoRigma::Classes::Work_Security::check_field()
      *      Публичный метод, который вызывает этот внутренний метод.
+     * @see PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      */
     protected function _check_field_internal(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
@@ -882,27 +887,27 @@ class Work_Security implements Work_Security_Interface
                     default => "Неизвестная ошибка регулярного выражения.",
                 };
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в регулярном выражении | Регулярное выражение: {$regexp}, Причина: {$errorMessage}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в регулярном выражении | Регулярное выражение: $regexp, Причина: $errorMessage"
                 );
                 return false;
             }
             if (!preg_match($regexp, $field)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля не соответствует регулярному выражению | Поле: '{$field}', Регулярное выражение: {$regexp}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля не соответствует регулярному выражению | Поле: '$field', Регулярное выражение: $regexp"
                 );
                 return false;
             }
         }
         if ($not_zero && $field === '0') {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля равно 0, но флаг not_zero установлен | Поле: '{$field}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля равно 0, но флаг not_zero установлен | Поле: '$field'"
             );
             return false;
         }
         foreach ($this->compiled_rules as $rule) {
             if (preg_match($rule, $field)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля содержит запрещённый паттерн | Поле: '{$field}', Паттерн: {$rule}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля содержит запрещённый паттерн | Поле: '$field', Паттерн: $rule"
                 );
                 return false;
             }
@@ -953,11 +958,12 @@ class Work_Security implements Work_Security_Interface
      *     echo "Поле не прошло проверку.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Security::_check_field_internal() Защищённый метод, реализующий основную логику.
+     * @throws Exception
      * @see PhotoRigma::Classes::Work::check_field() Этот метод вызывается через класс Work.
      * @see PhotoRigma::Classes::Work_Security::$compiled_rules Свойство, содержащее массив скомпилированных правил для проверки.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Security::_check_field_internal() Защищённый метод, реализующий основную логику.
      */
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
@@ -995,9 +1001,10 @@ class Work_Security implements Work_Security_Interface
      * // Вопрос: 2 x (3 + 4)
      * // Ответ: 14
      * @endcode
+     * @throws RandomException
+     * @see PhotoRigma::Classes::Work_Security::_gen_captcha_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Work::gen_captcha() Этот метод вызывается через класс Work.
      *
-     * @see PhotoRigma::Classes::Work_Security::_gen_captcha_internal() Защищённый метод, реализующий основную логику.
      */
     public function gen_captcha(): array
     {
@@ -1029,23 +1036,19 @@ class Work_Security implements Work_Security_Interface
      * echo "Вопрос: {$captcha['question']}\n";
      * echo "Ответ: {$captcha['answer']}\n";
      * @endcode
+     * @throws RandomException
      * @see PhotoRigma::Classes::Work_Security::gen_captcha()
      *      Публичный метод, который вызывает этот внутренний метод.
      *
      */
     protected function _gen_captcha_internal(): array
     {
-        $num1 = rand(1, 9);
-        $num2 = rand(1, 9);
-        $num3 = rand(1, 9);
+        $num1 = random_int(1, 9);
+        $num2 = random_int(1, 9);
+        $num3 = random_int(1, 9);
 
-        $operation1 = rand(1, 2); // 1 - умножение, 2 - сложение
-        $operation2 = rand(1, 2); // 1 - умножение, 2 - сложение
-
-        $captcha = [
-            'question' => '',
-            'answer' => 0,
-        ];
+        $operation1 = random_int(1, 2); // 1 - умножение, 2 - сложение
+        $operation2 = random_int(1, 2); // 1 - умножение, 2 - сложение
 
         if ($operation2 === 1) {
             $captcha['question'] = "($num2 x $num3)";
@@ -1101,10 +1104,11 @@ class Work_Security implements Work_Security_Interface
      *     echo "Email некорректен или пуст.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     *
+     * @throws Exception
      * @see PhotoRigma::Classes::Work_Security::_filt_email_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Work::filt_email() Этот метод вызывается через класс Work.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
      */
     public function filt_email(string $email): string
     {
@@ -1143,11 +1147,12 @@ class Work_Security implements Work_Security_Interface
      *     echo "Email некорректен или пуст.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Security::filt_email()
-     *      Публичный метод, который вызывает этот внутренний метод.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Security::filt_email()
+     *      Публичный метод, который вызывает этот внутренний метод.
      */
     protected function _filt_email_internal(string $email): string
     {
@@ -1159,11 +1164,10 @@ class Work_Security implements Work_Security_Interface
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный email-адрес | Получено: {$email}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный email-адрес | Получено: $email"
             );
             return '';
         }
-        $filtered_email = str_replace(['@', '.'], ['[at]', '[dot]'], $email);
-        return $filtered_email;
+        return str_replace(['@', '.'], ['[at]', '[dot]'], $email);
     }
 }

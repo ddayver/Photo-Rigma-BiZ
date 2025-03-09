@@ -58,11 +58,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 use Exception;
 use InvalidArgumentException;
-use PhotoRigma\Classes\Work_Security;
-use PhotoRigma\Classes\Work_Image;
-use PhotoRigma\Classes\Work_Template;
-use PhotoRigma\Classes\Work_Helper;
-use PhotoRigma\Classes\Work_CoreLogic;
+use PDOException;
 use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
@@ -111,15 +107,13 @@ use function PhotoRigma\Include\log_in_file;
 class Work
 {
     // Свойства:
-    private array $config = []; ///< Массив, хранящий конфигурацию приложения.
-    private Database_Interface $db; ///< Объект для работы с базой данных.
+    private array $config; ///< Массив, хранящий конфигурацию приложения.
     private Work_Security $security; ///< Объект для работы с безопасностью.
     private Work_Image $image; ///< Объект класса `Work_Image` для работы с изображениями.
     private Work_Template $template; ///< Объект для работы с шаблонами.
-    private Work_Helper $helper; ///< Объект для очистки строк, преобразования размеров и проверки MIME-типов.
     private Work_CoreLogic $core_logic; ///< Объект для основной логики приложения.
     private array $lang = []; ///< Массив с языковыми переменными
-    private array $session = []; ///< Массив, привязанный к глобальному массиву $_SESSION
+    private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
 
     /**
      * @brief Конструктор класса.
@@ -155,44 +149,34 @@ class Work
      * ];
      * $work = new \PhotoRigma\Classes\Work($db, $config);
      * @endcode
+     * @throws Exception
      * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
-     * @see PhotoRigma::Classes::Work::$db Объект для работы с базой данных.
      * @see PhotoRigma::Classes::Work::$security Свойство, содержащее объект Work_Security.
      * @see PhotoRigma::Classes::Work::$image Свойство, содержащее объект Work_Image.
      * @see PhotoRigma::Classes::Work::$template Свойство, содержащее объект Work_Template.
-     * @see PhotoRigma::Classes::Work::$helper Свойство, содержащее объект для очистки строк, преобразования размеров и проверки MIME-типов.
      * @see PhotoRigma::Classes::Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
      * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
      */
     public function __construct(Database_Interface $db, array $config, array &$session)
     {
-        if (!is_array($session)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные данные сессии | Проверьте, что массив сессии является корректным"
-            );
-        }
         $this->session = &$session;
-        $this->db = $db;
         $this->config = $config;
         // Загружаем конфигурацию из базы данных
-        $this->db->select(['*'], TBL_CONFIG, ['params' => []]);
-        $result = $this->db->res_arr();
+        $db->select(['*'], TBL_CONFIG, ['params' => []]);
+        $result = $db->res_arr();
         if (is_array($result)) {
-            foreach ($result as $tmp) {
-                $this->config[$tmp['name']] = $tmp['value'];
-            }
+            $this->config = array_merge($this->config, array_column($result, 'value', 'name'));
         } else {
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка загрузки конфигурации | Не удалось получить данные из таблицы " . TBL_CONFIG
             );
         }
         // Инициализация подклассов
-        $this->helper = new Work_Helper();
         $this->security = new Work_Security();
         $this->image = new Work_Image($this->config);
-        $this->template = new Work_Template($this->db, $this->config);
-        $this->core_logic = new Work_CoreLogic($this->db, $this->config, $this);
+        $this->template = new Work_Template($db, $this->config);
+        $this->core_logic = new Work_CoreLogic($db, $this->config, $this);
     }
 
     /**
@@ -237,7 +221,7 @@ class Work
      *      Публичный метод в классе Work_Helper.
      *
      */
-    public static function return_bytes($val): int
+    public static function return_bytes(string|int $val): int
     {
         return Work_Helper::return_bytes($val);
     }
@@ -479,8 +463,6 @@ class Work
      */
     public function &__get(string $name): array
     {
-        $result = null;
-
         switch ($name) {
             case 'config':
                 $result = &$this->config;
@@ -490,7 +472,7 @@ class Work
                 break;
             default:
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
                 );
         }
 
@@ -542,29 +524,24 @@ class Work
      * @see PhotoRigma::Classes::Work_Image::$config Свойство дочернего класса Work_Image.
      * @see PhotoRigma::Classes::Work_Template::$config Свойство дочернего класса Work_Template.
      */
-    public function __set($name, $value)
+    public function __set(string $name, array $value)
     {
         if ($name === 'config') {
-            // Проверка, что значение является массивом
-            if (!is_array($value)) {
-                throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Некорректный тип значения | Значение config должно быть массивом"
-                );
-            }
             // Проверка ключей и значений
             $errors = [];
             foreach ($value as $key => $val) {
                 if (!is_string($key)) {
-                    $errors[] = "Ключ '{$key}' должен быть строкой.";
+                    $errors[] = "Ключ '$key' должен быть строкой.";
                 }
                 if (!is_string($val)) {
-                    $errors[] = "Значение для ключа '{$key}' должно быть строкой.";
+                    $errors[] = "Значение для ключа '$key' должно быть строкой.";
                 }
             }
             if (!empty($errors)) {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обнаружены ошибки в конфигурации | Ошибки: " . json_encode(
-                        $errors
+                        $errors,
+                        JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
                 );
             }
@@ -573,7 +550,7 @@ class Work
             $updated_settings = [];
             $added_settings = [];
             foreach ($value as $key => $val) {
-                if (in_array($key, $exclude_from_logging)) {
+                if (in_array($key, $exclude_from_logging, true)) {
                     continue; // Пропускаем логирование для исключённых ключей
                 }
                 if (array_key_exists($key, $this->config)) {
@@ -585,14 +562,16 @@ class Work
             if (!empty($updated_settings)) {
                 log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обновление настроек | Настройки: " . json_encode(
-                        $updated_settings
+                        $updated_settings,
+                        JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
                 );
             }
             if (!empty($added_settings)) {
                 log_in_file(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Добавление настроек | Настройки: " . json_encode(
-                        $added_settings
+                        $added_settings,
+                        JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
                 );
             }
@@ -603,10 +582,15 @@ class Work
             $this->template->config = $this->config;
             $this->core_logic->config = $this->config;
         } else {
-            throw new Exception(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Несуществующее свойство | Свойство: {$name}"
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Несуществующее свойство | Свойство: $name"
             );
         }
+    }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->$name);
     }
 
     // Методы из под-класса Work_Security.
@@ -633,6 +617,7 @@ class Work
      *                                  Если массив языковых данных некорректен (не содержит ключ `'lang'` или содержит ошибки).
      *                                  Пример сообщения: "Обнаружены ошибки в массиве языковых данных | Ошибки: [список ошибок]".
      * @throws RuntimeException         Если файл языковых данных недоступен для чтения.
+     * @throws Exception
      *                                  Пример сообщения: "Файл языковых данных недоступен для чтения | Путь: [путь к файлу]".
      *
      * @see PhotoRigma::Include::log_in_file() Внешняя функция для логирования ошибок.
@@ -654,7 +639,7 @@ class Work
      * $work->set_lang('main');
      * @endcode
      */
-    public function set_lang(string $lang = 'main')
+    public function set_lang(string $lang = 'main'): void
     {
         if (empty($lang)) {
             throw new InvalidArgumentException(
@@ -663,7 +648,7 @@ class Work
         }
 
         // Устанавливаем язык из сессии или конфигурации
-        if (!isset($this->session['language']) || empty($this->session['language'])) {
+        if (empty($this->session['language'])) {
             $this->session['language'] = $this->config['language'];
         }
 
@@ -673,14 +658,14 @@ class Work
         // Проверяем существование файла
         if (!file_exists($lang_file_path)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных не найден | Путь: {$lang_file_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных не найден | Путь: $lang_file_path"
             );
         }
 
         // Проверяем доступность файла для чтения
         if (!is_readable($lang_file_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных недоступен для чтения | Путь: {$lang_file_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных недоступен для чтения | Путь: $lang_file_path"
             );
         }
 
@@ -688,7 +673,7 @@ class Work
         $data = include($lang_file_path);
         if (!is_array($data) || !isset($data['lang'])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных не возвращает массив с ключом 'lang' | Путь: {$lang_file_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных не возвращает массив с ключом 'lang' | Путь: $lang_file_path"
             );
         }
 
@@ -701,7 +686,7 @@ class Work
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обнаружены ошибки в массиве языковых данных | Ошибки: " . json_encode(
                     $result['errors'],
-                    JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
         }
@@ -711,7 +696,7 @@ class Work
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Очищенные значения | Значения: " . json_encode(
                     $result['changes'],
-                    JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
             );
         }
@@ -785,7 +770,7 @@ class Work
 
             // Проверка второго уровня
             if (!is_array($keys)) {
-                $result['errors'][] = "Значение для ключа '{$name}' должно быть массивом.";
+                $result['errors'][] = "Значение для ключа '$name' должно быть массивом.";
                 continue;
             }
 
@@ -793,7 +778,7 @@ class Work
                 // Преобразование ключа в строку
                 $test_key = (string)$key;
                 if (empty($test_key)) {
-                    $result['errors'][] = "Ключ второго уровня для '{$name}' должен быть строкой. Получено: {$key} - " . gettype(
+                    $result['errors'][] = "Ключ второго уровня для '$name' должен быть строкой. Получено: $key - " . gettype(
                         $key
                     );
                     continue;
@@ -805,7 +790,7 @@ class Work
 
                 // Проверка значений второго уровня
                 if (!is_string($value)) {
-                    $result['errors'][] = "Значение для ключа '{$name}['{$key}']' должно быть строкой. Получено: " . gettype(
+                    $result['errors'][] = "Значение для ключа '{$name}['$key']' должно быть строкой. Получено: " . gettype(
                         $value
                     );
                     continue;
@@ -815,7 +800,7 @@ class Work
                 $original_value = $value;
                 $cleaned_value = self::clean_field($value);
                 if ($original_value !== $cleaned_value) {
-                    $result['changes']["{$name}['{$key}']"] = [
+                    $result['changes']["{$name}['$key']"] = [
                         'original' => $original_value,
                         'cleaned' => $cleaned_value,
                     ];
@@ -858,7 +843,7 @@ class Work
      *      Публичный метод в классе Work_Helper.
      *
      */
-    public static function clean_field($field): ?string
+    public static function clean_field(string $field): string
     {
         return Work_Helper::clean_field($field);
     }
@@ -897,13 +882,8 @@ class Work
      * @see PhotoRigma::Classes::User Класс с объектом пользователя.
      * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство дочернего класса Work_CoreLogic.
      */
-    public function set_user(User $user)
+    public function set_user(User $user): void
     {
-        if (!$user instanceof User) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Некорректный тип аргумента | Ожидается объект класса User"
-            );
-        }
         $this->template->set_user($user);
         $this->core_logic->set_user($user);
     }
@@ -1989,7 +1969,7 @@ class Work
      *
      * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
      *
-     * @warning Метод завершает выполнение скрипта (`exit()`), отправляя заголовки и содержимое файла.
+     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
      * Пример использования:
      * @code

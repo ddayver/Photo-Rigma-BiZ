@@ -72,9 +72,9 @@ use LogicException;
 use OutOfBoundsException;
 use PDOException;
 use PhotoRigma\Classes\Database;
-use PhotoRigma\Classes\Work;
 use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
+use PhotoRigma\Classes\Work;
 use RangeException;
 use RuntimeException;
 use Throwable;
@@ -143,9 +143,9 @@ try {
     // Проходит по массиву списку обязательных файлов и проверяет, существуют ли файлы и доступны ли они для чтения.
     foreach ($required_files as $file) {
         if (!is_file($file)) {
-            $errors[] = "Файл отсутствует или не является файлом: {$file}";
+            $errors[] = "Файл отсутствует или не является файлом: $file";
         } elseif (!is_readable($file)) {
-            $errors[] = "Файл существует, но недоступен для чтения: {$file}";
+            $errors[] = "Файл существует, но недоступен для чтения: $file";
         }
     }
 
@@ -162,7 +162,7 @@ try {
         require_once $file;
     }
 
-    /** @var PhotoRigma::Classes::Database $db
+    /** @var PhotoRigma::Classes $db ::Database $db
      * @brief Создание объекта класса Database для работы с основной БД.
      * @details Инициализируется через конструктор с параметрами из массива $config['db'].
      * @see PhotoRigma::Classes::Database Класс для работы с базой данных.
@@ -171,7 +171,7 @@ try {
      */
     $db = new Database($config['db']);
 
-    /** @var PhotoRigma::Classes::Work $work
+    /** @var PhotoRigma::Classes $work ::Work $work
      * @brief Создание объекта класса Work.
      * @details Используется для выполнения различных вспомогательных операций.
      * @see PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
@@ -189,7 +189,7 @@ try {
      */
     unset($config);
 
-    /** @var PhotoRigma::Classes::User $user
+    /** @var PhotoRigma::Classes $user ::User $user
      * @brief Создание объекта класса User.
      * @details Используется для управления пользователями системы.
      * @see PhotoRigma::Classes::User Класс для управления пользователями.
@@ -198,9 +198,9 @@ try {
     $user = new User($db, $_SESSION);
 
     // Проверяем есть ли настройки темы у пользователя.
-    $themes_config = isset($user->session['theme']) ? $user->session['theme'] : $work->config['themes'];
+    $themes_config = $user->session['theme'] ?? $work->config['themes'];
 
-    /** @var PhotoRigma::Classes::Template $template
+    /** @var PhotoRigma::Classes $template ::Template $template
      * @brief Создание объекта класса Template.
      * @details Используется для генерации HTML-контента страниц.
      * @see PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
@@ -274,7 +274,7 @@ try {
         // Проверяем существование файла перед подключением
         if (!is_file($action_file) || !is_readable($action_file)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: {$action_file}"
+                __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: $action_file"
             );
             $action_file = $work->config['site_dir'] . 'action/main.php'; // Подключаем файл по умолчанию
             $action = 'main';
@@ -288,7 +288,7 @@ try {
         include_once $action_file;
     } else {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действий не найден или недоступен для чтения | Путь: {$action_file}"
+            __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действий не найден или недоступен для чтения | Путь: $action_file"
         );
     }
 
@@ -296,38 +296,38 @@ try {
     $template->create_template();
     if ($header_footer) {
         $template->page_header($title, $action);
-        $template->page_footer();
+        $template->page_footer($user->session['login_id']);
     }
     if ($template_output) {
         header('Content-Type: text/html; charset=UTF-8');
         echo $template->content;
     }
-} catch (RuntimeException $e) {
-    $type = "Ошибка времени выполнения";
 } catch (PDOException $e) {
     $type = "Ошибка базы данных";
+} catch (UnexpectedValueException $e) {
+    $type = "Неожиданное значение";
+} catch (OutOfBoundsException $e) {
+    $type = "Индекс или ключ вне границ";
+} catch (RangeException $e) {
+    $type = "Значение вне допустимого диапазона";
+} catch (RuntimeException $e) {
+    $type = "Ошибка времени выполнения";
 } catch (InvalidArgumentException $e) {
     $type = "Неверный аргумент";
-} catch (LogicException $e) {
-    $type = "Логическая ошибка";
 } catch (BadMethodCallException $e) {
     $type = "Вызов несуществующего метода";
 } catch (BadFunctionCallException $e) {
     $type = "Вызов несуществующей функции";
 } catch (DomainException $e) {
     $type = "Значение вне допустимой области";
-} catch (UnexpectedValueException $e) {
-    $type = "Неожиданное значение";
 } catch (LengthException $e) {
     $type = "Ошибка длины значения";
-} catch (OutOfBoundsException $e) {
-    $type = "Индекс или ключ вне границ";
-} catch (RangeException $e) {
-    $type = "Значение вне допустимого диапазона";
+} catch (LogicException $e) {
+    $type = "Логическая ошибка";
 } catch (Exception $e) {
     $type = "Общая ошибка";
 } finally {
-    if (isset($e) && ($e instanceof Exception || $e instanceof Throwable)) {
+    if (isset($e) && ($e instanceof Throwable)) {
         // Формируем трассировку один раз
         $remote_ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
         $message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage(
@@ -339,7 +339,9 @@ try {
             // Добавление трассировки, если DEBUG_GALLERY включен
             if (defined('DEBUG_GALLERY')) {
                 $trace_depth = 0;
-                if (DEBUG_GALLERY === true || (is_int(DEBUG_GALLERY) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9)) {
+                if (defined('DEBUG_GALLERY') && (DEBUG_GALLERY === true || (is_int(
+                    DEBUG_GALLERY
+                ) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9))) {
                     $trace_depth = is_int(DEBUG_GALLERY) ? DEBUG_GALLERY : 5;
                 }
 
@@ -350,8 +352,11 @@ try {
                     $trace_info = [];
                     foreach ($backtrace as $index => $trace) {
                         $step_number = $index + 1;
-                        $args = array_map(function ($arg) {
-                            $arg_str = is_string($arg) ? $arg : json_encode($arg, JSON_UNESCAPED_UNICODE);
+                        $args = array_map(static function ($arg) {
+                            $arg_str = is_string($arg) ? $arg : json_encode(
+                                $arg,
+                                JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                            );
                             return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
                                 $arg_str,
                                 0,
@@ -365,7 +370,7 @@ try {
                             $trace['file'] ?? 'неизвестный файл',
                             $trace['line'] ?? 'неизвестная строка',
                             $trace['function'] ?? 'неизвестная функция',
-                            json_encode($args, JSON_UNESCAPED_UNICODE)
+                            json_encode($args, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
                         );
                     }
                     $message .= "Трассировка:\n" . implode("\n\n", $trace_info) . PHP_EOL;

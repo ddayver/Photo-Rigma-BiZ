@@ -48,6 +48,8 @@
 
 namespace PhotoRigma\Include;
 
+/** @var array $config */
+
 // Предотвращение прямого вызова файла
 use Exception;
 use RuntimeException;
@@ -72,7 +74,7 @@ define('LOG_DIR', $config['site_dir'] . 'log/'); ///< Путь к директо
 
 /// Что использовать как конец строки (для Win-серверов).
 if (!defined('PHP_EOL')) {
-    define('PHP_EOL', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? "\r\n" : "\n");
+    define('PHP_EOL', PHP_OS_FAMILY === 'Windows' ? "\r\n" : "\n");
 }
 
 define('TBL_CONFIG', '`config`'); ///< Таблица с настройками сервера
@@ -95,7 +97,7 @@ define('DEFAULT_GROUP', 1); ///< Группа по-умолчанию для н�
  *          - Максимальная длина: 32 символа (1 символ для начала + до 30 символов в середине + 1 символ для конца).
  *          Читаемый вариант: /^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9_]$/
  * @see include/user.php Файл, где используется для валидации логина при регистрации.
- * @see PhotoRigma\Classes\User Класс для управления пользователями.
+ * @see PhotoRigma::Classes::User Класс для управления пользователями.
  */
 define(
     'REG_LOGIN',
@@ -110,7 +112,7 @@ define(
  *          - Максимальная длина: 100 символов.
  *          Читаемый вариант: /^[^\x00-\x1F\x7F<>&"'\\\/`=]{1,100}$/
  * @see action/profile.php Обработчик для работы с профилями пользователей.
- * @see PhotoRigma\Classes\User Класс для управления пользователями.
+ * @see PhotoRigma::Classes::User Класс для управления пользователями.
  */
 define('REG_NAME', '/^[\p{L}\p{N}\p{Zs}\-\.\,\!\?]{1,100}$/u');
 
@@ -123,7 +125,7 @@ define('REG_NAME', '/^[\p{L}\p{N}\p{Zs}\-\.\,\!\?]{1,100}$/u');
  *          - Минимальная длина доменной части: 2 символа.
  *          Читаемый вариант: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
  * @see include/user.php Файл, где используется для валидации email при регистрации.
- * @see PhotoRigma\Classes\User Класс для управления пользователями.
+ * @see PhotoRigma::Classes::User Класс для управления пользователями.
  */
 define(
     'REG_EMAIL',
@@ -158,7 +160,7 @@ if (!$cookie_domain) {
 // Валидация формата домена
 if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $cookie_domain)) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: {$cookie_domain}"
+        __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: $cookie_domain"
     );
 }
 
@@ -254,7 +256,7 @@ function archive_old_logs(): void
     }
 
     // Получаем список файлов логов с расширением .txt
-    $log_files = glob(LOG_DIR . '*_log.txt');
+    $log_files = glob(LOG_DIR . '*_log.txt', GLOB_NOSORT);
     if (empty($log_files)) {
         return; // Если файлов нет, выходим
     }
@@ -268,7 +270,7 @@ function archive_old_logs(): void
             $file_date = strtotime(str_replace('_', '-', $matches[1])); // Преобразуем дату в timestamp
 
             // Если файл старше недели
-            if ($file_date < $week_ago) {
+            if ($file_date !== false && $file_date < $week_ago) {
                 // Создаем имя архива
                 $archive_file = $file . '.gz';
 
@@ -280,7 +282,7 @@ function archive_old_logs(): void
                             INPUT_SERVER,
                             'REMOTE_ADDR',
                             FILTER_VALIDATE_IP
-                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать файл | Путь: {$file}"
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать файл | Путь: $file"
                     );
                     continue; // Пропускаем этот файл и переходим к следующему
                 }
@@ -293,7 +295,7 @@ function archive_old_logs(): void
                             INPUT_SERVER,
                             'REMOTE_ADDR',
                             FILTER_VALIDATE_IP
-                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: {$archive_file}"
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: $archive_file"
                     );
                     continue; // Пропускаем этот файл и переходим к следующему
                 }
@@ -305,7 +307,7 @@ function archive_old_logs(): void
                             INPUT_SERVER,
                             'REMOTE_ADDR',
                             FILTER_VALIDATE_IP
-                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в архив | Путь: {$archive_file}"
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в архив | Путь: $archive_file"
                     );
                     continue; // Пропускаем этот файл и переходим к следующему
                 }
@@ -318,7 +320,7 @@ function archive_old_logs(): void
                             INPUT_SERVER,
                             'REMOTE_ADDR',
                             FILTER_VALIDATE_IP
-                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось удалить исходный файл | Путь: {$file}"
+                        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось удалить исходный файл | Путь: $file"
                     );
                 }
             }
@@ -346,8 +348,6 @@ function archive_old_logs(): void
  *
  * @throws RuntimeException Возникает при проблемах с созданием директории, доступом к файлам, чтением/записью данных.
  * @throws Exception Любые непредвиденные ошибки.
- *
- * @deprecated Параметр $die скоро будет исключён из функции.
  *
  * @todo Полностью исключить из работы функции параметр $die как устаревший.
  *
@@ -401,7 +401,7 @@ function log_in_file(string $txt, bool $die = false): bool
         $log_file = LOG_DIR . date('Y_m_d') . '_log.txt';
 
         // Ограничение размера файла логов
-        if (file_exists($log_file) && filesize($log_file) > MAX_LOG_SIZE) {
+        if (is_file($log_file) && filesize($log_file) > MAX_LOG_SIZE) {
             $backup_file = $log_file . '_bak-' . date('Y_m_d_H_i_s') . '.gz';
             if (extension_loaded('zlib')) {
                 $gz_handle = gzopen($backup_file, 'w' . COMPRESSION_LEVEL);
@@ -409,7 +409,7 @@ function log_in_file(string $txt, bool $die = false): bool
                     $file_content = file_get_contents($log_file);
                     if ($file_content === false) {
                         throw new RuntimeException(
-                            __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать содержимое файла | Путь: {$log_file}"
+                            __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось прочитать содержимое файла | Путь: $log_file"
                         );
                     }
                     gzwrite($gz_handle, $file_content);
@@ -428,7 +428,7 @@ function log_in_file(string $txt, bool $die = false): bool
             // Проверяем успешность создания архива
             if (!file_exists($backup_file)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: {$backup_file}"
+                    __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось создать архив | Путь: $backup_file"
                 );
             }
         }
@@ -447,8 +447,11 @@ function log_in_file(string $txt, bool $die = false): bool
                 $trace_info = [];
                 foreach ($backtrace as $index => $trace) {
                     $step_number = $index + 1;
-                    $args = array_map(function ($arg) {
-                        $arg_str = is_string($arg) ? $arg : json_encode($arg, JSON_UNESCAPED_UNICODE);
+                    $args = array_map(static function ($arg) {
+                        $arg_str = is_string($arg) ? $arg : json_encode(
+                            $arg,
+                            JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                        );
                         return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
                             $arg_str,
                             0,
@@ -462,7 +465,7 @@ function log_in_file(string $txt, bool $die = false): bool
                         $trace['file'] ?: 'неизвестный файл',
                         $trace['line'] ?: 'неизвестная строка',
                         $trace['function'] ?: 'неизвестная функция',
-                        json_encode($args, JSON_UNESCAPED_UNICODE)
+                        json_encode($args, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
                     );
                 }
                 $write_txt .= "Трассировка:" . PHP_EOL . implode(PHP_EOL . PHP_EOL, $trace_info) . PHP_EOL;
@@ -470,19 +473,19 @@ function log_in_file(string $txt, bool $die = false): bool
         }
 
         // Безопасная запись в файл через потоки
-        $handle = fopen($log_file, 'a');
+        $handle = fopen($log_file, 'ab');
         if ($handle) {
             flock($handle, LOCK_EX);
             if (fwrite($handle, $write_txt) === false) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в файл | Путь: {$log_file}"
+                    __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось записать данные в файл | Путь: $log_file"
                 );
             }
             flock($handle, LOCK_UN);
             fclose($handle);
         } else {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось открыть файл для записи | Путь: {$log_file}"
+                __FILE__ . ":" . __LINE__ . " (" . __FUNCTION__ . ") | Не удалось открыть файл для записи | Путь: $log_file"
             );
         }
 

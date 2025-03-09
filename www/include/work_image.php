@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection TypoSafeNamingInspection */
+
 /**
  * @file        include/work_image.php
  * @brief       Файл содержит класс Work_Image, который отвечает за работу с изображениями.
@@ -38,8 +40,11 @@ namespace PhotoRigma\Classes;
 // Предотвращение прямого вызова файла
 use Exception;
 use Gmagick;
+use GmagickException;
+use GmagickPixel;
 use Imagick;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\NoReturn;
 use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
@@ -228,7 +233,7 @@ interface Work_Image_Interface
      *
      * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
      *
-     * @warning Метод завершает выполнение скрипта (`exit()`), отправляя заголовки и содержимое файла.
+     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
      * Пример использования:
      * @code
@@ -418,8 +423,8 @@ interface Work_Image_Interface
 class Work_Image implements Work_Image_Interface
 {
     // Свойства:
-    private const MAX_IMAGE_WIDTH = 5000; ///< Конфигурация приложения.
-    private const MAX_IMAGE_HEIGHT = 5000; // Максимальная ширина изображения (в пикселях)
+    private const int MAX_IMAGE_WIDTH = 5000; ///< Конфигурация приложения.
+    private const int MAX_IMAGE_HEIGHT = 5000; // Максимальная ширина изображения (в пикселях)
     private array $config; // Максимальная высота изображения (в пикселях)
 
     /**
@@ -497,7 +502,7 @@ class Work_Image implements Work_Image_Interface
             return $result;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '{$name}'"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -533,15 +538,20 @@ class Work_Image implements Work_Image_Interface
      * @see PhotoRigma::Classes::Work_Image::$config Свойство, которое изменяет метод.
      *
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, array $value)
     {
         if ($name === 'config') {
             $this->config = $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '{$name}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
+    }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->$name);
     }
 
     /**
@@ -635,14 +645,14 @@ class Work_Image implements Work_Image_Interface
         // Проверяем существование файла
         if (!file_exists($path_image)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден | Путь: '{$path_image}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден | Путь: '$path_image'"
             );
         }
         // Получаем размеры изображения
         $size = getimagesize($path_image);
         if ($size === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: '{$path_image}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: '$path_image'"
             );
         }
         // Используем готовый метод для расчёта размеров эскиза
@@ -712,7 +722,7 @@ class Work_Image implements Work_Image_Interface
         // Валидация параметра $size
         if (!isset($size[0], $size[1]) || !is_int($size[0]) || !is_int($size[1]) || $size[0] <= 0 || $size[1] <= 0) {
             throw new InvalidArgumentException(
-                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректные размеры изображения | " . "Требуется массив с двумя положительными целыми числами. Получено: width = " . (isset($size[0]) ? $size[0] : 'undefined') . ", height = " . (isset($size[1]) ? $size[1] : 'undefined')
+                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректные размеры изображения | " . "Требуется массив с двумя положительными целыми числами. Получено: width = " . ($size[0] ?? 'undefined') . ", height = " . ($size[1] ?? 'undefined')
             );
         }
 
@@ -723,7 +733,7 @@ class Work_Image implements Work_Image_Interface
             $this->config['temp_photo_h']
         ) || $this->config['temp_photo_w'] < 0 || $this->config['temp_photo_h'] < 0) {
             throw new RuntimeException(
-                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректная конфигурация temp_photo_w или temp_photo_h | " . "Значения должны быть числами ≥ 0. Получено: temp_photo_w = " . (isset($this->config['temp_photo_w']) ? $this->config['temp_photo_w'] : 'undefined') . ", temp_photo_h = " . (isset($this->config['temp_photo_h']) ? $this->config['temp_photo_h'] : 'undefined')
+                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректная конфигурация temp_photo_w или temp_photo_h | " . "Значения должны быть числами ≥ 0. Получено: temp_photo_w = " . ($this->config['temp_photo_w'] ?? 'undefined') . ", temp_photo_h = " . ($this->config['temp_photo_h'] ?? 'undefined')
             );
         }
 
@@ -756,12 +766,12 @@ class Work_Image implements Work_Image_Interface
                 'width' => (int)($size[0] / $ratio_height),
                 'height' => (int)($size[1] / $ratio_height)
             ];
-        } else {
-            return [
-                'width' => (int)($size[0] / $ratio_width),
-                'height' => (int)($size[1] / $ratio_width)
-            ];
         }
+
+        return [
+            'width' => (int)($size[0] / $ratio_width),
+            'height' => (int)($size[1] / $ratio_width)
+        ];
     }
 
     /**
@@ -784,7 +794,7 @@ class Work_Image implements Work_Image_Interface
      * @return bool True, если операция выполнена успешно, иначе False.
      *
      * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws RuntimeException|Exception Если возникли ошибки при проверке файлов, директорий или размеров изображения.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w`, `temp_photo_h`).
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
@@ -839,6 +849,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
      * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws Exception
      *
      * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w`, `temp_photo_h`).
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
@@ -876,7 +887,7 @@ class Work_Image implements Work_Image_Interface
         $thumbnail_path = realpath($thumbnail_path);
         if (!$full_path || !$thumbnail_path) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный путь к файлу | \$full_path = {$full_path}, \$thumbnail_path = {$thumbnail_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный путь к файлу | \$full_path = $full_path, \$thumbnail_path = $thumbnail_path"
             );
         }
         // Блок 1: Проверка корректности путей через filter_var
@@ -885,7 +896,7 @@ class Work_Image implements Work_Image_Interface
             if (!filter_var($path, FILTER_VALIDATE_REGEXP, [
                 'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/']
             ])) {
-                $path_errors[] = "Некорректный формат пути: \${$key} = {$path}.";
+                $path_errors[] = "Некорректный формат пути: \$$key = $path.";
             }
         }
         if (!empty($path_errors)) {
@@ -899,31 +910,31 @@ class Work_Image implements Work_Image_Interface
         // Блок 2: Проверка существования и доступности файлов
         if (!file_exists($full_path) || !is_readable($full_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исходное изображение не найдено или недоступно для чтения | Путь: \$full_path = {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исходное изображение не найдено или недоступно для чтения | Путь: \$full_path = $full_path"
             );
         }
         // Проверка доступности директории для записи
         $thumbnail_dir = dirname($thumbnail_path);
         if (!is_writable($thumbnail_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для сохранения эскиза недоступна для записи | Путь: \$thumbnail_dir = {$thumbnail_dir}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для сохранения эскиза недоступна для записи | Путь: \$thumbnail_dir = $thumbnail_dir"
             );
         }
         $full_size = getimagesize($full_path);
         if ($full_size === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: \$full_path = {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: \$full_path = $full_path"
             );
         }
         if ($full_size[0] > self::MAX_IMAGE_WIDTH || $full_size[1] > self::MAX_IMAGE_HEIGHT) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размеры исходного изображения слишком велики | Путь: \$full_path = {$full_path}, ширина = {$full_size[0]}, высота = {$full_size[1]}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размеры исходного изображения слишком велики | Путь: \$full_path = $full_path, ширина = $full_size[0], высота = $full_size[1]"
             );
         }
         $thumbnail_exists = file_exists($thumbnail_path);
         if ($thumbnail_exists && !is_writable($thumbnail_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл эскиза существует, но недоступен для записи | Путь: \$thumbnail_path = {$thumbnail_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл эскиза существует, но недоступен для записи | Путь: \$thumbnail_path = $thumbnail_path"
             );
         }
         // Блок 3: Расчет размеров будущего эскиза
@@ -931,7 +942,7 @@ class Work_Image implements Work_Image_Interface
         // Если файл эскиза существует и его размеры совпадают с расчетными, завершаем работу
         if ($thumbnail_exists) {
             $thumbnail_size = getimagesize($thumbnail_path);
-            if ($thumbnail_size !== false && $thumbnail_size[0] == $photo['width'] && $thumbnail_size[1] == $photo['height']) {
+            if ($thumbnail_size !== false && $thumbnail_size[0] === $photo['width'] && $thumbnail_size[1] === $photo['height']) {
                 return true;
             }
         }
@@ -959,7 +970,7 @@ class Work_Image implements Work_Image_Interface
             }
         } catch (Exception $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через GraphicsMagick | Аргументы: \$full_path = {$full_path}, \$thumbnail_path = {$thumbnail_path} | Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через GraphicsMagick | Аргументы: \$full_path = $full_path, \$thumbnail_path = $thumbnail_path | Сообщение об ошибке: {$e->getMessage()}"
             );
         }
         try {
@@ -968,7 +979,7 @@ class Work_Image implements Work_Image_Interface
             }
         } catch (Exception $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через ImageMagick | Аргументы: \$full_path = {$full_path}, \$thumbnail_path = {$thumbnail_path} | Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через ImageMagick | Аргументы: \$full_path = $full_path, \$thumbnail_path = $thumbnail_path | Сообщение об ошибке: {$e->getMessage()}"
             );
         }
         // Если ни одна из библиотек не сработала, используем GD
@@ -1008,6 +1019,7 @@ class Work_Image implements Work_Image_Interface
      * @return bool True, если эскиз создан успешно.
      *
      * @throws GmagickException Если возникает ошибка при работе с GraphicsMagick (например, при загрузке или обработке изображения).*@throws \GmagickException
+     * @throws Exception
      *
      * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
      *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
@@ -1068,9 +1080,9 @@ class Work_Image implements Work_Image_Interface
         $gmagick_instance = new Gmagick(); // Создаем экземпляр Gmagick
         $supported_formats = $gmagick_instance->queryFormats(); // Вызываем метод queryFormats()
         unset($gmagick_instance);
-        if (!in_array($format, $supported_formats)) {
+        if (!in_array($format, $supported_formats, true)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$format} не поддерживается GraphicsMagick"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат $format не поддерживается GraphicsMagick"
             );
             return false;
         }
@@ -1105,8 +1117,8 @@ class Work_Image implements Work_Image_Interface
             // Настройка прозрачности для PNG и WebP
             if ($original_data['type'] === 'image/png' || $original_data['type'] === 'image/webp') {
                 $image->setImageFormat($format);
-                $image->setImageBackgroundColor('transparent'); // Установка прозрачного фона
-                // $image = $image->flattenImages(); // Объединение слоев с учетом прозрачности
+                $backgroundColor = new GmagickPixel('transparent'); // Создаем объект GmagickPixel с прозрачным цветом
+                $image->setImageBackgroundColor($backgroundColor); // Установка прозрачного фона
             }
             // Масштабирование изображения
             $image->resizeImage(
@@ -1118,7 +1130,7 @@ class Work_Image implements Work_Image_Interface
             // Сохранение нового эскиза
             $image->writeImage($thumbnail_data['path']);
             // Удаление резервной копии старого эскиза
-            if ($backup_thumbnail_path && file_exists($backup_thumbnail_path)) {
+            if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
                 unlink($backup_thumbnail_path);
             }
             return true;
@@ -1128,7 +1140,7 @@ class Work_Image implements Work_Image_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через GraphicsMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
             // Восстановление старого эскиза
-            if ($backup_thumbnail_path && file_exists($backup_thumbnail_path)) {
+            if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
                 rename($backup_thumbnail_path, $thumbnail_data['path']);
             }
             return false;
@@ -1172,7 +1184,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @return bool True, если эскиз создан успешно.
      *
-     * @throws ImagickException Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке изображения).
+     * @throws Exception Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке изображения).
      *
      * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
      *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
@@ -1237,11 +1249,11 @@ class Work_Image implements Work_Image_Interface
         $format = $imagick_formats[$original_data['type']];
         // Проверка поддержки формата через ImageMagick
         $imagick_instance = new Imagick(); // Создаем экземпляр Imagick
-        $supported_formats = $imagick_instance->queryFormats(); // Вызываем метод queryFormats()
+        $supported_formats = Imagick::queryFormats(); // Вызываем метод queryFormats()
         unset($imagick_instance);
-        if (!in_array($format, $supported_formats)) {
+        if (!in_array($format, $supported_formats, true)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$format} не поддерживается ImageMagick"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат $format не поддерживается ImageMagick"
             );
             return false;
         }
@@ -1283,7 +1295,7 @@ class Work_Image implements Work_Image_Interface
             // Сохранение нового эскиза
             $image->writeImage($thumbnail_data['path']);
             // Удаление резервной копии старого эскиза
-            if ($backup_thumbnail_path && file_exists($backup_thumbnail_path)) {
+            if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
                 unlink($backup_thumbnail_path);
             }
             return true;
@@ -1293,14 +1305,14 @@ class Work_Image implements Work_Image_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через ImageMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
             // Восстановление старого эскиза
-            if ($backup_thumbnail_path && file_exists($backup_thumbnail_path)) {
+            if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
                 rename($backup_thumbnail_path, $thumbnail_data['path']);
             }
             return false;
         } finally {
             // Освобождение ресурсов
             if (isset($image) && $image instanceof Imagick) {
-                $image->destroy();
+                $image->clear();
             }
         }
     }
@@ -1340,7 +1352,7 @@ class Work_Image implements Work_Image_Interface
      * @throws InvalidArgumentException Если MIME-тип или тип изображения не поддерживаются.
      *      Пример сообщения:
      *          Неподдерживаемый MIME-тип для GD | Получено: [значение]
-     * @throws RuntimeException Если возникает ошибка при работе с GD (например, при загрузке, обработке или сохранении изображения).
+     * @throws RuntimeException|Exception Если возникает ошибка при работе с GD (например, при загрузке, обработке или сохранении изображения).
      *      Пример сообщения:
      *          Не удалось создать ресурс изображения через GD | Путь: [значение]
      *
@@ -1491,18 +1503,18 @@ class Work_Image implements Work_Image_Interface
             };
             if (!function_exists($save_function)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Функция {$save_function} недоступна в текущей версии GD"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Функция $save_function недоступна в текущей версии GD"
                 );
             }
             $save_function($im, $thumbnail_data['path']);
             // Удаление резервной копии старого эскиза
-            if ($backup_thumbnail_path && file_exists($backup_thumbnail_path)) {
+            if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
                 unlink($backup_thumbnail_path);
             }
             return true;
         } catch (Exception $e) {
             // Восстановление старого эскиза
-            if ($backup_thumbnail_path && file_exists($backup_thumbnail_path)) {
+            if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
                 rename($backup_thumbnail_path, $thumbnail_data['path']);
             }
             // Выбрасываем исключение с подробным сообщением
@@ -1652,7 +1664,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
      *
-     * @warning Метод завершает выполнение скрипта (`exit()`), отправляя заголовки и содержимое файла.
+     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
      * Пример использования:
      * @code
@@ -1662,13 +1674,14 @@ class Work_Image implements Work_Image_Interface
      * // Вызов метода для вывода изображения через HTTP
      * $image->image_attach('/path/to/image.jpg', 'example.jpg');
      * @endcode
-     * @see PhotoRigma::Classes::Work::clean_field() Публичный метод для очистки данных.
-     *
+     * @throws Exception
      * @see PhotoRigma::Classes::Work_Image::_image_attach_internal() Защищённый метод, выполняющий основную логику.
      * @see PhotoRigma::Classes::Work::image_attach() Этот метод вызывается через класс Work.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::clean_field() Публичный метод для очистки данных.
+     *
      */
-    public function image_attach(string $full_path, string $name_file): void
+    #[NoReturn] public function image_attach(string $full_path, string $name_file): void
     {
         $this->_image_attach_internal($full_path, $name_file);
     }
@@ -1694,55 +1707,56 @@ class Work_Image implements Work_Image_Interface
      *
      * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
      *
-     * @warning Метод завершает выполнение скрипта (`exit()`), отправляя заголовки и содержимое файла.
+     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
      * Пример использования:
      * @code
      * // Вызов защищённого метода внутри класса или наследника
      * $this->_image_attach_internal('/path/to/image.jpg', 'example.jpg');
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::image_attach()
-     *      Публичный метод-редирект для вызова этой логики.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      * @see PhotoRigma::Classes::Work::clean_field()
      *      Публичный метод-редирект для вызова этой логики.
      *
+     * @see PhotoRigma::Classes::Work_Image::image_attach()
+     *      Публичный метод-редирект для вызова этой логики.
      */
-    protected function _image_attach_internal(string $full_path, string $name_file): void
+    #[NoReturn] protected function _image_attach_internal(string $full_path, string $name_file): void
     {
         // Проверяем существование и доступность файла
-        if (!file_exists($full_path) || !is_readable($full_path)) {
+        if (!is_file($full_path) || !is_readable($full_path)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: $full_path"
             );
             header("HTTP/1.0 404 Not Found");
-            exit();
+            exit;
         }
         // Получаем MIME-тип и размеры изображения через finfo
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime_type = finfo_file($finfo, $full_path);
         finfo_close($finfo);
-        if (!$mime_type || strpos($mime_type, 'image/') !== 0) {
+        if (!$mime_type || !str_starts_with($mime_type, 'image/')) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: $full_path"
             );
             header("HTTP/1.0 500 Internal Server Error");
-            exit();
+            exit;
         }
         // Проверяем размер файла
         $file_size = filesize($full_path);
         if ($file_size === false || $file_size > 10 * 1024 * 1024) { // Ограничение: 10 МБ
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: {$full_path}, Размер: {$file_size}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: $full_path, Размер: $file_size"
             );
             header("HTTP/1.0 413 Payload Too Large");
-            exit();
+            exit;
         }
         // Устанавливаем заголовки для вывода изображения
         header("Content-Type: " . $mime_type);
         header("Content-Disposition: inline; filename=\"" . Work::clean_field($name_file) . "\"");
-        header("Content-Length: " . (string)$file_size);
+        header("Content-Length: " . $file_size);
 
         // Дополнительные заголовки для безопасности
         header("X-Content-Type-Options: nosniff");
@@ -1756,14 +1770,14 @@ class Work_Image implements Work_Image_Interface
         $fh = fopen($full_path, 'rb');
         if ($fh === false) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: $full_path"
             );
             header("HTTP/1.0 500 Internal Server Error");
-            exit();
+            exit;
         }
         fpassthru($fh);
         fclose($fh);
-        exit();
+        exit;
     }
 
     /**
@@ -1786,6 +1800,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не существует.
      * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
+     * @throws Exception
      *
      * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
      *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
@@ -1831,6 +1846,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не существует.
      * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
+     * @throws Exception
      *
      * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
      *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
@@ -1855,25 +1871,25 @@ class Work_Image implements Work_Image_Interface
             'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/']
         ])) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Путь: \$full_path = {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Путь: \$full_path = $full_path"
             );
         }
         // Нормализация пути через realpath()
         $normalized_path = realpath($full_path);
         if (!$normalized_path) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
             );
         }
         // Проверка существования файла и прав доступа
         if (!is_file($normalized_path)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
             );
         }
         if (!is_readable($normalized_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: \$full_path = {$full_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: \$full_path = $full_path"
             );
         }
         // Определение реального MIME-типа файла
@@ -1902,7 +1918,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка поддержки MIME-типа
         if (!array_key_exists($real_mime_type, $mime_to_extension)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип файла | Получено: {$real_mime_type}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип файла | Получено: $real_mime_type"
             );
         }
         // Получение правильного расширения
@@ -1913,7 +1929,7 @@ class Work_Image implements Work_Image_Interface
             // Если расширение отсутствует, добавляем его
             $new_full_path = $normalized_path . '.' . $correct_extension;
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '{$correct_extension}' к файлу | Путь: {$normalized_path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '$correct_extension' к файлу | Путь: $normalized_path"
             );
             return $new_full_path;
         }
@@ -1923,7 +1939,7 @@ class Work_Image implements Work_Image_Interface
         // Формирование нового пути с правильным расширением
         $new_full_path = preg_replace('/\.[^.]+$/', '.' . $correct_extension, $normalized_path);
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: {$normalized_path}, Новый путь: {$new_full_path}"
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: $normalized_path, Новый путь: $new_full_path"
         );
         return $new_full_path;
     }
@@ -2017,29 +2033,27 @@ class Work_Image implements Work_Image_Interface
     {
         if (!is_dir($path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория не существует | Путь: {$path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория не существует | Путь: $path"
             );
         }
 
         if (!is_writable($path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: {$path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: $path"
             );
         }
 
         foreach (glob($path . '/*', GLOB_NOSORT) as $file) {
-            if (is_file($file)) {
-                if (!unlink($file)) {
-                    throw new RuntimeException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл | Путь: {$file}"
-                    );
-                }
+            if (is_file($file) && !unlink($file)) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл | Путь: $file"
+                );
             }
         }
 
         if (!rmdir($path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить директорию | Путь: {$path}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить директорию | Путь: $path"
             );
         }
 
@@ -2165,9 +2179,13 @@ class Work_Image implements Work_Image_Interface
         }
 
         // Создаем директории рекурсивно
-        if (!mkdir($gallery_path, 0755, true) || !mkdir($thumbnail_path, 0755, true)) {
+        if (!mkdir($gallery_path, 0755, true) || !is_dir($gallery_path) || !mkdir(
+            $thumbnail_path,
+            0755,
+            true
+        ) || !is_dir($thumbnail_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: {$directory_name}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: $directory_name"
             );
         }
 
@@ -2182,12 +2200,12 @@ class Work_Image implements Work_Image_Interface
         // Проверяем существование исходных файлов index.php
         if (!is_file($gallery_index_file)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: {$gallery_index_file}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $gallery_index_file"
             );
         }
         if (!is_file($thumbnail_index_file)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: {$thumbnail_index_file}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $thumbnail_index_file"
             );
         }
 
@@ -2195,15 +2213,15 @@ class Work_Image implements Work_Image_Interface
         $gallery_index_content = file_get_contents($gallery_index_file);
         if ($gallery_index_content === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: {$gallery_index_file}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $gallery_index_file"
             );
         }
         $gallery_index_content = strtr($gallery_index_content, [
-            'gallery/index.php' => "gallery/{$directory_name}/index.php"
+            'gallery/index.php' => "gallery/$directory_name/index.php"
         ]);
-        if (file_put_contents($gallery_path . '/index.php', $gallery_index_content) === false) {
+        if (file_put_contents($gallery_path . '/index.php', $gallery_index_content, LOCK_EX) === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: {$gallery_path}/index.php"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $gallery_path/index.php"
             );
         }
 
@@ -2211,15 +2229,15 @@ class Work_Image implements Work_Image_Interface
         $thumbnail_index_content = file_get_contents($thumbnail_index_file);
         if ($thumbnail_index_content === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: {$thumbnail_index_file}"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $thumbnail_index_file"
             );
         }
         $thumbnail_index_content = strtr($thumbnail_index_content, [
-            'thumbnail/index.php' => "thumbnail/{$directory_name}/index.php"
+            'thumbnail/index.php' => "thumbnail/$directory_name/index.php"
         ]);
-        if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content) === false) {
+        if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content, LOCK_EX) === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: {$thumbnail_path}/index.php"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $thumbnail_path/index.php"
             );
         }
 

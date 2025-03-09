@@ -35,6 +35,7 @@
 namespace PhotoRigma\Classes;
 
 // Предотвращение прямого вызова файла
+use Exception;
 use Transliterator;
 
 use function PhotoRigma\Include\log_in_file;
@@ -90,7 +91,7 @@ interface Work_Helper_Interface
      * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
      *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
      *
-     * @return string|null Очищенная строка или null, если входные данные пусты.
+     * @return string Очищенная строка или '', если входные данные пусты.
      *
      * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
      *          Убедитесь, что входные данные могут быть преобразованы в строку.
@@ -106,7 +107,7 @@ interface Work_Helper_Interface
      *      Метод очистки строк и экранирования.
      *
      */
-    public static function clean_field($field): ?string;
+    public static function clean_field(string $field): string;
 
     /**
      * @brief Преобразование размера в байты.
@@ -152,7 +153,7 @@ interface Work_Helper_Interface
      *      Публичный метод, вызывающий этот метод.
      *
      */
-    public static function return_bytes($val): int;
+    public static function return_bytes(string|int $val): int;
 
     /**
      * @brief Транслитерация строки и замена знаков пунктуации на "_".
@@ -430,7 +431,7 @@ class Work_Helper implements Work_Helper_Interface
      * @see PhotoRigma::Classes::Work::return_bytes() Этот метод вызывается через класс Work.
      *
      */
-    public static function return_bytes($val): int
+    public static function return_bytes(string|int $val): int
     {
         return self::_return_bytes_internal($val);
     }
@@ -481,7 +482,7 @@ class Work_Helper implements Work_Helper_Interface
      *      Публичный метод, вызывающий этот защищённый метод.
      *
      */
-    protected static function _return_bytes_internal($val): int
+    protected static function _return_bytes_internal(string|int $val): int
     {
         // Проверяем, что входные данные являются строкой или числом
         if (!is_string($val) && !is_numeric($val)) {
@@ -675,15 +676,19 @@ class Work_Helper implements Work_Helper_Interface
             // Используем расширение intl, если оно доступно
             $transliterator = Transliterator::create('Any-Latin; Latin-ASCII');
             if ($transliterator !== null) {
-                $string = $transliterator->transliterate($string);
+                $string = (string)$transliterator->transliterate($string);
             }
         } else {
             // Если расширение intl недоступно, используем таблицу транслитерации
-            $string = str_replace(array_keys($table), array_values($table), $string);
+            $string = str_replace(array_keys($table), $table, $string);
         }
         // Замена специальных символов на "_" и удаление лишних подчёркиваний
-        $string = preg_replace('/[^a-zA-Z0-9]/', '_', $string); // Заменяем все символы, кроме букв и цифр  на "_"
-        $string = preg_replace('/_{2,}/', '_', $string); // Заменяем множественные подчёркивания на одно
+        // Заменяем все символы, кроме букв и цифр  на "_"
+        $string = preg_replace(
+            array('/[^a-zA-Z0-9]/', '/_{2,}/'),
+            '_',
+            $string
+        ); // Заменяем множественные подчёркивания на одно
         $string = trim($string, '_'); // Удаляем подчёркивания в начале и конце строки
         // Если после обработки строка пустая, генерируем уникальную последовательность
         if (empty($string)) {
@@ -737,10 +742,11 @@ class Work_Helper implements Work_Helper_Interface
      * $html = Work_Helper::ubb('[url=https://example.com]Example[/url]');
      * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer" title="Example">Example</a>
      * @endcode
-     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
-     *
+     * @throws Exception
      * @see PhotoRigma::Classes::Work_Helper::_ubb_internal() Защищённый метод, выполняющий преобразование BBCode.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::ubb() Этот метод вызывается через класс Work.
+     *
      */
     public static function ubb(string $text): string
     {
@@ -771,6 +777,7 @@ class Work_Helper implements Work_Helper_Interface
      *          Основная логика метода вызывается через публичный метод ubb().
      *
      * @callergraph
+     * @callgraph
      *
      * @param string $text Текст с BBCode.
      *                     Рекомендуется использовать строки в кодировке UTF-8.
@@ -792,193 +799,24 @@ class Work_Helper implements Work_Helper_Interface
      * $html = self::_ubb_internal('[url=https://example.com]Example[/url]');
      * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer" title="Example">Example</a>
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::ubb()
-     *      Публичный метод, вызывающий этот защищённый метод.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Helper::_process_bbcode_recursively()
+     * *      Приватный метод для рекурсивной обработки BBCode.
+     * @see PhotoRigma::Classes::Work_Helper::ubb()
+     *      Публичный метод, вызывающий этот защищённый метод.
      */
     protected static function _ubb_internal(string $text): string
     {
         // Очищаем текст от потенциально опасных символов
-        $text = self::clean_field($text);
+        $text = self::_clean_field_internal($text);
         // Максимальная глубина рекурсии для вложенных BBCode
         $max_recursion_depth = 10;
-        // Рекурсивная функция для обработки BBCode
-        $process_recursively = function ($text, $depth) use (&$process_recursively, $max_recursion_depth) {
-            if ($depth > $max_recursion_depth) {
-                log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Превышена максимальная глубина рекурсии при обработке BBCode"
-                );
-                return $text; // Прерываем обработку
-            }
-            // Проверяем, есть ли BBCode-теги
-            if (!preg_match('/\[[a-z].*?\]/', $text)) {
-                return $text; // Нет BBCode-тегов — завершаем обработку
-            }
-            // Паттерны для преобразования BBCode в HTML
-            $patterns = [
-                // Жирный текст
-                '#\[b\](.*?)\[/b\]#si' => fn ($matches) => '<strong>' . $process_recursively(
-                    $matches[1],
-                    $depth + 1
-                ) . '</strong>',
-                // Подчёркнутый текст
-                '#\[u\](.*?)\[/u\]#si' => fn ($matches) => '<u>' . $process_recursively(
-                    $matches[1],
-                    $depth + 1
-                ) . '</u>',
-                // Курсив
-                '#\[i\](.*?)\[/i\]#si' => fn ($matches) => '<em>' . $process_recursively(
-                    $matches[1],
-                    $depth + 1
-                ) . '</em>',
-                // Простая ссылка
-                '#\[url\](.*?)\[/url\]#si' => function ($matches) {
-                    $url = self::clean_field($matches[1]);
-                    if (!filter_var($url, FILTER_VALIDATE_URL) || preg_match(
-                        '/^(javascript|data|vbscript):/i',
-                        $url
-                    ) || strlen($url) > 2000) {
-                        log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
-                        );
-                        return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
-                    }
-                    return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer" title="' . $url . '">' . $url . '</a>';
-                },
-                // Ссылка с текстом
-                '#\[url=(.*?)\](.*?)\[/url\]#si' => function ($matches) {
-                    $url = self::clean_field($matches[1]);
-                    $text = self::clean_field($matches[2]);
-                    if (!filter_var($url, FILTER_VALIDATE_URL) || preg_match(
-                        '/^(javascript|data|vbscript):/i',
-                        $url
-                    ) || strlen($url) > 2000) {
-                        log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
-                        );
-                        return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
-                    }
-                    return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer" title="' . $text . '">' . $text . '</a>';
-                },
-                // Цвет текста
-                '#\[color=(.*?)\](.*?)\[/color\]#si' => fn ($matches) => '<span style="color:' . self::clean_field(
-                    $matches[1]
-                ) . ';">' . $process_recursively($matches[2], $depth + 1) . '</span>',
-                // Размер текста
-                '#\[size=(.*?)\](.*?)\[/size\]#si' => function ($matches) {
-                    $size = (int)$matches[1];
-                    $size = max(8, min(48, $size)); // Ограничение размера от 8px до 48px
-                    return '<span style="font-size:' . $size . 'px;">' . $process_recursively(
-                        $matches[2],
-                        $depth + 1
-                    ) . '</span>';
-                },
-                // Цитирование
-                '#\[quote\](.*?)\[/quote\]#si' => fn ($matches) => '<blockquote>' . $process_recursively(
-                    $matches[1],
-                    $depth + 1
-                ) . '</blockquote>',
-                '#\[quote=(.*?)\](.*?)\[/quote\]#si' => function ($matches) {
-                    $author = self::clean_field($matches[1]); // Защита от XSS
-                    return '<blockquote><strong>' . $author . ' писал:</strong><br />' . $process_recursively(
-                        $matches[2],
-                        $depth + 1
-                    ) . '</blockquote>';
-                },
-                // Списки
-                '#\[list\](.*?)\[/list\]#si' => fn ($matches) => '<ul>' . preg_replace(
-                    '#\[\*\](.*?)#si',
-                    '<li>$1</li>',
-                    $process_recursively($matches[1], $depth + 1)
-                ) . '</ul>',
-                '#\[list=1\](.*?)\[/list\]#si' => fn ($matches) => '<ol type="1">' . preg_replace(
-                    '#\[\*\](.*?)#si',
-                    '<li>$1</li>',
-                    $process_recursively($matches[1], $depth + 1)
-                ) . '</ol>',
-                '#\[list=a\](.*?)\[/list\]#si' => fn ($matches) => '<ol type="a">' . preg_replace(
-                    '#\[\*\](.*?)#si',
-                    '<li>$1</li>',
-                    $process_recursively($matches[1], $depth + 1)
-                ) . '</ol>',
-                // Код
-                '#\[code\](.*?)\[/code\]#si' => fn ($matches) => '<pre><code>' . self::clean_field(
-                    $matches[1]
-                ) . '</code></pre>',
-                // Спойлер
-                '#\[spoiler\](.*?)\[/spoiler\]#si' => fn (
-                    $matches
-                ) => '<details><summary>Показать/скрыть</summary>' . $process_recursively(
-                    $matches[1],
-                    $depth + 1
-                ) . '</details>',
-                // Горизонтальная линия
-                '[hr]' => fn () => '<hr />', // Исправлено: строка заменена на анонимную функцию
-                // Перенос строки
-                '[br]' => fn () => '<br />', // Исправлено: строка заменена на анонимную функцию
-                // Выравнивание текста
-                '#\[left\](.*?)\[/left\]#si' => fn ($matches) => '<p style="text-align:left;">' . $process_recursively(
-                    $matches[1],
-                    $depth + 1
-                ) . '</p>',
-                '#\[center\](.*?)\[/center\]#si' => fn (
-                    $matches
-                ) => '<p style="text-align:center;">' . $process_recursively($matches[1], $depth + 1) . '</p>',
-                '#\[right\](.*?)\[/right\]#si' => fn (
-                    $matches
-                ) => '<p style="text-align:right;">' . $process_recursively($matches[1], $depth + 1) . '</p>',
-                // Изображение
-                '#\[img\](.*?)\[/img\]#si' => function ($matches) {
-                    $src = self::clean_field($matches[1]);
-                    if (!filter_var($src, FILTER_VALIDATE_URL)) {
-                        log_in_file(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL изображения | Получено: '$src'"
-                        );
-                        return ''; // Удаляем некорректные изображения
-                    }
-                    return '<img src="' . $src . '" alt="' . $src . '" />';
-                },
-            ];
-            // Применяем паттерны к тексту
-            return preg_replace_callback_array($patterns, $text);
-        };
-        // Начинаем обработку с глубины 0
-        return $process_recursively($text, 0);
-    }
 
-    /**
-     * @brief Очистка строки от HTML-тегов и специальных символов (публичная обёртка).
-     *
-     * @details Публичная обёртка для вызова защищённого метода, который удаляет HTML-теги и экранирует специальные символы,
-     *          такие как `&lt;`, `&gt;`, `&amp;`, `&quot`, `&#039;`. Используется для защиты от XSS-атак и других проблем,
-     *          связанных с некорректными данными. Вся основная логика реализована в защищённом методе _clean_field_internal().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
-     *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
-     *
-     * @return string|null Очищенная строка или null, если входные данные пусты.
-     *
-     * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
-     *          Убедитесь, что входные данные могут быть преобразованы в строку.
-     *
-     * Пример использования метода:
-     * @code
-     * $dirty_input = '&lt;script&gt;alert(&quotXSS&quot)&lt;/script&gt;';
-     * $cleaned = Work_Helper::clean_field($dirty_input);
-     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
-     * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::_clean_field_internal() Защищённый метод, выполняющий очистку.
-     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
-     *
-     */
-    public static function clean_field($field): ?string
-    {
-        return self::_clean_field_internal($field);
+        // Начинаем обработку с глубины 0
+        return self::_process_bbcode_recursively($text, 0, $max_recursion_depth);
     }
 
     /**
@@ -994,7 +832,7 @@ class Work_Helper implements Work_Helper_Interface
      * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
      *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
      *
-     * @return string|null Очищенная строка или null, если входные данные пусты.
+     * @return string Очищенная строка или '', если входные данные пусты.
      *
      * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
      *          Убедитесь, что входные данные могут быть преобразованы в строку.
@@ -1010,23 +848,260 @@ class Work_Helper implements Work_Helper_Interface
      *      Публичный метод, вызывающий этот защищённый метод.
      *
      */
-    protected static function _clean_field_internal($field): ?string
+    protected static function _clean_field_internal(string $field): string
     {
         // Если входные данные пусты, возвращаем null
-        if ($field === null || $field === '') {
-            return null;
-        }
-        // Преобразуем данные в строку, если они не являются строкой
-        if (!is_string($field)) {
-            $field = (string)$field;
+        if ($field === '') {
+            return '';
         }
         // Гарантируем корректную кодировку UTF-8
-        $field = mb_convert_encoding($field, 'UTF-8', 'auto');
         // Удаляем HTML-теги
-        $field = strip_tags($field);
+        $field = strip_tags(mb_convert_encoding($field, 'UTF-8', 'auto'));
         // Экранируем специальные символы с использованием современных флагов
-        $field = htmlspecialchars($field, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        return $field;
+        return htmlspecialchars($field, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
+
+    /**
+     * @brief Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов.
+     *
+     * @details Этот приватный метод выполняет следующие действия:
+     *          - Проверяет текущую глубину рекурсии. Если она превышает максимальную, обработка прекращается.
+     *          - Ищет BBCode-теги в тексте с помощью регулярных выражений.
+     *          - Преобразует найденные BBCode-теги в соответствующую HTML-разметку.
+     *          - Рекурсивно обрабатывает вложенные BBCode-теги, увеличивая глубину рекурсии.
+     *          Метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $text Текст для обработки.
+     *                     Должен быть строкой, содержащей BBCode-теги.
+     *                     Может содержать вложенные BBCode-теги.
+     * @param int $depth Текущая глубина рекурсии.
+     *                   Должен быть целым числом.
+     *                   Не должен превышать `$max_recursion_depth`.
+     * @param int $max_recursion_depth Максимальная глубина рекурсии.
+     *                                 Должен быть положительным целым числом.
+     *
+     * @return string Возвращает текст, преобразованный из BBCode в HTML.
+     *                Содержит HTML-разметку, полученную из BBCode-тегов.
+     *
+     * @throws Exception Выбрасывается исключение в следующих случаях:
+     *                    - Если превышена максимальная глубина рекурсии.
+     *                    - Если обнаружен некорректный URL в BBCode-тегах.
+     *
+     * @note Метод использует рекурсию для обработки вложенных BBCode-тегов.
+     *
+     * @warning Не используйте слишком большую глубину рекурсии, чтобы избежать переполнения стека.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $text = '[b]Жирный текст[/b] [url=https://example.com]Ссылка[/url]';
+     * $result = self::_process_bbcode_recursively($text, 0, 10);
+     * echo $result; // <strong>Жирный текст</strong> <a href="https://example.com" target="_blank" rel="noopener noreferrer">Ссылка</a>
+     * @endcode
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     *
+     * @see PhotoRigma::Classes::Work_Helper::_clean_field_internal() Защищённый метод, выполняющий очистку.
+     * @see PhotoRigma::Classes::Work_Helper::_ubb_internal() Защищённый метод, вызывающий наш рекурсивный приватный.
+     */
+    private static function _process_bbcode_recursively(string $text, int $depth, int $max_recursion_depth): string
+    {
+        if ($depth > $max_recursion_depth) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Превышена максимальная глубина рекурсии при обработке BBCode"
+            );
+            return $text; // Прерываем обработку
+        }
+
+        // Проверяем, есть ли BBCode-теги
+        if (!preg_match('/\[[a-z].*?\]/', $text)) {
+            return $text; // Нет BBCode-тегов — завершаем обработку
+        }
+
+        // Паттерны для преобразования BBCode в HTML
+        $patterns = [
+            // Жирный текст
+            '#\[b\](.*?)\[/b\]#si' => fn ($matches) => '<strong>' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</strong>',
+            // Подчёркнутый текст
+            '#\[u\](.*?)\[/u\]#si' => fn ($matches) => '<u>' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</u>',
+            // Курсив
+            '#\[i\](.*?)\[/i\]#si' => fn ($matches) => '<em>' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</em>',
+            // Простая ссылка
+            '#\[url\](.*?)\[/url\]#si' => function ($matches) {
+                $url = self::_clean_field_internal($matches[1]);
+                if (!filter_var($url, FILTER_VALIDATE_URL) || preg_match(
+                    '/^(javascript|data|vbscript):/i',
+                    $url
+                ) || strlen($url) > 2000) {
+                    log_in_file(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
+                    );
+                    return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
+                }
+                return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer" title="' . $url . '">' . $url . '</a>';
+            },
+            // Ссылка с текстом
+            '#\[url=(.*?)\](.*?)\[/url\]#si' => function ($matches) {
+                $url = self::_clean_field_internal($matches[1]);
+                $text = self::_clean_field_internal($matches[2]);
+                if (!filter_var($url, FILTER_VALIDATE_URL) || preg_match(
+                    '/^(javascript|data|vbscript):/i',
+                    $url
+                ) || strlen($url) > 2000) {
+                    log_in_file(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
+                    );
+                    return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
+                }
+                return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer" title="' . $text . '">' . $text . '</a>';
+            },
+            // Цвет текста
+            '#\[color=(.*?)\](.*?)\[/color\]#si' => fn ($matches) => '<span style="color:' . self::_clean_field_internal(
+                $matches[1]
+            ) . ';">' . self::_process_bbcode_recursively(
+                $matches[2],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</span>',
+            // Размер текста
+            '#\[size=(.*?)\](.*?)\[/size\]#si' => function ($matches) use ($depth, $max_recursion_depth) {
+                $size = (int)$matches[1];
+                $size = max(8, min(48, $size)); // Ограничение размера от 8px до 48px
+                return '<span style="font-size:' . $size . 'px;">' . self::_process_bbcode_recursively(
+                    $matches[2],
+                    $depth + 1,
+                    $max_recursion_depth
+                ) . '</span>';
+            },
+            // Цитирование
+            '#\[quote\](.*?)\[/quote\]#si' => fn ($matches) => '<blockquote>' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</blockquote>',
+            '#\[quote=(.*?)\](.*?)\[/quote\]#si' => function ($matches) use ($depth, $max_recursion_depth) {
+                $author = self::_clean_field_internal($matches[1]); // Защита от XSS
+                return '<blockquote><strong>' . $author . ' писал:</strong><br />' . self::_process_bbcode_recursively(
+                    $matches[2],
+                    $depth + 1,
+                    $max_recursion_depth
+                ) . '</blockquote>';
+            },
+            // Списки
+            '#\[list\](.*?)\[/list\]#si' => fn ($matches) => '<ul>' . preg_replace(
+                '#\[\*\](.*?)#s',
+                '<li>$1</li>',
+                self::_process_bbcode_recursively($matches[1], $depth + 1, $max_recursion_depth)
+            ) . '</ul>',
+            '#\[list=1\](.*?)\[/list\]#si' => fn ($matches) => '<ol type="1">' . preg_replace(
+                '#\[\*\](.*?)#s',
+                '<li>$1</li>',
+                self::_process_bbcode_recursively($matches[1], $depth + 1, $max_recursion_depth)
+            ) . '</ol>',
+            '#\[list=a\](.*?)\[/list\]#si' => fn ($matches) => '<ol type="a">' . preg_replace(
+                '#\[\*\](.*?)#s',
+                '<li>$1</li>',
+                self::_process_bbcode_recursively($matches[1], $depth + 1, $max_recursion_depth)
+            ) . '</ol>',
+            // Код
+            '#\[code\](.*?)\[/code\]#si' => fn ($matches) => '<pre><code>' . self::_clean_field_internal(
+                $matches[1]
+            ) . '</code></pre>',
+            // Спойлер
+            '#\[spoiler\](.*?)\[/spoiler\]#si' => fn (
+                $matches
+            ) => '<details><summary>Показать/скрыть</summary>' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</details>',
+            // Горизонтальная линия
+            '[hr]' => fn () => '<hr />', // Исправлено: строка заменена на анонимную функцию
+            // Перенос строки
+            '[br]' => fn () => '<br />', // Исправлено: строка заменена на анонимную функцию
+            // Выравнивание текста
+            '#\[left\](.*?)\[/left\]#si' => fn (
+                $matches
+            ) => '<p style="text-align:left;">' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</p>',
+            '#\[center\](.*?)\[/center\]#si' => fn (
+                $matches
+            ) => '<p style="text-align:center;">' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</p>',
+            '#\[right\](.*?)\[/right\]#si' => fn (
+                $matches
+            ) => '<p style="text-align:right;">' . self::_process_bbcode_recursively(
+                $matches[1],
+                $depth + 1,
+                $max_recursion_depth
+            ) . '</p>',
+            // Изображение
+            '#\[img\](.*?)\[/img\]#si' => function ($matches) {
+                $src = self::_clean_field_internal($matches[1]);
+                if (!filter_var($src, FILTER_VALIDATE_URL)) {
+                    log_in_file(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL изображения | Получено: '$src'"
+                    );
+                    return ''; // Удаляем некорректные изображения
+                }
+                return '<img src="' . $src . '" alt="' . $src . '" />';
+            },
+        ];
+
+        // Применяем паттерны к тексту
+        return preg_replace_callback_array($patterns, $text);
+    }
+
+    /**
+     * @brief Очистка строки от HTML-тегов и специальных символов (публичная обёртка).
+     *
+     * @details Публичная обёртка для вызова защищённого метода, который удаляет HTML-теги и экранирует специальные символы,
+     *          такие как `&lt;`, `&gt;`, `&amp;`, `&quot`, `&#039;`. Используется для защиты от XSS-атак и других проблем,
+     *          связанных с некорректными данными. Вся основная логика реализована в защищённом методе _clean_field_internal().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
+     *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
+     *
+     * @return string Очищенная строка или '', если входные данные пусты.
+     *
+     * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
+     *          Убедитесь, что входные данные могут быть преобразованы в строку.
+     *
+     * Пример использования метода:
+     * @code
+     * $dirty_input = '&lt;script&gt;alert(&quotXSS&quot)&lt;/script&gt;';
+     * $cleaned = Work_Helper::clean_field($dirty_input);
+     * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
+     * @endcode
+     * @see PhotoRigma::Classes::Work_Helper::_clean_field_internal() Защищённый метод, выполняющий очистку.
+     * @see PhotoRigma::Classes::Work::clean_field() Этот метод вызывается через класс Work.
+     *
+     */
+    public static function clean_field($field): string
+    {
+        return self::_clean_field_internal($field);
     }
 
     /**
@@ -1067,10 +1142,11 @@ class Work_Helper implements Work_Helper_Interface
      * // needs to be
      * // wrapped.
      * @endcode
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @throws Exception
      * @see PhotoRigma::Classes::Work::utf8_wordwrap() Этот метод вызывается через класс Work.
      *
      * @see PhotoRigma::Classes::Work_Helper::_utf8_wordwrap_internal() Защищённый метод, выполняющий разбиение строки.
+     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      */
     public static function utf8_wordwrap(string $str, int $width = 70, string $break = PHP_EOL): string
     {
@@ -1115,18 +1191,19 @@ class Work_Helper implements Work_Helper_Interface
      * // needs to be
      * // wrapped.
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
-     *      Публичный метод, вызывающий этот защищённый метод.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
+     *      Публичный метод, вызывающий этот защищённый метод.
      */
     protected static function _utf8_wordwrap_internal(string $str, int $width = 70, string $break = PHP_EOL): string
     {
         // Проверка граничных условий
         if ($width <= 0 || empty($break)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные параметры | width = {$width}, break = '{$break}'"
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные параметры | width = $width, break = '$break'"
             );
             return $str;
         }
@@ -1184,10 +1261,11 @@ class Work_Helper implements Work_Helper_Interface
      * $is_supported = Work_Helper::validate_mime_type('application/pdf');
      * var_dump($is_supported); // Выведет: false
      * @endcode
-     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
-     *
+     * @throws Exception
      * @see PhotoRigma::Classes::Work_Helper::_validate_mime_type_internal() Защищённый метод, выполняющий проверку MIME-типа.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see PhotoRigma::Classes::Work::validate_mime_type() Этот метод вызывается через класс Work.
+     *
      */
     public static function validate_mime_type(string $real_mime_type): bool
     {
@@ -1226,11 +1304,12 @@ class Work_Helper implements Work_Helper_Interface
      * $is_supported = self::_validate_mime_type_internal('application/pdf');
      * var_dump($is_supported); // Выведет: false
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
-     *      Публичный метод, вызывающий этот защищённый метод.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
+     *      Публичный метод, вызывающий этот защищённый метод.
      */
     protected static function _validate_mime_type_internal(string $real_mime_type): bool
     {
@@ -1276,7 +1355,7 @@ class Work_Helper implements Work_Helper_Interface
                 $is_mime_supported = true;
             } else {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через imagick | Получено: '{$real_mime_type}'"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через imagick | Получено: '$real_mime_type'"
                 );
             }
         }
@@ -1286,7 +1365,7 @@ class Work_Helper implements Work_Helper_Interface
                 $is_mime_supported = true;
             } else {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через gmagick | Получено: '{$real_mime_type}'"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через gmagick | Получено: '$real_mime_type'"
                 );
             }
         }
@@ -1296,7 +1375,7 @@ class Work_Helper implements Work_Helper_Interface
                 $is_mime_supported = true;
             } else {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через GD | Получено: '{$real_mime_type}'"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через GD | Получено: '$real_mime_type'"
                 );
             }
         }
