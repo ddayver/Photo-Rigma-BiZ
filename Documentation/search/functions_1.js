@@ -1,7 +1,7 @@
 var searchData=
 [
   ['add_5fcase_0',['add_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a47bd6b3290e92943a380a494a29c981e',1,'PhotoRigma::Classes::Template']]],
-  ['add_5fcase_5far_1',['add_case_ar',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a8f10b76fef019d4088ccb49439b71319',1,'PhotoRigma::Classes::Template']]],
+  ['add_5fcase_5far_1',['add_case_ar',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a9acabbaa532d9e3d00e768499020060d',1,'PhotoRigma::Classes::Template']]],
   ['add_5fif_2',['add_if',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1c5d5f804563b88462ee58e079ce528d',1,'PhotoRigma::Classes::Template']]],
   ['add_5fif_5far_3',['add_if_ar',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a0fb77f922bbe89dd81cf860b9ad05a63',1,'PhotoRigma::Classes::Template']]],
   ['add_5fnew_5fgroup_4',['add_new_group',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#acb35e2058e1fa1189a515873e76e62dd',1,'PhotoRigma\Classes\User_Interface\add_new_group()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd',1,'PhotoRigma\Classes\User\add_new_group()']]],

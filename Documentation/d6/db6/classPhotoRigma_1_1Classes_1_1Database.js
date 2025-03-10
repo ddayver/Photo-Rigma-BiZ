@@ -25,10 +25,9 @@ var classPhotoRigma_1_1Classes_1_1Database =
     [ "select", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e", null ],
     [ "truncate", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b", null ],
     [ "update", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e", null ],
-    [ "$aff_rows", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#adac4bb14b3d809b245c89d5e7388096f", null ],
-    [ "$insert_id", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7d5870c89e950451ed8a204c07c66a30", null ],
-    [ "$pdo", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5766efd703cef0e00bfc06b3f3acbe0e", null ],
-    [ "$res_query", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a4e0fa9799781410b983bb2581c2ace29", null ],
-    [ "$result", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a112ef069ddc0454086e3d1e6d8d55d07", null ],
-    [ "$txt_query", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad8a3d0085346dd9a4d7bfa9500faae20", null ]
+    [ "$aff_rows", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a54ffcc55f5606eeb40e8ac59c881d22b", null ],
+    [ "$insert_id", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0fb355e7d9e1e7d9ca0b1b83dc960f33", null ],
+    [ "$pdo", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a9db61e1721b616500bce6ed60491752a", null ],
+    [ "$res_query", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae87877e5a83ed158cdad137dd27b1ac8", null ],
+    [ "$txt_query", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a556a1b37f162e7e8b576b86c182c7309", null ]
 ];

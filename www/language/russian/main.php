@@ -41,22 +41,40 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die("HACK!");
 }
 
-/// Название языка
-$lang_name = 'Русский';
 /**
  * @defgroup LanguageRussian Языковые переменные русского языка
+ * @brief Модуль для работы с языковыми переменными на русском языке.
  */
-/*@{*/
 
 /**
- * @var $lang
+ * @var string $lang_name
+ * @brief Название языка
+ * @ingroup LanguageRussian
+ */
+$lang_name = 'Русский';
+
+/**
+ * @var string $lang_id
+ * @brief Идентификатор языка для HTML
+ * @ingroup LanguageRussian
+ */
+$lang_id = 'ru';
+
+/**
+ * @addtogroup LanguageRussian
+ * @{
+ */
+
+/**
+ * @var array $lang
  * @brief Массив языковых переменных
  */
 $lang = [];
+
 /**
  * @defgroup LanguageRussianMain Основные языковые переменные
+ * @brief Основные текстовые переменные, используемые на сайте.
  */
-/*@{*/
 $lang = [
     'main' => [
         'main' => 'Главная',
@@ -111,12 +129,11 @@ $lang = [
         'cancel' => 'Отмена',
     ],
 ];
-/*@}*/
 
 /**
  * @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
+ * @brief Текстовые переменные для навигационного меню.
  */
-/*@{*/
 $lang += [
     'menu' => [
         'name_block' => 'Панель навигации',
@@ -135,12 +152,11 @@ $lang += [
         'logout' => 'Выйти',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageRussianCategory Переменные для процедур обзора и управления разделами
+ * @defgroup LanguageRussianCategory Переменные для категорий
+ * @brief Текстовые переменные для работы с разделами и категориями.
  */
-/*@{*/
 $lang += [
     'category' => [
         'category' => 'Раздел',
@@ -169,12 +185,11 @@ $lang += [
         'no_description' => 'Без описания',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageRussianLogin Переменные для процедур регистрации и восстановления пароля
+ * @defgroup LanguageRussianLogin Переменные для регистрации и входа
+ * @brief Текстовые переменные для форм регистрации, входа и восстановления пароля.
  */
-/*@{*/
 $lang += [
     'profile' => [
         'regist' => 'Регистрация',
@@ -206,12 +221,11 @@ $lang += [
         'captcha' => 'Защита от ботов. Для регистрации решите следующий пример:',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageRussianNews Переменные для новостей сайта
+ * @defgroup LanguageRussianNews Переменные для новостей
+ * @brief Текстовые переменные для работы с новостями.
  */
-/*@{*/
 $lang += [
     'news' => [
         'news' => 'Арxив новостей',
@@ -241,12 +255,11 @@ $lang += [
         '12' => 'декабрь',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageRussianPhoto Переменные для процедур вывода, обработки, оценки изображений
+ * @defgroup LanguageRussianPhoto Переменные для фотографий
+ * @brief Текстовые переменные для работы с изображениями.
  */
-/*@{*/
 $lang += [
     'photo' => [
         'title' => 'Изображение',
@@ -273,12 +286,11 @@ $lang += [
         'complite_delete' => 'успешно удалено!',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageRussianSearch Переменные для страницы поиска
+ * @defgroup LanguageRussianSearch Переменные для поиска
+ * @brief Текстовые переменные для страницы поиска.
  */
-/*@{*/
 $lang += [
     'search' => [
         'title' => 'Введите строку для поиска и выберите диапазон',
@@ -290,12 +302,11 @@ $lang += [
         'no_find' => 'Ничего не найдено',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageRussianAdmin Переменные для Админки
+ * @defgroup LanguageRussianAdmin Переменные для админки
+ * @brief Текстовые переменные для панели администратора.
  */
-/*@{*/
 $lang += [
     'admin' => [
         'title' => 'Администрирование',
@@ -379,10 +390,13 @@ $lang += [
         'save_group' => 'Соxранить группу',
     ],
 ];
-/*@}*/
-/*@}*/
+
+/**
+ * @}
+ */
 
 return [
     'lang_name' => $lang_name,
+    'lang_id' => $lang_id,
     'lang' => $lang,
 ];

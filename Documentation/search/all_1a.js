@@ -12,7 +12,7 @@ var searchData=
   ['template_9',['Template',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html',1,'PhotoRigma::Classes']]],
   ['template_2ephp_10',['template.php',['../d6/dd6/template_8php.html',1,'']]],
   ['template_5fbest_5fuser_11',['template_best_user',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9143fed87a3064985e0b51fe5fbb4ac3',1,'PhotoRigma\Classes\Work\template_best_user()'],['../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3',1,'PhotoRigma\Classes\Work_Template_Interface\template_best_user()'],['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3',1,'PhotoRigma\Classes\Work_Template\template_best_user()']]],
-  ['template_5fcase_12',['template_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5394ad42d06394073841b5b5b775591e',1,'PhotoRigma::Classes::Template']]],
+  ['template_5fcase_12',['template_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ae37406467b40a7cfde9fd65298c93451',1,'PhotoRigma::Classes::Template']]],
   ['template_5ffile_13',['template_file',['../de/d8e/namespacePhotoRigma_1_1Action.html#aa37f49d8322221dbe6f1bffe6c3640a9',1,'PhotoRigma::Action']]],
   ['template_5fif_14',['template_if',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ad71a93e7a2b88a650bb2934d9d562b1d',1,'PhotoRigma::Classes::Template']]],
   ['template_5fobject_15',['template_object',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a92761a765e0986cb9c76c3f308300767',1,'PhotoRigma::Classes::Template']]],

@@ -2,7 +2,8 @@ var classPhotoRigma_1_1Classes_1_1Work__Template =
 [
     [ "__construct", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#aebda93a95626971f99ba32c8ac7b4f30", null ],
     [ "__get", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a96d631a05b563f91f5494b409b357cbc", null ],
-    [ "__set", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a2c4e9c30cf213decde815cdcb37e1ac8", null ],
+    [ "__isset", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a0c45daa80235f514090aa7789f5e93b3", null ],
+    [ "__set", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
     [ "_create_menu_internal", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62", null ],
     [ "_template_best_user_internal", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c", null ],
     [ "_template_stat_internal", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3", null ],
@@ -17,5 +18,5 @@ var classPhotoRigma_1_1Classes_1_1Work__Template =
     [ "$db", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75", null ],
     [ "$lang", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b", null ],
     [ "$user", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7", null ],
-    [ "NO_USER_AVATAR", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a13745a6536499d5589da42ea46b1535d", null ]
+    [ "NO_USER_AVATAR", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a20f25a327b50ff8b674931e5ab257b22", null ]
 ];

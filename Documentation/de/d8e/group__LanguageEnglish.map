@@ -1,0 +1,11 @@
+<map id="English Language Variables" name="English Language Variables">
+<area shape="rect" id="Node000001" title="Module for working with English language variables." alt="" coords="5,192,186,217"/>
+<area shape="rect" id="Node000009" href="$df/db9/group__LanguageEnglishAdmin.html" title="Text variables for the admin panel." alt="" coords="259,5,374,30"/>
+<area shape="rect" id="Node000004" href="$d9/ded/group__LanguageEnglishCategory.html" title="Text variables for category management and browsing." alt="" coords="252,55,382,79"/>
+<area shape="rect" id="Node000005" href="$d0/d17/group__LanguageEnglishLogin.html" title="Text variables for registration, login, and password recovery." alt="" coords="242,104,392,142"/>
+<area shape="rect" id="Node000002" href="$d4/d2d/group__LanguageEnglishMain.html" title="Main text variables used on the site." alt="" coords="234,167,400,191"/>
+<area shape="rect" id="Node000003" href="$d3/db1/group__LanguageEnglishMenu.html" title="Text variables for site menu items." alt="" coords="247,216,386,241"/>
+<area shape="rect" id="Node000006" href="$df/dc9/group__LanguageEnglishNews.html" title="Text variables for site news." alt="" coords="261,265,373,290"/>
+<area shape="rect" id="Node000007" href="$d7/d94/group__LanguageEnglishPhoto.html" title="Text variables for image display, processing, and rating." alt="" coords="261,315,373,339"/>
+<area shape="rect" id="Node000008" href="$da/d95/group__LanguageEnglishSearch.html" title="Text variables for the search page." alt="" coords="257,364,376,389"/>
+</map>

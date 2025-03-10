@@ -32,7 +32,7 @@
 
 namespace PhotoRigma\Language;
 
-// Предотвращение прямого вызова файла
+// Prevent direct file access
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
         date('H:i:s') . " [ERROR] | " . (filter_input(
@@ -44,22 +44,40 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die("HACK!");
 }
 
-/// Название языка
-$lang_name = 'English';
 /**
- * @defgroup LanguageEnglish Языковые переменные английского языка
+ * @defgroup LanguageEnglish English Language Variables
+ * @brief Module for working with English language variables.
  */
-/*@{*/
 
 /**
- * @var $lang
- * @brief Массив языковых переменных
+ * @var string $lang_name
+ * @brief Language name
+ * @ingroup LanguageEnglish
+ */
+$lang_name = 'English';
+
+/**
+ * @var string $lang_id
+ * @brief Language identifier for HTML
+ * @ingroup LanguageEnglish
+ */
+$lang_id = 'en';
+
+/**
+ * @addtogroup LanguageEnglish
+ * @{
+ */
+
+/**
+ * @var array $lang
+ * @brief Array of language variables
  */
 $lang = [];
+
 /**
- * @defgroup LanguageEnglishMain Основные языковые переменные
+ * @defgroup LanguageEnglishMain Main Language Variables
+ * @brief Main text variables used on the site.
  */
-/*@{*/
 $lang = [
     'main' => [
         'main' => 'Home',
@@ -114,12 +132,11 @@ $lang = [
         'cancel' => 'Cancel',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishMenu Переменные для пунктов меню сайта
+ * @defgroup LanguageEnglishMenu Menu Item Variables
+ * @brief Text variables for site menu items.
  */
-/*@{*/
 $lang += [
     'menu' => [
         'name_block' => 'Navigation Panel',
@@ -138,12 +155,11 @@ $lang += [
         'logout' => 'Log Out',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishCategory Переменные для процедур обзора и управления разделами
+ * @defgroup LanguageEnglishCategory Category Variables
+ * @brief Text variables for category management and browsing.
  */
-/*@{*/
 $lang += [
     'category' => [
         'category' => 'Category',
@@ -172,12 +188,11 @@ $lang += [
         'no_description' => 'No description',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishLogin Переменные для процедур регистрации и восстановления пароля
+ * @defgroup LanguageEnglishLogin Login and Registration Variables
+ * @brief Text variables for registration, login, and password recovery.
  */
-/*@{*/
 $lang += [
     'profile' => [
         'regist' => 'Registration',
@@ -209,12 +224,11 @@ $lang += [
         'captcha' => 'Anti-bot protection. Solve the following example to register:',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishNews Переменные для новостей сайта
+ * @defgroup LanguageEnglishNews News Variables
+ * @brief Text variables for site news.
  */
-/*@{*/
 $lang += [
     'news' => [
         'news' => 'News Archive',
@@ -244,12 +258,11 @@ $lang += [
         '12' => 'December',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishPhoto Переменные для процедур вывода, обработки, оценки изображений
+ * @defgroup LanguageEnglishPhoto Photo Variables
+ * @brief Text variables for image display, processing, and rating.
  */
-/*@{*/
 $lang += [
     'photo' => [
         'title' => 'Image',
@@ -276,12 +289,11 @@ $lang += [
         'complite_delete' => 'successfully deleted!',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishSearch Переменные для страницы поиска
+ * @defgroup LanguageEnglishSearch Search Variables
+ * @brief Text variables for the search page.
  */
-/*@{*/
 $lang += [
     'search' => [
         'title' => 'Enter a search string and select a range',
@@ -293,12 +305,11 @@ $lang += [
         'no_find' => 'Nothing found',
     ],
 ];
-/*@}*/
 
 /**
- * @defgroup LanguageEnglishAdmin Переменные для Админки
+ * @defgroup LanguageEnglishAdmin Admin Variables
+ * @brief Text variables for the admin panel.
  */
-/*@{*/
 $lang += [
     'admin' => [
         'title' => 'Administration',
@@ -382,10 +393,13 @@ $lang += [
         'save_group' => 'Save Group',
     ],
 ];
-/*@}*/
-/*@}*/
+
+/**
+ * @}
+ */
 
 return [
     'lang_name' => $lang_name,
+    'lang_id' => $lang_id,
     'lang' => $lang,
 ];

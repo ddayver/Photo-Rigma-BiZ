@@ -2,10 +2,10 @@ var classPhotoRigma_1_1Classes_1_1Work__Image =
 [
     [ "__construct", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a1538e33cc82d38ead75aba61979dbcf9", null ],
     [ "__get", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a96d631a05b563f91f5494b409b357cbc", null ],
-    [ "__set", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a2c4e9c30cf213decde815cdcb37e1ac8", null ],
+    [ "__isset", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a0c45daa80235f514090aa7789f5e93b3", null ],
+    [ "__set", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
     [ "_create_directory_internal", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae77f64cb663e7c3c35e7cbcdfd846cf2", null ],
     [ "_fix_file_extension_internal", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af7cd1deb24cdf852e9981eb4f2665ff1", null ],
-    [ "_image_attach_internal", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a0502831dd0f02e73d62586e4966e6a71", null ],
     [ "_image_resize_internal", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8", null ],
     [ "_no_photo_internal", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a2b5c40822e7f0dcc8beb47dad2660286", null ],
     [ "_remove_directory_internal", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a16c229fbb1b62aee5791544bc1086248", null ],
@@ -13,7 +13,6 @@ var classPhotoRigma_1_1Classes_1_1Work__Image =
     [ "calculate_thumbnail_size", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c", null ],
     [ "create_directory", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a935337e705b7a1b9ea422d2e04932109", null ],
     [ "fix_file_extension", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138", null ],
-    [ "image_attach", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aeabe138e0704bd8403da0faf894ad0df", null ],
     [ "image_resize", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831", null ],
     [ "no_photo", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1", null ],
     [ "process_image_resize_gd", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce", null ],
@@ -22,6 +21,10 @@ var classPhotoRigma_1_1Classes_1_1Work__Image =
     [ "remove_directory", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#aaaf358ddc8223e4a5a479f645fc43da8", null ],
     [ "size_image", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a096b7e5c3f9fb908fbb30e1adc2ac61b", null ],
     [ "$config", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ab76f8f2ac851632a23ef69df2bd99dad", null ],
-    [ "MAX_IMAGE_HEIGHT", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae70ec35c87dd3bc4270f743731d77bfa", null ],
-    [ "MAX_IMAGE_WIDTH", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a50cced8b0f9f5fb1f5fb4fcf9595e5bf", null ]
+    [ "$fh", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a015aa0bda28030cbf1a64c0afb88f958", null ],
+    [ "$file_size", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7a835ab7aded33c3c34cd60ab84ae6c7", null ],
+    [ "$mime_type", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a4d1985caafb49b059e3ca3dedfee257a", null ],
+    [ "exit", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a6733eb5f605d09eaede9845835d71c4e", null ],
+    [ "MAX_IMAGE_HEIGHT", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a09a081b5d674123079734cef551329c9", null ],
+    [ "MAX_IMAGE_WIDTH", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a030bd442b445d4a25e28afd6b37accc6", null ]
 ];

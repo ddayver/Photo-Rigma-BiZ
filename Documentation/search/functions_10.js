@@ -1,7 +1,7 @@
 var searchData=
 [
   ['template_5fbest_5fuser_0',['template_best_user',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9143fed87a3064985e0b51fe5fbb4ac3',1,'PhotoRigma\Classes\Work\template_best_user()'],['../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3',1,'PhotoRigma\Classes\Work_Template_Interface\template_best_user()'],['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3',1,'PhotoRigma\Classes\Work_Template\template_best_user()']]],
-  ['template_5fcase_1',['template_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5394ad42d06394073841b5b5b775591e',1,'PhotoRigma::Classes::Template']]],
+  ['template_5fcase_1',['template_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ae37406467b40a7cfde9fd65298c93451',1,'PhotoRigma::Classes::Template']]],
   ['template_5fif_2',['template_if',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ad71a93e7a2b88a650bb2934d9d562b1d',1,'PhotoRigma::Classes::Template']]],
   ['template_5fobject_3',['template_object',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a92761a765e0986cb9c76c3f308300767',1,'PhotoRigma::Classes::Template']]],
   ['template_5fstat_4',['template_stat',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a116ebcf799d07566a74e7e765aecc1b7',1,'PhotoRigma\Classes\Work\template_stat()'],['../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#a116ebcf799d07566a74e7e765aecc1b7',1,'PhotoRigma\Classes\Work_Template_Interface\template_stat()'],['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7',1,'PhotoRigma\Classes\Work_Template\template_stat()']]],

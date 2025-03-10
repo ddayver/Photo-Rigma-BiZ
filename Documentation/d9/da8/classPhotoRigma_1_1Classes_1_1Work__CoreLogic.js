@@ -2,6 +2,7 @@ var classPhotoRigma_1_1Classes_1_1Work__CoreLogic =
 [
     [ "__construct", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4609bb638e265ca95f28d20758fc195b", null ],
     [ "__get", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a96d631a05b563f91f5494b409b357cbc", null ],
+    [ "__isset", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a0c45daa80235f514090aa7789f5e93b3", null ],
     [ "__set", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
     [ "_category_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433", null ],
     [ "_create_photo_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179", null ],
@@ -9,6 +10,7 @@ var classPhotoRigma_1_1Classes_1_1Work__CoreLogic =
     [ "_get_languages_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35ca0976dc523b429918f6904b8fc4c1", null ],
     [ "_get_themes_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#afd6b68f8d6f551886000447b30191b6a", null ],
     [ "_news_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfae1b80256c5a8b8addb7770d8939cf", null ],
+    [ "_process_rating_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a517c04199a06dc9cc857bfe6a285d042", null ],
     [ "category", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5", null ],
     [ "create_photo", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5", null ],
     [ "del_photo", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639", null ],
@@ -16,6 +18,7 @@ var classPhotoRigma_1_1Classes_1_1Work__CoreLogic =
     [ "get_languages", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9c2ee4da4bf10547c3aff7296d707c66", null ],
     [ "get_themes", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a8d2f43c00af0c9574caa0455df82c613", null ],
     [ "news", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90", null ],
+    [ "process_rating", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35f2b39b21e9ee39a5878708e9211198", null ],
     [ "set_lang", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aaf95d95540a3e47c5905a47db3424ed9", null ],
     [ "set_user", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ac632034f4e83ba35a7b3e2124829e0c2", null ],
     [ "$config", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad", null ],

@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,69,303,28,305,33,95,74"/>
 <area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4ed2627b2e687e62000e77ada58d072f" title="Инициализация данных пользователя." alt="" coords="143,92,242,117"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="96,85,128,91,127,96,95,90"/>
-<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7b22f0ff3047191231f20b97f25833f0" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="708,43,846,67"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="708,43,846,67"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="424,17,532,23,660,34,692,38,692,43,659,39,532,28,423,22"/>
 <area shape="rect" id="Node000005" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="290,92,452,117"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="242,102,274,102,274,107,242,107"/>

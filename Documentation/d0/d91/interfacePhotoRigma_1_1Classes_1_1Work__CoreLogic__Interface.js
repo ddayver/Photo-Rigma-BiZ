@@ -5,5 +5,6 @@ var interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface =
     [ "del_photo", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639", null ],
     [ "get_languages", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66", null ],
     [ "get_themes", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613", null ],
-    [ "news", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90", null ]
+    [ "news", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90", null ],
+    [ "process_rating", "d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html#a35f2b39b21e9ee39a5878708e9211198", null ]
 ];

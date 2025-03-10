@@ -415,6 +415,49 @@ interface Work_CoreLogic_Interface
      *
      */
     public function create_photo(string $type = 'top', int $id_photo = 0): array;
+
+    /**
+     * @brief Обрабатывает добавление новой оценки и пересчитывает среднюю оценку.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Вставлять новую оценку в указанную таблицу через `$this->db->insert()`.
+     *          - Проверять успешность вставки по значению `get_last_insert_id()`.
+     *          - Пересчитывать среднюю оценку на основе всех оценок для фотографии.
+     *          Реализация должна учитывать возможность вызова через "фасад" в родительском классе
+     *          `PhotoRigma::Classes::Work::process_rating()`.
+     *
+     * @callgraph
+     *
+     * @param string $table Имя таблицы для вставки оценки.
+     *                      Должен быть строкой, соответствующей существующей таблице в базе данных.
+     * @param int $photo_id ID фотографии.
+     *                      Должен быть положительным целым числом.
+     * @param int $user_id ID пользователя.
+     *                     Должен быть положительным целым числом.
+     * @param int $rate_value Значение оценки.
+     *                        Должен быть целым числом в диапазоне допустимых значений (например, 1–5).
+     *
+     * @return float Возвращает число с плавающей точкой, представляющее среднюю оценку.
+     *               Если оценок нет, возвращается `0`.
+     *
+     * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку.
+     *                           Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
+     *
+     * @note Метод использует базу данных для вставки и выборки данных.
+     *
+     * @warning Убедитесь, что таблица существует и данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_CoreLogic();
+     * $averageRate = $object->process_rating('ratings', 123, 456, 5);
+     * echo "Средняя оценка: {$averageRate}";
+     * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::process_rating() Защищённый метод, реализующий основную логику.
+     *
+     */
+    public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float;
 }
 
 /**
@@ -2045,5 +2088,120 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         return $default_data;
+    }
+
+    /**
+     * @brief Обрабатывает добавление новой оценки и пересчитывает среднюю оценку через вызов защищённого метода.
+     *
+     * @details Этот публичный метод является редиректом, который вызывает защищённый метод
+     * `_process_rating_internal()` для выполнения следующих действий:
+     *          - Вставляет новую оценку в указанную таблицу через `$this->db->insert()`.
+     *          - Проверяет успешность вставки по значению `get_last_insert_id()`.
+     *          - Пересчитывает среднюю оценку на основе всех оценок для фотографии.
+     *          Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют.
+     *          Метод предназначен для использования вне класса и вызывается через "фасад" в родительском классе
+     *          `PhotoRigma::Classes::Work::process_rating()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $table Имя таблицы для вставки оценки.
+     *                      Должен быть строкой, соответствующей существующей таблице в базе данных.
+     * @param int $photo_id ID фотографии.
+     *                      Должен быть положительным целым числом.
+     * @param int $user_id ID пользователя.
+     *                     Должен быть положительным целым числом.
+     * @param int $rate_value Значение оценки.
+     *                        Должен быть целым числом в диапазоне допустимых значений (например, 1–5).
+     *
+     * @return float Возвращает число с плавающей точкой, представляющее среднюю оценку.
+     *               Если оценок нет, возвращается `0`.
+     *
+     * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку.
+     *                           Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
+     *
+     * @note Метод использует базу данных для вставки и выборки данных.
+     *
+     * @warning Убедитесь, что таблица существует и данные корректны перед вызовом метода.
+     *
+     * Пример внешнего вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_CoreLogic();
+     * $averageRate = $object->process_rating('ratings', 123, 456, 5);
+     * echo "Средняя оценка: {$averageRate}";
+     * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::_process_rating_internal() Защищённый метод, реализующий основную логику.
+     * @see PhotoRigma::Classes::Work::process_rating() Фасад в родительском классе, через который вызывается этот метод.
+     *
+     */
+    public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float
+    {
+        return $this->_process_rating_internal($table, $photo_id, $user_id, $rate_value);
+    }
+
+    /**
+     * @brief Добавляет новую оценку в таблицу, проверяет успешность вставки и пересчитывает среднюю оценку.
+     *
+     * @details Этот защищенный метод выполняет следующие действия:
+     *          - Вставляет новую оценку в указанную таблицу через `$this->db->insert()`.
+     *          - Проверяет успешность вставки по значению `get_last_insert_id()`.
+     *          - Пересчитывает среднюю оценку на основе всех оценок для фотографии.
+     *          Метод вызывается через публичный метод-редирект `PhotoRigma::Classes::Work_CoreLogic::process_rating()`
+     *          и предназначен для использования внутри класса или его наследников.
+     *
+     * @callergraph
+     *
+     * @param string $table Имя таблицы для вставки оценки.
+     *                      Должен быть строкой, соответствующей существующей таблице в базе данных.
+     * @param int $photo_id ID фотографии.
+     *                      Должен быть положительным целым числом.
+     * @param int $user_id ID пользователя.
+     *                     Должен быть положительным целым числом.
+     * @param int $rate_value Значение оценки.
+     *                        Должен быть целым числом в диапазоне допустимых значений (например, 1–5).
+     *
+     * @return float Возвращает число с плавающей точкой, представляющее среднюю оценку.
+     *               Если оценок нет, возвращается `0`.
+     *
+     * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку.
+     *                           Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
+     *
+     * @note Метод использует базу данных для вставки и выборки данных.
+     *
+     * @warning Убедитесь, что таблица существует и данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * $averageRate = $this->_process_rating_internal('ratings', 123, 456, 5);
+     * echo "Средняя оценка: {$averageRate}";
+     * @endcode
+     * @see PhotoRigma::Classes::Work_CoreLogic::process_rating() Публичный метод-редирект для вызова этой логики.
+     *
+     */
+    protected function _process_rating_internal(string $table, int $photo_id, int $user_id, int $rate_value): float
+    {
+        // Вставка новой оценки
+        $query_rate = [
+            ':id_foto' => $photo_id,
+            ':id_user' => $user_id,
+            ':rate' => $rate_value
+        ];
+        $this->db->insert(
+            ['`id_foto`' => ':id_foto', '`id_user`' => ':id_user', '`rate`' => ':rate'],
+            $table,
+            'ignore',
+            ['params' => $query_rate]
+        );
+        $last_insert_id = $this->db->get_last_insert_id();
+        if ($last_insert_id === 0) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить оценку. | ID фотографии: {$photo_id} в таблицу: {$table}"
+            );
+        }
+
+        // Пересчет средней оценки
+        $this->db->select('`rate`', $table, ['where' => '`id_foto` = :id_foto', 'params' => [':id_foto' => $photo_id]]);
+        $rate = $this->db->res_arr();
+        return $rate ? array_sum(array_column($rate, 'rate')) / count($rate) : 0;
     }
 }

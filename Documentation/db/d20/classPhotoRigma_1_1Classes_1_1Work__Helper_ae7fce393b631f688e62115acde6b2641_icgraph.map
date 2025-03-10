@@ -1,0 +1,51 @@
+<map id="_clean_field_internal" name="_clean_field_internal">
+<area shape="rect" id="Node000001" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="917,131,1055,156"/>
+<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ade4e103eed321eb69427d7a05f8e939a" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов." alt="" coords="676,82,869,106"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="914,129,829,110,830,104,915,124"/>
+<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="508,82,606,106"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="901,142,794,134,676,121,606,108,607,102,677,115,794,129,901,136"/>
+<area shape="rect" id="Node000006" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML&#45;тегов и специальных символов (публичная обёртка)." alt="" coords="731,248,814,273"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="950,166,798,250,795,246,947,161"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="810,70,798,63,772,60,750,62,738,67,735,72,742,80,738,83,730,73,734,63,748,57,773,55,799,58,813,65"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="660,97,606,97,606,91,660,91"/>
+<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка)." alt="" coords="325,12,368,37"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="510,78,436,51,367,32,369,27,438,46,512,73"/>
+<area shape="rect" id="Node000005" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML." alt="" coords="35,5,178,44"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="309,27,179,27,179,22,309,22"/>
+<area shape="rect" id="Node000007" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML&#45;тегов и специальных символов." alt="" coords="485,377,628,416"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="740,284,591,379,588,375,737,279"/>
+<area shape="rect" id="Node000008" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="256,61,437,114"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="546,362,533,311,511,249,479,185,459,155,435,128,421,116,424,112,439,124,463,151,483,182,516,247,538,310,551,361"/>
+<area shape="rect" id="Node000010" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="265,138,428,191"/>
+<area shape="poly" id="edge11_Node000007_Node000010" title=" " alt="" coords="540,364,500,285,471,243,435,205,419,194,422,189,439,201,475,239,504,283,545,362"/>
+<area shape="rect" id="Node000012" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="262,216,430,268"/>
+<area shape="poly" id="edge13_Node000007_Node000012" title=" " alt="" coords="527,367,486,324,435,283,415,271,418,267,439,278,490,320,531,363"/>
+<area shape="rect" id="Node000014" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="258,293,435,346"/>
+<area shape="poly" id="edge15_Node000007_Node000014" title=" " alt="" coords="487,374,419,349,421,344,489,369"/>
+<area shape="rect" id="Node000016" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="258,370,435,423"/>
+<area shape="poly" id="edge17_Node000007_Node000016" title=" " alt="" coords="469,399,435,399,435,394,469,394"/>
+<area shape="rect" id="Node000018" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="258,448,435,500"/>
+<area shape="poly" id="edge19_Node000007_Node000018" title=" " alt="" coords="489,424,421,450,419,445,487,419"/>
+<area shape="rect" id="Node000020" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="258,524,434,563"/>
+<area shape="poly" id="edge21_Node000007_Node000020" title=" " alt="" coords="532,430,491,474,438,515,417,526,415,521,436,510,487,470,528,426"/>
+<area shape="rect" id="Node000021" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5371fabe76f72396d19c1700b8c71032" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="271,587,422,625"/>
+<area shape="poly" id="edge22_Node000007_Node000021" title=" " alt="" coords="543,431,503,504,474,542,439,576,419,588,416,584,435,572,470,539,499,501,539,429"/>
+<area shape="rect" id="Node000022" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="268,649,425,688"/>
+<area shape="poly" id="edge23_Node000007_Node000022" title=" " alt="" coords="550,432,535,478,513,533,481,590,461,616,439,639,421,651,418,647,435,635,457,612,477,587,508,531,530,476,545,431"/>
+<area shape="rect" id="Node000023" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения." alt="" coords="261,712,432,751"/>
+<area shape="poly" id="edge24_Node000007_Node000023" title=" " alt="" coords="554,432,543,489,522,561,488,636,466,670,439,701,422,714,419,709,435,697,462,667,484,633,517,560,538,488,549,431"/>
+<area shape="rect" id="Node000009" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="19,68,194,107"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="240,90,194,90,194,85,240,85"/>
+<area shape="rect" id="Node000011" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="9,145,204,184"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="249,167,205,167,205,162,249,162"/>
+<area shape="rect" id="Node000013" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="6,223,207,261"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="247,245,207,245,207,239,247,239"/>
+<area shape="rect" id="Node000015" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="21,293,192,346"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="242,322,192,322,192,317,242,317"/>
+<area shape="rect" id="Node000017" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона." alt="" coords="7,377,206,416"/>
+<area shape="poly" id="edge18_Node000016_Node000017" title=" " alt="" coords="242,399,206,399,206,394,242,394"/>
+<area shape="rect" id="Node000019" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирование блока пользователя." alt="" coords="5,455,208,493"/>
+<area shape="poly" id="edge20_Node000018_Node000019" title=" " alt="" coords="242,477,208,477,208,471,242,471"/>
+<area shape="rect" id="Node000024" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aed2ddce38e1559f3014f076e11a2cbe9" title="Устанавливает языковые данные из файла и передаёт их в дочерние классы." alt="" coords="35,712,178,751"/>
+<area shape="poly" id="edge25_Node000023_Node000024" title=" " alt="" coords="245,734,179,734,179,729,245,729"/>
+</map>

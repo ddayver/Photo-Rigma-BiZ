@@ -141,6 +141,9 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <tr class="memitem:a930a20fbdd1b0e274b7e648d966516c5" id="r_a930a20fbdd1b0e274b7e648d966516c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a930a20fbdd1b0e274b7e648d966516c5">create_photo</a> (string $type='top', int $id_photo=0)</td></tr>
 <tr class="memdesc:a930a20fbdd1b0e274b7e648d966516c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Генерирует блок данных для вывода изображений различных типов.  <br /></td></tr>
 <tr class="separator:a930a20fbdd1b0e274b7e648d966516c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f2b39b21e9ee39a5878708e9211198" id="r_a35f2b39b21e9ee39a5878708e9211198"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35f2b39b21e9ee39a5878708e9211198">process_rating</a> (string $table, int $photo_id, int $user_id, int $rate_value)</td></tr>
+<tr class="memdesc:a35f2b39b21e9ee39a5878708e9211198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает добавление новой оценки и пересчитывает среднюю оценку.  <br /></td></tr>
+<tr class="separator:a35f2b39b21e9ee39a5878708e9211198"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения. </p>
@@ -158,10 +161,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">\PhotoRigma\Classes\Work_CoreLogic_Interface</a> {</div>
 <div class="line">    <span class="comment">// Реализация методов интерфейса</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00454">work_corelogic.php:455</a></div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00081">work_corelogic.php:82</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00498">work_corelogic.php:499</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00082">work_corelogic.php:83</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00081">81</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00082">82</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a4dfb943f9b750ec6e1e2924a9620c7f5" name="a4dfb943f9b750ec6e1e2924a9620c7f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4dfb943f9b750ec6e1e2924a9620c7f5">&#9670;&#160;</a></span>category()</h2>
@@ -233,7 +236,7 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <div class="line"><span class="comment">// Получение данных о пользовательском альбоме с ID = 123</span></div>
 <div class="line">$user_album_data = $object-&gt;category(123, 1);</div>
 <div class="line">print_r($user_album_data);</div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных.</dd>
 <dd>
 <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\category()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
 
@@ -321,7 +324,7 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5">Work_CoreLogic</a>.</p>
 
@@ -580,6 +583,68 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\news()</a> Публичный метод-редирект для вызова этой логики. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic</a>.</p>
+
+</div>
+</div>
+<a id="a35f2b39b21e9ee39a5878708e9211198" name="a35f2b39b21e9ee39a5878708e9211198"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f2b39b21e9ee39a5878708e9211198">&#9670;&#160;</a></span>process_rating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">process_rating </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$table</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$photo_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$rate_value</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обрабатывает добавление новой оценки и пересчитывает среднюю оценку. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Вставлять новую оценку в указанную таблицу через <code>$this-&gt;db-&gt;insert()</code>.</li>
+<li>Проверять успешность вставки по значению <code>get_last_insert_id()</code>.</li>
+<li>Пересчитывать среднюю оценку на основе всех оценок для фотографии. Реализация должна учитывать возможность вызова через "фасад" в родительском классе <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a35f2b39b21e9ee39a5878708e9211198" title="Обрабатывает добавление новой оценки и пересчитывает среднюю оценку через вызов метода из дочернего к...">PhotoRigma\Classes\Work\process_rating()</a></code>.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$table</td><td>Имя таблицы для вставки оценки. Должен быть строкой, соответствующей существующей таблице в базе данных. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>ID фотографии. Должен быть положительным целым числом. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>ID пользователя. Должен быть положительным целым числом. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$rate_value</td><td>Значение оценки. Должен быть целым числом в диапазоне допустимых значений (например, 1–5).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>float Возвращает число с плавающей точкой, представляющее среднюю оценку. Если оценок нет, возвращается <code>0</code>.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается исключение, если не удалось добавить оценку. Причина: <code>get_last_insert_id()</code> возвращает <code>0</code>, что указывает на неудачную вставку.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод использует базу данных для вставки и выборки данных.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что таблица существует и данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Work_CoreLogic();</div>
+<div class="line">$averageRate = $object-&gt;process_rating(<span class="stringliteral">&#39;ratings&#39;</span>, 123, 456, 5);</div>
+<div class="line">echo <span class="stringliteral">&quot;Средняя оценка: {$averageRate}&quot;</span>;</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35f2b39b21e9ee39a5878708e9211198" title="Обрабатывает добавление новой оценки и пересчитывает среднюю оценку через вызов защищённого метода.">PhotoRigma\Classes\Work_CoreLogic\process_rating()</a> Защищённый метод, реализующий основную логику. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35f2b39b21e9ee39a5878708e9211198">Work_CoreLogic</a>.</p>
 
 </div>
 </div>

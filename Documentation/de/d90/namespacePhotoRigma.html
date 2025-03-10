@@ -138,18 +138,18 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="separator:adb6cc58d5735a7f6aa966e727899e7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33bafce57e837bd695b691dc6001e96f" id="r_a33bafce57e837bd695b691dc6001e96f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33bafce57e837bd695b691dc6001e96f">$config</a> ['site_url'] = 'http://'</td></tr>
 <tr class="separator:a33bafce57e837bd695b691dc6001e96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1063c700c9559e7928a1dc6ef5abe15f" id="r_a1063c700c9559e7928a1dc6ef5abe15f"><td class="memItemLeft" align="right" valign="top">if((!empty( $_SERVER[ 'HTTPS']) &amp;&amp;strtolower( $_SERVER[ 'HTTPS'])==='on')||(!empty( $_SERVER[ 'HTTPS']) &amp;&amp;$_SERVER[ 'HTTPS']==='1')) elseif(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &amp;&amp;in_array(strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']), ['https', 'h2'])) elseif(!empty( $_SERVER[ 'SERVER_PORT']) &amp;&amp;$_SERVER[ 'SERVER_PORT']==443) elseif(!empty($_SERVER['REQUEST_SCHEME']) &amp;&amp;strtolower($_SERVER['REQUEST_SCHEME'])==='https')&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1063c700c9559e7928a1dc6ef5abe15f">$http_host</a> = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
-<tr class="separator:a1063c700c9559e7928a1dc6ef5abe15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaecf358b21a899308ae271e98e50573e" id="r_aaecf358b21a899308ae271e98e50573e"><td class="memItemLeft" align="right" valign="top">if(!empty( $_SERVER[ 'HTTPS']) &amp;&amp;( $_SERVER[ 'HTTPS']==='1'||strtolower( $_SERVER[ 'HTTPS'])==='on')) elseif(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &amp;&amp;in_array(strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']), ['https', 'h2'])) elseif(!empty( $_SERVER[ 'SERVER_PORT']) &amp;&amp;$_SERVER[ 'SERVER_PORT']===443) elseif(!empty($_SERVER['REQUEST_SCHEME']) &amp;&amp;strtolower($_SERVER['REQUEST_SCHEME'])==='https')&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaecf358b21a899308ae271e98e50573e">$http_host</a> = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
+<tr class="separator:aaecf358b21a899308ae271e98e50573e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a271f5d9c110c98ece73bec3151bf1a90" id="r_a271f5d9c110c98ece73bec3151bf1a90"><td class="memItemLeft" align="right" valign="top">if(! $http_host) if(! $http_host) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $http_host))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a271f5d9c110c98ece73bec3151bf1a90">$script_name</a> = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
 <tr class="separator:a271f5d9c110c98ece73bec3151bf1a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eb0a189bae04261ab41ac974f8eb757" id="r_a0eb0a189bae04261ab41ac974f8eb757"><td class="memItemLeft" align="right" valign="top">if(! $script_name) if(! $script_name) if(!preg_match('/^\/&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0eb0a189bae04261ab41ac974f8eb757">$base_path</a> [a-zA-Z0-9._\-\/] *$/', $script_name)) = dirname($script_name)</td></tr>
 <tr class="separator:a0eb0a189bae04261ab41ac974f8eb757"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a660d2d19a190c2950fc16620c92b50ac" id="r_a660d2d19a190c2950fc16620c92b50ac"><td class="memItemLeft" align="right" valign="top">if( $base_path==='.') if(substr($base_path, -1) !=='/')&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a660d2d19a190c2950fc16620c92b50ac">$config</a> ['site_url'] = $http_host . $base_path</td></tr>
-<tr class="separator:a660d2d19a190c2950fc16620c92b50ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8f0eaf2324e66fe919da857ccbe33e7" id="r_ad8f0eaf2324e66fe919da857ccbe33e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8f0eaf2324e66fe919da857ccbe33e7">$config</a> ['site_dir'] = realpath(dirname(__FILE__))</td></tr>
+<tr class="memitem:a78c432ed71c36e4285d478f21642200a" id="r_a78c432ed71c36e4285d478f21642200a"><td class="memItemLeft" align="right" valign="top">if( $base_path==='.') if(!str_ends_with($base_path, '/'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78c432ed71c36e4285d478f21642200a">$config</a> ['site_url'] = $http_host . $base_path</td></tr>
+<tr class="separator:a78c432ed71c36e4285d478f21642200a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8f0eaf2324e66fe919da857ccbe33e7" id="r_ad8f0eaf2324e66fe919da857ccbe33e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8f0eaf2324e66fe919da857ccbe33e7">$config</a> ['site_dir'] = realpath(__DIR__)</td></tr>
 <tr class="separator:ad8f0eaf2324e66fe919da857ccbe33e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8670a6066b22c9c1f73a0a973fcc89bd" id="r_a8670a6066b22c9c1f73a0a973fcc89bd"><td class="memItemLeft" align="right" valign="top">if($config['site_dir']===false) if(!is_dir( $config[ 'site_dir'])) if(!is_readable($config['site_dir'])) if(!is_writable( $config[ 'site_dir'])) if(substr($config['site_dir'], -1) !=='/')&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8670a6066b22c9c1f73a0a973fcc89bd">$config</a> ['inc_dir'] = $config['site_dir'] . 'include/'</td></tr>
-<tr class="separator:a8670a6066b22c9c1f73a0a973fcc89bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a412006ba52011f7d77e5b9f2889a184c" id="r_a412006ba52011f7d77e5b9f2889a184c"><td class="memItemLeft" align="right" valign="top">if($config['site_dir']===false) if(!is_dir( $config[ 'site_dir'])) if(!is_readable($config['site_dir'])) if(!is_writable( $config[ 'site_dir'])) if(!str_ends_with($config['site_dir'], '/'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a412006ba52011f7d77e5b9f2889a184c">$config</a> ['inc_dir'] = $config['site_dir'] . 'include/'</td></tr>
+<tr class="separator:a412006ba52011f7d77e5b9f2889a184c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2d0bc152db0769c22005f821caf29e8" id="r_ab2d0bc152db0769c22005f821caf29e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2d0bc152db0769c22005f821caf29e8">$required_directories</a></td></tr>
 <tr class="separator:ab2d0bc152db0769c22005f821caf29e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee271b7ce67fbe00b9976e6c347cbfbf" id="r_aee271b7ce67fbe00b9976e6c347cbfbf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee271b7ce67fbe00b9976e6c347cbfbf">$encoding</a> = mb_regex_encoding('UTF-8')</td></tr>
@@ -173,7 +173,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:a598ca4e71b15a1313ec95f0df1027ca5" id="r_a598ca4e71b15a1313ec95f0df1027ca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>($db, $_SESSION)</td></tr>
 <tr class="memdesc:a598ca4e71b15a1313ec95f0df1027ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">User</a>.  <br /></td></tr>
 <tr class="separator:a598ca4e71b15a1313ec95f0df1027ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba5fcdd0bc47aeaa710f5ff7cf567777" id="r_aba5fcdd0bc47aeaa710f5ff7cf567777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a> = isset($user-&gt;session['theme']) ? $user-&gt;session['theme'] : $work-&gt;config['themes']</td></tr>
+<tr class="memitem:aba5fcdd0bc47aeaa710f5ff7cf567777" id="r_aba5fcdd0bc47aeaa710f5ff7cf567777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a> = $user-&gt;session['theme'] ?? $work-&gt;config['themes']</td></tr>
 <tr class="separator:aba5fcdd0bc47aeaa710f5ff7cf567777"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3e9534005fd516d941f6a5569896e01" id="r_aa3e9534005fd516d941f6a5569896e01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3e9534005fd516d941f6a5569896e01">$template</a></td></tr>
 <tr class="memdesc:aa3e9534005fd516d941f6a5569896e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a>.  <br /></td></tr>
@@ -250,7 +250,7 @@ file index.php Этот файл подключает <a class="el" href="../../
 <dd>
 <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с шаблонами. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки и экранирования полей. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки и экранирования полей. </dd>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work\news()</a> Метод для загрузки новостей. </dd>
 <dd>
@@ -384,7 +384,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 PhotoRigma::Classes::Template_Interface Интерфейс для работы с шаблонами. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Внешняя функция, используемая для очистки данных. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Внешняя функция, используемая для очистки данных. </dd>
 <dd>
 index.php Файл, который подключает <a class="el" href="../../d6/dd6/template_8php.html" title="Класс для работы с HTML-шаблонами, включая рендеринг и подстановку данных.">template.php</a>.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения.</dd></dl>
@@ -475,7 +475,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы для работы с изображениями. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для проверки MIME-типов изображений. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для проверки MIME-типов изображений. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок. </dd>
 <dd>
@@ -512,7 +512,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы для работы с шаблонами. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab73ba07b8376dd2e1764240c73a338ea" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очистка строки от HTML-тегов и специальных символов.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверка MIME-типа файла через доступные библиотеки.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типа файла. </dd>
 <dd>
@@ -561,7 +561,7 @@ index.php Файл, который подключает <a class="el" href="../.
 </dd></dl>
 <p>\<a class="el" href="../../dc/d7a/namespacePhotoRigma_1_1Language.html">Language</a></p>
 <p>This file contains English language strings used in the core of the project. It includes texts for the interface, menus, forms, notifications, and other elements.</p>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d8e/group__LanguageEnglish.html">Языковые переменные английского языка</a> Group for English localization.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d8e/group__LanguageEnglish.html">English Language Variables</a> Group for English localization.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>This file is part of the <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> system and provides localization for the project in English.</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000015">Необходимо сделать</a></b></dt><dd>Add support for additional languages.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. All rights reserved. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<ul>
@@ -595,7 +595,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00253">253</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00646">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01682">Work\create_menu()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00583">Work_Template\create_menu()</a>, <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a> и <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00641">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../dc/d7a/work_8php_source.html#l01708">Work\create_menu()</a>, <a class="el" href="../../d9/d2a/work__template_8php_source.html#l00578">Work_Template\create_menu()</a>, <a class="el" href="../../d8/d8a/interfacePhotoRigma_1_1Classes_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a> и <a class="el" href="../../d6/dd6/template_8php_source.html#l00781">Template\page_header()</a>.</p>
 
 </div>
 </div>
@@ -613,7 +613,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <p>Генерация полного URL сайта.</p>
 <p>Формируется на основе протокола, HTTP_HOST и SCRIPT_NAME. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00207">207</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00212">212</a></p>
 
 </div>
 </div>
@@ -650,7 +650,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Имя папки для хранения аватаров пользователей (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00108">108</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00115">115</a></p>
 
 </div>
 </div>
@@ -666,13 +666,20 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 <b>Инициализатор</b><div class="fragment"><div class="line">= [</div>
-<div class="line">    <span class="stringliteral">&#39;dbtype&#39;</span> =&gt; <span class="stringliteral">&#39;mysql&#39;</span>,                       </div>
-<div class="line">    <span class="stringliteral">&#39;dbhost&#39;</span> =&gt; <span class="stringliteral">&#39;localhost&#39;</span>,                   </div>
-<div class="line">    <span class="stringliteral">&#39;dbport&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,                            </div>
-<div class="line">    <span class="stringliteral">&#39;dbsock&#39;</span> =&gt; <span class="stringliteral">&#39;/var/run/mysqld/mysqld.sock&#39;</span>, </div>
-<div class="line">    <span class="stringliteral">&#39;dbuser&#39;</span> =&gt; <span class="stringliteral">&#39;root&#39;</span>,                        </div>
-<div class="line">    <span class="stringliteral">&#39;dbpass&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,                            </div>
-<div class="line">    <span class="stringliteral">&#39;dbname&#39;</span> =&gt; <span class="stringliteral">&#39;photorigma&#39;</span>,                  </div>
+<div class="line">    <span class="stringliteral">&#39;dbtype&#39;</span> =&gt; <span class="stringliteral">&#39;mysql&#39;</span>,</div>
+<div class="line">    </div>
+<div class="line">    <span class="stringliteral">&#39;dbhost&#39;</span> =&gt; <span class="stringliteral">&#39;localhost&#39;</span>,</div>
+<div class="line">    </div>
+<div class="line">    <span class="stringliteral">&#39;dbport&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,</div>
+<div class="line">    </div>
+<div class="line">    <span class="stringliteral">&#39;dbsock&#39;</span> =&gt; <span class="stringliteral">&#39;/var/run/mysqld/mysqld.sock&#39;</span>,</div>
+<div class="line">    </div>
+<div class="line">    <span class="stringliteral">&#39;dbuser&#39;</span> =&gt; <span class="stringliteral">&#39;root&#39;</span>,</div>
+<div class="line">    </div>
+<div class="line">    <span class="stringliteral">&#39;dbpass&#39;</span> =&gt; <span class="stringliteral">&#39;&#39;</span>,</div>
+<div class="line">    </div>
+<div class="line">    <span class="stringliteral">&#39;dbname&#39;</span> =&gt; <span class="stringliteral">&#39;photorigma&#39;</span>,</div>
+<div class="line">    </div>
 <div class="line">]</div>
 </div><!-- fragment -->
 <p>Параметры подключения к базе данных. </p>
@@ -705,25 +712,25 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Имя папки для хранения фотографий (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00106">106</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00113">113</a></p>
 
 </div>
 </div>
-<a id="a8670a6066b22c9c1f73a0a973fcc89bd" name="a8670a6066b22c9c1f73a0a973fcc89bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8670a6066b22c9c1f73a0a973fcc89bd">&#9670;&#160;</a></span>$config <span class="overload">[5/9]</span></h2>
+<a id="a412006ba52011f7d77e5b9f2889a184c" name="a412006ba52011f7d77e5b9f2889a184c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a412006ba52011f7d77e5b9f2889a184c">&#9670;&#160;</a></span>$config <span class="overload">[5/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if( $config[ 'site_dir']===false) if(!is_dir($config['site_dir'])) if(!is_readable( $config[ 'site_dir'])) if(!is_writable($config['site_dir'])) if (substr( $config[ 'site_dir'], -1) !=='/') $config[ 'inc_dir'] = $config['site_dir'] . 'include/'</td>
+          <td class="memname">if( $config[ 'site_dir']===false) if(!is_dir($config['site_dir'])) if(!is_readable( $config[ 'site_dir'])) if(!is_writable($config['site_dir'])) if (!str_ends_with( $config[ 'site_dir'], '/')) $config[ 'inc_dir'] = $config['site_dir'] . 'include/'</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Определение inc_dir.</p>
 <p>Указывает путь к директории include/, содержащей вспомогательные классы и функции. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00260">260</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00265">265</a></p>
 
 </div>
 </div>
@@ -734,7 +741,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$config[ 'site_dir'] = realpath(dirname(__FILE__))</td>
+          <td class="memname">$config[ 'site_dir'] = realpath(__DIR__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -744,7 +751,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>Доступна ли директория для чтения и записи. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00229">229</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00234">234</a></p>
 
 </div>
 </div>
@@ -767,23 +774,23 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>Переменная $_SERVER['REQUEST_SCHEME']. Если ни один из способов не дал результата, используется HTTP. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00134">134</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00141">141</a></p>
 
 </div>
 </div>
-<a id="a660d2d19a190c2950fc16620c92b50ac" name="a660d2d19a190c2950fc16620c92b50ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a660d2d19a190c2950fc16620c92b50ac">&#9670;&#160;</a></span>$config <span class="overload">[8/9]</span></h2>
+<a id="a78c432ed71c36e4285d478f21642200a" name="a78c432ed71c36e4285d478f21642200a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78c432ed71c36e4285d478f21642200a">&#9670;&#160;</a></span>$config <span class="overload">[8/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if($base_path==='.') if (substr( $base_path, -1) !=='/') $config[ 'site_url'] = $http_host . $base_path</td>
+          <td class="memname">if($base_path==='.') if (!str_ends_with( $base_path, '/')) $config[ 'site_url'] = $http_host . $base_path</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00220">220</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00225">225</a></p>
 
 </div>
 </div>
@@ -801,7 +808,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p>Имя папки для хранения эскизов фотографий (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00107">107</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00114">114</a></p>
 
 </div>
 </div>
@@ -818,6 +825,8 @@ index.php Файл, который подключает <a class="el" href="../.
 </div><div class="memdoc">
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00172">172</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00161">Work\__construct()</a>.</p>
 
 </div>
 </div>
@@ -851,7 +860,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00141">141</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00545">Work\__set()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d7a/work_8php_source.html#l00527">Work\__set()</a>.</p>
 
 </div>
 </div>
@@ -873,14 +882,14 @@ index.php Файл, который подключает <a class="el" href="../.
 
 </div>
 </div>
-<a id="a1063c700c9559e7928a1dc6ef5abe15f" name="a1063c700c9559e7928a1dc6ef5abe15f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1063c700c9559e7928a1dc6ef5abe15f">&#9670;&#160;</a></span>$http_host</h2>
+<a id="aaecf358b21a899308ae271e98e50573e" name="aaecf358b21a899308ae271e98e50573e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaecf358b21a899308ae271e98e50573e">&#9670;&#160;</a></span>$http_host</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if((!empty($_SERVER['HTTPS']) &amp;&amp;strtolower($_SERVER['HTTPS'])==='on')||(!empty($_SERVER['HTTPS']) &amp;&amp; $_SERVER['HTTPS']==='1')) elseif(!empty( $_SERVER[ 'HTTP_X_FORWARDED_PROTO']) &amp;&amp;in_array(strtolower( $_SERVER[ 'HTTP_X_FORWARDED_PROTO']),[ 'https', 'h2'])) elseif(!empty($_SERVER['SERVER_PORT']) &amp;&amp; $_SERVER['SERVER_PORT']==443) elseif (!empty( $_SERVER[ 'REQUEST_SCHEME']) &amp;&amp;strtolower( $_SERVER[ 'REQUEST_SCHEME'])==='https') $http_host = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td>
+          <td class="memname">if(!empty($_SERVER['HTTPS']) &amp;&amp;($_SERVER['HTTPS']==='1'||strtolower($_SERVER['HTTPS'])==='on')) elseif(!empty( $_SERVER[ 'HTTP_X_FORWARDED_PROTO']) &amp;&amp;in_array(strtolower( $_SERVER[ 'HTTP_X_FORWARDED_PROTO']),[ 'https', 'h2'])) elseif(!empty($_SERVER['SERVER_PORT']) &amp;&amp; $_SERVER['SERVER_PORT']===443) elseif (!empty( $_SERVER[ 'REQUEST_SCHEME']) &amp;&amp;strtolower( $_SERVER[ 'REQUEST_SCHEME'])==='https') $http_host = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -890,7 +899,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>$_SERVER['SERVER_NAME'] (резервный источник). Выполняется валидация формата домена для предотвращения атак через заголовки. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00162">162</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00167">167</a></p>
 
 </div>
 </div>
@@ -915,7 +924,7 @@ index.php Файл, который подключает <a class="el" href="../.
 </div><!-- fragment --><p>Проверка существования и доступности директорий.</p>
 <p>Проверяются директории, указанные в настройках ($gallery_folder, $thumbnail_folder, $avatar_folder). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00266">266</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00271">271</a></p>
 
 </div>
 </div>
@@ -967,7 +976,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <li>$_SERVER['PHP_SELF'] (резервный источник). Выполняется валидация формата пути для предотвращения атак через заголовки. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00186">186</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00191">191</a></p>
 
 </div>
 </div>
@@ -1002,7 +1011,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd" title="Метод формирует заголовок HTML-страницы с меню, метаданными и блоками контента.">PhotoRigma\Classes\Template\page_header()</a> Метод для добавления шапки страницы. </dd>
 <dd>
-<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#add2bf9bc51d5f40d33f8c3fec6f0491e" title="Метод формирует подвал HTML-страницы с выводом копирайта, статистики, информации о пользователе и слу...">PhotoRigma\Classes\Template\page_footer()</a> Метод для добавления подвала страницы. </dd>
+<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5371fabe76f72396d19c1700b8c71032" title="Метод формирует подвал HTML-страницы с выводом копирайта, статистики, информации о пользователе и слу...">PhotoRigma\Classes\Template\page_footer()</a> Метод для добавления подвала страницы. </dd>
 <dd>
 <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a43be552f5d6b48b6335bf0b4b5ef37c0" title="Содержимое для вывода">PhotoRigma\Classes\Template\$content</a> Свойство, хранящее содержимое всей страницы. </dd>
 <dd>
@@ -1037,7 +1046,7 @@ index.php Файл, который подключает <a class="el" href="../.
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$themes_config = isset($user-&gt;session['theme']) ? $user-&gt;session['theme'] : $work-&gt;config['themes']</td>
+          <td class="memname">$themes_config = $user-&gt;session['theme'] ?? $work-&gt;config['themes']</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1062,7 +1071,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00244">244</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l00781">Template\page_header()</a>.</p>
 
 </div>
 </div>
@@ -1085,7 +1094,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00198">198</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l01494">Template\page_footer()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00900">Work\set_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l01476">Template\page_footer()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00885">Work\set_user()</a>.</p>
 
 </div>
 </div>
@@ -1114,7 +1123,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00183">183</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00970">User\add_new_user()</a>, <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#abc4c7a4c4f01e32b4540c3d03f45aeb2">User_Interface\add_new_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01383">User\edit_avatar()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01521">User\login_user()</a>, <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab6cad9b0038673d591c0dd84575bc777">User_Interface\login_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01215">User\update_user_data()</a> и <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab142b3405ddc1bbb89b84a97dc89d8dc">User_Interface\update_user_data()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d1/d1a/user_8php_source.html#l00957">User\add_new_user()</a>, <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#abc4c7a4c4f01e32b4540c3d03f45aeb2">User_Interface\add_new_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01368">User\edit_avatar()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01507">User\login_user()</a>, <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab6cad9b0038673d591c0dd84575bc777">User_Interface\login_user()</a>, <a class="el" href="../../d1/d1a/user_8php_source.html#l01200">User\update_user_data()</a> и <a class="el" href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ab142b3405ddc1bbb89b84a97dc89d8dc">User_Interface\update_user_data()</a>.</p>
 
 </div>
 </div>
@@ -1188,9 +1197,9 @@ index.php Файл, который подключает <a class="el" href="../.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00116">116</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00123">123</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l00792">Template\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l00781">Template\page_header()</a>.</p>
 
 </div>
 </div>

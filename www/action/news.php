@@ -133,10 +133,10 @@ if ($subact === 'save') {
             ];
 
             // Формируем плоский массив плейсхолдеров и ассоциативный массив для вставки
-            $insert_data = array_map(fn ($key) => "`$key`", array_keys($query_news)); // Экранируем имена столбцов
-            $placeholders = array_map(fn ($key) => ":$key", array_keys($query_news)); // Формируем плейсхолдеры
+            $insert_data = array_map(static fn ($key) => "`$key`", array_keys($query_news)); // Экранируем имена столбцов
+            $placeholders = array_map(static fn ($key) => ":$key", array_keys($query_news)); // Формируем плейсхолдеры
             $params = array_combine(
-                array_map(fn ($key) => ":$key", array_keys($query_news)), // Добавляем префикс ':' к каждому ключу
+                array_map(static fn ($key) => ":$key", array_keys($query_news)), // Добавляем префикс ':' к каждому ключу
                 $query_news // Значения остаются без изменений
             );
 
@@ -338,239 +338,237 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
         'U_SAVE_NEWS' => sprintf('%s?action=news&amp;subact=save', $work->config['site_url']),
     ]);
-} else {
-    if ($news !== false) {
-        $news = $work->news($news, 'id');
+} elseif ($news !== false) {
+    $news_data = $work->news($news, 'id');
 
-        if (!empty($news)) {
-            foreach ($news as $key => $val) {
-                $template->add_case('NEWS_BLOCK', 'LAST_NEWS');
+    if (!empty($news_data)) {
+        foreach ($news_data as $key => $val) {
+            $template->add_case('NEWS_BLOCK', 'LAST_NEWS');
+            $template->add_string_ar([
+                'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
+                    $val['name_post']
+                ),
+                'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
+                'L_TEXT_POST' => trim(nl2br(Work::ubb($val['text_post'])))
+            ], 'LAST_NEWS[0]');
+            $template->add_if_ar([
+                'USER_EXISTS' => false,
+                'EDIT_SHORT' => false,
+                'EDIT_LONG' => false
+            ], 'LAST_NEWS[' . $key . ']');
+
+            // Получение данных пользователя, добавившего новость
+            $db->select(
+                '`real_name`',
+                TBL_USERS,
+                ['where' => '`id` = :id', 'params' => [':id' => $val['user_post']]]
+            );
+            $user_data = $db->res_row();
+
+            if ($user_data) {
+                $template->add_if('USER_EXISTS', true, 'LAST_NEWS[0]');
                 $template->add_string_ar([
-                    'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
-                        $val['name_post']
+                    'L_USER_ADD' => $work->lang['main']['user_add'],
+                    'U_PROFILE_USER_POST' => sprintf(
+                        '%s?action=profile&amp;subact=profile&amp;uid=%d',
+                        $work->config['site_url'],
+                        $val['user_post']
                     ),
-                    'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
-                    'L_TEXT_POST' => trim(nl2br(Work::ubb($val['text_post'])))
+                    'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name'])
                 ], 'LAST_NEWS[0]');
-                $template->add_if_ar([
-                    'USER_EXISTS' => false,
-                    'EDIT_SHORT' => false,
-                    'EDIT_LONG' => false
-                ], 'LAST_NEWS[0]');
-
-                // Получение данных пользователя, добавившего новость
-                $db->select(
-                    '`real_name`',
-                    TBL_USERS,
-                    ['where' => '`id` = :id', 'params' => [':id' => $val['user_post']]]
-                );
-                $user_data = $db->res_row();
-
-                if ($user_data) {
-                    $template->add_if('USER_EXISTS', true, 'LAST_NEWS[0]');
-                    $template->add_string_ar([
-                        'L_USER_ADD' => $work->lang['main']['user_add'],
-                        'U_PROFILE_USER_POST' => sprintf(
-                            '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                            $work->config['site_url'],
-                            $val['user_post']
-                        ),
-                        'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name'])
-                    ], 'LAST_NEWS[0]');
-                }
-
-                // Проверка прав на редактирование
-                if ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $val['user_post'])) {
-                    $template->add_if('EDIT_LONG', true, 'LAST_NEWS[0]');
-                    $template->add_string_ar([
-                        'L_EDIT_BLOCK' => $work->lang['main']['edit_news'],
-                        'L_DELETE_BLOCK' => $work->lang['main']['delete_news'],
-                        'L_CONFIRM_DELETE_BLOCK' => $work->lang['main']['confirm_delete_news'] . ' ' . Work::clean_field(
-                            $val['name_post']
-                        ) . '?',
-                        'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
-                        'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
-                        'U_EDIT_BLOCK' => sprintf(
-                            '%s?action=news&amp;subact=edit&amp;news=%d',
-                            $work->config['site_url'],
-                            $val['id']
-                        ),
-                        'U_DELETE_BLOCK' => sprintf(
-                            '%s?action=news&subact=delete&news=%d',
-                            $work->config['site_url'],
-                            $val['id']
-                        )
-                    ], 'LAST_NEWS[0]');
-                }
             }
 
-            // Устанавливаем заголовок страницы
-            $action = '';
-            $title = $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
-                end($news)['name_post']
-            ); // TODO преобразование массива в строку
-        } else {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
-            );
+            // Проверка прав на редактирование
+            if ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $val['user_post'])) {
+                $template->add_if('EDIT_LONG', true, 'LAST_NEWS[0]');
+                $template->add_string_ar([
+                    'L_EDIT_BLOCK' => $work->lang['main']['edit_news'],
+                    'L_DELETE_BLOCK' => $work->lang['main']['delete_news'],
+                    'L_CONFIRM_DELETE_BLOCK' => $work->lang['main']['confirm_delete_news'] . ' ' . Work::clean_field(
+                        $val['name_post']
+                    ) . '?',
+                    'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
+                    'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
+                    'U_EDIT_BLOCK' => sprintf(
+                        '%s?action=news&amp;subact=edit&amp;news=%d',
+                        $work->config['site_url'],
+                        $val['id']
+                    ),
+                    'U_DELETE_BLOCK' => sprintf(
+                        '%s?action=news&subact=delete&news=%d',
+                        $work->config['site_url'],
+                        $val['id']
+                    )
+                ], 'LAST_NEWS[0]');
+            }
         }
+
+        // Устанавливаем заголовок страницы
+        $action = '';
+        $title = $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
+            end($news_data)['name_post']
+        );
     } else {
-        $template->add_case('NEWS_BLOCK', 'LIST_NEWS');
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
+        );
+    }
+} else {
+    $template->add_case('NEWS_BLOCK', 'LIST_NEWS');
 
-        // Проверка параметра 'y' (год)
-        if (!$work->check_input('_GET', 'y', [
-            'isset' => true,
-            'empty' => true,
-            'regexp' => '/^[0-9]{4}$/', // Добавлены ограничители "/"
-            'not_zero' => true
-        ])) {
-            $action = 'news';
+    // Проверка параметра 'y' (год)
+    if (!$work->check_input('_GET', 'y', [
+        'isset' => true,
+        'empty' => true,
+        'regexp' => '/^[0-9]{4}$/', // Добавлены ограничители "/"
+        'not_zero' => true
+    ])) {
+        $action = 'news';
 
-            // Получение списка годов
+        // Получение списка годов
+        $db->select(
+            'DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`',
+            TBL_NEWS,
+            [
+                'order' => 'data_last_edit ASC'
+            ]
+        );
+        $years_list = $db->res_arr();
+
+        if ($years_list === false) {
+            header('Location: ' . $work->config['site_url']);
+            exit;
+        }
+
+        foreach ($years_list as $key => $year_data) {
+            // Получение количества новостей для года
             $db->select(
-                'DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`',
+                'COUNT(*) AS `count_news`',
                 TBL_NEWS,
                 [
+                    'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
+                    'params' => [':year' => $year_data['year']]
+                ]
+            );
+            $news_count_row = $db->res_row();
+            $news_count = $news_count_row['count_news'] ?? 0;
+
+            $template->add_string_ar([
+                'L_LIST_DATA' => (string)$year_data['year'],
+                'L_LIST_COUNT' => (string)$news_count,
+                'L_LIST_TITLE' => $year_data['year'] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
+                'U_LIST_URL' => sprintf(
+                    '%s?action=news&amp;y=%d',
+                    $work->config['site_url'],
+                    $year_data['year']
+                )
+            ], 'LIST_NEWS[' . $key . ']');
+        }
+
+        $template->add_string_ar([
+            'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
+            'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years']
+        ]);
+        $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'];
+    } else {
+        $year = $_GET['y'];
+
+        // Проверка параметра 'm' (месяц)
+        if (!$work->check_input('_GET', 'm', [
+            'isset' => true,
+            'empty' => true,
+            'regexp' => '/^[0-9]{2}$/', // Добавлены ограничители "/"
+            'not_zero' => true
+        ])) {
+            $action = '';
+
+            // Получение списка месяцев
+            $db->select(
+                'DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`',
+                TBL_NEWS,
+                [
+                    'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
+                    'params' => [':year' => $year],
                     'order' => 'data_last_edit ASC'
                 ]
             );
-            $years_list = $db->res_arr();
+            $months_list = $db->res_arr();
 
-            if ($years_list === false) {
+            if ($months_list === false) {
                 header('Location: ' . $work->config['site_url']);
                 exit;
             }
 
-            foreach ($years_list as $key => $year_data) {
-                // Получение количества новостей для года
+            foreach ($months_list as $key => $month_data) {
+                // Получение количества новостей для месяца
                 $db->select(
                     'COUNT(*) AS `count_news`',
                     TBL_NEWS,
                     [
-                        'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
-                        'params' => [':year' => $year_data['year']]
+                        'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
+                        'params' => [':year' => $year, ':month' => $month_data['month']]
                     ]
                 );
                 $news_count_row = $db->res_row();
                 $news_count = $news_count_row['count_news'] ?? 0;
 
                 $template->add_string_ar([
-                    'L_LIST_DATA' => (string)$year_data['year'],
+                    'L_LIST_DATA' => $work->lang['news'][$month_data['month']],
                     'L_LIST_COUNT' => (string)$news_count,
-                    'L_LIST_TITLE' => $year_data['year'] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
+                    'L_LIST_TITLE' => $work->lang['news'][$month_data['month']] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
                     'U_LIST_URL' => sprintf(
-                        '%s?action=news&amp;y=%d',
+                        '%s?action=news&amp;y=%d&amp;m=%02d',
                         $work->config['site_url'],
-                        $year_data['year']
+                        $year,
+                        $month_data['month']
                     )
                 ], 'LIST_NEWS[' . $key . ']');
             }
 
             $template->add_string_ar([
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
-                'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years']
+                'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month']
             ]);
-            $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'];
+            $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'];
         } else {
-            $year = $_GET['y'];
+            $month = $_GET['m'];
+            $action = '';
 
-            // Проверка параметра 'm' (месяц)
-            if (!$work->check_input('_GET', 'm', [
-                'isset' => true,
-                'empty' => true,
-                'regexp' => '/^[0-9]{2}$/', // Добавлены ограничители "/"
-                'not_zero' => true
-            ])) {
-                $action = '';
+            // Получение списка новостей за выбранный месяц и год
+            $db->select(
+                '*',
+                TBL_NEWS,
+                [
+                    'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
+                    'params' => [':year' => $year, ':month' => $month],
+                    'order' => 'data_last_edit ASC'
+                ]
+            );
+            $news_list = $db->res_arr();
 
-                // Получение списка месяцев
-                $db->select(
-                    'DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`',
-                    TBL_NEWS,
-                    [
-                        'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
-                        'params' => [':year' => $year],
-                        'order' => 'data_last_edit ASC'
-                    ]
-                );
-                $months_list = $db->res_arr();
-
-                if ($months_list === false) {
-                    header('Location: ' . $work->config['site_url']);
-                    exit;
-                }
-
-                foreach ($months_list as $key => $month_data) {
-                    // Получение количества новостей для месяца
-                    $db->select(
-                        'COUNT(*) AS `count_news`',
-                        TBL_NEWS,
-                        [
-                            'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
-                            'params' => [':year' => $year, ':month' => $month_data['month']]
-                        ]
-                    );
-                    $news_count_row = $db->res_row();
-                    $news_count = $news_count_row['count_news'] ?? 0;
-
-                    $template->add_string_ar([
-                        'L_LIST_DATA' => $work->lang['news'][$month_data['month']],
-                        'L_LIST_COUNT' => (string)$news_count,
-                        'L_LIST_TITLE' => $work->lang['news'][$month_data['month']] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
-                        'U_LIST_URL' => sprintf(
-                            '%s?action=news&amp;y=%d&amp;m=%02d',
-                            $work->config['site_url'],
-                            $year,
-                            $month_data['month']
-                        )
-                    ], 'LIST_NEWS[' . $key . ']');
-                }
-
-                $template->add_string_ar([
-                    'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
-                    'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month']
-                ]);
-                $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'];
-            } else {
-                $month = $_GET['m'];
-                $action = '';
-
-                // Получение списка новостей за выбранный месяц и год
-                $db->select(
-                    '*',
-                    TBL_NEWS,
-                    [
-                        'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
-                        'params' => [':year' => $year, ':month' => $month],
-                        'order' => 'data_last_edit ASC'
-                    ]
-                );
-                $news_list = $db->res_arr();
-
-                if ($news_list === false) {
-                    header('Location: ' . $work->config['site_url']);
-                    exit;
-                }
-
-                foreach ($news_list as $key => $news_data) {
-                    $template->add_string_ar([
-                        'L_LIST_DATA' => $news_data['name_post'],
-                        'L_LIST_COUNT' => date('d.m.Y', strtotime($news_data['data_last_edit'])),
-                        'L_LIST_TITLE' => Work::utf8_wordwrap(Work::clean_field($news_data['text_post']), 100),
-                        'U_LIST_URL' => sprintf(
-                            '%s?action=news&amp;news=%d',
-                            $work->config['site_url'],
-                            $news_data['id']
-                        )
-                    ], 'LIST_NEWS[' . $key . ']');
-                }
-
-                $template->add_string_ar([
-                    'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
-                    'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years']
-                ]);
-                $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'];
+            if ($news_list === false) {
+                header('Location: ' . $work->config['site_url']);
+                exit;
             }
+
+            foreach ($news_list as $key => $news_data) {
+                $template->add_string_ar([
+                    'L_LIST_DATA' => $news_data['name_post'],
+                    'L_LIST_COUNT' => date('d.m.Y', strtotime($news_data['data_last_edit'])),
+                    'L_LIST_TITLE' => Work::utf8_wordwrap(Work::clean_field($news_data['text_post']), 100),
+                    'U_LIST_URL' => sprintf(
+                        '%s?action=news&amp;news=%d',
+                        $work->config['site_url'],
+                        $news_data['id']
+                    )
+                ], 'LIST_NEWS[' . $key . ']');
+            }
+
+            $template->add_string_ar([
+                'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
+                'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years']
+            ]);
+            $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'];
         }
     }
 }

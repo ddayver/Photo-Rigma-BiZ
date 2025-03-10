@@ -118,10 +118,12 @@ $(function(){initNavTree('dc/d71/photo_8php.html','../../'); initResizable(true)
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a660379ed56239d22cfe2383d6d3373a7" id="r_a660379ed56239d22cfe2383d6d3373a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(! $work-&gt;check_get('id', true, true, '^&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a660379ed56239d22cfe2383d6d3373a7">else</a> [0-9]+\$')|| $user-&gt;user['pic_view'] !=true)</td></tr>
-<tr class="separator:a660379ed56239d22cfe2383d6d3373a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae68c67c422f1090027f6eb6ba01b62b2" id="r_ae68c67c422f1090027f6eb6ba01b62b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ae68c67c422f1090027f6eb6ba01b62b2">$photo</a> = array()</td></tr>
+<tr class="memitem:a6828550a6d5ac9b06cda0b5c8457c5a2" id="r_a6828550a6d5ac9b06cda0b5c8457c5a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(!defined( '<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) <a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(! $user-&gt;user&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a6828550a6d5ac9b06cda0b5c8457c5a2">else</a> ['pic_view']||! $work-&gt;check_input('_GET', 'id', ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^\d+$/']))</td></tr>
+<tr class="separator:a6828550a6d5ac9b06cda0b5c8457c5a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68c67c422f1090027f6eb6ba01b62b2" id="r_ae68c67c422f1090027f6eb6ba01b62b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ae68c67c422f1090027f6eb6ba01b62b2">$photo</a> = []</td></tr>
 <tr class="separator:ae68c67c422f1090027f6eb6ba01b62b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609a127810912f3c6c54274a7159ec10" id="r_a609a127810912f3c6c54274a7159ec10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a609a127810912f3c6c54274a7159ec10">$photo_data</a> = $db-&gt;res_row()</td></tr>
+<tr class="separator:a609a127810912f3c6c54274a7159ec10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a260b5d39330466fad30be6038aab7cf5" id="r_a260b5d39330466fad30be6038aab7cf5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a260b5d39330466fad30be6038aab7cf5">$max_photo_w</a> = $work-&gt;config['max_photo_w']</td></tr>
 <tr class="separator:a260b5d39330466fad30be6038aab7cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aea0d418c7a591370b46a24d378cd21" id="r_a4aea0d418c7a591370b46a24d378cd21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a4aea0d418c7a591370b46a24d378cd21">$max_photo_h</a> = $work-&gt;config['max_photo_h']</td></tr>
@@ -132,7 +134,7 @@ $(function(){initNavTree('dc/d71/photo_8php.html','../../'); initResizable(true)
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
 <dl class="section version"><dt>Версия</dt><dd>0.2.0 </dd></dl>
 <dl class="section date"><dt>Дата</dt><dd>28/03-2012</dd></dl>
-<p>Вывод, редактировани, загрузка и обработка изображений, оценок. </p>
+<p>Вывод, редактирование, загрузка и обработка изображений, оценок. </p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../dc/d71/photo_8php_source.html">photo.php</a></p>
 </div></div><!-- contents -->
