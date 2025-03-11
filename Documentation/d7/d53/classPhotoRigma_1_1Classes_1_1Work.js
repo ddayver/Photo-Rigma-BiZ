@@ -19,7 +19,6 @@ var classPhotoRigma_1_1Classes_1_1Work =
     [ "gen_captcha", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a19ab20c34a49c9684a03c09c62f8af46", null ],
     [ "get_languages", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9c2ee4da4bf10547c3aff7296d707c66", null ],
     [ "get_themes", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8d2f43c00af0c9574caa0455df82c613", null ],
-    [ "image_attach", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aeabe138e0704bd8403da0faf894ad0df", null ],
     [ "image_resize", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af37eb2b0693905dd71dd677f86d47831", null ],
     [ "news", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#abfa7c6c53ae460403a3d0b3923e71a90", null ],
     [ "no_photo", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1", null ],

@@ -1,7 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"db/d02/namespacePhotoRigma_1_1Include.html":[5,0,0,2],
-"db/d02/namespacePhotoRigma_1_1Include.html#a1872acdf0e01ae25ad823ea5e2e59d57":[5,0,0,2,19],
 "db/d02/namespacePhotoRigma_1_1Include.html#a1c3394673d867f3293d98eb77f069fd1":[5,0,0,2,7],
 "db/d02/namespacePhotoRigma_1_1Include.html#a1ece13b85e14fdb7d1a6b62a6933fe89":[5,0,0,2,20],
 "db/d02/namespacePhotoRigma_1_1Include.html#a26ebc544afff0aad8a2ae5ca6005ed08":[5,0,0,2,17],
@@ -249,5 +247,7 @@ var NAVTREEINDEX2 =
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acd25145f48c04385645c77ce03ebd9bc":[6,0,0,0,3,16],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5e5917c41be4155a54de5e90827dc57":[5,0,0,1,3,6],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5e5917c41be4155a54de5e90827dc57":[6,0,0,0,3,6],
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f":[5,0,0,1,3,22]
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f":[5,0,0,1,3,22],
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f":[6,0,0,0,3,22],
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea":[5,0,0,1,3,14]
 };

@@ -1,7 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f":[6,0,0,0,3,22],
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea":[5,0,0,1,3,14],
 "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea":[6,0,0,0,3,14],
 "dir_2e361893faae7e8ceea4950fc659485a.html":[7,0,0],
 "dir_309281e1aed42fca65bd89ad06cb4ebc.html":[7,0,2],

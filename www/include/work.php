@@ -58,7 +58,9 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 use Exception;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\NoReturn;
 use PDOException;
+use Random\RandomException;
 use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
@@ -232,7 +234,7 @@ class Work
      * @details Этот метод является делегатом (метод-редирект) для метода encodename() класса Work_Helper.
      *          Метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_".
      *          Используется для создания "безопасных" имен файлов или URL.
-     *          Если входная строка пустая, она возвращается без обработки.
+     *          Если входная строка пустая, то она возвращается без обработки.
      *          Если транслитерация невозможна (например, расширение intl недоступно), используется резервная таблица.
      *
      * @callgraph
@@ -313,11 +315,12 @@ class Work
      * $html = \PhotoRigma\Classes\Work::ubb('[invalid]Invalid tag[/invalid]');
      * echo $html; // Выведет: [invalid]Invalid tag[/invalid]
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::ubb()
-     *      Публичный метод в классе Work_Helper.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Helper::ubb()
+     *      Публичный метод в классе Work_Helper.
      */
     public static function ubb(string $text): string
     {
@@ -370,11 +373,12 @@ class Work
      * $wrapped = \PhotoRigma\Classes\Work::utf8_wordwrap('Empty break', 10, '');
      * echo $wrapped; // Выведет: Empty break
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
-     *      Публичный метод в классе Work_Helper.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
+     *      Публичный метод в классе Work_Helper.
      */
     public static function utf8_wordwrap(string $str, int $width = 70, string $break = PHP_EOL): string
     {
@@ -416,11 +420,12 @@ class Work
      * $is_supported = \PhotoRigma\Classes\Work::validate_mime_type('invalid/mime');
      * var_dump($is_supported); // Выведет: false
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
-     *      Публичный метод, вызывающий этот защищённый метод.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
+     *      Публичный метод, вызывающий этот защищённый метод.
      */
     public static function validate_mime_type(string $real_mime_type): bool
     {
@@ -827,7 +832,7 @@ class Work
      * @param mixed $field Строка или данные, которые могут быть преобразованы в строку.
      *                     Если входные данные пусты (null или пустая строка), метод вернёт null.
      *
-     * @return string|null Очищенная строка или null, если входные данные пусты.
+     * @return string Очищенная строка или null, если входные данные пусты.
      *
      * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
      *          Убедитесь, что входные данные могут быть преобразованы в строку.
@@ -914,9 +919,7 @@ class Work
      *
      * @return bool True, если данные прошли проверку, иначе False.
      *
-     * @see PhotoRigma::Classes::Work_Security::check_input()
-     *      Метод, который проверяет входные данные.
-     *
+     * @throws Exception
      * @deprecated Этот метод устарел. Используйте Work::check_input() вместо него.
      *
      * Пример использования:
@@ -930,6 +933,9 @@ class Work
      *     echo "Данные не прошли проверку.";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work_Security::check_input()
+     *      Метод, который проверяет входные данные.
+     *
      */
     public function check_post(
         string $field,
@@ -992,13 +998,14 @@ class Work
      *     echo "Проверка пройдена!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work::validate_mime_type()
-     *      Метод для проверки поддерживаемых MIME-типов.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      * @see PhotoRigma::Classes::Work_Security::check_input()
      *      Реализация метода внутри класса Work_Security.
+     * @see PhotoRigma::Classes::Work::validate_mime_type()
+     *      Метод для проверки поддерживаемых MIME-типов.
      */
     public function check_input(string $source_name, string $field, array $options = []): bool
     {
@@ -1031,9 +1038,7 @@ class Work
      *
      * @return bool True, если данные прошли проверку, иначе False.
      *
-     * @see PhotoRigma::Classes::Work_Security::check_input()
-     *      Метод, который проверяет входные данные.
-     *
+     * @throws Exception
      * @deprecated Этот метод устарел. Используйте Work::check_input() вместо него.
      *
      * Пример использования:
@@ -1047,6 +1052,9 @@ class Work
      *     echo "Данные не прошли проверку.";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work_Security::check_input()
+     *      Метод, который проверяет входные данные.
+     *
      */
     public function check_get(
         string $field,
@@ -1089,9 +1097,7 @@ class Work
      *
      * @return bool True, если данные прошли проверку, иначе False.
      *
-     * @see PhotoRigma::Classes::Work_Security::check_input()
-     *      Метод, который проверяет входные данные.
-     *
+     * @throws Exception
      * @deprecated Этот метод устарел. Используйте Work::check_input() вместо него.
      *
      * Пример использования:
@@ -1105,6 +1111,9 @@ class Work
      *     echo "Данные не прошли проверку.";
      * }
      * @endcode
+     * @see PhotoRigma::Classes::Work_Security::check_input()
+     *      Метод, который проверяет входные данные.
+     *
      */
     public function check_session(
         string $field,
@@ -1146,11 +1155,12 @@ class Work
      *     echo "Обнаружен подозрительный URL!";
      * }
      * @endcode
+     * @throws Exception
+     * @see PhotoRigma::Classes::Work_Security::url_check()
+     *      Реализация метода внутри класса Work_Security.
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Security::url_check()
-     *      Реализация метода внутри класса Work_Security.
      */
     public function url_check(): bool
     {
@@ -1195,11 +1205,12 @@ class Work
      *     echo "Поле прошло проверку!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Security::check_field()
-     *      Реализация метода внутри класса Work_Security.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Security::check_field()
+     *      Реализация метода внутри класса Work_Security.
      */
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
@@ -1231,6 +1242,7 @@ class Work
      * echo "Вопрос: {$captcha['question']}, Ответ: {$captcha['answer']}";
      * // Пример вывода: Вопрос: 2 x (3 + 4), Ответ: 14
      * @endcode
+     * @throws RandomException
      * @see PhotoRigma::Classes::Work_Security::gen_captcha()
      *      Реализация метода внутри класса Work_Security.
      *
@@ -1269,11 +1281,12 @@ class Work
      * $filteredEmail = $work->filt_email('example@example.com');
      * echo $filteredEmail; // Выведет: example[at]example[dot]com
      * @endcode
-     * @see PhotoRigma::Classes::Work_Security::filt_email()
-     *      Реализация метода внутри класса Work_Security.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
+     * @see PhotoRigma::Classes::Work_Security::filt_email()
+     *      Реализация метода внутри класса Work_Security.
      */
     public function filt_email(string $email): string
     {
@@ -1359,6 +1372,7 @@ class Work
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных или удалении файлов.
      *      Пример сообщения:
      *          Не удалось найти изображение | Переменная $photo_id = [значение]
+     * @throws Exception
      *
      * @warning Метод чувствителен к правам доступа при удалении файлов. Убедитесь, что скрипт имеет необходимые права на запись и чтение.
      * @warning Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор изображения.
@@ -1471,6 +1485,7 @@ class Work
      * @throws RuntimeException Если:
      *                           - Директория `/language/` недоступна или не существует.
      *                           - Ни один язык не найден в указанной директории.
+     * @throws Exception
      *
      * @warning Метод чувствителен к структуре директории `/language/` и содержимому файла `main.php`.
      *          Убедитесь, что файл `main.php` содержит корректную переменную `$lang_name`.
@@ -1511,7 +1526,7 @@ class Work
      *
      * @return array Массив строк с именами доступных тем. Если темы не найдены, возвращается пустой массив.
      *
-     * @throws RuntimeException Если:
+     * @throws RuntimeException|Exception Если:
      *                           - Директория `/themes/` не существует или недоступна для чтения.
      *                           - Ни одна тема не найдена в указанной директории.
      *
@@ -1581,7 +1596,7 @@ class Work
      *                                  Пример сообщения: "Некорректный идентификатор фотографии | Значение: {$id_photo}".
      * @throws PDOException            Если произошла ошибка при выборке данных из базы данных.
      *                                  Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}".
-     * @throws RuntimeException         Если файл изображения недоступен или не существует.
+     * @throws RuntimeException|Exception         Если файл изображения недоступен или не существует.
      *
      * @note Используются следующие константы:
      *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
@@ -1734,6 +1749,7 @@ class Work
      *                 - 'U_AVATAR': URL аватара (или дефолтного аватара, если файл недоступен или некорректен).
      *
      * @throws RuntimeException Если объект пользователя не установлен или данные некорректны.
+     * @throws RandomException
      *
      * @warning Убедитесь, что объект пользователя (User) корректно установлен перед вызовом метода.
      *          Также убедитесь, что конфигурация аватаров ($work->config['avatar_folder']) настроена правильно.
@@ -1924,7 +1940,7 @@ class Work
      * @return bool True, если операция выполнена успешно, иначе False.
      *
      * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws RuntimeException|Exception Если возникли ошибки при проверке файлов, директорий или размеров изображения.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w`, `temp_photo_h`).
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
@@ -2023,15 +2039,16 @@ class Work
      * $work = new \PhotoRigma\Classes\Work();
      * $work->image_attach('/path/to/image.jpg', 'image.jpg');
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::image_attach()
-     *      Публичный метод-редирект для вызова этой логики.
+     * @throws Exception
      * @see PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      * @see PhotoRigma::Classes::Work::clean_field()
      *      Публичный метод для очистки строк от HTML-тегов и специальных символов.
      *
+     * @see PhotoRigma::Classes::Work_Image::image_attach()
+     *      Публичный метод-редирект для вызова этой логики.
      */
-    public function image_attach(string $full_path, string $name_file): void
+    #[NoReturn] public function image_attach(string $full_path, string $name_file): void
     {
         $this->image->image_attach($full_path, $name_file);
     }
@@ -2058,6 +2075,7 @@ class Work
      *
      * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не существует.
      * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
+     * @throws Exception
      *
      * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
      *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
