@@ -106,27 +106,54 @@ $(function(){initNavTree('d6/d25/category_8php.html','../../'); initResizable(tr
 </div><!--header-->
 <div class="contents">
 
-<p>Обзор и управление разделами.  
+<p>Обзор и управление разделами галереи.  
 <a href="#details">Подробнее...</a></p>
 
 <p><a href="../../d6/d25/category_8php_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">PhotoRigma\Action</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a9398887dd812cf137a4db57a6b586bb8" id="r_a9398887dd812cf137a4db57a6b586bb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(! $work-&gt;check_input('_GET', 'cat',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a9398887dd812cf137a4db57a6b586bb8">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[a-zA-Z0-9_-]+$/']))</td></tr>
+<tr class="memitem:a9398887dd812cf137a4db57a6b586bb8" id="r_a9398887dd812cf137a4db57a6b586bb8"><td class="memItemLeft" align="right" valign="top">if(! $work-&gt;check_input('_GET', 'cat',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a9398887dd812cf137a4db57a6b586bb8">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[a-zA-Z0-9_-]+$/']))</td></tr>
 <tr class="separator:a9398887dd812cf137a4db57a6b586bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe91d823cfa7d5523353c881c2180b15" id="r_afe91d823cfa7d5523353c881c2180b15"><td class="memItemLeft" align="right" valign="top">if( $cat==='user'||$cat===0) elseif($work-&gt;check_input('_GET', 'cat',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#afe91d823cfa7d5523353c881c2180b15">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]+$/'])) elseif( $user-&gt;user[ 'cat_moderate'] &amp;&amp;$work-&gt;check_input( '_GET', 'subact',[ 'isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp;$_GET[ 'subact']==='add') elseif($user-&gt;user['cat_moderate'] &amp;&amp; $work-&gt;check_input('_GET', 'subact', ['isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp; $_GET['subact']==='saveadd')</td></tr>
+<tr class="separator:afe91d823cfa7d5523353c881c2180b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc71bc53d6775d8a344893d5ec10f187" id="r_afc71bc53d6775d8a344893d5ec10f187"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#afc71bc53d6775d8a344893d5ec10f187">$categories</a> = $db-&gt;res_arr()</td></tr>
+<tr class="separator:afc71bc53d6775d8a344893d5ec10f187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Обзор и управление разделами. </p>
+<div class="textblock"><p>Обзор и управление разделами галереи. </p>
+<p>Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею. Основные функции:</p><ul>
+<li>Отображение списка категорий и фотографий в них.</li>
+<li>Редактирование названия и описания категорий.</li>
+<li>Удаление категорий и связанных с ними фотографий.</li>
+<li>Добавление новых категорий.</li>
+<li>Проверка прав доступа пользователя на выполнение операций.</li>
+</ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Отображение списка категорий и фотографий.</li>
+<li>Редактирование данных категорий.</li>
+<li>Удаление категорий и связанных фотографий.</li>
+<li>Добавление новых категорий.</li>
+<li>Проверка прав доступа пользователя.</li>
+</ul>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если возникают ошибки при выполнении операций с базой данных или файловой системой. Пример сообщения: "Не удалось получить данные категории | ID: $cat".</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.2.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>28/03-2012</dd></dl>
-<p>Обзор, редактирование, удаление и добавление разделов в галерею. </p>
+<dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-03-12 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d25/category_8php_source.html">category.php</a></p>
 </div></div><!-- contents -->

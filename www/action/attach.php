@@ -4,18 +4,6 @@
  * @file        action/attach.php
  * @brief       Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей.
  *
- * @throws      Exception Если не удалось определить путь к фото или файл недоступен.
- *              Пример сообщения: "Не удалось определить путь к фото | Путь: {$photo_data['full_path']}".
- * @throws      RuntimeException Если возникла ошибка при создании миниатюры.
- *              Пример сообщения: "Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}".
- * @throws      RuntimeException Если пользователь не имеет прав на просмотр изображений.
- *              Пример сообщения: "Пользователь не имеет прав на просмотр изображений | ID: {$user->user['id']}".
- *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-02-23
- * @namespace   PhotoRigma\Action
- *
  * @details     Файл используется для вывода фото из галереи по идентификатору, переданному через параметр `$_GET['foto']`.
  *              Реализованы следующие особенности:
  *              - Проверка прав пользователя на просмотр изображений (`$user->user['pic_view']`).
@@ -29,6 +17,18 @@
  * - Проверка прав доступа и безопасности пути к файлу.
  * - Создание миниатюр изображений.
  * - Логирование ошибок и подозрительных действий.
+ *
+ * @throws      Exception Если не удалось определить путь к фото или файл недоступен.
+ *              Пример сообщения: "Не удалось определить путь к фото | Путь: {$photo_data['full_path']}".
+ * @throws      RuntimeException Если возникла ошибка при создании миниатюры.
+ *              Пример сообщения: "Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}".
+ * @throws      RuntimeException Если пользователь не имеет прав на просмотр изображений.
+ *              Пример сообщения: "Пользователь не имеет прав на просмотр изображений | ID: {$user->user['id']}".
+ *
+ * @author      Dark Dayver
+ * @version     0.4.0
+ * @date        2025-03-12
+ * @namespace   PhotoRigma\Action
  *
  * @see         PhotoRigma::Classes::Work Класс используется для выполнения различных операций.
  * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
@@ -78,7 +78,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 // Проверка параметра 'foto'
-if ($user->user['pic_view'] == false || !$work->check_input('_GET', 'foto', [
+if ($user->user['pic_view'] || !$work->check_input('_GET', 'foto', [
         'isset' => true,
         'empty' => true,
         'regexp' => '/^[0-9]+$/',
@@ -126,7 +126,7 @@ if (empty($photo_data['full_path'])) {
     } else {
         // Ограничиваем директорию папкой галереи
         $allowed_directory = realpath($work->config['site_dir'] . $work->config['gallery_folder']);
-        if ($allowed_directory === false || strpos($real_path, $allowed_directory) !== 0) {
+        if ($allowed_directory === false || !str_starts_with($real_path, $allowed_directory)) {
             log_in_file(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к запрещенному файлу | Путь: {$photo_data['full_path']}"
             );
@@ -138,7 +138,7 @@ if (empty($photo_data['full_path'])) {
             finfo_close($finfo);
             if (!Work::validate_mime_type($real_mime_type)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип файла | MIME: {$real_mime_type}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип файла | MIME: $real_mime_type"
                 );
                 $photo_data = $work->no_photo();
             }
@@ -163,7 +163,7 @@ if ($work->check_input('_GET', 'thumbnail', [
         'isset' => true,
         'empty' => true,
         'regexp' => '/^[0-1]+$/'
-    ]) && $_GET['thumbnail'] == '1') {
+    ]) && $_GET['thumbnail'] === '1') {
     if ($work->image_resize($photo_data['full_path'], $photo_data['thumbnail_path'])) {
         $work->image_attach($photo_data['thumbnail_path'], $photo_data['file']);
     } else {

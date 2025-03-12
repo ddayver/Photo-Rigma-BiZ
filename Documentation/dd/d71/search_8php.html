@@ -113,12 +113,14 @@ $(function(){initNavTree('dd/d71/search_8php.html','../../'); initResizable(true
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">PhotoRigma\Action</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a4824501816427469f491b9d503d55a65" id="r_a4824501816427469f491b9d503d55a65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>($work-&gt;check_post('search_main_text', true, true) &amp;&amp;! $work-&gt;check_post('search_text', true, true))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a4824501816427469f491b9d503d55a65">$check</a> = array()</td></tr>
+<tr class="memitem:a4824501816427469f491b9d503d55a65" id="r_a4824501816427469f491b9d503d55a65"><td class="memItemLeft" align="right" valign="top">if($work-&gt;check_post('search_main_text', true, true) &amp;&amp;! $work-&gt;check_post('search_text', true, true))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a4824501816427469f491b9d503d55a65">$check</a> = []</td></tr>
 <tr class="separator:a4824501816427469f491b9d503d55a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc37ea3f2d08f383befa5b8ca3e59274" id="r_acc37ea3f2d08f383befa5b8ca3e59274"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#acc37ea3f2d08f383befa5b8ca3e59274">$search</a> ['user'] = false</td></tr>
 <tr class="separator:acc37ea3f2d08f383befa5b8ca3e59274"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,15 +130,27 @@ $(function(){initNavTree('dd/d71/search_8php.html','../../'); initResizable(true
 <tr class="separator:a822e4ae1d0c6931019e36b17183e8d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad259fc1b401bb0e777ffd0da56f6e172" id="r_ad259fc1b401bb0e777ffd0da56f6e172"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ad259fc1b401bb0e777ffd0da56f6e172">$search</a> ['photo'] = false</td></tr>
 <tr class="separator:ad259fc1b401bb0e777ffd0da56f6e172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9c58f8f4cb90a5031f5480aa96ea54b" id="r_af9c58f8f4cb90a5031f5480aa96ea54b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#af9c58f8f4cb90a5031f5480aa96ea54b">$find_data</a> = array()</td></tr>
-<tr class="separator:af9c58f8f4cb90a5031f5480aa96ea54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Поиск по сайту. </p>
+<p>Этот файл отвечает за обработку поисковых запросов на сайте. Основные функции включают:</p><ul>
+<li>Поиск по пользователям, категориям, новостям и фотографиям.</li>
+<li>Фильтрация результатов поиска в зависимости от выбранных параметров.</li>
+<li>Отображение результатов поиска в удобном формате.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Поиск по пользователям (по имени).</li>
+<li>Поиск по категориям (по названию и описанию).</li>
+<li>Поиск по новостям (по заголовку и тексту).</li>
+<li>Поиск по фотографиям (по названию и описанию).</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.2.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>28/03-2012</dd></dl>
-<p>Обработка поисковых запросов. </p>
+<dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2015-03-12 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../dd/d71/search_8php_source.html">search.php</a></p>
 </div></div><!-- contents -->

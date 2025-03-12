@@ -189,25 +189,19 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>\Action</p>
-<p>Файл используется для вывода фото из галереи по идентификатору, переданному через параметр &lsquo;$_GET['foto&rsquo;]<code>. Реализованы следующие особенности:</p><ul>
-<li>Проверка прав пользователя на просмотр изображений (</li>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения вспомогательных операций. </dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для управления пользователями. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий. Используются подготовленные выражения для защиты от SQL-инъекций.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
-<p></code>$user-&gt;user['pic_view']<code>).</p><ul>
-<li>Ограничение доступа к файлам только внутри директории галереи.</li>
-<li>Проверка MIME-типа файла для предотвращения несанкционированного доступа.</li>
-<li>Поддержка создания миниатюр при наличии параметра</li>
-</ul>
-<p></code>$_GET['thumbnail']`.</p><ul>
-<li>Возврат данных об отсутствующем изображении, если файл недоступен.</li>
-</ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
-<ul>
-<li>Получение данных о фотографии из базы данных.</li>
-<li>Проверка прав доступа и безопасности пути к файлу.</li>
-<li>Создание миниатюр изображений.</li>
-<li>Логирование ошибок и подозрительных действий.</li>
-</ul>
+</dd></dl>
+<p>\Action</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения различных операций. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
@@ -221,21 +215,19 @@ file index.php Этот файл подключает <a class="el" href="../../
 </ul>
 </dd></dl>
 <p>\Action</p>
-<p>Этот файл отвечает за формирование главной страницы сайта. Основная логика включает:</p><ul>
-<li>Загрузку последних новостей (количество определяется конфигурацией <code>last_news</code>).</li>
-<li>Проверку прав пользователя на просмотр новостей (&lsquo;$user-&gt;user['news_view&rsquo;]<code>).</code></li>
-<li><code>Обработку ошибок при получении данных из базы данных.</code></li>
-<li><code>Формирование ссылок для редактирования или удаления новостей (если пользователь имеет соответствующие права).</code></li>
-<li><code>Использование всех ресурсов из пространства имён</code><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes`.</li>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Database Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Template Класс для работы с шаблонами. </dd>
+<dd>
+<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\User Класс для работы с пользователями. </dd>
+<dd>
+<a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes\Work Класс для выполнения различных операций.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа к данным. Используются подготовленные выражения для защиты от SQL-инъекций.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2012 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
-<ul>
-<li>Загрузка последних новостей.</li>
-<li>Проверка прав пользователя на просмотр новостей.</li>
-<li>Формирование ссылок для редактирования или удаления новостей.</li>
-<li>Логирование ошибок и подозрительных действий.</li>
-</ul>
+</dd></dl>
+<p>\Action</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, содержащий основные методы для работы с данными. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
@@ -255,14 +247,6 @@ file index.php Этот файл подключает <a class="el" href="../../
 </ul>
 </dd></dl>
 <p>\Action</p>
-<p>Файл реализует функциональность работы с новостями, включая:</p><ul>
-<li>Добавление новой новости (при наличии прав &lsquo;$user-&gt;user['news_add&rsquo;]<code>).</code></li>
-<li><code>Редактирование существующей новости (при наличии прав</code>$user-&gt;user['news_moderate']<code>или если пользователь является автором новости).</code></li>
-<li><code>Удаление новости (при наличии прав</code>$user-&gt;user['news_moderate']` или если пользователь является автором новости).</li>
-<li>Отображение списка новостей с фильтрацией по годам и месяцам.</li>
-<li>Защита от CSRF-атак при добавлении и редактировании новостей.</li>
-<li>Логирование ошибок и подозрительных действий.</li>
-</ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения вспомогательных операций. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
@@ -278,14 +262,21 @@ file index.php Этот файл подключает <a class="el" href="../../
 </ul>
 </dd></dl>
 <p>\Action</p>
-<p>Файл реализует функциональность работы с пользователями, включая:</p><ul>
-<li>Вход и выход пользователя.</li>
-<li>Регистрацию нового пользователя.</li>
-<li>Редактирование профиля (включая изменение аватара, языка и темы).</li>
-<li>Просмотр профиля другого пользователя.</li>
-<li>Защиту от CSRF-атак при изменении данных.</li>
-<li>Логирование ошибок и подозрительных действий.</li>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс, содержащий основные методы для работы с данными. </dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс по работе с пользователями и хранению данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для управления пользователями. </dd>
+<dd>
+<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с шаблонами. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий. Используются подготовленные выражения для защиты от SQL-инъекций.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2012 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
+</dd></dl>
+<p>\Action</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения вспомогательных операций. </dd>
 <dd>
 <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
@@ -295,8 +286,19 @@ file index.php Этот файл подключает <a class="el" href="../../
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
 file index.php Этот файл подключает <a class="el" href="../../dd/df8/profile_8php.html" title="Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.">action/profile.php</a> по запросу из <code>$_GET</code>.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий. Используются подготовленные выражения для защиты от SQL-инъекций.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\Action</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс используется для выполнения вспомогательных операций. </dd>
+<dd>
+<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс Database реализует интерфейс Database_Interface и отвечает за работу с различными базами данных...">PhotoRigma\Classes\Database</a> Класс для работы с базой данных. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий. Используются подготовленные выражения для защиты от SQL-инъекций.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2012 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
 </dd></dl>

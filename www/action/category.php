@@ -2,11 +2,47 @@
 
 /**
  * @file        action/category.php
- * @brief       Обзор и управление разделами.
+ * @brief       Обзор и управление разделами галереи.
+ *
+ * @details     Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею.
+ *              Основные функции:
+ *              - Отображение списка категорий и фотографий в них.
+ *              - Редактирование названия и описания категорий.
+ *              - Удаление категорий и связанных с ними фотографий.
+ *              - Добавление новых категорий.
+ *              - Проверка прав доступа пользователя на выполнение операций.
+ *
+ * @section     Основные функции
+ * - Отображение списка категорий и фотографий.
+ * - Редактирование данных категорий.
+ * - Удаление категорий и связанных фотографий.
+ * - Добавление новых категорий.
+ * - Проверка прав доступа пользователя.
+ *
+ * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
+ *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
+ *
  * @author      Dark Dayver
- * @version     0.2.0
- * @date        28/03-2012
- * @details     Обзор, редактирование, удаление и добавление разделов в галерею.
+ * @version     0.4.0
+ * @date        2025-03-12
+ * @namespace   PhotoRigma\Action
+ *
+ * @see         PhotoRigma\Classes\Database Класс для работы с базой данных.
+ * @see         PhotoRigma\Classes\Template Класс для работы с шаблонами.
+ * @see         PhotoRigma\Classes\User Класс для работы с пользователями.
+ * @see         PhotoRigma\Classes\Work Класс для выполнения различных операций.
+ *
+ * @note        Этот файл является частью системы PhotoRigma.
+ *              Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
+ *              Используются подготовленные выражения для защиты от SQL-инъекций.
+ *
+ * @copyright   Copyright (c) 2012 Dark Dayver. Все права защищены.
+ * @license     MIT License (https://opensource.org/licenses/MIT)
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
+ *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
+ *              программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
+ *                программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -23,7 +59,6 @@ use RuntimeException;
 /** @var Template $template */
 
 // Предотвращение прямого вызова файла
-
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
         date('H:i:s') . " [ERROR] | " . (filter_input(
@@ -233,7 +268,7 @@ if ($cat === 'user' || $cat === 0) {
             } else {
                 // Если данные категории не найдены, выбрасываем исключение
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей | ID: {$cat_id}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей | ID: $cat_id"
                 );
             }
         } else {
@@ -581,224 +616,222 @@ if ($cat === 'user' || $cat === 0) {
             ]);
         }
     }
+} elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+        'isset' => true,
+        'empty' => true
+    ]) && $_GET['subact'] === 'add') {
+    // Устанавливаем действие "добавление категории"
+    $action = 'add_category';
+
+    // Добавляем шаблон для редактирования категории
+    $template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
+    $template->add_if('ISSET_CATEGORY', true);
+
+    // Добавляем CSRF-токен для защиты формы от CSRF-атак
+    $template->add_string('CSRF_TOKEN', $user->csrf_token());
+
+    // Добавляем данные в шаблон
+    $template->add_string_ar([
+        'L_NAME_BLOCK' => $work->lang['category']['add'],
+        // Заголовок блока
+        'L_NAME_DIR' => $work->lang['category']['cat_dir'],
+        // Название директории
+        'L_NAME_CATEGORY' => sprintf(
+            '%s %s',
+            $work->lang['main']['name_of'],
+            $work->lang['category']['of_category']
+        ),
+        // Название категории
+        'L_DESCRIPTION_CATEGORY' => sprintf(
+            '%s %s',
+            $work->lang['main']['description_of'],
+            $work->lang['category']['of_category']
+        ),
+        // Описание категории
+        'L_EDIT_THIS' => $work->lang['category']['added'],
+        // Текст кнопки "Добавить"
+        'D_NAME_DIR' => '',
+        // Имя директории (пустое по умолчанию)
+        'D_NAME_CATEGORY' => '',
+        // Имя категории (пустое по умолчанию)
+        'D_DESCRIPTION_CATEGORY' => '',
+        // Описание категории (пустое по умолчанию)
+        'U_EDITED' => sprintf('%s?action=category&subact=saveadd', $work->config['site_url'])
+        // URL для отправки формы
+    ]);
+} elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+        'isset' => true,
+        'empty' => true
+    ]) && $_GET['subact'] === 'saveadd') {
+    // Проверяем CSRF-токен
+    if (empty($_POST['csrf_token']) || !hash_equals(
+        $user->session['csrf_token'],
+        $_POST['csrf_token']
+    )) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+        );
+    }
+    $user->unset_property_key('session', 'csrf_token');
+
+    // Определяем имя директории
+    if (!$work->check_input('_POST', 'name_dir', [
+        'isset' => true,
+        'empty' => true
+    ])) {
+        $directory_name = time();
+    } else {
+        $directory_name = Work::encodename(Work::clean_field($_POST['name_dir']));
+    }
+
+    // Проверяем уникальность имени директории
+    $db->select('COUNT(*) AS `count_dir`', TBL_CATEGORY, [
+        'where' => '`folder` = :folder',
+        'params' => [':folder' => $directory_name]
+    ]);
+    $directory_count_data = $db->res_row();
+
+    if ((isset($directory_count_data['count_dir']) && $directory_count_data['count_dir'] > 0) || is_dir(
+        $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $directory_name
+    ) || is_dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $directory_name)) {
+        $directory_name = time() . '_' . $directory_name;
+    }
+
+    // Определяем название категории
+    if (!$work->check_input('_POST', 'name_category', [
+        'isset' => true,
+        'empty' => true
+    ])) {
+        $category_name = sprintf('%s (%s)', $work->lang['category']['no_name'], $directory_name);
+    } else {
+        $category_name = Work::clean_field($_POST['name_category']);
+    }
+
+    // Определяем описание категории
+    if (!$work->check_input('_POST', 'description_category', [
+        'isset' => true,
+        'empty' => true
+    ])) {
+        $category_description = sprintf('%s (%s)', $work->lang['category']['no_description'], $directory_name);
+    } else {
+        $category_description = Work::clean_field($_POST['description_category']);
+    }
+
+    // Создаем директории и копируем index.php
+    $work->create_directory($directory_name);
+
+    // Добавляем категорию в базу данных
+    $db->insert([
+        'folder' => ':folder',
+        'name' => ':name',
+        'description' => ':desc'
+    ], TBL_CATEGORY, '', [
+        'params' => [
+            ':folder' => $directory_name,
+            ':name' => $category_name,
+            ':desc' => $category_description
+        ]
+    ]);
+
+    // Получаем ID новой категории
+    $new_category_id = $db->get_last_insert_id();
+    if ($new_category_id === 0) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: $directory_name"
+        );
+    }
+    // Перенаправляем пользователя после успешного добавления
+    header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $new_category_id));
+    exit;
 } else {
-    if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
-            'isset' => true,
-            'empty' => true
-        ]) && $_GET['subact'] === 'add') {
-        // Устанавливаем действие "добавление категории"
-        $action = 'add_category';
+    // Получаем список категорий
+    $db->select('id', TBL_CATEGORY, [
+        'where' => '`id` != :id',
+        'params' => [':id' => 0]
+    ]);
+    $categories = $db->res_arr();
+    $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 
-        // Добавляем шаблон для редактирования категории
-        $template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
+    if ($categories) {
+        foreach ($categories as $key => $val) {
+            $category_data = $work->category($val['id']);
+            $template->add_string_ar([
+                'D_NAME_CATEGORY' => Work::clean_field($category_data['name']),
+                'D_DESCRIPTION_CATEGORY' => Work::clean_field($category_data['description']),
+                'D_COUNT_PHOTO' => (string)$category_data['count_photo'],
+                'D_LAST_PHOTO' => $category_data['last_photo'],
+                'D_TOP_PHOTO' => $category_data['top_photo'],
+                'U_CATEGORY' => $category_data['url_cat'],
+                'U_LAST_PHOTO' => $category_data['url_last_photo'],
+                'U_TOP_PHOTO' => $category_data['url_top_photo']
+            ], 'LIST_CATEGORY[' . $key . ']');
+        }
+
+        // Добавляем данные для категории "Все фото"
+        $all_photos_category = $work->category(0, 0);
+        if ($all_photos_category['user_upload_count_data'] > 0) {
+            $template->add_string_ar([
+                'D_NAME_CATEGORY' => Work::clean_field($all_photos_category['name']),
+                'D_DESCRIPTION_CATEGORY' => Work::clean_field($all_photos_category['description']),
+                'D_COUNT_PHOTO' => (string)$all_photos_category['count_photo'],
+                'D_LAST_PHOTO' => $all_photos_category['last_photo'],
+                'D_TOP_PHOTO' => $all_photos_category['top_photo'],
+                'U_CATEGORY' => $all_photos_category['url_cat'],
+                'U_LAST_PHOTO' => $all_photos_category['url_last_photo'],
+                'U_TOP_PHOTO' => $all_photos_category['url_top_photo']
+            ], 'LIST_CATEGORY[' . (++$key) . ']');
+        }
+
         $template->add_if('ISSET_CATEGORY', true);
-
-        // Добавляем CSRF-токен для защиты формы от CSRF-атак
-        $template->add_string('CSRF_TOKEN', $user->csrf_token());
-
-        // Добавляем данные в шаблон
         $template->add_string_ar([
-            'L_NAME_BLOCK' => $work->lang['category']['add'],
-            // Заголовок блока
-            'L_NAME_DIR' => $work->lang['category']['cat_dir'],
-            // Название директории
+            'NAME_BLOCK' => $work->lang['category']['name_block'],
             'L_NAME_CATEGORY' => sprintf(
                 '%s %s',
                 $work->lang['main']['name_of'],
                 $work->lang['category']['of_category']
             ),
-            // Название категории
             'L_DESCRIPTION_CATEGORY' => sprintf(
                 '%s %s',
                 $work->lang['main']['description_of'],
                 $work->lang['category']['of_category']
             ),
-            // Описание категории
-            'L_EDIT_THIS' => $work->lang['category']['added'],
-            // Текст кнопки "Добавить"
-            'D_NAME_DIR' => '',
-            // Имя директории (пустое по умолчанию)
-            'D_NAME_CATEGORY' => '',
-            // Имя категории (пустое по умолчанию)
-            'D_DESCRIPTION_CATEGORY' => '',
-            // Описание категории (пустое по умолчанию)
-            'U_EDITED' => sprintf('%s?action=category&subact=saveadd', $work->config['site_url'])
-            // URL для отправки формы
+            'L_COUNT_PHOTO' => $work->lang['category']['count_photo'],
+            'L_LAST_PHOTO' => sprintf(
+                '%s %s',
+                $work->lang['main']['last_foto'],
+                $work->lang['category']['of_category']
+            ),
+            'L_TOP_PHOTO' => sprintf(
+                '%s %s',
+                $work->lang['main']['top_foto'],
+                $work->lang['category']['of_category']
+            )
         ]);
-    } elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
-            'isset' => true,
-            'empty' => true
-        ]) && $_GET['subact'] === 'saveadd') {
-        // Проверяем CSRF-токен
-        if (empty($_POST['csrf_token']) || !hash_equals(
-            $user->session['csrf_token'],
-            $_POST['csrf_token']
-        )) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
-            );
-        }
-        $user->unset_property_key('session', 'csrf_token');
-
-        // Определяем имя директории
-        if (!$work->check_input('_POST', 'name_dir', [
-            'isset' => true,
-            'empty' => true
-        ])) {
-            $directory_name = time();
-        } else {
-            $directory_name = Work::encodename(Work::clean_field($_POST['name_dir']));
-        }
-
-        // Проверяем уникальность имени директории
-        $db->select('COUNT(*) AS `count_dir`', TBL_CATEGORY, [
-            'where' => '`folder` = :folder',
-            'params' => [':folder' => $directory_name]
-        ]);
-        $directory_count_data = $db->res_row();
-
-        if ((isset($directory_count_data['count_dir']) && $directory_count_data['count_dir'] > 0) || is_dir(
-            $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $directory_name
-        ) || is_dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $directory_name)) {
-            $directory_name = time() . '_' . $directory_name;
-        }
-
-        // Определяем название категории
-        if (!$work->check_input('_POST', 'name_category', [
-            'isset' => true,
-            'empty' => true
-        ])) {
-            $category_name = sprintf('%s (%s)', $work->lang['category']['no_name'], $directory_name);
-        } else {
-            $category_name = Work::clean_field($_POST['name_category']);
-        }
-
-        // Определяем описание категории
-        if (!$work->check_input('_POST', 'description_category', [
-            'isset' => true,
-            'empty' => true
-        ])) {
-            $category_description = sprintf('%s (%s)', $work->lang['category']['no_description'], $directory_name);
-        } else {
-            $category_description = Work::clean_field($_POST['description_category']);
-        }
-
-        // Создаем директории и копируем index.php
-        $work->create_directory($directory_name);
-
-        // Добавляем категорию в базу данных
-        $db->insert([
-            'folder' => ':folder',
-            'name' => ':name',
-            'description' => ':desc'
-        ], TBL_CATEGORY, '', [
-            'params' => [
-                ':folder' => $directory_name,
-                ':name' => $category_name,
-                ':desc' => $category_description
-            ]
-        ]);
-
-        // Получаем ID новой категории
-        $new_category_id = $db->get_last_insert_id();
-        if ($new_category_id === 0) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: $directory_name"
-            );
-        }
-        // Перенаправляем пользователя после успешного добавления
-        header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $new_category_id));
-        exit;
     } else {
-        // Получаем список категорий
-        $db->select('id', TBL_CATEGORY, [
-            'where' => '`id` != :id',
-            'params' => [':id' => 0]
+        $template->add_string_ar([
+            'NAME_BLOCK' => $work->lang['category']['name_block'],
+            'L_NAME_CATEGORY' => sprintf(
+                '%s %s',
+                $work->lang['main']['name_of'],
+                $work->lang['category']['of_category']
+            ),
+            'L_DESCRIPTION_CATEGORY' => sprintf(
+                '%s %s',
+                $work->lang['main']['description_of'],
+                $work->lang['category']['of_category']
+            ),
+            'L_COUNT_PHOTO' => $work->lang['category']['count_photo'],
+            'L_LAST_PHOTO' => sprintf(
+                '%s %s',
+                $work->lang['main']['last_foto'],
+                $work->lang['category']['of_category']
+            ),
+            'L_TOP_PHOTO' => sprintf(
+                '%s %s',
+                $work->lang['main']['top_foto'],
+                $work->lang['category']['of_category']
+            ),
+            'L_NO_PHOTO' => $work->lang['main']['no_category']
         ]);
-        $categories = $db->res_arr();
-        $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
-
-        if ($categories) {
-            foreach ($categories as $key => $val) {
-                $category_data = $work->category($val['id']);
-                $template->add_string_ar([
-                    'D_NAME_CATEGORY' => Work::clean_field($category_data['name']),
-                    'D_DESCRIPTION_CATEGORY' => Work::clean_field($category_data['description']),
-                    'D_COUNT_PHOTO' => (string)$category_data['count_photo'],
-                    'D_LAST_PHOTO' => $category_data['last_photo'],
-                    'D_TOP_PHOTO' => $category_data['top_photo'],
-                    'U_CATEGORY' => $category_data['url_cat'],
-                    'U_LAST_PHOTO' => $category_data['url_last_photo'],
-                    'U_TOP_PHOTO' => $category_data['url_top_photo']
-                ], 'LIST_CATEGORY[' . $key . ']');
-            }
-
-            // Добавляем данные для категории "Все фото"
-            $all_photos_category = $work->category(0, 0);
-            if ($all_photos_category['user_upload_count_data'] > 0) {
-                $template->add_string_ar([
-                    'D_NAME_CATEGORY' => Work::clean_field($all_photos_category['name']),
-                    'D_DESCRIPTION_CATEGORY' => Work::clean_field($all_photos_category['description']),
-                    'D_COUNT_PHOTO' => (string)$all_photos_category['count_photo'],
-                    'D_LAST_PHOTO' => $all_photos_category['last_photo'],
-                    'D_TOP_PHOTO' => $all_photos_category['top_photo'],
-                    'U_CATEGORY' => $all_photos_category['url_cat'],
-                    'U_LAST_PHOTO' => $all_photos_category['url_last_photo'],
-                    'U_TOP_PHOTO' => $all_photos_category['url_top_photo']
-                ], 'LIST_CATEGORY[' . (++$key) . ']');
-            }
-
-            $template->add_if('ISSET_CATEGORY', true);
-            $template->add_string_ar([
-                'NAME_BLOCK' => $work->lang['category']['name_block'],
-                'L_NAME_CATEGORY' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['name_of'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_DESCRIPTION_CATEGORY' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['description_of'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_COUNT_PHOTO' => $work->lang['category']['count_photo'],
-                'L_LAST_PHOTO' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['last_foto'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_TOP_PHOTO' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['top_foto'],
-                    $work->lang['category']['of_category']
-                )
-            ]);
-        } else {
-            $template->add_string_ar([
-                'NAME_BLOCK' => $work->lang['category']['name_block'],
-                'L_NAME_CATEGORY' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['name_of'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_DESCRIPTION_CATEGORY' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['description_of'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_COUNT_PHOTO' => $work->lang['category']['count_photo'],
-                'L_LAST_PHOTO' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['last_foto'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_TOP_PHOTO' => sprintf(
-                    '%s %s',
-                    $work->lang['main']['top_foto'],
-                    $work->lang['category']['of_category']
-                ),
-                'L_NO_PHOTO' => $work->lang['main']['no_category']
-            ]);
-        }
     }
 }

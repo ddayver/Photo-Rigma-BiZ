@@ -127,6 +127,23 @@ $(function(){initNavTree('dd/df8/profile_8php.html','../../'); initResizable(tru
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля. </p>
+<p>Этот файл отвечает за управление профилями пользователей, включая:</p><ul>
+<li>Вход и выход пользователя.</li>
+<li>Регистрацию новых пользователей.</li>
+<li>Редактирование профиля (изменение аватара, языка, темы и других данных).</li>
+<li>Просмотр профиля другого пользователя.</li>
+<li>Защиту от CSRF-атак при изменении данных.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Вход и выход пользователя.</li>
+<li>Регистрация новых пользователей.</li>
+<li>Редактирование профиля.</li>
+<li>Просмотр профиля другого пользователя.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user-&gt;session['login_id']}". </td></tr>
@@ -136,7 +153,7 @@ $(function(){initNavTree('dd/df8/profile_8php.html','../../'); initResizable(tru
 </dl>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
 <dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-02-25 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-03-12 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../dd/df8/profile_8php_source.html">profile.php</a></p>
 </div></div><!-- contents -->

@@ -122,19 +122,36 @@ $(function(){initNavTree('d4/dad/news_8php.html','../../'); initResizable(true);
 Переменные</h2></td></tr>
 <tr class="memitem:aa698a3e72116e8e778be0e95d908ee30" id="r_aa698a3e72116e8e778be0e95d908ee30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#aa698a3e72116e8e778be0e95d908ee30">$action</a> = ''</td></tr>
 <tr class="separator:aa698a3e72116e8e778be0e95d908ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7015c06ea9534c7d526663a1482e258b" id="r_a7015c06ea9534c7d526663a1482e258b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>($news !==false)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a7015c06ea9534c7d526663a1482e258b">$subact</a></td></tr>
+<tr class="memitem:a7015c06ea9534c7d526663a1482e258b" id="r_a7015c06ea9534c7d526663a1482e258b"><td class="memItemLeft" align="right" valign="top">if($news !==false)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a7015c06ea9534c7d526663a1482e258b">$subact</a></td></tr>
 <tr class="separator:a7015c06ea9534c7d526663a1482e258b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bb4778c70884c9cebefbaf83124997c" id="r_a6bb4778c70884c9cebefbaf83124997c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>($subact==='save') <a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>( $subact==='edit' &amp;&amp;$news !==false &amp;&amp;( $user-&gt;user&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a6bb4778c70884c9cebefbaf83124997c">else</a> [ 'news_moderate']||( $user-&gt;user[ 'id'] !==0 &amp;&amp;$user-&gt;user[ 'id']===$news_data[ 'user_post']))) elseif($subact==='delete' &amp;&amp; $news !==false &amp;&amp;($user-&gt;user['news_moderate']||($user-&gt;user['id'] !==0 &amp;&amp; $user-&gt;user['id']===$news_data['user_post']))) elseif( $subact==='add' &amp;&amp;$news===false &amp;&amp;$user-&gt;user[ 'news_add']) elseif($news !==false)</td></tr>
+<tr class="memitem:a6bb4778c70884c9cebefbaf83124997c" id="r_a6bb4778c70884c9cebefbaf83124997c"><td class="memItemLeft" align="right" valign="top">if($subact==='save') if( $subact==='edit' &amp;&amp;$news !==false &amp;&amp;( $user-&gt;user&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a6bb4778c70884c9cebefbaf83124997c">else</a> [ 'news_moderate']||( $user-&gt;user[ 'id'] !==0 &amp;&amp;$user-&gt;user[ 'id']===$news_data[ 'user_post']))) elseif($subact==='delete' &amp;&amp; $news !==false &amp;&amp;($user-&gt;user['news_moderate']||($user-&gt;user['id'] !==0 &amp;&amp; $user-&gt;user['id']===$news_data['user_post']))) elseif( $subact==='add' &amp;&amp;$news===false &amp;&amp;$user-&gt;user[ 'news_add']) elseif($news !==false)</td></tr>
 <tr class="separator:a6bb4778c70884c9cebefbaf83124997c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54d3d5f4facd455285ef372ee6bae185" id="r_a54d3d5f4facd455285ef372ee6bae185"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(! $work-&gt;check_input('_GET', 'y',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a54d3d5f4facd455285ef372ee6bae185">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]{4}$/', 'not_zero'=&gt; true]))</td></tr>
+<tr class="memitem:a54d3d5f4facd455285ef372ee6bae185" id="r_a54d3d5f4facd455285ef372ee6bae185"><td class="memItemLeft" align="right" valign="top">if(! $work-&gt;check_input('_GET', 'y',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a54d3d5f4facd455285ef372ee6bae185">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]{4}$/', 'not_zero'=&gt; true]))</td></tr>
 <tr class="separator:a54d3d5f4facd455285ef372ee6bae185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe79ae181d13775952e4ddec8cf3e2c9" id="r_abe79ae181d13775952e4ddec8cf3e2c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#ab31765ef6e4e788da4d8cce24e5b59d7">if</a>(! $work-&gt;check_input('_GET', 'm',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#abe79ae181d13775952e4ddec8cf3e2c9">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]{2}$/', 'not_zero'=&gt; true]))</td></tr>
+<tr class="memitem:abe79ae181d13775952e4ddec8cf3e2c9" id="r_abe79ae181d13775952e4ddec8cf3e2c9"><td class="memItemLeft" align="right" valign="top">if(! $work-&gt;check_input('_GET', 'm',&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#abe79ae181d13775952e4ddec8cf3e2c9">else</a> ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]{2}$/', 'not_zero'=&gt; true]))</td></tr>
 <tr class="separator:abe79ae181d13775952e4ddec8cf3e2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ee5b530e2c5b5af7a40b21406ab72a7" id="r_a1ee5b530e2c5b5af7a40b21406ab72a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html#a1ee5b530e2c5b5af7a40b21406ab72a7">$news_list</a> = $db-&gt;res_arr()</td></tr>
 <tr class="separator:a1ee5b530e2c5b5af7a40b21406ab72a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение. </p>
+<p>Этот файл отвечает за управление новостями в системе, включая:</p><ul>
+<li>Добавление новой новости (при наличии прав &lsquo;$user-&gt;user['news_add&rsquo;]<code>).</code></li>
+<li><code>Редактирование существующей новости (при наличии прав</code>$user-&gt;user['news_moderate']<code>или если пользователь является автором новости).</code></li>
+<li><code>Удаление новости (при наличии прав</code>$user-&gt;user['news_moderate']` или если пользователь является автором новости).</li>
+<li>Отображение списка новостей с фильтрацией по годам и месяцам.</li>
+<li>Защита от CSRF-атак при добавлении и редактировании новостей.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
+<h1><a class="anchor" id="Основные"></a>
+функции</h1>
+<ul>
+<li>Добавление новой новости.</li>
+<li>Редактирование существующей новости.</li>
+<li>Удаление новости.</li>
+<li>Отображение списка новостей с фильтрацией по годам и месяцам.</li>
+<li>Логирование ошибок и подозрительных действий.</li>
+</ul>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление). Пример сообщения: Ошибка добавления новости | Данные: json_encode($query_news). </td></tr>
@@ -145,7 +162,7 @@ $(function(){initNavTree('d4/dad/news_8php.html','../../'); initResizable(true);
 </dl>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
 <dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-02-24 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-03-12 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d4/dad/news_8php_source.html">news.php</a></p>
 </div></div><!-- contents -->
