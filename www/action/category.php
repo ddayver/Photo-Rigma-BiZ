@@ -735,16 +735,18 @@ if ($cat === 'user' || $cat === 0) {
 
             // Добавляем данные для категории "Все фото"
             $all_photos_category = $work->category(0, 0);
-            $template->add_string_ar([
-                'D_NAME_CATEGORY' => Work::clean_field($all_photos_category['name']),
-                'D_DESCRIPTION_CATEGORY' => Work::clean_field($all_photos_category['description']),
-                'D_COUNT_PHOTO' => (string)$all_photos_category['count_photo'],
-                'D_LAST_PHOTO' => $all_photos_category['last_photo'],
-                'D_TOP_PHOTO' => $all_photos_category['top_photo'],
-                'U_CATEGORY' => $all_photos_category['url_cat'],
-                'U_LAST_PHOTO' => $all_photos_category['url_last_photo'],
-                'U_TOP_PHOTO' => $all_photos_category['url_top_photo']
-            ], 'LIST_CATEGORY[' . (++$key) . ']');
+            if ($all_photos_category['user_upload_count_data'] > 0) {
+                $template->add_string_ar([
+                    'D_NAME_CATEGORY' => Work::clean_field($all_photos_category['name']),
+                    'D_DESCRIPTION_CATEGORY' => Work::clean_field($all_photos_category['description']),
+                    'D_COUNT_PHOTO' => (string)$all_photos_category['count_photo'],
+                    'D_LAST_PHOTO' => $all_photos_category['last_photo'],
+                    'D_TOP_PHOTO' => $all_photos_category['top_photo'],
+                    'U_CATEGORY' => $all_photos_category['url_cat'],
+                    'U_LAST_PHOTO' => $all_photos_category['url_last_photo'],
+                    'U_TOP_PHOTO' => $all_photos_category['url_top_photo']
+                ], 'LIST_CATEGORY[' . (++$key) . ']');
+            }
 
             $template->add_if('ISSET_CATEGORY', true);
             $template->add_string_ar([

@@ -18,69 +18,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.js"></script>
 <!-- IF_LOCALHOST_SERVER_END -->
 	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
-	<script>
-		$(document).ready(function () {
-			// Инициализация стандартныx компонентов Fomantic-UI
-			$('.ui.checkbox').checkbox();
-			$('.ui.icon.button').popup();
-			$('.ui.dropdown').dropdown();
-			$('.ui.sticky').sticky({ context: '#short_menu' });
-			console.log('Initializing readonly ratings...');
-
-			function initializeReadOnlyRating() {
-				$('.readonly-rating').each(function () {
-					const ratingContainer = $(this);
-					const maxRating = parseFloat(ratingContainer.attr('data-max-rating')) || 1;
-					const ratingValue = parseFloat(ratingContainer.attr('data-rating')) || 0;
-
-					console.log(`Processing rating: value=${ratingValue}, max=${maxRating}`);
-
-					const totalIcons = 2 * maxRating + 1;
-
-					ratingContainer.empty();
-					for (let i = 0; i < totalIcons; i++) {
-						ratingContainer.append('<i class="icon"></i>');
-					}
-
-					ratingContainer.rating({
-						initialRating: Math.abs(ratingValue),
-						maxRating: totalIcons,
-						interactive: false,
-						fireOnInit: true,
-						onRate: function () {
-							return false;
-						}
-					});
-
-					ratingContainer.find('.icon').each(function (index) {
-						const icon = $(this);
-						const midpoint = maxRating;
-
-						if (index < midpoint) {
-							icon.addClass('red');
-						} else if (index === midpoint) {
-							icon.addClass('grey');
-						} else {
-							icon.addClass('green');
-						}
-					});
-
-					const fractionalPart = Math.abs(ratingValue) % 1;
-					if (fractionalPart > 0) {
-						const activeIconIndex = Math.floor(Math.abs(ratingValue));
-						const partialIcon = ratingContainer.find('.icon').eq(activeIconIndex);
-						partialIcon.addClass('partial');
-
-						const fillPercent = `${fractionalPart * 100}%`;
-						partialIcon.css('--fill-percent', fillPercent);
-						console.log(`Set --fill-percent to ${fillPercent}`);
-					}
-				});
-			}
-
-			initializeReadOnlyRating();
-		});
-	</script>
 </head>
 
 <body {INSERT_BODY}>

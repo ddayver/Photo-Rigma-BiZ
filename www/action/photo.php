@@ -417,7 +417,7 @@ if ($photo_id !== 0) {
             ]
         );
 
-        header(sprintf("Location: %s?action=photo&subact=edit&id=%d", $work->config['site_url'], $photo_id));
+        header(sprintf("Location: %s?action=photo&id=%d", $work->config['site_url'], $photo_id));
         exit;
     }
 
@@ -454,14 +454,18 @@ if ($photo_id !== 0) {
 
         // Формируем выпадающий список категорий
         foreach ($category_list as $key => $val) {
-            $selected = ($val['id'] === $photo_data['category']) ? ' selected="selected"' : '';
             if ($val['id'] === 0) {
                 $val['name'] .= ' ' . $photo['user'];
+            }
+            if ($val['id'] === $photo_data['category']) {
+                $template->add_string_ar([
+                    'D_SELECTED_CATEGORY' => (string)$val['id'],
+                    'L_SELECT_CATEGORY' => Work::clean_field($val['name']),
+                ]);
             }
             $template->add_string_ar([
                 'D_ID_CATEGORY' => (string)$val['id'],
                 'D_NAME_CATEGORY' => $val['name'],
-                'D_SELECTED' => $selected
             ], 'SELECT_CATEGORY[' . $key . ']');
         }
 
@@ -601,6 +605,8 @@ if ($photo_id !== 0) {
                     $photo_data['name']
                 ),
                 'L_DELETE_BLOCK' => $work->lang['photo']['delete'],
+                'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
+                'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
                 'U_EDIT_BLOCK' => sprintf(
                     '%s?action=photo&subact=edit&id=%d',
                     $work->config['site_url'],
@@ -665,10 +671,9 @@ if ($photo_id !== 0) {
                 $template->add_if('RATE_USER', true);
                 $key = 0;
                 for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++) {
-                    $selected = ($i === 0) ? ' selected="selected"' : '';
+                    $template->add_string('D_SELECTED_LVL_USER', '0');
                     $template->add_string_ar([
                         'D_LVL_RATE' => (string)$i,
-                        'D_SELECTED' => $selected
                     ], 'SELECT_USER_RATE[' . $key++ . ']');
                 }
             }
@@ -688,10 +693,9 @@ if ($photo_id !== 0) {
                 $template->add_if('RATE_MODER', true);
                 $key = 0;
                 for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++) {
-                    $selected = ($i === 0) ? ' selected="selected"' : '';
+                    $template->add_string('D_SELECTED_LVL_MODER', '0');
                     $template->add_string_ar([
                         'D_LVL_RATE' => (string)$i,
-                        'D_SELECTED' => $selected
                     ], 'SELECT_MODER_RATE[' . $key++ . ']');
                 }
             }
@@ -744,15 +748,15 @@ if ($photo_id !== 0) {
     // Формируем выпадающий список категорий
     foreach ($category_data as $key => $val) {
         if ($val['id'] === 0) {
-            $val['name'] .= ' ' . Work::clean_field($user->user['real_name']);
-            $selected = ' selected="selected"';
-        } else {
-            $selected = '';
+            $val['name'] .= ' ' . $user->user['real_name'];
+            $template->add_string_ar([
+                'D_SELECTED_CATEGORY' => (string)$val['id'],
+                'L_SELECT_CATEGORY' => Work::clean_field($val['name']),
+            ]);
         }
         $template->add_string_ar([
             'D_ID_CATEGORY' => (string)$val['id'],
-            'D_NAME_CATEGORY' => $val['name'],
-            'D_SELECTED' => $selected
+            'D_NAME_CATEGORY' => Work::clean_field($val['name']),
         ], 'UPLOAD_CATEGORY[' . $key . ']');
     }
 

@@ -382,30 +382,30 @@ $(function(){initNavTree('dd/d79/work__corelogic_8php_source.html','../../'); in
 <div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>                [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;`category` = :category&#39;</span>, <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:category&#39;</span> =&gt; 0]]</div>
 <div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>            );</div>
 <div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>            $user_upload_count_data = $this-&gt;db-&gt;res_row();</div>
-<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>            <span class="keywordflow">if</span> ($user_upload_count_data) {</div>
+<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>            <span class="keywordflow">if</span> ($user_upload_count_data[<span class="stringliteral">&#39;num_user_upload&#39;</span>] &gt; 0) {</div>
 <div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>                $category_data[<span class="stringliteral">&#39;id&#39;</span>] = <span class="stringliteral">&#39;user&#39;</span>;</div>
 <div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>                $category_data[<span class="stringliteral">&#39;name&#39;</span>] .= <span class="stringliteral">&#39; (&#39;</span> . $this-&gt;lang[<span class="stringliteral">&#39;category&#39;</span>][<span class="stringliteral">&#39;count_user_category&#39;</span>] . <span class="stringliteral">&#39;: &#39;</span> . $user_upload_count_data[<span class="stringliteral">&#39;num_user_upload&#39;</span>] . <span class="charliteral">&#39;)&#39;</span>;</div>
 <div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>                <span class="comment">// Исключаем &lt;br /&gt; из экранирования</span></div>
-<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>                $category_data[<span class="stringliteral">&#39;name&#39;</span>] .= <span class="stringliteral">&#39;&lt;br /&gt;(&#39;</span> . $this-&gt;lang[<span class="stringliteral">&#39;category&#39;</span>][<span class="stringliteral">&#39;no_user_category&#39;</span>] . <span class="charliteral">&#39;)&#39;</span>;</div>
-<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>            }</div>
-<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>        }</div>
-<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span> </div>
-<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>        <span class="comment">// Обновление id категории для пользовательских альбомов</span></div>
-<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>        <span class="keywordflow">if</span> ($user_flag === 1) {</div>
-<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>            $category_data[<span class="stringliteral">&#39;id&#39;</span>] = <span class="stringliteral">&#39;user&amp;amp;id=&#39;</span> . $cat_id;</div>
-<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>        }</div>
-<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span> </div>
-<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>        <span class="comment">// Формирование итоговой информации о категории</span></div>
-<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>        <span class="keywordflow">return</span> [</div>
-<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>            <span class="stringliteral">&#39;name&#39;</span> =&gt; $category_data[<span class="stringliteral">&#39;name&#39;</span>],</div>
-<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>            <span class="stringliteral">&#39;description&#39;</span> =&gt; $category_data[<span class="stringliteral">&#39;description&#39;</span>],</div>
-<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>            <span class="stringliteral">&#39;count_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;count&#39;</span>],</div>
-<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>            <span class="stringliteral">&#39;last_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;last_name&#39;</span>],</div>
-<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span>            <span class="stringliteral">&#39;top_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;top_name&#39;</span>],</div>
-<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>            <span class="stringliteral">&#39;url_cat&#39;</span> =&gt; sprintf(<span class="stringliteral">&#39;%s?action=category&amp;amp;cat=%s&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>], $category_data[<span class="stringliteral">&#39;id&#39;</span>]),</div>
-<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>            <span class="stringliteral">&#39;url_last_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;last_url&#39;</span>],</div>
-<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>            <span class="stringliteral">&#39;url_top_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;top_url&#39;</span>],</div>
+<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>                $category_data[<span class="stringliteral">&#39;name&#39;</span>] .= <span class="stringliteral">&#39;&lt;br /&gt;(&#39;</span> . $this-&gt;lang[<span class="stringliteral">&#39;category&#39;</span>][<span class="stringliteral">&#39;no_user_category&#39;</span>] . <span class="charliteral">&#39;)&#39;</span>;</div>
+<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>            }</div>
+<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>        }</div>
+<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span> </div>
+<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>        <span class="comment">// Обновление id категории для пользовательских альбомов</span></div>
+<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>        <span class="keywordflow">if</span> ($user_flag === 1) {</div>
+<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>            $category_data[<span class="stringliteral">&#39;id&#39;</span>] = <span class="stringliteral">&#39;user&amp;amp;id=&#39;</span> . $cat_id;</div>
+<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>        }</div>
+<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span> </div>
+<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>        <span class="comment">// Формирование итоговой информации о категории</span></div>
+<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>        <span class="keywordflow">return</span> [</div>
+<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>            <span class="stringliteral">&#39;name&#39;</span> =&gt; $category_data[<span class="stringliteral">&#39;name&#39;</span>],</div>
+<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>            <span class="stringliteral">&#39;description&#39;</span> =&gt; $category_data[<span class="stringliteral">&#39;description&#39;</span>],</div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>            <span class="stringliteral">&#39;count_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;count&#39;</span>],</div>
+<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>            <span class="stringliteral">&#39;last_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;last_name&#39;</span>],</div>
+<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>            <span class="stringliteral">&#39;top_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;top_name&#39;</span>],</div>
+<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span>            <span class="stringliteral">&#39;url_cat&#39;</span> =&gt; sprintf(<span class="stringliteral">&#39;%s?action=category&amp;amp;cat=%s&#39;</span>, $this-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>], $category_data[<span class="stringliteral">&#39;id&#39;</span>]),</div>
+<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>            <span class="stringliteral">&#39;url_last_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;last_url&#39;</span>],</div>
+<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>            <span class="stringliteral">&#39;url_top_photo&#39;</span> =&gt; $photo_info[<span class="stringliteral">&#39;top_url&#39;</span>],</div>
+<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>            <span class="stringliteral">&#39;user_upload_count_data&#39;</span> =&gt; $user_upload_count_data[<span class="stringliteral">&#39;num_user_upload&#39;</span>],</div>
 <div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>        ];</div>
 <div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>    }</div>
 </div>

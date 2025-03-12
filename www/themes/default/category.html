@@ -56,24 +56,11 @@
                                         <button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
                                             <i class="edit icon"></i> {L_EDIT_BLOCK}
                                         </button>
-                                        <button class="ui inverted circular red basic icon button" id="delete-button">
+                                        <button class="ui inverted circular red basic icon button delete-button" data-target="#delete-modal">
                                             <i class="trash alternate icon"></i> {L_DELETE_BLOCK}
                                         </button>
                                     </div>
-                                    <script>
-                                        $('#delete-button').on('click', function() {
-                                            $('.ui.basic.modal')
-                                                .modal({
-                                                    closable: false,
-                                                    onApprove: function() {
-                                                        window.location.href = '{U_DELETE_BLOCK}';
-                                                    }
-                                                })
-                                                .modal('show');
-                                        });
-                                    </script>
-
-                                    <div class="ui basic modal">
+                                    <div id="delete-modal" class="ui basic modal" data-url="{U_DELETE_BLOCK}">
                                         <div class="header">{L_DELETE_BLOCK}</div>
                                         <div class="content">
                                             <p>{L_CONFIRM_DELETE_BLOCK}</p>

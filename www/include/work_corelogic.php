@@ -986,11 +986,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 ['where' => '`category` = :category', 'params' => [':category' => 0]]
             );
             $user_upload_count_data = $this->db->res_row();
-            if ($user_upload_count_data) {
+            if ($user_upload_count_data['num_user_upload'] > 0) {
                 $category_data['id'] = 'user';
                 $category_data['name'] .= ' (' . $this->lang['category']['count_user_category'] . ': ' . $user_upload_count_data['num_user_upload'] . ')';
             } else {
-                // Исключаем <br /> из экранирования
                 $category_data['name'] .= '<br />(' . $this->lang['category']['no_user_category'] . ')';
             }
         }
@@ -1010,6 +1009,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'url_cat' => sprintf('%s?action=category&amp;cat=%s', $this->config['site_url'], $category_data['id']),
             'url_last_photo' => $photo_info['last_url'],
             'url_top_photo' => $photo_info['top_url'],
+            'user_upload_count_data' => $user_upload_count_data['num_user_upload'],
         ];
     }
 
