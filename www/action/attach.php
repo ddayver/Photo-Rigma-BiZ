@@ -77,28 +77,24 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die("HACK!");
 }
 
-// Запретить вывод шапки страницы
-$header_footer = false;
-// Запретить вывод подвала страницы
-$template_output = false;
 // Проверка параметра 'foto'
-if (!$work->check_input('_GET', 'foto', [
+if ($user->user['pic_view'] == false || !$work->check_input('_GET', 'foto', [
         'isset' => true,
         'empty' => true,
-        'regexp' => '^[0-9]+$',
+        'regexp' => '/^[0-9]+$/',
         'not_zero' => true
-    ]) || $user->user['pic_view'] == false) {
+    ])) {
     $photo_data = $work->no_photo();
 } else {
     // Получение данных о фотографии и категории через JOIN
     $db->join(
-        ['TBL_PHOTO.id', 'TBL_PHOTO.file', 'TBL_PHOTO.category', 'TBL_CATEGORY.folder'],
+        [TBL_PHOTO . '.`id`', TBL_PHOTO . '.`file`', TBL_PHOTO . '.`category`', TBL_CATEGORY . '.`folder`'],
         TBL_PHOTO,
         [
-            ['type' => 'INNER', 'table' => TBL_CATEGORY, 'on' => 'TBL_PHOTO.category = TBL_CATEGORY.id']
+            ['type' => 'INNER', 'table' => TBL_CATEGORY, 'on' => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`']
         ],
         [
-            'where' => 'TBL_PHOTO.id = :id',
+            'where' => TBL_PHOTO . '.`id` = :id',
             'params' => [':id' => $_GET['foto']]
         ]
     );

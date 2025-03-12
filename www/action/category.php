@@ -70,13 +70,13 @@ if ($cat === 'user' || $cat === 0) {
         // Получение списка пользователей с категорией = 0 (используем JOIN)
         // Связываем таблицы TBL_PHOTO и TBL_USERS через поле user_upload
         $db->join(
-            [TBL_PHOTO . '.user_upload', TBL_USERS . '.id', TBL_USERS . '.real_name'], // Поля для выборки
+            [TBL_PHOTO . '.`user_upload`', TBL_USERS . '.`id`', TBL_USERS . '.`real_name`'], // Поля для выборки
             TBL_PHOTO, // Основная таблица
             [
                 [
                     'type' => 'LEFT', // Тип JOIN
                     'table' => TBL_USERS, // Таблица для JOIN
-                    'on' => TBL_PHOTO . '.user_upload = ' . TBL_USERS . '.id' // Условие JOIN
+                    'on' => TBL_PHOTO . '.`user_upload` = ' . TBL_USERS . '.`id`' // Условие JOIN
                 ]
             ],
             [
@@ -95,10 +95,10 @@ if ($cat === 'user' || $cat === 0) {
                 $template->add_string_ar([
                     'D_NAME_CATEGORY' => $photo_data['name'],
                     'D_DESCRIPTION_CATEGORY' => $photo_data['description'],
-                    'D_COUNT_PHOTO' => $photo_data['count_photo'],
+                    'D_COUNT_PHOTO' => (string)$photo_data['count_photo'],
                     'D_LAST_PHOTO' => $photo_data['last_photo'],
                     'D_TOP_PHOTO' => $photo_data['top_photo'],
-                    'U_CATEGORY' => sprintf('%s/category/%s', $work->config['site_url'], $photo_data['url_cat']),
+                    'U_CATEGORY' => $photo_data['url_cat'],
                     'U_LAST_PHOTO' => $photo_data['url_last_photo'],
                     'U_TOP_PHOTO' => $photo_data['url_top_photo']
                 ], 'LIST_CATEGORY[' . $key . ']');
@@ -197,13 +197,13 @@ if ($cat === 'user' || $cat === 0) {
                 $photo_info = $work->create_photo('cat', $photo_data['id']);
                 $template->add_string_ar([
                     'L_USER_ADD' => $work->lang['main']['user_add'],
-                    'MAX_PHOTO_HEIGHT' => $work->config['temp_photo_h'] + 10,
-                    'PHOTO_WIDTH' => $photo_info['width'],
-                    'PHOTO_HEIGHT' => $photo_info['height'],
+                    'MAX_PHOTO_HEIGHT' => (string)($work->config['temp_photo_h'] + 10),
+                    'PHOTO_WIDTH' => (string)$photo_info['width'],
+                    'PHOTO_HEIGHT' => (string)$photo_info['height'],
                     'D_DESCRIPTION_PHOTO' => $photo_info['description'],
                     'D_NAME_PHOTO' => $photo_info['name'],
                     'D_REAL_NAME_USER_ADD' => $photo_info['real_name'],
-                    'D_PHOTO_RATE' => $photo_info['rate'],
+                    'D_PHOTO_RATE' => (string)$photo_info['rate'],
                     'U_THUMBNAIL_PHOTO' => $photo_info['thumbnail_url'],
                     'U_PHOTO' => $photo_info['url'],
                     'U_PROFILE_USER_ADD' => $photo_info['url_user']

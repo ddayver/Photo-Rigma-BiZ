@@ -86,6 +86,37 @@
     border: #414b57 ridge 3px !important;
 }
 
+/* Базовые стили для рейтинга */
+.ui.rating .icon {
+    font-family: 'Icons'; /* Используем шрифт Fomantic-UI */
+    font-size: 14px; /* Размер иконок */
+    color: grey; /* Цвет нейтральных иконок */
+}
+
+/* Цвета для положительных, отрицательных и нейтральных значений */
+.ui.rating .icon.red {
+    color: red;
+}
+.ui.rating .icon.green {
+    color: green;
+}
+.ui.rating .icon.grey {
+    color: grey;
+}
+
+/* Активные иконки */
+.ui.rating .icon.active {
+    color: currentColor; /* Сохраняем цвет, заданный выше */
+}
+
+/* Стиль для частичной заливки */
+.ui.rating .icon.partial {
+    background: linear-gradient(to right, currentColor var(--fill-percent), transparent var(--fill-percent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
 body {
     background: #141519;
     font: 14px Helvetica, sans-serif;

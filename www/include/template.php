@@ -1508,7 +1508,7 @@ class Template
             $footer_template->add_string_ar([
                 'U_BEST_USER_PROFILE' => $val['user_url'],
                 'D_USER_NAME' => $val['user_name'],
-                'D_USER_PHOTO' => $val['user_photo']
+                'D_USER_PHOTO' => (string)$val['user_photo']
             ], 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
             $footer_template->add_if('USER_EXIST', !empty($val['user_url']), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
         }

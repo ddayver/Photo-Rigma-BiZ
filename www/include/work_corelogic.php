@@ -915,7 +915,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         ];
 
         if ($user_flag === 1) {
-            $options['where'][] = 'p.user_upload = :user_upload';
+            $options['where'] = 'p.category = :category AND p.user_upload = :user_upload';
             $options['params'][':user_upload'] = $cat_id;
         }
 
@@ -1146,15 +1146,18 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
         // Получение данных об изображении и категории через JOIN
         $this->db->join(
-            ['p.*', 'c.folder'],
-            TBL_PHOTO . ' p',
+            ['p.*', 'c.folder'], // Список полей для выборки
+            TBL_PHOTO . ' p', // Основная таблица
             [
-                'table' => TBL_CATEGORY . ' c',
-                'on' => 'p.category = c.id'
+                [
+                    'table' => TBL_CATEGORY . ' c', // Таблица для JOIN
+                    'type' => 'LEFT', // Тип JOIN
+                    'on' => 'p.category = c.id' // Условие JOIN
+                ]
             ],
             [
-                'where' => 'p.id = :photo_id',
-                'params' => [':photo_id' => $photo_id]
+                'where' => 'p.id = :photo_id', // Условие WHERE
+                'params' => [':photo_id' => $photo_id] // Параметры для prepared statements
             ]
         );
         $temp_data = $this->db->res_row();
@@ -2189,15 +2192,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $this->db->insert(
             ['`id_foto`' => ':id_foto', '`id_user`' => ':id_user', '`rate`' => ':rate'],
             $table,
-            'ignore',
+            '',
             ['params' => $query_rate]
         );
-        $last_insert_id = $this->db->get_last_insert_id();
-        if ($last_insert_id === 0) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить оценку. | ID фотографии: {$photo_id} в таблицу: {$table}"
-            );
-        }
 
         // Пересчет средней оценки
         $this->db->select('`rate`', $table, ['where' => '`id_foto` = :id_foto', 'params' => [':id_foto' => $photo_id]]);

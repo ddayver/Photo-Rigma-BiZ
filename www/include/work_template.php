@@ -1217,11 +1217,13 @@ class Work_Template implements Work_Template_Interface
         }
 
         // Блок формирования метаданных для шаблона
-        $array_data[0] = [
+        $top_data = [
             'NAME_BLOCK' => sprintf($this->lang['main']['best_user'], $best_user),
             'L_USER_NAME' => $this->lang['main']['user_name'],
             'L_USER_PHOTO' => $this->lang['main']['best_user_photo']
         ];
+        array_unshift($array_data, $top_data);
+
         return $array_data;
     }
 }

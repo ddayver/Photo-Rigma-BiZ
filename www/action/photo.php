@@ -95,12 +95,6 @@ if ($photo_data) {
 // Настройка шаблона для отображения фотографии
 $template->template_file = 'photo.html';
 
-/** @var int $max_photo_w */
-$max_photo_w = $work->config['max_photo_w'];
-
-/** @var int $max_photo_h */
-$max_photo_h = $work->config['max_photo_h'];
-
 // Добавление условий в шаблон
 $template->add_if_ar([
     'EDIT_BLOCK' => false,
@@ -198,6 +192,7 @@ if ($photo_id !== 0) {
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить оценку пользователя в таблице фотографий | ID фотографии: $photo_id"
                 );
             }
+            $photo_data['rate_user'] = $rate_user;
         }
 
         // Проверка текущей оценки модератора
@@ -236,6 +231,7 @@ if ($photo_id !== 0) {
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить оценку модератора в таблице фотографий | ID фотографии: $photo_id"
                 );
             }
+            $photo_data['rate_moder'] = $rate_moder;
         }
     } elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
         '_GET',
@@ -416,18 +412,13 @@ if ($photo_id !== 0) {
                     ':name' => $photo['name'],
                     ':desc' => $photo['description'],
                     ':cat' => $photo['category_id'],
-                    ':file' => $photo['file']
+                    ':file' => $photo['file'] ?? $photo_data['file']
                 ] // Параметры для prepared statements
             ]
         );
 
-        // Проверяем количество изменённых строк
-        $affected_rows = $db->get_affected_rows();
-        if ($affected_rows === 0) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные фотографии в базе данных | ID: $photo_id"
-            );
-        }
+        header(sprintf("Location: %s?action=photo&subact=edit&id=%d", $work->config['site_url'], $photo_id));
+        exit;
     }
 
     if ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
@@ -468,7 +459,7 @@ if ($photo_id !== 0) {
                 $val['name'] .= ' ' . $photo['user'];
             }
             $template->add_string_ar([
-                'D_ID_CATEGORY' => $val['id'],
+                'D_ID_CATEGORY' => (string)$val['id'],
                 'D_NAME_CATEGORY' => $val['name'],
                 'D_SELECTED' => $selected
             ], 'SELECT_CATEGORY[' . $key . ']');
@@ -655,8 +646,11 @@ if ($photo_id !== 0) {
 
         // Добавляем данные об оценках
         $template->add_string_ar([
-            'D_RATE_USER' => $work->lang['photo']['rate_user'] . ': ' . $photo_data['rate_user'],
-            'D_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $photo_data['rate_moder']
+            'L_RATE_USER' => $work->lang['photo']['rate_user'] . ': ' . $photo_data['rate_user'],
+            'L_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $photo_data['rate_moder'],
+            'D_RATE_USER' => (string)$photo_data['rate_user'],
+            'D_RATE_MODER' => (string)$photo_data['rate_moder'],
+            'D_MAX_RATE' => (string)$work->config['max_rate']
         ]);
 
         // Проверка возможности оценки пользователем
@@ -673,7 +667,7 @@ if ($photo_id !== 0) {
                 for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++) {
                     $selected = ($i === 0) ? ' selected="selected"' : '';
                     $template->add_string_ar([
-                        'D_LVL_RATE' => $i,
+                        'D_LVL_RATE' => (string)$i,
                         'D_SELECTED' => $selected
                     ], 'SELECT_USER_RATE[' . $key++ . ']');
                 }
@@ -696,7 +690,7 @@ if ($photo_id !== 0) {
                 for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++) {
                     $selected = ($i === 0) ? ' selected="selected"' : '';
                     $template->add_string_ar([
-                        'D_LVL_RATE' => $i,
+                        'D_LVL_RATE' => (string)$i,
                         'D_SELECTED' => $selected
                     ], 'SELECT_MODER_RATE[' . $key++ . ']');
                 }
@@ -719,215 +713,278 @@ if ($photo_id !== 0) {
             ]);
         }
     }
-} else {
-    if ($work->check_get(
-        'subact',
-        true,
-        true
-    ) && $_GET['subact'] === "upload" && $user->user['id'] !== 0 && $user->user['pic_upload']) {
-        $template->add_case('PHOTO_BLOCK', 'UPLOAD_PHOTO');
-        $max_size_php = Work::return_bytes(ini_get('post_max_size'));
-        $max_size = Work::return_bytes($work->config['max_file_size']);
-        if ($max_size > $max_size_php) {
-            $max_size = $max_size_php;
-        }
-        if ((bool)$user->user['cat_user']) {
-            $select_cat = false;
+} elseif ($work->check_input(
+    '_GET',
+    'subact',
+    [
+            'isset' => true,
+            'empty' => true,
+        ]
+) && $_GET['subact'] === "upload" && $user->user['id'] !== 0 && $user->user['pic_upload']) {
+    // Добавляем блок PHOTO_BLOCK в шаблон
+    $template->add_case('PHOTO_BLOCK', 'UPLOAD_PHOTO');
+
+    // Определяем максимальный размер файла для загрузки
+    $max_size_php = Work::return_bytes(ini_get('post_max_size'));
+    $max_size = Work::return_bytes($work->config['max_file_size']);
+    $max_size = min($max_size, $max_size_php);
+
+    // Формируем условия выборки категорий
+    $select_cat = $user->user['cat_user'] ? [] : ['where' => '`id` != :id', 'params' => [':id' => 0]];
+
+    // Получаем список категорий
+    $db->select('*', TBL_CATEGORY, $select_cat);
+    $category_data = $db->res_arr();
+    if (!$category_data) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить список категорий"
+        );
+    }
+
+    // Формируем выпадающий список категорий
+    foreach ($category_data as $key => $val) {
+        if ($val['id'] === 0) {
+            $val['name'] .= ' ' . Work::clean_field($user->user['real_name']);
+            $selected = ' selected="selected"';
         } else {
-            $select_cat = '`id` != 0';
+            $selected = '';
         }
+        $template->add_string_ar([
+            'D_ID_CATEGORY' => (string)$val['id'],
+            'D_NAME_CATEGORY' => $val['name'],
+            'D_SELECTED' => $selected
+        ], 'UPLOAD_CATEGORY[' . $key . ']');
+    }
 
-        if ($db->select('*', TBL_CATEGORY, $select_cat)) {
-            $category_data = $db->res_arr();
-            if ($category_data) {
-                foreach ($category_data as $key => $val) {
-                    if ($val['id'] === 0) {
-                        $val['name'] .= ' ' . Work::clean_field($user->user['real_name']);
-                        $selected = ' selected="selected"';
-                    } else {
-                        $selected = '';
-                    }
-                    $template->add_string_ar(array(
-                        'D_ID_CATEGORY' => $val['id'],
-                        'D_NAME_CATEGORY' => $val['name'],
-                        'D_SELECTED' => $selected
-                    ), 'UPLOAD_CATEGORY[' . $key . ']');
-                }
-                $template->add_string_ar(array(
-                    'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['photo']['upload'],
-                    'L_NAME_PHOTO' => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
-                    'L_DESCRIPTION_PHOTO' => $work->lang['main']['description_of'] . ' ' . $work->lang['photo']['of_photo'],
-                    'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
-                    'L_UPLOAD_THIS' => $work->lang['photo']['upload'],
-                    'L_FILE_PHOTO' => $work->lang['photo']['select_file'],
-                    'D_MAX_FILE_SIZE' => $max_size,
-                    'U_UPLOADED' => $work->config['site_url'] . '?action=photo&amp;subact=uploaded'
-                ));
-            } else {
-                log_in_file('Unable to get the category', DIE_IF_ERROR);
-            }
-        } else {
-            log_in_file($db->error, DIE_IF_ERROR);
+    // Добавляем данные в шаблон
+    $template->add_string_ar([
+        'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['photo']['upload'],
+        'L_NAME_PHOTO' => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
+        'L_DESCRIPTION_PHOTO' => $work->lang['main']['description_of'] . ' ' . $work->lang['photo']['of_photo'],
+        'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
+        'L_UPLOAD_THIS' => $work->lang['photo']['upload'],
+        'L_FILE_PHOTO' => $work->lang['photo']['select_file'],
+        'D_MAX_FILE_SIZE' => (string)$max_size,
+        'U_UPLOADED' => sprintf('%s?action=photo&subact=uploaded', $work->config['site_url'])
+    ]);
+} elseif ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
+    '_GET',
+    'subact',
+    [
+            'isset' => true,
+            'empty' => true,
+        ]
+) && $_GET['subact'] === "uploaded") {
+    // Флаг успешной загрузки (bool)
+    $submit_upload = true;
+
+    // Определяем максимальный размер файла для загрузки (int)
+    $max_size_php = Work::return_bytes(ini_get('post_max_size'));
+    $max_size = Work::return_bytes($work->config['max_file_size']);
+    $max_size = min($max_size, $max_size_php);
+
+    // Проверяем название фотографии
+    if (!$work->check_input('_POST', 'name_photo', ['isset' => true, 'empty' => true])) {
+        $photo['name'] = false; // Если название не указано, оставляем флаг false
+    } else {
+        $photo['name'] = Work::clean_field($_POST['name_photo']); // Очищаем название
+    }
+
+    // Проверяем описание фотографии
+    if (!$work->check_input('_POST', 'description_photo', ['isset' => true, 'empty' => true])) {
+        $photo['description'] = false; // Если описание не указано, оставляем флаг false
+    } else {
+        $photo['description'] = Work::clean_field($_POST['description_photo']); // Очищаем описание
+    }
+
+    // Проверяем категорию
+    if (!$work->check_input('_POST', 'name_category', ['isset' => true, 'regexp' => '/^[0-9]+$/'])) {
+        $submit_upload = false; // Если категория не указана или некорректна, отменяем загрузку
+    } else {
+        // Формируем условие для выборки категории
+        $category_condition = $user->user['cat_user'] || $user->user['pic_moderate'] ? [
+            'where' => '`id` = :id',
+            'params' => [':id' => $_POST['name_category']]
+        ] : ['where' => '`id` != 0 AND `id` = :id', 'params' => [':id' => $_POST['name_category']]];
+
+        // Выполняем запрос к базе данных для проверки существования категории
+        $db->select('id, folder', TBL_CATEGORY, $category_condition); // Ограничиваем выборку только нужными полями
+        $category_data = $db->res_row();
+        if (!$category_data) {
+            $submit_upload = false; // Если категория не найдена, отменяем загрузку
         }
-    } elseif ($work->check_get(
-        'subact',
-        true,
-        true
-    ) && $_GET['subact'] === "uploaded" && $user->user['id'] !== 0 && $user->user['pic_upload']) {
-        $submit_upload = true;
-        $max_size_php = Work::return_bytes(ini_get('post_max_size'));
-        $max_size = Work::return_bytes($work->config['max_file_size']);
-        if ($max_size > $max_size_php) {
-            $max_size = $max_size_php;
-        }
+    }
 
-        if (!$work->check_post('name_photo', true, true)) {
-            $photo['name'] = $work->lang['photo']['no_name'] . ' (' . Work::encodename(
-                basename($_FILES['file_photo']['name'])
-            ) . ')';
-        } else {
-            $photo['name'] = $_POST['name_photo'];
-        }
+    // Если все проверки пройдены, обрабатываем загрузку файла
+    if ($submit_upload) {
+        $photo['category_id'] = $_POST['name_category']; // Сохраняем ID категории
 
-        if (!$work->check_post('description_photo', true, true)) {
-            $photo['description'] = $work->lang['photo']['no_description'] . ' (' . Work::encodename(
-                basename($_FILES['file_photo']['name'])
-            ) . ')';
-        } else {
-            $photo['description'] = $_POST['description_photo'];
-        }
+        // Проверяем корректность загруженного файла через $work->check_input
+        if ($work->check_input('_FILES', 'file_photo', [
+            'isset' => true,
+            'max_size' => $max_size,
+        ])) {
+            // Разделяем имя файла на базовое имя и расширение
+            $file_info = pathinfo($_FILES['file_photo']['name']);
+            $file_base_name = $file_info['filename']; // Имя файла без расширения
+            $file_extension = $file_info['extension']; // Расширение файла
 
-        if (!$work->check_post('name_category', true, false, '^[0-9]+\$')) {
-            $submit_upload = false;
-        } else {
-            if ($user->user['cat_user'] || $user->user['pic_moderate']) {
-                $select_cat = '`id` = ' . $_POST['name_category'];
-            } else {
-                $select_cat = '`id` != 0 AND `id` = ' . $_POST['name_category'];
-            }
-            if ($db->select('*', TBL_CATEGORY, $select_cat)) {
-                $category_data = $db->res_row();
-                if (!$category_data) {
-                    $submit_upload = false;
-                }
-            } else {
-                log_in_file($db->error, DIE_IF_ERROR);
-            }
-        }
+            // Формируем новое имя файла
+            $file_name = time() . '_' . Work::encodename($file_base_name) . '.' . $file_extension;
 
-        if ($submit_upload) {
-            $photo['category_name'] = $_POST['name_category'];
-            if ($_FILES['file_photo']['error'] === 0 && $_FILES['file_photo']['size'] > 0 && $_FILES['file_photo']['size'] <= $max_size && mb_eregi(
-                '(gif|jpeg|png)$',
-                $_FILES['file_photo']['type'],
-                $type
-            )) {
-                $file_name = time() . '_' . Work::encodename(basename($_FILES['file_photo']['name'])) . '.' . $type[0];
+            // Формируем пути для сохранения файла и миниатюры
+            $photo['path'] = sprintf(
+                '%s%s/%s/%s',
+                $work->config['site_dir'],
+                $work->config['gallery_folder'],
+                $category_data['folder'],
+                $file_name
+            );
+            $photo['thumbnail_path'] = sprintf(
+                '%s%s/%s/%s',
+                $work->config['site_dir'],
+                $work->config['thumbnail_folder'],
+                $category_data['folder'],
+                $file_name
+            );
 
-                if ($db->select('*', TBL_CATEGORY, '`id` = ' . $photo['category_name'])) {
-                    $category_data = $db->res_row();
-                    if ($category_data) {
-                        $photo['path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $category_data['folder'] . '/' . $file_name;
-                        $photo['thumbnail_path'] = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $category_data['folder'] . '/' . $file_name;
-                        if (move_uploaded_file($_FILES['file_photo']['tmp_name'], $photo['path'])) {
-                            $work->image_resize($photo['path'], $photo['thumbnail_path']);
-                        } else {
-                            $submit_upload = false;
-                        }
-                    } else {
-                        $submit_upload = false;
-                    }
-                } else {
-                    log_in_file($db->error, DIE_IF_ERROR);
-                }
-            } else {
+            // Нормализуем пути с помощью realpath
+            $photo['path'] = realpath($photo['path']) ?: $photo['path'];
+            $photo['thumbnail_path'] = realpath($photo['thumbnail_path']) ?: $photo['thumbnail_path'];
+
+            // Проверяем права доступа к директориям
+            $gallery_dir = dirname($photo['path']);
+            $thumbnail_dir = dirname($photo['thumbnail_path']);
+            if (!is_writable($gallery_dir) || !is_writable($thumbnail_dir)) {
+                log_in_file(
+                    "Ошибка прав доступа: директории недоступны для записи | Пользователь: {$user->user['id']} | Файл: {$_FILES['file_photo']['name']}"
+                );
                 $submit_upload = false;
             }
-        }
-        if ($submit_upload) {
-            $query = array(
-                'file' => $file_name,
-                'name' => $photo['name'],
-                'description' => $photo['description'],
-                'category' => $photo['category_name'],
-                'date_upload' => date('Y-m-d H:m:s'),
-                'user_upload' => $user->user['id'],
-                'rate_user' => '0',
-                'rate_moder' => '0'
-            );
-            if ($db->insert($query, TBL_PHOTO, 'ignore')) {
-                $photo_id = $db->get_last_insert_id();
+
+            // Перемещаем файл и создаем миниатюру
+            if ($submit_upload && move_uploaded_file($_FILES['file_photo']['tmp_name'], $photo['path'])) {
+                $work->image_resize($photo['path'], $photo['thumbnail_path']);
             } else {
-                log_in_file($db->error, DIE_IF_ERROR);
-            }
-            if ($photo_id) {
-                $redirect_url = $work->config['site_url'] . '?action=photo&id=' . $photo_id;
-            } else {
-                @unlink($photo['path']);
-                @unlink($photo['thumbnail_path']);
-                $redirect_url = $work->config['site_url'] . '?action=photo&subact=upload';
+                log_in_file(
+                    "Ошибка перемещения загруженного файла: {$_FILES['file_photo']['name']} | Пользователь: {$user->user['id']}"
+                );
+                $submit_upload = false;
             }
         } else {
-            $redirect_url = $work->config['site_url'] . '?action=photo&subact=upload';
+            $submit_upload = false; // Если файл не прошел проверку, отменяем загрузку
+        }
+    }
+
+    // Если загрузка успешна, сохраняем данные в базу данных
+    if ($submit_upload) {
+        // Проверяем правильность расширения
+        $old_file_path = $photo['path'];
+        $photo['path'] = $work->fix_file_extension($photo['path']);
+        if ($photo['path'] !== $old_file_path) {
+            rename($old_file_path, $photo['path']);
+            $file_info = pathinfo($photo['path']);
+            $file_name = $file_info['filename'] . '.' . $file_info['extension'];
+        }
+
+        // Устанавливаем значения по умолчанию для названия и описания
+        $photo['name'] = $photo['name'] ?: ($work->lang['photo']['no_name'] . ' (' . $file_name . ')');
+        $photo['description'] = $photo['description'] ?: ($work->lang['photo']['no_description'] . ' (' . $file_name . ')');
+
+        $query = [
+            'file' => ':file',
+            'name' => ':name',
+            'description' => ':desc',
+            'category' => ':cat',
+            'date_upload' => ':date',
+            'user_upload' => ':user',
+            'rate_user' => ':r_user',
+            'rate_moder' => ':r_moder'
+        ];
+        $params = [
+            ':file' => $file_name,
+            ':name' => $photo['name'],
+            ':desc' => $photo['description'],
+            ':cat' => $photo['category_id'],
+            ':date' => date('Y-m-d H:i:s'),
+            ':user' => $user->user['id'],
+            ':r_user' => '0',
+            ':r_moder' => '0'
+        ];
+
+        // Вставка данных в базу данных
+        $db->insert($query, TBL_PHOTO, 'ignore', ['params' => $params]);
+        $photo_id = $db->get_last_insert_id();
+
+        if ($photo_id > 0) {
+            // Если ID фотографии успешно получен, формируем URL для редиректа
+            $redirect_url = sprintf('%s?action=photo&id=%d', $work->config['site_url'], $photo_id);
+        } else {
+            // Удаляем файлы, если сохранение в БД не удалось
+            if (is_file($photo['path']) && is_writable($photo['path'])) {
+                unlink($photo['path']);
+            }
+            if (is_file($photo['thumbnail_path']) && is_writable($photo['thumbnail_path'])) {
+                unlink($photo['thumbnail_path']);
+            }
+            // Формируем URL для редиректа на форму загрузки
+            $redirect_url = sprintf('%s?action=photo&subact=upload', $work->config['site_url']);
         }
     } else {
-        $template->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
-        $photo_data['file'] = 'no_foto.png';
-        $template->add_string_ar(array(
-            'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['main']['no_foto'],
-            'L_DESCRIPTION_BLOCK' => $work->lang['main']['no_foto'],
-            'L_USER_ADD' => $work->lang['main']['user_add'],
-            'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
-            'L_DESCRIPTION_CATEGORY' => $work->lang['main']['description_of'] . ' ' . $work->lang['category']['of_category'],
-            'D_NAME_PHOTO' => $work->lang['main']['no_foto'],
-            'D_DESCRIPTION_PHOTO' => $work->lang['main']['no_foto'],
-            'D_USER_ADD' => $work->lang['main']['no_user_add'],
-            'D_NAME_CATEGORY' => $work->lang['main']['no_category'],
-            'D_DESCRIPTION_CATEGORY' => $work->lang['main']['no_category'],
-            'D_RATE_USER' => $work->lang['photo']['rate_user'] . ': ' . $work->lang['main']['no_foto'],
-            'D_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $work->lang['main']['no_foto'],
-            'U_CATEGORY' => $work->config['site_url'],
-            'U_USER_ADD' => '',
-            'U_PHOTO' => $work->config['site_url'] . '?action=attach&amp;foto=0'
-        ));
-
-        $photo['path'] = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $photo_data['file'];
+        // Редирект на форму загрузки в случае ошибки
+        $redirect_url = sprintf('%s?action=photo&subact=upload', $work->config['site_url']);
     }
+
+    // Выполняем редирект
+    header('Location: ' . $redirect_url);
+    exit;
+} else {
+    $template->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
+    $photo_data['file'] = 'no_foto.png';
+
+    $template->add_string_ar(array(
+        'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['main']['no_foto'],
+        'L_DESCRIPTION_BLOCK' => $work->lang['main']['no_foto'],
+        'L_USER_ADD' => $work->lang['main']['user_add'],
+        'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
+        'L_DESCRIPTION_CATEGORY' => $work->lang['main']['description_of'] . ' ' . $work->lang['category']['of_category'],
+        'D_NAME_PHOTO' => $work->lang['main']['no_foto'],
+        'D_DESCRIPTION_PHOTO' => $work->lang['main']['no_foto'],
+        'D_USER_ADD' => $work->lang['main']['no_user_add'],
+        'D_NAME_CATEGORY' => $work->lang['main']['no_category'],
+        'D_DESCRIPTION_CATEGORY' => $work->lang['main']['no_category'],
+        'D_RATE_USER' => $work->lang['photo']['rate_user'] . ': ' . $work->lang['main']['no_foto'],
+        'D_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $work->lang['main']['no_foto'],
+        'U_CATEGORY' => $work->config['site_url'],
+        'U_USER_ADD' => '',
+        'U_PHOTO' => sprintf('%s?action=attach&amp;foto=0', $work->config['site_url']),
+    ));
+
+    $photo['path'] = sprintf(
+        '%s%s/%s',
+        $work->config['site_dir'],
+        $work->config['gallery_folder'],
+        $photo_data['file']
+    );
 }
 
 if (!empty($photo['path'])) {
-    $size = getimagesize($photo['path']);
-
-    if ($max_photo_w === '0') {
-        $ratioWidth = 1;
-    } else {
-        $ratioWidth = $size[0] / $max_photo_w;
-    }
-    if ($max_photo_h === '0') {
-        $ratioHeight = 1;
-    } else {
-        $ratioHeight = $size[1] / $max_photo_h;
-    }
-
-    if ($size[0] < $max_photo_w && $size[1] < $max_photo_h && (int)$max_photo_w !== 0 && (int)$max_photo_h !== 0) {
-        $photo['width'] = $size[0];
-        $photo['height'] = $size[1];
-    } else {
-        if ($ratioWidth < $ratioHeight) {
-            $photo['width'] = $size[0] / $ratioHeight;
-            $photo['height'] = $size[1] / $ratioHeight;
-        } else {
-            $photo['width'] = $size[0] / $ratioWidth;
-            $photo['height'] = $size[1] / $ratioWidth;
-        }
-    }
+    $size_photo = $work->size_image($photo['path']);
     $template->add_string_ar(array(
-        'D_FOTO_WIDTH' => (string)$photo['width'],
-        'D_FOTO_HEIGHT' => (string)$photo['height']
+        'D_FOTO_WIDTH' => (string)$size_photo['width'],
+        'D_FOTO_HEIGHT' => (string)$size_photo['height']
     ));
 }
 
-if ((isset($_GET['subact']) && $_GET['subact'] === "uploaded" && $user->user['id'] !== 0 && $user->user['pic_upload'])) {
+if ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
+    '_GET',
+    'subact',
+    [
+            'isset' => true,
+            'empty' => true,
+        ]
+) && $_GET['subact'] === "uploaded") {
+    $redirect_url = $redirect_url ?? $work->config['site_url'];
     header('Location: ' . $redirect_url);
-    log_in_file('Hack attempt!', DIE_IF_ERROR);
+    exit;
 }

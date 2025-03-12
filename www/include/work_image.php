@@ -884,7 +884,6 @@ class Work_Image implements Work_Image_Interface
     {
         // Нормализация путей через realpath()
         $full_path = realpath($full_path);
-        $thumbnail_path = realpath($thumbnail_path);
         if (!$full_path || !$thumbnail_path) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный путь к файлу | \$full_path = $full_path, \$thumbnail_path = $thumbnail_path"

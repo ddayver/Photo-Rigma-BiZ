@@ -228,16 +228,6 @@ try {
     // Передаем объект Work в класс Template
     $template->set_work($work);
 
-    /** @var bool $header_footer
-     * @brief Флаг: выводить ли заголовок и подвал страницы.
-     */
-    $header_footer = true;
-
-    /** @var bool $template_output
-     * @brief Флаг: выводить ли обработанный шаблон.
-     */
-    $template_output = true;
-
     /** @var string $title
      * @brief Добавление текста к заголовку страницы.
      */
@@ -294,14 +284,11 @@ try {
 
     // Создание шаблона
     $template->create_template();
-    if ($header_footer) {
-        $template->page_header($title, $action);
-        $template->page_footer($user->session['login_id']);
-    }
-    if ($template_output) {
-        header('Content-Type: text/html; charset=UTF-8');
-        echo $template->content;
-    }
+    $template->page_header($title, $action);
+    $template->page_footer($user->session['login_id']);
+    header('Content-Type: text/html; charset=UTF-8');
+    echo $template->content;
+
 } catch (PDOException $e) {
     $type = "Ошибка базы данных";
 } catch (UnexpectedValueException $e) {
