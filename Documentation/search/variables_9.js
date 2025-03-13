@@ -10,5 +10,6 @@ var searchData=
   ['tbl_5frate_5fuser_7',['TBL_RATE_USER',['../db/d02/namespacePhotoRigma_1_1Include.html#a1ece13b85e14fdb7d1a6b62a6933fe89',1,'PhotoRigma::Include']]],
   ['tbl_5fusers_8',['TBL_USERS',['../db/d02/namespacePhotoRigma_1_1Include.html#a2a3024d0b4853a913d3baa522a035f91',1,'PhotoRigma::Include']]],
   ['template_5ffile_9',['template_file',['../de/d8e/namespacePhotoRigma_1_1Action.html#aa37f49d8322221dbe6f1bffe6c3640a9',1,'PhotoRigma::Action']]],
-  ['try_10',['try',['../de/d90/namespacePhotoRigma.html#abe4cc9788f52e49485473dc699537388',1,'PhotoRigma']]]
+  ['true_5fvalue_10',['TRUE_VALUE',['../de/d8e/namespacePhotoRigma_1_1Action.html#a411af7215df22ded09bf9da8186e5662',1,'PhotoRigma::Action']]],
+  ['try_11',['try',['../de/d90/namespacePhotoRigma.html#abe4cc9788f52e49485473dc699537388',1,'PhotoRigma']]]
 ];
