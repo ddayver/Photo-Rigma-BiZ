@@ -1,37 +1,39 @@
-                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
-                                <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                            <div class="ui stacked segments field_big block_border" style="border-radius: 15px;">
+                                <div class="ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
                                     <div class="small ui center aligned header">
                                         <i class="search icon"></i> {NAME_BLOCK}
                                     </div>
                                 </div>
                                 <form name="search" action="{U_SEARCH}" method="post">
-                                    <div class="ui grid">
-                                        <div class="row">
-                                            <div class="sixteen wide column">
-                                                <label>{L_SEARCH_TITLE}</label>
-                                                <div class="ui action input">
-                                                    <input class="form" size="50" type="text" name="search_text" value="{D_SEARCH_TEXT}" />
-                                                    <button class="ui button no_jquery" name="search" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
+                                    <div class="ui bottom attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57; padding-top: 15px !important; padding-bottom: 15px !important;">
+                                        <div class="ui center aligned grid">
+                                            <div class="row middle aligned tiny-space">
+                                                <div class="sixteen wide column">
+                                                    <label>{L_SEARCH_TITLE}:</label>
+                                                    <div class="small ui action input custom-input">
+                                                        <input class="small ui bordered input" type="text" name="search_text" value="{D_SEARCH_TEXT}" />
+                                                        <button class="small ui secondary basic inverted button" name="search" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row" style="margin-top: 15px;">
-                                            <div class="sixteen wide column">
-                                                <div class="ui checkbox">
-                                                    <input class="form" name="search_user" type="checkbox" value="true" {D_NEED_USER} />
-                                                    <label>{L_NEED_USER}</label>
-                                                </div>
-                                                <div class="ui checkbox">
-                                                    <input class="form" name="search_category" type="checkbox" value="true" {D_NEED_CATEGORY} />
-                                                    <label>{L_NEED_CATEGORY}</label>
-                                                </div>
-                                                <div class="ui checkbox">
-                                                    <input class="form" name="search_news" type="checkbox" value="true" {D_NEED_NEWS} />
-                                                    <label>{L_NEED_NEWS}</label>
-                                                </div>
-                                                <div class="ui checkbox">
-                                                    <input class="form" name="search_photo" type="checkbox" value="true" {D_NEED_PHOTO} />
-                                                    <label>{L_NEED_PHOTO}</label>
+                                            <div class="row middle aligned tiny-space">
+                                                <div class="sixteen wide column">
+                                                    <div class="ui checkbox">
+                                                        <input class="form" name="search_user" type="checkbox" value="true" {D_NEED_USER} />
+                                                        <label>{L_NEED_USER}</label>
+                                                    </div>
+                                                    <div class="ui checkbox">
+                                                        <input class="form" name="search_category" type="checkbox" value="true" {D_NEED_CATEGORY} />
+                                                        <label>{L_NEED_CATEGORY}</label>
+                                                    </div>
+                                                    <div class="ui checkbox">
+                                                        <input class="form" name="search_news" type="checkbox" value="true" {D_NEED_NEWS} />
+                                                        <label>{L_NEED_NEWS}</label>
+                                                    </div>
+                                                    <div class="ui checkbox">
+                                                        <input class="form" name="search_photo" type="checkbox" value="true" {D_NEED_PHOTO} />
+                                                        <label>{L_NEED_PHOTO}</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -39,70 +41,82 @@
                                 </form>
                             </div>
 <!-- IF_NEED_USER_BEGIN -->
-                            <div class="ui segment field_big">
-                                <div class="name_block">{L_FIND_USER}</div>
-                                <div class="category_center">
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
+                                <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                                    <div class="small ui center aligned header">
+                                        <i class="user icon"></i> {L_FIND_USER}
+                                    </div>
+                                </div>
+                                <div class="ui attached horizontal wrapping segments field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
 <!-- ARRAY_SEARCH_USER_BEGIN -->
 <!-- IF_USER_FIND_BEGIN -->
-                                    <div class="mini_photo_category">
+                                    <div class="ui compact inverted transparent segment" style="border-radius: 10px;">
                                         &nbsp;&bull;&nbsp;<a href="{U_USER_FIND}" title="{D_USER_FIND}">{D_USER_FIND}</a>
                                     </div>
 <!-- IF_USER_FIND_ELSE -->
-                                    <div class="mini_photo_category">{D_USER_FIND}</div>
+                                    <div class="ui inverted transpatent segment">{D_USER_FIND}</div>
 <!-- IF_USER_FIND_END -->
 <!-- ARRAY_SEARCH_USER_END -->
                                 </div>
                             </div>
 <!-- IF_NEED_USER_END -->
 <!-- IF_NEED_CATEGORY_BEGIN -->
-                            <div class="ui segment field_big">
-                                <div class="name_block">{L_FIND_CATEGORY}</div>
-<!-- ARRAY_SEARCH_CATEGORY_BEGIN -->
-                                <div class="category_center">
-<!-- IF_CATEGORY_FIND_BEGIN -->
-                                    <a href="{U_CATEGORY_FIND}" title="{D_CATEGORY_FIND_DESC}">{D_CATEGORY_FIND_NAME}</a>
-<!-- IF_CATEGORY_FIND_ELSE -->
-                                    <div>{D_CATEGORY_FIND}</div>
-<!-- IF_CATEGORY_FIND_END -->
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
+                                <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                                    <div class="small ui center aligned header">
+                                        <i class="images outline icon"></i>> {L_FIND_CATEGORY}
+                                    </div>
                                 </div>
+                                <div class="ui attached horizontal wrapping segments field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+<!-- ARRAY_SEARCH_CATEGORY_BEGIN -->
+<!-- IF_CATEGORY_FIND_BEGIN -->
+                                    <div class="ui compact inverted transparent segment" style="border-radius: 10px;">
+                                        &nbsp;&bull;&nbsp;<a href="{U_CATEGORY_FIND}" title="{D_CATEGORY_FIND_DESC}">{D_CATEGORY_FIND_NAME}</a>
+                                    </div>
+<!-- IF_CATEGORY_FIND_ELSE -->
+                                    <div class="ui inverted transpatent segment">{D_CATEGORY_FIND}</div>
+<!-- IF_CATEGORY_FIND_END -->
 <!-- ARRAY_SEARCH_CATEGORY_END -->
+                                </div>
                             </div>
 <!-- IF_NEED_CATEGORY_END -->
 <!-- IF_NEED_NEWS_BEGIN -->
-                            <div class="ui segment field_big">
-                                <div class="name_block">{L_FIND_NEWS}</div>
-<!-- ARRAY_SEARCH_NEWS_BEGIN -->
-                                <div class="category_center">
-<!-- IF_NEWS_FIND_BEGIN -->
-                                    <a href="{U_NEWS_FIND}" title="{D_NEWS_FIND_DESC}">{D_NEWS_FIND_NAME}</a>
-<!-- IF_NEWS_FIND_ELSE -->
-                                    <div>{D_NEWS_FIND}</div>
-<!-- IF_NEWS_FIND_END -->
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
+                                <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                                    <div class="small ui center aligned header">
+                                        <i class="newspaper icon"></i> {L_FIND_NEWS}
+                                    </div>
                                 </div>
+                                <div class="ui attached horizontal wrapping segments field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+<!-- ARRAY_SEARCH_NEWS_BEGIN -->
+<!-- IF_NEWS_FIND_BEGIN -->
+                                    <div class="ui compact inverted transparent segment" style="border-radius: 10px;">
+                                        &nbsp;&bull;&nbsp;<a href="{U_NEWS_FIND}" title="{D_NEWS_FIND_DESC}">{D_NEWS_FIND_NAME}</a>
+                                    </div>
+<!-- IF_NEWS_FIND_ELSE -->
+                                    <div class="ui inverted transpatent segment">{D_NEWS_FIND}</div>
+<!-- IF_NEWS_FIND_END -->
 <!-- ARRAY_SEARCH_NEWS_END -->
+                                </div>
                             </div>
 <!-- IF_NEED_NEWS_END -->
 <!-- IF_NEED_PHOTO_BEGIN -->
-                            <div class="ui segment field_big">
-                                <div class="name_block">{L_FIND_PHOTO}</div>
-                                <div class="category_center">
+                            <div class="ui segment field_big block_border" style="border-radius: 15px;">
+                                <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                                    <div class="small ui center aligned header">
+                                        <i class="image outline icon"></i> {L_FIND_PHOTO}
+                                    </div>
+                                </div>
+                                <div class="ui attached horizontal wrapping segments field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
 <!-- ARRAY_SEARCH_PHOTO_BEGIN -->
 <!-- IF_PHOTO_FIND_BEGIN -->
-                                    <div class="mini_photo_category">
-                                        <table cellpadding="1" cellspacing="0" border="0">
-                                            <tr>
-                                                <td class="mini_photo"></td>
-                                                <td class="mini_photo" height="{MAX_PHOTO_HEIGHT}">
-                                                    <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">
+                                    <div class="ui compact inverted transparent segment" style="border-radius: 10px;">
+                                                    <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}" class="ui rounded image">
                                                         <img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" />
                                                     </a>
-                                                </td>
-                                                <td class="mini_photo"></td>
-                                            </tr>
-                                        </table>
                                     </div>
 <!-- IF_PHOTO_FIND_ELSE -->
-                                    <div>{D_PHOTO_FIND}</div>
+                                    <div class="ui inverted transpatent segment">{D_PHOTO_FIND}</div>
 <!-- IF_PHOTO_FIND_END -->
 <!-- ARRAY_SEARCH_PHOTO_END -->
                                 </div>

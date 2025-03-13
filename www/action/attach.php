@@ -78,7 +78,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 // Проверка параметра 'foto'
-if ($user->user['pic_view'] || !$work->check_input('_GET', 'foto', [
+if (!$user->user['pic_view'] || !$work->check_input('_GET', 'foto', [
         'isset' => true,
         'empty' => true,
         'regexp' => '/^[0-9]+$/',

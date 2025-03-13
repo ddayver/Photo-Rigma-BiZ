@@ -141,7 +141,7 @@ if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true
     $raw_search_text = trim($_POST['search_text']); // Убираем лишние пробелы
 
     if ($raw_search_text === '*') {
-        $search_text = '%%'; // Поиск всех строк
+        $search_text = '%'; // Поиск всех строк
     } elseif (strlen($raw_search_text) > 2) {
         $search_text = '%' . $raw_search_text . '%'; // Добавляем символы для частичного поиска
     } else {
@@ -211,9 +211,9 @@ if ($search['category']) {
         '*', // Выбираем все поля
         TBL_CATEGORY, // Из таблицы категорий
         [
-            'where' => '`id` != 0 AND (`name` LIKE :search OR `description` LIKE :search)',
+            'where' => '`id` != 0 AND (`name` LIKE :search_name OR `description` LIKE :search_desc)',
             // Условие: поля name или description содержат $search_text
-            'params' => [':search' => $search_text]
+            'params' => [':search_name' => $search_text, ':search_desc' => $search_text]
             // Параметры для prepared statements
         ]
     );
@@ -248,9 +248,9 @@ if ($search['news']) {
         '*', // Выбираем все поля
         TBL_NEWS, // Из таблицы новостей
         [
-            'where' => '`name_post` LIKE :search OR `text_post` LIKE :search',
+            'where' => '`name_post` LIKE :search_name OR `text_post` LIKE :search_text',
             // Условие: поля name_post или text_post содержат $search_text
-            'params' => [':search' => $search_text]
+            'params' => [':search_name' => $search_text, ':search_text' => $search_text]
             // Параметры для prepared statements
         ]
     );
@@ -285,9 +285,9 @@ if ($search['photo']) {
         'id', // Выбираем только id фотографий
         TBL_PHOTO, // Из таблицы фотографий
         [
-            'where' => '`name` LIKE :search OR `description` LIKE :search',
+            'where' => '`name` LIKE :search_name OR `description` LIKE :search_desc',
             // Условие: поля name или description содержат $search_text
-            'params' => [':search' => $search_text]
+            'params' => [':search_name' => $search_text, ':search_desc' => $search_text]
             // Параметры для prepared statements
         ]
     );
