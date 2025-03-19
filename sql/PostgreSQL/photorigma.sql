@@ -16,37 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
-ALTER TABLE ONLY public.users DROP CONSTRAINT users_login_key;
-ALTER TABLE ONLY public.rate_user DROP CONSTRAINT rate_user_pkey;
-ALTER TABLE ONLY public.rate_moder DROP CONSTRAINT rate_moder_pkey;
-ALTER TABLE ONLY public.photo DROP CONSTRAINT photo_pkey;
-ALTER TABLE ONLY public.news DROP CONSTRAINT news_pkey;
-ALTER TABLE ONLY public.menu DROP CONSTRAINT menu_pkey;
-ALTER TABLE ONLY public.groups DROP CONSTRAINT group_pkey;
-ALTER TABLE ONLY public.db_version DROP CONSTRAINT db_version_pkey;
-ALTER TABLE ONLY public.config DROP CONSTRAINT config_pkey;
-ALTER TABLE ONLY public.category DROP CONSTRAINT category_pkey;
-ALTER TABLE public.users ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.photo ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.news ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.menu ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.category ALTER COLUMN id DROP DEFAULT;
-DROP SEQUENCE public.users_id_seq;
-DROP TABLE public.users;
-DROP TABLE public.rate_user;
-DROP TABLE public.rate_moder;
-DROP SEQUENCE public.photo_id_seq;
-DROP TABLE public.photo;
-DROP SEQUENCE public.news_id_seq;
-DROP TABLE public.news;
-DROP SEQUENCE public.menu_id_seq;
-DROP TABLE public.menu;
-DROP TABLE public.groups;
-DROP TABLE public.db_version;
-DROP TABLE public.config;
-DROP SEQUENCE public.category_id_seq;
-DROP TABLE public.category;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -620,7 +589,8 @@ CREATE TABLE public.users (
     date_last_activ timestamp without time zone,
     date_last_logout timestamp without time zone,
     group_id integer DEFAULT 0 NOT NULL,
-    user_rights jsonb
+    user_rights jsonb,
+    theme character varying(32) DEFAULT 'default'::character varying NOT NULL
 );
 
 
@@ -718,6 +688,13 @@ COMMENT ON COLUMN public.users.user_rights IS 'Права доступа';
 
 
 --
+-- Name: COLUMN users.theme; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.theme IS 'Тема сайта';
+
+
+--
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
 --
 
@@ -778,103 +755,123 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.category VALUES (0, 'user', 'Пользовательский альбом', 'Персональный пользовательский альбом');
+COPY public.category (id, folder, name, description) FROM stdin;
+0	user	Пользовательский альбом	Персональный пользовательский альбом
+\.
 
 
 --
 -- Data for Name: config; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.config VALUES ('best_user', '5');
-INSERT INTO public.config VALUES ('copyright_text', 'Проекты Rigma.BiZ');
-INSERT INTO public.config VALUES ('copyright_url', 'http://rigma.biz/');
-INSERT INTO public.config VALUES ('copyright_year', '2008-2013');
-INSERT INTO public.config VALUES ('gal_width', '95%');
-INSERT INTO public.config VALUES ('language', 'russian');
-INSERT INTO public.config VALUES ('last_news', '5');
-INSERT INTO public.config VALUES ('left_panel', '250');
-INSERT INTO public.config VALUES ('max_avatar_h', '100');
-INSERT INTO public.config VALUES ('max_avatar_w', '100');
-INSERT INTO public.config VALUES ('max_file_size', '2M');
-INSERT INTO public.config VALUES ('max_photo_h', '480');
-INSERT INTO public.config VALUES ('max_photo_w', '640');
-INSERT INTO public.config VALUES ('max_rate', '2');
-INSERT INTO public.config VALUES ('meta_description', 'Rigma.BiZ - фотогалерея Gold Rigma');
-INSERT INTO public.config VALUES ('meta_keywords', 'Rigma.BiZ photo gallery Gold Rigma');
-INSERT INTO public.config VALUES ('right_panel', '250');
-INSERT INTO public.config VALUES ('temp_photo_h', '200');
-INSERT INTO public.config VALUES ('temp_photo_w', '200');
-INSERT INTO public.config VALUES ('themes', 'default');
-INSERT INTO public.config VALUES ('title_description', 'Фотогалерея Rigma и Co');
-INSERT INTO public.config VALUES ('title_name', 'Rigma Foto');
-INSERT INTO public.config VALUES ('time_user_online', '900');
+COPY public.config (name, value) FROM stdin;
+best_user	5
+copyright_text	Проекты Rigma.BiZ
+copyright_url	http://rigma.biz/
+copyright_year	2008-2013
+gal_width	95%
+language	russian
+last_news	5
+left_panel	250
+max_avatar_h	100
+max_avatar_w	100
+max_file_size	2M
+max_photo_h	480
+max_photo_w	640
+max_rate	2
+meta_description	Rigma.BiZ - фотогалерея Gold Rigma
+meta_keywords	Rigma.BiZ photo gallery Gold Rigma
+right_panel	250
+temp_photo_h	200
+temp_photo_w	200
+themes	default
+title_description	Фотогалерея Rigma и Co
+title_name	Rigma Foto
+time_user_online	900
+\.
 
 
 --
 -- Data for Name: db_version; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.db_version VALUES ('0.4.0');
+COPY public.db_version (ver) FROM stdin;
+0.4.0
+\.
 
 
 --
 -- Data for Name: groups; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.groups VALUES (0, 'Гость', '{"admin": 0, "cat_user": 0, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 0, "comment_add": 0, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 0, "pic_rate_moder": 0, "comment_moderate": 0}');
-INSERT INTO public.groups VALUES (1, 'Пользователь', '{"admin": 0, "cat_user": 1, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 1, "pic_rate_moder": 0, "comment_moderate": 0}');
-INSERT INTO public.groups VALUES (2, 'Модератор', '{"admin": 0, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 0, "pic_rate_moder": 1, "comment_moderate": 1}');
-INSERT INTO public.groups VALUES (3, 'Администратор', '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}');
+COPY public.groups (id, name, user_rights) FROM stdin;
+0	Гость	{"admin": 0, "cat_user": 0, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 0, "comment_add": 0, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 0, "pic_rate_moder": 0, "comment_moderate": 0}
+1	Пользователь	{"admin": 0, "cat_user": 1, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 1, "pic_rate_moder": 0, "comment_moderate": 0}
+2	Модератор	{"admin": 0, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 0, "pic_rate_moder": 1, "comment_moderate": 1}
+3	Администратор	{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}
+\.
 
 
 --
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.menu VALUES (1, 'main', './', 'home', 1, 1, NULL, NULL);
-INSERT INTO public.menu VALUES (2, 'regist', '?action=profile&subact=regist', 'regist', 1, 1, 0, NULL);
-INSERT INTO public.menu VALUES (3, 'category', '?action=category', 'category', 1, 1, NULL, NULL);
-INSERT INTO public.menu VALUES (4, 'user_category', '?action=category&cat=user', 'user_category', 0, 1, NULL, NULL);
-INSERT INTO public.menu VALUES (5, 'you_category', '?action=category&cat=user&id=curent', 'you_category', 0, 1, 1, 'cat_user');
-INSERT INTO public.menu VALUES (6, 'upload', '?action=photo&subact=upload', 'upload', 0, 1, 1, 'pic_upload');
-INSERT INTO public.menu VALUES (7, 'add_category', '?action=category&subact=add', 'add_category', 0, 1, 1, 'cat_moderate');
-INSERT INTO public.menu VALUES (8, 'search', '?action=search', 'search', 1, 1, NULL, NULL);
-INSERT INTO public.menu VALUES (9, 'news', '?action=news', 'news', 1, 1, NULL, 'news_view');
-INSERT INTO public.menu VALUES (10, 'news_add', '?action=news&subact=add', 'news_add', 0, 1, 1, 'news_add');
-INSERT INTO public.menu VALUES (11, 'profile', '?action=profile&subact=profile', 'profile', 1, 1, 1, NULL);
-INSERT INTO public.menu VALUES (12, 'admin', '?action=admin', 'admin', 1, 1, 1, 'admin');
-INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', 'logout', 1, 1, 1, NULL);
+COPY public.menu (id, action, url_action, name_action, short, long, user_login, user_access) FROM stdin;
+1	main	./	home	1	1	\N	\N
+2	regist	?action=profile&subact=regist	regist	1	1	0	\N
+3	category	?action=category	category	1	1	\N	\N
+4	user_category	?action=category&cat=user	user_category	0	1	\N	\N
+5	you_category	?action=category&cat=user&id=curent	you_category	0	1	1	cat_user
+6	upload	?action=photo&subact=upload	upload	0	1	1	pic_upload
+7	add_category	?action=category&subact=add	add_category	0	1	1	cat_moderate
+8	search	?action=search	search	1	1	\N	\N
+9	news	?action=news	news	1	1	\N	news_view
+10	news_add	?action=news&subact=add	news_add	0	1	1	news_add
+11	profile	?action=profile&subact=profile	profile	1	1	1	\N
+12	admin	?action=admin	admin	1	1	1	admin
+13	logout	?action=profile&subact=logout	logout	1	1	1	\N
+\.
 
 
 --
 -- Data for Name: news; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
+COPY public.news (id, data_post, data_last_edit, user_post, name_post, text_post) FROM stdin;
+\.
 
 
 --
 -- Data for Name: photo; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
+COPY public.photo (id, file, name, description, category, date_upload, user_upload, rate_user, rate_moder) FROM stdin;
+\.
 
 
 --
 -- Data for Name: rate_moder; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
+COPY public.rate_moder (id_foto, id_user, rate) FROM stdin;
+\.
 
 
 --
 -- Data for Name: rate_user; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
+COPY public.rate_user (id_foto, id_user, rate) FROM stdin;
+\.
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-02-28 21:04:24', '2025-02-27 09:45:08', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}');
+COPY public.users (id, login, password, real_name, email, avatar, language, date_regist, date_last_activ, date_last_logout, group_id, user_rights, theme) FROM stdin;
+1	admin	$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW	Администратор	admin@rigma.biz	no_avatar.jpg	russian	2009-01-20 12:31:35	2025-02-28 21:04:24	2025-02-27 09:45:08	3	{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}	default
+\.
 
 
 --
@@ -1003,5 +1000,4 @@ ALTER TABLE ONLY public.users
 --
 -- PostgreSQL database dump complete
 --
-
 

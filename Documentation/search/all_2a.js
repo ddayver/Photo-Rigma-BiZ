@@ -5,7 +5,7 @@ var searchData=
   ['переменные_20для_20новостей_2',['Переменные для новостей',['../d8/da1/group__LanguageRussianNews.html',1,'']]],
   ['переменные_20для_20поиска_3',['Переменные для поиска',['../d6/d51/group__LanguageRussianSearch.html',1,'']]],
   ['переменные_20для_20пунктов_20меню_20сайта_4',['Переменные для пунктов меню сайта',['../d9/d53/group__LanguageRussianMenu.html',1,'']]],
-  ['переменные_20для_20регистрации_20и_20входа_5',['Переменные для регистрации и входа',['../df/d6b/group__LanguageRussianLogin.html',1,'']]],
+  ['переменные_20для_20регистрации_20и_20вxода_5',['Переменные для регистрации и вxода',['../df/d6b/group__LanguageRussianLogin.html',1,'']]],
   ['переменные_20для_20фотографий_6',['Переменные для фотографий',['../d2/d55/group__LanguageRussianPhoto.html',1,'']]],
   ['планы_20на_20будущее_7',['Планы на будущее',['../index.html#autotoc_md79',1,'']]],
   ['поддиректории_8',['Поддиректории',['..//home/victoria/Photo-Rigma-BiZ/www/gallery/README.md#autotoc_md10',1,'Поддиректории'],['..//home/victoria/Photo-Rigma-BiZ/www/thumbnail/README.md#autotoc_md13',1,'Поддиректории']]],

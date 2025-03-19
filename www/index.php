@@ -80,6 +80,7 @@ use RuntimeException;
 use Throwable;
 use UnexpectedValueException;
 
+use function PhotoRigma\Include\archive_old_logs;
 use function PhotoRigma\Include\log_in_file;
 
 // Устанавливаем кодировку для работы с мультибайтовыми строками
@@ -161,6 +162,9 @@ try {
     foreach ($required_files as $file) {
         require_once $file;
     }
+
+    // Архивирование старых логов
+    archive_old_logs();
 
     /** @var PhotoRigma::Classes $db ::Database $db
      * @brief Создание объекта класса Database для работы с основной БД.

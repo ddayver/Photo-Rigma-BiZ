@@ -689,11 +689,10 @@ class Work_Template implements Work_Template_Interface
 
             if ($menu_item['user_access'] !== null) {
                 // user_access: NULL - всем, иначе проверяем значение в $this->user->user
-                if (!isset($this->user->user[$menu_item['user_access']]) || $this->user->user[$menu_item['user_access']] !== 1) {
+                if (empty($this->user->user[$menu_item['user_access']])) {
                     $is_visible = false;
                 }
             }
-
             // Если пункт меню видим, добавляем его в результат
             if ($is_visible) {
                 // Очищаем данные с использованием Work::clean_field() (статический метод с расширенными проверками)

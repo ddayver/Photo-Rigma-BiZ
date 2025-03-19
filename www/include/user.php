@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection HashTimingAttacksInspection */
+
 /**
  * @file        include/user.php
  * @brief       Класс для управления пользователями, включая регистрацию, аутентификацию, управление профилем и хранение текущих настроек пользователя.
@@ -363,11 +365,11 @@ interface User_Interface
 class User implements User_Interface
 {
     // Свойства
-    public const string DEFAULT_AVATAR = 'no_avatar.jpg'; ///< Массив, содержащий все данные о текущем пользователе.
-    private array $user = []; ///< Объект для работы с базой данных.
-    private Database_Interface $db; ///< Массив, привязанный к глобальному массиву $_SESSION
-    private array $session; ///< Массив с полями наименований прав доступа
-    private array $user_right_fields = []; ///< Константа для значения аватара по умолчанию
+    public const string DEFAULT_AVATAR = 'no_avatar.jpg'; ///< Константа для значения аватара по умолчанию
+    private array $user = []; ///< Массив, содержащий все данные о текущем пользователе.
+    private Database_Interface $db; ///< Объект для работы с базой данных.
+    private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
+    private array $user_right_fields = []; ///< Массив с полями наименований прав доступа
 
     /**
      * @brief Конструктор класса.
@@ -481,6 +483,12 @@ class User implements User_Interface
             // Если права группы отсутствуют, сохраняем пустой массив
             $this->user_right_fields['group'] = [];
         }
+
+        // Объединяем поля прав в один массив
+        $this->user_right_fields['all'] = array_unique(array_merge(
+            $this->user_right_fields['user'],
+            $this->user_right_fields['group']
+        ));
     }
 
     /**
@@ -512,7 +520,7 @@ class User implements User_Interface
      * $rights = $this->process_user_rights('{"edit": 1, "delete": 0}');
      * @endcode
      */
-    private function process_user_rights(string $user_rights): array
+    public function process_user_rights(string $user_rights): array
     {
         // Проверяем, существует ли поле user_rights
         if (!isset($user_rights)) {
@@ -676,9 +684,6 @@ class User implements User_Interface
             return;
         }
 
-        // Удаляем конфиденциальное поле password из данных пользователя
-        unset($user_data['password']);
-
         // Удаляем поле user_rights из данных пользователя
         $user_rights = $user_data['user_rights'] ?? null;
         if (is_array($user_data)) {
@@ -781,6 +786,58 @@ class User implements User_Interface
     }
 
     /**
+     * @brief Метод преобразует массив прав пользователя в строку JSON.
+     *
+     * @details Метод выполняет следующие шаги:
+     *          1. Проверяет, существует ли входной массив. Если массив отсутствует или пуст, возвращается пустая строка.
+     *          2. Проверяет, что входное значение является массивом. Если тип данных некорректен, выбрасывается исключение.
+     *          3. Кодирует массив в строку JSON. Если кодирование завершается с ошибкой, выбрасывается исключение.
+     *          4. Возвращает строку JSON, готовую для сохранения в поле `user_rights`.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     *
+     * @param array $rights Массив прав пользователя. Может быть ассоциативным массивом, пустым значением или `null`.
+     *                      Если значение не является массивом, выбрасывается исключение.
+     *
+     * @return string Строка JSON, представляющая права пользователя. Если массив отсутствует или содержит некорректные данные,
+     *                возвращается пустая строка.
+     *
+     * @throws InvalidArgumentException Если входное значение не является массивом.
+     * @throws InvalidArgumentException Если возникает ошибка при кодировании массива в JSON.
+     * @throws JsonException
+     *
+     * @note Метод возвращает пустую строку, если массив прав отсутствует или содержит некорректные данные.
+     * @warning Входные данные должны быть корректным массивом. Некорректные данные могут привести к исключению.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $json = $this->encode_user_rights(['edit' => 1, 'delete' => 0]);
+     * @endcode
+     */
+    public function encode_user_rights(array $rights): string
+    {
+        // Проверяем, существует ли массив прав
+        if (!isset($rights)) {
+            return '';
+        }
+
+        // Кодируем массив в JSON
+        $json = json_encode($rights, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        // Проверяем наличие ошибок при кодировании
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка кодирования JSON | " . json_last_error_msg(
+                )
+            );
+        }
+
+        // Возвращаем строку JSON
+        return is_string($json) ? $json : '';
+    }
+
+    /**
      * @brief Получает значение приватного свойства.
      *
      * @details Метод позволяет получить доступ к приватным свойствам `$user` и `$session`.
@@ -790,19 +847,21 @@ class User implements User_Interface
      * @callgraph
      *
      * @param string $name Имя свойства:
-     *                     - Допустимые значения: 'user', 'session'.
+     *                     - Допустимые значения: 'user', 'session', 'user_right_fields'.
      *                     - Если указано другое имя, выбрасывается исключение.
      *
-     * @return array Значение запрашиваемого свойства (`$user` или `$session`).
+     * @return array Значение запрашиваемого свойства (`$user`, `$session` или `$user_right_fields`).
      *
      * @throws InvalidArgumentException Если запрашиваемое свойство не существует.
      *
-     * @note Этот метод предназначен только для доступа к свойствам `$user` и `$session`.
+     * @note Этот метод предназначен только для доступа к свойствам `$user`, `$session` и `$user_right_fields`.
      * @warning Не используйте этот метод для доступа к другим свойствам, так как это вызовет исключение.
      *
      * @see User::$session Свойство, привязанное к глобальному массиву $_SESSION.
      *
      * @see User::$user Свойство, содержащее данные о текущем пользователе.
+     *
+     * @see User::$user_right_fields Свойство, содержащее допустимые значения прав пользоватлей и груп.
      * @todo Добавить скрытый "шифрованный ключ" к массиву `$session` для повышения безопасности.
      *
      * Пример использования метода:
@@ -810,6 +869,7 @@ class User implements User_Interface
      * $user = new User($db, $_SESSION);
      * echo $user->user['name']; // Выведет: Имя пользователя (если установлено)
      * echo $user->session['user_id']; // Выведет: ID пользователя из сессии
+     * print_r($user->user_right_fields['user']); // Выведет список допустимых полей прав пользователя
      * @endcode
      */
     public function &__get(string $name): array
@@ -820,6 +880,9 @@ class User implements User_Interface
                 break;
             case 'session':
                 $result = &$this->session;
+                break;
+            case 'user_right_fields':
+                $result = &$this->user_right_fields;
                 break;
             default:
                 throw new InvalidArgumentException(
@@ -905,6 +968,11 @@ class User implements User_Interface
         $this->$name = $current_value;
     }
 
+    public function __isset(string $name): bool
+    {
+        return isset($this->$name);
+    }
+
     /**
      * @brief Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.
      *
@@ -930,6 +998,7 @@ class User implements User_Interface
      * @return int ID нового пользователя, если регистрация успешна, или 0 в случае ошибки.
      *
      * @throws RuntimeException Если группа по умолчанию не найдена в базе данных.
+     * @throws Exception
      *                           Пример сообщения: "Не удалось получить данные группы по умолчанию."
      *
      * @note Используется CAPTCHA для защиты от автоматической регистрации.
@@ -1174,6 +1243,7 @@ class User implements User_Interface
      *             Возвращается 0, если данные не изменились или запрос завершился ошибкой.
      *
      * @throws RuntimeException Выбрасывается исключение если пользователь с указанным `$user_id` не найден в базе данных.
+     * @throws Exception
      *
      * @note Метод зависит от корректной конфигурации базы данных.
      *
@@ -1343,6 +1413,7 @@ class User implements User_Interface
      *                если загрузка аватара была отменена или произошла ошибка.
      *
      * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     * @throws Exception
      *                           - Директория для аватаров недоступна для записи.
      *                           - Не удалось переместить загруженный файл.
      *
@@ -1544,36 +1615,36 @@ class User implements User_Interface
                 // Пароль неверный
                 header('Location: ' . $redirect_url);
                 exit;
-            } else {
-                // Пароль верный, но хранится в формате md5. Преобразуем его в формат password_hash()
-                $new_password_hash = password_hash($post['password'], PASSWORD_BCRYPT);
+            }
 
-                // Обновляем пароль в базе данных
-                $this->db->update(
-                    ['`password`' => ':password'], // Данные для обновления
-                    TBL_USERS, // Таблица
-                    [
-                        'where' => '`id` = :id', // Условие WHERE
-                        'params' => [
-                            ':password' => $new_password_hash,
-                            ':id' => $user_data['id']
-                        ]
+            // Пароль верный, но хранится в формате md5. Преобразуем его в формат password_hash()
+            $new_password_hash = password_hash($post['password'], PASSWORD_BCRYPT);
+
+            // Обновляем пароль в базе данных
+            $this->db->update(
+                ['`password`' => ':password'], // Данные для обновления
+                TBL_USERS, // Таблица
+                [
+                    'where' => '`id` = :id', // Условие WHERE
+                    'params' => [
+                        ':password' => $new_password_hash,
+                        ':id' => $user_data['id']
                     ]
-                );
+                ]
+            );
 
-                // Проверяем результат обновления
-                $rows = $this->db->get_affected_rows();
-                if ($rows > 0) {
-                    // Пароль успешно обновлён
-                    log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
-                    );
-                } else {
-                    // Ошибка при обновлении пароля
-                    log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
-                    );
-                }
+            // Проверяем результат обновления
+            $rows = $this->db->get_affected_rows();
+            if ($rows > 0) {
+                // Пароль успешно обновлён
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
+                );
+            } else {
+                // Ошибка при обновлении пароля
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
+                );
             }
         }
 

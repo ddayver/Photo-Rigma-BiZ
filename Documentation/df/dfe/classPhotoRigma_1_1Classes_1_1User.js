@@ -2,6 +2,7 @@ var classPhotoRigma_1_1Classes_1_1User =
 [
     [ "__construct", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0524c883699d2510258de9ed3b7b3194", null ],
     [ "__get", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a96d631a05b563f91f5494b409b357cbc", null ],
+    [ "__isset", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0c45daa80235f514090aa7789f5e93b3", null ],
     [ "__set", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
     [ "add_new_group", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd", null ],
     [ "add_new_user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc4c7a4c4f01e32b4540c3d03f45aeb2", null ],
@@ -10,6 +11,7 @@ var classPhotoRigma_1_1Classes_1_1User =
     [ "delete_group", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961", null ],
     [ "delete_user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb", null ],
     [ "edit_avatar", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a93574eaa3191f6cb217b7342793eec34", null ],
+    [ "encode_user_rights", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078", null ],
     [ "initialize_user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4ed2627b2e687e62000e77ada58d072f", null ],
     [ "load_authenticated_user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9", null ],
     [ "load_guest_user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc", null ],

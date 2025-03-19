@@ -5,45 +5,45 @@ ALTER TABLE `user` ADD `user_rights` JSON NULL COMMENT 'Права доступ�
 -- 3. Заполнение нового столбца `user_rights` в таблице `user` JSON-данными
 UPDATE `user`
 SET `user_rights` = JSON_OBJECT(
-    'pic_view', pic_view,
-    'pic_rate_user', pic_rate_user,
-    'pic_rate_moder', pic_rate_moder,
-    'pic_upload', pic_upload,
-    'pic_moderate', pic_moderate,
-    'cat_moderate', cat_moderate,
-    'cat_user', cat_user,
-    'comment_view', comment_view,
-    'comment_add', comment_add,
-    'comment_moderate', comment_moderate,
-    'news_view', news_view,
-    'news_add', news_add,
-    'news_moderate', news_moderate,
-    'admin', admin
+    'pic_view', pic_view = 1,
+    'pic_rate_user', pic_rate_user = 1,
+    'pic_rate_moder', pic_rate_moder = 1,
+    'pic_upload', pic_upload = 1,
+    'pic_moderate', pic_moderate = 1,
+    'cat_moderate', cat_moderate = 1,
+    'cat_user', cat_user = 1,
+    'comment_view', comment_view = 1,
+    'comment_add', comment_add = 1,
+    'comment_moderate', comment_moderate = 1,
+    'news_view', news_view = 1,
+    'news_add', news_add = 1,
+    'news_moderate', news_moderate = 1,
+    'admin', admin = 1
 );
 -- 4. Удаление старых полей в таблице `user`
--- ALTER TABLE `user` DROP COLUMN pic_view, DROP COLUMN pic_rate_user, DROP COLUMN pic_rate_moder, DROP COLUMN pic_upload, DROP COLUMN pic_moderate, DROP COLUMN cat_moderate, DROP COLUMN cat_user, DROP COLUMN comment_view, DROP COLUMN comment_add, DROP COLUMN comment_moderate, DROP COLUMN news_view, DROP COLUMN news_add, DROP COLUMN news_moderate, DROP COLUMN admin;
+ALTER TABLE `user` DROP COLUMN pic_view, DROP COLUMN pic_rate_user, DROP COLUMN pic_rate_moder, DROP COLUMN pic_upload, DROP COLUMN pic_moderate, DROP COLUMN cat_moderate, DROP COLUMN cat_user, DROP COLUMN comment_view, DROP COLUMN comment_add, DROP COLUMN comment_moderate, DROP COLUMN news_view, DROP COLUMN news_add, DROP COLUMN news_moderate, DROP COLUMN admin;
 -- 5. Добавление нового столбца `user_rights` после столбца `admin` в таблице `group`
 ALTER TABLE `group` ADD `user_rights` JSON NULL COMMENT 'Права доступа' AFTER `admin`;
 -- 6. Заполнение нового столбца `user_rights` в таблице `group` JSON-данными
 UPDATE `group`
 SET `user_rights` = JSON_OBJECT(
-    'pic_view', pic_view,
-    'pic_rate_user', pic_rate_user,
-    'pic_rate_moder', pic_rate_moder,
-    'pic_upload', pic_upload,
-    'pic_moderate', pic_moderate,
-    'cat_moderate', cat_moderate,
-    'cat_user', cat_user,
-    'comment_view', comment_view,
-    'comment_add', comment_add,
-    'comment_moderate', comment_moderate,
-    'news_view', news_view,
-    'news_add', news_add,
-    'news_moderate', news_moderate,
-    'admin', admin
+    'pic_view', pic_view = 1,
+    'pic_rate_user', pic_rate_user = 1,
+    'pic_rate_moder', pic_rate_moder = 1,
+    'pic_upload', pic_upload = 1,
+    'pic_moderate', pic_moderate = 1,
+    'cat_moderate', cat_moderate = 1,
+    'cat_user', cat_user = 1,
+    'comment_view', comment_view = 1,
+    'comment_add', comment_add = 1,
+    'comment_moderate', comment_moderate = 1,
+    'news_view', news_view = 1,
+    'news_add', news_add = 1,
+    'news_moderate', news_moderate = 1,
+    'admin', admin = 1
 );
 -- 7. Удаление старых полей в таблице `group`
--- ALTER TABLE `group` DROP COLUMN pic_view, DROP COLUMN pic_rate_user, DROP COLUMN pic_rate_moder, DROP COLUMN pic_upload, DROP COLUMN pic_moderate, DROP COLUMN cat_moderate, DROP COLUMN cat_user, DROP COLUMN comment_view, DROP COLUMN comment_add, DROP COLUMN comment_moderate, DROP COLUMN news_view, DROP COLUMN news_add, DROP COLUMN news_moderate, DROP COLUMN admin;
+ALTER TABLE `group` DROP COLUMN pic_view, DROP COLUMN pic_rate_user, DROP COLUMN pic_rate_moder, DROP COLUMN pic_upload, DROP COLUMN pic_moderate, DROP COLUMN cat_moderate, DROP COLUMN cat_user, DROP COLUMN comment_view, DROP COLUMN comment_add, DROP COLUMN comment_moderate, DROP COLUMN news_view, DROP COLUMN news_add, DROP COLUMN news_moderate, DROP COLUMN admin;
 
 -- 8. Изменение описания по-умолчанию.
 UPDATE `config` SET `value` = 'Фотогалерея Rigma и Co' WHERE `config`.`name` = 'title_description'

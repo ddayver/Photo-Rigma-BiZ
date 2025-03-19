@@ -17,11 +17,6 @@
  * - Управление группами (редактирование, изменение прав).
  * - Логирование ошибок и подозрительных действий.
  *
- * @throws      RuntimeException Если возникают ошибки при выполнении административных действий.
- *              Пример сообщения: "Ошибка при обновлении настроек | Настройка: {$name}".
- * @throws      LogicException Если не удалось получить данные группы или пользователя.
- *              Пример сообщения: "Не удалось получить данные группы | ID: {$group_id}".
- *
  * @author      Dark Dayver
  * @version     0.4.0
  * @date        2025-03-12
@@ -51,6 +46,7 @@ use PhotoRigma\Classes\Database;
 use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
+use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
 
@@ -71,155 +67,201 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die("HACK!");
 }
 
+// Устанавливаем шаблон для административной панели
 $template->template_file = 'admin.html';
-$template->add_if_ar(array(
-    'SESSION_ADMIN_ON' => false,
-    'NEED_FIND' => false,
-    'NEED_USER' => false,
-    'FIND_USER' => false,
-    'SELECT_GROUP' => false,
-    'EDIT_GROUP' => false
-));
 
-if ((!$work->check_session(
-    'admin_on',
-    true
-) || $_SESSION['admin_on'] !== true) && $user->user['admin'] && $work->check_post(
-    'admin_password',
-    true,
-    true
-) && $user->user['password'] == md5(
-    $_POST['admin_password']
-)) { // если не открыта сессия для Админа, пользователь имеет право на вход в Админку, был передан пароль для входа и пароль совпадает с паролем пользователя, то...
-    $_SESSION['admin_on'] = true; // открываем сессию для Админа
+// Инициализация флагов для шаблона
+$template->add_if_ar([
+    'SESSION_ADMIN_ON' => false, // Флаг активности сессии администратора
+    'NEED_FIND' => false,        // Флаг необходимости поиска
+    'NEED_USER' => false,        // Флаг необходимости отображения пользователей
+    'FIND_USER' => false,        // Флаг найденных пользователей
+    'SELECT_GROUP' => false,     // Флаг выбора группы
+    'EDIT_GROUP' => false        // Флаг редактирования группы
+]);
+
+// Проверяем условия для входа в административную панель
+if (// Если сессия администратора не активна
+    (!$work->check_input(
+        '_SESSION',
+        'admin_on',
+        ['isset' => true]
+    ) || !$user->session['admin_on']) && // И пользователь имеет права администратора
+    $user->user['admin'] && // И был передан пароль через POST-запрос
+    $work->check_input('_POST', 'admin_password', ['isset' => true, 'empty' => true])) {
+    // Инициализация данных о попытках входа в сессии
+    if (!isset($user->session['login_attempts'])) {
+        $user->session['login_attempts'] = 0;
+    }
+    if (!isset($user->session['last_attempt_time'])) {
+        $user->session['last_attempt_time'] = 0;
+    }
+
+    // Текущее время
+    $current_time = time();
+
+    // Проверяем, прошло ли достаточно времени с момента последней попытки
+    if ($current_time - $user->session['last_attempt_time'] > LOCKOUT_TIME) {
+        // Сбрасываем счетчик попыток, если время истекло
+        $user->session['login_attempts'] = 0;
+    }
+
+    // Проверяем, не превышено ли количество попыток
+    if ($user->session['login_attempts'] >= MAX_LOGIN_ATTEMPTS) {
+        // Логируем блокировку
+        log_in_file(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь заблокирован из-за превышения попыток входа | ID пользователя: {$user->user['id']}"
+        );
+
+        // Выводим сообщение об ошибке и завершаем выполнение
+        die(sprintf($work->lang['lockout_time'], LOCKOUT_TIME / 60));
+    }
+
+    // Проверяем пароль
+    if (password_verify($_POST['admin_password'], $user->user['password'])) {
+        // Открываем сессию для администратора
+        $user->session['admin_on'] = true;
+
+        // Сбрасываем счетчик попыток при успешном входе
+        $user->session['login_attempts'] = 0;
+
+        // Логируем успешный вход
+        log_in_file(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Администратор успешно вошел в систему | ID пользователя: {$user->user['id']}"
+        );
+    } else {
+        // Увеличиваем счетчик неудачных попыток
+        $user->session['login_attempts']++;
+        $user->session['last_attempt_time'] = $current_time;
+
+        // Логируем неудачную попытку входа
+        log_in_file(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неудачная попытка входа в административную панель | ID пользователя: {$user->user['id']}"
+        );
+
+        // Перенаправляем пользователя на главную страницу
+        header('Location: ' . $work->config['site_url']);
+        exit;
+    }
 }
 
-if ($work->check_session(
+if (!empty($user->user['admin']) && $work->check_input(
+    '_SESSION',
     'admin_on',
-    true
-) && $_SESSION['admin_on'] === true && $user->user['admin']) { // если открыта сессия для Админа и пользователь имеет права Админа, то...
-    if ($work->check_get(
-        'subact',
-        true,
-        true
-    ) && $_GET['subact'] === 'settings') { // если была команда на общие настройки, то...
-        if ($work->check_post('submit', true, true) || ($work->check_post('submit_x', true, true) && $work->check_post(
-            'submit_y',
-            true,
-            true
-        ))) { // если поступил запрос на сохранение общих настроек, то...
-            $new_config = $work->config; // формируем массив настроек, хранящихся в базе на текущий момент
+    ['isset' => true]
+) && $user->session['admin_on']) {
+    if ($work->check_input('_GET', 'subact', ['isset' => true, 'empty' => true]) && $_GET['subact'] === 'settings') {
+        if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true])) {
+            // Массив правил для обработки настроек
+            $config_rules = [
+                'title_name' => ['regexp' => REG_NAME],
+                'title_description' => ['regexp' => REG_NAME],
+                'meta_description' => ['regexp' => REG_NAME],
+                'meta_keywords' => ['regexp' => REG_NAME],
+                'gal_width' => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
+                'left_panel' => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
+                'right_panel' => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
+                'language' => [
+                    'regexp' => REG_LOGIN,
+                    'condition' => static function () use ($work) {
+                        return is_dir($work->config['site_dir'] . 'language/' . $_POST['language']);
+                    }
+                ],
+                'themes' => [
+                    'regexp' => REG_LOGIN,
+                    'condition' => static function () use ($work) {
+                        return is_dir($work->config['site_dir'] . 'themes/' . $_POST['themes']);
+                    }
+                ],
+                'max_file_size' => ['regexp' => '/^[0-9]+$/'],
+                'max_file_size_letter' => ['regexp' => '/^(B|K|M|G)$/'],
+                'max_photo_w' => ['regexp' => '/^[0-9]+$/'],
+                'max_photo_h' => ['regexp' => '/^[0-9]+$/'],
+                'temp_photo_w' => ['regexp' => '/^[0-9]+$/'],
+                'temp_photo_h' => ['regexp' => '/^[0-9]+$/'],
+                'max_avatar_w' => ['regexp' => '/^[0-9]+$/'],
+                'max_avatar_h' => ['regexp' => '/^[0-9]+$/'],
+                'copyright_year' => ['regexp' => '/^[0-9\-]+$/'],
+                'copyright_text' => ['regexp' => REG_NAME],
+                'copyright_url' => ['regexp' => '/^.+$/'],
+                'last_news' => ['regexp' => '/^[0-9]+$/'],
+                'best_user' => ['regexp' => '/^[0-9]+$/'],
+                'max_rate' => ['regexp' => '/^[0-9]+$/'],
+                'time_user_online' => ['regexp' => '/^[0-9]+$/'],
+            ];
 
-            // проверим введенные пользователем данные на соотвествие формата, если формат соответствует, то используем введенное пользователем, если нет - остается старая настройка
-            if ($work->check_post('title_name', true, true, REG_NAME)) {
-                $new_config['title_name'] = Work::clean_field($_POST['title_name']);
-            }
-            if ($work->check_post('title_description', true, true, REG_NAME)) {
-                $new_config['title_description'] = Work::clean_field($_POST['title_description']);
-            }
-            if ($work->check_post('meta_description', true, true, REG_NAME)) {
-                $new_config['meta_description'] = Work::clean_field($_POST['meta_description']);
-            }
-            if ($work->check_post('meta_keywords', true, true, REG_NAME)) {
-                $new_config['meta_keywords'] = Work::clean_field($_POST['meta_keywords']);
-            }
-            if ($work->check_post('gal_width', true, true, '^([0-9]+)(%){0,1}\$')) {
-                $new_config['gal_width'] = $_POST['gal_width'];
-            }
-            if ($work->check_post('left_panel', true, true, '^([0-9]+)(%){0,1}\$')) {
-                $new_config['left_panel'] = $_POST['left_panel'];
-            }
-            if ($work->check_post('right_panel', true, true, '^([0-9]+)(%){0,1}\$')) {
-                $new_config['right_panel'] = $_POST['right_panel'];
-            }
-            if ($work->check_post('language', true, true, REG_LOGIN) && is_dir(
-                $work->config['site_dir'] . 'language/' . $_POST['language']
-            )) {
-                $new_config['language'] = $_POST['language'];
-            }
-            if ($work->check_post('themes', true, true, REG_LOGIN) && is_dir(
-                $work->config['site_dir'] . 'themes/' . $_POST['themes']
-            )) {
-                $new_config['themes'] = $_POST['themes'];
-            }
-            if ($work->check_post('max_file_size', true, true, '^[0-9]+\$') && $work->check_post(
-                'max_file_size_letter',
-                true,
-                true,
-                '^(B|K|M|G)\$'
-            )) {
-                if ($_POST['max_file_size_letter'] === 'B') {
-                    $new_config['max_file_size'] = $_POST['max_file_size'];
-                } else {
-                    $new_config['max_file_size'] = $_POST['max_file_size'] . $_POST['max_file_size_letter'];
-                }
-            }
-            if ($work->check_post('max_photo_w', true, true, '^[0-9]+\$')) {
-                $new_config['max_photo_w'] = $_POST['max_photo_w'];
-            }
-            if ($work->check_post('max_photo_h', true, true, '^[0-9]+\$')) {
-                $new_config['max_photo_h'] = $_POST['max_photo_h'];
-            }
-            if ($work->check_post('temp_photo_w', true, true, '^[0-9]+\$')) {
-                $new_config['temp_photo_w'] = $_POST['temp_photo_w'];
-            }
-            if ($work->check_post('temp_photo_h', true, true, '^[0-9]+\$')) {
-                $new_config['temp_photo_h'] = $_POST['temp_photo_h'];
-            }
-            if ($work->check_post('max_avatar_w', true, true, '^[0-9]+\$')) {
-                $new_config['max_avatar_w'] = $_POST['max_avatar_w'];
-            }
-            if ($work->check_post('max_avatar_h', true, true, '^[0-9]+\$')) {
-                $new_config['max_avatar_h'] = $_POST['max_avatar_h'];
-            }
-            if ($work->check_post('copyright_year', true, true, '^[0-9\-]+\$')) {
-                $new_config['copyright_year'] = $_POST['copyright_year'];
-            }
-            if ($work->check_post('copyright_text', true, true, REG_NAME)) {
-                $new_config['copyright_text'] = Work::clean_field($_POST['copyright_text']);
-            }
-            if ($work->check_post('copyright_url', true, true)) {
-                $new_config['copyright_url'] = $_POST['copyright_url'];
-            }
-            if ($work->check_post('last_news', true, true, '^[0-9]+\$')) {
-                $new_config['last_news'] = $_POST['last_news'];
-            }
-            if ($work->check_post('best_user', true, true, '^[0-9]+\$')) {
-                $new_config['best_user'] = $_POST['best_user'];
-            }
-            if ($work->check_post('max_rate', true, true, '^[0-9]+\$')) {
-                $new_config['max_rate'] = $_POST['max_rate'];
-            }
+            // Новый конфиг
+            $new_config = [];
 
-            foreach ($new_config as $name => $value) {
-                if ($work->config[$name] !== $value) {
-                    if ($db->update(array('value' => $value), TBL_CONFIG, '`name` = \'' . $name . '\'')) {
-                        $work->config[$name] = $value;
+            foreach ($config_rules as $name => $rule) {
+                if ($work->check_input(
+                    '_POST',
+                    $name,
+                    ['isset' => true, 'empty' => true, 'regexp' => $rule['regexp'] ?? null]
+                )) {
+                    if (isset($rule['condition']) && !$rule['condition']()) {
+                        continue; // Пропускаем, если дополнительное условие не выполнено
+                    }
+
+                    // Обработка max_file_size и max_file_size_letter
+                    if ($name === 'max_file_size' && isset($_POST['max_file_size_letter'])) {
+                        $letter = $_POST['max_file_size_letter'];
+                        $value = in_array(
+                            $letter,
+                            ['B', 'K', 'M', 'G'],
+                            true
+                        ) ? $_POST[$name] . $letter : $_POST[$name];
                     } else {
-                        log_in_file($db->error, DIE_IF_ERROR);
+                        $value = Work::clean_field($_POST[$name]);
+                    }
+
+                    // Проверяем, отличается ли новое значение от текущего
+                    if ($work->config[$name] !== $value) {
+                        $new_config[$name] = $value;
                     }
                 }
             }
+
+            unset($new_config['max_file_size_letter']);
+
+            // Обновление конфигурации в базе данных
+            foreach ($new_config as $name => $value) {
+                // Используем новый формат вызова update()
+                $db->update(
+                    ['value' => ':value'], // Данные для обновления
+                    TBL_CONFIG, // Таблица
+                    [
+                        'where' => '`name` = :name', // Условие WHERE
+                        'params' => [':value' => $value, ':name' => $name] // Параметры для prepared statements
+                    ]
+                );
+
+                // Проверяем количество затронутых строк
+                $rows = $db->get_affected_rows();
+                if ($rows > 0) {
+                    $work->config[$name] = $value; // Обновляем конфиг в памяти
+                } else {
+                    log_in_file("Ошибка при обновлении настройки: $name");
+                }
+            }
         }
 
-        $max_file_size = trim($work->config['max_file_size']); // удаляем пробельные символы в начале и конце строки
-        $max_file_size_letter = strtolower(
-            $max_file_size[strlen($max_file_size) - 1]
-        ); // получаем последний символ строки и переводим его в нижний регистр
-        if ($max_file_size_letter === 'k' || $max_file_size_letter === 'm' || $max_file_size_letter === 'g') { // если последний символ является указателем на кило-, мега- или гиго-байты
-            $max_file_size = substr(
-                $max_file_size,
-                0,
-                -1
-            ); // получаем все, кроме последнего символа строки
-        } else { // иначе
-            $max_file_size_letter = 'b'; // пометим показатель в байтах
+        // Обработка max_file_size
+        $max_file_size = trim($work->config['max_file_size']);
+        $max_file_size_letter = strtolower($max_file_size[strlen($max_file_size) - 1]);
+        if (!in_array($max_file_size_letter, ['k', 'm', 'g'], true)) {
+            $max_file_size_letter = 'b';
+        } else {
+            $max_file_size = substr($max_file_size, 0, -1);
         }
+
+        // Получение языков и тем
         $language = $work->get_languages();
         $themes = $work->get_themes();
 
+        // Добавление данных в шаблон
         $template->add_case('ADMIN_BLOCK', 'ADMIN_SETTINGS');
-        $template->add_string_ar(array(
+        $template->add_string_ar([
             'L_NAME_BLOCK' => $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['settings'],
             'L_MAIN_SETTINGS' => $work->lang['admin']['main_settings'],
             'L_TITLE_NAME' => $work->lang['admin']['title_name'],
@@ -264,6 +306,8 @@ if ($work->check_session(
             'L_BEST_USER_DESCRIPTION' => $work->lang['admin']['best_user_description'],
             'L_MAX_RATE' => $work->lang['admin']['max_rate'],
             'L_MAX_RATE_DESCRIPTION' => $work->lang['admin']['max_rate_description'],
+            'L_TIME_ONLINE' => $work->lang['admin']['time_online'],
+            'L_TIME_ONLINE_DESCRIPTION' => $work->lang['admin']['time_online_description'],
             'L_SAVE_SETTINGS' => $work->lang['admin']['save_settings'],
             'D_TITLE_NAME' => $work->config['title_name'],
             'D_TITLE_DESCRIPTION' => $work->config['title_description'],
@@ -288,346 +332,459 @@ if ($work->check_session(
             'D_COPYRIGHT_URL' => $work->config['copyright_url'],
             'D_LAST_NEWS' => $work->config['last_news'],
             'D_BEST_USER' => $work->config['best_user'],
-            'D_MAX_RATE' => $work->config['max_rate']
-        ));
+            'D_MAX_RATE' => $work->config['max_rate'],
+            'D_TIME_ONLINE' => $work->config['time_user_online']
+        ]);
+
+        // Добавление языков в шаблон
         foreach ($language as $key => $val) {
-            $template->add_string_ar(array(
+            $template->add_string_ar([
                 'D_DIR_LANG' => $val['value'],
                 'D_NAME_LANG' => $val['name'],
                 'D_SELECTED_LANG' => $val['value'] === $work->config['language'] ? ' selected="selected"' : ''
-            ), 'SELECT_LANGUAGE[' . $key . ']');
+            ], 'SELECT_LANGUAGE[' . $key . ']');
         }
+
+        // Добавление тем в шаблон
         foreach ($themes as $key => $val) {
-            $template->add_string_ar(array(
+            $template->add_string_ar([
                 'D_DIR_THEMES' => $val,
                 'D_SELECTED_THEMES' => $val === $work->config['themes'] ? ' selected="selected"' : ''
-            ), 'SELECT_THEMES[' . $key . ']');
+            ], 'SELECT_THEMES[' . $key . ']');
         }
-        $action = ''; // активного пункта меню - нет
-        $title = $work->lang['admin']['settings']; // дполнительный заговловок - Общие настройки
-    } elseif ($work->check_get(
+
+        // Инициализация переменных для ядра
+        $action = ''; // Переменная для действия (используется в ядре)
+        $title = $work->lang['admin']['settings']; // Заголовок страницы (используется в ядре)
+    } elseif ($work->check_input(
+        '_GET',
         'subact',
-        true,
-        true
-    ) && $_GET['subact'] === 'admin_user') { // иначе если было запрошено Управление пользователями
+        ['isset' => true, 'empty' => true]
+    ) && $_GET['subact'] === 'admin_user') {
+        // Добавление блока для администрирования пользователей
         $template->add_case('ADMIN_BLOCK', 'ADMIN_USER');
         $template->add_string(
             'L_NAME_BLOCK',
             $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['admin_user']
         );
 
-        if ($work->check_get(
-            'uid',
-            true,
-            true,
-            '^[0-9]+\$',
-            true
-        )) { // если был передан идентификатор пользователя для редактирования, то...
-            if ($db->select('*', TBL_USERS, '`id` = ' . Work::clean_field($_GET['uid']))) {
-                $temp = $db->res_row();
-                if ($temp) {
-                    if ($work->check_post('submit', true, true)) {
-                        if ($work->check_post(
-                            'group',
-                            true,
-                            true,
-                            '^[0-9]+\$',
-                            true
-                        ) && $_POST['group'] !== $temp['group']) {
-                            $query['group'] = Work::clean_field($_POST['group']);
-                            $new_temp = $temp;
-                            if ($db->select('*', TBL_GROUP, '`id` = ' . Work::clean_field($_POST['group']))) {
-                                $temp_group = $db->res_row();
-                                if ($temp_group) {
-                                    foreach ($temp_group as $key => $value) {
-                                        if ($key !== 'id' && $key !== 'name') {
-                                            $query[$key] = $value;
-                                            $new_temp[$key] = $value;
-                                        }
-                                    }
-                                    if ($db->update($query, TBL_USERS, '`id` = ' . Work::clean_field($_GET['uid']))) {
-                                        $temp = $new_temp;
-                                    } else {
-                                        log_in_file($db->error, DIE_IF_ERROR);
-                                    }
+        if ($work->check_input('_GET', 'uid', [
+            'isset' => true,
+            'empty' => true,
+            'regexp' => '/^[0-9]+$/',
+            'not_zero' => true
+        ])) {
+            // Проверяем существование пользователя с указанным uid
+            $db->select('*', TBL_USERS, [
+                'where' => '`id` = :uid',
+                'params' => [':uid' => $_GET['uid']],
+            ]);
+            $user_data = $db->res_row();
+
+            if ($user_data) {
+                // Получаем поля прав доступа пользователя
+                $user_permission_fields = $user->user_right_fields['all'];
+                $user_data = array_merge($user_data, $user->process_user_rights($user_data['user_rights']));
+
+                if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true])) {
+                    // Обновление группы пользователя
+                    if ($work->check_input('_POST', 'group', [
+                            'isset' => true,
+                            'empty' => true,
+                            'regexp' => '/^[0-9]+$/',
+                            'not_zero' => true
+                        ]) && (int)$_POST['group'] !== $user_data['group_id']) {
+                        $query = ['group_id' => $_POST['group']];
+                        $new_user_data = $user_data;
+
+                        // Получаем данные новой группы
+                        $db->select('`id`, `user_rights`', TBL_GROUP, [
+                            'where' => '`id` = :group_id',
+                            'params' => [':group_id' => $_POST['group']],
+                        ]);
+                        $group_data = $db->res_row();
+
+                        if ($group_data) {
+                            foreach ($group_data as $key => $value) {
+                                if ($key === 'id') {
+                                    $new_user_data['group_id'] = $value;
                                 } else {
-                                    log_in_file('Unable to get the group', DIE_IF_ERROR);
+                                    $query[$key] = $value;
+                                    $new_user_data[$key] = $value;
                                 }
+                            }
+
+                            // Обновляем данные пользователя в БД
+                            $db->update($query, TBL_USERS, [
+                                'where' => '`id` = :uid',
+                                'params' => [':uid' => $_GET['uid']],
+                            ]);
+                            $rows = $db->get_affected_rows();
+
+                            if ($rows > 0) {
+                                $processed_rights = $user->process_user_rights($new_user_data['user_rights']);
+                                unset($new_user_data['user_rights']);
+                                $user_data = array_merge($new_user_data, $processed_rights);
                             } else {
-                                log_in_file($db->error, DIE_IF_ERROR);
+                                throw new RuntimeException(
+                                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: {$_GET['uid']}"
+                                );
                             }
                         } else {
-                            foreach ($temp as $key => $value) {
-                                if ($key !== 'id' && $key !== 'login' && $key !== 'password' && $key !== 'real_name' && $key !== 'email' && $key !== 'avatar' && $key !== 'date_regist' && $key !== 'date_last_activ' && $key !== 'date_last_logout' && $key !== 'group') {
-                                    if ($work->check_post(
-                                        $key,
-                                        true
-                                    ) && ($_POST[$key] === 'on' || $_POST[$key] === true)) {
-                                        $_POST[$key] = '1';
-                                    } else {
-                                        $_POST[$key] = '0';
-                                    }
-                                    if ($_POST[$key] !== $value) {
-                                        if ($db->update(
-                                            array($key => $_POST[$key]),
-                                            TBL_USERS,
-                                            '`id` = ' . Work::clean_field($_GET['uid'])
-                                        )) {
-                                            $temp[$key] = $_POST[$key];
-                                        } else {
-                                            log_in_file($db->error, DIE_IF_ERROR);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if ($db->select('*', TBL_GROUP, '`id` !=0')) {
-                        $group = $db->res_arr();
-                        if ($group) {
-                            foreach ($group as $key => $val) {
-                                $template->add_string_ar(array(
-                                    'D_GROUP_ID' => $val['id'],
-                                    'D_GROUP_NAME' => $val['name'],
-                                    'D_GROUP_SELECTED' => $val['id'] === $temp['group'] ? ' selected="selected"' : ''
-                                ), 'GROUP_USER[' . $key . ']');
-                            }
-
-                            foreach ($temp as $key => $value) {
-                                if ($key !== 'id' && $key !== 'login' && $key !== 'password' && $key !== 'real_name' && $key !== 'email' && $key !== 'avatar' && $key !== 'date_regist' && $key !== 'date_last_activ' && $key !== 'date_last_logout' && $key !== 'group') {
-                                    $template->add_string('L_' . strtoupper($key), $work->lang['admin'][$key]);
-                                    if ($value === 1 || $value === '1' || $value === true) {
-                                        $template->add_string('D_' . strtoupper($key), ' checked="checked"');
-                                    } else {
-                                        $template->add_string('D_' . strtoupper($key), '');
-                                    }
-                                }
-                            }
-                            $template->add_if('FIND_USER', true);
-                            $template->add_string_ar(array(
-                                'L_LOGIN' => $work->lang['admin']['login'],
-                                'L_EMAIL' => $work->lang['admin']['email'],
-                                'L_REAL_NAME' => $work->lang['admin']['real_name'],
-                                'L_AVATAR' => $work->lang['admin']['avatar'],
-                                'L_GROUP' => $work->lang['main']['group'],
-                                'L_USER_RIGHTS' => $work->lang['admin']['user_rights'],
-                                'L_HELP_EDIT' => $work->lang['admin']['help_edit_user'],
-                                'L_SAVE_USER' => $work->lang['admin']['save_user'],
-                                'D_LOGIN' => $temp['login'],
-                                'D_EMAIL' => $temp['email'],
-                                'D_REAL_NAME' => $temp['real_name'],
-                                'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $temp['avatar']
-                            ));
-                        } else {
-                            log_in_file('Unable to get the group', DIE_IF_ERROR);
+                            throw new RuntimeException(
+                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы | ID группы: {$_POST['group']}"
+                            );
                         }
                     } else {
-                        log_in_file($db->error, DIE_IF_ERROR);
+                        // Обновление прав доступа пользователя
+                        $new_user_rights = [];
+
+                        foreach ($user_permission_fields as $field) {
+                            if ($work->check_input('_POST', $field, ['isset' => true])) {
+                                $_POST[$field] = in_array($_POST[$field], ['on', 1, true], true);
+                            } else {
+                                $_POST[$field] = false;
+                            }
+
+                            $new_user_rights[$field] = $_POST[$field];
+                        }
+
+                        $encoded_user_rights = $user->encode_user_rights($new_user_rights);
+
+                        $db->update(
+                            ['user_rights' => $encoded_user_rights],
+                            TBL_USERS,
+                            [
+                                'where' => '`id` = :uid',
+                                'params' => [':uid' => $_GET['uid']],
+                            ]
+                        );
+
+                        $rows = $db->get_affected_rows();
+
+                        if ($rows > 0) {
+                            $user_data = array_merge($user_data, $new_user_rights); // Обновляем данные в памяти
+                        } else {
+                            throw new RuntimeException(
+                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: {$_GET['uid']}"
+                            );
+                        }
                     }
+                }
+
+                // Получаем список групп для отображения в шаблоне
+                $db->select('*', TBL_GROUP, [
+                    'where' => '`id` != 0',
+                ]);
+                $groups = $db->res_arr();
+
+                if ($groups) {
+                    foreach ($groups as $key => $group) {
+                        $template->add_string_ar([
+                            'D_GROUP_ID' => (string)$group['id'],
+                            'D_GROUP_NAME' => $group['name'],
+                            'D_GROUP_SELECTED' => $group['id'] === $user_data['group_id'] ? ' selected="selected"' : '',
+                        ], 'GROUP_USER[' . $key . ']');
+                    }
+
+                    // Добавляем права доступа в шаблон
+                    foreach ($user_permission_fields as $field) {
+                        $template->add_string('L_' . strtoupper($field), $work->lang['admin'][$field]);
+                        $template->add_string(
+                            'D_' . strtoupper($field),
+                            $user_data[$field] ? ' checked="checked"' : ''
+                        );
+                    }
+
+                    // Добавляем основные данные пользователя в шаблон
+                    $template->add_if('FIND_USER', true);
+                    $template->add_string_ar([
+                        'L_LOGIN' => $work->lang['admin']['login'],
+                        'L_EMAIL' => $work->lang['admin']['email'],
+                        'L_REAL_NAME' => $work->lang['admin']['real_name'],
+                        'L_AVATAR' => $work->lang['admin']['avatar'],
+                        'L_GROUP' => $work->lang['main']['group'],
+                        'L_USER_RIGHTS' => $work->lang['admin']['user_rights'],
+                        'L_HELP_EDIT' => $work->lang['admin']['help_edit_user'],
+                        'L_SAVE_USER' => $work->lang['admin']['save_user'],
+                        'D_LOGIN' => $user_data['login'],
+                        'D_EMAIL' => $user_data['email'],
+                        'D_REAL_NAME' => $user_data['real_name'],
+                        'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'],
+                    ]);
                 } else {
-                    log_in_file('Unable to get the user', DIE_IF_ERROR);
+                    throw new RuntimeException(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы"
+                    );
                 }
             } else {
-                log_in_file($db->error, DIE_IF_ERROR);
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID пользователя: {$_GET['uid']}"
+                );
             }
         } else {
-            if ($work->check_post('submit', true, true) && $work->check_post('search_user', true, true)) {
-                if ($_POST['search_user'] === '*') {
-                    $_POST['search_user'] = '%';
-                }
+            // Поиск пользователей
+            if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true]) && $work->check_input(
+                '_POST',
+                'search_user',
+                ['isset' => true, 'empty' => true]
+            )) {
+                $search_query = $_POST['search_user'] === '*' ? '%' : "%" . Work::clean_field(
+                    $_POST['search_user']
+                ) . "%";
 
-                if ($db->select(
-                    '*',
-                    TBL_USERS,
-                    '`real_name` LIKE \'%' . Work::clean_field($_POST['search_user']) . '%\''
-                )) {
-                    $find = $db->res_arr();
-                    if ($find) {
-                        foreach ($find as $key => $val) {
-                            $template->add_string_ar(array(
-                                'D_FIND_USER' => $val['real_name'],
-                                'U_FIND_USER' => $work->config['site_url'] . '?action=admin&amp;subact=admin_user&amp;uid=' . $val['id']
-                            ), 'FIND_USER[' . $key . ']');
-                        }
-                    } else {
-                        $template->add_string_ar(array(
-                            'D_FIND_USER' => $work->lang['admin']['no_find_user'],
-                            'U_FIND_USER' => '#'
-                        ), 'FIND_USER[0]');
+                // Выполняем запрос к БД
+                $db->select('*', TBL_USERS, [
+                    'where' => '(real_name LIKE :real_name_query OR email LIKE :email_query OR login LIKE :login_query)',
+                    'params' => [
+                        ':real_name_query' => $search_query,
+                        ':email_query' => $search_query,
+                        ':login_query' => $search_query,
+                    ],
+                ]);
+                $found_users = $db->res_arr();
+
+                if ($found_users) {
+                    foreach ($found_users as $key => $user) {
+                        $template->add_string_ar([
+                            'D_FIND_USER' => $user['real_name'],
+                            'U_FIND_USER' => sprintf(
+                                "%s?action=admin&amp;subact=admin_user&amp;uid=%s",
+                                $work->config['site_url'],
+                                $user['id']
+                            ),
+                        ], 'FIND_USER[' . $key . ']');
                     }
                 } else {
-                    log_in_file($db->error, DIE_IF_ERROR);
+                    $template->add_string_ar([
+                        'D_FIND_USER' => $work->lang['admin']['no_find_user'],
+                        'U_FIND_USER' => '#',
+                    ], 'FIND_USER[0]');
                 }
 
                 $template->add_if('NEED_USER', true);
-                if ($_POST['search_user'] === '%') {
-                    $_POST['search_user'] = '*';
-                }
+                $_POST['search_user'] = $search_query === '%' ? '*' : $search_query;
             }
 
+            // Добавляем форму поиска в шаблон
             $template->add_if('NEED_FIND', true);
-            $template->add_string_ar(array(
+            $template->add_string_ar([
                 'L_SEARCH_USER' => $work->lang['admin']['search_user'],
                 'L_HELP_SEARCH' => $work->lang['admin']['help_search_user'],
                 'L_SEARCH' => $work->lang['main']['search'],
-                'D_SEARCH_USER' => $work->check_post('search_user', true, true) ? Work::clean_field(
-                    $_POST['search_user']
-                ) : ''
-            ));
+                'D_SEARCH_USER' => $work->check_input(
+                    '_POST',
+                    'search_user',
+                    ['isset' => true, 'empty' => true]
+                ) ? Work::clean_field($_POST['search_user']) : '',
+            ]);
         }
 
+        // Инициализация переменных для ядра
         $action = '';
         $title = $work->lang['admin']['admin_user'];
-    } elseif ($work->check_get(
+    } elseif ($work->check_input(
+        '_GET',
         'subact',
-        true,
-        true
-    ) && $_GET['subact'] === 'admin_group') { // иначе если запрошено Управление группами, то...
+        ['isset' => true, 'empty' => true]
+    ) && $_GET['subact'] === 'admin_group') {
+        // Добавляем блок для администрирования групп
         $template->add_case('ADMIN_BLOCK', 'ADMIN_GROUP');
         $template->add_string(
             'L_NAME_BLOCK',
             $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['admin_group']
         );
+        $group_permission_fields = $user->user_right_fields['all'];
 
-        if ($work->check_post('submit', true, true) && $work->check_post('id_group', true, false, '^[0-9]+\$')) {
-            if ($db->select('*', TBL_GROUP, '`id` = ' . Work::clean_field($_POST['id_group']))) {
-                $temp = $db->res_row();
-                if ($temp) {
-                    if ($work->check_post(
-                        'name_group',
-                        true,
-                        true,
-                        REG_NAME
-                    ) && $_POST['name_group'] !== $temp['name']) {
-                        if ($db->update(
-                            array('name' => Work::clean_field($_POST['name_group'])),
-                            TBL_GROUP,
-                            '`id` = ' . Work::clean_field($_POST['id_group'])
-                        )) {
-                            $temp['name'] = Work::clean_field($_POST['name_group']);
-                        } else {
-                            log_in_file($db->error, DIE_IF_ERROR);
-                        }
+        if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true]) && $work->check_input(
+            '_POST',
+            'id_group',
+            ['isset' => true, 'regexp' => '/^[0-9]+$/']
+        )) {
+            // Выбираем данные группы по ID
+            $db->select('*', TBL_GROUP, [
+                'where' => '`id` = :id_group',
+                'params' => [':id_group' => $_POST['id_group']],
+            ]);
+            $group_data = $db->res_row();
+
+            if ($group_data) {
+                // Обновляем название группы
+                if ($work->check_input(
+                    '_POST',
+                    'name_group',
+                    ['isset' => true, 'empty' => true, 'regexp' => REG_NAME]
+                ) && $_POST['name_group'] !== $group_data['name']) {
+                    $clean_name = Work::clean_field($_POST['name_group']);
+                    $db->update(
+                        ['name' => ':name'],
+                        TBL_GROUP,
+                        [
+                            'where' => '`id` = :id_group',
+                            'params' => [
+                                ':name' => $clean_name,
+                                ':id_group' => $_POST['id_group'],
+                            ],
+                        ]
+                    );
+                    $rows = $db->get_affected_rows();
+                    if ($rows > 0) {
+                        $group_data['name'] = $clean_name;
                     }
-                    foreach ($temp as $key => $value) {
-                        if ($key !== 'id' && $key !== 'name') {
-                            if ($work->check_post(
-                                $key,
-                                true,
-                                true
-                            ) && ($_POST[$key] === 'on' || $_POST[$key] === true)) {
-                                $_POST[$key] = '1';
-                            } else {
-                                $_POST[$key] = '0';
-                            }
-                            if ($_POST[$key] !== $value) {
-                                if ($db->update(
-                                    array($key => $_POST[$key]),
-                                    TBL_GROUP,
-                                    '`id` = ' . Work::clean_field($_POST['id_group'])
-                                )) {
-                                    $temp[$key] = $_POST[$key];
-                                } else {
-                                    log_in_file($db->error, DIE_IF_ERROR);
-                                }
-                            }
-                        }
-                    }
-                    $_POST['group'] = Work::clean_field($_POST['id_group']);
-                } else {
-                    log_in_file('Unable to get the group', DIE_IF_ERROR);
                 }
-            } else {
-                log_in_file($db->error, DIE_IF_ERROR);
+
+                $new_group_rights = [];
+
+                // Обновляем права доступа группы
+                foreach ($group_permission_fields as $value) {
+                    if ($work->check_input('_POST', $value, ['isset' => true, 'empty' => true])) {
+                        $_POST[$value] = in_array($_POST[$value], ['on', 1, '1', true], true);
+                    } else {
+                        $_POST[$value] = false;
+                    }
+                    $new_group_rights[$value] = $_POST[$value];
+                }
+
+                $encoded_group_rights = $user->encode_user_rights($new_group_rights);
+
+                $db->update(
+                    ['user_rights' => ':user_rights'],
+                    TBL_GROUP,
+                    [
+                        'where' => '`id` = :id_group',
+                        'params' => [
+                            ':user_rights' => $encoded_group_rights,
+                            ':id_group' => $_POST['id_group'],
+                        ],
+                    ]
+                );
+                $rows = $db->get_affected_rows();
+                if ($rows > 0) {
+                    $group_data = array_merge($group_data, $new_group_rights);
+                } else {
+                    $group_data = array_merge($group_data, $user->process_user_rights($group_data['user_rights']));
+                }
+                if (isset($group_data['user_rights'])) {
+                    unset($group_data['user_rights']);
+                }
+                $_POST['group'] = $_POST['id_group'];
             }
         }
 
-        if ($work->check_post('submit', true, true) && $work->check_post('group', true, false, '^[0-9]+\$')) {
-            if ($db->select('*', TBL_GROUP, '`id` = ' . Work::clean_field($_POST['group']))) {
-                $temp = $db->res_row();
-                if ($temp) {
-                    foreach ($temp as $key => $value) {
-                        if ($key !== 'id' && $key !== 'name') {
-                            $template->add_string('L_' . strtoupper($key), $work->lang['admin'][$key]);
-                            if ($value === 1) {
-                                $template->add_string('D_' . strtoupper($key), ' checked="checked"');
-                            } else {
-                                $template->add_string('D_' . strtoupper($key), '');
-                            }
-                        }
-                    }
-                    $template->add_if('EDIT_GROUP', true);
-                    $template->add_string_ar(array(
-                        'L_NAME_GROUP' => $work->lang['main']['group'],
-                        'L_GROUP_RIGHTS' => $work->lang['admin']['group_rights'],
-                        'L_SAVE_GROUP' => $work->lang['admin']['save_group'],
+        if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true]) && $work->check_input(
+            '_POST',
+            'group',
+            ['isset' => true, 'regexp' => '/^[0-9]+$/']
+        )) {
+            // Выбираем данные группы по ID
+            $db->select('*', TBL_GROUP, [
+                'where' => '`id` = :group_id',
+                'params' => [':group_id' => $_POST['group']],
+            ]);
+            $group_data = $db->res_row();
 
-                        'D_ID_GROUP' => $temp['id'],
-                        'D_NAME_GROUP' => $temp['name']
-                    ));
-                } else {
-                    log_in_file('Unable to get the group', DIE_IF_ERROR);
+            if ($group_data) {
+                $group_data = array_merge($group_data, $user->process_user_rights($group_data['user_rights']));
+                if (isset($group_data['user_rights'])) {
+                    unset($group_data['user_rights']);
                 }
-            } else {
-                log_in_file($db->error, DIE_IF_ERROR);
+
+                // Добавляем права доступа в шаблон
+                foreach ($group_permission_fields as $value) {
+                    $template->add_string('L_' . strtoupper($value), $work->lang['admin'][$value]);
+                    $template->add_string(
+                        'D_' . strtoupper($value),
+                        $group_data[$value] ? ' checked="checked"' : ''
+                    );
+                }
+
+                // Добавляем основные данные группы в шаблон
+                $template->add_if('EDIT_GROUP', true);
+                $template->add_string_ar([
+                    'L_NAME_GROUP' => $work->lang['main']['group'],
+                    'L_GROUP_RIGHTS' => $work->lang['admin']['group_rights'],
+                    'L_SAVE_GROUP' => $work->lang['admin']['save_group'],
+
+                    'D_ID_GROUP' => (string)$group_data['id'],
+                    'D_NAME_GROUP' => $group_data['name'],
+                ]);
             }
         } elseif ($db->select('*', TBL_GROUP)) {
-            $group = $db->res_arr();
-            if ($group) {
-                foreach ($group as $key => $val) {
-                    $template->add_string_ar(array(
-                        'D_ID_GROUP' => $val['id'],
-                        'D_NAME_GROUP' => $val['name']
-                    ), 'SELECT_GROUP[' . $key . ']');
+            // Получаем список всех групп
+            $groups = $db->res_arr();
+
+            if ($groups) {
+                foreach ($groups as $key => $group) {
+                    $template->add_string_ar([
+                        'D_ID_GROUP' => (string)$group['id'],
+                        'D_NAME_GROUP' => $group['name'],
+                    ], 'SELECT_GROUP[' . $key . ']');
                 }
+
+                // Добавляем форму выбора группы в шаблон
                 $template->add_if('SELECT_GROUP', true);
-                $template->add_string_ar(array(
+                $template->add_string_ar([
                     'L_SELECT_GROUP' => $work->lang['admin']['select_group'],
-                    'L_EDIT' => $work->lang['admin']['edit_group']
-                ));
-            } else {
-                log_in_file('Unable to get the group', DIE_IF_ERROR);
+                    'L_EDIT' => $work->lang['admin']['edit_group'],
+                ]);
             }
-        } else {
-            log_in_file($db->error, DIE_IF_ERROR);
         }
 
+        // Инициализация переменных для ядра
         $action = '';
         $title = $work->lang['admin']['admin_group'];
     } else {
-        $select_subact = array();
-        $select_subact[0]['url'] = $work->config['site_url'] . '?action=admin&amp;subact=settings';
-        $select_subact[0]['txt'] = $work->lang['admin']['settings'];
-        $select_subact[1]['url'] = $work->config['site_url'] . '?action=admin&amp;subact=admin_user';
-        $select_subact[1]['txt'] = $work->lang['admin']['admin_user'];
-        $select_subact[2]['url'] = $work->config['site_url'] . '?action=admin&amp;subact=admin_group';
-        $select_subact[2]['txt'] = $work->lang['admin']['admin_group'];
+        // Подготовка данных для выбора подразделов администрирования
+        $select_subact = [
+            [
+                'url' => sprintf("%s?action=admin&amp;subact=settings", $work->config['site_url']),
+                'txt' => $work->lang['admin']['settings'],
+            ],
+            [
+                'url' => sprintf("%s?action=admin&amp;subact=admin_user", $work->config['site_url']),
+                'txt' => $work->lang['admin']['admin_user'],
+            ],
+            [
+                'url' => sprintf("%s?action=admin&amp;subact=admin_group", $work->config['site_url']),
+                'txt' => $work->lang['admin']['admin_group'],
+            ],
+        ];
+
+        // Добавляем блок администрирования в шаблон
         $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
         $template->add_if('SESSION_ADMIN_ON', true);
-        $template->add_string_ar(array(
+        $template->add_string_ar([
             'L_NAME_BLOCK' => $work->lang['admin']['title'],
-            'L_SELECT_SUBACT' => $work->lang['admin']['select_subact']
-        ));
-        foreach ($select_subact as $key => $val) {
-            $template->add_string_ar(array(
-                'L_SUBACT' => $val['txt'],
-                'U_SUBACT' => $val['url']
-            ), 'SELECT_SUBACT[' . $key . ']');
+            'L_SELECT_SUBACT' => $work->lang['admin']['select_subact'],
+        ]);
+
+        // Добавляем подразделы администрирования в шаблон
+        foreach ($select_subact as $index => $item) {
+            $template->add_string_ar([
+                'L_SUBACT' => $item['txt'], // Текстовая метка подраздела
+                'U_SUBACT' => $item['url'], // URL подраздела
+            ], 'SELECT_SUBACT[' . $index . ']');
         }
-        $action = 'admin'; // активный пункт меню - admin
-        $title = $work->lang['admin']['title']; // дполнительный заговловок - Администрирование
+
+        // Инициализация переменных для ядра
+        $action = 'admin'; // Активный пункт меню - admin
+        $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
     }
-} elseif ((!isset($_SESSION['admin_on']) || $_SESSION['admin_on'] !== true) && $user->user['admin']) { // иначе если сессия для Админа не открыта, но пользователь имеет право её открыть, то...
-    $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
-    $template->add_string_ar(array(
-        'L_NAME_BLOCK' => $work->lang['admin']['title'],
-        'L_ENTER_ADMIN_PASS' => $work->lang['admin']['admin_pass'],
-        'L_ENTER' => $work->lang['main']['enter']
-    ));
-    $action = 'admin'; // активный пункт меню - admin
-    $title = $work->lang['admin']['title']; // дполнительный заговловок - Администрирование
-} else { // иначе...
-    Header('Location: ' . $work->config['site_url']);
-    log_in_file('Hack attempt!', DIE_IF_ERROR);
+} else { // Проверяем, что сессия администратора не равна true, но пользователь имеет права администратора
+    if ((!isset($user->session['admin_on']) || $user->session['admin_on'] !== true) && $user->user['admin']) {
+        // Добавляем блок администрирования в шаблон
+        $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
+        $template->add_string_ar([
+            'L_NAME_BLOCK' => $work->lang['admin']['title'],
+            'L_ENTER_ADMIN_PASS' => $work->lang['admin']['admin_pass'],
+            'L_ENTER' => $work->lang['main']['enter'],
+        ]);
+
+        // Инициализация переменных для ядра
+        $action = 'admin'; // Активный пункт меню - admin
+        $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
+    } else {
+        Header('Location: ' . $work->config['site_url']);
+        exit;
+    }
 }

@@ -361,6 +361,8 @@ $lang += [
         'best_user_description' => 'The number of top users to display',
         'max_rate' => 'Maximum Rating',
         'max_rate_description' => 'The maximum allowed rating when rating an image (from -value to +value)',
+        'time_online' => 'User Online Time',
+        'time_online_description' => 'Time since the user\'s last activity, during which they are considered online (in seconds).',
         'save_settings' => 'Save Settings',
         'search_user' => 'Search for a User',
         'find_user' => 'The following users were found',
@@ -391,6 +393,7 @@ $lang += [
         'edit_group' => 'Edit Group',
         'group_rights' => 'Group Rights',
         'save_group' => 'Save Group',
+        'lockout_time' => 'Too many failed login attempts. Minutes remaining until the next attempt: %d.',
     ],
 ];
 
