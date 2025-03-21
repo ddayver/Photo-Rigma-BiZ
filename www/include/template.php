@@ -778,7 +778,7 @@ class Template
      * @see PhotoRigma::Classes::Work::create_photo() Метод, используемый для генерации данных фотографий.
      * @see PhotoRigma::Classes::Template Класс, используемый для обработки шаблонов.
      */
-    public function page_header(string $title, string $action): void
+    public function page_header(string $title, string $action, string $csrf_token): void
     {
         // Проверка параметра $action
         if (!empty($action) && !preg_match('/^\w+$/', $action)) {
@@ -816,6 +816,7 @@ class Template
             'SITE_DESCRIPTION' => Work::clean_field($this->work->config['title_description']),
             'U_SEARCH' => $this->work->config['site_url'] . '?action=search',
             'L_SEARCH' => $this->lang['main']['search'],
+            'CSRF_TOKEN' => $csrf_token,
             'LEFT_PANEL_WIDHT' => $this->work->config['left_panel'],
             'RIGHT_PANEL_WIDHT' => $this->work->config['right_panel']
         ]);
@@ -1473,7 +1474,7 @@ class Template
      * $object->page_footer();
      * @endcode
      */
-    public function page_footer(int $login_id): void
+    public function page_footer(int $login_id, string $csrf_token): void
     {
         // Генерация данных для подвала
         $user = $this->work->template_user();
@@ -1494,6 +1495,7 @@ class Template
         // Обработка блока информации о пользователе
         $footer_template->add_case('RIGHT_BLOCK', 'USER_INFO', 'RIGHT_PANEL[0]');
         $footer_template->add_string_ar($user, 'RIGHT_PANEL[0]');
+        $footer_template->add_string('CSRF_TOKEN', $csrf_token, 'RIGHT_PANEL[0]');
         $footer_template->add_if('USER_NOT_LOGIN', ($login_id === 0), 'RIGHT_PANEL[0]');
 
         // Обработка блока статистики

@@ -286,13 +286,15 @@ try {
         );
     }
 
+    // Создаем токен для CSRF-защиты в полях поиска и входа
+    $csrf_token = $user->csrf_token();
+
     // Создание шаблона
     $template->create_template();
-    $template->page_header($title, $action);
-    $template->page_footer($user->session['login_id']);
+    $template->page_header($title, $action, $csrf_token);
+    $template->page_footer($user->session['login_id'], $csrf_token);
     header('Content-Type: text/html; charset=UTF-8');
     echo $template->content;
-
 } catch (PDOException $e) {
     $type = "Ошибка базы данных";
 } catch (UnexpectedValueException $e) {

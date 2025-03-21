@@ -1,295 +1,270 @@
-						</td>
-						<td width="5px" class="td_spacer">&nbsp;</td>
-						<td class="field">
+			</div>
+			<div class="right-panel">
 <!-- ARRAY_RIGHT_PANEL_BEGIN -->
 <!-- SELECT_RIGHT_BLOCK_BEGIN -->
 <!-- CASE_USER_INFO -->
 <!-- IF_USER_NOT_LOGIN_BEGIN -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-                                    <td>
-                                        <div class="large ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="large ui top black attached centered label">
-                                                <i class="user circle outline icon"></i> {NAME_BLOCK}
-                                            </div>
-                                        </div>
-                                    </td>
-								</tr>
-								<tr>
-									<td class="login_user" align="center">
-										<form name="login_user" action="{U_LOGIN}" method="post">
-											<table cellpadding="0" cellspacing="1" border="0">
-												<tr>
-													<td style="text-align:left;">{L_LOGIN}:</td>
-													<td style="text-align:left;"><div class="mini ui inverted icon input custom-input"><input type="text" name="login" maxlength="32" placeholder="{L_LOGIN}..." /><i class="user icon"></i></div></td>
-												</tr>
-												<tr>
-													<td style="text-align:left;">{L_PASSWORD}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></td>
-													<td style="text-align:left;"><div class="mini ui inverted icon input custom-input"><input class="ui input" type="password" name="password" placeholder="{L_PASSWORD}..." /><i class="key icon"></i></div></td>
-												</tr>
-												<tr>
-													<td colspan="2"><button class="small ui positive basic inverted button" name="submit" type="submit" title="{L_ENTER}"><i class="sign in alternate icon"></i> {L_ENTER}</button></td>
-												</tr>
-											</table>
-										</form>
-									</td>
-								</tr>
-								<tr>
-									<td class="login_user" align="center">
-										<!-- <a href="{U_FORGOT_PASSWORD}" title="{L_FORGOT_PASSWORD}">{L_FORGOT_PASSWORD}</a><br /> -->
-                                        <button class="mini ui primary basic inverted button" onclick="window.location.href='{U_REGISTRATION}'" title="{L_REGISTRATION}"><i class="user plus icon"></i>  {L_REGISTRATION}</button>
-									</td>
-								</tr>
-							</table>
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="user circle outline icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="login_user" style="text-align: center;">
+						<form name="login_user" action="{U_LOGIN}" method="post">
+							<div class="ui grid" style="margin: 10px 0;">
+								<div class="row middle aligned no-space">
+									<div class="five wide column" style="text-align: left;">{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}"></div>
+									<div class="eleven wide column">
+										<div class="mini ui inverted icon input custom-input" style="width: 100%;">
+											<input type="text" name="login" maxlength="32" placeholder="{L_LOGIN}...">
+											<i class="user icon"></i>
+										</div>
+									</div>
+								</div>
+								<div class="row middle aligned no-space">
+									<div class="five wide column" style="text-align: left;">
+										{L_PASSWORD}:
+									</div>
+									<div class="eleven wide column">
+										<div class="mini ui inverted icon input custom-input" style="width: 100%;">
+											<input class="ui input" type="password" name="password" placeholder="{L_PASSWORD}...">
+											<i class="key icon"></i>
+										</div>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column center aligned">
+										<button class="small ui positive basic inverted button" name="submit" type="submit" title="{L_ENTER}" style="margin-top: 5px;">
+											<i class="sign in alternate icon"></i> {L_ENTER}
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="login_user" style="text-align: center; margin: 5px 0;">
+						<button class="mini ui primary basic inverted button" onclick="window.location.href='{U_REGISTRATION}'" title="{L_REGISTRATION}">
+							<i class="user plus icon"></i> {L_REGISTRATION}
+						</button>
+					</div>
+				</div>
 <!-- IF_USER_NOT_LOGIN_ELSE -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-                                    <td>
-                                        <div class="large ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="large ui top black attached centered label">
-                                                <i class="user circle icon"></i> {NAME_BLOCK}
-                                            </div>
-                                        </div>
-                                    </td>
-								</tr>
-								<tr>
-									<td class="login_user">
-										<br />{L_HI_USER}<br /><br />
-										<img class="ui small centered circular image" src="{U_AVATAR}" title="{L_HI_USER}" alt="{L_HI_USER}" border="0" class="image" /><br /><br />
-										{L_GROUP}<br /><br />
-									</td>
-								</tr>
-							</table>
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="user circle icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="login_user" style="text-align: center; margin: 10px 0;">
+						<div>{L_HI_USER}</div>
+						<div style="display: flex; justify-content: center; margin: 5px 0;">
+							<img class="small ui circular image" src="{U_AVATAR}" title="{L_HI_USER}" alt="{L_HI_USER}">
+						</div>
+						<div>{L_GROUP}</div>
+					</div>
+				</div>
 <!-- IF_USER_NOT_LOGIN_END -->
 <!-- BREAK_USER_INFO -->
 <!-- CASE_STATISTIC -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-                                    <td>
-                                        <div class="large ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="large ui top black attached centered label">
-                                                <i class="chart bar icon"></i> {NAME_BLOCK}
-                                            </div>
-                                        </div>
-                                    </td>
-								</tr>
-								<tr>
-                                    <td class="polya">
-										<table cellpadding="0" cellspacing="0" border="0" width="95%" class="stat">
-											<tr>
-												<td>{L_STAT_REGIST}:</td>
-												<td class="stat_data">{D_STAT_REGIST}</td>
-											</tr>
-											<tr>
-												<td>{L_STAT_PHOTO}:</td>
-												<td class="stat_data">{D_STAT_PHOTO}</td>
-											</tr>
-											<tr>
-												<td>{L_STAT_CATEGORY}:</td>
-												<td class="stat_data">{D_STAT_CATEGORY}</td>
-											</tr>
-											<tr>
-												<td>{L_STAT_USER_ADMIN}:</td>
-												<td class="stat_data">{D_STAT_USER_ADMIN}</td>
-											</tr>
-											<tr>
-												<td>{L_STAT_USER_MODER}:</td>
-												<td class="stat_data">{D_STAT_USER_MODER}</td>
-											</tr>
-											<tr>
-												<td>{L_STAT_RATE_USER}:</td>
-												<td class="stat_data">{D_STAT_RATE_USER}</td>
-											</tr>
-											<tr>
-												<td>{L_STAT_RATE_MODER}:</td>
-												<td class="stat_data">{D_STAT_RATE_MODER}</td>
-											</tr>
-										</table>
-										<table cellpadding="0" cellspacing="0" border="0" width="95%" class="stat">
-											<tr>
-												<td class="news_data">{L_STAT_ONLINE}: {D_STAT_ONLINE}</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="chart bar icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="polya" style="margin: 15px 0;">
+						<div class="ui grid" style="width: 100%;">
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_REGIST}:</div>
+								<div class="two wide column stat_data">{D_STAT_REGIST}</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_PHOTO}:</div>
+								<div class="two wide column stat_data">{D_STAT_PHOTO}</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_CATEGORY}:</div>
+								<div class="two wide column stat_data">{D_STAT_CATEGORY}</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_USER_ADMIN}:</div>
+								<div class="two wide column stat_data">{D_STAT_USER_ADMIN}</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_USER_MODER}:</div>
+								<div class="two wide column stat_data">{D_STAT_USER_MODER}</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_RATE_USER}:</div>
+								<div class="two wide column stat_data">{D_STAT_RATE_USER}</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="fourteen wide column">{L_STAT_RATE_MODER}:</div>
+								<div class="two wide column stat_data">{D_STAT_RATE_MODER}</div>
+							</div>
+							<div class="row middle aligned tiny-space" style="margin: 10px 0 !important;">
+								<div class="sixteen wide column news_data">{L_STAT_ONLINE}: {D_STAT_ONLINE}</div>
+							</div>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_STATISTIC -->
 <!-- CASE_BEST_USER -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-                                    <td>
-                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="large ui top black attached centered label">
-                                                <i class="trophy icon"></i> {NAME_BLOCK}
-                                            </div>
-                                        </div>
-                                    </td>
-								</tr>
-								<tr>
-                                    <td class="polya">
-										<table cellpadding="0" cellspacing="0" border="0" width="95%" class="stat">
-											<tr>
-												<td class="stat_data">{L_USER_NAME}</td>
-												<td class="stat_data">{L_USER_PHOTO}</td>
-											</tr>
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="trophy icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="polya" style="margin: 15px 0;">
+						<div class="ui grid">
+							<div class="row middle aligned tiny-space">
+								<div class="eight wide column stat_data">{L_USER_NAME}</div>
+								<div class="eight wide column stat_data">{L_USER_PHOTO}</div>
+							</div>
 <!-- ARRAY_BEST_USER_BEGIN -->
-											<tr>
-												<td class="news_data">
+							<div class="row middle aligned tiny-space">
+								<div class="eight wide column news_data">
 <!-- IF_USER_EXIST_BEGIN -->
-												<a href="{U_BEST_USER_PROFILE}" title="{D_USER_NAME}">{D_USER_NAME}</a>
+									<a href="{U_BEST_USER_PROFILE}" title="{D_USER_NAME}">{D_USER_NAME}</a>
 <!-- IF_USER_EXIST_ELSE -->
-												{D_USER_NAME}
+									{D_USER_NAME}
 <!-- IF_USER_EXIST_END -->
-												</td>
-												<td class="stat_data">{D_USER_PHOTO}</td>
-											</tr>
+								</div>
+								<div class="eight wide column stat_data">{D_USER_PHOTO}</div>
+							</div>
 <!-- ARRAY_BEST_USER_END -->
-											</table>
-									</td>
-								</tr>
-							</table>
-
+						</div>
+					</div>
+				</div>
 <!-- BREAK_BEST_USER -->
 <!-- CASE_RANDOM_PHOTO -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-                                    <td>
-                                        <div class="large ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="large ui top black attached centered label">
-                                                <i class="camera retro icon"></i> {NAME_BLOCK}
-                                            </div>
-                                        </div>
-                                    </td>
-								</tr>
-								<tr>
-									<td class="mini_photo"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
-								</tr>
-								<tr>
-									<td class="mini_photo"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-								</tr>
-								<tr>
-									<td class="mini_photo">
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="camera retro icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="mini_photo" style="margin: 10px 0; text-align: center;">
+						<div style="margin-bottom: 10px;">
+							<a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> ->
+							<a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a>
+						</div>
+						<div style="margin-bottom: 10px;">
+							<a class="ui small rounded image" href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">
+								<img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}">
+							</a>
+						</div>
+						<div style="margin-bottom: 10px;">
 <!-- IF_USER_EXISTS_BEGIN -->
-										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
+							{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
 <!-- IF_USER_EXISTS_ELSE -->
-										{D_REAL_NAME_USER_ADD}
+							{D_REAL_NAME_USER_ADD}
 <!-- IF_USER_EXISTS_END -->
-									</td>
-								</tr>
-								<tr>
-									<td class="mini_photo">{PHOTO_RATE}</td>
-								</tr>
-							</table>
+						</div>
+						<div>{PHOTO_RATE}</div>
+					</div>
+				</div>
 <!-- BREAK_RANDOM_PHOTO -->
 <!-- CASE_DEFAULT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-									<td>
-                                        <div class="ui top black attached segment" style="border-radius: 15px 15px 0 0;">
-                                            <div class="ui top black attached centered label">
-                                                <i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
-                                            </div>
-                                        </div>
-									</td>
-								</tr>
-							</table>
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+						<div class="ui center aligned header">
+							<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_RIGHT_BLOCK_END -->
 <!-- ARRAY_RIGHT_PANEL_END -->
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td class="field_copyright" colspan="5">&copy;&nbsp;{COPYRIGHT_YEAR}&nbsp;<a href="{COPYRIGHT_URL}" title="{COPYRIGHT_TEXT}" target="_blank">{COPYRIGHT_TEXT}</a></td>
-		</tr>
-		<tr>
-			<td class="field_copyright" colspan="5"><a href="https://validator.w3.org/check?uri=referer"><img src="https://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>&nbsp;&nbsp;<a href="https://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="https://www.w3.org/Icons/valid-css-blue"
-        alt="Правильный CSS!" /></a></td>
-		</tr>
-			</table>
+			</div>
 		</div>
-		<script>
-			$(document).ready(function () {
-				// Инициализация стандартныx компонентов Fomantic-UI
-				$('.ui.checkbox').checkbox();
-				$('.ui.icon.button').popup();
-				$('.ui.dropdown').dropdown();
-				$('.ui.sticky').sticky({ context: '#short_menu' });
-				console.log('Initializing readonly ratings...');
+		<div class="field_copyright" style="margin-top: 10px; border-radius: 15px;">
+			&copy;&nbsp;{COPYRIGHT_YEAR}&nbsp;<a href="{COPYRIGHT_URL}" title="{COPYRIGHT_TEXT}" target="_blank">{COPYRIGHT_TEXT}</a>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function () {
+		// Инициализация стандартныx компонентов Fomantic-UI
+		$('.ui.checkbox').checkbox();
+		$('.ui.icon.button').popup();
+		$('.ui.dropdown').dropdown();
+		$('.ui.sticky').sticky({ context: '#short_menu' });
+		console.log('Initializing readonly ratings...');
 
-				function initializeReadOnlyRating() {
-					$('.readonly-rating').each(function () {
-						const ratingContainer = $(this);
-						const maxRating = parseFloat(ratingContainer.attr('data-max-rating')) || 1;
-						const ratingValue = parseFloat(ratingContainer.attr('data-rating')) || 0;
+		function initializeReadOnlyRating() {
+			$('.readonly-rating').each(function () {
+				const ratingContainer = $(this);
+				const maxRating = parseFloat(ratingContainer.attr('data-max-rating')) || 1;
+				const ratingValue = parseFloat(ratingContainer.attr('data-rating')) || 0;
 
-						console.log(`Processing rating: value=${ratingValue}, max=${maxRating}`);
+				console.log(`Processing rating: value=${ratingValue}, max=${maxRating}`);
 
-						const totalIcons = 2 * maxRating + 1;
+				const totalIcons = 2 * maxRating + 1;
 
-						ratingContainer.empty();
-						for (let i = 0; i < totalIcons; i++) {
-							ratingContainer.append('<i class="icon"></i>');
-						}
-
-						ratingContainer.rating({
-							initialRating: Math.abs(ratingValue),
-							maxRating: totalIcons,
-							interactive: false,
-							fireOnInit: true,
-							onRate: function () {
-								return false;
-							}
-						});
-
-						ratingContainer.find('.icon').each(function (index) {
-							const icon = $(this);
-							const midpoint = maxRating;
-
-							if (index < midpoint) {
-								icon.addClass('red');
-							} else if (index === midpoint) {
-								icon.addClass('grey');
-							} else {
-								icon.addClass('green');
-							}
-						});
-
-						const fractionalPart = Math.abs(ratingValue) % 1;
-						if (fractionalPart > 0) {
-							const activeIconIndex = Math.floor(Math.abs(ratingValue));
-							const partialIcon = ratingContainer.find('.icon').eq(activeIconIndex);
-							partialIcon.addClass('partial');
-
-							const fillPercent = `${fractionalPart * 100}%`;
-							partialIcon.css('--fill-percent', fillPercent);
-							console.log(`Set --fill-percent to ${fillPercent}`);
-						}
-					});
+				ratingContainer.empty();
+				for (let i = 0; i < totalIcons; i++) {
+					ratingContainer.append('<i class="icon"></i>');
 				}
 
-				initializeReadOnlyRating();
-
-				$(document).on('click', '.delete-button', function () {
-					const modalSelector = $(this).data('target');
-					const $modal = $(modalSelector);
-
-					$modal.modal({
-						closable: false,
-						transition: 'fly left',
-						duration: 500,
-						onHide: function () {
-							$modal.modal('setting', 'transition', 'fly right');
-						},
-						onApprove: function () {
-							const url = $modal.data('url');
-							window.location.href = url;
-						}
-					}).modal('show');
+				ratingContainer.rating({
+					initialRating: Math.abs(ratingValue),
+					maxRating: totalIcons,
+					interactive: false,
+					fireOnInit: true,
+					onRate: function () {
+						return false;
+					}
 				});
+
+				ratingContainer.find('.icon').each(function (index) {
+					const icon = $(this);
+					const midpoint = maxRating;
+
+					if (index < midpoint) {
+						icon.addClass('red');
+					} else if (index === midpoint) {
+						icon.addClass('grey');
+					} else {
+						icon.addClass('green');
+					}
+				});
+
+				const fractionalPart = Math.abs(ratingValue) % 1;
+				if (fractionalPart > 0) {
+					const activeIconIndex = Math.floor(Math.abs(ratingValue));
+					const partialIcon = ratingContainer.find('.icon').eq(activeIconIndex);
+					partialIcon.addClass('partial');
+
+					const fillPercent = `${fractionalPart * 100}%`;
+					partialIcon.css('--fill-percent', fillPercent);
+					console.log(`Set --fill-percent to ${fillPercent}`);
+				}
 			});
-		</script>
-	</body>
+		}
+
+		initializeReadOnlyRating();
+
+		$(document).on('click', '.delete-button', function () {
+			const modalSelector = $(this).data('target');
+			const $modal = $(modalSelector);
+
+			$modal.modal({
+				closable: false,
+				transition: 'fly left',
+				duration: 500,
+				onHide: function () {
+					$modal.modal('setting', 'transition', 'fly right');
+				},
+				onApprove: function () {
+					const url = $modal.data('url');
+					window.location.href = url;
+				}
+			}).modal('show');
+		});
+	});
+</script>
+</body>
 </html>

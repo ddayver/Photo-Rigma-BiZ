@@ -138,6 +138,38 @@ body.modal-open.modal-visible::before {
     opacity: 1;
 }
 
+.ui.buttons.vertical .button:first-child {
+    border-radius: 0;
+}
+
+.ui.buttons.vertical .button:last-child {
+    border-radius: 0 0 15px 15px;
+    margin-bottom: 0;
+}
+
+/* Общий контейнер с использованием CSS Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: var(--left-panel-width) 1fr var(--right-panel-width); /* Ширина колонок */
+    gap: 5px; /* Отступ между колонками */
+    padding-top: 5px;
+}
+
+/* Стиль для левой панели */
+.left-panel {
+    text-align: center;
+}
+
+/* Стиль для центральной части */
+.center-content {
+    text-align: center;
+}
+
+/* Стиль для правой панели */
+.right-panel {
+    text-align: center;
+}
+
 body {
     background: #141519;
     font: 14px Helvetica, sans-serif;
@@ -161,26 +193,27 @@ body {
 
 .field_small, .field_copyright, .header_site {
     border: #414b57 ridge 3px;
-    vertical-align: top
+    vertical-align: top;
 }
 
 .field_small {
-    background: url(images/gpadient_small.jpg) repeat-x bottom
-}
+    background: url(images/gpadient_small.jpg) repeat-x bottom !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
-.field_small_left {
-    background: url(images/gpadient_small.jpg) repeat-x bottom;
-    text-align: left
 }
 
 .header_site {
-    background: url(images/logo-2.png) no-repeat right
+    background: url(images/logo-2.png) no-repeat right;
+    overflow: hidden;
+    border-radius: 15px;
+    margin: 0 !important;
 }
 
 .field_big {
     background: url(images/gpadient_big.jpg) repeat-x top !important;
     margin: 0 !important;
-    padding: 0 !important
+    padding: 0 !important;
 }
 
 .field_copyright {
@@ -189,16 +222,7 @@ body {
     vertical-align: middle
 }
 
-.td_spacer {
-    height: 1px;
-    max-height: 1px;
-    min-height: 1px;
-    border-width: 0;
-    margin: 0;
-    padding: 0
-}
-
-.name_block, .name_block_left, .name_block_right {
+.name_block {
     font: bold 14px serif;
     color: #CCCCCC;
     height: 26px;
@@ -207,22 +231,6 @@ body {
     border-width: 0;
     margin: 0;
     padding: 0
-}
-
-.name_block_left {
-    background: url(images/name_block_left.png) no-repeat;
-    font: 3px serif;
-    width: 7px
-}
-
-.name_block_right {
-    background: url(images/name_block_right.png) no-repeat;
-    font: 1px serif;
-    width: 7px
-}
-
-.name_block {
-    background: url(images/name_block.png) repeat-x
 }
 
 .mini_photo {
@@ -339,14 +347,6 @@ button, .no_jquery {
 
 .edit_delete {
     float: right
-}
-
-.edit {
-    background: url(images/b_edit.gif) no-repeat center center
-}
-
-.delete {
-    background: url(images/b_drop.gif) no-repeat center center
 }
 
 .field_copyright a, .field_copyright a:visited, .login_user a, .login_user a:visited, .mini_photo a, .mini_photo a:visited, .news_data a, .news_data a:visited, .news a, .news a:visited, .category a, .category a:visited, .category_center a, .category_center a:visited, .category_left a, .category_left a:visited {
