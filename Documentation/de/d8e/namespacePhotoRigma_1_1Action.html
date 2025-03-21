@@ -109,8 +109,12 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 Переменные</h2></td></tr>
 <tr class="memitem:aa37f49d8322221dbe6f1bffe6c3640a9" id="r_aa37f49d8322221dbe6f1bffe6c3640a9"><td class="memItemLeft" align="right" valign="top">if(!defined('<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) $template&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa37f49d8322221dbe6f1bffe6c3640a9">template_file</a> = 'admin.html'</td></tr>
 <tr class="separator:aa37f49d8322221dbe6f1bffe6c3640a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad9271fde25875e1ed5ffc2447432649" id="r_aad9271fde25875e1ed5ffc2447432649"><td class="memItemLeft" align="right" valign="top">if(!defined( '<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) if(! $user-&gt;user&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad9271fde25875e1ed5ffc2447432649">else</a> ['pic_view']||! $work-&gt;check_input('_GET', 'foto', ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]+$/', 'not_zero'=&gt; true]))</td></tr>
-<tr class="separator:aad9271fde25875e1ed5ffc2447432649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3659a51b3cd945578c20fe5540395b49" id="r_a3659a51b3cd945578c20fe5540395b49"><td class="memItemLeft" align="right" valign="top">if((! $work-&gt;check_input('_SESSION', 'admin_on', ['isset'=&gt; true])||! $user-&gt;session['admin_on']) &amp;&amp;$user-&gt;user['admin'] &amp;&amp;$work-&gt;check_input('_POST', 'admin_password', ['isset'=&gt; true, 'empty'=&gt; true])) if(!empty( $user-&gt;user[ 'admin']) &amp;&amp;$work-&gt;check_input( '_SESSION', 'admin_on',[ 'isset'=&gt; true]) &amp;&amp;$user-&gt;session[ 'admin_on']) elseif((!isset($user-&gt;session['admin_on'])|| $user-&gt;session['admin_on'] !==true) &amp;&amp; $user-&gt;user['admin'])&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3659a51b3cd945578c20fe5540395b49">else</a></td></tr>
+<tr class="separator:a3659a51b3cd945578c20fe5540395b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6733eb5f605d09eaede9845835d71c4e" id="r_a6733eb5f605d09eaede9845835d71c4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6733eb5f605d09eaede9845835d71c4e">exit</a></td></tr>
+<tr class="separator:a6733eb5f605d09eaede9845835d71c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcadbcad27933c04a6b6380d6f449c50" id="r_adcadbcad27933c04a6b6380d6f449c50"><td class="memItemLeft" align="right" valign="top">if(!defined( '<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) if(! $user-&gt;user&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcadbcad27933c04a6b6380d6f449c50">else</a> ['pic_view']||! $work-&gt;check_input('_GET', 'foto', ['isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]+$/', 'not_zero'=&gt; true]))</td></tr>
+<tr class="separator:adcadbcad27933c04a6b6380d6f449c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade0b3dacf5d65d8f2293ffa78561fe31" id="r_ade0b3dacf5d65d8f2293ffa78561fe31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade0b3dacf5d65d8f2293ffa78561fe31">$query_result</a> = $db-&gt;res_row()</td></tr>
 <tr class="separator:ade0b3dacf5d65d8f2293ffa78561fe31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e1abd674afc1ccfc20aca3c95243cd3" id="r_a9e1abd674afc1ccfc20aca3c95243cd3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e1abd674afc1ccfc20aca3c95243cd3">$real_mime_type</a> = finfo_file($finfo, $real_path)</td></tr>
@@ -155,8 +159,6 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 <tr class="separator:ad544869fbeae7842215a9454d717e511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb1929f736cb07d0c6601e3467eff95b" id="r_adb1929f736cb07d0c6601e3467eff95b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb1929f736cb07d0c6601e3467eff95b">$redirect_url</a></td></tr>
 <tr class="separator:adb1929f736cb07d0c6601e3467eff95b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6733eb5f605d09eaede9845835d71c4e" id="r_a6733eb5f605d09eaede9845835d71c4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6733eb5f605d09eaede9845835d71c4e">exit</a></td></tr>
-<tr class="separator:a6733eb5f605d09eaede9845835d71c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8f0e73baf9c23924fb5410eda5f9ca9" id="r_aa8f0e73baf9c23924fb5410eda5f9ca9"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8f0e73baf9c23924fb5410eda5f9ca9">CHECKED_VALUE</a> 'checked'</td></tr>
 <tr class="separator:aa8f0e73baf9c23924fb5410eda5f9ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a411af7215df22ded09bf9da8186e5662" id="r_a411af7215df22ded09bf9da8186e5662"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a411af7215df22ded09bf9da8186e5662">TRUE_VALUE</a> 'true'</td></tr>
@@ -479,8 +481,26 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 
 </div>
 </div>
+<a id="a3659a51b3cd945578c20fe5540395b49" name="a3659a51b3cd945578c20fe5540395b49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3659a51b3cd945578c20fe5540395b49">&#9670;&#160;</a></span>else <span class="overload">[1/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if($subact==='saveprofile') if( $subact==='logout') if($subact==='regist') elseif( $subact==='register') elseif($subact==='login') elseif ( $subact==='profile') else</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
+<div class="line">    Header(<span class="stringliteral">&#39;Location: &#39;</span> . <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;config[<span class="stringliteral">&#39;site_url&#39;</span>])</div>
+</div><!-- fragment -->
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d78/admin_8php_source.html">admin.php</a> строка <a class="el" href="../../dc/d78/admin_8php_source.html#l00884">884</a></p>
+
+</div>
+</div>
 <a id="a6bb4778c70884c9cebefbaf83124997c" name="a6bb4778c70884c9cebefbaf83124997c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bb4778c70884c9cebefbaf83124997c">&#9670;&#160;</a></span>else <span class="overload">[1/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb4778c70884c9cebefbaf83124997c">&#9670;&#160;</a></span>else <span class="overload">[2/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -499,7 +519,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="a04590eca754d146f49f48614e340ea33" name="a04590eca754d146f49f48614e340ea33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04590eca754d146f49f48614e340ea33">&#9670;&#160;</a></span>else <span class="overload">[2/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a04590eca754d146f49f48614e340ea33">&#9670;&#160;</a></span>else <span class="overload">[3/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -517,7 +537,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="a4e86755baf61e103042e768f69f408be" name="a4e86755baf61e103042e768f69f408be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e86755baf61e103042e768f69f408be">&#9670;&#160;</a></span>else <span class="overload">[3/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e86755baf61e103042e768f69f408be">&#9670;&#160;</a></span>else <span class="overload">[4/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -535,7 +555,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="afe91d823cfa7d5523353c881c2180b15" name="afe91d823cfa7d5523353c881c2180b15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe91d823cfa7d5523353c881c2180b15">&#9670;&#160;</a></span>else <span class="overload">[4/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afe91d823cfa7d5523353c881c2180b15">&#9670;&#160;</a></span>else <span class="overload">[5/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -558,7 +578,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="abe79ae181d13775952e4ddec8cf3e2c9" name="abe79ae181d13775952e4ddec8cf3e2c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe79ae181d13775952e4ddec8cf3e2c9">&#9670;&#160;</a></span>else <span class="overload">[5/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abe79ae181d13775952e4ddec8cf3e2c9">&#9670;&#160;</a></span>else <span class="overload">[6/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -576,7 +596,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="a54d3d5f4facd455285ef372ee6bae185" name="a54d3d5f4facd455285ef372ee6bae185"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54d3d5f4facd455285ef372ee6bae185">&#9670;&#160;</a></span>else <span class="overload">[6/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a54d3d5f4facd455285ef372ee6bae185">&#9670;&#160;</a></span>else <span class="overload">[7/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -594,7 +614,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="a9398887dd812cf137a4db57a6b586bb8" name="a9398887dd812cf137a4db57a6b586bb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9398887dd812cf137a4db57a6b586bb8">&#9670;&#160;</a></span>else <span class="overload">[7/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9398887dd812cf137a4db57a6b586bb8">&#9670;&#160;</a></span>else <span class="overload">[8/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -611,14 +631,14 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 
 </div>
 </div>
-<a id="aad9271fde25875e1ed5ffc2447432649" name="aad9271fde25875e1ed5ffc2447432649"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad9271fde25875e1ed5ffc2447432649">&#9670;&#160;</a></span>else <span class="overload">[8/9]</span></h2>
+<a id="adcadbcad27933c04a6b6380d6f449c50" name="adcadbcad27933c04a6b6380d6f449c50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcadbcad27933c04a6b6380d6f449c50">&#9670;&#160;</a></span>else <span class="overload">[9/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if($subact==='saveprofile') if( $subact==='logout') if($subact==='regist') elseif( $subact==='register') elseif($subact==='login') elseif ( $subact==='profile') else</td>
+          <td class="memname">if(!defined('<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a>')||<a class="el" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !==true) if (! $user-&gt;user else[ 'pic_view']||! $work-&gt;check_input( '_GET', 'foto',[ 'isset'=&gt; true, 'empty'=&gt; true, 'regexp'=&gt; '/^[0-9]+$/', 'not_zero'=&gt; true]))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -641,7 +661,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
 </div>
 </div>
 <a id="a6828550a6d5ac9b06cda0b5c8457c5a2" name="a6828550a6d5ac9b06cda0b5c8457c5a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6828550a6d5ac9b06cda0b5c8457c5a2">&#9670;&#160;</a></span>else <span class="overload">[9/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6828550a6d5ac9b06cda0b5c8457c5a2">&#9670;&#160;</a></span>else <span class="overload">[10/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -670,7 +690,7 @@ $(function(){initNavTree('de/d8e/namespacePhotoRigma_1_1Action.html','../../'); 
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../dd/df8/profile_8php_source.html">profile.php</a> строка <a class="el" href="../../dd/df8/profile_8php_source.html#l00573">573</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d78/admin_8php_source.html">admin.php</a> строка <a class="el" href="../../dc/d78/admin_8php_source.html#l00886">886</a></p>
 
 </div>
 </div>

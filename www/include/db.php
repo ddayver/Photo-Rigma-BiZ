@@ -74,8 +74,6 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @see PhotoRigma::Classes::Database Класс, который реализует интерфейс.
  * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
  *
- * @todo Добавить поддержку SQLite.
- *
  * @note Интерфейс поддерживает только MySQL (MariaDB) и PostgreSQL.
  *
  * @warning Методы интерфейса изменили свою реализацию в отличие от предыдущей версии. Убедитесь, что вы изучили новую документацию по методам перед использованием.
@@ -555,8 +553,6 @@ interface Database_Interface
  * @see PhotoRigma::Classes::Database_Interface Интерфейс, который реализует класс.
  * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
  *
- * @todo Добавить поддержку SQLite.
- *
  * Пример создания объекта класса Database:
  * @code
  * $config = [
@@ -617,7 +613,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::$pdo Свойство, хранящее объект PDO для подключения к базе данных.
      *
      * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
-     * @todo Добавить поддержку SQLite.
      *
      * Пример использования конструктора:
      * @code

@@ -68,7 +68,6 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @see PhotoRigma::Classes::User Класс, который реализует интерфейс.
  * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
  *
- * @todo Внедрить ряд методов по работе с группами и пользователями (добавление, изменение, удаление, вход).
  * @note Используются константы с именами таблиц в базе данных.
  * @warning Класс зависит от глобального массива $_SESSION.
  *
@@ -916,8 +915,6 @@ class User implements User_Interface
      * @see PhotoRigma::Classes::User::$user Свойство, содержащее данные о текущем пользователе.
      * @see PhotoRigma::Classes::User::$session Свойство, привязанное к глобальному массиву $_SESSION.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок и изменений.
-     *
-     * @todo Добавить скрытый "шифрованный ключ" к массиву `$session` для повышения безопасности.
      *
      * Пример использования метода:
      * @code

@@ -16,8 +16,6 @@
  *
  * @note        This file is part of the PhotoRigma system and provides localization for the project in English.
  *
- * @todo        Add support for additional languages.
- *
  * @copyright   Copyright (c) 2025 Dark Dayver. All rights reserved.
  * @license     MIT License (https://opensource.org/licenses/MIT)
  *              Permission is hereby granted, free of charge, to any person obtaining a copy

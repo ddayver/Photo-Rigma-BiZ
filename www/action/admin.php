@@ -81,12 +81,11 @@ $template->add_if_ar([
 ]);
 
 // Проверяем условия для входа в административную панель
-if (// Если сессия администратора не активна
-    (!$work->check_input(
-        '_SESSION',
-        'admin_on',
-        ['isset' => true]
-    ) || !$user->session['admin_on']) && // И пользователь имеет права администратора
+if ((!$work->check_input(
+    '_SESSION',
+    'admin_on',
+    ['isset' => true]
+) || !$user->session['admin_on']) && // И пользователь имеет права администратора
     $user->user['admin'] && // И был передан пароль через POST-запрос
     $work->check_input('_POST', 'admin_password', ['isset' => true, 'empty' => true])) {
     // Инициализация данных о попытках входа в сессии
@@ -116,6 +115,14 @@ if (// Если сессия администратора не активна
         // Выводим сообщение об ошибке и завершаем выполнение
         die(sprintf($work->lang['lockout_time'], LOCKOUT_TIME / 60));
     }
+
+    // Проверяем CSRF-токен
+    if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+        );
+    }
+    $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
 
     // Проверяем пароль
     if (password_verify($_POST['admin_password'], $user->user['password'])) {
@@ -152,6 +159,14 @@ if (!empty($user->user['admin']) && $work->check_input(
 ) && $user->session['admin_on']) {
     if ($work->check_input('_GET', 'subact', ['isset' => true, 'empty' => true]) && $_GET['subact'] === 'settings') {
         if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true])) {
+            // Проверяем CSRF-токен
+            if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                );
+            }
+            $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
+
             // Массив правил для обработки настроек
             $config_rules = [
                 'title_name' => ['regexp' => REG_NAME],
@@ -192,12 +207,11 @@ if (!empty($user->user['admin']) && $work->check_input(
 
             // Новый конфиг
             $new_config = [];
-
             foreach ($config_rules as $name => $rule) {
                 if ($work->check_input(
                     '_POST',
                     $name,
-                    ['isset' => true, 'empty' => true, 'regexp' => $rule['regexp'] ?? null]
+                    ['isset' => true, 'empty' => true, 'regexp' => $rule['regexp'] ?? false]
                 )) {
                     if (isset($rule['condition']) && !$rule['condition']()) {
                         continue; // Пропускаем, если дополнительное условие не выполнено
@@ -317,10 +331,10 @@ if (!empty($user->user['admin']) && $work->check_input(
             'D_LEFT_PANEL' => $work->config['left_panel'],
             'D_RIGHT_PANEL' => $work->config['right_panel'],
             'D_MAX_FILE_SIZE' => $max_file_size,
-            'D_SEL_B' => $max_file_size_letter === 'b' ? ' selected="selected"' : '',
-            'D_SEL_K' => $max_file_size_letter === 'k' ? ' selected="selected"' : '',
-            'D_SEL_M' => $max_file_size_letter === 'm' ? ' selected="selected"' : '',
-            'D_SEL_G' => $max_file_size_letter === 'g' ? ' selected="selected"' : '',
+            'D_SELECTED_SIZE' => strtoupper($max_file_size_letter), // Буква размера в верхнем регистре
+            'L_SELECTED_SIZE' => $max_file_size_letter === 'b' ? $max_file_size_letter : strtoupper(
+                $max_file_size_letter
+            ) . 'b', // Формируем метку размера
             'D_MAX_PHOTO_W' => $work->config['max_photo_w'],
             'D_MAX_PHOTO_H' => $work->config['max_photo_h'],
             'D_TEMP_PHOTO_W' => $work->config['temp_photo_w'],
@@ -333,24 +347,48 @@ if (!empty($user->user['admin']) && $work->check_input(
             'D_LAST_NEWS' => $work->config['last_news'],
             'D_BEST_USER' => $work->config['best_user'],
             'D_MAX_RATE' => $work->config['max_rate'],
-            'D_TIME_ONLINE' => $work->config['time_user_online']
+            'D_TIME_ONLINE' => $work->config['time_user_online'],
+            'CSRF_TOKEN' => $user->csrf_token(),
         ]);
 
         // Добавление языков в шаблон
         foreach ($language as $key => $val) {
-            $template->add_string_ar([
-                'D_DIR_LANG' => $val['value'],
-                'D_NAME_LANG' => $val['name'],
-                'D_SELECTED_LANG' => $val['value'] === $work->config['language'] ? ' selected="selected"' : ''
-            ], 'SELECT_LANGUAGE[' . $key . ']');
+            $template->add_string_ar(
+                [
+                    'D_DIR_LANG' => $val['value'],
+                    'D_NAME_LANG' => $val['name'],
+                ],
+                'SELECT_LANGUAGE[' . $key . ']'
+            );
+
+            if ($val['value'] === $work->config['language']) {
+                $template->add_string_ar(
+                    [
+                        'D_SELECTED_LANG' => $val['value'],
+                        'L_SELECTED_LANG' => $val['name'],
+                    ]
+                );
+            }
         }
 
         // Добавление тем в шаблон
         foreach ($themes as $key => $val) {
-            $template->add_string_ar([
-                'D_DIR_THEMES' => $val,
-                'D_SELECTED_THEMES' => $val === $work->config['themes'] ? ' selected="selected"' : ''
-            ], 'SELECT_THEMES[' . $key . ']');
+            $template->add_string_ar(
+                [
+                    'D_DIR_THEME' => $val,
+                    'D_NAME_THEME' => ucfirst($val),
+                ],
+                'SELECT_THEME[' . $key . ']'
+            );
+
+            if ($val === $work->config['themes']) {
+                $template->add_string_ar(
+                    [
+                        'D_SELECTED_THEME' => $val,
+                        'L_SELECTED_THEME' => ucfirst($val),
+                    ]
+                );
+            }
         }
 
         // Инициализация переменных для ядра
@@ -387,6 +425,16 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $user_data = array_merge($user_data, $user->process_user_rights($user_data['user_rights']));
 
                 if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true])) {
+                    // Проверяем CSRF-токен
+                    if (!isset($_POST['csrf_token']) || !hash_equals(
+                        $user->session['csrf_token'],
+                        $_POST['csrf_token']
+                    )) {
+                        throw new RuntimeException(
+                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                        );
+                    }
+                    $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
                     // Обновление группы пользователя
                     if ($work->check_input('_POST', 'group', [
                             'isset' => true,
@@ -464,10 +512,6 @@ if (!empty($user->user['admin']) && $work->check_input(
 
                         if ($rows > 0) {
                             $user_data = array_merge($user_data, $new_user_rights); // Обновляем данные в памяти
-                        } else {
-                            throw new RuntimeException(
-                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: {$_GET['uid']}"
-                            );
                         }
                     }
                 }
@@ -479,12 +523,23 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $groups = $db->res_arr();
 
                 if ($groups) {
-                    foreach ($groups as $key => $group) {
-                        $template->add_string_ar([
-                            'D_GROUP_ID' => (string)$group['id'],
-                            'D_GROUP_NAME' => $group['name'],
-                            'D_GROUP_SELECTED' => $group['id'] === $user_data['group_id'] ? ' selected="selected"' : '',
-                        ], 'GROUP_USER[' . $key . ']');
+                    foreach ($groups as $key => $val) {
+                        $template->add_string_ar(
+                            [
+                                'D_GROUP_ID' => (string)$val['id'],
+                                'D_GROUP_NAME' => $val['name'],
+                            ],
+                            'GROUP_USER[' . $key . ']'
+                        );
+
+                        if ($val['id'] === $user_data['group_id']) {
+                            $template->add_string_ar(
+                                [
+                                    'D_SELECTED_GROUP' => (string)$val['id'],
+                                    'L_SELECTED_GROUP' => $val['name'],
+                                ]
+                            );
+                        }
                     }
 
                     // Добавляем права доступа в шаблон
@@ -511,6 +566,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         'D_EMAIL' => $user_data['email'],
                         'D_REAL_NAME' => $user_data['real_name'],
                         'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'],
+                        'CSRF_TOKEN' => $user->csrf_token(),
                     ]);
                 } else {
                     throw new RuntimeException(
@@ -529,6 +585,14 @@ if (!empty($user->user['admin']) && $work->check_input(
                 'search_user',
                 ['isset' => true, 'empty' => true]
             )) {
+                // Проверяем CSRF-токен
+                if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
+                    throw new RuntimeException(
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                    );
+                }
+                $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
+
                 $search_query = $_POST['search_user'] === '*' ? '%' : "%" . Work::clean_field(
                     $_POST['search_user']
                 ) . "%";
@@ -545,13 +609,13 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $found_users = $db->res_arr();
 
                 if ($found_users) {
-                    foreach ($found_users as $key => $user) {
+                    foreach ($found_users as $key => $value) {
                         $template->add_string_ar([
-                            'D_FIND_USER' => $user['real_name'],
+                            'D_FIND_USER' => $value['real_name'],
                             'U_FIND_USER' => sprintf(
                                 "%s?action=admin&amp;subact=admin_user&amp;uid=%s",
                                 $work->config['site_url'],
-                                $user['id']
+                                $value['id']
                             ),
                         ], 'FIND_USER[' . $key . ']');
                     }
@@ -577,6 +641,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                     'search_user',
                     ['isset' => true, 'empty' => true]
                 ) ? Work::clean_field($_POST['search_user']) : '',
+                'CSRF_TOKEN' => $user->csrf_token(),
             ]);
         }
 
@@ -601,6 +666,16 @@ if (!empty($user->user['admin']) && $work->check_input(
             'id_group',
             ['isset' => true, 'regexp' => '/^[0-9]+$/']
         )) {
+            // Проверяем CSRF-токен
+            if (!isset($_POST['csrf_token']) || !hash_equals(
+                $user->session['csrf_token'],
+                $_POST['csrf_token']
+            )) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                );
+            }
+
             // Выбираем данные группы по ID
             $db->select('*', TBL_GROUP, [
                 'where' => '`id` = :id_group',
@@ -676,6 +751,16 @@ if (!empty($user->user['admin']) && $work->check_input(
             'group',
             ['isset' => true, 'regexp' => '/^[0-9]+$/']
         )) {
+            // Проверяем CSRF-токен
+            if (!isset($_POST['csrf_token']) || !hash_equals(
+                $user->session['csrf_token'],
+                $_POST['csrf_token']
+            )) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                );
+            }
+
             // Выбираем данные группы по ID
             $db->select('*', TBL_GROUP, [
                 'where' => '`id` = :group_id',
@@ -704,22 +789,32 @@ if (!empty($user->user['admin']) && $work->check_input(
                     'L_NAME_GROUP' => $work->lang['main']['group'],
                     'L_GROUP_RIGHTS' => $work->lang['admin']['group_rights'],
                     'L_SAVE_GROUP' => $work->lang['admin']['save_group'],
-
                     'D_ID_GROUP' => (string)$group_data['id'],
                     'D_NAME_GROUP' => $group_data['name'],
                 ]);
             }
+            $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
+            $template->add_string('CSRF_TOKEN', $user->csrf_token());
         } elseif ($db->select('*', TBL_GROUP)) {
             // Получаем список всех групп
             $groups = $db->res_arr();
 
             if ($groups) {
-                foreach ($groups as $key => $group) {
-                    $template->add_string_ar([
-                        'D_ID_GROUP' => (string)$group['id'],
-                        'D_NAME_GROUP' => $group['name'],
-                    ], 'SELECT_GROUP[' . $key . ']');
+                foreach ($groups as $key => $val) {
+                    $template->add_string_ar(
+                        [
+                            'D_ID_GROUP' => (string)$val['id'],
+                            'D_NAME_GROUP' => $val['name'],
+                        ],
+                        'SELECT_GROUP[' . $key . ']'
+                    );
                 }
+                $template->add_string_ar(
+                    [
+                        'D_SELECTED_GROUP' => (string)$groups[0]['id'],
+                        'L_SELECTED_GROUP' => $groups[0]['name'],
+                    ]
+                );
 
                 // Добавляем форму выбора группы в шаблон
                 $template->add_if('SELECT_GROUP', true);
@@ -727,6 +822,8 @@ if (!empty($user->user['admin']) && $work->check_input(
                     'L_SELECT_GROUP' => $work->lang['admin']['select_group'],
                     'L_EDIT' => $work->lang['admin']['edit_group'],
                 ]);
+                $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
+                $template->add_string('CSRF_TOKEN', $user->csrf_token());
             }
         }
 
@@ -770,21 +867,21 @@ if (!empty($user->user['admin']) && $work->check_input(
         $action = 'admin'; // Активный пункт меню - admin
         $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
     }
-} else { // Проверяем, что сессия администратора не равна true, но пользователь имеет права администратора
-    if ((!isset($user->session['admin_on']) || $user->session['admin_on'] !== true) && $user->user['admin']) {
-        // Добавляем блок администрирования в шаблон
-        $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
-        $template->add_string_ar([
-            'L_NAME_BLOCK' => $work->lang['admin']['title'],
-            'L_ENTER_ADMIN_PASS' => $work->lang['admin']['admin_pass'],
-            'L_ENTER' => $work->lang['main']['enter'],
-        ]);
+} elseif ((!isset($user->session['admin_on']) || $user->session['admin_on'] !== true) && $user->user['admin']) {
+    // Добавляем блок администрирования в шаблон
+    $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
+    $template->add_string_ar([
+        'L_NAME_BLOCK' => $work->lang['admin']['title'],
+        'L_ENTER_ADMIN_PASS' => $work->lang['admin']['admin_pass'],
+        'L_PASSWORD' => $work->lang['profile']['password'],
+        'L_ENTER' => $work->lang['main']['enter'],
+        'CSRF_TOKEN' => $user->csrf_token(),
+    ]);
 
-        // Инициализация переменных для ядра
-        $action = 'admin'; // Активный пункт меню - admin
-        $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
-    } else {
-        Header('Location: ' . $work->config['site_url']);
-        exit;
-    }
+    // Инициализация переменных для ядра
+    $action = 'admin'; // Активный пункт меню - admin
+    $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
+} else {
+    Header('Location: ' . $work->config['site_url']);
+    exit;
 }
