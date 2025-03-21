@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['page_5ffooter_0',['page_footer',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5371fabe76f72396d19c1700b8c71032',1,'PhotoRigma::Classes::Template']]],
-  ['page_5fheader_1',['page_header',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd',1,'PhotoRigma::Classes::Template']]],
+  ['page_5ffooter_0',['page_footer',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30',1,'PhotoRigma::Classes::Template']]],
+  ['page_5fheader_1',['page_header',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2',1,'PhotoRigma::Classes::Template']]],
   ['pars_5ftemplate_2',['pars_template',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4',1,'PhotoRigma::Classes::Template']]],
   ['photo_20rigma_20biz_20📸_3',['Photo Rigma BiZ 📸',['../index.html',1,'']]],
   ['photo_20variables_4',['Photo Variables',['../d7/d94/group__LanguageEnglishPhoto.html',1,'']]],

@@ -1,6 +1,7 @@
 var index_8php =
 [
     [ "PhotoRigma\\$action", "de/d90/namespacePhotoRigma.html#aa698a3e72116e8e778be0e95d908ee30", null ],
+    [ "PhotoRigma\\$csrf_token", "de/d90/namespacePhotoRigma.html#a1860c2e884f5466ff46754807f8a79b7", null ],
     [ "PhotoRigma\\$db", "de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319", null ],
     [ "PhotoRigma\\$encoding", "de/d90/namespacePhotoRigma.html#aee271b7ce67fbe00b9976e6c347cbfbf", null ],
     [ "PhotoRigma\\$errors", "de/d90/namespacePhotoRigma.html#ab24faf4aa647cdcee494fc48524ad4ff", null ],

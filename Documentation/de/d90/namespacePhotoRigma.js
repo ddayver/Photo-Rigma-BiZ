@@ -78,6 +78,7 @@ var namespacePhotoRigma =
     [ "$config", "de/d90/namespacePhotoRigma.html#a33bafce57e837bd695b691dc6001e96f", null ],
     [ "$config", "de/d90/namespacePhotoRigma.html#a78c432ed71c36e4285d478f21642200a", null ],
     [ "$config", "de/d90/namespacePhotoRigma.html#a97536661153bec04cfa8c9437f7dac4a", null ],
+    [ "$csrf_token", "de/d90/namespacePhotoRigma.html#a1860c2e884f5466ff46754807f8a79b7", null ],
     [ "$db", "de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319", null ],
     [ "$encoding", "de/d90/namespacePhotoRigma.html#aee271b7ce67fbe00b9976e6c347cbfbf", null ],
     [ "$errors", "de/d90/namespacePhotoRigma.html#ab24faf4aa647cdcee494fc48524ad4ff", null ],

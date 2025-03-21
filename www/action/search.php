@@ -74,10 +74,13 @@ namespace PhotoRigma\Action;
 
 use PhotoRigma\Classes\Database;
 use PhotoRigma\Classes\Template;
+use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
+use RuntimeException;
 
 /** @var Database $db */
 /** @var Work $work */
+/** @var User $user */
 /** @var Template $template */
 
 // Предотвращение прямого вызова файла
@@ -135,6 +138,17 @@ foreach ($types as $type) {
 if (!in_array(true, $search, true)) {
     $check['photo'] = CHECKED_VALUE;
 }
+
+// Проверяем CSRF-токен
+if (empty($_POST['csrf_token']) || !hash_equals(
+    $user->session['csrf_token'],
+    $_POST['csrf_token']
+)) {
+    throw new RuntimeException(
+        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+    );
+}
+$user->unset_property_key('session', 'csrf_token');
 
 // Обработка текста запроса
 if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true])) {
@@ -318,6 +332,9 @@ if ($search['photo']) {
 if (isset($_POST['search_text'])) {
     $_POST['search_text'] = Work::clean_field($_POST['search_text']);
 }
+
+// Генерируем CSRF-токен для защиты от атак типа CSRF
+$template->add_string('CSRF_TOKEN', $user->csrf_token());
 
 // Добавляем данные в шаблон для отображения формы поиска
 $template->add_string_ar([

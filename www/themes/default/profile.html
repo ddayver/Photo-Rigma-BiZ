@@ -1,365 +1,365 @@
 <!-- SELECT_PROFILE_BLOCK_BEGIN -->
 <!-- CASE_REGIST -->
-							<div class="ui segment field_big block_border" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui top black attached centered label">
-										<i class="signup icon"></i> {NAME_BLOCK}
-									</div>
-								</div>
-								<div class="ui attached segment regist field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
-									<div align="center">
-										<form action="{U_REGISTER}" method="post" name="regist">
-											<div class="ui grid regist_data" style="margin: 0;">
-												<div class="row middle aligned tiny-space">
-													<div class="one wide column"></div>
-													<div class="five wide column">
-														{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" />
-													</div>
-													<div class="eight wide column">
-														<div class="small ui icon input custom-input">
-															<input class="ui input" type="text" name="login" maxlength="32" placeholder="{L_LOGIN}..." />
-															<i class="user icon"></i>
-														</div>
-													</div>
-													<div class="one wide column error">
-<!-- IF_ERROR_LOGIN_BEGIN -->
-														<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_LOGIN}" data-position="right center" data-variation="red small">
-															<i class="red exclamation circle icon"></i>
-														</div>
-<!-- IF_ERROR_LOGIN_ELSE -->
-														<div class="ui icon">
-															<i class="exclamation circle icon" style="opacity: 0;"></i>
-														</div>
-<!-- IF_ERROR_LOGIN_END -->
-													</div>
-													<div class="one wide column"></div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="one wide column"></div>
-													<div class="five wide column">{L_PASSWORD}:</div>
-													<div class="eight wide column">
-														<div class="small ui icon input custom-input">
-															<input class="ui input" type="password" name="password" maxlength="50" placeholder="{L_PASSWORD}..." />
-															<i class="unlock icon"></i>
-														</div>
-													</div>
-													<div class="one wide column error">
-<!-- IF_ERROR_PASSWORD_BEGIN -->
-														<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_PASSWORD}" data-position="right center" data-variation="red small">
-															<i class="red exclamation circle icon"></i>
-														</div>
-<!-- IF_ERROR_PASSWORD_ELSE -->
-														<div class="ui icon">
-															<i class="exclamation circle icon" style="opacity: 0;"></i>
-														</div>
-<!-- IF_ERROR_PASSWORD_END -->
-													</div>
-													<div class="one wide column"></div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="one wide column"></div>
-													<div class="five wide column">{L_RE_PASSWORD}:</div>
-													<div class="eight wide column">
-														<div class="small ui icon input custom-input">
-															<input class="ui input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}..." />
-															<i class="unlock alternate icon"></i>
-														</div>
-													</div>
-													<div class="one wide column error">
-<!-- IF_ERROR_RE_PASSWORD_BEGIN -->
-														<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_RE_PASSWORD}" data-position="right center" data-variation="red small">
-															<i class="red exclamation circle icon"></i>
-														</div>
-<!-- IF_ERROR_RE_PASSWORD_ELSE -->
-														<div class="ui icon">
-															<i class="exclamation circle icon" style="opacity: 0;"></i>
-														</div>
-<!-- IF_ERROR_RE_PASSWORD_END -->
-													</div>
-													<div class="one wide column"></div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="one wide column"></div>
-													<div class="five wide column">{L_EMAIL}:</div>
-													<div class="eight wide column">
-														<div class="small ui icon input custom-input">
-															<input class="ui input" type="text" name="email" maxlength="50" placeholder="{L_EMAIL}..." />
-															<i class="envelope outline icon"></i>
-														</div>
-													</div>
-													<div class="one wide column error">
-<!-- IF_ERROR_EMAIL_BEGIN -->
-														<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_EMAIL}" data-position="right center" data-variation="red small">
-															<i class="red exclamation circle icon"></i>
-														</div>
-<!-- IF_ERROR_EMAIL_ELSE -->
-														<div class="ui icon">
-															<i class="exclamation circle icon" style="opacity: 0;"></i>
-														</div>
-<!-- IF_ERROR_EMAIL_END -->
-													</div>
-													<div class="one wide column"></div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="one wide column"></div>
-													<div class="five wide column">{L_REAL_NAME}:</div>
-													<div class="eight wide column">
-														<div class="small ui icon input custom-input">
-															<input class="ui input" type="text" name="real_name" maxlength="50" placeholder="{L_REAL_NAME}..." />
-															<i class="id card icon"></i>
-														</div>
-													</div>
-													<div class="one wide column error">
-<!-- IF_ERROR_REAL_NAME_BEGIN -->
-														<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_REAL_NAME}" data-position="right center" data-variation="red small">
-															<i class="red exclamation circle icon"></i>
-														</div>
-<!-- IF_ERROR_REAL_NAME_ELSE -->
-														<div class="ui icon">
-															<i class="exclamation circle icon" style="opacity: 0;"></i>
-														</div>
-<!-- IF_ERROR_REAL_NAME_END -->
-													</div>
-													<div class="one wide column"></div>
-												</div>
-												<div class="row middle aligned">
-													<div class="sixteen wide column" style="text-align: center;">{L_CAPTCHA}</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="one wide column"></div>
-													<div class="five wide column">{D_CAPTCHA_QUESTION}&nbsp;=</div>
-													<div class="eight wide column">
-														<div class="small ui icon input custom-input">
-															<input class="ui input" type="text" name="captcha" maxlength="50" />
-															<i class="puzzle piece icon"></i>
-														</div>
-													</div>
-													<div class="one wide column error">
-<!-- IF_ERROR_CAPTCHA_BEGIN -->
-														<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_CAPTCHA}" data-position="right center" data-variation="red small">
-															<i class="red exclamation circle icon"></i>
-														</div>
-<!-- IF_ERROR_CAPTCHA_ELSE -->
-														<div class="ui icon">
-															<i class="exclamation circle icon" style="opacity: 0;"></i>
-														</div>
-<!-- IF_ERROR_CAPTCHA_END -->
-													</div>
-													<div class="one wide column"></div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="sixteen wide column" style="text-align: center; margin-top: 15px;">
-														<button class="small ui primary basic inverted button" name="submit" type="submit" title="{L_REGISTER}">
-															<i class="user plus icon"></i> {L_REGISTER}
-														</button>
-													</div>
-												</div>
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui top black attached centered label">
+							<i class="signup icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="ui attached segment regist field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+						<div align="center">
+							<form action="{U_REGISTER}" method="post" name="regist">
+								<div class="ui grid regist_data" style="margin: 0;">
+									<div class="row middle aligned tiny-space">
+										<div class="one wide column"></div>
+										<div class="five wide column">
+											{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+										</div>
+										<div class="eight wide column">
+											<div class="small ui icon input custom-input">
+												<input class="ui input" type="text" name="login" maxlength="32" placeholder="{L_LOGIN}...">
+												<i class="user icon"></i>
 											</div>
-										</form>
+										</div>
+										<div class="one wide column error">
+<!-- IF_ERROR_LOGIN_BEGIN -->
+											<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_LOGIN}" data-position="right center" data-variation="red small">
+												<i class="red exclamation circle icon"></i>
+											</div>
+<!-- IF_ERROR_LOGIN_ELSE -->
+											<div class="ui icon">
+												<i class="exclamation circle icon" style="opacity: 0;"></i>
+											</div>
+<!-- IF_ERROR_LOGIN_END -->
+										</div>
+										<div class="one wide column"></div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="one wide column"></div>
+										<div class="five wide column">{L_PASSWORD}:</div>
+										<div class="eight wide column">
+											<div class="small ui icon input custom-input">
+												<input class="ui input" type="password" name="password" maxlength="50" placeholder="{L_PASSWORD}...">
+												<i class="unlock icon"></i>
+											</div>
+										</div>
+										<div class="one wide column error">
+<!-- IF_ERROR_PASSWORD_BEGIN -->
+											<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_PASSWORD}" data-position="right center" data-variation="red small">
+												<i class="red exclamation circle icon"></i>
+											</div>
+<!-- IF_ERROR_PASSWORD_ELSE -->
+											<div class="ui icon">
+												<i class="exclamation circle icon" style="opacity: 0;"></i>
+											</div>
+<!-- IF_ERROR_PASSWORD_END -->
+										</div>
+										<div class="one wide column"></div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="one wide column"></div>
+										<div class="five wide column">{L_RE_PASSWORD}:</div>
+										<div class="eight wide column">
+											<div class="small ui icon input custom-input">
+												<input class="ui input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}...">
+												<i class="unlock alternate icon"></i>
+											</div>
+										</div>
+										<div class="one wide column error">
+<!-- IF_ERROR_RE_PASSWORD_BEGIN -->
+											<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_RE_PASSWORD}" data-position="right center" data-variation="red small">
+												<i class="red exclamation circle icon"></i>
+											</div>
+<!-- IF_ERROR_RE_PASSWORD_ELSE -->
+											<div class="ui icon">
+												<i class="exclamation circle icon" style="opacity: 0;"></i>
+											</div>
+<!-- IF_ERROR_RE_PASSWORD_END -->
+										</div>
+										<div class="one wide column"></div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="one wide column"></div>
+										<div class="five wide column">{L_EMAIL}:</div>
+										<div class="eight wide column">
+											<div class="small ui icon input custom-input">
+												<input class="ui input" type="text" name="email" maxlength="50" placeholder="{L_EMAIL}...">
+												<i class="envelope outline icon"></i>
+											</div>
+										</div>
+										<div class="one wide column error">
+<!-- IF_ERROR_EMAIL_BEGIN -->
+											<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_EMAIL}" data-position="right center" data-variation="red small">
+												<i class="red exclamation circle icon"></i>
+											</div>
+<!-- IF_ERROR_EMAIL_ELSE -->
+											<div class="ui icon">
+												<i class="exclamation circle icon" style="opacity: 0;"></i>
+											</div>
+<!-- IF_ERROR_EMAIL_END -->
+										</div>
+										<div class="one wide column"></div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="one wide column"></div>
+										<div class="five wide column">{L_REAL_NAME}:</div>
+										<div class="eight wide column">
+											<div class="small ui icon input custom-input">
+												<input class="ui input" type="text" name="real_name" maxlength="50" placeholder="{L_REAL_NAME}...">
+												<i class="id card icon"></i>
+											</div>
+										</div>
+										<div class="one wide column error">
+<!-- IF_ERROR_REAL_NAME_BEGIN -->
+											<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_REAL_NAME}" data-position="right center" data-variation="red small">
+												<i class="red exclamation circle icon"></i>
+											</div>
+<!-- IF_ERROR_REAL_NAME_ELSE -->
+											<div class="ui icon">
+												<i class="exclamation circle icon" style="opacity: 0;"></i>
+											</div>
+<!-- IF_ERROR_REAL_NAME_END -->
+										</div>
+										<div class="one wide column"></div>
+									</div>
+									<div class="row middle aligned">
+										<div class="sixteen wide column" style="text-align: center;">{L_CAPTCHA}</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="one wide column"></div>
+										<div class="five wide column">{D_CAPTCHA_QUESTION}&nbsp;=</div>
+										<div class="eight wide column">
+											<div class="small ui icon input custom-input">
+												<input class="ui input" type="text" name="captcha" maxlength="50">
+												<i class="puzzle piece icon"></i>
+											</div>
+										</div>
+										<div class="one wide column error">
+<!-- IF_ERROR_CAPTCHA_BEGIN -->
+											<div class="ui icon" data-inverted="" data-tooltip="{D_ERROR_CAPTCHA}" data-position="right center" data-variation="red small">
+												<i class="red exclamation circle icon"></i>
+											</div>
+<!-- IF_ERROR_CAPTCHA_ELSE -->
+											<div class="ui icon">
+												<i class="exclamation circle icon" style="opacity: 0;"></i>
+											</div>
+<!-- IF_ERROR_CAPTCHA_END -->
+										</div>
+										<div class="one wide column"></div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="sixteen wide column" style="text-align: center; margin-top: 15px;">
+											<button class="small ui primary basic inverted button" name="submit" type="submit" title="{L_REGISTER}">
+												<i class="user plus icon"></i> {L_REGISTER}
+											</button>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_REGIST -->
 <!-- CASE_PROFILE_EDIT -->
-							<div class="ui segment field_big block_border" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui center aligned header">
-										<i class="user edit icon"></i> {NAME_BLOCK}
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="user edit icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="ui attached segment regist field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+						<div style="text-align: center;">
+							<form action="{U_PROFILE_EDIT}" method="post" name="profile" enctype="multipart/form-data">
+								<div class="ui grid regist_data no-space" style="margin: 0;">
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}"></div>
+										<div class="nine wide column">
+											<div class="small ui black inverted basic tag label">{D_LOGIN} <i class="user icon"></i></div>
+										</div>
 									</div>
-								</div>
-								<div class="ui attached segment regist field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
-									<div style="text-align: center;">
-										<form action="{U_PROFILE_EDIT}" method="post" name="profile" enctype="multipart/form-data">
-											<div class="ui grid regist_data no-space" style="margin: 0;">
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_LOGIN}:<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}" /></div>
-													<div class="nine wide column">
-														<div class="small ui black inverted basic tag label">{D_LOGIN} <i class="user icon"></i></div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_GROUP}:</div>
-													<div class="nine wide column">
-														<div class="small ui black inverted basic tag label">{D_GROUP} <i class="users icon"></i></div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_EDIT_PASSWORD}<b>*</b>:</div>
-													<div class="nine wide column">
-														<div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small">
-															<input class="small ui bordered input" name="edit_password" type="password" maxlength="50" placeholder="{L_EDIT_PASSWORD}..." />
-															<i class="unlock icon"></i>
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_RE_PASSWORD}<b>*</b>:</div>
-													<div class="nine wide column">
-														<div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small">
-															<input class="small ui bordered input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}..." />
-															<i class="unlock alternate icon"></i>
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_EMAIL}:</div>
-													<div class="nine wide column">
-														<div class="small ui icon input custom-input">
-															<input class="small ui bordered input custom-input" name="email" type="text" maxlength="50" value="{D_EMAIL}" />
-															<i class="envelope outline icon"></i>
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_REAL_NAME}:</div>
-													<div class="nine wide column">
-														<div class="small ui icon input custom-input">
-															<input class="small ui bordered input" name="real_name" type="text" maxlength="50" value="{D_REAL_NAME}" />
-															<i class="id card icon"></i>
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="seven wide column">{L_AVATAR}<b>*</b>:</div>
-													<div class="nine wide column">
-														<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0">
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="sixteen wide column">
-														<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}" />
-														<div class="small ui file input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="top center" data-variation="black small">
-															<input class="small ui black inverted file input" name="file_avatar" value="" type="file" />
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_DELETE_AVATAR}:</div>
-													<div class="nine wide column">
-														<div class="small ui toggle checkbox">
-															<input name="delete_avatar" type="checkbox" value="true" />
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="sixteen wide column">
-														<div class="custom-divider"></div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_CHANGE_LANG}:</div>
-													<div class="nine wide column">
-														<div class="ui inverted small dropdown selection">
-															<input type="hidden" name="language" value="{D_SELECTED_LANG}">
-															<i class="dropdown icon"></i>
-															<div class="default text">{L_SELECTED_LANG}</div>
-															<div class="menu">
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_GROUP}:</div>
+										<div class="nine wide column">
+											<div class="small ui black inverted basic tag label">{D_GROUP} <i class="users icon"></i></div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_EDIT_PASSWORD}<b>*</b>:</div>
+										<div class="nine wide column">
+											<div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small">
+												<input class="small ui bordered input" name="edit_password" type="password" maxlength="50" placeholder="{L_EDIT_PASSWORD}...">
+												<i class="unlock icon"></i>
+											</div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_RE_PASSWORD}<b>*</b>:</div>
+										<div class="nine wide column">
+											<div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small">
+												<input class="small ui bordered input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}...">
+												<i class="unlock alternate icon"></i>
+											</div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_EMAIL}:</div>
+										<div class="nine wide column">
+											<div class="small ui icon input custom-input">
+												<input class="small ui bordered input custom-input" name="email" type="text" maxlength="50" value="{D_EMAIL}">
+												<i class="envelope outline icon"></i>
+											</div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_REAL_NAME}:</div>
+										<div class="nine wide column">
+											<div class="small ui icon input custom-input">
+												<input class="small ui bordered input" name="real_name" type="text" maxlength="50" value="{D_REAL_NAME}">
+												<i class="id card icon"></i>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="seven wide column">{L_AVATAR}<b>*</b>:</div>
+										<div class="nine wide column">
+											<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0">
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="sixteen wide column">
+											<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}">
+											<div class="small ui file input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="top center" data-variation="black small">
+												<input class="small ui black inverted file input" name="file_avatar" value="" type="file">
+											</div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_DELETE_AVATAR}:</div>
+										<div class="nine wide column">
+											<div class="small ui toggle checkbox">
+												<input name="delete_avatar" type="checkbox" value="true">
+											</div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="sixteen wide column">
+											<div class="custom-divider"></div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_CHANGE_LANG}:</div>
+										<div class="nine wide column">
+											<div class="ui inverted small dropdown selection">
+												<input type="hidden" name="language" value="{D_SELECTED_LANG}">
+												<i class="dropdown icon"></i>
+												<div class="default text">{L_SELECTED_LANG}</div>
+												<div class="menu">
 <!-- ARRAY_SELECT_LANGUAGE_BEGIN -->
-																<div class="item" data-value="{D_DIR_LANG}">{D_NAME_LANG}</div>
+													<div class="item" data-value="{D_DIR_LANG}">{D_NAME_LANG}</div>
 <!-- ARRAY_SELECT_LANGUAGE_END -->
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_CHANGE_THEME}:</div>
-													<div class="nine wide column">
-														<div class="ui inverted small dropdown selection">
-															<input type="hidden" name="language" value="{D_SELECTED_THEME}">
-															<i class="dropdown icon"></i>
-															<div class="default text">{L_SELECTED_THEME}</div>
-															<div class="menu">
-<!-- ARRAY_SELECT_THEME_BEGIN -->
-																<div class="item" data-value="{D_DIR_THEME}">{D_NAME_THEME}</div>
-<!-- ARRAY_SELECT_THEME_END -->
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row middle aligned tiny-space">
-													<div class="sixteen wide column" style="text-align: center;">
-														<b>*</b> {L_HELP_EDIT}
-														<div class="custom-divider"></div>
-													</div>
-												</div>
-<!-- IF_NEED_PASSWORD_BEGIN -->
-												<div class="row middle aligned tiny-space">
-													<div class="seven wide column">{L_PASSWORD}:</div>
-													<div class="nine wide column">
-														<div class="small ui icon input custom-input">
-															<input class="small ui bordered input" name="password" type="password" maxlength="50" placeholder="{L_PASSWORD}..." />
-															<i class="key icon"></i>
-														</div>
-													</div>
-												</div>
-<!-- IF_NEED_PASSWORD_END -->
-												<div class="row middle aligned tiny-space">
-													<div class="sixteen wide column" style="text-align: center;">
-														<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_PROFILE}">
-															<i class="upload icon"></i> {L_SAVE_PROFILE}
-														</button>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-<!-- BREAK_PROFILE_EDIT -->
-<!-- CASE_PROFILE_VIEW -->
-							<div class="ui segment field_big block_border" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui center aligned header">
-										<i class="user icon"></i> {NAME_BLOCK}
-									</div>
-								</div>
-								<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
-									<div style="text-align: center;">
-										<div class="ui grid regist_data" style="margin: 0;">
-											<div class="row middle aligned tiny-space">
-												<div class="seven wide column" style="text-align: right; padding-right: 10px;">
-													{L_REAL_NAME}:
-												</div>
-												<div class="nine wide column" style="text-align: left; padding-left: 10px;">
-													{D_REAL_NAME}
-												</div>
-											</div>
-											<div class="row middle aligned tiny-space">
-												<div class="seven wide column" style="text-align: right; padding-right: 10px;">
-													{L_EMAIL}:
-												</div>
-												<div class="nine wide column" style="text-align: left; padding-left: 10px;">
-													{D_EMAIL}
-												</div>
-											</div>
-											<div class="row middle aligned tiny-space">
-												<div class="seven wide column" style="text-align: right; padding-right: 10px;">
-													{L_GROUP}:
-												</div>
-												<div class="nine wide column" style="text-align: left; padding-left: 10px;">
-													{D_GROUP}
-												</div>
-											</div>
-											<div class="row middle aligned tiny-space">
-												<div class="seven wide column" style="text-align: right; padding-right: 10px;">
-													{L_AVATAR}:
-												</div>
-												<div class="nine wide column" style="text-align: left; padding-left: 10px;">
-													<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0">
 												</div>
 											</div>
 										</div>
 									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_CHANGE_THEME}:</div>
+										<div class="nine wide column">
+											<div class="ui inverted small dropdown selection">
+												<input type="hidden" name="language" value="{D_SELECTED_THEME}">
+												<i class="dropdown icon"></i>
+												<div class="default text">{L_SELECTED_THEME}</div>
+												<div class="menu">
+<!-- ARRAY_SELECT_THEME_BEGIN -->
+													<div class="item" data-value="{D_DIR_THEME}">{D_NAME_THEME}</div>
+<!-- ARRAY_SELECT_THEME_END -->
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="sixteen wide column" style="text-align: center;">
+											<b>*</b> {L_HELP_EDIT}
+											<div class="custom-divider"></div>
+										</div>
+									</div>
+<!-- IF_NEED_PASSWORD_BEGIN -->
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_PASSWORD}:</div>
+										<div class="nine wide column">
+											<div class="small ui icon input custom-input">
+												<input class="small ui bordered input" name="password" type="password" maxlength="50" placeholder="{L_PASSWORD}...">
+												<i class="key icon"></i>
+											</div>
+										</div>
+									</div>
+<!-- IF_NEED_PASSWORD_END -->
+									<div class="row middle aligned tiny-space">
+										<div class="sixteen wide column" style="text-align: center;">
+											<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_PROFILE}">
+												<i class="upload icon"></i> {L_SAVE_PROFILE}
+											</button>
+										</div>
+									</div>
 								</div>
-							</div>
-<!-- BREAK_PROFILE_VIEW -->
-<!-- CASE_DEFAULT -->
-							<div class="ui segment field_big" style="border-radius: 15px;">
-								<div class="ui top attached inverted red segment" style="border-radius: 15px;">
-									<div class="ui center aligned header">
-										<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+							</form>
+						</div>
+					</div>
+				</div>
+<!-- BREAK_PROFILE_EDIT -->
+<!-- CASE_PROFILE_VIEW -->
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="user icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+						<div style="text-align: center;">
+							<div class="ui grid regist_data" style="margin: 0;">
+								<div class="row middle aligned tiny-space">
+									<div class="seven wide column" style="text-align: right; padding-right: 10px;">
+										{L_REAL_NAME}:
+									</div>
+									<div class="nine wide column" style="text-align: left; padding-left: 10px;">
+										{D_REAL_NAME}
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="seven wide column" style="text-align: right; padding-right: 10px;">
+										{L_EMAIL}:
+									</div>
+									<div class="nine wide column" style="text-align: left; padding-left: 10px;">
+										{D_EMAIL}
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="seven wide column" style="text-align: right; padding-right: 10px;">
+										{L_GROUP}:
+									</div>
+									<div class="nine wide column" style="text-align: left; padding-left: 10px;">
+										{D_GROUP}
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="seven wide column" style="text-align: right; padding-right: 10px;">
+										{L_AVATAR}:
+									</div>
+									<div class="nine wide column" style="text-align: left; padding-left: 10px;">
+										<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0">
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+<!-- BREAK_PROFILE_VIEW -->
+<!-- CASE_DEFAULT -->
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+						<div class="ui center aligned header">
+							<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_PROFILE_BLOCK_END -->

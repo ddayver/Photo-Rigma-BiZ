@@ -1,252 +1,255 @@
 <!-- SELECT_PHOTO_BLOCK_BEGIN -->
 <!-- CASE_VIEW_PHOTO -->
-							<div class="ui segment field_big block_border" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui center aligned header">
-										<i class="image outline icon"></i> {L_NAME_BLOCK}
-									</div>
-								</div>
-								<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
-									<div class="category_center">
-										{L_DESCRIPTION_BLOCK}
-									</div>
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="image outline icon"></i> {L_NAME_BLOCK}
+						</div>
+					</div>
+					<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
+						<div class="category_center">
+							{L_DESCRIPTION_BLOCK}
+						</div>
 <!-- IF_EDIT_BLOCK_BEGIN -->
-									<div style="text-align: center; width: 95%;">
-										<div class="tiny ui center aligned buttons">
-											<button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
-												<i class="edit icon"></i> {L_EDIT_BLOCK}
-											</button>
-											<button class="ui inverted circular red basic icon button delete-button" data-target="#delete-modal">
-												<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
-											</button>
-										</div>
-									</div>
-									<div id="delete-modal" class="ui basic modal" data-url="{U_DELETE_BLOCK}">
-										<div class="header">{L_DELETE_BLOCK}</div>
-										<div class="content">
-											<p>{L_CONFIRM_DELETE_BLOCK}</p>
-										</div>
-										<div class="actions">
-											<div class="ui cancel button">{L_CANCEL_DELETE}</div>
-											<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
-										</div>
-									</div>
-									<div class="custom-divider"></div>
-<!-- IF_EDIT_BLOCK_END -->
-									<div class="mini_photo">
-										{L_USER_ADD}: <a href="{U_USER_ADD}" title="{D_USER_ADD}">{D_USER_ADD}</a>
-									</div>
-									<div class="mini_photo">
-										{L_NAME_CATEGORY}: <a href="{U_CATEGORY}" title="{D_NAME_CATEGORY}">{D_NAME_CATEGORY}</a>
-									</div>
-									<div class="mini_photo">
-										{L_DESCRIPTION_CATEGORY}: <a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_DESCRIPTION_CATEGORY}</a>
-										<hr class="line" />
-									</div>
-									<div class="mini_photo">
-										<img class="ui centered rounded image" src="{U_PHOTO}" alt="{D_NAME_PHOTO}" width="{D_FOTO_WIDTH}" height="{D_FOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" />
-									</div>
-									<div class="mini_photo">
-										{L_RATE_USER}<br />{L_RATE_MODER}
-									</div>
-								</div>
+						<div style="text-align: center; width: 95%;">
+							<div class="tiny ui center aligned buttons">
+								<button class="ui inverted circular orange basic icon button" onclick="window.location.href='{U_EDIT_BLOCK}'">
+									<i class="edit icon"></i> {L_EDIT_BLOCK}
+								</button>
+								<button class="ui inverted circular red basic icon button delete-button" data-target="#delete-modal">
+									<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
+								</button>
 							</div>
+						</div>
+						<div id="delete-modal" class="ui basic modal" data-url="{U_DELETE_BLOCK}">
+							<div class="header">{L_DELETE_BLOCK}</div>
+							<div class="content">
+								<p>{L_CONFIRM_DELETE_BLOCK}</p>
+							</div>
+							<div class="actions">
+								<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+								<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+							</div>
+						</div>
+						<div class="custom-divider"></div>
+<!-- IF_EDIT_BLOCK_END -->
+						<div class="mini_photo">
+							{L_USER_ADD}: <a href="{U_USER_ADD}" title="{D_USER_ADD}">{D_USER_ADD}</a>
+						</div>
+						<div class="mini_photo">
+							{L_NAME_CATEGORY}: <a href="{U_CATEGORY}" title="{D_NAME_CATEGORY}">{D_NAME_CATEGORY}</a>
+						</div>
+						<div class="mini_photo">
+							{L_DESCRIPTION_CATEGORY}: <a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_DESCRIPTION_CATEGORY}</a>
+							<hr class="line">
+						</div>
+						<div class="mini_photo">
+							<img class="ui centered rounded image" src="{U_PHOTO}" alt="{D_NAME_PHOTO}" width="{D_FOTO_WIDTH}" height="{D_FOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}">
+						</div>
+						<div class="mini_photo">
+							{L_RATE_USER}<br>{L_RATE_MODER}
+						</div>
+					</div>
+				</div>
 <!-- IF_RATE_PHOTO_BEGIN -->
-							<div class="ui segment block_border field_big" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui center aligned header">{L_RATE}</div>
-								</div>
-								<form name="rate" action="{U_RATE}" method="post">
-									<div class="ui attached inverted segment" style="border-radius: 0 0 15px 15px;">
-										<div class="ui center aligned grid">
+				<div class="ui segment block_border field_big" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">{L_RATE}</div>
+					</div>
+					<form name="rate" action="{U_RATE}" method="post">
+						<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+						<div class="ui attached inverted segment" style="border-radius: 0 0 15px 15px;">
+							<div class="ui center aligned grid">
 <!-- IF_RATE_USER_BEGIN -->
-											<div class="row middle aligned tiny-space">
-												<div class="seven wide column">{L_USER_RATE}:</div>
-												<div class="nine wide column">
-													<div class="ui inverted small dropdown selection">
-														<input type="hidden" name="rate_user" value="{D_SELECTED_LVL_USER}">
-														<i class="dropdown icon"></i>
-														<div class="default text">{D_SELECTED_LVL_USER}</div>
-														<div class="menu">
+								<div class="row middle aligned tiny-space">
+									<div class="seven wide column">{L_USER_RATE}:</div>
+									<div class="nine wide column">
+										<div class="ui inverted small dropdown selection">
+											<input type="hidden" name="rate_user" value="{D_SELECTED_LVL_USER}">
+											<i class="dropdown icon"></i>
+											<div class="default text">{D_SELECTED_LVL_USER}</div>
+											<div class="menu">
 <!-- ARRAY_SELECT_USER_RATE_BEGIN -->
-															<div class="item" data-value="{D_LVL_RATE}">{D_LVL_RATE}</div>
+												<div class="item" data-value="{D_LVL_RATE}">{D_LVL_RATE}</div>
 <!-- ARRAY_SELECT_USER_RATE_END -->
-														</div>
-													</div>
-												</div>
 											</div>
+										</div>
+									</div>
+								</div>
 <!-- IF_RATE_USER_END -->
 <!-- IF_RATE_MODER_BEGIN -->
-											<div class="row middle aligned tiny-space">
-												<div class="seven wide column">{L_MODER_RATE}:</div>
-												<div class="nine wide column">
-													<div class="ui inverted small dropdown selection">
-														<input type="hidden" name="rate_moder" value="{D_SELECTED_LVL_MODER}">
-														<i class="dropdown icon"></i>
-														<div class="default text">{D_SELECTED_LVL_MODER}</div>
-														<div class="menu">
+								<div class="row middle aligned tiny-space">
+									<div class="seven wide column">{L_MODER_RATE}:</div>
+									<div class="nine wide column">
+										<div class="ui inverted small dropdown selection">
+											<input type="hidden" name="rate_moder" value="{D_SELECTED_LVL_MODER}">
+											<i class="dropdown icon"></i>
+											<div class="default text">{D_SELECTED_LVL_MODER}</div>
+											<div class="menu">
 <!-- ARRAY_SELECT_MODER_RATE_BEGIN -->
-															<div class="item" data-value="{D_LVL_RATE}">{D_LVL_RATE}</div>
+												<div class="item" data-value="{D_LVL_RATE}">{D_LVL_RATE}</div>
 <!-- ARRAY_SELECT_MODER_RATE_END -->
-														</div>
-													</div>
-												</div>
-											</div>
-<!-- IF_RATE_MODER_END -->
-											<div class="row middle aligned tiny-space">
-												<div class="sixteen wide column">
-													<button class="small ui secondary basic inverted button" name="submit" type="submit"><i class="vote yea icon"></i> {L_RATE_THIS}</button>
-												</div>
 											</div>
 										</div>
 									</div>
-								</form>
+								</div>
+<!-- IF_RATE_MODER_END -->
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column">
+										<button class="small ui secondary basic inverted button" name="submit" type="submit"><i class="vote yea icon"></i> {L_RATE_THIS}</button>
+									</div>
+								</div>
 							</div>
+						</div>
+					</form>
+				</div>
 <!-- IF_RATE_PHOTO_END -->
 <!-- BREAK_VIEW_PHOTO -->
 <!-- CASE_EDIT_PHOTO -->
-							<div class="ui segment field_big" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui center aligned header">
-										<i class="image outline icon"></i> {L_NAME_BLOCK}
-									</div>
-								</div>
-								<div class="mini_photo" style="text-align: center; margin-top: 15px; padding-bottom: 15px">
-									<img class="ui centered rounded image" src="{U_PHOTO}" alt="{D_NAME_PHOTO}" width="{D_FOTO_WIDTH}" height="{D_FOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" />
-								</div>
-								<form name="edit" action="{U_EDITED}" method="post">
-									<div class="ui grid">
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_NAME_FILE}:</label>
-											</div>
-											<div class="ten wide column" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-												<span>{D_NAME_FILE}</span>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_NAME_PHOTO}:</label>
-											</div>
-											<div class="ten wide column">
-												<div class="small ui input custom-input">
-													<input name="name_photo" value="{D_NAME_PHOTO}" type="text" maxlength="50" class="small ui bordered input" />
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_DESCRIPTION_PHOTO}:</label>
-											</div>
-											<div class="ten wide column">
-												<div class="small ui input custom-input">
-													<input name="description_photo" value="{D_DESCRIPTION_PHOTO}" type="text" maxlength="250" class="small ui bordered input" />
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_NAME_CATEGORY}:</label>
-											</div>
-											<div class="ten wide column">
-												<div class="ui inverted small dropdown selection">
-													<input type="hidden" name="name_category" value="{D_SELECTED_CATEGORY}">
-													<i class="dropdown icon"></i>
-													<div class="default text">{L_SELECT_CATEGORY}</div>
-													<div class="menu">
+				<div class="ui segment field_big" style="border-radius: 15px;">
+                    <div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+                        <div class="small ui center aligned header">
+                            <i class="image outline icon"></i> {L_NAME_BLOCK}
+                        </div>
+                    </div>
+                    <div class="mini_photo" style="text-align: center; margin-top: 15px; padding-bottom: 15px">
+                        <img class="ui centered rounded image" src="{U_PHOTO}" alt="{D_NAME_PHOTO}" width="{D_FOTO_WIDTH}" height="{D_FOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}">
+                    </div>
+                    <form name="edit" action="{U_EDITED}" method="post">
+						<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+                        <div class="ui grid">
+                            <div class="row middle aligned tiny-space">
+                                <div class="six wide column">
+                                    <label>{L_NAME_FILE}:</label>
+                                </div>
+                                <div class="ten wide column" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <span>{D_NAME_FILE}</span>
+                                </div>
+                            </div>
+                            <div class="row middle aligned tiny-space">
+                                <div class="six wide column">
+                                    <label>{L_NAME_PHOTO}:</label>
+                                </div>
+                                <div class="ten wide column">
+                                    <div class="small ui input custom-input">
+                                        <input name="name_photo" value="{D_NAME_PHOTO}" type="text" maxlength="50" class="small ui bordered input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row middle aligned tiny-space">
+                                <div class="six wide column">
+                                    <label>{L_DESCRIPTION_PHOTO}:</label>
+                                </div>
+                                <div class="ten wide column">
+                                    <div class="small ui input custom-input">
+                                        <input name="description_photo" value="{D_DESCRIPTION_PHOTO}" type="text" maxlength="250" class="small ui bordered input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row middle aligned tiny-space">
+                                <div class="six wide column">
+                                    <label>{L_NAME_CATEGORY}:</label>
+                                </div>
+                                <div class="ten wide column">
+                                    <div class="ui inverted small dropdown selection">
+                                        <input type="hidden" name="name_category" value="{D_SELECTED_CATEGORY}">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">{L_SELECT_CATEGORY}</div>
+                                        <div class="menu">
 <!-- ARRAY_SELECT_CATEGORY_BEGIN -->
-														<div class="item" data-value="{D_ID_CATEGORY}">{D_NAME_CATEGORY}</div>
+											<div class="item" data-value="{D_ID_CATEGORY}">{D_NAME_CATEGORY}</div>
 <!-- ARRAY_SELECT_CATEGORY_END -->
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space" style="text-align: center; margin-top: 15px;">
-											<div class="sixteen wide column">
-												<button class="small ui secondary basic inverted button" name="submit" type="submit">
-													<i class="upload icon"></i> {L_EDIT_THIS}
-												</button>
-											</div>
 										</div>
 									</div>
-								</form>
+								</div>
 							</div>
+							<div class="row middle aligned tiny-space" style="text-align: center; margin-top: 15px;">
+								<div class="sixteen wide column">
+									<button class="small ui secondary basic inverted button" name="submit" type="submit">
+										<i class="upload icon"></i> {L_EDIT_THIS}
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
 <!-- BREAK_EDIT_PHOTO -->
 <!-- CASE_UPLOAD_PHOTO -->
-							<div class="ui segment field_big" style="border-radius: 15px;">
-								<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
-									<div class="small ui center aligned header">
-										<i class="image outline icon"></i> {L_NAME_BLOCK}
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="image outline icon"></i> {L_NAME_BLOCK}
+						</div>
+					</div>
+					<form name="edit" action="{U_UPLOADED}" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+						<div class="ui grid" style="padding-top: 15px">
+							<div class="row middle aligned tiny-space">
+								<div class="six wide column">
+									<label>{L_FILE_PHOTO}:</label>
+								</div>
+								<div class="ten wide column">
+									<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}">
+									<div class="small ui file input custom-input">
+										<input class="small ui black inverted file input" name="file_photo" value="" type="file">
 									</div>
 								</div>
-								<form name="edit" action="{U_UPLOADED}" method="post" enctype="multipart/form-data">
-									<div class="ui grid" style="padding-top: 15px">
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_FILE_PHOTO}:</label>
-											</div>
-											<div class="ten wide column">
-												<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}" />
-												<div class="small ui file input custom-input">
-													<input class="small ui black inverted file input" name="file_photo" value="" type="file" />
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_NAME_PHOTO}:</label>
-											</div>
-											<div class="ten wide column">
-												<div class="small ui input custom-input">
-													<input name="name_photo" type="text" maxlength="250" class="small ui bordered input" />
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_DESCRIPTION_PHOTO}:</label>
-											</div>
-											<div class="ten wide column">
-												<div class="small ui input custom-input">
-													<input name="description_photo" type="text" maxlength="250" class="small ui bordered input" />
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space">
-											<div class="six wide column">
-												<label>{L_NAME_CATEGORY}:</label>
-											</div>
-											<div class="ten wide column">
-												<div class="ui inverted small dropdown selection">
-													<input type="hidden" name="name_category" value="{D_SELECTED_CATEGORY}" />
-													<i class="dropdown icon"></i>
-													<div class="default text">{L_SELECT_CATEGORY}</div>
-													<div class="menu">
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="six wide column">
+									<label>{L_NAME_PHOTO}:</label>
+								</div>
+								<div class="ten wide column">
+									<div class="small ui input custom-input">
+										<input name="name_photo" type="text" maxlength="250" class="small ui bordered input">
+									</div>
+								</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="six wide column">
+									<label>{L_DESCRIPTION_PHOTO}:</label>
+								</div>
+								<div class="ten wide column">
+									<div class="small ui input custom-input">
+										<input name="description_photo" type="text" maxlength="250" class="small ui bordered input">
+									</div>
+								</div>
+							</div>
+							<div class="row middle aligned tiny-space">
+								<div class="six wide column">
+									<label>{L_NAME_CATEGORY}:</label>
+								</div>
+								<div class="ten wide column">
+									<div class="ui inverted small dropdown selection">
+										<input type="hidden" name="name_category" value="{D_SELECTED_CATEGORY}">
+										<i class="dropdown icon"></i>
+										<div class="default text">{L_SELECT_CATEGORY}</div>
+										<div class="menu">
 <!-- ARRAY_UPLOAD_CATEGORY_BEGIN -->
-														<div class="item" data-value="{D_ID_CATEGORY}">{D_NAME_CATEGORY}</div>
+											<div class="item" data-value="{D_ID_CATEGORY}">{D_NAME_CATEGORY}</div>
 <!-- ARRAY_UPLOAD_CATEGORY_END -->
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row middle aligned tiny-space" style="text-align: center; margin-top: 15px;">
-											<div class="sixteen wide column">
-												<button class="small ui secondary basic inverted button" name="submit" type="submit">
-													<i class="file upload icon"></i> {L_UPLOAD_THIS}
-												</button>
-											</div>
 										</div>
 									</div>
-								</form>
+								</div>
 							</div>
+							<div class="row middle aligned tiny-space" style="text-align: center; margin-top: 15px;">
+								<div class="sixteen wide column">
+									<button class="small ui secondary basic inverted button" name="submit" type="submit">
+										<i class="file upload icon"></i> {L_UPLOAD_THIS}
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
 <!-- BREAK_UPLOAD_PHOTO -->
 <!-- CASE_DEFAULT -->
-							<div class="ui segment field_big" style="border-radius: 15px;">
-								<div class="ui top attached inverted red segment" style="border-radius: 15px;">
-									<div class="ui center aligned header">
-										<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
-									</div>
-								</div>
-							</div>
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+						<div class="ui center aligned header">
+							<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_PHOTO_BLOCK_END -->

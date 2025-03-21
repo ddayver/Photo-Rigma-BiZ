@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['page_5ffooter_0',['page_footer',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5371fabe76f72396d19c1700b8c71032',1,'PhotoRigma::Classes::Template']]],
-  ['page_5fheader_1',['page_header',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd',1,'PhotoRigma::Classes::Template']]],
+  ['page_5ffooter_0',['page_footer',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30',1,'PhotoRigma::Classes::Template']]],
+  ['page_5fheader_1',['page_header',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2',1,'PhotoRigma::Classes::Template']]],
   ['pars_5ftemplate_2',['pars_template',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4',1,'PhotoRigma::Classes::Template']]],
   ['prepare_5finsert_5fdata_3',['prepare_insert_data',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae086bc0ecde3e2e6c33a483e2f7dc899',1,'PhotoRigma::Classes::Database']]],
   ['process_5fimage_5fresize_5fgd_4',['process_image_resize_gd',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#afaedd403d60cd5b36facbf5414e5b6ce',1,'PhotoRigma::Classes::Work_Image']]],

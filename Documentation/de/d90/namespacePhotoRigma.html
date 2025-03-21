@@ -187,6 +187,8 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="separator:aa698a3e72116e8e778be0e95d908ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa355238e5cfbf4556dccf2f8a2b68926" id="r_aa355238e5cfbf4556dccf2f8a2b68926"><td class="memItemLeft" align="right" valign="top">if($work-&gt;check_input('_GET', 'action', ['isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp;$_GET['action'] !=='index' &amp;&amp;$work-&gt;url_check())&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa355238e5cfbf4556dccf2f8a2b68926">else</a></td></tr>
 <tr class="separator:aa355238e5cfbf4556dccf2f8a2b68926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1860c2e884f5466ff46754807f8a79b7" id="r_a1860c2e884f5466ff46754807f8a79b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1860c2e884f5466ff46754807f8a79b7">$csrf_token</a> = $user-&gt;csrf_token()</td></tr>
+<tr class="separator:a1860c2e884f5466ff46754807f8a79b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>\Action</p>
@@ -807,6 +809,24 @@ index.php Файл, который подключает <a class="el" href="../.
 
 </div>
 </div>
+<a id="a1860c2e884f5466ff46754807f8a79b7" name="a1860c2e884f5466ff46754807f8a79b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1860c2e884f5466ff46754807f8a79b7">&#9670;&#160;</a></span>$csrf_token</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$csrf_token = $user-&gt;csrf_token()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00290">290</a></p>
+
+<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l01477">Template\page_footer()</a> и <a class="el" href="../../d6/dd6/template_8php_source.html#l00781">Template\page_header()</a>.</p>
+
+</div>
+</div>
 <a id="a1fa3127fc82f96b1436d871ef02be319" name="a1fa3127fc82f96b1436d871ef02be319"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1fa3127fc82f96b1436d871ef02be319">&#9670;&#160;</a></span>$db</h2>
 
@@ -993,9 +1013,9 @@ index.php Файл, который подключает <a class="el" href="../.
 <dd>
 <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров.">PhotoRigma\Classes\Template\create_template()</a> Метод для создания содержимого страницы. </dd>
 <dd>
-<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd" title="Метод формирует заголовок HTML-страницы с меню, метаданными и блоками контента.">PhotoRigma\Classes\Template\page_header()</a> Метод для добавления шапки страницы. </dd>
+<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2" title="Метод формирует заголовок HTML-страницы с меню, метаданными и блоками контента.">PhotoRigma\Classes\Template\page_header()</a> Метод для добавления шапки страницы. </dd>
 <dd>
-<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5371fabe76f72396d19c1700b8c71032" title="Метод формирует подвал HTML-страницы с выводом копирайта, статистики, информации о пользователе и слу...">PhotoRigma\Classes\Template\page_footer()</a> Метод для добавления подвала страницы. </dd>
+<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30" title="Метод формирует подвал HTML-страницы с выводом копирайта, статистики, информации о пользователе и слу...">PhotoRigma\Classes\Template\page_footer()</a> Метод для добавления подвала страницы. </dd>
 <dd>
 <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a43be552f5d6b48b6335bf0b4b5ef37c0" title="Содержимое для вывода">PhotoRigma\Classes\Template\$content</a> Свойство, хранящее содержимое всей страницы. </dd>
 <dd>
@@ -1060,7 +1080,7 @@ index.php Файл, который подключает <a class="el" href="../.
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00202">202</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l01476">Template\page_footer()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00890">Work\set_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d6/dd6/template_8php_source.html#l01477">Template\page_footer()</a> и <a class="el" href="../../dc/d7a/work_8php_source.html#l00890">Work\set_user()</a>.</p>
 
 </div>
 </div>

@@ -195,6 +195,17 @@ if ($photo_id !== 0) {
                 'empty' => true,
             ]
     ) && $_GET['subact'] === "rate") {
+        // Проверяем CSRF-токен
+        if (empty($_POST['csrf_token']) || !hash_equals(
+            $user->session['csrf_token'],
+            $_POST['csrf_token']
+        )) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
+
         // Проверка текущей оценки пользователя
         $db->select(
             '`rate`',
@@ -280,7 +291,16 @@ if ($photo_id !== 0) {
                 'empty' => true,
             ]
     ) && $_GET['subact'] === 'saveedit') {
-        // Используем данные, полученные из JOIN-запроса
+        // Проверяем CSRF-токен
+        if (empty($_POST['csrf_token']) || !hash_equals(
+            $user->session['csrf_token'],
+            $_POST['csrf_token']
+        )) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
 
         // Обновление имени фотографии
         if (!$work->check_input('_POST', 'name_photo', [
@@ -508,6 +528,8 @@ if ($photo_id !== 0) {
             ], 'SELECT_CATEGORY[' . $key . ']');
         }
 
+        // Генерируем CSRF-токен для защиты от атак типа CSRF
+        $template->add_string('CSRF_TOKEN', $user->csrf_token());
         // Добавляем данные в шаблон
         $template->add_string_ar([
             'L_NAME_BLOCK' => $work->lang['photo']['edit'] . ' - ' . Work::clean_field($photo_data['name']),
@@ -747,6 +769,9 @@ if ($photo_id !== 0) {
         $can_rate = ($user->user['pic_rate_user'] || $user->user['pic_rate_moder']) && $photo_data['user_upload'] !== $user->user['id'];
         if ($can_rate && ($user_rate || $moder_rate)) {
             $template->add_if('RATE_PHOTO', true);
+            // Генерируем CSRF-токен для защиты от атак типа CSRF
+            $template->add_string('CSRF_TOKEN', $user->csrf_token());
+
             $template->add_string_ar([
                 'L_RATE' => $work->lang['photo']['rate_you'],
                 'L_USER_RATE' => $work->lang['photo']['if_user'],
@@ -799,6 +824,8 @@ if ($photo_id !== 0) {
         ], 'UPLOAD_CATEGORY[' . $key . ']');
     }
 
+    // Генерируем CSRF-токен для защиты от атак типа CSRF
+    $template->add_string('CSRF_TOKEN', $user->csrf_token());
     // Добавляем данные в шаблон
     $template->add_string_ar([
         'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['photo']['upload'],
@@ -818,6 +845,17 @@ if ($photo_id !== 0) {
             'empty' => true,
         ]
 ) && $_GET['subact'] === "uploaded") {
+    // Проверяем CSRF-токен
+    if (empty($_POST['csrf_token']) || !hash_equals(
+        $user->session['csrf_token'],
+        $_POST['csrf_token']
+    )) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+        );
+    }
+    $user->unset_property_key('session', 'csrf_token');
+
     // Флаг успешной загрузки (bool)
     $submit_upload = true;
 

@@ -16,9 +16,9 @@
 <area shape="poly" id="edge12_Node000002_Node000013" title=" " alt="" coords="470,398,436,405,435,399,469,393"/>
 <area shape="rect" id="Node000015" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="258,468,434,507"/>
 <area shape="poly" id="edge14_Node000002_Node000015" title=" " alt="" coords="518,411,480,436,438,459,413,470,411,465,436,455,478,431,515,406"/>
-<area shape="rect" id="Node000016" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5371fabe76f72396d19c1700b8c71032" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="271,531,422,570"/>
+<area shape="rect" id="Node000016" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="271,531,422,570"/>
 <area shape="poly" id="edge15_Node000002_Node000016" title=" " alt="" coords="537,414,496,468,469,496,438,521,417,533,414,528,436,516,465,492,492,465,533,411"/>
-<area shape="rect" id="Node000017" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a67ca57f7864ad7e7bb66d9c59d3d43cd" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="268,594,425,632"/>
+<area shape="rect" id="Node000017" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="268,594,425,632"/>
 <area shape="poly" id="edge16_Node000002_Node000017" title=" " alt="" coords="546,415,530,453,507,498,477,544,439,583,420,595,417,591,435,579,472,540,502,496,525,451,541,413"/>
 <area shape="rect" id="Node000018" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения." alt="" coords="261,656,432,695"/>
 <area shape="poly" id="edge17_Node000002_Node000018" title=" " alt="" coords="551,415,538,466,516,527,484,590,463,620,439,646,421,658,418,654,435,642,459,616,479,588,512,525,533,464,546,414"/>
