@@ -5,9 +5,9 @@ var indexSectionsWithContent =
   2: "p",
   3: "acdimnprstuvw",
   4: "_abcdefgijlmnprstuv",
-  5: "$cdeilmnrt",
+  5: "$cdeilmrt",
   6: "aceilmnprsvавдикмнопрсфя",
-  7: "bloprtuзиосу📸"
+  7: "bloprtuзс📸"
 };
 
 var indexSectionNames =

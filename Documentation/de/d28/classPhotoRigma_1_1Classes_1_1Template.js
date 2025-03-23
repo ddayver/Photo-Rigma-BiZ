@@ -27,7 +27,6 @@ var classPhotoRigma_1_1Classes_1_1Template =
     [ "$block_object", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4f4f3c513bd88fdf135a6ad0a107b296", null ],
     [ "$block_string", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#aa06a43ee253bf731e7fd53fdfb285a6f", null ],
     [ "$content", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a43be552f5d6b48b6335bf0b4b5ef37c0", null ],
-    [ "$ins_body", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5c959827236a901d6094ca16d083dbd3", null ],
     [ "$ins_header", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a930897d95e135d0c18357e1beb794687", null ],
     [ "$lang", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b", null ],
     [ "$mod_rewrite", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adf68c2a3c358b7338829ebeb28cf98cc", null ],

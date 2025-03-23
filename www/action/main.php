@@ -102,7 +102,7 @@ if (!empty($news) && $user->user['news_view']) {
 
         // Проверяем, существует ли пользователь, добавивший новость.
         // Выполняем запрос с использованием плейсхолдеров.
-        $db->select('real_name', TBL_USERS, [
+        $db->select('`real_name`', TBL_USERS, [
             'where' => '`id` = :user_id',
             'params' => [':user_id' => $value['user_post']]
         ]);

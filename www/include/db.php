@@ -85,9 +85,7 @@ interface Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      *          - Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$options` (массив).
-     *          - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с экранированными именами полей.
-     *            Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     *          - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     *          - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с именами полей.
      *          - Формирует базовый SQL-запрос.
      *          - Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          - Выполняет сформированный запрос через метод `execute_query`.
@@ -96,11 +94,9 @@ interface Database_Interface
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
      *                              Пример: "id", ["id", "name"].
      * @param string $from_tbl Имя таблицы, из которой выбираются данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
@@ -138,13 +134,10 @@ interface Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      *          - Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$join` (массив), `$options` (массив).
-     *          - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с экранированными именами полей.
-     *            Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     *          - Экранирует имя основной таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     *          - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с именами полей.
      *          - Обрабатывает массив JOIN-операций (`$join`):
      *            - Для каждой операции проверяется наличие имени таблицы (`table`) и условия (`on`).
      *            - Если тип JOIN не указан, используется `INNER` по умолчанию.
-     *            - Условия JOIN формируются с использованием метода `sanitize_expression`.
      *          - Формирует базовый SQL-запрос с использованием JOIN-операций.
      *          - Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          - Выполняет сформированный запрос через метод `execute_query`.
@@ -153,11 +146,9 @@ interface Database_Interface
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
      *                              Пример: "id", ["id", "name"].
      * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
      *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
      *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
@@ -205,7 +196,6 @@ interface Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      *          - Проверяет типы входных данных: `$from_tbl` (строка), `$options` (массив).
-     *          - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      *          - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного удаления всех данных.
      *          - Проверяет и удаляет недопустимые ключи из массива `$options`:
      *            - Ключ `group` не поддерживается в запросах DELETE и удаляется с записью в лог.
@@ -218,7 +208,6 @@ interface Database_Interface
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
@@ -259,7 +248,6 @@ interface Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      *          - Проверяет тип входных данных: `$from_tbl` должен быть строкой. Если передан неверный тип, выбрасывается исключение.
-     *          - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      *          - Формирует базовый SQL-запрос TRUNCATE TABLE.
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
@@ -267,7 +255,6 @@ interface Database_Interface
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
@@ -292,10 +279,8 @@ interface Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      *          - Проверяет типы входных данных: `$update` (ассоциативный массив), `$from_tbl` (строка), `$options` (массив).
-     *          - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      *          - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного обновления всех данных.
      *          - Удаляет недопустимый ключ `group` из массива `$options` с записью в лог, так как GROUP BY не поддерживается в запросах UPDATE.
-     *          - Преобразует массив `$update` в строку формата "поле = значение" с использованием метода `prepare_insert_data`, который заменяет значения на плейсхолдеры для подготовленного выражения.
      *          - Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.
      *          - Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          - Выполняет сформированный запрос через метод `execute_query`.
@@ -303,12 +288,8 @@ interface Database_Interface
      * @callgraph
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
-     *                       Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                       Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                       Пример: ['name' => 'John Doe', 'status' => 1].
      * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
@@ -349,28 +330,21 @@ interface Database_Interface
      * @details Метод выполняет следующие шаги:
      *          - Проверяет типы входных данных: `$insert` (ассоциативный массив), `$to_tbl` (строка), `$type` (строка), `$options` (массив).
      *          - Проверяет, что массив `$insert` не пустой. Если массив пустой, выбрасывается исключение.
-     *          - Экранирует имя таблицы (`$to_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      *          - Нормализует параметр `$type`, приводя его к нижнему регистру, и проверяет на допустимые значения: `'ignore'`, `'replace'`, `'into'`, `''`.
      *            Если указан недопустимый тип, выбрасывается исключение.
      *          - Определяет тип запроса на основе параметра `$type`:
      *            - `'ignore'`: Формирует запрос типа "INSERT IGNORE INTO".
      *            - `'replace'`: Формирует запрос типа "REPLACE INTO".
      *            - `'into'` или пустая строка (`''`): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     *          - Подготавливает данные для запроса с использованием метода `prepare_insert_data`, который преобразует массив `$insert` в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     *            Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      *          - Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.
      *          - Выполняет сформированный запрос через метод `execute_query`.
      *
      * @callgraph
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                       Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                       Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                       Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
      *                       Если передан пустой массив, выбрасывается исключение.
      * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
      *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
      *                      - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
      *                      - 'replace': Формирует запрос типа "REPLACE INTO".
@@ -722,11 +696,9 @@ class Database implements Database_Interface
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
      *                              Пример: "id", ["id", "name"].
      * @param string $from_tbl Имя таблицы, из которой выбираются данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
@@ -756,7 +728,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::_select_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -770,9 +741,7 @@ class Database implements Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      * - Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$options` (массив).
-     * - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с экранированными именами полей.
-     *   Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
+     * - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с именами полей.
      * - Формирует базовый SQL-запрос.
      * - Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      * - Выполняет сформированный запрос через метод `execute_query`.
@@ -784,11 +753,9 @@ class Database implements Database_Interface
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
      *                              Пример: "id", ["id", "name"].
      * @param string $from_tbl Имя таблицы, из которой выбираются данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                        - group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").
@@ -818,7 +785,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::select() Публичный метод-редирект для вызова этой логики.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса.
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -842,7 +808,7 @@ class Database implements Database_Interface
         }
 
         // Санитизация каждого поля выборки
-        $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
+        $select = implode(', ', $select);
 
         // Формирование базового запроса
         $this->txt_query = "SELECT $select FROM $from_tbl";
@@ -861,14 +827,10 @@ class Database implements Database_Interface
      * @details Этот метод выполняет следующие шаги:
      *          1. Обрабатывает условие `WHERE`:
      *             - Если `where` является строкой, она используется как есть.
-     *             - Если `where` является массивом, он преобразуется в SQL-условие с использованием метода `prepare_insert_data()`.
-     *          2. Обрабатывает группировку `GROUP BY`:
-     *             - Экранирует имена полей с помощью метода `sanitize_expression()`.
-     *          3. Обрабатывает сортировку `ORDER BY`:
-     *             - Экранирует имена полей с помощью метода `sanitize_expression()`.
-     *          4. Обрабатывает ограничение `LIMIT`:
+     *             - Если `where` является массивом, он преобразуется в SQL-условие.
+     *          2. Обрабатывает ограничение `LIMIT`:
      *             - Проверяет, что значение является числом или строкой, и добавляет его к строке запроса.
-     *          5. Возвращает результат:
+     *          3. Возвращает результат:
      *             - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
      *             - Обновлённый массив параметров для подготовленного выражения.
      *
@@ -919,10 +881,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::join()
      *      Метод, который вызывает build_conditions() для формирования JOIN-запроса.
      *
-     * @see PhotoRigma::Classes::Database::sanitize_expression()
-     *      Экранирует и обрабатывает входные данные для SQL-запроса.
-     * @see PhotoRigma::Classes::Database::prepare_insert_data()
-     *      Подготавливает данные для формирования условий WHERE.
      * @see PhotoRigma::Classes::Database::delete()
      *      Метод, который вызывает build_conditions() для формирования DELETE-запроса.
      */
@@ -935,18 +893,10 @@ class Database implements Database_Interface
         if (isset($options['where'])) {
             if (is_string($options['where'])) {
                 // Если where — строка, добавляем её напрямую
-                $conditions .= ' WHERE ' . $this->sanitize_expression($options['where']);
+                $conditions .= ' WHERE ' . $options['where'];
             } elseif (is_array($options['where'])) {
-                // Если where — массив, обрабатываем его через prepare_insert_data
-                [$where_fields, $where_placeholders, $params] = $this->prepare_insert_data($options['where'], 'where_');
-                $conditions .= ' WHERE ' . implode(
-                    ' AND ',
-                    array_map(
-                        static fn ($field, $placeholder) => "$field = $placeholder",
-                        explode(', ', $where_fields),
-                        explode(', ', $where_placeholders)
-                    )
-                );
+                // Если where — массив, обрабатываем его
+                $conditions .= ' WHERE ' . implode(' AND ', $options['where']);
             } else {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
@@ -959,7 +909,7 @@ class Database implements Database_Interface
         // === 2. Обработка GROUP BY ===
         if (isset($options['group'])) {
             if (is_string($options['group'])) {
-                $conditions .= ' GROUP BY ' . $this->sanitize_expression($options['group']);
+                $conditions .= ' GROUP BY ' . $options['group'];
             } else {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype(
@@ -972,7 +922,7 @@ class Database implements Database_Interface
         // === 3. Обработка ORDER BY ===
         if (isset($options['order'])) {
             if (is_string($options['order'])) {
-                $conditions .= ' ORDER BY ' . $this->sanitize_expression($options['order']);
+                $conditions .= ' ORDER BY ' . $options['order'];
             } else {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype(
@@ -999,238 +949,6 @@ class Database implements Database_Interface
         }
 
         return [$conditions, $params];
-    }
-
-    /**
-     * @brief Обрабатывает и очищает SQL-выражение, экранируя имена таблиц и полей.
-     *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет тип входного выражения и выбрасывает исключение при некорректном значении:
-     *             - Выражение должно быть строкой.
-     *          2. Разбивает выражение на части с использованием регулярного выражения:
-     *             - Разделители: операторы (AND, OR, =, <, >, LIKE, IN, IS NULL).
-     *          3. Обрабатывает каждую часть:
-     *             - Экранирует имена таблиц и полей.
-     *             - Проверяет допустимость SQL-функций.
-     *             - Рекурсивно обрабатывает подзапросы.
-     *             - Если часть является значением в кавычках или оператором, она остаётся без изменений.
-     *          4. Собирает обработанные части в одно выражение.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param string $expression SQL-выражение (например, условие WHERE, ON или SELECT).
-     *                           Должно быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *
-     * @return string Очищенное и безопасное выражение.
-     *
-     * @throws InvalidArgumentException Если выражение имеет недопустимый тип или содержит некорректные части.
-     *
-     * Пример использования метода sanitize_expression():
-     * @code
-     * $unsafe_expression = "users.id = 1 AND users.status = 'active'";
-     * $safe_expression = $this->sanitize_expression($unsafe_expression);
-     * echo "Безопасное выражение: $safe_expression";
-     * @endcode
-     * @see PhotoRigma::Classes::Database::build_conditions()
-     *      Метод, который вызывает sanitize_expression() для обработки условий WHERE, GROUP BY, ORDER BY и других частей запроса.
-     * @see PhotoRigma::Classes::Database::delete()
-     *      Метод, который вызывает sanitize_expression() для обработки имени таблицы.
-     * @see PhotoRigma::Classes::Database::truncate()
-     *      Метод, который вызывает sanitize_expression() для обработки имени таблицы.
-     * @see PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и полей.
-     * @see PhotoRigma::Classes::Database::insert()
-     *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и полей.
-     * @see PhotoRigma::Classes::Database::select()
-     *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и полей.
-     * @see PhotoRigma::Classes::Database::join()
-     *      Метод, который вызывает sanitize_expression() для обработки имени таблицы и условий JOIN.
-     *
-     */
-    private function sanitize_expression(string $expression): string
-    {
-        return $expression; // Временная заглушка
-        // Логируем входное выражение для отладки
-        error_log("Полученное выражение в sanitize_expression: $expression");
-
-        // === 1. Валидация аргументов ===
-        if (!is_string($expression)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип выражения | Ожидалась строка, получено: " . gettype(
-                    $expression
-                )
-            );
-        }
-
-        // === 2. Проверка на наличие сложных SQL-функций ===
-        if (preg_match('/^[A-Z_]+\(/i', $expression)) {
-            // Улучшенное регулярное выражение для функций
-            if (!preg_match('/^[A-Z_]+\((?:[^()]*(?:\([^()]*\)[^()]*)*)\)(\s+AS\s+\w+)?$/i', $expression)) {
-                throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая SQL-функция | Получено: $expression"
-                );
-            }
-            return $expression; // Возвращаем выражение без изменений
-        }
-
-        // === 3. Обработка условий с операторами ===
-        if (preg_match(
-            '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:\w+|\'[^\']*\'|"[^"]*"|\d+)/i',
-            $expression
-        )) {
-            // Разбиваем условие на части
-            $pattern = '/^(`?[a-zA-Z0-9_\.]+`?)\s*(=|<|>|<=|>=|!=|<>|LIKE|IN|IS NULL)\s*(:\w+|\'[^\']*\'|"[^"]*"|\d+)/i';
-            if (preg_match($pattern, $expression, $matches)) {
-                [$field, $operator, $value] = array_slice($matches, 1, 3);
-
-                // Экранируем поле, если оно не экранировано
-                if (!preg_match('/^`.*`$/', $field)) {
-                    if (str_contains($field, '.')) {
-                        [$table, $column] = explode('.', $field, 2);
-                        $field = "`$table`.`$column`";
-                    } else {
-                        $field = "`$field`";
-                    }
-                }
-
-                // Возвращаем условие в исходном виде
-                return "$field $operator $value";
-            }
-        }
-
-        // === 4. Обработка остальных частей ===
-        // Если часть — это символ *, возвращаем его без изменений
-        if ($expression === '*') {
-            return $expression;
-        }
-
-        // Если часть — это имя таблицы или поля, экранируем её
-        if (preg_match('/^(`?[a-zA-Z0-9_\.]+`?)$/', $expression)) {
-            // Если имя уже экранировано, возвращаем его без изменений
-            if (preg_match('/^`.*`$/', $expression)) {
-                return $expression;
-            }
-            // Если имя не экранировано, добавляем обратные кавычки
-            if (str_contains($expression, '.')) {
-                [$table, $column] = explode('.', $expression, 2);
-                return "`$table`.`$column`";
-            }
-            return "`$expression`";
-        }
-
-        // Если часть — это значение в кавычках, возвращаем её без изменений
-        if (preg_match('/^([\'"]).*\1$/', $expression)) {
-            return $expression;
-        }
-
-        // Если часть — это параметр SQL-запроса (начинается с ':'), возвращаем его без изменений
-        if (preg_match('/^:\w+$/', $expression)) {
-            return $expression;
-        }
-
-        // Если часть — это подзапрос, рекурсивно обрабатываем его
-        if (preg_match('/^\(.*\)$/', $expression)) {
-            $subquery = substr($expression, 1, -1);
-            $sanitized_subquery = $this->sanitize_expression($subquery);
-            return "($sanitized_subquery)";
-        }
-
-        // Если часть — это что-то другое, выбрасываем исключение
-        throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимая часть выражения | Получено: $expression"
-        );
-    }
-
-    /**
-     * @brief Подготавливает данные для SQL-запроса.
-     *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет типы входных данных и выбрасывает исключения при некорректных значениях:
-     *             - Проверяется, что `$data` является массивом.
-     *             - Проверяется, что `$prefix` является строкой.
-     *             - Проверяется, что `$params` является массивом.
-     *             - Если массив `$data` пуст, выбрасывается исключение.
-     *          2. Обрабатывает массив данных:
-     *             - Экранирует имена полей с помощью метода `sanitize_expression()`.
-     *             - Генерирует плейсхолдеры для значений, добавляя префикс `$prefix`.
-     *             - Если значение уже является плейсхолдером, проверяется его наличие в массиве `$params`.
-     *          3. Формирует результат:
-     *             - Создаёт строку с перечислением полей (`$fields_clause`).
-     *             - Создаёт строку с плейсхолдерами (`$placeholders_clause`).
-     *             - Возвращает обновлённый массив параметров (`$final_params`).
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param array $data Массив данных для обработки в формате 'имя_поля' => 'значение'.
-     *                    Если передан неверный тип или пустой массив, выбрасывается исключение
-     *                    InvalidArgumentException.
-     * @param string $prefix Префикс для плейсхолдеров (например, 'insert_', 'where_').
-     *                       Должен быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                       InvalidArgumentException.
-     * @param array $params Массив параметров плейсхолдеров (по умолчанию пустой).
-     *                      Если параметры не соответствуют условиям, выбрасывается исключение
-     *                      InvalidArgumentException.
-     *
-     * @return array Массив с тремя элементами:
-     *               - string $fields_clause - Строка с перечислением полей.
-     *               - string $placeholders_clause - Строка с плейсхолдерами.
-     *               - array $final_params - Обновлённый массив параметров для подготовленного выражения.
-     *
-     * @throws InvalidArgumentException Если аргументы имеют недопустимый тип или содержат некорректные данные.
-     *
-     * Пример использования метода prepare_insert_data():
-     * @code
-     * $data = ['name' => 'John Doe', 'email' => 'john@example.com'];
-     * [$fields_clause, $placeholders_clause, $final_params] = $this->prepare_insert_data($data, 'insert_');
-     * @endcode
-     * @see PhotoRigma::Classes::Database::insert()
-     *      Метод, который вызывает prepare_insert_data() для подготовки данных для INSERT-запроса.
-     * @see PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает prepare_insert_data() для подготовки данных для UPDATE-запроса.
-     * @see PhotoRigma::Classes::Database::build_conditions()
-     *      Метод, который вызывает prepare_insert_data() для подготовки данных для условий WHERE.
-     *
-     * @see PhotoRigma::Classes::Database::sanitize_expression()
-     *      Экранирует и обрабатывает имена полей.
-     */
-    private function prepare_insert_data(array $data, string $prefix = '', array $params = []): array
-    {
-        // === 1. Валидация аргументов ===
-        if (empty($data)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Массив данных не может быть пустым | Причина: Отсутствуют данные для обработки"
-            );
-        }
-        // === 2. Подготовка данных ===
-        $fields = [];
-        $placeholders = [];
-        $final_params = $params;
-        foreach ($data as $key => $value) {
-            $sanitized_key = $this->sanitize_expression($key);
-            if (is_string($value) && str_starts_with($value, ':')) {
-                // Если значение уже является плейсхолдером
-                $placeholder = $value;
-                // Проверяем, есть ли значение для этого плейсхолдера в $params
-                if (!isset($final_params[$placeholder])) {
-                    throw new InvalidArgumentException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует значение для плейсхолдера | Получено: '$placeholder'"
-                    );
-                }
-            } else {
-                // Генерируем новый плейсхолдер
-                $placeholder = ":$prefix$key";
-                $final_params[$placeholder] = $value;
-            }
-            $fields[] = $sanitized_key;
-            $placeholders[] = $placeholder;
-        }
-        // === 3. Формирование результатов ===
-        $fields_clause = implode(', ', $fields);
-        $placeholders_clause = implode(', ', $placeholders);
-        return [$fields_clause, $placeholders_clause, $final_params];
     }
 
     /**
@@ -1352,11 +1070,9 @@ class Database implements Database_Interface
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
      *                              Пример: "id", ["id", "name"].
      * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
      *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
      *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
@@ -1397,7 +1113,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::_join_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -1411,13 +1126,11 @@ class Database implements Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      * - Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$join` (массив), `$options` (массив).
-     * - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с экранированными именами полей.
+     * - Обрабатывает список полей для выборки (`$select`), преобразуя его в строку с именами полей.
      *   Каждое имя поля оборачивается в обратные кавычки (\` \`).
-     * - Экранирует имя основной таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      * - Обрабатывает массив JOIN-операций (`$join`):
      *   - Для каждой операции проверяется наличие имени таблицы (`table`) и условия (`on`).
      *   - Если тип JOIN не указан, используется `INNER` по умолчанию.
-     *   - Условия JOIN формируются с использованием метода `sanitize_expression`.
      * - Формирует базовый SQL-запрос с использованием JOIN-операций.
      * - Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      * - Выполняет сформированный запрос через метод `execute_query`.
@@ -1429,11 +1142,9 @@ class Database implements Database_Interface
      *
      * @param string|array $select Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей).
      *                              Если передан массив, он преобразуется в строку с разделителем `, `.
-     *                              Каждое поле экранируется методом `sanitize_expression`.
      *                              Пример: "id", ["id", "name"].
      * @param string $from_tbl Имя основной таблицы, из которой начинается выборка.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $join Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:
      *                    - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.
      *                    - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.
@@ -1474,7 +1185,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::join() Публичный метод-редирект для вызова этой логики.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -1484,10 +1194,8 @@ class Database implements Database_Interface
         if (!is_array($select)) {
             $select = [$select];
         }
-        $select = implode(', ', array_map([$this, 'sanitize_expression'], $select));
-        // === 2. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
-        // === 3. Обработка $join ===
+        $select = implode(', ', $select);
+        // === 2. Обработка $join ===
         $join_clauses = [];
         foreach ($join as $j) {
             if (empty($j['table'])) {
@@ -1500,14 +1208,14 @@ class Database implements Database_Interface
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует условие 'on' для таблицы '{$j['table']}' в описании JOIN | Проверьте структуру массива \$join"
                 );
             }
-            $table = $this->sanitize_expression($j['table']);
-            $on_condition = $this->sanitize_expression($j['on']);
+            $table = $j['table'];
+            $on_condition = $j['on'];
             $type = !empty($j['type']) ? strtoupper($j['type']) . ' ' : 'INNER ';
             $join_clauses[] = "{$type}JOIN $table ON $on_condition";
         }
-        // === 4. Формирование базового запроса ===
+        // === 3. Формирование базового запроса ===
         $this->txt_query = "SELECT $select FROM $from_tbl " . implode(' ', $join_clauses);
-        // === 5. Добавление условий ===
+        // === 4. Добавление условий ===
         [$conditions, $params] = $this->build_conditions($options);
         $this->txt_query .= $conditions;
         // === 6. Выполнение запроса ===
@@ -1526,7 +1234,6 @@ class Database implements Database_Interface
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
@@ -1558,7 +1265,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::_delete_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
@@ -1573,7 +1279,6 @@ class Database implements Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      * - Проверяет типы входных данных: `$from_tbl` (строка), `$options` (массив).
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      * - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного удаления всех данных.
      * - Проверяет и удаляет недопустимые ключи из массива `$options`:
      *   - Ключ `group` не поддерживается в запросах DELETE и удаляется с записью в лог.
@@ -1589,7 +1294,6 @@ class Database implements Database_Interface
      *
      * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression`.
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
@@ -1621,7 +1325,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::delete() Публичный метод-редирект для вызова этой логики.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя поля оборачивается в обратные кавычки (\` \`).
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
@@ -1656,17 +1359,14 @@ class Database implements Database_Interface
             unset($options['order'], $options['limit']); // Удаляем ключи 'order' и 'limit'
         }
 
-        // === 3. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
-
-        // === 4. Формирование базового запроса ===
+        // === 3. Формирование базового запроса ===
         $this->txt_query = "DELETE FROM $from_tbl";
 
-        // === 5. Добавление условий ===
+        // === 4. Добавление условий ===
         [$conditions, $params] = $this->build_conditions($options);
         $this->txt_query .= $conditions;
 
-        // === 6. Выполнение запроса ===
+        // === 5. Выполнение запроса ===
         return $this->execute_query($params);
     }
 
@@ -1682,7 +1382,6 @@ class Database implements Database_Interface
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
@@ -1701,7 +1400,6 @@ class Database implements Database_Interface
      *
      * @see PhotoRigma::Classes::Database::_truncate_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
      */
     public function truncate(string $from_tbl): bool
     {
@@ -1713,7 +1411,6 @@ class Database implements Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      * - Проверяет тип входных данных: `$from_tbl` должен быть строкой. Если передан неверный тип, выбрасывается исключение.
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      * - Формирует базовый SQL-запрос TRUNCATE TABLE.
      * - Выполняет сформированный запрос через метод `execute_query`.
      *
@@ -1724,7 +1421,6 @@ class Database implements Database_Interface
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *               В случае ошибки выбрасывается исключение.
@@ -1743,12 +1439,9 @@ class Database implements Database_Interface
      *
      * @see PhotoRigma::Classes::Database::truncate() Публичный метод-редирект для вызова этой логики.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
      */
     protected function _truncate_internal(string $from_tbl): bool
     {
-        // Обработка $from_tbl
-        $from_tbl = $this->sanitize_expression($from_tbl);
         // Формирование базового запроса
         $this->txt_query = "TRUNCATE TABLE $from_tbl";
         // Выполнение запроса
@@ -1766,12 +1459,8 @@ class Database implements Database_Interface
      * @callgraph
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'status' => 1].
      * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
@@ -1802,8 +1491,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::_update_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -1817,10 +1504,8 @@ class Database implements Database_Interface
      *
      * @details Метод выполняет следующие шаги:
      * - Проверяет типы входных данных: `$update` (ассоциативный массив), `$from_tbl` (строка), `$options` (массив).
-     * - Экранирует имя таблицы (`$from_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      * - Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует, выбрасывается исключение для предотвращения случайного обновления всех данных.
      * - Удаляет недопустимый ключ `group` из массива `$options` с записью в лог, так как GROUP BY не поддерживается в запросах UPDATE.
-     * - Преобразует массив `$update` в строку формата "поле = значение" с использованием метода `prepare_insert_data`, который заменяет значения на плейсхолдеры для подготовленного выражения.
      * - Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.
      * - Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      * - Выполняет сформированный запрос через метод `execute_query`.
@@ -1831,12 +1516,8 @@ class Database implements Database_Interface
      * @callgraph
      *
      * @param array $update Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'status' => 1].
      * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                         Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * @param array $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
      *                              Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
@@ -1867,8 +1548,6 @@ class Database implements Database_Interface
      * @see PhotoRigma::Classes::Database::update() Публичный метод-редирект для вызова этой логики.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
      * @see PhotoRigma::Classes::Database::build_conditions() Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строку формата "поле = значение" с использованием плейсхолдеров.
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -1892,35 +1571,20 @@ class Database implements Database_Interface
             unset($options['group']); // Удаляем ключ 'group'
         }
 
-        // === 3. Обработка $from_tbl ===
-        $from_tbl = $this->sanitize_expression($from_tbl);
+        // === 3. Формирование списка полей для обновления ===
+        $update = array_map(static function ($key, $value) {
+            return "$key = $value";
+        }, array_keys($update), array_values($update));
+        $set_clause = implode(', ', $update);
 
-        // === 4. Формирование списка полей для обновления ===
-        [$set_fields, $set_placeholders, $params] = $this->prepare_insert_data(
-            $update,
-            'update_',
-            $options['params'] ?? []
-        );
-        $set_clause = implode(
-            ', ',
-            array_map(
-                static fn ($field, $placeholder) => "$field = $placeholder",
-                explode(', ', $set_fields),
-                explode(', ', $set_placeholders)
-            )
-        );
-
-        // === 5. Формирование базового запроса ===
+        // === 4. Формирование базового запроса ===
         $this->txt_query = "UPDATE $from_tbl SET $set_clause";
 
-        // === 6. Добавление условий ===
-        [$conditions, $condition_params] = $this->build_conditions($options);
+        // === 5. Добавление условий ===
+        [$conditions, $params] = $this->build_conditions($options);
         $this->txt_query .= $conditions;
 
-        // === 7. Подготовка параметров ===
-        $params = array_merge($params, $condition_params);
-
-        // === 8. Выполнение запроса ===
+        // === 6. Выполнение запроса ===
         return $this->execute_query($params);
     }
 
@@ -1934,13 +1598,8 @@ class Database implements Database_Interface
      * @callgraph
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
-     *                      Если передан пустой массив, выбрасывается исключение.
      * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
      *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
      *                     - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
      *                     - 'replace': Формирует запрос типа "REPLACE INTO".
@@ -1969,8 +1628,6 @@ class Database implements Database_Interface
      * @endcode
      * @see PhotoRigma::Classes::Database::_insert_internal() Защищённый метод, реализующий основную логику.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -1985,15 +1642,12 @@ class Database implements Database_Interface
      * @details Метод выполняет следующие шаги:
      * - Проверяет типы входных данных: `$insert` (ассоциативный массив), `$to_tbl` (строка), `$type` (строка), `$options` (массив).
      * - Проверяет, что массив `$insert` не пустой. Если массив пустой, выбрасывается исключение.
-     * - Экранирует имя таблицы (`$to_tbl`) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (\` \`) методом `sanitize_expression`.
      * - Нормализует параметр `$type`, приводя его к нижнему регистру, и проверяет на допустимые значения: `'ignore'`, `'replace'`, `'into'`, `''`.
      *   Если указан недопустимый тип, выбрасывается исключение.
      * - Определяет тип запроса на основе параметра `$type`:
      *   - `'ignore'`: Формирует запрос типа "INSERT IGNORE INTO".
      *   - `'replace'`: Формирует запрос типа "REPLACE INTO".
      *   - `'into'` или пустая строка (`''`): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     * - Подготавливает данные для запроса с использованием метода `prepare_insert_data`, который преобразует массив `$insert` в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     *   Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * - Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.
      * - Выполняет сформированный запрос через метод `execute_query`.
      *
@@ -2003,13 +1657,9 @@ class Database implements Database_Interface
      * @callgraph
      *
      * @param array $insert Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                      Каждое имя поля экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
-     *                      Значения преобразуются в плейсхолдеры методом `prepare_insert_data` для подготовленного выражения.
-     *                      Пример: ['name' => 'John Doe', 'email' => 'john@example.com'].
      *                      Если передан пустой массив, выбрасывается исключение.
      * @param string $to_tbl Имя таблицы, в которую необходимо вставить данные.
      *                       Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
-     *                       Имя таблицы экранируется методом `sanitize_expression` и оборачивается в обратные кавычки (\` \`).
      * @param string $type Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:
      *                     - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
      *                     - 'replace': Формирует запрос типа "REPLACE INTO".
@@ -2038,8 +1688,6 @@ class Database implements Database_Interface
      * @endcode
      * @see PhotoRigma::Classes::Database::insert() Публичный метод-редирект для вызова этой логики.
      * @see PhotoRigma::Classes::Database::execute_query() Выполняет SQL-запрос.
-     * @see PhotoRigma::Classes::Database::prepare_insert_data() Преобразует массив данных в строки формата "поле" и "плейсхолдер" для подготовленного выражения.
-     * @see PhotoRigma::Classes::Database::sanitize_expression() Экранирует и обрабатывает входные данные для SQL-запроса. Каждое имя таблицы или столбца оборачивается в обратные кавычки (\` \`).
      * @see PhotoRigma::Classes::Database::$txt_query Свойство, в которое помещается текст SQL-запроса.
      *
      */
@@ -2059,9 +1707,7 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace', 'into'. Получено: '$type'"
             );
         }
-        // === 2. Обработка $to_tbl ===
-        $to_tbl = $this->sanitize_expression($to_tbl);
-        // === 3. Определение типа запроса ===
+        // === 2. Определение типа запроса ===
         if ($type === 'ignore') {
             $query_type = 'INSERT IGNORE INTO ';
         } elseif ($type === 'replace') {
@@ -2069,16 +1715,14 @@ class Database implements Database_Interface
         } else {
             $query_type = 'INSERT INTO '; // По умолчанию или если указано 'into'
         }
-        // === 4. Подготовка данных для запроса ===
-        [$fields_clause, $placeholders_clause, $params] = $this->prepare_insert_data(
-            $insert,
-            'insert_',
-            $options['params'] ?? []
-        );
-        // === 5. Формирование базового запроса ===
-        $this->txt_query = "$query_type$to_tbl ($fields_clause) VALUES ($placeholders_clause)";
-        // === 6. Выполнение запроса ===
-        return $this->execute_query($params);
+        // === 3. Подготовка данных для запроса ===
+        $keys = implode(', ', array_keys($insert));
+        $values = implode(', ', $insert);
+
+        // === 4. Формирование базового запроса ===
+        $this->txt_query = "$query_type$to_tbl ($keys) VALUES ($values)";
+        // === 5. Выполнение запроса ===
+        return $this->execute_query($options['params']);
     }
 
     /**

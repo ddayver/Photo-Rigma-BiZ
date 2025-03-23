@@ -17,6 +17,5 @@ var classPhotoRigma_1_1Classes_1_1Work__Template =
     [ "$config", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ab76f8f2ac851632a23ef69df2bd99dad", null ],
     [ "$db", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a18e3eac65d39ced5231d9b3e3630ba75", null ],
     [ "$lang", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9fd8978d2c6cbdcfdd6be875be161b7b", null ],
-    [ "$user", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7", null ],
-    [ "NO_USER_AVATAR", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a20f25a327b50ff8b674931e5ab257b22", null ]
+    [ "$user", "d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a35c45cc33d8d420da794514df59466b7", null ]
 ];

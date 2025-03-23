@@ -242,7 +242,7 @@ if (!empty($user->user['admin']) && $work->check_input(
             foreach ($new_config as $name => $value) {
                 // Используем новый формат вызова update()
                 $db->update(
-                    ['value' => ':value'], // Данные для обновления
+                    ['`value`' => ':value'], // Данные для обновления
                     TBL_CONFIG, // Таблица
                     [
                         'where' => '`name` = :name', // Условие WHERE
@@ -457,15 +457,17 @@ if (!empty($user->user['admin']) && $work->check_input(
                                 if ($key === 'id') {
                                     $new_user_data['group_id'] = $value;
                                 } else {
-                                    $query[$key] = $value;
+                                    $query["`$key`"] = ":$key";
+                                    $params[":$key"] = $value;
                                     $new_user_data[$key] = $value;
                                 }
                             }
 
+                            $params[':uid'] = $_GET['uid'];
                             // Обновляем данные пользователя в БД
                             $db->update($query, TBL_USERS, [
                                 'where' => '`id` = :uid',
-                                'params' => [':uid' => $_GET['uid']],
+                                'params' => $params,
                             ]);
                             $rows = $db->get_affected_rows();
 
@@ -500,11 +502,14 @@ if (!empty($user->user['admin']) && $work->check_input(
                         $encoded_user_rights = $user->encode_user_rights($new_user_rights);
 
                         $db->update(
-                            ['user_rights' => $encoded_user_rights],
+                            ['`user_rights`' => ':u_rights'],
                             TBL_USERS,
                             [
                                 'where' => '`id` = :uid',
-                                'params' => [':uid' => $_GET['uid']],
+                                'params' => [
+                                    ':uid' => $_GET['uid'],
+                                    ':u_rights' => $encoded_user_rights
+                                ],
                             ]
                         );
 
@@ -599,7 +604,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 
                 // Выполняем запрос к БД
                 $db->select('*', TBL_USERS, [
-                    'where' => '(real_name LIKE :real_name_query OR email LIKE :email_query OR login LIKE :login_query)',
+                    'where' => '(`real_name` LIKE :real_name_query OR `email` LIKE :email_query OR `login` LIKE :login_query)',
                     'params' => [
                         ':real_name_query' => $search_query,
                         ':email_query' => $search_query,
@@ -723,12 +728,12 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $encoded_group_rights = $user->encode_user_rights($new_group_rights);
 
                 $db->update(
-                    ['user_rights' => ':user_rights'],
+                    ['`user_rights`' => ':u_rights'],
                     TBL_GROUP,
                     [
                         'where' => '`id` = :id_group',
                         'params' => [
-                            ':user_rights' => $encoded_group_rights,
+                            ':u_rights' => $encoded_group_rights,
                             ':id_group' => $_POST['id_group'],
                         ],
                     ]

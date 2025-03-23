@@ -99,10 +99,8 @@ var menudata={children:[
 {text:"v",url:"functions_func_v.html#index_v"}]},
 {text:"Переменные",url:"functions_vars.html",children:[
 {text:"$",url:"functions_vars.html#index__24"},
-{text:"d",url:"functions_vars.html#index_d"},
 {text:"e",url:"functions_vars.html#index_e"},
-{text:"m",url:"functions_vars.html#index_m"},
-{text:"n",url:"functions_vars.html#index_n"}]}]}]},
+{text:"m",url:"functions_vars.html#index_m"}]}]}]},
 {text:"Файлы",url:"files.html",children:[
 {text:"Файлы",url:"files.html"},
 {text:"Список членов всех файлов",url:"globals.html",children:[

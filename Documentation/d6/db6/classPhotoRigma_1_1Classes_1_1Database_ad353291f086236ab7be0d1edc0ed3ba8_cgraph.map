@@ -1,8 +1,5 @@
 <map id="_truncate_internal" name="_truncate_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="5,43,130,67"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="193,5,297,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,39,177,29,178,34,130,45"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae52395b38793b8f4adeb05716bb4faa7" title="Обрабатывает и очищает SQL&#45;выражение, экранируя имена таблиц и полей." alt="" coords="178,79,312,103"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,65,167,72,166,78,129,70"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="215,80,209,70,212,60,225,54,245,52,267,55,278,62,275,66,265,60,245,57,226,59,216,64,214,69,220,77"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="5,5,130,30"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="178,5,282,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,15,162,15,162,20,130,20"/>
 </map>

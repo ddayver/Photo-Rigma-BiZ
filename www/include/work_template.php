@@ -141,7 +141,7 @@ interface Work_Template_Interface
      *          - Если пользователь не авторизован, формируется блок с ссылками на вход, восстановление пароля и регистрацию.
      *          - Если пользователь авторизован, формируется блок с приветствием, группой и аватаром.
      *          Для авторизованных пользователей проверяется существование аватара и его MIME-тип через Work::validate_mime_type().
-     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (NO_USER_AVATAR).
+     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (DEFAULT_AVATAR).
      *
      * @callgraph
      *
@@ -299,7 +299,7 @@ interface Work_Template_Interface
  * @see PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типа файла.
  *
  * @note Использованы константы:
- *       - NO_USER_AVATAR - Аваар по-умолчанию,
+ *       - DEFAULT_AVATAR - Аваар по-умолчанию,
  *
  * @warning Убедитесь, что передаваемые параметры в методы корректны, так как это может привести к ошибкам.
  *
@@ -328,11 +328,10 @@ interface Work_Template_Interface
 class Work_Template implements Work_Template_Interface
 {
     //Свойства:
-    private const string NO_USER_AVATAR = 'no_avatar.jpg'; ///< Конфигурация приложения.
-    private array $config; ///< Языковые данные.
-    private ?array $lang = null; ///< Объект для работы с базой данных.
-    private Database_Interface $db; ///< Объект пользователя.
-    private ?User $user = null; // Аватар по-умолчанию
+    private array $config; ///< Конфигурация приложения.
+    private ?array $lang = null; ///< Языковые данные.
+    private Database_Interface $db; ///< Объект для работы с базой данных.
+    private ?User $user = null; ///< Объект пользователя.
 
     /**
      * @brief Конструктор класса.
@@ -657,12 +656,12 @@ class Work_Template implements Work_Template_Interface
         // Формирование запроса для получения данных меню (используем параметры для безопасности)
         // Условие ":menu_type = 1" используется для выборки по имени столбца (смена имени столбца для выборки).
         $this->db->select(
-            ['*'], // Все поля таблицы используются для этого запроса
+            '*', // Все поля таблицы используются для этого запроса
             TBL_MENU,
             [
                 'where' => '`' . $menu_type . '` = :menu_type',
                 'params' => [':menu_type' => 1],
-                'order_by' => ['id' => 'ASC']
+                'order' => '`id` ASC'
             ]
         );
         // Получение результатов запроса
@@ -715,7 +714,7 @@ class Work_Template implements Work_Template_Interface
      *          - Если пользователь не авторизован, формируется блок с ссылками на вход, восстановление пароля и регистрацию.
      *          - Если пользователь авторизован, формируется блок с приветствием, группой и аватаром.
      *          Для авторизованных пользователей проверяется существование аватара и его MIME-тип через Work::validate_mime_type().
-     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (NO_USER_AVATAR).
+     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (DEFAULT_AVATAR).
      *
      * @callergraph
      * @callgraph
@@ -766,7 +765,7 @@ class Work_Template implements Work_Template_Interface
      *          - Если пользователь не авторизован, формируется блок со ссылками на вход, восстановление пароля и регистрацию.
      *          - Если пользователь авторизован, формируется блок с приветствием, группой и аватаром.
      *          Для авторизованных пользователей проверяется существование аватара и его MIME-тип через Work::validate_mime_type().
-     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (NO_USER_AVATAR).
+     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (DEFAULT_AVATAR).
      *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод template_user().
      *
@@ -805,8 +804,6 @@ class Work_Template implements Work_Template_Interface
      *      Метод для очистки данных.
      * @see PhotoRigma::Classes::Work::validate_mime_type()
      *      Метод для проверки MIME-типа файла.
-     * @see PhotoRigma::Classes::Work_Template::NO_USER_AVATAR
-     *      Константа, определяющая имя файла по умолчанию для аватара.
      *
      * @see PhotoRigma::Classes::Work_Template::template_user()
      *      Публичный метод, который вызывает этот внутренний метод.
@@ -825,20 +822,20 @@ class Work_Template implements Work_Template_Interface
         $avatar_path = sprintf(
             '%s/%s',
             $this->config['avatar_folder'],
-            $this->user->user['avatar'] ?? self::NO_USER_AVATAR
+            $this->user->user['avatar'] ?? DEFAULT_AVATAR
         );
         // Проверка существования файла и его MIME-типа
         if ($this->user->session['login_id'] > 0) {
             $full_avatar_path = $this->config['site_dir'] . '/' . $avatar_path;
             if (!file_exists($full_avatar_path)) {
-                $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], self::NO_USER_AVATAR);
+                $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], DEFAULT_AVATAR);
             } else {
                 $mime_type = new finfo(FILEINFO_MIME_TYPE)->file($full_avatar_path);
                 if (!Work::validate_mime_type($mime_type)) {
                     log_in_file(
                         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: $full_avatar_path"
                     );
-                    $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], self::NO_USER_AVATAR);
+                    $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], DEFAULT_AVATAR);
                 }
             }
         }
@@ -982,9 +979,9 @@ class Work_Template implements Work_Template_Interface
         // Получение статистики пользователей
         $this->db->select(
             [
-                'COUNT(*) AS regist_user',
-                'SUM(CASE WHEN `group_id` = 3 THEN 1 ELSE 0 END) AS user_admin',
-                'SUM(CASE WHEN `group_id` = 2 THEN 1 ELSE 0 END) AS user_moder'
+                'COUNT(*) AS `regist_user`',
+                'SUM(CASE WHEN `group_id` = 3 THEN 1 ELSE 0 END) AS `user_admin`',
+                'SUM(CASE WHEN `group_id` = 2 THEN 1 ELSE 0 END) AS `user_moder`'
             ],
             TBL_USERS
         );
@@ -995,19 +992,19 @@ class Work_Template implements Work_Template_Interface
         // Получение статистики категорий
         $this->db->join(
             [
-                'COUNT(DISTINCT c.id) AS category',
-                'COUNT(DISTINCT CASE WHEN p.category = 0 THEN p.user_upload END) AS category_user'
+                'COUNT(DISTINCT c.`id`) AS `category`',
+                'COUNT(DISTINCT CASE WHEN p.`category` = 0 THEN p.`user_upload` END) AS `category_user`'
             ],
             TBL_CATEGORY . ' AS c', // Основная таблица (category)
             [
                 [
                     'type' => 'LEFT', // Тип JOIN
                     'table' => TBL_PHOTO . ' AS p', // Присоединяемая таблица (photo)
-                    'on' => 'c.id = p.category' // Условие JOIN
+                    'on' => 'c.`id` = p.`category`' // Условие JOIN
                 ]
             ],
             [
-                'where' => 'c.id != 0' // Условие WHERE
+                'where' => 'c.`id` != 0' // Условие WHERE
             ]
         );
         $category_stats = $this->db->res_row();
@@ -1017,14 +1014,14 @@ class Work_Template implements Work_Template_Interface
         $stat['category_user'] = $category_stats ? (int)$category_stats['category_user'] : 0;
         $stat['category'] += $stat['category_user'];
         // Получение статистики фотографий
-        $this->db->select(['COUNT(*) AS photo_count'], TBL_PHOTO);
+        $this->db->select(['COUNT(*) AS `photo_count`'], TBL_PHOTO);
         $photo_stats = $this->db->res_row();
         $stat['photo'] = $photo_stats ? (int)$photo_stats['photo_count'] : 0;
         // Получение статистики оценок
-        $this->db->select(['COUNT(*) AS rate_user'], TBL_RATE_USER);
+        $this->db->select(['COUNT(*) AS `rate_user`'], TBL_RATE_USER);
         $rate_user_stats = $this->db->res_row();
         $stat['rate_user'] = $rate_user_stats ? (int)$rate_user_stats['rate_user'] : 0;
-        $this->db->select(['COUNT(*) AS rate_moder'], TBL_RATE_MODER);
+        $this->db->select(['COUNT(*) AS `rate_moder`'], TBL_RATE_MODER);
         $rate_moder_stats = $this->db->res_row();
         $stat['rate_moder'] = $rate_moder_stats ? (int)$rate_moder_stats['rate_moder'] : 0;
         // Получение онлайн-пользователей

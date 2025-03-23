@@ -229,37 +229,183 @@ interface User_Interface
     public function update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work): int;
 
     /**
-     * Удаление пользователя.
+     * @brief Обновляет права пользователя или группу через Админку.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Проверять, изменилась ли группа пользователя. Если группа изменилась, устанавливать права группы.
+     *          - Если группа не изменилась, проверять, отличаются ли текущие права пользователя в БД от указанных в `$user_rights`.
+     *            Если отличия есть, обновлять права пользователя в БД.
+     *          - Возвращать массив с итоговой группой пользователя и его правами.
+     *
+     * @param int $user_id ID пользователя, чьи права обновляются.
+     *                     Должен быть положительным целым числом.
+     * @param int $group Новая группа пользователя.
+     *                   Должен быть положительным целым числом.
+     * @param string $user_rights JSON-строка с новыми правами пользователя.
+     *
+     * @return array Возвращает массив с двумя ключами:
+     *               - `new_group`: Новая группа пользователя (int).
+     *               - `user_rights`: Новые права пользователя (string, JSON-формат).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входные данные некорректны (например, невалидный JSON).
+     *
+     * @warning Убедитесь, что входные данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $result = $object->update_user_rights(123, 2, '{"read": true, "write": false}');
+     * echo "Новая группа: {$result['new_group']}, Права: " . json_encode($result['user_rights']);
+     * @endcode
+     * @see PhotoRigma::Classes::User::update_user_rights() Пример реализации метода в классе.
+     *
+     */
+    public function update_user_rights(int $user_id, int $group, string $user_rights): array;
+
+    /**
+     * @brief Удаляет пользователя через Админку.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Удалять все данные пользователя, включая файл аватара.
+     *          - Относительно удаления категорий и фото методы и способы должны быть определены в реализации.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
      *
      * @param int $user_id Идентификатор пользователя.
-     * @return void
-     */
-    public function delete_user(int $user_id): void;
-
-    /**
-     * Добавление новой группы.
+     *                     Должен быть положительным целым числом.
      *
-     * @param array $group_data Данные новой группы.
-     * @return void
+     * @return bool Возвращает:
+     *              - `true`, если пользователь успешно удален.
+     *              - `false`, если удаление не выполнено.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входные данные некорректны (например, отрицательный ID).
+     *
+     * @warning Убедитесь, что входные данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $result = $object->delete_user(123);
+     * if ($result) {
+     *     echo "Пользователь успешно удален!";
+     * } else {
+     *     echo "Не удалось удалить пользователя.";
+     * }
+     * @endcode
+     * @see PhotoRigma::Classes::User::delete_user() Пример реализации метода в классе.
+     *
      */
-    public function add_new_group(array $group_data): void;
+    public function delete_user(int $user_id): bool;
 
     /**
-     * Обновление данных группы.
+     * @brief Добавляет новую группу в систему через Админку.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Создавать новую группу по команде из Админки.
+     *          - Принимать данные новой группы, включая её имя и права.
+     *          - Возвращать ID созданной группы.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
+     *
+     * @param array $group_data Данные новой группы:
+     *                          - `name` (string): Имя группы.
+     *                          - `user_rights` (string): JSON-строка с правами группы.
+     *
+     * @return int Возвращает ID новой группы.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входные данные некорректны (например, отсутствует имя группы или невалидный JSON).
+     *
+     * @warning Убедитесь, что входные данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $groupId = $object->add_new_group([
+     *     'name' => 'Moderators',
+     *     'user_rights' => '{"read": true, "write": true}'
+     * ]);
+     * echo "Новая группа создана с ID: $groupId";
+     * @endcode
+     * @see PhotoRigma::Classes::User::add_new_group() Пример реализации метода в классе.
+     *
+     */
+    public function add_new_group(array $group_data): int;
+
+    /**
+     * @brief Обновляет данные группы в системе через Админку.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Обновлять данные группы по её идентификатору.
+     *          - Принимать ID группы и новые данные, включая имя и права.
+     *          - Возвращать ID обновленной группы.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
      *
      * @param int $group_id Идентификатор группы.
-     * @param array $group_data Новые данные группы.
-     * @return void
+     *                      Должен быть положительным целым числом.
+     * @param array $group_data Новые данные группы:
+     *                          - `name` (string): Новое имя группы.
+     *                          - `user_rights` (string): JSON-строка с новыми правами группы.
+     *
+     * @return int Возвращает ID обновленной группы.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входные данные некорректны (например, отрицательный ID или невалидный JSON).
+     *
+     * @warning Убедитесь, что входные данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $groupId = $object->update_group_data(123, [
+     *     'name' => 'Editors',
+     *     'user_rights' => '{"read": true, "write": false}'
+     * ]);
+     * echo "Группа обновлена с ID: $groupId";
+     * @endcode
+     * @see PhotoRigma::Classes::User::update_group_data() Пример реализации метода в классе.
+     *
      */
-    public function update_group_data(int $group_id, array $group_data): void;
+    public function update_group_data(int $group_id, array $group_data): int;
 
     /**
-     * Удаление группы.
+     * @brief Удаляет группу из системы через Админку.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Удалять группу по её идентификатору.
+     *          - Для групп с ID 0 (Гость), 1 (Пользователь), 2 (Модератор) и 3 (Администратор) удаление запрещено.
+     *          - Возвращать результат операции: `true`, если группа успешно удалена, и `false`, если удаление не выполнено.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
      *
      * @param int $group_id Идентификатор группы.
-     * @return void
+     *                      Должен быть положительным целым числом.
+     *                      Удаление запрещено для групп с ID: 0 (Гость), 1 (Пользователь), 2 (Модератор), 3 (Администратор).
+     *
+     * @return bool Возвращает:
+     *              - `true`, если группа успешно удалена.
+     *              - `false`, если удаление не выполнено (например, для запрещенных ID).
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входные данные некорректны (например, отрицательный ID).
+     *
+     * @see PhotoRigma::Classes::User::delete_group() Пример реализации метода в классе.
+     *
+     * @todo Реализовать метод в классах, использующих интерфейс.
+     *
+     * @warning Убедитесь, что входные данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $result = $object->delete_group(123);
+     * if ($result) {
+     *     echo "Группа успешно удалена.";
+     * } else {
+     *     echo "Удаление группы запрещено или произошла ошибка.";
+     * }
+     * @endcode
      */
-    public function delete_group(int $group_id): void;
+    public function delete_group(int $group_id): bool;
 
     /**
      * @brief Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.
@@ -331,6 +477,74 @@ interface User_Interface
      *
      */
     public function csrf_token(): string;
+
+    /**
+     * @brief Преобразует массив прав пользователя в строку JSON.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Проверять, существует ли входной массив. Если массив отсутствует или пуст, возвращается пустая строка.
+     *          - Проверять, что входное значение является массивом.
+     *          - Кодировать массив в строку JSON.
+     *          - Возвращать строку JSON, готовую для сохранения в поле `user_rights`.
+     *
+     * @param array $rights Массив прав пользователя.
+     *                      Может быть ассоциативным массивом, пустым значением или `null`.
+     *                      Если значение не является массивом, выбрасывается исключение.
+     *
+     * @return string Строка JSON, представляющая права пользователя.
+     *                Если массив отсутствует или содержит некорректные данные, возвращается пустая строка.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входное значение не является массивом.
+     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании массива в JSON.
+     *
+     * @note Метод возвращает пустую строку, если массив прав отсутствует или содержит некорректные данные.
+     * @warning Убедитесь, что входные данные корректны перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $json = $object->encode_user_rights(['edit' => 1, 'delete' => 0]);
+     * echo "JSON-строка: $json";
+     * @endcode
+     * @see PhotoRigma::Classes::User::encode_user_rights() Пример реализации метода в классе.
+     *
+     */
+    public function encode_user_rights(array $rights): string;
+
+    /**
+     * @brief Обрабатывает поле `user_rights`, преобразуя его из строки JSON в массив прав.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен выполнять следующие действия:
+     *          - Проверять, существует ли поле `user_rights`. Если поле отсутствует, возвращается пустой массив.
+     *          - Проверять, что поле является строкой.
+     *          - Декодировать строку JSON в ассоциативный массив.
+     *          - Возвращать массив прав, готовый для добавления в свойство `$user`.
+     *
+     * @param string $user_rights Значение поля `user_rights`.
+     *                            Может быть строкой JSON, пустым значением или `null`.
+     *                            Если значение не является строкой или содержит невалидный JSON, выбрасывается исключение.
+     *
+     * @return array Ассоциативный массив прав пользователя.
+     *               Если поле `user_rights` отсутствует или содержит некорректные данные, возвращается пустой массив.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если поле `user_rights` не является строкой.
+     * @throws JsonException Выбрасывается, если поле `user_rights` содержит невалидный JSON.
+     *
+     * @note Метод возвращает пустой массив, если поле `user_rights` отсутствует или содержит некорректные данные.
+     * @warning Убедитесь, что поле `user_rights` содержит валидный JSON. Невалидные данные могут привести к исключению.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $rights = $object->process_user_rights('{"edit": 1, "delete": 0}');
+     * print_r($rights);
+     * @endcode
+     * @see PhotoRigma::Classes::User::process_user_rights() Пример реализации метода в классе.
+     *
+     */
+    public function process_user_rights(string $user_rights): array;
 }
 
 /**
@@ -364,7 +578,6 @@ interface User_Interface
 class User implements User_Interface
 {
     // Свойства
-    public const string DEFAULT_AVATAR = 'no_avatar.jpg'; ///< Константа для значения аватара по умолчанию
     private array $user = []; ///< Массив, содержащий все данные о текущем пользователе.
     private Database_Interface $db; ///< Объект для работы с базой данных.
     private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
@@ -448,7 +661,7 @@ class User implements User_Interface
     private function all_right_fields(): void
     {
         // === Загрузка прав первого пользователя ===
-        if (!$this->db->select('user_rights', TBL_USERS, ['limit' => 1])) {
+        if (!$this->db->select('`user_rights`', TBL_USERS, ['limit' => 1])) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить права первого пользователя"
             );
@@ -466,7 +679,7 @@ class User implements User_Interface
         }
 
         // === Загрузка прав первой группы ===
-        if (!$this->db->select('user_rights', TBL_GROUP, ['limit' => 1])) {
+        if (!$this->db->select('`user_rights`', TBL_GROUP, ['limit' => 1])) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить права первой группы"
             );
@@ -484,10 +697,12 @@ class User implements User_Interface
         }
 
         // Объединяем поля прав в один массив
-        $this->user_right_fields['all'] = array_unique(array_merge(
-            $this->user_right_fields['user'],
-            $this->user_right_fields['group']
-        ));
+        $this->user_right_fields['all'] = array_unique(
+            array_merge(
+                $this->user_right_fields['user'],
+                $this->user_right_fields['group']
+            )
+        );
     }
 
     /**
@@ -516,7 +731,9 @@ class User implements User_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $rights = $this->process_user_rights('{"edit": 1, "delete": 0}');
+     * $object = new \PhotoRigma\Classes\User();
+     * $rights = $object->process_user_rights('{"edit": 1, "delete": 0}');
+     * print_r($rights);
      * @endcode
      */
     public function process_user_rights(string $user_rights): array
@@ -730,9 +947,9 @@ class User implements User_Interface
 
         // Обновляем данные о последней активности пользователя
         if (!$this->db->update(
-            ['date_last_activ' => ':current_time'],
+            ['`date_last_activ`' => ':current_time'],
             TBL_USERS,
-            ['where' => '`id` = :user_id', 'params' => ['user_id' => $user_id, ':current_time' => date('Y-m-d H:i:s')]]
+            ['where' => '`id` = :user_id', 'params' => [':user_id' => $user_id, ':current_time' => date('Y-m-d H:i:s')]]
         )) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось обновить дату последней активности пользователя с ID: $user_id"
@@ -811,7 +1028,9 @@ class User implements User_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $json = $this->encode_user_rights(['edit' => 1, 'delete' => 0]);
+     * $object = new \PhotoRigma\Classes\User();
+     * $json = $object->encode_user_rights(['edit' => 1, 'delete' => 0]);
+     * echo "JSON-строка: $json";
      * @endcode
      */
     public function encode_user_rights(array $rights): string
@@ -1064,9 +1283,9 @@ class User implements User_Interface
 
         // === 2. Проверка уникальности login, email и real_name ===
         $this->db->select(
-            'COUNT(CASE WHEN `login` = :login THEN 1 END) as login_count,
-             COUNT(CASE WHEN `email` = :email THEN 1 END) as email_count,
-             COUNT(CASE WHEN `real_name` = :real_name THEN 1 END) as real_count',
+            'COUNT(CASE WHEN `login` = :login THEN 1 END) as `login_count`,
+             COUNT(CASE WHEN `email` = :email THEN 1 END) as `email_count`,
+             COUNT(CASE WHEN `real_name` = :real_name THEN 1 END) as `real_count`',
             TBL_USERS,
             [
                 'params' => [
@@ -1324,17 +1543,17 @@ class User implements User_Interface
         )) {
             $new_user_data['avatar'] = $this->edit_avatar($files_data, $max_size, $work);
             // Проверяем, нужно ли удалить старый аватар
-            if ($user_data['avatar'] !== static::DEFAULT_AVATAR && $user_data['avatar'] !== $new_user_data['avatar']) {
+            if ($user_data['avatar'] !== DEFAULT_AVATAR && $user_data['avatar'] !== $new_user_data['avatar']) {
                 $delete_old_avatar = true; // Устанавливаем флаг на удаление
             }
         } else {
             $old_avatar_path = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'];
-            if ($user_data['avatar'] !== static::DEFAULT_AVATAR && is_file($old_avatar_path) && is_writable(
+            if ($user_data['avatar'] !== DEFAULT_AVATAR && is_file($old_avatar_path) && is_writable(
                 $old_avatar_path
             )) {
                 unlink($old_avatar_path); // Безопасное удаление старого аватара
             }
-            $new_user_data['avatar'] = static::DEFAULT_AVATAR;
+            $new_user_data['avatar'] = DEFAULT_AVATAR;
         }
         // === Проверка языка и темы сайта ===
         $new_user_data['language'] = $work->check_input(
@@ -1353,7 +1572,7 @@ class User implements User_Interface
         $params = [];
         foreach ($new_user_data as $field => $value) {
             $placeholder = ":update_$field"; // Уникальный плейсхолдер для каждого поля
-            $update_data[$field] = $placeholder; // Формируем ассоциативный массив для update
+            $update_data["`$field`"] = $placeholder; // Формируем ассоциативный массив для update
             $params[$placeholder] = $value; // Добавляем значение в параметры
         }
 
@@ -1421,7 +1640,7 @@ class User implements User_Interface
      * $maxSize = 5 * 1024 * 1024; // 5 MB
      * $work = new \PhotoRigma\Classes\Work();
      * $newAvatar = $this->edit_avatar($_FILES, $maxSize, $work);
-     * if ($newAvatar !== static::DEFAULT_AVATAR) {
+     * if ($newAvatar !== DEFAULT_AVATAR) {
      *     echo "Новый аватар успешно загружен: {$newAvatar}";
      * } else {
      *     echo "Загрузка аватара не удалась.";
@@ -1474,16 +1693,84 @@ class User implements User_Interface
             return $file_avatar;
         }
 
-        return static::DEFAULT_AVATAR;
+        return DEFAULT_AVATAR;
     }
 
     /**
-     * Удаление пользователя.
+     * @brief Обновляет права пользователя или группу через Админку.
+     *
+     * @details Этот публичный метод выполняет следующие действия:
+     *          - Проверяет, изменилась ли группа пользователя. Если группа изменилась, устанавливает права группы.
+     *          - Если группа не изменилась, проверяет, отличаются ли текущие права пользователя в БД от указанных в `$user_rights`.
+     *            Если отличия есть, обновляет права пользователя в БД.
+     *          - Возвращает массив с итоговой группой пользователя и его правами.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
+     *
+     * @param int $user_id ID пользователя, чьи права обновляются.
+     *                     Должен быть положительным целым числом.
+     * @param int $group Новая группа пользователя.
+     *                   Должен быть положительным целым числом.
+     * @param string $user_rights JSON-строка с новыми правами пользователя.
+     *
+     * @return array Возвращает массив с двумя ключами:
+     *               - `new_group`: Новая группа пользователя (int).
+     *               - `user_rights`: Новые права пользователя (string, JSON-формат).
+     *
+     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
+     *                           Причина: Метод пока не имеет логики обработки данных.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $result = $object->update_user_rights(123, 2, '{"read": true, "write": false}');
+     * echo "Новая группа: {$result['new_group']}, Права: " . json_encode($result['user_rights']);
+     * @endcode
+     * @todo Реализовать (вынести из Админки) метод.
+     *
+     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
+     *
+     */
+    public function update_user_rights(int $user_id, int $group, string $user_rights): array
+    {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Обновление прав пользователя с ID: $user_id"
+        );
+    }
+
+    /**
+     * @brief Удаляет пользователя через Админку.
+     *
+     * @details Этот публичный метод выполняет следующие действия:
+     *          - Удаляет все данные пользователя, включая файл аватара.
+     *          - Относительно удаления категорий и фото методы и способы еще не определены.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
      *
      * @param int $user_id Идентификатор пользователя.
-     * @return void
+     *                     Должен быть положительным целым числом.
+     *
+     * @return bool Возвращает:
+     *              - `true`, если пользователь успешно удален.
+     *              - `false`, если удаление не выполнено.
+     *
+     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
+     *                           Причина: Метод пока не имеет логики обработки данных.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $result = $object->delete_user(123);
+     * if ($result) {
+     *     echo "Пользователь успешно удален!";
+     * } else {
+     *     echo "Не удалось удалить пользователя.";
+     * }
+     * @endcode
+     * @todo Продумать и реализовать метод.
+     *
+     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
+     *
      */
-    public function delete_user(int $user_id): void
+    public function delete_user(int $user_id): bool
     {
         throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление пользователя с ID: $user_id"
@@ -1491,12 +1778,37 @@ class User implements User_Interface
     }
 
     /**
-     * Добавление новой группы.
+     * @brief Добавляет новую группу в систему через Админку.
      *
-     * @param array $group_data Данные новой группы.
-     * @return void
+     * @details Этот публичный метод создает новую группу по команде из Админки.
+     *          - Принимает данные новой группы, включая её имя и права.
+     *          - В текущей реализации метод не реализован и выбрасывает исключение.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
+     *
+     * @param array $group_data Данные новой группы:
+     *                          - `name` (string): Имя группы.
+     *                          - `user_rights` (string): JSON-строка с правами группы.
+     *
+     * @return int Возвращает ID новой группы.
+     *
+     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
+     *                           Причина: Метод пока не имеет логики обработки данных.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $groupId = $object->add_new_group([
+     *     'name' => 'Moderators',
+     *     'user_rights' => '{"read": true, "write": true}'
+     * ]);
+     * echo "Новая группа создана с ID: $groupId";
+     * @endcode
+     * @todo Продумать и реализовать метод.
+     *
+     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
+     *
      */
-    public function add_new_group(array $group_data): void
+    public function add_new_group(array $group_data): int
     {
         throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Добавление новой группы"
@@ -1504,13 +1816,39 @@ class User implements User_Interface
     }
 
     /**
-     * Обновление данных группы.
+     * @brief Обновляет данные группы в системе через Админку.
+     *
+     * @details Этот публичный метод обновляет данные группы по её идентификатору.
+     *          - Принимает ID группы и новые данные, включая имя и права.
+     *          - В текущей реализации метод не реализован и выбрасывает исключение.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
      *
      * @param int $group_id Идентификатор группы.
-     * @param array $group_data Новые данные группы.
-     * @return void
+     *                      Должен быть положительным целым числом.
+     * @param array $group_data Новые данные группы:
+     *                          - `name` (string): Новое имя группы.
+     *                          - `user_rights` (string): JSON-строка с новыми правами группы.
+     *
+     * @return int Возвращает ID обновленной группы.
+     *
+     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
+     *                           Причина: Метод пока не имеет логики обработки данных.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $groupId = $object->update_group_data(123, [
+     *     'name' => 'Editors',
+     *     'user_rights' => '{"read": true, "write": false}'
+     * ]);
+     * echo "Группа обновлена с ID: $groupId";
+     * @endcode
+     * @todo Реализовать (перенести из Админки) метод.
+     *
+     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
+     *
      */
-    public function update_group_data(int $group_id, array $group_data): void
+    public function update_group_data(int $group_id, array $group_data): int
     {
         throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Обновление данных группы с ID: $group_id"
@@ -1518,12 +1856,40 @@ class User implements User_Interface
     }
 
     /**
-     * Удаление группы.
+     * @brief Удаляет группу из системы через Админку.
+     *
+     * @details Этот публичный метод выполняет удаление группы по её идентификатору.
+     *          - Для групп с ID 0 (Гость), 1 (Пользователь), 2 (Модератор) и 3 (Администратор) удаление запрещено.
+     *          - В текущей реализации метод не реализован и выбрасывает исключение.
+     *          Метод предназначен для прямого использования извне (например, через Админку).
      *
      * @param int $group_id Идентификатор группы.
-     * @return void
+     *                      Должен быть положительным целым числом.
+     *                      Удаление запрещено для групп с ID: 0 (Гость), 1 (Пользователь), 2 (Модератор), 3 (Администратор).
+     *
+     * @return bool Возвращает:
+     *              - `true`, если группа успешно удалена.
+     *              - `false`, если удаление не выполнено (например, для запрещенных ID).
+     *
+     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
+     *                           Причина: Метод пока не имеет логики обработки данных.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\User();
+     * $result = $object->delete_group(123);
+     * if ($result) {
+     *     echo "Группа успешно удалена.";
+     * } else {
+     *     echo "Удаление группы запрещено или произошла ошибка.";
+     * }
+     * @endcode
+     * @todo Реализовать метод.
+     *
+     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
+     *
      */
-    public function delete_group(int $group_id): void
+    public function delete_group(int $group_id): bool
     {
         throw new RuntimeException(
             __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление группы с ID: $group_id"
@@ -1590,10 +1956,10 @@ class User implements User_Interface
 
         // === 2. Поиск пользователя в базе данных по логину ===
         $this->db->select(
-            ['id', 'login', 'password'], // Список полей для выборки
+            ['`id`', '`login`', '`password`'], // Список полей для выборки
             TBL_USERS, // Имя таблицы
             [
-                'where' => 'login = :login', // Условие WHERE
+                'where' => '`login` = :login', // Условие WHERE
                 'params' => [':login' => $post['login']] // Параметры для prepared statements
             ]
         );

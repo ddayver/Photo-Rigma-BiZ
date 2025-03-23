@@ -40,6 +40,7 @@ var namespacePhotoRigma =
       [ "$cookie_domain", "db/d02/namespacePhotoRigma_1_1Include.html#abec6ae06ad5526172520fb1ccb7c6806", null ],
       [ "$cur_cookie", "db/d02/namespacePhotoRigma_1_1Include.html#ab408c4099149d8137d6693a245d2c34e", null ],
       [ "COMPRESSION_LEVEL", "db/d02/namespacePhotoRigma_1_1Include.html#a897408179e814597df3eb0c708611873", null ],
+      [ "DEFAULT_AVATAR", "db/d02/namespacePhotoRigma_1_1Include.html#a834e1bd7ce0d2d35485d68dff3f8c594", null ],
       [ "DEFAULT_GROUP", "db/d02/namespacePhotoRigma_1_1Include.html#a2790a51795c400a411236e4651f1b3f1", null ],
       [ "DIE_IF_ERROR", "db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c", null ],
       [ "LOCKOUT_TIME", "db/d02/namespacePhotoRigma_1_1Include.html#a1c726f497331dad6f276df319b20b076", null ],

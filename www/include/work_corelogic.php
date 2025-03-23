@@ -886,13 +886,13 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Получение данных о фотографиях
         $select = [
-            'COUNT(DISTINCT p.id) AS num_photo',
-            'p1.id AS latest_photo_id',
-            'p1.name AS latest_photo_name',
-            'p1.description AS latest_photo_description',
-            'p2.id AS top_rated_photo_id',
-            'p2.name AS top_rated_photo_name',
-            'p2.description AS top_rated_photo_description',
+            'COUNT(DISTINCT p.`id`) AS `num_photo`',
+            'p1.`id` AS `latest_photo_id`',
+            'p1.`name` AS `latest_photo_name`',
+            'p1.`description` AS `latest_photo_description`',
+            'p2.`id` AS `top_rated_photo_id`',
+            'p2.`name` AS `top_rated_photo_name`',
+            'p2.`description` AS `top_rated_photo_description`',
         ];
 
         $from_tbl = TBL_PHOTO . ' p';
@@ -900,22 +900,22 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             [
                 'table' => TBL_PHOTO . ' p1',
                 'type' => 'LEFT',
-                'on' => 'p.category = p1.category AND p1.date_upload = (SELECT MAX(date_upload) FROM ' . TBL_PHOTO . ' WHERE category = p.category)',
+                'on' => 'p.`category` = p1.`category` AND p1.`date_upload` = (SELECT MAX(`date_upload`) FROM ' . TBL_PHOTO . ' WHERE `category` = p.`category`)',
             ],
             [
                 'table' => TBL_PHOTO . ' p2',
                 'type' => 'LEFT',
-                'on' => 'p.category = p2.category AND p2.rate_user = (SELECT MAX(rate_user) FROM ' . TBL_PHOTO . ' WHERE category = p.category AND rate_user != 0)',
+                'on' => 'p.`category` = p2.`category` AND p2.`rate_user` = (SELECT MAX(`rate_user`) FROM ' . TBL_PHOTO . ' WHERE `category` = p.`category` AND `rate_user` != 0)',
             ],
         ];
 
         $options = [
-            'where' => ['p.category = :category'],
+            'where' => ['p.`category` = :category'],
             'params' => [':category' => $category_data['id']],
         ];
 
         if ($user_flag === 1) {
-            $options['where'] = 'p.category = :category AND p.user_upload = :user_upload';
+            $options['where'] = 'p.`category` = :category AND p.`user_upload` = :user_upload';
             $options['params'][':user_upload'] = $cat_id;
         }
 
@@ -1146,17 +1146,17 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
         // Получение данных об изображении и категории через JOIN
         $this->db->join(
-            ['p.*', 'c.folder'], // Список полей для выборки
+            ['p.*', 'c.`folder`'], // Список полей для выборки
             TBL_PHOTO . ' p', // Основная таблица
             [
                 [
                     'table' => TBL_CATEGORY . ' c', // Таблица для JOIN
                     'type' => 'LEFT', // Тип JOIN
-                    'on' => 'p.category = c.id' // Условие JOIN
+                    'on' => 'p.`category` = c.`id`' // Условие JOIN
                 ]
             ],
             [
-                'where' => 'p.id = :photo_id', // Условие WHERE
+                'where' => 'p.`id` = :photo_id', // Условие WHERE
                 'params' => [':photo_id' => $photo_id] // Параметры для prepared statements
             ]
         );
@@ -1332,7 +1332,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'last' => [
                 // Формируем запрос для 'last'
                 'table' => TBL_NEWS,
-                'order_by' => ['data_last_edit' => 'DESC'],
+                'order' => '`data_last_edit` DESC',
                 'limit' => $news_id_or_limit,
             ],
         };
@@ -1343,17 +1343,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             array_filter([
                 'where' => $query_params['where'] ?? null,
                 'params' => $query_params['params'] ?? [],
-                'order_by' => $query_params['order_by'] ?? null,
+                'order' => $query_params['order'] ?? null,
                 'limit' => $query_params['limit'] ?? null,
             ])
         );
         // Получение результатов
         $news_results = $this->db->res_arr();
-        //        if (!$news_results) {
-        //            throw new \RuntimeException(
-        //                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные из базы данных | Тип запроса: '$act'"
-        //            );
-        //        }
         // Возврат результата
         return $news_results ?: [];
     }
@@ -1925,7 +1920,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Получение данных категории
         $this->db->select(
-            ['*'],
+            '*',
             TBL_CATEGORY,
             [
                 'where' => '`id` = :category_id',
@@ -1965,7 +1960,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Получение данных пользователя
         $this->db->select(
-            ['`real_name`'],
+            '`real_name`',
             TBL_USERS,
             [
                 'where' => '`id` = :user_id',

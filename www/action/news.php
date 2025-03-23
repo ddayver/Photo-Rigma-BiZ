@@ -204,7 +204,7 @@ if ($subact === 'save') {
             $params = [];
             foreach ($query_news as $field => $value) {
                 $placeholder = ":update_$field"; // Уникальный плейсхолдер для каждого поля
-                $update_data[$field] = $placeholder; // Формируем ассоциативный массив для update
+                $update_data["`$field`"] = $placeholder; // Формируем ассоциативный массив для update
                 $params[$placeholder] = $value; // Добавляем значение в параметры
             }
 
@@ -436,7 +436,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             'DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`',
             TBL_NEWS,
             [
-                'order' => 'data_last_edit ASC'
+                'order' => '`data_last_edit` ASC'
             ]
         );
         $years_list = $db->res_arr();
@@ -495,7 +495,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 [
                     'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
                     'params' => [':year' => $year],
-                    'order' => 'data_last_edit ASC'
+                    'order' => '`data_last_edit` ASC'
                 ]
             );
             $months_list = $db->res_arr();
@@ -547,7 +547,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 [
                     'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
                     'params' => [':year' => $year, ':month' => $month],
-                    'order' => 'data_last_edit ASC'
+                    'order' => '`data_last_edit` ASC'
                 ]
             );
             $news_list = $db->res_arr();

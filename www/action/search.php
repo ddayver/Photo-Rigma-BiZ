@@ -139,20 +139,20 @@ if (!in_array(true, $search, true)) {
     $check['photo'] = CHECKED_VALUE;
 }
 
-// Проверяем CSRF-токен
-if (empty($_POST['csrf_token']) || !hash_equals(
-    $user->session['csrf_token'],
-    $_POST['csrf_token']
-)) {
-    throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
-    );
-}
-$user->unset_property_key('session', 'csrf_token');
-
 // Обработка текста запроса
 if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true])) {
     $raw_search_text = trim($_POST['search_text']); // Убираем лишние пробелы
+
+    // Проверяем CSRF-токен
+    if (empty($_POST['csrf_token']) || !hash_equals(
+        $user->session['csrf_token'],
+        $_POST['csrf_token']
+    )) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+        );
+    }
+    $user->unset_property_key('session', 'csrf_token');
 
     if ($raw_search_text === '*') {
         $search_text = '%'; // Поиск всех строк

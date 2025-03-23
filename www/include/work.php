@@ -165,7 +165,7 @@ class Work
         $this->session = &$session;
         $this->config = $config;
         // Загружаем конфигурацию из базы данных
-        $db->select(['*'], TBL_CONFIG, ['params' => []]);
+        $db->select('*', TBL_CONFIG, ['params' => []]);
         $result = $db->res_arr();
         if (is_array($result)) {
             $this->config = array_merge($this->config, array_column($result, 'value', 'name'));
@@ -893,65 +893,6 @@ class Work
         $this->core_logic->set_user($user);
     }
 
-    /**
-     * @brief Метод-редирект для проверки данных из POST-запроса.
-     *
-     * @details Этот метод является заглушкой и вызывает метод check_input() из дочернего класса Work_Security.
-     *          Метод проверяет данные из массива $_POST на соответствие указанным условиям:
-     *          - Существование поля (параметр $isset).
-     *          - Пустота поля (параметр $empty).
-     *          - Соответствие регулярному выражению (параметр $regexp).
-     *          - Ненулевое значение (параметр $not_zero).
-     *          Этот метод устарел. Рекомендуется использовать Work::check_input().
-     *
-     * @callgraph
-     *
-     * @param string $field Поле для проверки.
-     *                      Указывается имя ключа в массиве $_POST, которое необходимо проверить.
-     * @param bool $isset Флаг, указывающий, что поле должно существовать в массиве $_POST.
-     *                    По умолчанию false.
-     * @param bool $empty Флаг, указывающий, что поле не должно быть пустым.
-     *                    По умолчанию false.
-     * @param string|false $regexp Регулярное выражение для проверки поля или false, если проверка не требуется.
-     *                              По умолчанию false.
-     * @param bool $not_zero Флаг, указывающий, что значение поля не должно быть нулём.
-     *                       По умолчанию false.
-     *
-     * @return bool True, если данные прошли проверку, иначе False.
-     *
-     * @throws Exception
-     * @deprecated Этот метод устарел. Используйте Work::check_input() вместо него.
-     *
-     * Пример использования:
-     * @code
-     * // Пример вызова метода через родительский класс Work
-     * $work = new \PhotoRigma\Classes\Work();
-     * $result = $work->check_post('username', true, true, '/^[a-z0-9]+$/i', false);
-     * if ($result) {
-     *     echo "Данные прошли проверку.";
-     * } else {
-     *     echo "Данные не прошли проверку.";
-     * }
-     * @endcode
-     * @see PhotoRigma::Classes::Work_Security::check_input()
-     *      Метод, который проверяет входные данные.
-     *
-     */
-    public function check_post(
-        string $field,
-        bool $isset = false,
-        bool $empty = false,
-        string|false $regexp = false,
-        bool $not_zero = false
-    ): bool {
-        return $this->security->check_input('_POST', $field, [
-            'isset' => $isset,
-            'empty' => $empty,
-            'regexp' => $regexp,
-            'not_zero' => $not_zero,
-        ]);
-    }
-
     // Методы из под-класса Work_CoreLogic.
 
     /**
@@ -1010,124 +951,6 @@ class Work
     public function check_input(string $source_name, string $field, array $options = []): bool
     {
         return $this->security->check_input($source_name, $field, $options);
-    }
-
-    /**
-     * @brief Метод-редирект для проверки данных из GET-запроса.
-     *
-     * @details Этот метод является заглушкой и вызывает метод check_input() из дочернего класса Work_Security.
-     *          Метод проверяет данные из массива $_GET на соответствие указанным условиям:
-     *          - Существование поля (параметр $isset).
-     *          - Пустота поля (параметр $empty).
-     *          - Соответствие регулярному выражению (параметр $regexp).
-     *          - Ненулевое значение (параметр $not_zero).
-     *          Этот метод устарел. Рекомендуется использовать Work::check_input().
-     *
-     * @callgraph
-     *
-     * @param string $field Поле для проверки.
-     *                      Указывается имя ключа в массиве $_GET, которое необходимо проверить.
-     * @param bool $isset Флаг, указывающий, что поле должно существовать в массиве $_GET.
-     *                    По умолчанию false.
-     * @param bool $empty Флаг, указывающий, что поле не должно быть пустым.
-     *                    По умолчанию false.
-     * @param string|false $regexp Регулярное выражение для проверки поля или false, если проверка не требуется.
-     *                              По умолчанию false.
-     * @param bool $not_zero Флаг, указывающий, что значение поля не должно быть нулём.
-     *                       По умолчанию false.
-     *
-     * @return bool True, если данные прошли проверку, иначе False.
-     *
-     * @throws Exception
-     * @deprecated Этот метод устарел. Используйте Work::check_input() вместо него.
-     *
-     * Пример использования:
-     * @code
-     * // Пример вызова метода через родительский класс Work
-     * $work = new \PhotoRigma\Classes\Work();
-     * $result = $work->check_get('id', true, false, '/^\d+$/', true);
-     * if ($result) {
-     *     echo "Данные прошли проверку.";
-     * } else {
-     *     echo "Данные не прошли проверку.";
-     * }
-     * @endcode
-     * @see PhotoRigma::Classes::Work_Security::check_input()
-     *      Метод, который проверяет входные данные.
-     *
-     */
-    public function check_get(
-        string $field,
-        bool $isset = false,
-        bool $empty = false,
-        string|false $regexp = false,
-        bool $not_zero = false
-    ): bool {
-        return $this->security->check_input('_GET', $field, [
-            'isset' => $isset,
-            'empty' => $empty,
-            'regexp' => $regexp,
-            'not_zero' => $not_zero,
-        ]);
-    }
-
-    /**
-     * @brief Метод-редирект для проверки данных из сессии.
-     *
-     * @details Этот метод является заглушкой и вызывает метод check_input() из дочернего класса Work_Security.
-     *          Метод проверяет данные из массива $_SESSION на соответствие указанным условиям:
-     *          - Существование поля (параметр $isset).
-     *          - Пустота поля (параметр $empty).
-     *          - Соответствие регулярному выражению (параметр $regexp).
-     *          - Ненулевое значение (параметр $not_zero).
-     *          Этот метод устарел. Рекомендуется использовать Work::check_input().
-     *
-     * @callgraph
-     *
-     * @param string $field Поле для проверки.
-     *                      Указывается имя ключа в массиве $_SESSION, которое необходимо проверить.
-     * @param bool $isset Флаг, указывающий, что поле должно существовать в массиве $_SESSION.
-     *                    По умолчанию false.
-     * @param bool $empty Флаг, указывающий, что поле не должно быть пустым.
-     *                    По умолчанию false.
-     * @param string|false $regexp Регулярное выражение для проверки поля или false, если проверка не требуется.
-     *                              По умолчанию false.
-     * @param bool $not_zero Флаг, указывающий, что значение поля не должно быть нулём.
-     *                       По умолчанию false.
-     *
-     * @return bool True, если данные прошли проверку, иначе False.
-     *
-     * @throws Exception
-     * @deprecated Этот метод устарел. Используйте Work::check_input() вместо него.
-     *
-     * Пример использования:
-     * @code
-     * // Пример вызова метода через родительский класс Work
-     * $work = new \PhotoRigma\Classes\Work();
-     * $result = $work->check_session('user_id', true, false, '/^\d+$/', true);
-     * if ($result) {
-     *     echo "Данные прошли проверку.";
-     * } else {
-     *     echo "Данные не прошли проверку.";
-     * }
-     * @endcode
-     * @see PhotoRigma::Classes::Work_Security::check_input()
-     *      Метод, который проверяет входные данные.
-     *
-     */
-    public function check_session(
-        string $field,
-        bool $isset = false,
-        bool $empty = false,
-        string|false $regexp = false,
-        bool $not_zero = false
-    ): bool {
-        return $this->security->check_input('_SESSION', $field, [
-            'isset' => $isset,
-            'empty' => $empty,
-            'regexp' => $regexp,
-            'not_zero' => $not_zero,
-        ]);
     }
 
     /**

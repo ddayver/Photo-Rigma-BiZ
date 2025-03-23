@@ -196,7 +196,6 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, и выполняет его. </p>
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет типы входных данных: <code>$from_tbl</code> (строка), <code>$options</code> (массив).</li>
-<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
 <li>Проверяет наличие обязательного условия <code>where</code> в массиве <code>$options</code>. Если условие отсутствует, выбрасывается исключение для предотвращения случайного удаления всех данных.</li>
 <li>Проверяет и удаляет недопустимые ключи из массива <code>$options</code>:<ul>
 <li>Ключ <code>group</code> не поддерживается в запросах DELETE и удаляется с записью в лог.</li>
@@ -209,7 +208,7 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой необходимо удалить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой необходимо удалить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
 <li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]). Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.</li>
 <li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC"). Может использоваться только вместе с <code>limit</code>. Если указан только один из этих ключей, оба игнорируются.</li>
@@ -361,17 +360,15 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет типы входных данных: <code>$insert</code> (ассоциативный массив), <code>$to_tbl</code> (строка), <code>$type</code> (строка), <code>$options</code> (массив).</li>
 <li>Проверяет, что массив <code>$insert</code> не пустой. Если массив пустой, выбрасывается исключение.</li>
-<li>Экранирует имя таблицы (<code>$to_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
 <li>Нормализует параметр <code>$type</code>, приводя его к нижнему регистру, и проверяет на допустимые значения: &lsquo;'ignore&rsquo;<code>,</code>'replace'<code>,</code>'into'<code>,</code>''<code>. Если указан недопустимый тип, выбрасывается исключение.</code></li>
 <li><code>Определяет тип запроса на основе параметра</code>$type<code>: -</code>'ignore'<code>: Формирует запрос типа "INSERT IGNORE INTO". -</code>'replace'<code>: Формирует запрос типа "REPLACE INTO". -</code>'into'<code>или пустая строка (</code>''<code>): Формирует запрос типа "INSERT INTO" (по умолчанию).</code></li>
-<li><code>Подготавливает данные для запроса с использованием метода</code>prepare_insert_data<code>, который преобразует массив</code>$insert<code>в строки формата "поле" и "плейсхолдер" для подготовленного выражения. Каждое имя поля экранируется методом</code>sanitize_expression<code>и оборачивается в обратные кавычки (\</code> `).</li>
-<li>Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.</li>
-<li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
+<li><code>Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.</code></li>
+<li><code>Выполняет сформированный запрос через метод</code>execute_query`.</li>
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">array</td><td class="paramname">$insert</td><td>Ассоциативный массив данных для вставки в формате: 'имя_поля' =&gt; 'значение'. Каждое имя поля экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). Значения преобразуются в плейсхолдеры методом <code>prepare_insert_data</code> для подготовленного выражения. Пример: ['name' =&gt; 'John Doe', 'email' =&gt; '<a href="#" onclick="location.href='mai'+'lto:'+'joh'+'n@'+'exa'+'mp'+'le.'+'co'+'m'; return false;">john@<span class="obfuscator">.nosp@m.</span>exam<span class="obfuscator">.nosp@m.</span>ple.c<span class="obfuscator">.nosp@m.</span>om</a>']. Если передан пустой массив, выбрасывается исключение. </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$to_tbl</td><td>Имя таблицы, в которую необходимо вставить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$insert</td><td>Ассоциативный массив данных для вставки в формате: 'имя_поля' =&gt; 'значение'. Если передан пустой массив, выбрасывается исключение. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$to_tbl</td><td>Имя таблицы, в которую необходимо вставить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые значения:<ul>
 <li>'ignore': Формирует запрос типа "INSERT IGNORE INTO".</li>
 <li>'replace': Формирует запрос типа "REPLACE INTO".</li>
@@ -439,12 +436,10 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, и выполняет его. </p>
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет типы входных данных: <code>$select</code> (строка или массив), <code>$from_tbl</code> (строка), <code>$join</code> (массив), <code>$options</code> (массив).</li>
-<li>Обрабатывает список полей для выборки (<code>$select</code>), преобразуя его в строку с экранированными именами полей. Каждое имя поля оборачивается в обратные кавычки (` `).</li>
-<li>Экранирует имя основной таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Обрабатывает список полей для выборки (<code>$select</code>), преобразуя его в строку с именами полей.</li>
 <li>Обрабатывает массив JOIN-операций (<code>$join</code>):<ul>
 <li>Для каждой операции проверяется наличие имени таблицы (<code>table</code>) и условия (<code>on</code>).</li>
 <li>Если тип JOIN не указан, используется <code>INNER</code> по умолчанию.</li>
-<li>Условия JOIN формируются с использованием метода <code>sanitize_expression</code>.</li>
 </ul>
 </li>
 <li>Формирует базовый SQL-запрос с использованием JOIN-операций.</li>
@@ -453,8 +448,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Каждое поле экранируется методом <code>sanitize_expression</code>. Пример: "id", ["id", "name"]. </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя основной таблицы, из которой начинается выборка. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя основной таблицы, из которой начинается выборка. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$join</td><td>Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие ключи:<ul>
 <li>table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только допустимые имена таблиц.</li>
 <li>type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не указан, используется INNER по умолчанию.</li>
@@ -622,16 +617,15 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, и выполняет его. </p>
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет типы входных данных: <code>$select</code> (строка или массив), <code>$from_tbl</code> (строка), <code>$options</code> (массив).</li>
-<li>Обрабатывает список полей для выборки (<code>$select</code>), преобразуя его в строку с экранированными именами полей. Каждое имя поля оборачивается в обратные кавычки (` `).</li>
-<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы также оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
+<li>Обрабатывает список полей для выборки (<code>$select</code>), преобразуя его в строку с именами полей.</li>
 <li>Формирует базовый SQL-запрос.</li>
 <li>Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Каждое поле экранируется методом <code>sanitize_expression</code>. Пример: "id", ["id", "name"]. </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой выбираются данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code>. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой выбираются данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
 <li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
 <li>group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").</li>
@@ -686,13 +680,12 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет. </p>
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет тип входных данных: <code>$from_tbl</code> должен быть строкой. Если передан неверный тип, выбрасывается исключение.</li>
-<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
 <li>Формирует базовый SQL-запрос TRUNCATE TABLE.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, которую необходимо очистить. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `).</td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, которую необходимо очистить. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.</td></tr>
   </table>
   </dd>
 </dl>
@@ -741,18 +734,16 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <p>Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, и выполняет его. </p>
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет типы входных данных: <code>$update</code> (ассоциативный массив), <code>$from_tbl</code> (строка), <code>$options</code> (массив).</li>
-<li>Экранирует имя таблицы (<code>$from_tbl</code>) для защиты от SQL-инъекций. Имя таблицы оборачивается в обратные кавычки (` `) методом <code>sanitize_expression</code>.</li>
 <li>Проверяет наличие обязательного условия <code>where</code> в массиве <code>$options</code>. Если условие отсутствует, выбрасывается исключение для предотвращения случайного обновления всех данных.</li>
 <li>Удаляет недопустимый ключ <code>group</code> из массива <code>$options</code> с записью в лог, так как GROUP BY не поддерживается в запросах UPDATE.</li>
-<li>Преобразует массив <code>$update</code> в строку формата "поле = значение" с использованием метода <code>prepare_insert_data</code>, который заменяет значения на плейсхолдеры для подготовленного выражения.</li>
 <li>Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.</li>
 <li>Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре <code>$options</code>.</li>
 <li>Выполняет сформированный запрос через метод <code>execute_query</code>.</li>
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">array</td><td class="paramname">$update</td><td>Ассоциативный массив данных для обновления в формате: 'имя_поля' =&gt; 'значение'. Каждое имя поля экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). Значения преобразуются в плейсхолдеры методом <code>prepare_insert_data</code> для подготовленного выражения. Пример: ['name' =&gt; 'John Doe', 'status' =&gt; 1]. </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, в которой необходимо обновить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. Имя таблицы экранируется методом <code>sanitize_expression</code> и оборачивается в обратные кавычки (` `). </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$update</td><td>Ассоциативный массив данных для обновления в формате: 'имя_поля' =&gt; 'значение'. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, в которой необходимо обновить данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
 <li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]). Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.</li>
 <li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>

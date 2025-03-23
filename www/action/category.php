@@ -141,7 +141,7 @@ if ($cat === 'user' || $cat === 0) {
 
             // Получение данных категории с id = 0 (зарезервирована для "Пользовательских альбомов")
             $db->select(
-                ['name', 'description'],
+                ['`name`', '`description`'],
                 TBL_CATEGORY,
                 [
                     'where' => '`id` = 0'
@@ -192,29 +192,29 @@ if ($cat === 'user' || $cat === 0) {
         // Получение фотографий для категории = 0 и user_upload = $cat_id (используем JOIN)
         $db->join(
             [
-                TBL_PHOTO . '.id',
-                TBL_PHOTO . '.file',
-                TBL_PHOTO . '.name',
-                TBL_PHOTO . '.description',
-                TBL_USERS . '.real_name'
+                TBL_PHOTO . '.`id`',
+                TBL_PHOTO . '.`file`',
+                TBL_PHOTO . '.`name`',
+                TBL_PHOTO . '.`description`',
+                TBL_USERS . '.`real_name`'
             ], // Поля для выборки
             TBL_PHOTO, // Основная таблица
             [
                 [
                     'type' => 'LEFT', // Тип JOIN
                     'table' => TBL_USERS, // Таблица для JOIN
-                    'on' => TBL_PHOTO . '.user_upload = ' . TBL_USERS . '.id' // Условие JOIN
+                    'on' => TBL_PHOTO . '.`user_upload` = ' . TBL_USERS . '.`id`' // Условие JOIN
                 ]
             ],
             [
-                'where' => TBL_PHOTO . '.category = :category AND ' . TBL_PHOTO . '.user_upload = :user_upload',
+                'where' => TBL_PHOTO . '.`category` = :category AND ' . TBL_PHOTO . '.`user_upload` = :user_upload',
                 // Условие WHERE
                 'params' => [
                     ':category' => 0,
                     ':user_upload' => $cat_id
                 ],
                 // Параметры для prepared statements
-                'order_by' => TBL_PHOTO . '.date_upload DESC'
+                'order_by' => TBL_PHOTO . '.`date_upload` DESC'
                 // Сортировка ORDER BY
             ]
         );
@@ -251,7 +251,7 @@ if ($cat === 'user' || $cat === 0) {
 
             // Получение данных категории с id = 0 (зарезервирована для "Пользовательских альбомов")
             $db->select(
-                ['name', 'description'],
+                ['`name`', '`description`'],
                 TBL_CATEGORY,
                 [
                     'where' => '`id` = 0'
@@ -331,7 +331,7 @@ if ($cat === 'user' || $cat === 0) {
             // Обновление данных категории через подготовленный запрос.
             // Используем плейсхолдеры для защиты от SQL-инъекций.
             $db->update(
-                ['name' => ':name', 'description' => ':desc'],
+                ['`name`' => ':name', '`description`' => ':desc'],
                 TBL_CATEGORY,
                 [
                     'where' => '`id` = :id',
@@ -426,7 +426,7 @@ if ($cat === 'user' || $cat === 0) {
 
         if ($category_data) {
             // Удаление всех фотографий, связанных с категорией
-            $db->select('id', TBL_PHOTO, [
+            $db->select('`id`', TBL_PHOTO, [
                 'where' => '`category` = :category',
                 'params' => [':category' => $cat]
             ]);
@@ -469,9 +469,9 @@ if ($cat === 'user' || $cat === 0) {
         exit;
     } else {
         // Получение фотографий категории
-        $db->select('id', TBL_PHOTO, [
+        $db->select('`id`', TBL_PHOTO, [
             'where' => '`category` = :category',
-            'order_by' => 'date_upload DESC',
+            'order' => '`date_upload` DESC',
             'params' => [':category' => $cat]
         ]);
         $photos = $db->res_arr();
@@ -515,7 +515,7 @@ if ($cat === 'user' || $cat === 0) {
             }
 
             // Получение данных категории
-            $db->select(['name', 'description'], TBL_CATEGORY, [
+            $db->select(['`name`', '`description`'], TBL_CATEGORY, [
                 'where' => '`id` = :id',
                 'params' => [':id' => $cat]
             ]);
@@ -563,7 +563,7 @@ if ($cat === 'user' || $cat === 0) {
             }
         } else {
             // Если фотографий нет, получаем данные категории
-            $db->select(['name', 'description'], TBL_CATEGORY, [
+            $db->select(['`name`', '`description`'], TBL_CATEGORY, [
                 'where' => '`id` = :id',
                 'params' => [':id' => $cat]
             ]);
@@ -722,9 +722,9 @@ if ($cat === 'user' || $cat === 0) {
 
     // Добавляем категорию в базу данных
     $db->insert([
-        'folder' => ':folder',
-        'name' => ':name',
-        'description' => ':desc'
+        '`folder`' => ':folder',
+        '`name`' => ':name',
+        '`description`' => ':desc'
     ], TBL_CATEGORY, '', [
         'params' => [
             ':folder' => $directory_name,
@@ -745,7 +745,7 @@ if ($cat === 'user' || $cat === 0) {
     exit;
 } else {
     // Получаем список категорий
-    $db->select('id', TBL_CATEGORY, [
+    $db->select('`id`', TBL_CATEGORY, [
         'where' => '`id` != :id',
         'params' => [':id' => 0]
     ]);

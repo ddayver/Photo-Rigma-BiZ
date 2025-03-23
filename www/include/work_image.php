@@ -423,9 +423,9 @@ interface Work_Image_Interface
 class Work_Image implements Work_Image_Interface
 {
     // Свойства:
-    private const int MAX_IMAGE_WIDTH = 5000; ///< Конфигурация приложения.
-    private const int MAX_IMAGE_HEIGHT = 5000; // Максимальная ширина изображения (в пикселях)
-    private array $config; // Максимальная высота изображения (в пикселях)
+    private const int MAX_IMAGE_WIDTH = 5000; ///< Максимальная ширина изображения (в пикселях)
+    private const int MAX_IMAGE_HEIGHT = 5000; ///< Максимальная высота изображения (в пикселях)
+    private array $config; ///< Конфигурация приложения.
 
     /**
      * @brief Конструктор класса.

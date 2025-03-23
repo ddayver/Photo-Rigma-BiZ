@@ -4,6 +4,5 @@ var searchData=
   ['news_20variables_1',['News Variables',['../df/dc9/group__LanguageEnglishNews.html',1,'']]],
   ['news_2ephp_2',['news.php',['../d4/dad/news_8php.html',1,'']]],
   ['no_5fphoto_3',['no_photo',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work\no_photo()'],['../d2/daa/interfacePhotoRigma_1_1Classes_1_1Work__Image__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work_Image_Interface\no_photo()'],['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#adfcd1cb7963a860013ca9ca1898f54f1',1,'PhotoRigma\Classes\Work_Image\no_photo()']]],
-  ['no_5fuser_5favatar_4',['NO_USER_AVATAR',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a20f25a327b50ff8b674931e5ab257b22',1,'PhotoRigma::Classes::Work_Template']]],
-  ['node_20module_5',['Node Module',['..//home/victoria/Photo-Rigma-BiZ/www/badword/README.md#autotoc_md3',1,'']]]
+  ['node_20module_4',['Node Module',['..//home/victoria/Photo-Rigma-BiZ/www/badword/README.md#autotoc_md3',1,'']]]
 ];

@@ -21,9 +21,9 @@ var classPhotoRigma_1_1Classes_1_1User =
     [ "unset_property_key", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acd25145f48c04385645c77ce03ebd9bc", null ],
     [ "update_group_data", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac5e8ffbb47053c27a7df5b5e7563975d", null ],
     [ "update_user_data", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc", null ],
+    [ "update_user_rights", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aced8c94b564776574984f4caf97b3614", null ],
     [ "$db", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a18e3eac65d39ced5231d9b3e3630ba75", null ],
     [ "$session", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aa4aebf7c7377e1c2823e0520d16de530", null ],
     [ "$user", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a54301e4038f95a7b17247e0d674ff3d6", null ],
-    [ "$user_right_fields", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f", null ],
-    [ "DEFAULT_AVATAR", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6d02df1a460a0134614e7e18358f6e36", null ]
+    [ "$user_right_fields", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af31e6e13ab6e21a8020e1573c9899c5f", null ]
 ];

@@ -178,8 +178,8 @@ if ($subact === 'logout') {
 
     // Обновление данных пользователя через плейсхолдеры
     $db->update([
-        'date_last_activ' => null,
-        'date_last_logout' => date('Y-m-d H:i:s')
+        '`date_last_activ`' => null,
+        '`date_last_logout`' => date('Y-m-d H:i:s')
     ], TBL_USERS, [
         'where' => '`id` = :user_id',
         'params' => [':user_id' => $user->session['login_id']]
@@ -378,10 +378,10 @@ if ($subact === 'regist') {
     if ($uid === $user->session['login_id'] || $user->user['admin']) {
         // Получение данных пользователя
         $db->select(
-            ['*'],
+            '*',
             TBL_USERS,
             [
-                'where' => 'id = :id',
+                'where' => '`id` = :id',
                 'params' => [':id' => $uid]
             ]
         );
@@ -399,10 +399,10 @@ if ($subact === 'regist') {
         $confirm_password = ($uid === $user->session['login_id']);
         // Получение данных группы
         $db->select(
-            ['*'],
+            '*',
             TBL_GROUP,
             [
-                'where' => 'id = :id',
+                'where' => '`id` = :id',
                 'params' => [':id' => $user_data['group_id']]
             ]
         );
@@ -413,10 +413,10 @@ if ($subact === 'regist') {
             );
             $user_data['group_id'] = 0; // Устанавливаем группу по умолчанию (гости)
             $db->select(
-                ['*'],
+                '*',
                 TBL_GROUP,
                 [
-                    'where' => 'id = :id',
+                    'where' => '`id` = :id',
                     'params' => [':id' => $user_data['group_id']]
                 ]
             );
@@ -505,10 +505,10 @@ if ($subact === 'regist') {
     } else {
         // Получение данных пользователя для просмотра
         $db->select(
-            ['*'],
+            '*',
             TBL_USERS,
             [
-                'where' => 'id = :id',
+                'where' => '`id` = :id',
                 'params' => [':id' => $uid]
             ]
         );
@@ -520,10 +520,10 @@ if ($subact === 'regist') {
         $name_block = $work->lang['profile']['profile'] . ' ' . Work::clean_field($user_data['real_name']);
         // Получение данных группы
         $db->select(
-            ['*'],
+            '*',
             TBL_GROUP,
             [
-                'where' => 'id = :id',
+                'where' => '`id` = :id',
                 'params' => [':id' => $user_data['group_id']]
             ]
         );
@@ -534,10 +534,10 @@ if ($subact === 'regist') {
             );
             $user_data['group_id'] = 0; // Устанавливаем группу по умолчанию (гости)
             $db->select(
-                ['*'],
+                '*',
                 TBL_GROUP,
                 [
-                    'where' => 'id = :id',
+                    'where' => '`id` = :id',
                     'params' => [':id' => $user_data['group_id']]
                 ]
             );

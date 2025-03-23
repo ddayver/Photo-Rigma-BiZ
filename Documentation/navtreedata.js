@@ -32,7 +32,6 @@ var NAVTREE =
       [ "Organizations", "d2/d0c/md_badword_2USERS.html#autotoc_md7", null ]
     ] ],
     [ "Список задач", "dd/da0/todo.html", null ],
-    [ "Список устаревших определений и описаний", "da/d58/deprecated.html", null ],
     [ "Разделы", "topics.html", "topics" ],
     [ "Пространства имен", "namespaces.html", [
       [ "Пространства имен", "namespaces.html", "namespaces_dup" ],
@@ -65,9 +64,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a935337e705b7a1b9ea422d2e04932109",
-"db/d02/namespacePhotoRigma_1_1Include.html#a1872acdf0e01ae25ad823ea5e2e59d57",
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5e5917c41be4155a54de5e90827dc57"
+"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9c2ee4da4bf10547c3aff7296d707c66",
+"db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0",
+"dir_61426e5d1398367c5ebaa59d7a086d1f.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

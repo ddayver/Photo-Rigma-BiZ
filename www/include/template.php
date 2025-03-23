@@ -53,7 +53,6 @@ class Template
 {
     // Свойства:
     private string $ins_header = ''; ///< Данные, вставляемые в заголовок
-    private string $ins_body = ''; ///< Данные, вставляемые в тег "body"
     private string $content = ''; ///< Содержимое для вывода
     private bool $mod_rewrite; ///< Включение читаемых URL
     private string $template_file = 'main.html'; ///< Файл шаблона
@@ -764,16 +763,26 @@ class Template
      *
      * @param string $title Дополнительное название страницы для тега `<title>`. Может быть пустым.
      * @param string $action Текущее активное действие (пункт меню). Должно содержать только латинские буквы, цифры и подчеркивания. Не может быть пустым.
+     * @param string $csrf_token CSRF-токен для защиты от межсайтовой подделки запросов.
+     *                           Должен быть строкой, содержащей валидный токен.
+     *                           Если токен некорректен, метод может выбросить исключение или вернуть ошибку.
      *
-     * @throws InvalidArgumentException Если параметр `$action` некорректен (пустой или содержит недопустимые символы).
+     * @return void Метод не возвращает значений, но напрямую изменяет содержимое HTML-страницы.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если параметр `$action` некорректен (пустой или содержит недопустимые символы).
+     * @throws InvalidArgumentException Выбрасывается, если параметр `$csrf_token` некорректен (пустой или содержит недопустимые символы).
+     * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     *
+     * @note Метод использует шаблон `header.html` для формирования заголовка. Убедитесь, что шаблон существует и доступен.
+     * @warning Входные параметры должны быть корректными. Невалидные данные могут привести к исключениям или ошибкам в работе метода.
      *
      * Пример использования метода:
      * @code
      * $object = new \PhotoRigma\Classes\Template('https://example.com', '/var/www/example', 'default');
-     * $object->page_header('Главная страница', 'home');
+     * $object->page_header('Главная страница', 'home', 'abc123xyz');
      * @endcode
-     * @see Work::clean_field() Функция, используемая для очистки данных.
      *
+     * @see Work::clean_field() Функция, используемая для очистки данных.
      * @see PhotoRigma::Classes::Work::create_menu() Метод, используемый для генерации данных меню.
      * @see PhotoRigma::Classes::Work::create_photo() Метод, используемый для генерации данных фотографий.
      * @see PhotoRigma::Classes::Template Класс, используемый для обработки шаблонов.
@@ -795,9 +804,6 @@ class Template
 
         // Создание экземпляра шаблона заголовка
         $header_template = new Template($this->site_url, $this->site_dir, $this->theme);
-        if ($this->ins_body !== '') {
-            $this->ins_body = ' ' . $this->ins_body;
-        }
 
         // Добавление условия, что скрипты и CSS требуется использовать локальные.
         $header_template->add_if('LOCALHOST_SERVER', LOCALHOST_SERVER);
@@ -808,7 +814,6 @@ class Template
                 $this->work->config['title_name']
             ) . ' - ' . Work::clean_field($title),
             'INSERT_HEADER' => $this->ins_header,
-            'INSERT_BODY' => $this->ins_body,
             'META_DESRIPTION' => Work::clean_field($this->work->config['meta_description']),
             'META_KEYWORDS' => Work::clean_field($this->work->config['meta_keywords']),
             'GALLERY_WIDHT' => $this->work->config['gal_width'],
@@ -1461,6 +1466,26 @@ class Template
      * @callergraph
      * @callgraph
      *
+     * @param int $login_id Идентификатор пользователя, авторизованного на сайте.
+     *                      Должен быть положительным целым числом.
+     *                      Если значение некорректно, метод может выбросить исключение или вернуть ошибку.
+     * @param string $csrf_token CSRF-токен для защиты от межсайтовой подделки запросов.
+     *                           Должен быть строкой, содержащей валидный токен.
+     *                           Если токен некорректен, метод может выбросить исключение или вернуть ошибку.
+     *
+     * @return void Метод не возвращает значений, но напрямую изменяет содержимое HTML-страницы.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если входные параметры некорректны (например, отрицательный `login_id` или пустой `csrf_token`).
+     * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     *
+     * @note Метод использует шаблон `footer.html` для формирования подвала. Убедитесь, что шаблон существует и доступен.
+     * @warning Входные параметры должны быть корректными. Невалидные данные могут привести к исключениям или ошибкам в работе метода.
+     *
+     * Пример использования метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Template('https://example.com', '/var/www/example', 'default');
+     * $object->page_footer(123, 'abc123xyz');
+     * @endcode
      * @see PhotoRigma::Classes::Work::template_user() Метод, используемый для генерации данных о пользователе.
      * @see PhotoRigma::Classes::Work::template_stat() Метод, используемый для генерации статистики.
      * @see PhotoRigma::Classes::Work::template_best_user() Метод, используемый для генерации данных о лучших пользователях.
@@ -1468,11 +1493,6 @@ class Template
      * @see PhotoRigma::Classes::Template Класс, используемый для обработки шаблонов.
      * @see Work::clean_field() Функция, используемая для очистки данных.
      *
-     * Пример использования метода:
-     * @code
-     * $object = new \PhotoRigma\Classes\Template('https://example.com', '/var/www/example', 'default');
-     * $object->page_footer();
-     * @endcode
      */
     public function page_footer(int $login_id, string $csrf_token): void
     {

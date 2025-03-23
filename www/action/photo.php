@@ -356,7 +356,7 @@ if ($photo_id !== 0) {
         if ($category && $photo_data['category'] !== $_POST['name_category']) {
             // Получаем папку новой категории
             $db->select(
-                'folder', // Список полей для выборки
+                '`folder`', // Список полей для выборки
                 TBL_CATEGORY, // Имя таблицы
                 [
                     'where' => '`id` = :id', // Условие WHERE
@@ -458,10 +458,10 @@ if ($photo_id !== 0) {
         // Обновляем данные в таблице фотографий
         $db->update(
             [
-                'name' => ':name',
-                'description' => ':desc',
-                'category' => ':cat',
-                'file' => ':file',
+                '`name`' => ':name',
+                '`description`' => ':desc',
+                '`category`' => ':cat',
+                '`file`' => ':file',
             ],
             TBL_PHOTO, // Таблица
             [
@@ -889,7 +889,7 @@ if ($photo_id !== 0) {
         ] : ['where' => '`id` != 0 AND `id` = :id', 'params' => [':id' => $_POST['name_category']]];
 
         // Выполняем запрос к базе данных для проверки существования категории
-        $db->select('id, folder', TBL_CATEGORY, $category_condition); // Ограничиваем выборку только нужными полями
+        $db->select('`id`, `folder`', TBL_CATEGORY, $category_condition); // Ограничиваем выборку только нужными полями
         $category_data = $db->res_row();
         if (!$category_data) {
             $submit_upload = false; // Если категория не найдена, отменяем загрузку
@@ -973,14 +973,14 @@ if ($photo_id !== 0) {
         $photo['description'] = $photo['description'] ?: ($work->lang['photo']['no_description'] . ' (' . $file_name . ')');
 
         $query = [
-            'file' => ':file',
-            'name' => ':name',
-            'description' => ':desc',
-            'category' => ':cat',
-            'date_upload' => ':date',
-            'user_upload' => ':user',
-            'rate_user' => ':r_user',
-            'rate_moder' => ':r_moder'
+            '`file`' => ':file',
+            '`name`' => ':name',
+            '`description`' => ':desc',
+            '`category`' => ':cat',
+            '`date_upload`' => ':date',
+            '`user_upload`' => ':user',
+            '`rate_user`' => ':r_user',
+            '`rate_moder`' => ':r_moder'
         ];
         $params = [
             ':file' => $file_name,

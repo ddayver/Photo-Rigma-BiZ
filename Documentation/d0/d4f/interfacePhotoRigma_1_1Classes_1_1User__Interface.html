@@ -132,13 +132,20 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <tr class="memitem:ab142b3405ddc1bbb89b84a97dc89d8dc" id="r_ab142b3405ddc1bbb89b84a97dc89d8dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab142b3405ddc1bbb89b84a97dc89d8dc">update_user_data</a> (int $user_id, array $post_data, array $files_data, int $max_size, <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> $work)</td></tr>
 <tr class="memdesc:ab142b3405ddc1bbb89b84a97dc89d8dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.  <br /></td></tr>
 <tr class="separator:ab142b3405ddc1bbb89b84a97dc89d8dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aced8c94b564776574984f4caf97b3614" id="r_aced8c94b564776574984f4caf97b3614"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aced8c94b564776574984f4caf97b3614">update_user_rights</a> (int $user_id, int $group, string $user_rights)</td></tr>
+<tr class="memdesc:aced8c94b564776574984f4caf97b3614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет права пользователя или группу через Админку.  <br /></td></tr>
+<tr class="separator:aced8c94b564776574984f4caf97b3614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2ab959808354af438bd760ef89d09eb" id="r_ab2ab959808354af438bd760ef89d09eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2ab959808354af438bd760ef89d09eb">delete_user</a> (int $user_id)</td></tr>
+<tr class="memdesc:ab2ab959808354af438bd760ef89d09eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет пользователя через Админку.  <br /></td></tr>
 <tr class="separator:ab2ab959808354af438bd760ef89d09eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb35e2058e1fa1189a515873e76e62dd" id="r_acb35e2058e1fa1189a515873e76e62dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb35e2058e1fa1189a515873e76e62dd">add_new_group</a> (array $group_data)</td></tr>
+<tr class="memdesc:acb35e2058e1fa1189a515873e76e62dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавляет новую группу в систему через Админку.  <br /></td></tr>
 <tr class="separator:acb35e2058e1fa1189a515873e76e62dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5e8ffbb47053c27a7df5b5e7563975d" id="r_ac5e8ffbb47053c27a7df5b5e7563975d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5e8ffbb47053c27a7df5b5e7563975d">update_group_data</a> (int $group_id, array $group_data)</td></tr>
+<tr class="memdesc:ac5e8ffbb47053c27a7df5b5e7563975d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет данные группы в системе через Админку.  <br /></td></tr>
 <tr class="separator:ac5e8ffbb47053c27a7df5b5e7563975d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4045f753ad732e5f01bafd4b6c04d961" id="r_a4045f753ad732e5f01bafd4b6c04d961"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4045f753ad732e5f01bafd4b6c04d961">delete_group</a> (int $group_id)</td></tr>
+<tr class="memdesc:a4045f753ad732e5f01bafd4b6c04d961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет группу из системы через Админку.  <br /></td></tr>
 <tr class="separator:a4045f753ad732e5f01bafd4b6c04d961"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6cad9b0038673d591c0dd84575bc777" id="r_ab6cad9b0038673d591c0dd84575bc777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6cad9b0038673d591c0dd84575bc777">login_user</a> (array $post, <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> $work, string $redirect_url)</td></tr>
 <tr class="memdesc:ab6cad9b0038673d591c0dd84575bc777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.  <br /></td></tr>
@@ -146,6 +153,12 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <tr class="memitem:ae5e5917c41be4155a54de5e90827dc57" id="r_ae5e5917c41be4155a54de5e90827dc57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5e5917c41be4155a54de5e90827dc57">csrf_token</a> ()</td></tr>
 <tr class="memdesc:ae5e5917c41be4155a54de5e90827dc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов. Метод является частью контракта интерфейса для обеспечения безопасности форм при взаимодействии с пользователями.  <br /></td></tr>
 <tr class="separator:ae5e5917c41be4155a54de5e90827dc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ccf217fb8ddc2f985779f15cf32f078" id="r_a6ccf217fb8ddc2f985779f15cf32f078"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ccf217fb8ddc2f985779f15cf32f078">encode_user_rights</a> (array $rights)</td></tr>
+<tr class="memdesc:a6ccf217fb8ddc2f985779f15cf32f078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразует массив прав пользователя в строку JSON.  <br /></td></tr>
+<tr class="separator:a6ccf217fb8ddc2f985779f15cf32f078"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6031ba212847fdf2810753c120c4b4d2" id="r_a6031ba212847fdf2810753c120c4b4d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6031ba212847fdf2810753c120c4b4d2">process_user_rights</a> (string $user_rights)</td></tr>
+<tr class="memdesc:a6031ba212847fdf2810753c120c4b4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает поле <code>user_rights</code>, преобразуя его из строки JSON в массив прав.  <br /></td></tr>
+<tr class="separator:a6031ba212847fdf2810753c120c4b4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с пользователями и группами. </p>
@@ -165,13 +178,13 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <div class="line">    public function <a class="code hl_function" href="#ab6cad9b0038673d591c0dd84575bc777">login_user</a>(string $login, string $password): void {}</div>
 <div class="line">}</div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html"><div class="ttname"><a href="../../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html">PhotoRigma\Classes\User_Interface</a></div><div class="ttdoc">Интерфейс для работы с пользователями и группами.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/d1a/user_8php_source.html#l00087">user.php:88</a></div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_a4045f753ad732e5f01bafd4b6c04d961"><div class="ttname"><a href="#a4045f753ad732e5f01bafd4b6c04d961">PhotoRigma\Classes\User_Interface\delete_group</a></div><div class="ttdeci">delete_group(int $group_id)</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_a4045f753ad732e5f01bafd4b6c04d961"><div class="ttname"><a href="#a4045f753ad732e5f01bafd4b6c04d961">PhotoRigma\Classes\User_Interface\delete_group</a></div><div class="ttdeci">delete_group(int $group_id)</div><div class="ttdoc">Удаляет группу из системы через Админку.</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab142b3405ddc1bbb89b84a97dc89d8dc"><div class="ttname"><a href="#ab142b3405ddc1bbb89b84a97dc89d8dc">PhotoRigma\Classes\User_Interface\update_user_data</a></div><div class="ttdeci">update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work)</div><div class="ttdoc">Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.</div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab2ab959808354af438bd760ef89d09eb"><div class="ttname"><a href="#ab2ab959808354af438bd760ef89d09eb">PhotoRigma\Classes\User_Interface\delete_user</a></div><div class="ttdeci">delete_user(int $user_id)</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab2ab959808354af438bd760ef89d09eb"><div class="ttname"><a href="#ab2ab959808354af438bd760ef89d09eb">PhotoRigma\Classes\User_Interface\delete_user</a></div><div class="ttdeci">delete_user(int $user_id)</div><div class="ttdoc">Удаляет пользователя через Админку.</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ab6cad9b0038673d591c0dd84575bc777"><div class="ttname"><a href="#ab6cad9b0038673d591c0dd84575bc777">PhotoRigma\Classes\User_Interface\login_user</a></div><div class="ttdeci">login_user(array $post, Work $work, string $redirect_url)</div><div class="ttdoc">Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_abc4c7a4c4f01e32b4540c3d03f45aeb2"><div class="ttname"><a href="#abc4c7a4c4f01e32b4540c3d03f45aeb2">PhotoRigma\Classes\User_Interface\add_new_user</a></div><div class="ttdeci">add_new_user(array $post_data, Work $work, string $redirect_url)</div><div class="ttdoc">Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.</div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ac5e8ffbb47053c27a7df5b5e7563975d"><div class="ttname"><a href="#ac5e8ffbb47053c27a7df5b5e7563975d">PhotoRigma\Classes\User_Interface\update_group_data</a></div><div class="ttdeci">update_group_data(int $group_id, array $group_data)</div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_acb35e2058e1fa1189a515873e76e62dd"><div class="ttname"><a href="#acb35e2058e1fa1189a515873e76e62dd">PhotoRigma\Classes\User_Interface\add_new_group</a></div><div class="ttdeci">add_new_group(array $group_data)</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_ac5e8ffbb47053c27a7df5b5e7563975d"><div class="ttname"><a href="#ac5e8ffbb47053c27a7df5b5e7563975d">PhotoRigma\Classes\User_Interface\update_group_data</a></div><div class="ttdeci">update_group_data(int $group_id, array $group_data)</div><div class="ttdoc">Обновляет данные группы в системе через Админку.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1User__Interface_html_acb35e2058e1fa1189a515873e76e62dd"><div class="ttname"><a href="#acb35e2058e1fa1189a515873e76e62dd">PhotoRigma\Classes\User_Interface\add_new_group</a></div><div class="ttdeci">add_new_group(array $group_data)</div><div class="ttdoc">Добавляет новую группу в систему через Админку.</div></div>
 </div><!-- fragment --> 
 <p class="definition">См. определение в файле <a class="el" href="../../d1/d1a/user_8php_source.html">user.php</a> строка <a class="el" href="../../d1/d1a/user_8php_source.html#l00087">87</a></p>
 </div><h2 class="groupheader">Методы</h2>
@@ -189,14 +202,38 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Добавление новой группы.</p>
+
+<p>Добавляет новую группу в систему через Админку. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Создавать новую группу по команде из Админки.</li>
+<li>Принимать данные новой группы, включая её имя и права.</li>
+<li>Возвращать ID созданной группы. Метод предназначен для прямого использования извне (например, через Админку).</li>
+</ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">array</td><td class="paramname">$group_data</td><td>Данные новой группы. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$group_data</td><td>Данные новой группы:<ul>
+<li><code>name</code> (string): Имя группы.</li>
+<li><code>user_rights</code> (string): JSON-строка с правами группы.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>void </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>int Возвращает ID новой группы.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, отсутствует имя группы или невалидный JSON).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$groupId = $object-&gt;add_new_group([</div>
+<div class="line">    <span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;Moderators&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;user_rights&#39;</span> =&gt; <span class="stringliteral">&#39;{&quot;read&quot;: true, &quot;write&quot;: true}&#39;</span></div>
+<div class="line">]);</div>
+<div class="line">echo <span class="stringliteral">&quot;Новая группа создана с ID: $groupId&quot;</span>;</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd" title="Добавляет новую группу в систему через Админку.">PhotoRigma\Classes\User\add_new_group()</a> Пример реализации метода в классе. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd">User</a>.</p>
 
@@ -325,15 +362,41 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Удаление группы.</p>
+
+<p>Удаляет группу из системы через Админку. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Удалять группу по её идентификатору.</li>
+<li>Для групп с ID 0 (Гость), 1 (Пользователь), 2 (Модератор) и 3 (Администратор) удаление запрещено.</li>
+<li>Возвращать результат операции: <code>true</code>, если группа успешно удалена, и <code>false</code>, если удаление не выполнено. Метод предназначен для прямого использования извне (например, через Админку).</li>
+</ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$group_id</td><td>Идентификатор группы. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$group_id</td><td>Идентификатор группы. Должен быть положительным целым числом. Удаление запрещено для групп с ID: 0 (Гость), 1 (Пользователь), 2 (Модератор), 3 (Администратор).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>void </dd></dl>
-
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает:<ul>
+<li><code>true</code>, если группа успешно удалена.</li>
+<li><code>false</code>, если удаление не выполнено (например, для запрещенных ID).</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, отрицательный ID).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961" title="Удаляет группу из системы через Админку.">PhotoRigma\Classes\User\delete_group()</a> Пример реализации метода в классе.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000006">Необходимо сделать</a></b></dt><dd>Реализовать метод в классах, использующих интерфейс.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$result = $object-&gt;delete_group(123);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Группа успешно удалена.&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Удаление группы запрещено или произошла ошибка.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961">User</a>.</p>
 
 </div>
@@ -352,16 +415,87 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Удаление пользователя.</p>
+
+<p>Удаляет пользователя через Админку. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Удалять все данные пользователя, включая файл аватара.</li>
+<li>Относительно удаления категорий и фото методы и способы должны быть определены в реализации. Метод предназначен для прямого использования извне (например, через Админку).</li>
+</ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя. Должен быть положительным целым числом.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>void </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает:<ul>
+<li><code>true</code>, если пользователь успешно удален.</li>
+<li><code>false</code>, если удаление не выполнено.</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, отрицательный ID).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$result = $object-&gt;delete_user(123);</div>
+<div class="line"><span class="keywordflow">if</span> ($result) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Пользователь успешно удален!&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Не удалось удалить пользователя.&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb" title="Удаляет пользователя через Админку.">PhotoRigma\Classes\User\delete_user()</a> Пример реализации метода в классе. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb">User</a>.</p>
+
+</div>
+</div>
+<a id="a6ccf217fb8ddc2f985779f15cf32f078" name="a6ccf217fb8ddc2f985779f15cf32f078"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ccf217fb8ddc2f985779f15cf32f078">&#9670;&#160;</a></span>encode_user_rights()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">encode_user_rights </td>
+          <td>(</td>
+          <td class="paramtype">array</td>          <td class="paramname"><span class="paramname"><em>$rights</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Преобразует массив прав пользователя в строку JSON. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Проверять, существует ли входной массив. Если массив отсутствует или пуст, возвращается пустая строка.</li>
+<li>Проверять, что входное значение является массивом.</li>
+<li>Кодировать массив в строку JSON.</li>
+<li>Возвращать строку JSON, готовую для сохранения в поле <code>user_rights</code>.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$rights</td><td>Массив прав пользователя. Может быть ассоциативным массивом, пустым значением или <code>null</code>. Если значение не является массивом, выбрасывается исключение.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>string Строка JSON, представляющая права пользователя. Если массив отсутствует или содержит некорректные данные, возвращается пустая строка.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входное значение не является массивом. </td></tr>
+    <tr><td class="paramname">JsonException</td><td>Выбрасывается, если возникает ошибка при кодировании массива в JSON.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод возвращает пустую строку, если массив прав отсутствует или содержит некорректные данные. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$json = $object-&gt;encode_user_rights([<span class="stringliteral">&#39;edit&#39;</span> =&gt; 1, <span class="stringliteral">&#39;delete&#39;</span> =&gt; 0]);</div>
+<div class="line">echo <span class="stringliteral">&quot;JSON-строка: $json&quot;</span>;</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Метод преобразует массив прав пользователя в строку JSON.">PhotoRigma\Classes\User\encode_user_rights()</a> Пример реализации метода в классе. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078">User</a>.</p>
 
 </div>
 </div>
@@ -433,6 +567,53 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 
 </div>
 </div>
+<a id="a6031ba212847fdf2810753c120c4b4d2" name="a6031ba212847fdf2810753c120c4b4d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6031ba212847fdf2810753c120c4b4d2">&#9670;&#160;</a></span>process_user_rights()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">process_user_rights </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$user_rights</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обрабатывает поле <code>user_rights</code>, преобразуя его из строки JSON в массив прав. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Проверять, существует ли поле <code>user_rights</code>. Если поле отсутствует, возвращается пустой массив.</li>
+<li>Проверять, что поле является строкой.</li>
+<li>Декодировать строку JSON в ассоциативный массив.</li>
+<li>Возвращать массив прав, готовый для добавления в свойство <code>$user</code>.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$user_rights</td><td>Значение поля <code>user_rights</code>. Может быть строкой JSON, пустым значением или <code>null</code>. Если значение не является строкой или содержит невалидный JSON, выбрасывается исключение.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Ассоциативный массив прав пользователя. Если поле <code>user_rights</code> отсутствует или содержит некорректные данные, возвращается пустой массив.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если поле <code>user_rights</code> не является строкой. </td></tr>
+    <tr><td class="paramname">JsonException</td><td>Выбрасывается, если поле <code>user_rights</code> содержит невалидный JSON.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод возвращает пустой массив, если поле <code>user_rights</code> отсутствует или содержит некорректные данные. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что поле <code>user_rights</code> содержит валидный JSON. Невалидные данные могут привести к исключению.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$rights = $object-&gt;process_user_rights(<span class="stringliteral">&#39;{&quot;edit&quot;: 1, &quot;delete&quot;: 0}&#39;</span>);</div>
+<div class="line">print_r($rights);</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав.">PhotoRigma\Classes\User\process_user_rights()</a> Пример реализации метода в классе. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2">User</a>.</p>
+
+</div>
+</div>
 <a id="acd25145f48c04385645c77ce03ebd9bc" name="acd25145f48c04385645c77ce03ebd9bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acd25145f48c04385645c77ce03ebd9bc">&#9670;&#160;</a></span>unset_property_key()</h2>
 
@@ -499,15 +680,39 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Обновление данных группы.</p>
+
+<p>Обновляет данные группы в системе через Админку. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Обновлять данные группы по её идентификатору.</li>
+<li>Принимать ID группы и новые данные, включая имя и права.</li>
+<li>Возвращать ID обновленной группы. Метод предназначен для прямого использования извне (например, через Админку).</li>
+</ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$group_id</td><td>Идентификатор группы. </td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$group_data</td><td>Новые данные группы. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$group_id</td><td>Идентификатор группы. Должен быть положительным целым числом. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$group_data</td><td>Новые данные группы:<ul>
+<li><code>name</code> (string): Новое имя группы.</li>
+<li><code>user_rights</code> (string): JSON-строка с новыми правами группы.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>void </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>int Возвращает ID обновленной группы.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, отрицательный ID или невалидный JSON).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$groupId = $object-&gt;update_group_data(123, [</div>
+<div class="line">    <span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;Editors&#39;</span>,</div>
+<div class="line">    <span class="stringliteral">&#39;user_rights&#39;</span> =&gt; <span class="stringliteral">&#39;{&quot;read&quot;: true, &quot;write&quot;: false}&#39;</span></div>
+<div class="line">]);</div>
+<div class="line">echo <span class="stringliteral">&quot;Группа обновлена с ID: $groupId&quot;</span>;</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac5e8ffbb47053c27a7df5b5e7563975d" title="Обновляет данные группы в системе через Админку.">PhotoRigma\Classes\User\update_group_data()</a> Пример реализации метода в классе. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac5e8ffbb47053c27a7df5b5e7563975d">User</a>.</p>
 
@@ -607,6 +812,65 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc">User</a>.</p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00187">PhotoRigma\$work</a>.</p>
+
+</div>
+</div>
+<a id="aced8c94b564776574984f4caf97b3614" name="aced8c94b564776574984f4caf97b3614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aced8c94b564776574984f4caf97b3614">&#9670;&#160;</a></span>update_user_rights()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">update_user_rights </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$group</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$user_rights</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Обновляет права пользователя или группу через Админку. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен выполнять следующие действия:</p><ul>
+<li>Проверять, изменилась ли группа пользователя. Если группа изменилась, устанавливать права группы.</li>
+<li>Если группа не изменилась, проверять, отличаются ли текущие права пользователя в БД от указанных в <code>$user_rights</code>. Если отличия есть, обновлять права пользователя в БД.</li>
+<li>Возвращать массив с итоговой группой пользователя и его правами.</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>ID пользователя, чьи права обновляются. Должен быть положительным целым числом. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$group</td><td>Новая группа пользователя. Должен быть положительным целым числом. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$user_rights</td><td>JSON-строка с новыми правами пользователя.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Возвращает массив с двумя ключами:<ul>
+<li><code>new_group</code>: Новая группа пользователя (int).</li>
+<li><code>user_rights</code>: Новые права пользователя (string, JSON-формат).</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, невалидный JSON).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\User();</div>
+<div class="line">$result = $object-&gt;update_user_rights(123, 2, <span class="stringliteral">&#39;{&quot;read&quot;: true, &quot;write&quot;: false}&#39;</span>);</div>
+<div class="line">echo <span class="stringliteral">&quot;Новая группа: {$result[&#39;new_group&#39;]}, Права: &quot;</span> . json_encode($result[<span class="stringliteral">&#39;user_rights&#39;</span>]);</div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aced8c94b564776574984f4caf97b3614" title="Обновляет права пользователя или группу через Админку.">PhotoRigma\Classes\User\update_user_rights()</a> Пример реализации метода в классе. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aced8c94b564776574984f4caf97b3614">User</a>.</p>
 
 </div>
 </div>
