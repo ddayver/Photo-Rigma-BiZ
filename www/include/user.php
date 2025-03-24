@@ -122,7 +122,7 @@ interface User_Interface
      * @brief Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.
      *
      * @details Этот метод выполняет следующие действия:
-     *          - Проверяет корректность входных данных с использованием `$work->check_input()`.
+     *          - Проверяет корректность входных данных с использованием `Work::check_input()`.
      *          - Проверяет уникальность логина, email и имени пользователя в базе данных.
      *          - Добавляет нового пользователя в базу данных, назначая ему группу по умолчанию.
      *          - При возникновении ошибок сохраняет их в сессии и перенаправляет пользователя на указанный URL.
@@ -137,7 +137,6 @@ interface User_Interface
      *                         - string $email: Email пользователя (должен соответствовать регулярному выражению REG_EMAIL).
      *                         - string $real_name: Реальное имя пользователя (должно соответствовать регулярному выражению REG_NAME).
      *                         - string $captcha: Значение CAPTCHA (должно быть числом).
-     * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
      * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
      *
      * @return int ID нового пользователя, если регистрация успешна, или 0 в случае ошибки.
@@ -152,9 +151,8 @@ interface User_Interface
      * Пример использования метода:
      * @code
      * $user = new \PhotoRigma\Classes\User();
-     * $work = new \PhotoRigma\Classes\Work();
      * $redirectUrl = '/register/error';
-     * $userId = $user->add_new_user($_POST, $work, $redirectUrl);
+     * $userId = $user->add_new_user($_POST, $redirectUrl);
      * if ($userId > 0) {
      *     echo "Пользователь успешно зарегистрирован! ID: {$userId}";
      * } else {
@@ -164,7 +162,7 @@ interface User_Interface
      * @see PhotoRigma::Classes::User::add_new_user Реализация метода в классе User.
      *
      */
-    public function add_new_user(array $post_data, Work $work, string $redirect_url): int;
+    public function add_new_user(array $post_data, string $redirect_url): int;
 
     /**
      * @brief Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.
@@ -195,9 +193,6 @@ interface User_Interface
      * @param int $max_size Максимальный размер файла для аватара в байтах. Определяется на основе конфигурации
      *                      приложения и ограничений PHP (например, post_max_size). Если размер файла превышает
      *                      это значение, загрузка аватара отклоняется. Пример: 5 * 1024 * 1024 (5 MB).
-     * @param Work $work Экземпляр класса `Work`, предоставляющий вспомогательные методы для работы с данными:
-     *                   - `check_input()`: Валидация входных данных.
-     *                   Класс используется для выполнения вспомогательных операций внутри метода.
      *
      * @return int Количество затронутых строк в базе данных после выполнения обновления.
      *             Возвращается 0, если данные не изменились или запрос завершился ошибкой.
@@ -213,8 +208,7 @@ interface User_Interface
      * $user = new \PhotoRigma\Classes\User();
      * $userId = 1;
      * $maxSize = 5 * 1024 * 1024; // 5 MB
-     * $work = new \PhotoRigma\Classes\Work();
-     * $affectedRows = $user->update_user_data($userId, $_POST, $_FILES, $maxSize, $work);
+     * $affectedRows = $user->update_user_data($userId, $_POST, $_FILES, $maxSize);
      * if ($affectedRows > 0) {
      *     echo "Данные успешно обновлены!";
      * } else {
@@ -223,10 +217,9 @@ interface User_Interface
      * @endcode
      * @see PhotoRigma::Classes::User::update_user_data() Метод реализации в классе User.
      * @see PhotoRigma::Classes::Work::check_input() Метод для проверки корректности входных данных.
-     * @see PhotoRigma::Classes::Work Класс, передаваемый в качестве объекта аргументом.
      *
      */
-    public function update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work): int;
+    public function update_user_data(int $user_id, array $post_data, array $files_data, int $max_size): int;
 
     /**
      * @brief Обновляет права пользователя или группу через Админку.
@@ -411,7 +404,7 @@ interface User_Interface
      * @brief Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.
      *
      * @details Этот метод выполняет следующие действия:
-     *          - Проверяет корректность входных данных (логин и пароль) с использованием `$work->check_input()`.
+     *          - Проверяет корректность входных данных (логин и пароль) с использованием `Work::check_input()`.
      *          - Ищет пользователя в базе данных по логину.
      *          - Проверяет пароль через `password_verify()` и, при необходимости, через `md5`.
      *          - Если пароль хранится в старом формате (md5), он обновляется до формата `password_hash()`.
@@ -422,7 +415,6 @@ interface User_Interface
      * @param array $post Массив данных из формы ($_POST), содержащий ключи:
      *                    - string $login: Логин пользователя (должен соответствовать регулярному выражению REG_LOGIN).
      *                    - string $password: Пароль пользователя (не должен быть пустым).
-     * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
      * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
      *
      * @return int ID пользователя, если авторизация успешна, или 0 в случае ошибки.
@@ -434,9 +426,8 @@ interface User_Interface
      * Пример использования метода:
      * @code
      * $user = new \PhotoRigma\Classes\User();
-     * $work = new \PhotoRigma\Classes\Work();
      * $redirectUrl = '/login/error';
-     * $userId = $user->login_user($_POST, $work, $redirectUrl);
+     * $userId = $user->login_user($_POST, $redirectUrl);
      * if ($userId > 0) {
      *     echo "Вход выполнен успешно! ID пользователя: {$userId}";
      * } else {
@@ -448,7 +439,7 @@ interface User_Interface
      *
      * @see PhotoRigma::Classes::User::login_user Метод реализации в классе User.
      */
-    public function login_user(array $post, Work $work, string $redirect_url): int;
+    public function login_user(array $post, string $redirect_url): int;
 
     /**
      * @brief Генерирует или возвращает CSRF-токен для защиты от межсайтовой подделки запросов.
@@ -582,6 +573,7 @@ class User implements User_Interface
     private Database_Interface $db; ///< Объект для работы с базой данных.
     private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
     private array $user_right_fields = []; ///< Массив с полями наименований прав доступа
+    private ?Work $work = null; ///< Свойство для объекта класса Work
 
     /**
      * @brief Конструктор класса.
@@ -1002,6 +994,41 @@ class User implements User_Interface
     }
 
     /**
+     * @brief Установка объекта Work через сеттер.
+     *
+     * @details Этот метод позволяет установить объект Work ($work).
+     *          Метод выполняет следующие действия:
+     *          1. Проверяет, что переданный объект является экземпляром класса Work.
+     *          2. Присваивает объект свойству $work текущего класса.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param Work $work Объект Work:
+     *                   - Должен быть экземпляром класса Work.
+     *
+     * @throws InvalidArgumentException Если передан некорректный объект (не экземпляр класса Work).
+     *
+     * @note Метод проверяет тип переданного объекта.
+     *       Объект Work используется для дальнейшего взаимодействия в текущем классе.
+     *
+     * @warning Некорректный объект (не экземпляр класса Work) вызывает исключение.
+     *
+     * Пример использования метода:
+     * @code
+     * $user = new \PhotoRigma\Classes\User();
+     * $work = new \PhotoRigma\Classes\Work();
+     * $user->set_work($work);
+     * @endcode
+     * @see PhotoRigma::Classes::Work Класс с объектом Work.
+     *
+     */
+    public function set_work(Work $work): void
+    {
+        $this->work = $work;
+    }
+
+    /**
      * @brief Метод преобразует массив прав пользователя в строку JSON.
      *
      * @details Метод выполняет следующие шаги:
@@ -1193,7 +1220,7 @@ class User implements User_Interface
      * @brief Добавляет нового пользователя в базу данных, выполняя валидацию входных данных.
      *
      * @details Этот метод выполняет следующие действия:
-     *          - Проверяет корректность входных данных с использованием `$work->check_input()`.
+     *          - Проверяет корректность входных данных с использованием `Work::check_input()`.
      *          - Проверяет уникальность логина, email и имени пользователя в базе данных.
      *          - Добавляет нового пользователя в базу данных, назначая ему группу по умолчанию.
      *          - При возникновении ошибок сохраняет их в сессии и перенаправляет пользователя на указанный URL.
@@ -1208,7 +1235,6 @@ class User implements User_Interface
      *                         - string $email: Email пользователя (должен соответствовать регулярному выражению REG_EMAIL).
      *                         - string $real_name: Реальное имя пользователя (должно соответствовать регулярному выражению REG_NAME).
      *                         - string $captcha: Значение CAPTCHA (должно быть числом).
-     * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
      * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
      *
      * @return int ID нового пользователя, если регистрация успешна, или 0 в случае ошибки.
@@ -1224,9 +1250,8 @@ class User implements User_Interface
      * Пример использования метода:
      * @code
      * $user = new \PhotoRigma\Classes\User();
-     * $work = new \PhotoRigma\Classes\Work();
      * $redirectUrl = '/register/error';
-     * $userId = $user->add_new_user($_POST, $work, $redirectUrl);
+     * $userId = $user->add_new_user($_POST, $redirectUrl);
      * if ($userId > 0) {
      *     echo "Пользователь успешно зарегистрирован! ID: {$userId}";
      * } else {
@@ -1234,12 +1259,11 @@ class User implements User_Interface
      * }
      * @endcode
      * @see PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных.
-     * @see PhotoRigma::Classes::Work Класс, объект которого передается в аргументах.
      * @see PhotoRigma::Include::log_in_file() Функция логирования ошибок.
      *
      * @see PhotoRigma::Classes::User::$session Свойство класса User, связанное с $_SESSION.
      */
-    public function add_new_user(array $post_data, Work $work, string $redirect_url): int
+    public function add_new_user(array $post_data, string $redirect_url): int
     {
         // === 1. Валидация входных данных ===
         $error = false;
@@ -1253,15 +1277,15 @@ class User implements User_Interface
         ];
 
         foreach ($field_validators as $field => $options) {
-            if (!$work->check_input('_POST', $field, $options)) {
+            if (!$this->work->check_input('_POST', $field, $options)) {
                 $this->session['error'][$field]['if'] = true;
                 $this->session['error'][$field]['text'] = match ($field) {
-                    'login' => $work->lang['profile']['error_login'],
-                    'password' => $work->lang['profile']['error_password'],
-                    're_password' => $work->lang['profile']['error_re_password'],
-                    'email' => $work->lang['profile']['error_email'],
-                    'real_name' => $work->lang['profile']['error_real_name'],
-                    'captcha' => $work->lang['profile']['error_captcha'],
+                    'login' => $this->work->lang['profile']['error_login'],
+                    'password' => $this->work->lang['profile']['error_password'],
+                    're_password' => $this->work->lang['profile']['error_re_password'],
+                    'email' => $this->work->lang['profile']['error_email'],
+                    'real_name' => $this->work->lang['profile']['error_real_name'],
+                    'captcha' => $this->work->lang['profile']['error_captcha'],
                     default => 'Unknown error',
                 };
                 $error = true;
@@ -1269,12 +1293,12 @@ class User implements User_Interface
                 // Дополнительные проверки для re_password и captcha
                 if ($field === 're_password' && $post_data['re_password'] !== $post_data['password']) {
                     $this->session['error']['re_password']['if'] = true;
-                    $this->session['error']['re_password']['text'] = $work->lang['profile']['error_re_password'];
+                    $this->session['error']['re_password']['text'] = $this->work->lang['profile']['error_re_password'];
                     $error = true;
                 }
                 if ($field === 'captcha' && !password_verify($post_data['captcha'], $this->session['captcha'])) {
                     $this->session['error']['captcha']['if'] = true;
-                    $this->session['error']['captcha']['text'] = $work->lang['profile']['error_captcha'];
+                    $this->session['error']['captcha']['text'] = $this->work->lang['profile']['error_captcha'];
                     $error = true;
                 }
             }
@@ -1301,17 +1325,17 @@ class User implements User_Interface
             if ($unique_check_result['login_count'] > 0) {
                 $error = true;
                 $this->session['error']['login']['if'] = true;
-                $this->session['error']['login']['text'] = $work->lang['profile']['error_login_exists'];
+                $this->session['error']['login']['text'] = $this->work->lang['profile']['error_login_exists'];
             }
             if ($unique_check_result['email_count'] > 0) {
                 $error = true;
                 $this->session['error']['email']['if'] = true;
-                $this->session['error']['email']['text'] = $work->lang['profile']['error_email_exists'];
+                $this->session['error']['email']['text'] = $this->work->lang['profile']['error_email_exists'];
             }
             if ($unique_check_result['real_count'] > 0) {
                 $error = true;
                 $this->session['error']['real_name']['if'] = true;
-                $this->session['error']['real_name']['text'] = $work->lang['profile']['error_real_name_exists'];
+                $this->session['error']['real_name']['text'] = $this->work->lang['profile']['error_real_name_exists'];
             }
         }
 
@@ -1451,9 +1475,6 @@ class User implements User_Interface
      * @param int $max_size Максимальный размер файла для аватара в байтах. Определяется на основе конфигурации
      *                      приложения и ограничений PHP (например, post_max_size). Если размер файла превышает
      *                      это значение, загрузка аватара отклоняется. Пример: 5 * 1024 * 1024 (5 MB).
-     * @param Work $work Экземпляр класса `Work`, предоставляющий вспомогательные методы для работы с данными:
-     *                   - `check_input()`: Валидация входных данных.
-     *                   Класс используется для выполнения вспомогательных операций внутри метода.
      *
      * @return int Количество затронутых строк в базе данных после выполнения обновления.
      *             Возвращается 0, если данные не изменились или запрос завершился ошибкой.
@@ -1470,8 +1491,7 @@ class User implements User_Interface
      * $user = new \PhotoRigma\Classes\User();
      * $userId = 1;
      * $maxSize = 5 * 1024 * 1024; // 5 MB
-     * $work = new \PhotoRigma\Classes\Work();
-     * $affectedRows = $user->update_user_data($userId, $_POST, $_FILES, $maxSize, $work);
+     * $affectedRows = $user->update_user_data($userId, $_POST, $_FILES, $maxSize);
      * if ($affectedRows > 0) {
      *     echo "Данные успешно обновлены!";
      * } else {
@@ -1479,11 +1499,10 @@ class User implements User_Interface
      * }
      * @endcode
      * @see PhotoRigma::Classes::Work::check_input() Метод для проверки корректности входных данных.
-     * @see PhotoRigma::Classes::Work Класс, передаваемый в качестве объекта аргументом.
      * @see PhotoRigma::Classes::User::edit_avatar() Приватный метод для обработки загрузки аватара.
      *
      */
-    public function update_user_data(int $user_id, array $post_data, array $files_data, int $max_size, Work $work): int
+    public function update_user_data(int $user_id, array $post_data, array $files_data, int $max_size): int
     {
         // Проверяем, существует ли пользователь с указанным ID
         $this->db->select('*', TBL_USERS, [
@@ -1498,12 +1517,12 @@ class User implements User_Interface
         }
         $new_user_data = [];
         // === ПРОВЕРКА ПАРОЛЯ ===
-        if ($user_id !== $this->session['login_id'] || ($work->check_input(
+        if ($user_id !== $this->session['login_id'] || ($this->work->check_input(
             '_POST',
             'password',
             ['isset' => true, 'empty' => true]
         ) && password_verify($post_data['password'], $user_data['password']))) {
-            if ($work->check_input('_POST', 'edit_password', ['isset' => true, 'empty' => true])) {
+            if ($this->work->check_input('_POST', 'edit_password', ['isset' => true, 'empty' => true])) {
                 $new_user_data['password'] = $post_data['re_password'] !== $post_data['edit_password'] ? $user_data['password'] : password_hash(
                     $post_data['re_password'],
                     PASSWORD_BCRYPT
@@ -1513,7 +1532,7 @@ class User implements User_Interface
             }
         }
         // === ПРОВЕРКА EMAIL И REAL_NAME ===
-        if ($work->check_input('_POST', 'email', ['isset' => true, 'empty' => true, 'regexp' => REG_EMAIL])) {
+        if ($this->work->check_input('_POST', 'email', ['isset' => true, 'empty' => true, 'regexp' => REG_EMAIL])) {
             $filtered_email = filter_var($post_data['email'], FILTER_SANITIZE_EMAIL);
             $this->db->select(
                 'SUM(`email` = :email) as `email_count`, SUM(`real_name` = :real_name) as `real_count`',
@@ -1536,18 +1555,18 @@ class User implements User_Interface
         }
         // === ОБРАБОТКА АВАТАРА ===
         $delete_old_avatar = false; // Флаг для удаления старого аватара
-        if ($post_data['delete_avatar'] !== 'true' || !$work->check_input(
+        if ($post_data['delete_avatar'] !== 'true' || !$this->work->check_input(
             '_POST',
             'delete_avatar',
             ['isset' => true, 'empty' => true]
         )) {
-            $new_user_data['avatar'] = $this->edit_avatar($files_data, $max_size, $work);
+            $new_user_data['avatar'] = $this->edit_avatar($files_data, $max_size);
             // Проверяем, нужно ли удалить старый аватар
             if ($user_data['avatar'] !== DEFAULT_AVATAR && $user_data['avatar'] !== $new_user_data['avatar']) {
                 $delete_old_avatar = true; // Устанавливаем флаг на удаление
             }
         } else {
-            $old_avatar_path = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'];
+            $old_avatar_path = $this->work->config['site_dir'] . $this->work->config['avatar_folder'] . '/' . $user_data['avatar'];
             if ($user_data['avatar'] !== DEFAULT_AVATAR && is_file($old_avatar_path) && is_writable(
                 $old_avatar_path
             )) {
@@ -1556,12 +1575,12 @@ class User implements User_Interface
             $new_user_data['avatar'] = DEFAULT_AVATAR;
         }
         // === Проверка языка и темы сайта ===
-        $new_user_data['language'] = $work->check_input(
+        $new_user_data['language'] = $this->work->check_input(
             '_POST',
             'language',
             ['isset' => true, 'empty' => true]
         ) ? $post_data['language'] : $user_data['language'];
-        $new_user_data['theme'] = $work->check_input(
+        $new_user_data['theme'] = $this->work->check_input(
             '_POST',
             'theme',
             ['isset' => true, 'empty' => true]
@@ -1591,7 +1610,7 @@ class User implements User_Interface
         $affected_rows = $this->db->get_affected_rows();
         // Если данные успешно обновлены и флаг удаления установлен, удаляем старый аватар
         if ($affected_rows > 0 && $delete_old_avatar) {
-            $old_avatar_path = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'];
+            $old_avatar_path = $this->work->config['site_dir'] . $this->work->config['avatar_folder'] . '/' . $user_data['avatar'];
             if (is_file($old_avatar_path) && is_writable($old_avatar_path)) {
                 unlink($old_avatar_path); // Безопасное удаление старого аватара
             }
@@ -1603,10 +1622,10 @@ class User implements User_Interface
      * @brief Обрабатывает загрузку аватара пользователя.
      *
      * @details Этот приватный метод выполняет следующие действия:
-     *          - Проверяет входные данные через `$work->check_input()`.
-     *          - Генерирует уникальное имя файла для аватара с использованием `$work->encodename()`.
+     *          - Проверяет входные данные через `Work::check_input()`.
+     *          - Генерирует уникальное имя файла для аватара с использованием `Work::encodename()`.
      *          - Перемещает загруженный файл в директорию аватаров.
-     *          - Корректирует расширение файла на основе его MIME-типа с помощью `$work->fix_file_extension()`.
+     *          - Корректирует расширение файла на основе его MIME-типа с помощью `Work::fix_file_extension()`.
      *          - Возвращает имя нового аватара или значение по умолчанию (`no_avatar.jpg`), если загрузка не удалась.
      *          Метод предназначен только для использования внутри класса.
      *
@@ -1619,11 +1638,6 @@ class User implements User_Interface
      * @param int $max_size Максимальный размер файла для аватара в байтах. Определяется на основе конфигурации
      *                      приложения и ограничений PHP (например, post_max_size). Если размер файла превышает
      *                      это значение, загрузка аватара отклоняется.
-     * @param Work $work Экземпляр класса `Work`, предоставляющий вспомогательные методы для работы с данными:
-     *                   - `check_input()`: Валидация входных данных.
-     *                   - `encodename()`: Генерация уникального имени файла.
-     *                   - `fix_file_extension()`: Корректировка расширения файла на основе его MIME-типа.
-     *                   Класс используется для выполнения вспомогательных операций внутри метода.
      *
      * @return string Имя нового аватара пользователя или значение по умолчанию (`no_avatar.jpg`),
      *                если загрузка аватара была отменена или произошла ошибка.
@@ -1638,8 +1652,7 @@ class User implements User_Interface
      * Пример вызова метода внутри класса:
      * @code
      * $maxSize = 5 * 1024 * 1024; // 5 MB
-     * $work = new \PhotoRigma\Classes\Work();
-     * $newAvatar = $this->edit_avatar($_FILES, $maxSize, $work);
+     * $newAvatar = $this->edit_avatar($_FILES, $maxSize);
      * if ($newAvatar !== DEFAULT_AVATAR) {
      *     echo "Новый аватар успешно загружен: {$newAvatar}";
      * } else {
@@ -1652,10 +1665,10 @@ class User implements User_Interface
      *
      * @see PhotoRigma::Classes::Work::check_input() Метод для проверки корректности входных данных.
      */
-    private function edit_avatar(array $files_data, int $max_size, Work $work): string
+    private function edit_avatar(array $files_data, int $max_size): string
     {
         // Проверяем входные данные через check_input
-        if ($work->check_input('_FILES', 'file_avatar', [
+        if ($this->work->check_input('_FILES', 'file_avatar', [
             'isset' => true,
             'empty' => true,
             'max_size' => $max_size
@@ -1667,10 +1680,10 @@ class User implements User_Interface
             $file_extension = isset($file_info['extension']) ? '.' . $file_info['extension'] : '';
             $encoded_name = Work::encodename($file_name);
             $file_avatar = time() . '_' . $encoded_name . $file_extension;
-            $path_avatar = $work->config['site_dir'] . $work->config['avatar_folder'] . '/' . $file_avatar;
+            $path_avatar = $this->work->config['site_dir'] . $this->work->config['avatar_folder'] . '/' . $file_avatar;
 
             // Проверяем права доступа к директории
-            if (!is_writable($work->config['site_dir'] . $work->config['avatar_folder'])) {
+            if (!is_writable($this->work->config['site_dir'] . $this->work->config['avatar_folder'])) {
                 throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для аватаров недоступна для записи."
                 );
@@ -1684,7 +1697,7 @@ class User implements User_Interface
             }
 
             // Корректировка расширения файла
-            $fixed_path = $work->fix_file_extension($path_avatar);
+            $fixed_path = $this->work->fix_file_extension($path_avatar);
             if ($fixed_path !== $path_avatar) {
                 rename($path_avatar, $fixed_path);
                 $file_avatar = basename($fixed_path);
@@ -1900,7 +1913,7 @@ class User implements User_Interface
      * @brief Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.
      *
      * @details Этот метод выполняет следующие действия:
-     *          - Проверяет корректность входных данных (логин и пароль) с использованием `$work->check_input()`.
+     *          - Проверяет корректность входных данных (логин и пароль) с использованием `Work::check_input()`.
      *          - Ищет пользователя в базе данных по логину.
      *          - Проверяет пароль через `password_verify()` и, при необходимости, через `md5`.
      *          - Если пароль хранится в старом формате (md5), он обновляется до формата `password_hash()`.
@@ -1911,7 +1924,6 @@ class User implements User_Interface
      * @param array $post Массив данных из формы ($_POST), содержащий ключи:
      *                    - string $login: Логин пользователя (должен соответствовать регулярному выражению REG_LOGIN).
      *                    - string $password: Пароль пользователя (не должен быть пустым).
-     * @param Work $work Объект класса `Work`, предоставляющий вспомогательные методы для проверки входных данных.
      * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
      *
      * @return int ID пользователя, если авторизация успешна, или 0 в случае ошибки.
@@ -1923,9 +1935,8 @@ class User implements User_Interface
      * Пример использования метода:
      * @code
      * $user = new \PhotoRigma\Classes\User();
-     * $work = new \PhotoRigma\Classes\Work();
      * $redirectUrl = '/login/error';
-     * $userId = $user->login_user($_POST, $work, $redirectUrl);
+     * $userId = $user->login_user($_POST, $redirectUrl);
      * if ($userId > 0) {
      *     echo "Вход выполнен успешно! ID пользователя: {$userId}";
      * } else {
@@ -1938,14 +1949,14 @@ class User implements User_Interface
      * @see PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных.
      * @see PhotoRigma::Classes::User::$db Свойство, содержащее объект класса Database.
      */
-    public function login_user(array $post, Work $work, string $redirect_url): int
+    public function login_user(array $post, string $redirect_url): int
     {
         // === 1. Проверка входных данных (логин и пароль) ===
-        if (!$work->check_input('_POST', 'login', [
+        if (!$this->work->check_input('_POST', 'login', [
                 'isset' => true,
                 'empty' => true,
                 'regexp' => REG_LOGIN
-            ]) || !$work->check_input('_POST', 'password', [
+            ]) || !$this->work->check_input('_POST', 'password', [
                 'isset' => true,
                 'empty' => true
             ])) {

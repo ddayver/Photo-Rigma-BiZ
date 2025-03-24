@@ -2,8 +2,8 @@
 <area shape="rect" id="Node000001" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (публичная обёртка)." alt="" coords="596,12,692,37"/>
 <area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot;." alt="" coords="405,5,548,44"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="581,27,549,27,549,22,581,22"/>
-<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a93574eaa3191f6cb217b7342793eec34" title="Обрабатывает загрузку аватара пользователя." alt="" coords="214,5,357,44"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя." alt="" coords="214,5,357,44"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="389,27,357,27,357,22,389,22"/>
-<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab142b3405ddc1bbb89b84a97dc89d8dc" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,5,166,44"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,5,166,44"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="198,27,166,27,166,22,198,22"/>
 </map>

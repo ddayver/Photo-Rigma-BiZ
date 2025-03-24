@@ -153,7 +153,7 @@ if ($subact === 'saveprofile') {
         }
 
         // Вызываем метод update_user_data для обновления данных пользователя
-        $rows = $user->update_user_data($user_id, $_POST, $_FILES, $max_size, $work);
+        $rows = $user->update_user_data($user_id, $_POST, $_FILES, $max_size);
 
         // Переинициируем класс User для обновления данных в сессии.
         $user = new User($db, $_SESSION);
@@ -307,7 +307,7 @@ if ($subact === 'regist') {
     $user->unset_property_key('session', 'csrf_token');
 
     // Вызываем метод add_user_data
-    $new_user = $user->add_new_user($_POST, $work, $redirect_url);
+    $new_user = $user->add_new_user($_POST, $redirect_url);
 
     // Обработка результата
     if ($new_user !== 0) {
@@ -343,7 +343,7 @@ if ($subact === 'regist') {
     $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
 
     // Вызываем метод login_user
-    $user_id = $user->login_user($_POST, $work, $redirect_url);
+    $user_id = $user->login_user($_POST, $redirect_url);
 
     // Авторизуем пользователя
     $user->session['login_id'] = $user_id; // Устанавливаем ID или 0, если пользователь не найден

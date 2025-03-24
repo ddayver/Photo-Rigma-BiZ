@@ -229,8 +229,9 @@ try {
     $work->set_lang();
     $template->set_lang($work->lang);
 
-    // Передаем объект Work в класс Template
+    // Передаем объект Work в классы Template и User
     $template->set_work($work);
+    $user->set_work($work);
 
     /** @var string $title
      * @brief Добавление текста к заголовку страницы.
