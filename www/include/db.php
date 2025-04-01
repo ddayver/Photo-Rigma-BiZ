@@ -6,7 +6,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-02-17
+ * @date        2025-04-02
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит реализацию класса `Database`, который предоставляет методы для работы с различными

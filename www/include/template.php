@@ -6,7 +6,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-02-21
+ * @date        2025-04-02
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Основные функции — обработка шаблонов с реализацией алгоритмов IF/ELSE, ARRAY, SWITCH/CASE.

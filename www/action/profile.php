@@ -28,7 +28,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-03-12
+ * @date        2025-04-02
  * @namespace   PhotoRigma\Action
  *
  * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.

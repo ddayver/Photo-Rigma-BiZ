@@ -17,7 +17,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-02-07
+ * @date        2025-04-02
  * @namespace   PhotoRigma
  *
  * @details     Этот файл является точкой входа в приложение и выполняет следующие задачи:

@@ -1004,79 +1004,79 @@ $(function(){initNavTree('d1/d1a/user_8php_source.html','../../'); initResizable
 <div class="foldopen" id="foldopen02262" data-start="{" data-end="}">
 <div class="line"><a id="l02262" name="l02262"></a><span class="lineno"><a class="line" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a54dd5e694d07ac47b91bf9a7cc58d9d2"> 2262</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a54dd5e694d07ac47b91bf9a7cc58d9d2">update_user_rights</a>(<span class="keywordtype">int</span> $user_id, array $user_data, array $post_data): array</div>
 <div class="line"><a id="l02263" name="l02263"></a><span class="lineno"> 2263</span>    {</div>
-<div class="line"><a id="l02264" name="l02264"></a><span class="lineno"> 2264</span>        <span class="comment">// Обновление группы пользователя</span></div>
-<div class="line"><a id="l02265" name="l02265"></a><span class="lineno"> 2265</span>        <span class="keywordflow">if</span> ($this-&gt;work-&gt;check_input(<span class="stringliteral">&#39;_POST&#39;</span>, <span class="stringliteral">&#39;group&#39;</span>, [</div>
-<div class="line"><a id="l02266" name="l02266"></a><span class="lineno"> 2266</span>                <span class="stringliteral">&#39;isset&#39;</span>    =&gt; <span class="keyword">true</span>,</div>
-<div class="line"><a id="l02267" name="l02267"></a><span class="lineno"> 2267</span>                <span class="stringliteral">&#39;empty&#39;</span>    =&gt; <span class="keyword">true</span>,</div>
-<div class="line"><a id="l02268" name="l02268"></a><span class="lineno"> 2268</span>                <span class="stringliteral">&#39;regexp&#39;</span>   =&gt; <span class="stringliteral">&#39;/^[0-9]+$/&#39;</span>,</div>
-<div class="line"><a id="l02269" name="l02269"></a><span class="lineno"> 2269</span>                <span class="stringliteral">&#39;not_zero&#39;</span> =&gt; <span class="keyword">true</span>,</div>
-<div class="line"><a id="l02270" name="l02270"></a><span class="lineno"> 2270</span>            ]) &amp;&amp; (<span class="keywordtype">int</span>)$post_data[<span class="stringliteral">&#39;group&#39;</span>] !== $user_data[<span class="stringliteral">&#39;group_id&#39;</span>]) {</div>
-<div class="line"><a id="l02271" name="l02271"></a><span class="lineno"> 2271</span>            $new_user_data = $user_data;</div>
-<div class="line"><a id="l02272" name="l02272"></a><span class="lineno"> 2272</span> </div>
-<div class="line"><a id="l02273" name="l02273"></a><span class="lineno"> 2273</span>            <span class="comment">// Получаем данные новой группы из таблицы групп</span></div>
-<div class="line"><a id="l02274" name="l02274"></a><span class="lineno"> 2274</span>            $this-&gt;db-&gt;select(<span class="stringliteral">&#39;`id`, `user_rights`&#39;</span>, TBL_GROUP, [</div>
-<div class="line"><a id="l02275" name="l02275"></a><span class="lineno"> 2275</span>                <span class="stringliteral">&#39;where&#39;</span>  =&gt; <span class="stringliteral">&#39;`id` = :group_id&#39;</span>,</div>
-<div class="line"><a id="l02276" name="l02276"></a><span class="lineno"> 2276</span>                <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:group_id&#39;</span> =&gt; $post_data[<span class="stringliteral">&#39;group&#39;</span>]],</div>
-<div class="line"><a id="l02277" name="l02277"></a><span class="lineno"> 2277</span>            ]);</div>
-<div class="line"><a id="l02278" name="l02278"></a><span class="lineno"> 2278</span>            $group_data = $this-&gt;db-&gt;res_row();</div>
-<div class="line"><a id="l02279" name="l02279"></a><span class="lineno"> 2279</span> </div>
-<div class="line"><a id="l02280" name="l02280"></a><span class="lineno"> 2280</span>            <span class="keywordflow">if</span> ($group_data) {</div>
-<div class="line"><a id="l02281" name="l02281"></a><span class="lineno"> 2281</span>                <span class="keywordflow">foreach</span> ($group_data as $key =&gt; $value) {</div>
-<div class="line"><a id="l02282" name="l02282"></a><span class="lineno"> 2282</span>                    <span class="keywordflow">if</span> ($key === <span class="stringliteral">&#39;id&#39;</span>) {</div>
-<div class="line"><a id="l02283" name="l02283"></a><span class="lineno"> 2283</span>                        <span class="comment">// Обновляем ID группы пользователя</span></div>
-<div class="line"><a id="l02284" name="l02284"></a><span class="lineno"> 2284</span>                        $new_user_data[<span class="stringliteral">&#39;group_id&#39;</span>] = $value;</div>
-<div class="line"><a id="l02285" name="l02285"></a><span class="lineno"> 2285</span>                    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l02286" name="l02286"></a><span class="lineno"> 2286</span>                        <span class="comment">// Формируем массив для обновления данных пользователя в БД</span></div>
-<div class="line"><a id="l02287" name="l02287"></a><span class="lineno"> 2287</span>                        $query[<span class="stringliteral">&quot;`$key`&quot;</span>] = <span class="stringliteral">&quot;:$key&quot;</span>;</div>
-<div class="line"><a id="l02288" name="l02288"></a><span class="lineno"> 2288</span>                        $params[<span class="stringliteral">&quot;:$key&quot;</span>] = $value;</div>
-<div class="line"><a id="l02289" name="l02289"></a><span class="lineno"> 2289</span>                        $new_user_data[$key] = $value;</div>
-<div class="line"><a id="l02290" name="l02290"></a><span class="lineno"> 2290</span>                    }</div>
-<div class="line"><a id="l02291" name="l02291"></a><span class="lineno"> 2291</span>                }</div>
-<div class="line"><a id="l02292" name="l02292"></a><span class="lineno"> 2292</span> </div>
-<div class="line"><a id="l02293" name="l02293"></a><span class="lineno"> 2293</span>                $params[<span class="stringliteral">&#39;:uid&#39;</span>] = $user_id;</div>
-<div class="line"><a id="l02294" name="l02294"></a><span class="lineno"> 2294</span> </div>
-<div class="line"><a id="l02295" name="l02295"></a><span class="lineno"> 2295</span>                <span class="comment">// Обновляем данные пользователя в БД</span></div>
-<div class="line"><a id="l02296" name="l02296"></a><span class="lineno"> 2296</span>                $this-&gt;db-&gt;update($query, TBL_USERS, [</div>
-<div class="line"><a id="l02297" name="l02297"></a><span class="lineno"> 2297</span>                    <span class="stringliteral">&#39;where&#39;</span>  =&gt; <span class="stringliteral">&#39;`id` = :uid&#39;</span>,</div>
-<div class="line"><a id="l02298" name="l02298"></a><span class="lineno"> 2298</span>                    <span class="stringliteral">&#39;params&#39;</span> =&gt; $params,</div>
-<div class="line"><a id="l02299" name="l02299"></a><span class="lineno"> 2299</span>                ]);</div>
-<div class="line"><a id="l02300" name="l02300"></a><span class="lineno"> 2300</span>                $rows = $this-&gt;db-&gt;get_affected_rows();</div>
-<div class="line"><a id="l02301" name="l02301"></a><span class="lineno"> 2301</span> </div>
-<div class="line"><a id="l02302" name="l02302"></a><span class="lineno"> 2302</span>                <span class="keywordflow">if</span> ($rows &gt; 0) {</div>
-<div class="line"><a id="l02303" name="l02303"></a><span class="lineno"> 2303</span>                    <span class="comment">// Если данные успешно обновлены, обрабатываем права пользователя</span></div>
-<div class="line"><a id="l02304" name="l02304"></a><span class="lineno"> 2304</span>                    $processed_rights = $this-&gt;<a class="code hl_function" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2">process_user_rights</a>($new_user_data[<span class="stringliteral">&#39;user_rights&#39;</span>]);</div>
-<div class="line"><a id="l02305" name="l02305"></a><span class="lineno"> 2305</span>                    unset($new_user_data[<span class="stringliteral">&#39;user_rights&#39;</span>]);</div>
-<div class="line"><a id="l02306" name="l02306"></a><span class="lineno"> 2306</span>                    $user_data = array_merge($new_user_data, $processed_rights);</div>
-<div class="line"><a id="l02307" name="l02307"></a><span class="lineno"> 2307</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l02308" name="l02308"></a><span class="lineno"> 2308</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(</div>
-<div class="line"><a id="l02309" name="l02309"></a><span class="lineno"> 2309</span>                        __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Ошибка при обновлении данных пользователя | ID пользователя: {$user_id}&quot;</span></div>
-<div class="line"><a id="l02310" name="l02310"></a><span class="lineno"> 2310</span>                    );</div>
-<div class="line"><a id="l02311" name="l02311"></a><span class="lineno"> 2311</span>                }</div>
-<div class="line"><a id="l02312" name="l02312"></a><span class="lineno"> 2312</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l02313" name="l02313"></a><span class="lineno"> 2313</span>                <span class="comment">// Группа с указанным ID не найдена</span></div>
-<div class="line"><a id="l02314" name="l02314"></a><span class="lineno"> 2314</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(</div>
-<div class="line"><a id="l02315" name="l02315"></a><span class="lineno"> 2315</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Не удалось получить данные группы | ID группы: {$post_data[&#39;group&#39;]}&quot;</span></div>
-<div class="line"><a id="l02316" name="l02316"></a><span class="lineno"> 2316</span>                );</div>
-<div class="line"><a id="l02317" name="l02317"></a><span class="lineno"> 2317</span>            }</div>
-<div class="line"><a id="l02318" name="l02318"></a><span class="lineno"> 2318</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l02319" name="l02319"></a><span class="lineno"> 2319</span>            <span class="comment">// Обновление прав доступа пользователя</span></div>
-<div class="line"><a id="l02320" name="l02320"></a><span class="lineno"> 2320</span>            $new_user_rights = [];</div>
-<div class="line"><a id="l02321" name="l02321"></a><span class="lineno"> 2321</span> </div>
-<div class="line"><a id="l02322" name="l02322"></a><span class="lineno"> 2322</span>            <span class="comment">// Получаем список всех полей прав доступа</span></div>
-<div class="line"><a id="l02323" name="l02323"></a><span class="lineno"> 2323</span>            <span class="keywordflow">foreach</span> ($this-&gt;user_right_fields[<span class="stringliteral">&#39;all&#39;</span>] as $field) {</div>
-<div class="line"><a id="l02324" name="l02324"></a><span class="lineno"> 2324</span>                <span class="keywordflow">if</span> ($this-&gt;work-&gt;check_input(<span class="stringliteral">&#39;_POST&#39;</span>, $field, [<span class="stringliteral">&#39;isset&#39;</span> =&gt; <span class="keyword">true</span>])) {</div>
-<div class="line"><a id="l02325" name="l02325"></a><span class="lineno"> 2325</span>                    <span class="comment">// Если поле существует и имеет допустимое значение, устанавливаем его в true</span></div>
-<div class="line"><a id="l02326" name="l02326"></a><span class="lineno"> 2326</span>                    $post_data[$field] = in_array($post_data[$field], [<span class="stringliteral">&#39;on&#39;</span>, 1, <span class="keyword">true</span>], <span class="keyword">true</span>);</div>
-<div class="line"><a id="l02327" name="l02327"></a><span class="lineno"> 2327</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l02328" name="l02328"></a><span class="lineno"> 2328</span>                    <span class="comment">// Если поле не передано, устанавливаем его в false</span></div>
-<div class="line"><a id="l02329" name="l02329"></a><span class="lineno"> 2329</span>                    $post_data[$field] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02330" name="l02330"></a><span class="lineno"> 2330</span>                }</div>
-<div class="line"><a id="l02331" name="l02331"></a><span class="lineno"> 2331</span> </div>
-<div class="line"><a id="l02332" name="l02332"></a><span class="lineno"> 2332</span>                $new_user_rights[$field] = $post_data[$field];</div>
-<div class="line"><a id="l02333" name="l02333"></a><span class="lineno"> 2333</span>            }</div>
-<div class="line"><a id="l02334" name="l02334"></a><span class="lineno"> 2334</span> </div>
-<div class="line"><a id="l02335" name="l02335"></a><span class="lineno"> 2335</span>            <span class="comment">// Кодируем права доступа для сохранения в БД</span></div>
-<div class="line"><a id="l02336" name="l02336"></a><span class="lineno"> 2336</span>            $encoded_user_rights = $this-&gt;<a class="code hl_function" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078">encode_user_rights</a>($new_user_rights);</div>
+<div class="line"><a id="l02264" name="l02264"></a><span class="lineno"> 2264</span>        $new_user_data = $user_data;</div>
+<div class="line"><a id="l02265" name="l02265"></a><span class="lineno"> 2265</span>        <span class="comment">// Обновление группы пользователя</span></div>
+<div class="line"><a id="l02266" name="l02266"></a><span class="lineno"> 2266</span>        <span class="keywordflow">if</span> ($this-&gt;work-&gt;check_input(<span class="stringliteral">&#39;_POST&#39;</span>, <span class="stringliteral">&#39;group&#39;</span>, [</div>
+<div class="line"><a id="l02267" name="l02267"></a><span class="lineno"> 2267</span>                <span class="stringliteral">&#39;isset&#39;</span>    =&gt; <span class="keyword">true</span>,</div>
+<div class="line"><a id="l02268" name="l02268"></a><span class="lineno"> 2268</span>                <span class="stringliteral">&#39;empty&#39;</span>    =&gt; <span class="keyword">true</span>,</div>
+<div class="line"><a id="l02269" name="l02269"></a><span class="lineno"> 2269</span>                <span class="stringliteral">&#39;regexp&#39;</span>   =&gt; <span class="stringliteral">&#39;/^[0-9]+$/&#39;</span>,</div>
+<div class="line"><a id="l02270" name="l02270"></a><span class="lineno"> 2270</span>                <span class="stringliteral">&#39;not_zero&#39;</span> =&gt; <span class="keyword">true</span>,</div>
+<div class="line"><a id="l02271" name="l02271"></a><span class="lineno"> 2271</span>            ]) &amp;&amp; (<span class="keywordtype">int</span>)$post_data[<span class="stringliteral">&#39;group&#39;</span>] !== $user_data[<span class="stringliteral">&#39;group_id&#39;</span>]) {</div>
+<div class="line"><a id="l02272" name="l02272"></a><span class="lineno"> 2272</span>            <span class="comment">// Получаем данные новой группы из таблицы групп</span></div>
+<div class="line"><a id="l02273" name="l02273"></a><span class="lineno"> 2273</span>            $this-&gt;db-&gt;select(<span class="stringliteral">&#39;`id`, `user_rights`&#39;</span>, TBL_GROUP, [</div>
+<div class="line"><a id="l02274" name="l02274"></a><span class="lineno"> 2274</span>                <span class="stringliteral">&#39;where&#39;</span>  =&gt; <span class="stringliteral">&#39;`id` = :group_id&#39;</span>,</div>
+<div class="line"><a id="l02275" name="l02275"></a><span class="lineno"> 2275</span>                <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:group_id&#39;</span> =&gt; $post_data[<span class="stringliteral">&#39;group&#39;</span>]],</div>
+<div class="line"><a id="l02276" name="l02276"></a><span class="lineno"> 2276</span>            ]);</div>
+<div class="line"><a id="l02277" name="l02277"></a><span class="lineno"> 2277</span>            $group_data = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l02278" name="l02278"></a><span class="lineno"> 2278</span> </div>
+<div class="line"><a id="l02279" name="l02279"></a><span class="lineno"> 2279</span>            <span class="keywordflow">if</span> ($group_data) {</div>
+<div class="line"><a id="l02280" name="l02280"></a><span class="lineno"> 2280</span>                <span class="keywordflow">foreach</span> ($group_data as $key =&gt; $value) {</div>
+<div class="line"><a id="l02281" name="l02281"></a><span class="lineno"> 2281</span>                    <span class="keywordflow">if</span> ($key === <span class="stringliteral">&#39;id&#39;</span>) {</div>
+<div class="line"><a id="l02282" name="l02282"></a><span class="lineno"> 2282</span>                        <span class="comment">// Обновляем ID группы пользователя</span></div>
+<div class="line"><a id="l02283" name="l02283"></a><span class="lineno"> 2283</span>                        $query[<span class="stringliteral">&quot;`group_id`&quot;</span>] = <span class="stringliteral">&quot;:group_id&quot;</span>;</div>
+<div class="line"><a id="l02284" name="l02284"></a><span class="lineno"> 2284</span>                        $params[<span class="stringliteral">&quot;:group_id&quot;</span>] = $value;</div>
+<div class="line"><a id="l02285" name="l02285"></a><span class="lineno"> 2285</span>                        $new_user_data[<span class="stringliteral">&#39;group_id&#39;</span>] = $value;</div>
+<div class="line"><a id="l02286" name="l02286"></a><span class="lineno"> 2286</span>                    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02287" name="l02287"></a><span class="lineno"> 2287</span>                        <span class="comment">// Формируем массив для обновления данных пользователя в БД</span></div>
+<div class="line"><a id="l02288" name="l02288"></a><span class="lineno"> 2288</span>                        $query[<span class="stringliteral">&quot;`$key`&quot;</span>] = <span class="stringliteral">&quot;:$key&quot;</span>;</div>
+<div class="line"><a id="l02289" name="l02289"></a><span class="lineno"> 2289</span>                        $params[<span class="stringliteral">&quot;:$key&quot;</span>] = $value;</div>
+<div class="line"><a id="l02290" name="l02290"></a><span class="lineno"> 2290</span>                        $new_user_data[$key] = $value;</div>
+<div class="line"><a id="l02291" name="l02291"></a><span class="lineno"> 2291</span>                    }</div>
+<div class="line"><a id="l02292" name="l02292"></a><span class="lineno"> 2292</span>                }</div>
+<div class="line"><a id="l02293" name="l02293"></a><span class="lineno"> 2293</span> </div>
+<div class="line"><a id="l02294" name="l02294"></a><span class="lineno"> 2294</span>                $params[<span class="stringliteral">&#39;:uid&#39;</span>] = $user_id;</div>
+<div class="line"><a id="l02295" name="l02295"></a><span class="lineno"> 2295</span> </div>
+<div class="line"><a id="l02296" name="l02296"></a><span class="lineno"> 2296</span>                <span class="comment">// Обновляем данные пользователя в БД</span></div>
+<div class="line"><a id="l02297" name="l02297"></a><span class="lineno"> 2297</span>                $this-&gt;db-&gt;update($query, TBL_USERS, [</div>
+<div class="line"><a id="l02298" name="l02298"></a><span class="lineno"> 2298</span>                    <span class="stringliteral">&#39;where&#39;</span>  =&gt; <span class="stringliteral">&#39;`id` = :uid&#39;</span>,</div>
+<div class="line"><a id="l02299" name="l02299"></a><span class="lineno"> 2299</span>                    <span class="stringliteral">&#39;params&#39;</span> =&gt; $params,</div>
+<div class="line"><a id="l02300" name="l02300"></a><span class="lineno"> 2300</span>                ]);</div>
+<div class="line"><a id="l02301" name="l02301"></a><span class="lineno"> 2301</span>                $rows = $this-&gt;db-&gt;get_affected_rows();</div>
+<div class="line"><a id="l02302" name="l02302"></a><span class="lineno"> 2302</span> </div>
+<div class="line"><a id="l02303" name="l02303"></a><span class="lineno"> 2303</span>                <span class="keywordflow">if</span> ($rows &gt; 0) {</div>
+<div class="line"><a id="l02304" name="l02304"></a><span class="lineno"> 2304</span>                    <span class="comment">// Если данные успешно обновлены, обрабатываем права пользователя</span></div>
+<div class="line"><a id="l02305" name="l02305"></a><span class="lineno"> 2305</span>                    $processed_rights = $this-&gt;<a class="code hl_function" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2">process_user_rights</a>($new_user_data[<span class="stringliteral">&#39;user_rights&#39;</span>]);</div>
+<div class="line"><a id="l02306" name="l02306"></a><span class="lineno"> 2306</span>                    unset($new_user_data[<span class="stringliteral">&#39;user_rights&#39;</span>]);</div>
+<div class="line"><a id="l02307" name="l02307"></a><span class="lineno"> 2307</span>                    $new_user_data = array_merge($new_user_data, $processed_rights);</div>
+<div class="line"><a id="l02308" name="l02308"></a><span class="lineno"> 2308</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02309" name="l02309"></a><span class="lineno"> 2309</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(</div>
+<div class="line"><a id="l02310" name="l02310"></a><span class="lineno"> 2310</span>                        __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Ошибка при обновлении данных пользователя | ID пользователя: {$user_id}&quot;</span></div>
+<div class="line"><a id="l02311" name="l02311"></a><span class="lineno"> 2311</span>                    );</div>
+<div class="line"><a id="l02312" name="l02312"></a><span class="lineno"> 2312</span>                }</div>
+<div class="line"><a id="l02313" name="l02313"></a><span class="lineno"> 2313</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02314" name="l02314"></a><span class="lineno"> 2314</span>                <span class="comment">// Группа с указанным ID не найдена</span></div>
+<div class="line"><a id="l02315" name="l02315"></a><span class="lineno"> 2315</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(</div>
+<div class="line"><a id="l02316" name="l02316"></a><span class="lineno"> 2316</span>                    __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__METHOD__ ?: __FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Не удалось получить данные группы | ID группы: {$post_data[&#39;group&#39;]}&quot;</span></div>
+<div class="line"><a id="l02317" name="l02317"></a><span class="lineno"> 2317</span>                );</div>
+<div class="line"><a id="l02318" name="l02318"></a><span class="lineno"> 2318</span>            }</div>
+<div class="line"><a id="l02319" name="l02319"></a><span class="lineno"> 2319</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02320" name="l02320"></a><span class="lineno"> 2320</span>            <span class="comment">// Обновление прав доступа пользователя</span></div>
+<div class="line"><a id="l02321" name="l02321"></a><span class="lineno"> 2321</span>            <span class="comment">// Получаем список всех полей прав доступа</span></div>
+<div class="line"><a id="l02322" name="l02322"></a><span class="lineno"> 2322</span>            <span class="keywordflow">foreach</span> ($this-&gt;user_right_fields[<span class="stringliteral">&#39;all&#39;</span>] as $field) {</div>
+<div class="line"><a id="l02323" name="l02323"></a><span class="lineno"> 2323</span>                <span class="keywordflow">if</span> ($this-&gt;work-&gt;check_input(<span class="stringliteral">&#39;_POST&#39;</span>, $field, [<span class="stringliteral">&#39;isset&#39;</span> =&gt; <span class="keyword">true</span>])) {</div>
+<div class="line"><a id="l02324" name="l02324"></a><span class="lineno"> 2324</span>                    <span class="comment">// Если поле существует и имеет допустимое значение, устанавливаем его в true</span></div>
+<div class="line"><a id="l02325" name="l02325"></a><span class="lineno"> 2325</span>                    $post_data[$field] = in_array($post_data[$field], [<span class="stringliteral">&#39;on&#39;</span>, 1, <span class="keyword">true</span>], <span class="keyword">true</span>);</div>
+<div class="line"><a id="l02326" name="l02326"></a><span class="lineno"> 2326</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l02327" name="l02327"></a><span class="lineno"> 2327</span>                    <span class="comment">// Если поле не передано, устанавливаем его в false</span></div>
+<div class="line"><a id="l02328" name="l02328"></a><span class="lineno"> 2328</span>                    $post_data[$field] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02329" name="l02329"></a><span class="lineno"> 2329</span>                }</div>
+<div class="line"><a id="l02330" name="l02330"></a><span class="lineno"> 2330</span> </div>
+<div class="line"><a id="l02331" name="l02331"></a><span class="lineno"> 2331</span>                $new_user_rights[$field] = $post_data[$field];</div>
+<div class="line"><a id="l02332" name="l02332"></a><span class="lineno"> 2332</span>            }</div>
+<div class="line"><a id="l02333" name="l02333"></a><span class="lineno"> 2333</span> </div>
+<div class="line"><a id="l02334" name="l02334"></a><span class="lineno"> 2334</span>            <span class="comment">// Кодируем права доступа для сохранения в БД</span></div>
+<div class="line"><a id="l02335" name="l02335"></a><span class="lineno"> 2335</span>            $encoded_user_rights = $this-&gt;<a class="code hl_function" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078">encode_user_rights</a>($new_user_rights);</div>
+<div class="line"><a id="l02336" name="l02336"></a><span class="lineno"> 2336</span>            $new_user_data = array_merge($new_user_data, $new_user_rights);</div>
 <div class="line"><a id="l02337" name="l02337"></a><span class="lineno"> 2337</span> </div>
 <div class="line"><a id="l02338" name="l02338"></a><span class="lineno"> 2338</span>            <span class="comment">// Обновляем права доступа пользователя в БД</span></div>
 <div class="line"><a id="l02339" name="l02339"></a><span class="lineno"> 2339</span>            $this-&gt;db-&gt;update(</div>
@@ -1092,7 +1092,7 @@ $(function(){initNavTree('d1/d1a/user_8php_source.html','../../'); initResizable
 <div class="line"><a id="l02349" name="l02349"></a><span class="lineno"> 2349</span>            );</div>
 <div class="line"><a id="l02350" name="l02350"></a><span class="lineno"> 2350</span>        }</div>
 <div class="line"><a id="l02351" name="l02351"></a><span class="lineno"> 2351</span> </div>
-<div class="line"><a id="l02352" name="l02352"></a><span class="lineno"> 2352</span>        <span class="keywordflow">return</span> $user_data;</div>
+<div class="line"><a id="l02352" name="l02352"></a><span class="lineno"> 2352</span>        <span class="keywordflow">return</span> $new_user_data;</div>
 <div class="line"><a id="l02353" name="l02353"></a><span class="lineno"> 2353</span>    }</div>
 </div>
 <div class="line"><a id="l02354" name="l02354"></a><span class="lineno"> 2354</span>}</div>

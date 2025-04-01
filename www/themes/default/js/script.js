@@ -1,5 +1,5 @@
 /*
- * Авторские права (c) 2025.
+ * Авторские права (c) 2008-2025. Dark Dayver. Все права защищены.
  *
  * Данная лицензия разрешает лицам, получившим копию данного программного обеспечения и связанных с ним файлов документации
  * (далее — «Программное Обеспечение»), безвозмездно использовать Программное Обеспечение без ограничений, включая право
@@ -22,7 +22,7 @@ $(document).ready(function () {
     $('.ui.checkbox').checkbox();
     $('.ui.icon.button').popup();
     $('.ui.dropdown').dropdown();
-    $('.ui.sticky').sticky({ context: '#short_menu' });
+    $('.ui.sticky').sticky({context: '#short_menu'});
     console.log('Initializing readonly ratings...');
 
     function initializeReadOnlyRating() {
@@ -83,13 +83,9 @@ $(document).ready(function () {
         const $modal = $(modalSelector);
 
         $modal.modal({
-            closable: false,
-            transition: 'fly left',
-            duration: 500,
-            onHide: function () {
+            closable: false, transition: 'fly left', duration: 500, onHide: function () {
                 $modal.modal('setting', 'transition', 'fly right');
-            },
-            onApprove: function () {
+            }, onApprove: function () {
                 const url = $modal.data('url');
                 window.location.href = url;
             }

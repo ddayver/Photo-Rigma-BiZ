@@ -77,6 +77,7 @@
     display: grid;
     margin: 5px;
 }
+
 .form-field label {
     font-weight: bold;
     margin-bottom: 5px;
@@ -87,56 +88,12 @@
 }
 
 /* Базовые стили для рейтинга */
-.ui.rating .icon {
-    font-family: 'Icons'; /* Используем шрифт Fomantic-UI */
-    font-size: 14px; /* Размер иконок */
-    color: grey; /* Цвет нейтральных иконок */
-}
 
 /* Цвета для положительных, отрицательных и нейтральных значений */
-.ui.rating .icon.red {
-    color: red;
-}
-.ui.rating .icon.green {
-    color: green;
-}
-.ui.rating .icon.grey {
-    color: grey;
-}
 
 /* Активные иконки */
-.ui.rating .icon.active {
-    color: currentColor; /* Сохраняем цвет, заданный выше */
-}
 
 /* Стиль для частичной заливки */
-.ui.rating .icon.partial {
-    background: linear-gradient(to right, currentColor var(--fill-percent), transparent var(--fill-percent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-body.modal-open {
-    overflow: hidden; /* Запрет прокрутки страницы */
-}
-
-body.modal-open::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 999;
-}
-
-body.modal-open.modal-visible::before {
-    opacity: 1;
-}
 
 .ui.buttons.vertical .button:first-child {
     border-radius: 0;
@@ -173,14 +130,14 @@ body.modal-open.modal-visible::before {
 body {
     background: #141519;
     font: 14px Helvetica, sans-serif;
-    color: #CCCCCC
+    color: #cccccc
 }
 
 .my {
     background: #141519;
     font: 14px Helvetica, sans-serif;
     border: #414b57 ridge 2px;
-    color: #CCCCCC;
+    color: #cccccc;
     text-align: left;
     vertical-align: top;
     margin: 0;
@@ -222,17 +179,6 @@ body {
     vertical-align: middle
 }
 
-.name_block {
-    font: bold 14px serif;
-    color: #CCCCCC;
-    height: 26px;
-    text-align: center;
-    vertical-align: middle;
-    border-width: 0;
-    margin: 0;
-    padding: 0
-}
-
 .mini_photo {
     color: #999999;
     text-align: center;
@@ -248,28 +194,20 @@ body {
     text-align: left;
     text-indent: 10px;
     vertical-align: top;
-/*    border-width: 0 */
+    /*    border-width: 0 */
 }
 
 .news_data {
     color: #999999;
     text-align: left;
     vertical-align: top;
-/*    border-width: 0 */
+    /*    border-width: 0 */
 }
 
 .login_user {
     text-align: center;
     vertical-align: middle;
     border-width: 0
-}
-
-.stat {
-    text-align: left;
-    vertical-align: top;
-    border-width: 0;
-    margin: 0;
-    padding: 5px
 }
 
 .stat_data {
@@ -304,22 +242,12 @@ body {
     font: 14px "Courier New", Courier, monospace
 }
 
-.category, .category_center {
+.category_center {
     text-align: center;
     vertical-align: middle;
     border-width: 0;
     margin: 0;
     padding: 0 0 5px
-}
-
-.category_left {
-    text-align: left
-}
-
-.category {
-    border-bottom-color: #414b57;
-    border-style: none none ridge;
-    border-width: medium medium 2px
 }
 
 .mini_photo_category {
@@ -339,31 +267,27 @@ body {
     width: 14px
 }
 
-button, .no_jquery {
+button {
     background: #1f2329;
     border: solid 1px;
     color: #cccccc
 }
 
-.edit_delete {
-    float: right
-}
-
-.field_copyright a, .field_copyright a:visited, .login_user a, .login_user a:visited, .mini_photo a, .mini_photo a:visited, .news_data a, .news_data a:visited, .news a, .news a:visited, .category a, .category a:visited, .category_center a, .category_center a:visited, .category_left a, .category_left a:visited {
-    color: #CCCCCC;
+.field_copyright a, .field_copyright a:visited, .login_user a, .login_user a:visited, .mini_photo a, .mini_photo a:visited, .news_data a, .news_data a:visited, .news a, .news a:visited, .category_center a, .category_center a:visited {
+    color: #cccccc;
     text-decoration: none
 }
 
-.field_copyright a:hover, .login_user a:hover, .mini_photo a:hover, .news_data a:hover, .news a:hover, .category a:hover, .category_center a:hover, .category_left a:hover {
-    color: #FFFFFF;
+.field_copyright a:hover, .login_user a:hover, .mini_photo a:hover, .news_data a:hover, .news a:hover, .category_center a:hover {
+    color: #ffffff;
     text-decoration: none
 }
 
-.field_copyright a:active, .login_user a:active, .mini_photo a:active, .news_data a:active, .news a:active, .category a:active, .category_center a:active, .category_left a:active {
-    color: #FF0000;
+.field_copyright a:active, .login_user a:active, .mini_photo a:active, .news_data a:active, .news a:active, .category_center a:active {
+    color: #6ec151;
     text-decoration: none
 }
 
-.line, .select, .vselect {
+.line, .select {
     color: #999999
 }

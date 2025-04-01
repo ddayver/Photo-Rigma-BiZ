@@ -323,7 +323,7 @@ $(function(){initNavTree('de/d20/index_8php_source.html','../../'); initResizabl
 <div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                        $args = array_map(<span class="keyword">static</span> <span class="keyword">function</span> ($arg) {</div>
 <div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>                            $arg_str = is_string($arg) ? $arg : json_encode(</div>
 <div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                                $arg,</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                                JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                                JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT</div>
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                            );</div>
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                            <span class="keywordflow">return</span> mb_strlen($arg_str, <span class="stringliteral">&#39;UTF-8&#39;</span>) &gt; 80 ? mb_substr(</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                                $arg_str,</div>
@@ -338,7 +338,7 @@ $(function(){initNavTree('de/d20/index_8php_source.html','../../'); initResizabl
 <div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                            $trace[<span class="stringliteral">&#39;file&#39;</span>] ?? <span class="stringliteral">&#39;неизвестный файл&#39;</span>,</div>
 <div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>                            $trace[<span class="stringliteral">&#39;line&#39;</span>] ?? <span class="stringliteral">&#39;неизвестная строка&#39;</span>,</div>
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>                            $trace[<span class="stringliteral">&#39;function&#39;</span>] ?? <span class="stringliteral">&#39;неизвестная функция&#39;</span>,</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                            json_encode($args, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                            json_encode($args, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)</div>
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                        );</div>
 <div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>                    }</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>                    $message .= <span class="stringliteral">&quot;Трассировка:\n&quot;</span> . implode(<span class="stringliteral">&quot;\n\n&quot;</span>, $trace_info) . PHP_EOL;</div>

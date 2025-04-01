@@ -20,7 +20,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-03-12
+ * @date        2025-04-02
  * @namespace   PhotoRigma\Action
  *
  * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
@@ -414,10 +414,14 @@ if (!empty($user->user['admin']) && $work->check_input(
             'not_zero' => true,
         ])) {
             // Проверяем существование пользователя с указанным uid
-            $db->select('*', TBL_USERS, [
-                'where'  => '`id` = :uid',
-                'params' => [':uid' => $_GET['uid']],
-            ]);
+            $db->select(
+                '`id`, `login`, `email`, `real_name`, `avatar`, `group_id`, `user_rights`',
+                TBL_USERS,
+                [
+                    'where'  => '`id` = :uid',
+                    'params' => [':uid' => $_GET['uid']],
+                ]
+            );
             $user_data = $db->res_row();
 
             if ($user_data) {
@@ -436,7 +440,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         );
                     }
                     $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
-                    // Обновление данные  пользователя
+                    // Обновление данные пользователя
                     $user_data = $user->update_user_rights($_GET['uid'], $user_data, $_POST);
                 }
 
@@ -551,7 +555,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 }
 
                 $template->add_if('NEED_USER', true);
-                $_POST['search_user'] = $search_query === '%' ? '*' : $search_query;
+                $_POST['search_user'] = $search_query === '%' ? '*' : $_POST['search_user'];
             }
 
             // Добавляем форму поиска в шаблон

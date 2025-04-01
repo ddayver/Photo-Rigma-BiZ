@@ -9,7 +9,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-02-20
+ * @date        2025-04-02
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Содержит класс `User` и интерфейс `User_Interface` с набором методов для работы с пользователями, а
@@ -2261,6 +2261,7 @@ class User implements User_Interface
      */
     public function update_user_rights(int $user_id, array $user_data, array $post_data): array
     {
+        $new_user_data = $user_data;
         // Обновление группы пользователя
         if ($this->work->check_input('_POST', 'group', [
                 'isset'    => true,
@@ -2268,8 +2269,6 @@ class User implements User_Interface
                 'regexp'   => '/^[0-9]+$/',
                 'not_zero' => true,
             ]) && (int)$post_data['group'] !== $user_data['group_id']) {
-            $new_user_data = $user_data;
-
             // Получаем данные новой группы из таблицы групп
             $this->db->select('`id`, `user_rights`', TBL_GROUP, [
                 'where'  => '`id` = :group_id',
@@ -2281,6 +2280,8 @@ class User implements User_Interface
                 foreach ($group_data as $key => $value) {
                     if ($key === 'id') {
                         // Обновляем ID группы пользователя
+                        $query["`group_id`"] = ":group_id";
+                        $params[":group_id"] = $value;
                         $new_user_data['group_id'] = $value;
                     } else {
                         // Формируем массив для обновления данных пользователя в БД
@@ -2303,7 +2304,7 @@ class User implements User_Interface
                     // Если данные успешно обновлены, обрабатываем права пользователя
                     $processed_rights = $this->process_user_rights($new_user_data['user_rights']);
                     unset($new_user_data['user_rights']);
-                    $user_data = array_merge($new_user_data, $processed_rights);
+                    $new_user_data = array_merge($new_user_data, $processed_rights);
                 } else {
                     throw new RuntimeException(
                         __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: {$user_id}"
@@ -2317,8 +2318,6 @@ class User implements User_Interface
             }
         } else {
             // Обновление прав доступа пользователя
-            $new_user_rights = [];
-
             // Получаем список всех полей прав доступа
             foreach ($this->user_right_fields['all'] as $field) {
                 if ($this->work->check_input('_POST', $field, ['isset' => true])) {
@@ -2334,6 +2333,7 @@ class User implements User_Interface
 
             // Кодируем права доступа для сохранения в БД
             $encoded_user_rights = $this->encode_user_rights($new_user_rights);
+            $new_user_data = array_merge($new_user_data, $new_user_rights);
 
             // Обновляем права доступа пользователя в БД
             $this->db->update(
@@ -2349,6 +2349,6 @@ class User implements User_Interface
             );
         }
 
-        return $user_data;
+        return $new_user_data;
     }
 }

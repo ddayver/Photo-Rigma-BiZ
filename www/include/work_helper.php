@@ -6,7 +6,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-02-12
+ * @date        2025-04-02
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_Helper`, который реализует вспомогательные методы для обработки данных.
