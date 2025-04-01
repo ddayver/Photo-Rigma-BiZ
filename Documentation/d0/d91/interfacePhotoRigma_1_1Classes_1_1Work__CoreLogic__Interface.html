@@ -161,10 +161,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 <p>Пример класса, реализующего интерфейс: </p><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">Work_CoreLogic</a> <span class="keyword">implements</span> <a class="code hl_interface" href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">\PhotoRigma\Classes\Work_CoreLogic_Interface</a> {</div>
 <div class="line">    <span class="comment">// Реализация методов интерфейса</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00498">work_corelogic.php:499</a></div></div>
-<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00082">work_corelogic.php:83</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html"><div class="ttname"><a href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html">PhotoRigma\Classes\Work_CoreLogic</a></div><div class="ttdoc">Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00509">work_corelogic.php:510</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLogic__Interface.html">PhotoRigma\Classes\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/d79/work__corelogic_8php_source.html#l00084">work_corelogic.php:85</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00082">82</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dd/d79/work__corelogic_8php_source.html">work_corelogic.php</a> строка <a class="el" href="../../dd/d79/work__corelogic_8php_source.html#l00084">84</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a4dfb943f9b750ec6e1e2924a9620c7f5" name="a4dfb943f9b750ec6e1e2924a9620c7f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4dfb943f9b750ec6e1e2924a9620c7f5">&#9670;&#160;</a></span>category()</h2>
@@ -293,8 +293,10 @@ $(function(){initNavTree('d0/d91/interfacePhotoRigma_1_1Classes_1_1Work__CoreLog
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый <code>$type</code> или <code>$id_photo &lt; 0</code>. Пример сообщения: "Некорректный идентификатор фотографии | Значение: {$id_photo}". </td></tr>
-    <tr><td class="paramname">PDOException</td><td>Если произошла ошибка при выборке данных из базы данных. Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}". </td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан недопустимый <code>$type</code> или <code>$id_photo &lt; 0</code>. Пример сообщения: "Некорректный идентификатор фотографии | Значение:
+                                 {$id_photo}". </td></tr>
+    <tr><td class="paramname">PDOException</td><td>Если произошла ошибка при выборке данных из базы данных. Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с
+                                 ID: {$photo_data['category']}". </td></tr>
     <tr><td class="paramname">RuntimeException</td><td>Если файл изображения недоступен или не существует.</td></tr>
   </table>
   </dd>

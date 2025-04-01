@@ -141,69 +141,69 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <tr class="memitem:ab020da18450b0c34601b4d365da6f943" id="r_ab020da18450b0c34601b4d365da6f943"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab020da18450b0c34601b4d365da6f943">__construct</a> (array $db_config)</td></tr>
 <tr class="memdesc:ab020da18450b0c34601b4d365da6f943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор класса.  <br /></td></tr>
 <tr class="separator:ab020da18450b0c34601b4d365da6f943"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab30d2495bb1362d218cd62e1556b13e" id="r_aab30d2495bb1362d218cd62e1556b13e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a> (string|array $select, string $from_tbl, array $options=[])</td></tr>
-<tr class="memdesc:aab30d2495bb1362d218cd62e1556b13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:aab30d2495bb1362d218cd62e1556b13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2b6c23b3a70e9ef06c22d8a4885d69a" id="r_aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $join, array $options=[])</td></tr>
-<tr class="memdesc:aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d8e6acdfb996002f980ab7c9c18515" id="r_a73d8e6acdfb996002f980ab7c9c18515"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73d8e6acdfb996002f980ab7c9c18515">delete</a> (string $from_tbl, array $options=[])</td></tr>
 <tr class="memdesc:a73d8e6acdfb996002f980ab7c9c18515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
 <tr class="separator:a73d8e6acdfb996002f980ab7c9c18515"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4d4e455d9e4bf865126c72cf23a517b" id="r_ad4d4e455d9e4bf865126c72cf23a517b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4d4e455d9e4bf865126c72cf23a517b">truncate</a> (string $from_tbl)</td></tr>
-<tr class="memdesc:ad4d4e455d9e4bf865126c72cf23a517b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:ad4d4e455d9e4bf865126c72cf23a517b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a539e51bc2144b972bfafeccdda56ee9e" id="r_a539e51bc2144b972bfafeccdda56ee9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e">update</a> (array $update, string $from_tbl, array $options=[])</td></tr>
-<tr class="memdesc:a539e51bc2144b972bfafeccdda56ee9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:a539e51bc2144b972bfafeccdda56ee9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e5af1f386c0c7968aa10ea928c7a110" id="r_a6e5af1f386c0c7968aa10ea928c7a110"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110">insert</a> (array $insert, string $to_tbl, string $type='', array $options=[])</td></tr>
-<tr class="memdesc:a6e5af1f386c0c7968aa10ea928c7a110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:a6e5af1f386c0c7968aa10ea928c7a110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a974af553ef190897a8849c77166ea32d" id="r_a974af553ef190897a8849c77166ea32d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a974af553ef190897a8849c77166ea32d">res_row</a> ()</td></tr>
-<tr class="memdesc:a974af553ef190897a8849c77166ea32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>.  <br /></td></tr>
-<tr class="separator:a974af553ef190897a8849c77166ea32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bfd8e43ae69ed64120dd984b9e288a4" id="r_a0bfd8e43ae69ed64120dd984b9e288a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a> ()</td></tr>
-<tr class="memdesc:a0bfd8e43ae69ed64120dd984b9e288a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>, и возвращает их как массив.  <br /></td></tr>
-<tr class="separator:a0bfd8e43ae69ed64120dd984b9e288a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c437dae4e310529391e7f5388b133ba" id="r_a2c437dae4e310529391e7f5388b133ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c437dae4e310529391e7f5388b133ba">get_affected_rows</a> ()</td></tr>
 <tr class="memdesc:a2c437dae4e310529391e7f5388b133ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество строк, затронутых последним запросом.  <br /></td></tr>
 <tr class="separator:a2c437dae4e310529391e7f5388b133ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abafff8c03a52d73e37072449448e5a3c" id="r_abafff8c03a52d73e37072449448e5a3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abafff8c03a52d73e37072449448e5a3c">get_last_insert_id</a> ()</td></tr>
 <tr class="memdesc:abafff8c03a52d73e37072449448e5a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ID последней вставленной строки.  <br /></td></tr>
 <tr class="separator:abafff8c03a52d73e37072449448e5a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e5af1f386c0c7968aa10ea928c7a110" id="r_a6e5af1f386c0c7968aa10ea928c7a110"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110">insert</a> (array $insert, string $to_tbl, string $type='', array $options=[])</td></tr>
+<tr class="memdesc:a6e5af1f386c0c7968aa10ea928c7a110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:a6e5af1f386c0c7968aa10ea928c7a110"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2b6c23b3a70e9ef06c22d8a4885d69a" id="r_aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $join, array $options=[])</td></tr>
+<tr class="memdesc:aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:aa2b6c23b3a70e9ef06c22d8a4885d69a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bfd8e43ae69ed64120dd984b9e288a4" id="r_a0bfd8e43ae69ed64120dd984b9e288a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bfd8e43ae69ed64120dd984b9e288a4">res_arr</a> ()</td></tr>
+<tr class="memdesc:a0bfd8e43ae69ed64120dd984b9e288a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>, и возвращает их как массив.  <br /></td></tr>
+<tr class="separator:a0bfd8e43ae69ed64120dd984b9e288a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a974af553ef190897a8849c77166ea32d" id="r_a974af553ef190897a8849c77166ea32d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a974af553ef190897a8849c77166ea32d">res_row</a> ()</td></tr>
+<tr class="memdesc:a974af553ef190897a8849c77166ea32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>.  <br /></td></tr>
+<tr class="separator:a974af553ef190897a8849c77166ea32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab30d2495bb1362d218cd62e1556b13e" id="r_aab30d2495bb1362d218cd62e1556b13e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a> (string|array $select, string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:aab30d2495bb1362d218cd62e1556b13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:aab30d2495bb1362d218cd62e1556b13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d4e455d9e4bf865126c72cf23a517b" id="r_ad4d4e455d9e4bf865126c72cf23a517b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4d4e455d9e4bf865126c72cf23a517b">truncate</a> (string $from_tbl)</td></tr>
+<tr class="memdesc:ad4d4e455d9e4bf865126c72cf23a517b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:ad4d4e455d9e4bf865126c72cf23a517b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a539e51bc2144b972bfafeccdda56ee9e" id="r_a539e51bc2144b972bfafeccdda56ee9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e">update</a> (array $update, string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:a539e51bc2144b972bfafeccdda56ee9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:a539e51bc2144b972bfafeccdda56ee9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Защищенные члены</h2></td></tr>
-<tr class="memitem:a3e40bb61553455b6f52be0ab9a6062b1" id="r_a3e40bb61553455b6f52be0ab9a6062b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e40bb61553455b6f52be0ab9a6062b1">_select_internal</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $options=[])</td></tr>
-<tr class="memdesc:a3e40bb61553455b6f52be0ab9a6062b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:a3e40bb61553455b6f52be0ab9a6062b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3fbbc7c98d1c241e897f0bf80177d2b" id="r_aa3fbbc7c98d1c241e897f0bf80177d2b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3fbbc7c98d1c241e897f0bf80177d2b">_join_internal</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $<a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a>, array $options=[])</td></tr>
-<tr class="memdesc:aa3fbbc7c98d1c241e897f0bf80177d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:aa3fbbc7c98d1c241e897f0bf80177d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4094e522b4780bd58666dba20fdd09d" id="r_aa4094e522b4780bd58666dba20fdd09d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4094e522b4780bd58666dba20fdd09d">_delete_internal</a> (string $from_tbl, array $options=[])</td></tr>
 <tr class="memdesc:aa4094e522b4780bd58666dba20fdd09d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
 <tr class="separator:aa4094e522b4780bd58666dba20fdd09d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad353291f086236ab7be0d1edc0ed3ba8" id="r_ad353291f086236ab7be0d1edc0ed3ba8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad353291f086236ab7be0d1edc0ed3ba8">_truncate_internal</a> (string $from_tbl)</td></tr>
-<tr class="memdesc:ad353291f086236ab7be0d1edc0ed3ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:ad353291f086236ab7be0d1edc0ed3ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1dc7ae1ce60a864b1d7c865e99029b0" id="r_ab1dc7ae1ce60a864b1d7c865e99029b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1dc7ae1ce60a864b1d7c865e99029b0">_update_internal</a> (array $<a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e">update</a>, string $from_tbl, array $options=[])</td></tr>
-<tr class="memdesc:ab1dc7ae1ce60a864b1d7c865e99029b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:ab1dc7ae1ce60a864b1d7c865e99029b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a442c0348c8bd3cd7104cb110cc71348a" id="r_a442c0348c8bd3cd7104cb110cc71348a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a442c0348c8bd3cd7104cb110cc71348a">_insert_internal</a> (array $<a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110">insert</a>, string $to_tbl, string $type='', array $options=[])</td></tr>
-<tr class="memdesc:a442c0348c8bd3cd7104cb110cc71348a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
-<tr class="separator:a442c0348c8bd3cd7104cb110cc71348a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbe79d2c68c4501e901c6a978544ba25" id="r_adbe79d2c68c4501e901c6a978544ba25"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbe79d2c68c4501e901c6a978544ba25">_res_row_internal</a> ()</td></tr>
-<tr class="memdesc:adbe79d2c68c4501e901c6a978544ba25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>.  <br /></td></tr>
-<tr class="separator:adbe79d2c68c4501e901c6a978544ba25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71ffa0229d9d0c5053501c55e6fd98d0" id="r_a71ffa0229d9d0c5053501c55e6fd98d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71ffa0229d9d0c5053501c55e6fd98d0">_res_arr_internal</a> ()</td></tr>
-<tr class="memdesc:a71ffa0229d9d0c5053501c55e6fd98d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>, и возвращает их как массив.  <br /></td></tr>
-<tr class="separator:a71ffa0229d9d0c5053501c55e6fd98d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a834ca0d1c7c60bc9bfae123070b45fbd" id="r_a834ca0d1c7c60bc9bfae123070b45fbd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a834ca0d1c7c60bc9bfae123070b45fbd">_get_affected_rows_internal</a> ()</td></tr>
 <tr class="memdesc:a834ca0d1c7c60bc9bfae123070b45fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество строк, затронутых последним запросом.  <br /></td></tr>
 <tr class="separator:a834ca0d1c7c60bc9bfae123070b45fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab122f53e8d2ca9d723e32426c9e691e9" id="r_ab122f53e8d2ca9d723e32426c9e691e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab122f53e8d2ca9d723e32426c9e691e9">_get_last_insert_id_internal</a> ()</td></tr>
 <tr class="memdesc:ab122f53e8d2ca9d723e32426c9e691e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ID последней вставленной строки.  <br /></td></tr>
 <tr class="separator:ab122f53e8d2ca9d723e32426c9e691e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442c0348c8bd3cd7104cb110cc71348a" id="r_a442c0348c8bd3cd7104cb110cc71348a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a442c0348c8bd3cd7104cb110cc71348a">_insert_internal</a> (array $<a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110">insert</a>, string $to_tbl, string $type='', array $options=[])</td></tr>
+<tr class="memdesc:a442c0348c8bd3cd7104cb110cc71348a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:a442c0348c8bd3cd7104cb110cc71348a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3fbbc7c98d1c241e897f0bf80177d2b" id="r_aa3fbbc7c98d1c241e897f0bf80177d2b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3fbbc7c98d1c241e897f0bf80177d2b">_join_internal</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $<a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a">join</a>, array $options=[])</td></tr>
+<tr class="memdesc:aa3fbbc7c98d1c241e897f0bf80177d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:aa3fbbc7c98d1c241e897f0bf80177d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71ffa0229d9d0c5053501c55e6fd98d0" id="r_a71ffa0229d9d0c5053501c55e6fd98d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71ffa0229d9d0c5053501c55e6fd98d0">_res_arr_internal</a> ()</td></tr>
+<tr class="memdesc:a71ffa0229d9d0c5053501c55e6fd98d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>, и возвращает их как массив.  <br /></td></tr>
+<tr class="separator:a71ffa0229d9d0c5053501c55e6fd98d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbe79d2c68c4501e901c6a978544ba25" id="r_adbe79d2c68c4501e901c6a978544ba25"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbe79d2c68c4501e901c6a978544ba25">_res_row_internal</a> ()</td></tr>
+<tr class="memdesc:adbe79d2c68c4501e901c6a978544ba25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве <code>$res_query</code>.  <br /></td></tr>
+<tr class="separator:adbe79d2c68c4501e901c6a978544ba25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e40bb61553455b6f52be0ab9a6062b1" id="r_a3e40bb61553455b6f52be0ab9a6062b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e40bb61553455b6f52be0ab9a6062b1">_select_internal</a> (string|array $<a class="el" href="#aab30d2495bb1362d218cd62e1556b13e">select</a>, string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:a3e40bb61553455b6f52be0ab9a6062b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:a3e40bb61553455b6f52be0ab9a6062b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad353291f086236ab7be0d1edc0ed3ba8" id="r_ad353291f086236ab7be0d1edc0ed3ba8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad353291f086236ab7be0d1edc0ed3ba8">_truncate_internal</a> (string $from_tbl)</td></tr>
+<tr class="memdesc:ad353291f086236ab7be0d1edc0ed3ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:ad353291f086236ab7be0d1edc0ed3ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1dc7ae1ce60a864b1d7c865e99029b0" id="r_ab1dc7ae1ce60a864b1d7c865e99029b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1dc7ae1ce60a864b1d7c865e99029b0">_update_internal</a> (array $<a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e">update</a>, string $from_tbl, array $options=[])</td></tr>
+<tr class="memdesc:ab1dc7ae1ce60a864b1d7c865e99029b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает его в свойстве <code>$txt_query</code> и выполняет.  <br /></td></tr>
+<tr class="separator:ab1dc7ae1ce60a864b1d7c865e99029b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Закрытые члены</h2></td></tr>
@@ -256,9 +256,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">];</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new \\PhotoRigma\\Classes\\Database(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>);</div>
 <div class="ttc" id="anamespacePhotoRigma_html_a1fa3127fc82f96b1436d871ef02be319"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">PhotoRigma\$db</a></div><div class="ttdeci">$db</div><div class="ttdoc">Создание объекта класса Database для работы с основной БД.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00176">index.php:176</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a49c7011be9c979d9174c52a8b83e5d8e">PhotoRigma\$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Массив с настройками сервера.</div><div class="ttdef"><b>Определения</b> <a href="../../d0/d45/config_8php_source.html#l00072">config.php:72</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a49c7011be9c979d9174c52a8b83e5d8e">PhotoRigma\$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Массив с настройками сервера.</div><div class="ttdef"><b>Определения</b> <a href="../../d0/d45/config_8php_source.html#l00074">config.php:74</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00542">542</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00614">614</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="ab020da18450b0c34601b4d365da6f943" name="ab020da18450b0c34601b4d365da6f943"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab020da18450b0c34601b4d365da6f943">&#9670;&#160;</a></span>__construct()</h2>
@@ -317,7 +317,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">];</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new \PhotoRigma\Classes\Database($db_config);</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00604">604</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00678">678</a></p>
 
 </div>
 </div>
@@ -393,7 +393,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <p>Пример использования метода _delete_internal(): </p><div class="fragment"><div class="line">$this-&gt;<a class="code hl_function" href="#aa4094e522b4780bd58666dba20fdd09d">_delete_internal</a>(<span class="stringliteral">&#39;users&#39;</span>, [</div>
 <div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; 1],</div>
 <div class="line">]);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa4094e522b4780bd58666dba20fdd09d"><div class="ttname"><a href="#aa4094e522b4780bd58666dba20fdd09d">PhotoRigma\Classes\Database\_delete_internal</a></div><div class="ttdeci">_delete_internal(string $from_tbl, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01332">db.php:1332</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa4094e522b4780bd58666dba20fdd09d"><div class="ttname"><a href="#aa4094e522b4780bd58666dba20fdd09d">PhotoRigma\Classes\Database\_delete_internal</a></div><div class="ttdeci">_delete_internal(string $from_tbl, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00891">db.php:891</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Выполняет SQL-запрос. </dd>
@@ -404,11 +404,11 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01332">1332</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00891">891</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00887">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01019">execute_query()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01865">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01999">execute_query()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01272">delete()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00819">delete()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -482,7 +482,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$aff_rows</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$aff_rows</code> как целое число.</dd></dl>
 <p>Пример использования метода _get_affected_rows_internal(): </p><div class="fragment"><div class="line">$this-&gt;<span class="keyword">delete</span>(<span class="stringliteral">&#39;users&#39;</span>, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;status = 0&#39;</span>]);</div>
 <div class="line">echo <span class="stringliteral">&quot;Affected rows: &quot;</span> . $this-&gt;<a class="code hl_function" href="#a834ca0d1c7c60bc9bfae123070b45fbd">_get_affected_rows_internal</a>();</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a834ca0d1c7c60bc9bfae123070b45fbd"><div class="ttname"><a href="#a834ca0d1c7c60bc9bfae123070b45fbd">PhotoRigma\Classes\Database\_get_affected_rows_internal</a></div><div class="ttdeci">_get_affected_rows_internal()</div><div class="ttdoc">Возвращает количество строк, затронутых последним запросом.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01981">db.php:1981</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a834ca0d1c7c60bc9bfae123070b45fbd"><div class="ttname"><a href="#a834ca0d1c7c60bc9bfae123070b45fbd">PhotoRigma\Classes\Database\_get_affected_rows_internal</a></div><div class="ttdeci">_get_affected_rows_internal()</div><div class="ttdoc">Возвращает количество строк, затронутых последним запросом.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01008">db.php:1008</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Метод, который обновляет значение <code>$aff_rows</code> после выполнения запроса. </dd>
 <dd>
 <a class="el" href="#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Метод, который может изменять значение <code>$aff_rows</code>. </dd>
@@ -495,11 +495,11 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#a54ffcc55f5606eeb40e8ac59c881d22b" title="Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)">PhotoRigma\Classes\Database\$aff_rows</a> Свойство, хранящее количество затронутых строк. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01981">1981</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01008">1008</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00548">$aff_rows</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00620">$aff_rows</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01942">get_affected_rows()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00965">get_affected_rows()</a>.</p>
 <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
@@ -559,8 +559,8 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к состоянию свойства <code>$insert_id</code>. Убедитесь, что перед вызовом метода был выполнен запрос, который установил значение <code>$insert_id</code> как целое число.</dd></dl>
 <p>Пример использования метода _get_last_insert_id_internal(): </p><div class="fragment"><div class="line">$this-&gt;<a class="code hl_function" href="#a6e5af1f386c0c7968aa10ea928c7a110">insert</a>([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>, <span class="stringliteral">&#39;email&#39;</span> =&gt; <span class="stringliteral">&#39;john@example.com&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>);</div>
 <div class="line">echo <span class="stringliteral">&quot;Last insert ID: &quot;</span> . $this-&gt;<a class="code hl_function" href="#ab122f53e8d2ca9d723e32426c9e691e9">_get_last_insert_id_internal</a>();</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a6e5af1f386c0c7968aa10ea928c7a110"><div class="ttname"><a href="#a6e5af1f386c0c7968aa10ea928c7a110">PhotoRigma\Classes\Database\insert</a></div><div class="ttdeci">insert(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01634">db.php:1634</a></div></div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab122f53e8d2ca9d723e32426c9e691e9"><div class="ttname"><a href="#ab122f53e8d2ca9d723e32426c9e691e9">PhotoRigma\Classes\Database\_get_last_insert_id_internal</a></div><div class="ttdeci">_get_last_insert_id_internal()</div><div class="ttdoc">Возвращает ID последней вставленной строки.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l02058">db.php:2058</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a6e5af1f386c0c7968aa10ea928c7a110"><div class="ttname"><a href="#a6e5af1f386c0c7968aa10ea928c7a110">PhotoRigma\Classes\Database\insert</a></div><div class="ttdeci">insert(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01151">db.php:1151</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab122f53e8d2ca9d723e32426c9e691e9"><div class="ttname"><a href="#ab122f53e8d2ca9d723e32426c9e691e9">PhotoRigma\Classes\Database\_get_last_insert_id_internal</a></div><div class="ttdeci">_get_last_insert_id_internal()</div><div class="ttdoc">Возвращает ID последней вставленной строки.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01092">db.php:1092</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\insert()</a> Метод, который устанавливает значение <code>$insert_id</code>. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Метод, который обновляет значение <code>$insert_id</code> после выполнения запроса.</dd>
@@ -569,11 +569,11 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#a0fb355e7d9e1e7d9ca0b1b83dc960f33" title="ID последней вставленной строки после выполнения INSERT-запроса">PhotoRigma\Classes\Database\$insert_id</a> Свойство, хранящее ID последней вставленной строки. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l02058">2058</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01092">1092</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00549">$insert_id</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00621">$insert_id</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l02021">get_last_insert_id()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01051">get_last_insert_id()</a>.</p>
 <div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
@@ -630,7 +630,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <p>Метод выполняет следующие шаги:</p><ul>
 <li>Проверяет типы входных данных: <code>$insert</code> (ассоциативный массив), <code>$to_tbl</code> (строка), <code>$type</code> (строка), <code>$options</code> (массив).</li>
 <li>Проверяет, что массив <code>$insert</code> не пустой. Если массив пустой, выбрасывается исключение.</li>
-<li>Нормализует параметр <code>$type</code>, приводя его к нижнему регистру, и проверяет на допустимые значения: &lsquo;'ignore&rsquo;<code>,</code>'replace'<code>,</code>'into'<code>,</code>''<code>. Если указан недопустимый тип, выбрасывается исключение.</code></li>
+<li>Нормализует параметр <code>$type</code>, приводя его к нижнему регистру, и проверяет на допустимые значения: &lsquo;'ignore&rsquo;<code>, </code>'replace'<code>,</code>'into'<code>,</code>''<code>. Если указан недопустимый тип, выбрасывается исключение.</code></li>
 <li><code>Определяет тип запроса на основе параметра</code>$type<code>: -</code>'ignore'<code>: Формирует запрос типа "INSERT IGNORE INTO". -</code>'replace'<code>: Формирует запрос типа "REPLACE INTO". -</code>'into'<code>или пустая строка (</code>''<code>): Формирует запрос типа "INSERT INTO" (по умолчанию).</code></li>
 <li><code>Формирует базовый SQL-запрос INSERT с использованием преобразованных данных.</code></li>
 <li><code>Выполняет сформированный запрос через метод</code>execute_query`.</li>
@@ -669,18 +669,18 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 </dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Убедитесь, что массив <code>$insert</code> не пустой и содержит корректные данные. Параметр <code>$type</code> должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.</dd></dl>
 <p>Пример использования метода _insert_internal(): </p><div class="fragment"><div class="line">$this-&gt;<a class="code hl_function" href="#a442c0348c8bd3cd7104cb110cc71348a">_insert_internal</a>([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>, <span class="stringliteral">&#39;email&#39;</span> =&gt; <span class="stringliteral">&#39;john@example.com&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a442c0348c8bd3cd7104cb110cc71348a"><div class="ttname"><a href="#a442c0348c8bd3cd7104cb110cc71348a">PhotoRigma\Classes\Database\_insert_internal</a></div><div class="ttdeci">_insert_internal(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01694">db.php:1694</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a442c0348c8bd3cd7104cb110cc71348a"><div class="ttname"><a href="#a442c0348c8bd3cd7104cb110cc71348a">PhotoRigma\Classes\Database\_insert_internal</a></div><div class="ttdeci">_insert_internal(array $insert, string $to_tbl, string $type=&#39;&#39;, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01217">db.php:1217</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a6e5af1f386c0c7968aa10ea928c7a110" title="Формирует SQL-запрос на вставку данных в таблицу, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\insert()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Выполняет SQL-запрос. </dd>
 <dd>
 <a class="el" href="#a556a1b37f162e7e8b576b86c182c7309" title="Текст последнего SQL-запроса, сформированного методами класса">PhotoRigma\Classes\Database\$txt_query</a> Свойство, в которое помещается текст SQL-запроса. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01694">1694</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01217">1217</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01019">execute_query()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01999">execute_query()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01634">insert()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01151">insert()</a>.</p>
 <div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
@@ -770,7 +770,8 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 </ul>
 </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
-<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status =
+                                  1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
 <li>group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").</li>
 <li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>
 <li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").</li>
@@ -804,7 +805,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">        <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;users.status&#39;</span> =&gt; 1],</div>
 <div class="line">    ]</div>
 <div class="line">);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa3fbbc7c98d1c241e897f0bf80177d2b"><div class="ttname"><a href="#aa3fbbc7c98d1c241e897f0bf80177d2b">PhotoRigma\Classes\Database\_join_internal</a></div><div class="ttdeci">_join_internal(string|array $select, string $from_tbl, array $join, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01191">db.php:1191</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_aa3fbbc7c98d1c241e897f0bf80177d2b"><div class="ttname"><a href="#aa3fbbc7c98d1c241e897f0bf80177d2b">PhotoRigma\Classes\Database\_join_internal</a></div><div class="ttdeci">_join_internal(string|array $select, string $from_tbl, array $join, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01411">db.php:1411</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Выполняет SQL-запрос. </dd>
@@ -813,11 +814,11 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#a556a1b37f162e7e8b576b86c182c7309" title="Текст последнего SQL-запроса, сформированного методами класса">PhotoRigma\Classes\Database\$txt_query</a> Свойство, в которое помещается текст SQL-запроса. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01191">1191</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01411">1411</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00887">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01019">execute_query()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01865">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01999">execute_query()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01119">join()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01323">join()</a>.</p>
 <div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
@@ -899,7 +900,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;No results found.&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a71ffa0229d9d0c5053501c55e6fd98d0"><div class="ttname"><a href="#a71ffa0229d9d0c5053501c55e6fd98d0">PhotoRigma\Classes\Database\_res_arr_internal</a></div><div class="ttdeci">_res_arr_internal()</div><div class="ttdoc">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве $res_query,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01896">db.php:1896</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a71ffa0229d9d0c5053501c55e6fd98d0"><div class="ttname"><a href="#a71ffa0229d9d0c5053501c55e6fd98d0">PhotoRigma\Classes\Database\_res_arr_internal</a></div><div class="ttdeci">_res_arr_internal()</div><div class="ttdoc">Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве $res_query,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01540">db.php:1540</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Метод, который устанавливает значение <code>$res_query</code>. </dd>
 <dd>
 <a class="el" href="#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Метод, который может использовать <code>_res_arr_internal()</code> для получения результатов SELECT-запроса. </dd>
@@ -910,9 +911,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#ae87877e5a83ed158cdad137dd27b1ac8" title="Результат выполнения подготовленного выражения (PDOStatement)">PhotoRigma\Classes\Database\$res_query</a> Свойство, хранящее результат подготовленного выражения. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01896">1896</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01540">1540</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01849">res_arr()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01486">res_arr()</a>.</p>
 <div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
@@ -975,7 +976,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line"><span class="keywordflow">while</span> ($row = $this-&gt;<a class="code hl_function" href="#adbe79d2c68c4501e901c6a978544ba25">_res_row_internal</a>()) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;ID: &quot;</span> . $row[<span class="stringliteral">&#39;id&#39;</span>] . <span class="stringliteral">&quot;, Name: &quot;</span> . $row[<span class="stringliteral">&#39;name&#39;</span>] . <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_adbe79d2c68c4501e901c6a978544ba25"><div class="ttname"><a href="#adbe79d2c68c4501e901c6a978544ba25">PhotoRigma\Classes\Database\_res_row_internal</a></div><div class="ttdeci">_res_row_internal()</div><div class="ttdoc">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01800">db.php:1800</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_adbe79d2c68c4501e901c6a978544ba25"><div class="ttname"><a href="#adbe79d2c68c4501e901c6a978544ba25">PhotoRigma\Classes\Database\_res_row_internal</a></div><div class="ttdeci">_res_row_internal()</div><div class="ttdoc">Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01635">db.php:1635</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Метод, который устанавливает значение <code>$res_query</code>. </dd>
 <dd>
 <a class="el" href="#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Метод, который может использовать <code>_res_row_internal()</code> для получения результатов SELECT-запроса.</dd>
@@ -984,9 +985,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#ae87877e5a83ed158cdad137dd27b1ac8" title="Результат выполнения подготовленного выражения (PDOStatement)">PhotoRigma\Classes\Database\$res_query</a> Свойство, хранящее результат подготовленного выражения. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01800">1800</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01635">1635</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01759">res_row()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01589">res_row()</a>.</p>
 <div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-11-summary" class="dynsummary" style="display:block;">
@@ -1045,7 +1046,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <p>Метод является защищенным и предназначен для использования внутри класса или его наследников. Основная логика вызывается через публичный метод-редирект <code>select()</code>.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>, </code>. Пример: "id", ["id", "name"]. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой выбираются данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
 <li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
@@ -1077,7 +1078,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">    <span class="stringliteral">&#39;order&#39;</span> =&gt; <span class="stringliteral">&#39;created_at DESC&#39;</span>,</div>
 <div class="line">    <span class="stringliteral">&#39;limit&#39;</span> =&gt; 10,</div>
 <div class="line">]);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a3e40bb61553455b6f52be0ab9a6062b1"><div class="ttname"><a href="#a3e40bb61553455b6f52be0ab9a6062b1">PhotoRigma\Classes\Database\_select_internal</a></div><div class="ttdeci">_select_internal(string|array $select, string $from_tbl, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00791">db.php:791</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_a3e40bb61553455b6f52be0ab9a6062b1"><div class="ttname"><a href="#a3e40bb61553455b6f52be0ab9a6062b1">PhotoRigma\Classes\Database\_select_internal</a></div><div class="ttdeci">_select_internal(string|array $select, string $from_tbl, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01769">db.php:1769</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Выполняет SQL-запрос. </dd>
@@ -1086,11 +1087,11 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#a556a1b37f162e7e8b576b86c182c7309" title="Текст последнего SQL-запроса, сформированного методами класса">PhotoRigma\Classes\Database\$txt_query</a> Свойство, в которое помещается текст SQL-запроса. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00791">791</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01769">1769</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00887">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01019">execute_query()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01865">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01999">execute_query()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00734">select()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01702">select()</a>.</p>
 <div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-12-summary" class="dynsummary" style="display:block;">
@@ -1168,18 +1169,18 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 </dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут привести к выбросу исключения. Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления. Используйте этот метод с осторожностью.</dd></dl>
 <p>Пример использования метода _truncate_internal(): </p><div class="fragment"><div class="line">$this-&gt;<a class="code hl_function" href="#ad353291f086236ab7be0d1edc0ed3ba8">_truncate_internal</a>(<span class="stringliteral">&#39;users&#39;</span>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ad353291f086236ab7be0d1edc0ed3ba8"><div class="ttname"><a href="#ad353291f086236ab7be0d1edc0ed3ba8">PhotoRigma\Classes\Database\_truncate_internal</a></div><div class="ttdeci">_truncate_internal(string $from_tbl)</div><div class="ttdoc">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01443">db.php:1443</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ad353291f086236ab7be0d1edc0ed3ba8"><div class="ttname"><a href="#ad353291f086236ab7be0d1edc0ed3ba8">PhotoRigma\Classes\Database\_truncate_internal</a></div><div class="ttdeci">_truncate_internal(string $from_tbl)</div><div class="ttdoc">Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l02117">db.php:2117</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a556a1b37f162e7e8b576b86c182c7309" title="Текст последнего SQL-запроса, сформированного методами класса">PhotoRigma\Classes\Database\$txt_query</a> Свойство, в которое помещается текст SQL-запроса.</dd>
 <dd>
 <a class="el" href="#ad4d4e455d9e4bf865126c72cf23a517b" title="Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет.">PhotoRigma\Classes\Database\truncate()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Выполняет SQL-запрос. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01443">1443</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l02117">2117</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01019">execute_query()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01999">execute_query()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01404">truncate()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l02075">truncate()</a>.</p>
 <div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-14-summary" class="dynsummary" style="display:block;">
@@ -1281,7 +1282,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <p>Пример использования метода _update_internal(): </p><div class="fragment"><div class="line">$this-&gt;<a class="code hl_function" href="#ab1dc7ae1ce60a864b1d7c865e99029b0">_update_internal</a>([<span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;John Doe&#39;</span>], <span class="stringliteral">&#39;users&#39;</span>, [</div>
 <div class="line">    <span class="stringliteral">&#39;where&#39;</span> =&gt; [<span class="stringliteral">&#39;id&#39;</span> =&gt; 1],</div>
 <div class="line">]);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab1dc7ae1ce60a864b1d7c865e99029b0"><div class="ttname"><a href="#ab1dc7ae1ce60a864b1d7c865e99029b0">PhotoRigma\Classes\Database\_update_internal</a></div><div class="ttdeci">_update_internal(array $update, string $from_tbl, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01554">db.php:1554</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ab1dc7ae1ce60a864b1d7c865e99029b0"><div class="ttname"><a href="#ab1dc7ae1ce60a864b1d7c865e99029b0">PhotoRigma\Classes\Database\_update_internal</a></div><div class="ttdeci">_update_internal(array $update, string $from_tbl, array $options=[])</div><div class="ttdoc">Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l02250">db.php:2250</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\update()</a> Публичный метод-редирект для вызова этой логики. </dd>
 <dd>
 <a class="el" href="#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL-запрос с использованием подготовленных выражений.">PhotoRigma\Classes\Database\execute_query()</a> Выполняет SQL-запрос. </dd>
@@ -1290,11 +1291,11 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#a556a1b37f162e7e8b576b86c182c7309" title="Текст последнего SQL-запроса, сформированного методами класса">PhotoRigma\Classes\Database\$txt_query</a> Свойство, в которое помещается текст SQL-запроса. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01554">1554</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l02250">2250</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00887">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01019">execute_query()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01865">build_conditions()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01999">execute_query()</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01497">update()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l02181">update()</a>.</p>
 <div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-16-summary" class="dynsummary" style="display:block;">
@@ -1398,7 +1399,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">[$conditions, $params] = $this-&gt;<a class="code hl_function" href="#ae03e71e82bbc0b864fdbc401fa44bc35">build_conditions</a>($options);</div>
 <div class="line">echo <span class="stringliteral">&quot;Условия: $conditions\n&quot;</span>;</div>
 <div class="line">print_r($params);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ae03e71e82bbc0b864fdbc401fa44bc35"><div class="ttname"><a href="#ae03e71e82bbc0b864fdbc401fa44bc35">PhotoRigma\Classes\Database\build_conditions</a></div><div class="ttdeci">build_conditions(array $options)</div><div class="ttdoc">Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l00887">db.php:887</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_ae03e71e82bbc0b864fdbc401fa44bc35"><div class="ttname"><a href="#ae03e71e82bbc0b864fdbc401fa44bc35">PhotoRigma\Classes\Database\build_conditions</a></div><div class="ttdeci">build_conditions(array $options)</div><div class="ttdoc">Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01865">db.php:1865</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a539e51bc2144b972bfafeccdda56ee9e" title="Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\update()</a> Метод, который вызывает build_conditions() для формирования UPDATE-запроса. </dd>
 <dd>
 <a class="el" href="#aab30d2495bb1362d218cd62e1556b13e" title="Формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\select()</a> Метод, который вызывает build_conditions() для формирования SELECT-запроса. </dd>
@@ -1407,9 +1408,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL-запрос на удаление данных из таблицы, основываясь на полученных аргументах,...">PhotoRigma\Classes\Database\delete()</a> Метод, который вызывает build_conditions() для формирования DELETE-запроса. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00887">887</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01865">1865</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01332">_delete_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01191">_join_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l00791">_select_internal()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01554">_update_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00891">_delete_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01411">_join_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01769">_select_internal()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l02250">_update_internal()</a>.</p>
 <div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-18-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-18-summary" class="dynsummary" style="display:block;">
@@ -1503,9 +1504,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a73d8e6acdfb996002f980ab7c9c18515">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01272">1272</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00819">819</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01332">_delete_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00891">_delete_internal()</a>.</p>
 <div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-19-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-19-summary" class="dynsummary" style="display:block;">
@@ -1594,7 +1595,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <div class="line">$params = [<span class="stringliteral">&#39;:id&#39;</span> =&gt; 1];</div>
 <div class="line">$this-&gt;<a class="code hl_function" href="#abc7fc3b91f038f52e180afb480397d65">execute_query</a>($query, $params);</div>
 <div class="line">echo <span class="stringliteral">&quot;Запрос выполнен успешно!&quot;</span>;</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_abc7fc3b91f038f52e180afb480397d65"><div class="ttname"><a href="#abc7fc3b91f038f52e180afb480397d65">PhotoRigma\Classes\Database\execute_query</a></div><div class="ttdeci">execute_query(array $params=[])</div><div class="ttdoc">Выполняет SQL-запрос с использованием подготовленных выражений.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01019">db.php:1019</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html_abc7fc3b91f038f52e180afb480397d65"><div class="ttname"><a href="#abc7fc3b91f038f52e180afb480397d65">PhotoRigma\Classes\Database\execute_query</a></div><div class="ttdeci">execute_query(array $params=[])</div><div class="ttdoc">Выполняет SQL-запрос с использованием подготовленных выражений.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/d82/db_8php_source.html#l01999">db.php:1999</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Логирует медленные запросы. </dd>
 <dd>
 <a class="el" href="#a9db61e1721b616500bce6ed60491752a" title="Объект PDO для подключения к базе данных">PhotoRigma\Classes\Database\$pdo</a> Объект PDO, используемый для выполнения запроса. </dd>
@@ -1619,9 +1620,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <dd>
 <a class="el" href="#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Формирует SQL-запрос с использованием JOIN для выборки данных из нескольких таблиц,...">PhotoRigma\Classes\Database\join()</a> Метод, который вызывает execute_query() для выполнения JOIN-запроса. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01019">1019</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01999">1999</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01332">_delete_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01694">_insert_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01191">_join_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l00791">_select_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01443">_truncate_internal()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l01554">_update_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l00891">_delete_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01217">_insert_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01411">_join_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l01769">_select_internal()</a>, <a class="el" href="../../dc/d82/db_8php_source.html#l02117">_truncate_internal()</a> и <a class="el" href="../../dc/d82/db_8php_source.html#l02250">_update_internal()</a>.</p>
 <div id="dynsection-20" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-20-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
 <div id="dynsection-20-summary" class="dynsummary" style="display:block;">
@@ -1704,9 +1705,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01942">1942</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00965">965</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01981">_get_affected_rows_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01008">_get_affected_rows_internal()</a>.</p>
 <div id="dynsection-21" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-21-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-21-summary" class="dynsummary" style="display:block;">
@@ -1763,9 +1764,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#abafff8c03a52d73e37072449448e5a3c">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l02021">2021</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01051">1051</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l02058">_get_last_insert_id_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01092">_get_last_insert_id_internal()</a>.</p>
 <div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-22-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-22-summary" class="dynsummary" style="display:block;">
@@ -1854,9 +1855,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a6e5af1f386c0c7968aa10ea928c7a110">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01634">1634</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01151">1151</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01694">_insert_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01217">_insert_internal()</a>.</p>
 <div id="dynsection-23" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-23-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-23-summary" class="dynsummary" style="display:block;">
@@ -1916,7 +1917,8 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 </ul>
 </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
-<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status =
+                                  1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
 <li>group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").</li>
 <li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>
 <li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").</li>
@@ -1961,9 +1963,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aa2b6c23b3a70e9ef06c22d8a4885d69a">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01119">1119</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01323">1323</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01191">_join_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01411">_join_internal()</a>.</p>
 <div id="dynsection-24" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-24-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-24-summary" class="dynsummary" style="display:block;">
@@ -2033,9 +2035,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a0bfd8e43ae69ed64120dd984b9e288a4">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01849">1849</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01486">1486</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01896">_res_arr_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01540">_res_arr_internal()</a>.</p>
 <div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-25-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-25-summary" class="dynsummary" style="display:block;">
@@ -2094,9 +2096,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a974af553ef190897a8849c77166ea32d">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01759">1759</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01589">1589</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01800">_res_row_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01635">_res_row_internal()</a>.</p>
 <div id="dynsection-26" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-26-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-26-summary" class="dynsummary" style="display:block;">
@@ -2140,7 +2142,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 <p>Метод является публичным редиректом для защищённого метода <code>_select_internal()</code>, который реализует основную логику формирования и выполнения SQL-запроса. Все параметры передаются напрямую в защищённый метод без дополнительных проверок или преобразований. Редиректов из внешних классов нет.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>, </code>. Пример: "id", ["id", "name"]. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой выбираются данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
 <li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
@@ -2183,9 +2185,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aab30d2495bb1362d218cd62e1556b13e">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00734">734</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01702">1702</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l00791">_select_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01769">_select_internal()</a>.</p>
 <div id="dynsection-27" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-27-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-27-summary" class="dynsummary" style="display:block;">
@@ -2249,9 +2251,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#ad4d4e455d9e4bf865126c72cf23a517b">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01404">1404</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l02075">2075</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01443">_truncate_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l02117">_truncate_internal()</a>.</p>
 <div id="dynsection-28" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-28-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-28-summary" class="dynsummary" style="display:block;">
@@ -2338,9 +2340,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Замещает <a class="el" href="../../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a539e51bc2144b972bfafeccdda56ee9e">Database_Interface</a>.</p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l01497">1497</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l02181">2181</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l01554">_update_internal()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../dc/d82/db_8php_source.html#l02250">_update_internal()</a>.</p>
 <div id="dynsection-29" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-29-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-29-summary" class="dynsummary" style="display:block;">
@@ -2383,9 +2385,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00548">548</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00620">620</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01981">_get_affected_rows_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01008">_get_affected_rows_internal()</a>.</p>
 
 </div>
 </div>
@@ -2411,9 +2413,9 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>ID последней вставленной строки после выполнения INSERT-запроса </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00549">549</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00621">621</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l02058">_get_last_insert_id_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../dc/d82/db_8php_source.html#l01092">_get_last_insert_id_internal()</a>.</p>
 
 </div>
 </div>
@@ -2439,7 +2441,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Объект PDO для подключения к базе данных </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00545">545</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00617">617</a></p>
 
 </div>
 </div>
@@ -2465,7 +2467,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Результат выполнения подготовленного выражения (PDOStatement) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00547">547</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00619">619</a></p>
 
 </div>
 </div>
@@ -2491,7 +2493,7 @@ $(function(){initNavTree('d6/db6/classPhotoRigma_1_1Classes_1_1Database.html','.
 
 <p>Текст последнего SQL-запроса, сформированного методами класса </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00546">546</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00618">618</a></p>
 
 </div>
 </div>

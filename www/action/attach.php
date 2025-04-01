@@ -2,10 +2,11 @@
 
 /**
  * @file        action/attach.php
- * @brief       Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей.
+ * @brief       Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением
+ *              путей.
  *
- * @details     Файл используется для вывода фото из галереи по идентификатору, переданному через параметр `$_GET['foto']`.
- *              Реализованы следующие особенности:
+ * @details     Файл используется для вывода фото из галереи по идентификатору, переданному через параметр
+ *              `$_GET['foto']`. Реализованы следующие особенности:
  *              - Проверка прав пользователя на просмотр изображений (`$user->user['pic_view']`).
  *              - Ограничение доступа к файлам только внутри директории галереи.
  *              - Проверка MIME-типа файла для предотвращения несанкционированного доступа.
@@ -39,13 +40,13 @@
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа к файлам.
  *              Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -79,10 +80,10 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 // Проверка параметра 'foto'
 if (!$user->user['pic_view'] || !$work->check_input('_GET', 'foto', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]+$/',
-        'not_zero' => true
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]+$/',
+        'not_zero' => true,
     ])) {
     $photo_data = $work->no_photo();
 } else {
@@ -91,22 +92,22 @@ if (!$user->user['pic_view'] || !$work->check_input('_GET', 'foto', [
         [TBL_PHOTO . '.`id`', TBL_PHOTO . '.`file`', TBL_PHOTO . '.`category`', TBL_CATEGORY . '.`folder`'],
         TBL_PHOTO,
         [
-            ['type' => 'INNER', 'table' => TBL_CATEGORY, 'on' => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`']
+            ['type' => 'INNER', 'table' => TBL_CATEGORY, 'on' => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`'],
         ],
         [
-            'where' => TBL_PHOTO . '.`id` = :id',
-            'params' => [':id' => $_GET['foto']]
+            'where'  => TBL_PHOTO . '.`id` = :id',
+            'params' => [':id' => $_GET['foto']],
         ]
     );
     $query_result = $db->res_row();
     if ($query_result) {
         // Формирование путей к файлам
         $photo_data = [
-            'id' => $query_result['id'],
-            'file' => $query_result['file'],
-            'category' => $query_result['category'],
-            'full_path' => $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $query_result['folder'] . '/' . $query_result['file'],
-            'thumbnail_path' => $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $query_result['folder'] . '/' . $query_result['file']
+            'id'             => $query_result['id'],
+            'file'           => $query_result['file'],
+            'category'       => $query_result['category'],
+            'full_path'      => $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $query_result['folder'] . '/' . $query_result['file'],
+            'thumbnail_path' => $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $query_result['folder'] . '/' . $query_result['file'],
         ];
     } else {
         $photo_data = $work->no_photo();
@@ -160,9 +161,9 @@ if ($final_real_path === false || !is_file($final_real_path) || !is_readable($fi
 }
 // Обработка миниатюры
 if ($work->check_input('_GET', 'thumbnail', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-1]+$/'
+        'isset'  => true,
+        'empty'  => true,
+        'regexp' => '/^[0-1]+$/',
     ]) && $_GET['thumbnail'] === '1') {
     if ($work->image_resize($photo_data['full_path'], $photo_data['thumbnail_path'])) {
         $work->image_attach($photo_data['thumbnail_path'], $photo_data['file']);

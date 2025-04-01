@@ -48,13 +48,13 @@
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в запуске и работе приложения.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 declare(strict_types=1);
@@ -87,26 +87,26 @@ use function PhotoRigma\Include\log_in_file;
 $encoding = mb_regex_encoding('UTF-8');
 mb_internal_encoding('UTF-8');
 
-
 /** @def IN_GALLERY
  * @brief Используется для проверки, что файлы подключены через index.php, а не вызваны напрямую.
  */
 define('IN_GALLERY', true);
 
 /** @def DEBUG_GALLERY
- * @brief Включение режима отладки (более подробный вывод информации об ошибках).
+ * @brief   Включение режима отладки (более подробный вывод информации об ошибках).
  * @details Используется для включения режима отладки, который влияет на логирование ошибок.
- * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+ * @see     PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  */
 define('DEBUG_GALLERY', false);
 
 try {
     /**
      * Безопасное подключение конфигурационного файла.
+     *
      * @details Файл config.php содержит настройки, редактируемые пользователем, такие как параметры подключения к базе данных,
      *          пути к директориям, настройки тем и другие важные параметры.
-     * @see config.php Файл конфигурации приложения.
-     * @see $config Массив, инициализируемый в файле config.php, содержащий все настройки приложения.
+     * @see     config.php Файл конфигурации приложения.
+     * @see     $config Массив, инициализируемый в файле config.php, содержащий все настройки приложения.
      */
     if (!is_file('config.php')) {
         throw new RuntimeException(
@@ -122,7 +122,7 @@ try {
 
     /**
      * @var array $required_files
-     * @brief Список обязательных файлов для подключения.
+     * @brief   Список обязательных файлов для подключения.
      * @details Содержит пути к файлам, которые необходимы для работы приложения.
      */
     $required_files = [
@@ -167,37 +167,38 @@ try {
     archive_old_logs();
 
     /** @var PhotoRigma::Classes $db ::Database $db
-     * @brief Создание объекта класса Database для работы с основной БД.
+     * @brief   Создание объекта класса Database для работы с основной БД.
      * @details Инициализируется через конструктор с параметрами из массива $config['db'].
-     * @see PhotoRigma::Classes::Database Класс для работы с базой данных.
-     * @see include/db.php Файл, содержащий реализацию класса Database.
-     * @see $config Массив конфигурации, используемый для подключения к БД.
+     * @see     PhotoRigma::Classes::Database Класс для работы с базой данных.
+     * @see     include/db.php Файл, содержащий реализацию класса Database.
+     * @see     $config Массив конфигурации, используемый для подключения к БД.
      */
     $db = new Database($config['db']);
 
     /** @var PhotoRigma::Classes $work ::Work $work
-     * @brief Создание объекта класса Work.
+     * @brief   Создание объекта класса Work.
      * @details Используется для выполнения различных вспомогательных операций.
-     * @see PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
-     * @see include/work.php Файл, содержащий реализацию класса Work.
-     * @see PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения.
-     * @see PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
-     * @see PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
+     * @see     PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
+     * @see     include/work.php Файл, содержащий реализацию класса Work.
+     * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения.
+     * @see     PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
+     * @see     PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
      */
     $work = new Work($db, $config, $_SESSION);
 
     /**
      * Очищаем значение массива $config[], чтобы предотвратить его использование напрямую.
      * Все настройки теперь доступны только через свойство \PhotoRigma\Classes\Work::$config.
+     *
      * @see PhotoRigma::Classes::Work::$config Свойство для хранения конфигурации проекта
      */
     unset($config);
 
     /** @var PhotoRigma::Classes $user ::User $user
-     * @brief Создание объекта класса User.
+     * @brief   Создание объекта класса User.
      * @details Используется для управления пользователями системы.
-     * @see PhotoRigma::Classes::User Класс для управления пользователями.
-     * @see include/user.php Файл, содержащий реализацию класса User.
+     * @see     PhotoRigma::Classes::User Класс для управления пользователями.
+     * @see     include/user.php Файл, содержащий реализацию класса User.
      */
     $user = new User($db, $_SESSION);
 
@@ -205,16 +206,16 @@ try {
     $themes_config = $user->session['theme'] ?? $work->config['themes'];
 
     /** @var PhotoRigma::Classes $template ::Template $template
-     * @brief Создание объекта класса Template.
+     * @brief   Создание объекта класса Template.
      * @details Используется для генерации HTML-контента страниц.
-     * @see PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
-     * @see include/template.php Файл, содержащий реализацию класса Template.
-     * @see PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию для шаблонов.
-     * @see PhotoRigma::Classes::Template::create_template() Метод для создания содержимого страницы.
-     * @see PhotoRigma::Classes::Template::page_header() Метод для добавления шапки страницы.
-     * @see PhotoRigma::Classes::Template::page_footer() Метод для добавления подвала страницы.
-     * @see PhotoRigma::Classes::Template::$content Свойство, хранящее содержимое всей страницы.
-     * @see $title Переменная, используемая для добавления текста к заголовку страницы.
+     * @see     PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
+     * @see     include/template.php Файл, содержащий реализацию класса Template.
+     * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию для шаблонов.
+     * @see     PhotoRigma::Classes::Template::create_template() Метод для создания содержимого страницы.
+     * @see     PhotoRigma::Classes::Template::page_header() Метод для добавления шапки страницы.
+     * @see     PhotoRigma::Classes::Template::page_footer() Метод для добавления подвала страницы.
+     * @see     PhotoRigma::Classes::Template::$content Свойство, хранящее содержимое всей страницы.
+     * @see     $title Переменная, используемая для добавления текста к заголовку страницы.
      */
     $template = new Template(
         $work->config['site_url'],
@@ -240,7 +241,7 @@ try {
 
     /**
      * @var string $action
-     * @brief Действие, которое необходимо выполнить.
+     * @brief   Действие, которое необходимо выполнить.
      * @details Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'.
      * Пример вызова действия 'profile':
      * $_GET['action'] = 'profile';
@@ -349,7 +350,7 @@ try {
                         $args = array_map(static function ($arg) {
                             $arg_str = is_string($arg) ? $arg : json_encode(
                                 $arg,
-                                JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                                JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                             );
                             return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
                                 $arg_str,
@@ -364,7 +365,7 @@ try {
                             $trace['file'] ?? 'неизвестный файл',
                             $trace['line'] ?? 'неизвестная строка',
                             $trace['function'] ?? 'неизвестная функция',
-                            json_encode($args, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+                            json_encode($args, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
                         );
                     }
                     $message .= "Трассировка:\n" . implode("\n\n", $trace_info) . PHP_EOL;
@@ -379,7 +380,7 @@ try {
     }
 }
 /** @dir action
- * @brief Содержит обработчики действий (например, формы, запросы).
+ * @brief   Содержит обработчики действий (например, формы, запросы).
  * @details Примеры файлов:
  *          - admin.php: Обработчик действий для административной панели.
  *          - attach.php: Обработчик для вывода изображений или файлов.
@@ -399,12 +400,12 @@ try {
  */
 
 /** @dir gallery
- * @brief Содержит полноформатные изображения.
+ * @brief   Содержит полноформатные изображения.
  * @details Включает поддиректорию user/ для пользовательских галерей.
  */
 
 /** @dir include
- * @brief Содержит вспомогательные классы и функции.
+ * @brief   Содержит вспомогательные классы и функции.
  * @details Примеры файлов:
  *          - common.php: Общие настройки и конфигурации.
  *          - db.php: Класс для работы с базой данных через PDO.
@@ -415,11 +416,11 @@ try {
 
 /** @dir install
  * @brief Содержит файлы установки проекта.
- * @todo Разработать установочный скрипт.
+ * @todo  Разработать установочный скрипт.
  */
 
 /** @dir language
- * @brief Содержит файлы локализации.
+ * @brief   Содержит файлы локализации.
  * @details Включает поддиректорию russian/ с переводами на русский язык.
  */
 
@@ -428,11 +429,11 @@ try {
  */
 
 /** @dir themes
- * @brief Содержит темы оформления.
+ * @brief   Содержит темы оформления.
  * @details Включает поддиректорию default/ с темой по умолчанию.
  */
 
 /** @dir thumbnail
- * @brief Содержит миниатюры изображений.
+ * @brief   Содержит миниатюры изображений.
  * @details Включает поддиректорию user/ для миниатюр пользовательских галерей.
  */

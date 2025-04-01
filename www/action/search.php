@@ -61,13 +61,13 @@
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *              Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -167,14 +167,14 @@ if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true
 
 // Настройка шаблона: инициализация флагов для отображения результатов поиска
 $template->add_if_ar([
-    'NEED_USER' => false,
+    'NEED_USER'     => false,
     'NEED_CATEGORY' => false,
-    'NEED_NEWS' => false,
-    'NEED_PHOTO' => false,
-    'USER_FIND' => false,
+    'NEED_NEWS'     => false,
+    'NEED_PHOTO'    => false,
+    'USER_FIND'     => false,
     'CATEGORY_FIND' => false,
-    'NEWS_FIND' => false,
-    'PHOTO_FIND' => false
+    'NEWS_FIND'     => false,
+    'PHOTO_FIND'    => false,
 ]);
 
 if ($search['user']) {
@@ -187,8 +187,8 @@ if ($search['user']) {
         '*', // Выбираем все поля
         TBL_USERS, // Из таблицы пользователей
         [
-            'where' => '`real_name` LIKE :search', // Условие: поле real_name содержит $search_text
-            'params' => [':search' => $search_text] // Параметры для prepared statements
+            'where'  => '`real_name` LIKE :search', // Условие: поле real_name содержит $search_text
+            'params' => [':search' => $search_text], // Параметры для prepared statements
         ]
     );
 
@@ -203,7 +203,7 @@ if ($search['user']) {
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
                     $work->config['site_url'],
                     $val['id']
-                ) // Ссылка на профиль пользователя
+                ), // Ссылка на профиль пользователя
             ], 'SEARCH_USER[' . $key . ']');
         }
     } else {
@@ -225,9 +225,9 @@ if ($search['category']) {
         '*', // Выбираем все поля
         TBL_CATEGORY, // Из таблицы категорий
         [
-            'where' => '`id` != 0 AND (`name` LIKE :search_name OR `description` LIKE :search_desc)',
+            'where'  => '`id` != 0 AND (`name` LIKE :search_name OR `description` LIKE :search_desc)',
             // Условие: поля name или description содержат $search_text
-            'params' => [':search_name' => $search_text, ':search_desc' => $search_text]
+            'params' => [':search_name' => $search_text, ':search_desc' => $search_text],
             // Параметры для prepared statements
         ]
     );
@@ -242,7 +242,11 @@ if ($search['category']) {
                 // Название категории
                 'D_CATEGORY_FIND_DESC' => Work::clean_field($val['description']),
                 // Описание категории
-                'U_CATEGORY_FIND' => sprintf("%s?action=category&amp;cat=%d", $work->config['site_url'], $val['id'])
+                'U_CATEGORY_FIND'      => sprintf(
+                    "%s?action=category&amp;cat=%d",
+                    $work->config['site_url'],
+                    $val['id']
+                ),
                 // Ссылка на категорию
             ], 'SEARCH_CATEGORY[' . $key . ']');
         }
@@ -262,9 +266,9 @@ if ($search['news']) {
         '*', // Выбираем все поля
         TBL_NEWS, // Из таблицы новостей
         [
-            'where' => '`name_post` LIKE :search_name OR `text_post` LIKE :search_text',
+            'where'  => '`name_post` LIKE :search_name OR `text_post` LIKE :search_text',
             // Условие: поля name_post или text_post содержат $search_text
-            'params' => [':search_name' => $search_text, ':search_text' => $search_text]
+            'params' => [':search_name' => $search_text, ':search_text' => $search_text],
             // Параметры для prepared statements
         ]
     );
@@ -279,7 +283,7 @@ if ($search['news']) {
                 // Заголовок новости
                 'D_NEWS_FIND_DESC' => mb_substr(Work::clean_field($val['text_post']), 0, 100, 'UTF-8') . '...',
                 // Краткое описание новости (первые 100 символов)
-                'U_NEWS_FIND' => sprintf("%s?action=news&amp;news=%d", $work->config['site_url'], $val['id'])
+                'U_NEWS_FIND'      => sprintf("%s?action=news&amp;news=%d", $work->config['site_url'], $val['id']),
                 // Ссылка на новость
             ], 'SEARCH_NEWS[' . $key . ']');
         }
@@ -299,9 +303,9 @@ if ($search['photo']) {
         'id', // Выбираем только id фотографий
         TBL_PHOTO, // Из таблицы фотографий
         [
-            'where' => '`name` LIKE :search_name OR `description` LIKE :search_desc',
+            'where'  => '`name` LIKE :search_name OR `description` LIKE :search_desc',
             // Условие: поля name или description содержат $search_text
-            'params' => [':search_name' => $search_text, ':search_desc' => $search_text]
+            'params' => [':search_name' => $search_text, ':search_desc' => $search_text],
             // Параметры для prepared statements
         ]
     );
@@ -313,13 +317,13 @@ if ($search['photo']) {
         foreach ($find as $key => $val) {
             $find_photo = $work->create_photo('cat', $val['id']); // Создаем объект фотографии
             $template->add_string_ar([
-                'MAX_PHOTO_HEIGHT' => (string)($work->config['temp_photo_h'] + 10), // Максимальная высота фотографии
-                'PHOTO_WIDTH' => (string)$find_photo['width'], // Ширина фотографии
-                'PHOTO_HEIGHT' => (string)$find_photo['height'], // Высота фотографии
+                'MAX_PHOTO_HEIGHT'    => (string)($work->config['temp_photo_h'] + 10), // Максимальная высота фотографии
+                'PHOTO_WIDTH'         => (string)$find_photo['width'], // Ширина фотографии
+                'PHOTO_HEIGHT'        => (string)$find_photo['height'], // Высота фотографии
                 'D_DESCRIPTION_PHOTO' => Work::clean_field($find_photo['description']), // Описание фотографии
-                'D_NAME_PHOTO' => Work::clean_field($find_photo['name']), // Название фотографии
-                'U_THUMBNAIL_PHOTO' => $find_photo['thumbnail_url'], // URL миниатюры
-                'U_PHOTO' => $find_photo['url'] // URL фотографии
+                'D_NAME_PHOTO'        => Work::clean_field($find_photo['name']), // Название фотографии
+                'U_THUMBNAIL_PHOTO'   => $find_photo['thumbnail_url'], // URL миниатюры
+                'U_PHOTO'             => $find_photo['url'], // URL фотографии
             ], 'SEARCH_PHOTO[' . $key . ']');
         }
     } else {
@@ -338,17 +342,17 @@ $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
 // Добавляем данные в шаблон для отображения формы поиска
 $template->add_string_ar([
-    'NAME_BLOCK' => $work->lang['main']['search'], // Заголовок блока
-    'L_SEARCH' => $work->lang['main']['search'], // Текст кнопки "Поиск"
-    'L_SEARCH_TITLE' => $work->lang['search']['title'], // Заголовок страницы поиска
-    'L_NEED_USER' => $work->lang['search']['need_user'], // Текст "Искать пользователей"
+    'NAME_BLOCK'      => $work->lang['main']['search'], // Заголовок блока
+    'L_SEARCH'        => $work->lang['main']['search'], // Текст кнопки "Поиск"
+    'L_SEARCH_TITLE'  => $work->lang['search']['title'], // Заголовок страницы поиска
+    'L_NEED_USER'     => $work->lang['search']['need_user'], // Текст "Искать пользователей"
     'L_NEED_CATEGORY' => $work->lang['search']['need_category'], // Текст "Искать категории"
-    'L_NEED_NEWS' => $work->lang['search']['need_news'], // Текст "Искать новости"
-    'L_NEED_PHOTO' => $work->lang['search']['need_photo'], // Текст "Искать фотографии"
-    'D_SEARCH_TEXT' => $_POST['search_text'] ?? '', // Текущее значение поля поиска
-    'D_NEED_USER' => isset($check['user']) ? 'checked="checked"' : '', // Флаг "Искать пользователей"
+    'L_NEED_NEWS'     => $work->lang['search']['need_news'], // Текст "Искать новости"
+    'L_NEED_PHOTO'    => $work->lang['search']['need_photo'], // Текст "Искать фотографии"
+    'D_SEARCH_TEXT'   => $_POST['search_text'] ?? '', // Текущее значение поля поиска
+    'D_NEED_USER'     => isset($check['user']) ? 'checked="checked"' : '', // Флаг "Искать пользователей"
     'D_NEED_CATEGORY' => isset($check['category']) ? 'checked="checked"' : '', // Флаг "Искать категории"
-    'D_NEED_NEWS' => isset($check['news']) ? 'checked="checked"' : '', // Флаг "Искать новости"
-    'D_NEED_PHOTO' => isset($check['photo']) ? 'checked="checked"' : '', // Флаг "Искать фотографии"
-    'U_SEARCH' => sprintf("%s?action=search", $work->config['site_url']) // URL для отправки формы
+    'D_NEED_NEWS'     => isset($check['news']) ? 'checked="checked"' : '', // Флаг "Искать новости"
+    'D_NEED_PHOTO'    => isset($check['photo']) ? 'checked="checked"' : '', // Флаг "Искать фотографии"
+    'U_SEARCH'        => sprintf("%s?action=search", $work->config['site_url']), // URL для отправки формы
 ]);

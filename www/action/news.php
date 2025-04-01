@@ -6,8 +6,10 @@
  *
  * @details     Этот файл отвечает за управление новостями в системе, включая:
  *              - Добавление новой новости (при наличии прав `$user->user['news_add']`).
- *              - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если пользователь является автором новости).
- *              - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является автором новости).
+ *              - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если
+ *              пользователь является автором новости).
+ *              - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является
+ *              автором новости).
  *              - Отображение списка новостей с фильтрацией по годам и месяцам.
  *              - Защита от CSRF-атак при добавлении и редактировании новостей.
  *              - Логирование ошибок и подозрительных действий.
@@ -19,8 +21,9 @@
  * - Отображение списка новостей с фильтрацией по годам и месяцам.
  * - Логирование ошибок и подозрительных действий.
  *
- * @throws      RuntimeException Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление).
- *              Пример сообщения: Ошибка добавления новости | Данные: json_encode($query_news).
+ * @throws      RuntimeException Если не удалось выполнить действие с новостью (например, добавление, редактирование
+ *                               или удаление). Пример сообщения: Ошибка добавления новости | Данные:
+ *                               json_encode($query_news).
  * @throws      RuntimeException Если новость не найдена.
  *              Пример сообщения: Новость не найдена | ID: {$news}.
  * @throws      RuntimeException Если CSRF-токен неверен.
@@ -40,13 +43,13 @@
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -82,11 +85,11 @@ $action = '';
 // === Обработка параметра 'news' ===
 $news = match (true) {
     !$work->check_input('_GET', 'news', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]+$/',
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]+$/',
         'not_zero' => true,
-    ]) => false,
+    ])      => false,
     default => $_GET['news'],
 };
 
@@ -105,7 +108,7 @@ $subact = match (true) {
     !$work->check_input('_GET', 'subact', [
         'isset' => true,
         'empty' => true,
-    ]) => '',
+    ])      => '',
     default => $_GET['subact'],
 };
 
@@ -131,11 +134,11 @@ if ($subact === 'save') {
             $subact = 'add';
         } else {
             $query_news = [
-                'data_post' => date('Y-m-d'),
+                'data_post'      => date('Y-m-d'),
                 'data_last_edit' => date('Y-m-d H:i:s'),
-                'user_post' => $user->user['id'],
-                'name_post' => trim(Work::clean_field($_POST['name_post'])),
-                'text_post' => trim(Work::clean_field($_POST['text_post'])),
+                'user_post'      => $user->user['id'],
+                'name_post'      => trim(Work::clean_field($_POST['name_post'])),
+                'text_post'      => trim(Work::clean_field($_POST['text_post'])),
             ];
 
             // Формируем плоский массив плейсхолдеров и ассоциативный массив для вставки
@@ -216,8 +219,8 @@ if ($subact === 'save') {
                 $update_data, // Данные для обновления (ассоциативный массив с плейсхолдерами)
                 TBL_NEWS,     // Таблица (строка)
                 [
-                    'where' => '`id` = :news_id', // Условие WHERE (строка)
-                    'params' => $params          // Все параметры для prepared statements (массив)
+                    'where'  => '`id` = :news_id', // Условие WHERE (строка)
+                    'params' => $params,          // Все параметры для prepared statements (массив)
                 ]
             );
 
@@ -242,7 +245,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
     if ($news_data) {
         $template->add_if_ar([
-            'NEED_USER' => true,
+            'NEED_USER'   => true,
             'USER_EXISTS' => false,
         ]);
 
@@ -258,7 +261,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             $template->add_if('USER_EXISTS', true);
             $template->add_string_ar([
                 'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name']),
-                'U_PROFILE_USER_POST' => sprintf(
+                'U_PROFILE_USER_POST'   => sprintf(
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
                     $work->config['site_url'],
                     $news_data['user_post']
@@ -274,7 +277,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         // Генерируем CSRF-токен для защиты от атак типа CSRF
         $template->add_string('CSRF_TOKEN', $user->csrf_token());
         $template->add_string_ar([
-            'NAME_BLOCK' => $work->lang['main']['edit_news'] . ' - ' . Work::clean_field($news_data['name_post']),
+            'NAME_BLOCK'  => $work->lang['main']['edit_news'] . ' - ' . Work::clean_field($news_data['name_post']),
             'L_NAME_USER' => $user_add,
             'L_NAME_POST' => $work->lang['news']['name_post'],
             'L_TEXT_POST' => $work->lang['news']['text_post'],
@@ -332,7 +335,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
     // Генерируем CSRF-токен для защиты от атак типа CSRF
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
     $template->add_string_ar([
-        'NAME_BLOCK' => $work->lang['news']['add_post'],
+        'NAME_BLOCK'  => $work->lang['news']['add_post'],
         'L_NAME_USER' => '',
         'L_NAME_POST' => $work->lang['news']['name_post'],
         'L_TEXT_POST' => $work->lang['news']['text_post'],
@@ -354,13 +357,13 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
                     $val['name_post']
                 ),
-                'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
-                'L_TEXT_POST' => trim(nl2br(Work::ubb($val['text_post'])))
+                'L_NEWS_DATA'        => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
+                'L_TEXT_POST'        => trim(nl2br(Work::ubb($val['text_post']))),
             ], 'LAST_NEWS[0]');
             $template->add_if_ar([
                 'USER_EXISTS' => false,
-                'EDIT_SHORT' => false,
-                'EDIT_LONG' => false
+                'EDIT_SHORT'  => false,
+                'EDIT_LONG'   => false,
             ], 'LAST_NEWS[' . $key . ']');
 
             // Получение данных пользователя, добавившего новость
@@ -374,13 +377,13 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             if ($user_data) {
                 $template->add_if('USER_EXISTS', true, 'LAST_NEWS[0]');
                 $template->add_string_ar([
-                    'L_USER_ADD' => $work->lang['main']['user_add'],
-                    'U_PROFILE_USER_POST' => sprintf(
+                    'L_USER_ADD'            => $work->lang['main']['user_add'],
+                    'U_PROFILE_USER_POST'   => sprintf(
                         '%s?action=profile&amp;subact=profile&amp;uid=%d',
                         $work->config['site_url'],
                         $val['user_post']
                     ),
-                    'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name'])
+                    'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name']),
                 ], 'LAST_NEWS[0]');
             }
 
@@ -388,23 +391,23 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             if ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $val['user_post'])) {
                 $template->add_if('EDIT_LONG', true, 'LAST_NEWS[0]');
                 $template->add_string_ar([
-                    'L_EDIT_BLOCK' => $work->lang['main']['edit_news'],
-                    'L_DELETE_BLOCK' => $work->lang['main']['delete_news'],
+                    'L_EDIT_BLOCK'           => $work->lang['main']['edit_news'],
+                    'L_DELETE_BLOCK'         => $work->lang['main']['delete_news'],
                     'L_CONFIRM_DELETE_BLOCK' => $work->lang['main']['confirm_delete_news'] . ' ' . Work::clean_field(
                         $val['name_post']
                     ) . '?',
-                    'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
-                    'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
-                    'U_EDIT_BLOCK' => sprintf(
+                    'L_CONFIRM_DELETE'       => $work->lang['main']['delete'],
+                    'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
+                    'U_EDIT_BLOCK'           => sprintf(
                         '%s?action=news&amp;subact=edit&amp;news=%d',
                         $work->config['site_url'],
                         $val['id']
                     ),
-                    'U_DELETE_BLOCK' => sprintf(
+                    'U_DELETE_BLOCK'         => sprintf(
                         '%s?action=news&subact=delete&news=%d',
                         $work->config['site_url'],
                         $val['id']
-                    )
+                    ),
                 ], 'LAST_NEWS[0]');
             }
         }
@@ -424,10 +427,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
     // Проверка параметра 'y' (год)
     if (!$work->check_input('_GET', 'y', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]{4}$/', // Добавлены ограничители "/"
-        'not_zero' => true
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]{4}$/', // Добавлены ограничители "/"
+        'not_zero' => true,
     ])) {
         $action = 'news';
 
@@ -436,7 +439,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             'DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`',
             TBL_NEWS,
             [
-                'order' => '`data_last_edit` ASC'
+                'order' => '`data_last_edit` ASC',
             ]
         );
         $years_list = $db->res_arr();
@@ -452,28 +455,28 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'COUNT(*) AS `count_news`',
                 TBL_NEWS,
                 [
-                    'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
-                    'params' => [':year' => $year_data['year']]
+                    'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
+                    'params' => [':year' => $year_data['year']],
                 ]
             );
             $news_count_row = $db->res_row();
             $news_count = $news_count_row['count_news'] ?? 0;
 
             $template->add_string_ar([
-                'L_LIST_DATA' => (string)$year_data['year'],
+                'L_LIST_DATA'  => (string)$year_data['year'],
                 'L_LIST_COUNT' => (string)$news_count,
                 'L_LIST_TITLE' => $year_data['year'] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
-                'U_LIST_URL' => sprintf(
+                'U_LIST_URL'   => sprintf(
                     '%s?action=news&amp;y=%d',
                     $work->config['site_url'],
                     $year_data['year']
-                )
+                ),
             ], 'LIST_NEWS[' . $key . ']');
         }
 
         $template->add_string_ar([
             'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
-            'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years']
+            'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'],
         ]);
         $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'];
     } else {
@@ -481,10 +484,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
         // Проверка параметра 'm' (месяц)
         if (!$work->check_input('_GET', 'm', [
-            'isset' => true,
-            'empty' => true,
-            'regexp' => '/^[0-9]{2}$/', // Добавлены ограничители "/"
-            'not_zero' => true
+            'isset'    => true,
+            'empty'    => true,
+            'regexp'   => '/^[0-9]{2}$/', // Добавлены ограничители "/"
+            'not_zero' => true,
         ])) {
             $action = '';
 
@@ -493,9 +496,9 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`',
                 TBL_NEWS,
                 [
-                    'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
+                    'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
                     'params' => [':year' => $year],
-                    'order' => '`data_last_edit` ASC'
+                    'order'  => '`data_last_edit` ASC',
                 ]
             );
             $months_list = $db->res_arr();
@@ -511,29 +514,29 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'COUNT(*) AS `count_news`',
                     TBL_NEWS,
                     [
-                        'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
-                        'params' => [':year' => $year, ':month' => $month_data['month']]
+                        'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
+                        'params' => [':year' => $year, ':month' => $month_data['month']],
                     ]
                 );
                 $news_count_row = $db->res_row();
                 $news_count = $news_count_row['count_news'] ?? 0;
 
                 $template->add_string_ar([
-                    'L_LIST_DATA' => $work->lang['news'][$month_data['month']],
+                    'L_LIST_DATA'  => $work->lang['news'][$month_data['month']],
                     'L_LIST_COUNT' => (string)$news_count,
                     'L_LIST_TITLE' => $work->lang['news'][$month_data['month']] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
-                    'U_LIST_URL' => sprintf(
+                    'U_LIST_URL'   => sprintf(
                         '%s?action=news&amp;y=%d&amp;m=%02d',
                         $work->config['site_url'],
                         $year,
                         $month_data['month']
-                    )
+                    ),
                 ], 'LIST_NEWS[' . $key . ']');
             }
 
             $template->add_string_ar([
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
-                'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month']
+                'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'],
             ]);
             $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'];
         } else {
@@ -545,9 +548,9 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 '*',
                 TBL_NEWS,
                 [
-                    'where' => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
+                    'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
                     'params' => [':year' => $year, ':month' => $month],
-                    'order' => '`data_last_edit` ASC'
+                    'order'  => '`data_last_edit` ASC',
                 ]
             );
             $news_list = $db->res_arr();
@@ -559,20 +562,20 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
             foreach ($news_list as $key => $news_data) {
                 $template->add_string_ar([
-                    'L_LIST_DATA' => $news_data['name_post'],
+                    'L_LIST_DATA'  => $news_data['name_post'],
                     'L_LIST_COUNT' => date('d.m.Y', strtotime($news_data['data_last_edit'])),
                     'L_LIST_TITLE' => Work::utf8_wordwrap(Work::clean_field($news_data['text_post']), 100),
-                    'U_LIST_URL' => sprintf(
+                    'U_LIST_URL'   => sprintf(
                         '%s?action=news&amp;news=%d',
                         $work->config['site_url'],
                         $news_data['id']
-                    )
+                    ),
                 ], 'LIST_NEWS[' . $key . ']');
             }
 
             $template->add_string_ar([
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
-                'L_NEWS_DATA' => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years']
+                'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'],
             ]);
             $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'];
         }

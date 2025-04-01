@@ -9,7 +9,7 @@ var interfacePhotoRigma_1_1Classes_1_1User__Interface =
     [ "login_user", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a9f839b5040591e4ea416cfc8f2ec8f44", null ],
     [ "process_user_rights", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a6031ba212847fdf2810753c120c4b4d2", null ],
     [ "unset_property_key", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#acd25145f48c04385645c77ce03ebd9bc", null ],
-    [ "update_group_data", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#ac5e8ffbb47053c27a7df5b5e7563975d", null ],
+    [ "update_group_data", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a8432fa6f08d4982b9c9d9aaede7de566", null ],
     [ "update_user_data", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a855f88015180a39f2464a41a2ce2a5c2", null ],
-    [ "update_user_rights", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#aced8c94b564776574984f4caf97b3614", null ]
+    [ "update_user_rights", "d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a54dd5e694d07ac47b91bf9a7cc58d9d2", null ]
 ];

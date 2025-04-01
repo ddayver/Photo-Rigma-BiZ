@@ -19,10 +19,12 @@
  * - Просмотр профиля другого пользователя.
  * - Логирование ошибок и подозрительных действий.
  *
- * @throws      RuntimeException Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование).
- *              Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
+ * @throws      RuntimeException Если не удалось выполнить действие с профилем (например, вход, выход, регистрация,
+ *                               редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID:
+ *                               {$user->session['login_id']}".
  * @throws      LogicException Если не удалось получить данные группы пользователя.
- *              Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}".
+ *              Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID:
+ *              {$user->session['login_id']}".
  *
  * @author      Dark Dayver
  * @version     0.4.0
@@ -39,13 +41,13 @@
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *              Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -82,14 +84,14 @@ $template->template_file = 'profile.html';
 // Проверяем и получаем значение subact через check_input
 $subact = match (true) {
     $work->check_input('_GET', 'subact', [
-        'isset' => true,
-        'empty' => true,
+        'isset'  => true,
+        'empty'  => true,
         'regexp' => '/^[_A-Za-z0-9\-]+$/',
-    ]) => $_GET['subact'],
+    ])                               => $_GET['subact'],
 
     $user->session['login_id'] === 0 => 'login',
 
-    default => 'logout',
+    default                          => 'logout',
 };
 
 // Определяем URL для перенаправления
@@ -97,7 +99,7 @@ $redirect_url = match (true) {
     !empty($_SERVER['HTTP_REFERER']) && filter_var(
         $_SERVER['HTTP_REFERER'],
         FILTER_VALIDATE_URL
-    ) => $_SERVER['HTTP_REFERER'],
+    )       => $_SERVER['HTTP_REFERER'],
     default => $work->config['site_url'],
 };
 
@@ -110,10 +112,10 @@ if ($subact === 'saveprofile') {
 
     // Проверяем параметр uid через check_input
     if ($work->check_input('_GET', 'uid', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]+$/',
-        'not_zero' => true
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]+$/',
+        'not_zero' => true,
     ])) {
         $user_id = (int)$_GET['uid'];
     } else {
@@ -135,8 +137,8 @@ if ($subact === 'saveprofile') {
     if ($user_id === $user->session['login_id'] || $user->user['admin']) {
         // Запрос с плейсхолдерами
         $db->select('*', TBL_USERS, [
-            'where' => '`id` = :user_id',
-            'params' => [':user_id' => $user_id]
+            'where'  => '`id` = :user_id',
+            'params' => [':user_id' => $user_id],
         ]);
         $user_data = $db->res_row();
         if (!$user_data) {
@@ -178,11 +180,11 @@ if ($subact === 'logout') {
 
     // Обновление данных пользователя через плейсхолдеры
     $db->update([
-        '`date_last_activ`' => null,
-        '`date_last_logout`' => date('Y-m-d H:i:s')
+        '`date_last_activ`'  => null,
+        '`date_last_logout`' => date('Y-m-d H:i:s'),
     ], TBL_USERS, [
-        'where' => '`id` = :user_id',
-        'params' => [':user_id' => $user->session['login_id']]
+        'where'  => '`id` = :user_id',
+        'params' => [':user_id' => $user->session['login_id']],
     ]);
 
     // Проверка успешности обновления
@@ -217,10 +219,10 @@ if ($subact === 'logout') {
 if ($subact === 'regist') {
     // Проверяем, авторизован ли пользователь через check_input
     if ($work->check_input('_SESSION', 'login_id', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]+$/',
-        'not_zero' => true
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]+$/',
+        'not_zero' => true,
     ])) {
         // Если пользователь уже авторизован, перенаправляем на главную страницу
         header('Location: ' . $work->config['site_url']);
@@ -242,31 +244,31 @@ if ($subact === 'regist') {
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
     // Инициализируем флаги ошибок для всех полей формы
-    $template->add_if_ar(array(
-        'ERROR_LOGIN' => false,
-        'ERROR_PASSWORD' => false,
+    $template->add_if_ar([
+        'ERROR_LOGIN'       => false,
+        'ERROR_PASSWORD'    => false,
         'ERROR_RE_PASSWORD' => false,
-        'ERROR_EMAIL' => false,
-        'ERROR_REAL_NAME' => false,
-        'ERROR_CAPTCHA' => false
-    ));
+        'ERROR_EMAIL'       => false,
+        'ERROR_REAL_NAME'   => false,
+        'ERROR_CAPTCHA'     => false,
+    ]);
 
     // Добавляем строки для шаблона, включая метки, URL и данные CAPTCHA
-    $template->add_string_ar(array(
-        'NAME_BLOCK' => $work->lang['profile']['regist'],
-        'L_LOGIN' => $work->lang['profile']['login'],
-        'L_PASSWORD' => $work->lang['profile']['password'],
-        'L_RE_PASSWORD' => $work->lang['profile']['re_password'],
-        'L_EMAIL' => $work->lang['profile']['email'],
-        'L_REAL_NAME' => $work->lang['profile']['real_name'],
-        'L_REGISTER' => $work->lang['profile']['register'],
-        'L_CAPTCHA' => $work->lang['profile']['captcha'],
-        'U_REGISTER' => sprintf('%s?action=profile&subact=register', $work->config['site_url']),
+    $template->add_string_ar([
+        'NAME_BLOCK'         => $work->lang['profile']['regist'],
+        'L_LOGIN'            => $work->lang['profile']['login'],
+        'L_PASSWORD'         => $work->lang['profile']['password'],
+        'L_RE_PASSWORD'      => $work->lang['profile']['re_password'],
+        'L_EMAIL'            => $work->lang['profile']['email'],
+        'L_REAL_NAME'        => $work->lang['profile']['real_name'],
+        'L_REGISTER'         => $work->lang['profile']['register'],
+        'L_CAPTCHA'          => $work->lang['profile']['captcha'],
+        'U_REGISTER'         => sprintf('%s?action=profile&subact=register', $work->config['site_url']),
         'D_CAPTCHA_QUESTION' => $captcha['question'],
-        'D_LOGIN' => '',
-        'D_EMAIL' => '',
-        'D_REAL_NAME' => ''
-    ));
+        'D_LOGIN'            => '',
+        'D_EMAIL'            => '',
+        'D_REAL_NAME'        => '',
+    ]);
 
     // Если есть ошибки в сессии, добавляем их в шаблон
     if (!empty($user->session['error']) && is_array($user->session['error'])) {
@@ -275,10 +277,10 @@ if ($subact === 'regist') {
             $template->add_if('ERROR_' . strtoupper($key), $value['if'] ?? false);
 
             // Добавляем данные ошибки в шаблон
-            $template->add_string_ar(array(
-                'D_' . strtoupper($key) => Work::clean_field($value['data'] ?? '') ?? '',
-                'D_ERROR_' . strtoupper($key) => Work::clean_field($value['text'] ?? '') ?? ''
-            ));
+            $template->add_string_ar([
+                'D_' . strtoupper($key)       => Work::clean_field($value['data'] ?? '') ?? '',
+                'D_ERROR_' . strtoupper($key) => Work::clean_field($value['text'] ?? '') ?? '',
+            ]);
         }
         // Очищаем ошибки из сессии после использования
         $user->unset_property_key('session', 'error');
@@ -286,10 +288,10 @@ if ($subact === 'regist') {
 } elseif ($subact === 'register') {
     // Проверяем, авторизован ли пользователь через check_input
     if ($work->check_input('_SESSION', 'login_id', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]+$/',
-        'not_zero' => true
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]+$/',
+        'not_zero' => true,
     ])) {
         header('Location: ' . $redirect_url);
         exit;
@@ -321,10 +323,10 @@ if ($subact === 'regist') {
 } elseif ($subact === 'login') {
     // Проверяем, авторизован ли пользователь через сессию
     if ($work->check_input('_SESSION', 'login_id', [
-        'isset' => true,
-        'empty' => true,
-        'regexp' => '/^[0-9]+$/',
-        'not_zero' => true
+        'isset'    => true,
+        'empty'    => true,
+        'regexp'   => '/^[0-9]+$/',
+        'not_zero' => true,
     ])) {
         // Если пользователь уже авторизован, перенаправляем его на главную страницу
         header('Location: ' . $work->config['site_url']);
@@ -360,9 +362,9 @@ if ($subact === 'regist') {
 } elseif ($subact === 'profile') {
     // Проверка и установка $uid
     if ($work->check_input('_GET', 'uid', [
-        'isset' => true,
-        'empty' => false,
-        'regexp' => '/^[0-9]+$/',
+        'isset'    => true,
+        'empty'    => false,
+        'regexp'   => '/^[0-9]+$/',
         'not_zero' => true,
     ])) {
         $uid = (int)$_GET['uid'];
@@ -381,8 +383,8 @@ if ($subact === 'regist') {
             '*',
             TBL_USERS,
             [
-                'where' => '`id` = :id',
-                'params' => [':id' => $uid]
+                'where'  => '`id` = :id',
+                'params' => [':id' => $uid],
             ]
         );
         $user_data = $db->res_row();
@@ -402,8 +404,8 @@ if ($subact === 'regist') {
             '*',
             TBL_GROUP,
             [
-                'where' => '`id` = :id',
-                'params' => [':id' => $user_data['group_id']]
+                'where'  => '`id` = :id',
+                'params' => [':id' => $user_data['group_id']],
             ]
         );
         $group_data = $db->res_row();
@@ -416,8 +418,8 @@ if ($subact === 'regist') {
                 '*',
                 TBL_GROUP,
                 [
-                    'where' => '`id` = :id',
-                    'params' => [':id' => $user_data['group_id']]
+                    'where'  => '`id` = :id',
+                    'params' => [':id' => $user_data['group_id']],
                 ]
             );
             $group_data = $db->res_row();
@@ -433,43 +435,43 @@ if ($subact === 'regist') {
         $language = $work->get_languages();
         $themes = $work->get_themes();
         $template->add_if('NEED_PASSWORD', $confirm_password);
-        $template->add_string_ar(array(
-            'NAME_BLOCK' => $name_block,
-            'CSRF_TOKEN' => $user->csrf_token(),
-            'L_LOGIN' => $work->lang['profile']['login'],
+        $template->add_string_ar([
+            'NAME_BLOCK'      => $name_block,
+            'CSRF_TOKEN'      => $user->csrf_token(),
+            'L_LOGIN'         => $work->lang['profile']['login'],
             'L_EDIT_PASSWORD' => $work->lang['profile']['password'],
-            'L_RE_PASSWORD' => $work->lang['profile']['re_password'],
-            'L_EMAIL' => $work->lang['profile']['email'],
-            'L_REAL_NAME' => $work->lang['profile']['real_name'],
-            'L_PASSWORD' => $work->lang['profile']['confirm_password'],
-            'L_SAVE_PROFILE' => $work->lang['profile']['save_profile'],
-            'L_HELP_EDIT' => $work->lang['profile']['help_edit'],
-            'L_AVATAR' => $work->lang['profile']['avatar'],
-            'L_GROUP' => $work->lang['main']['group'],
+            'L_RE_PASSWORD'   => $work->lang['profile']['re_password'],
+            'L_EMAIL'         => $work->lang['profile']['email'],
+            'L_REAL_NAME'     => $work->lang['profile']['real_name'],
+            'L_PASSWORD'      => $work->lang['profile']['confirm_password'],
+            'L_SAVE_PROFILE'  => $work->lang['profile']['save_profile'],
+            'L_HELP_EDIT'     => $work->lang['profile']['help_edit'],
+            'L_AVATAR'        => $work->lang['profile']['avatar'],
+            'L_GROUP'         => $work->lang['main']['group'],
             'L_DELETE_AVATAR' => $work->lang['profile']['delete_avatar'],
-            'L_CHANGE_LANG' => $work->lang['admin']['language'],
-            'L_CHANGE_THEME' => $work->lang['admin']['themes'],
-            'D_LOGIN' => $user_data['login'],
-            'D_EMAIL' => $user_data['email'],
-            'D_REAL_NAME' => $user_data['real_name'],
+            'L_CHANGE_LANG'   => $work->lang['admin']['language'],
+            'L_CHANGE_THEME'  => $work->lang['admin']['themes'],
+            'D_LOGIN'         => $user_data['login'],
+            'D_EMAIL'         => $user_data['email'],
+            'D_REAL_NAME'     => $user_data['real_name'],
             'D_MAX_FILE_SIZE' => (string)$max_size,
-            'D_GROUP' => Work::clean_field($group_data['name']),
-            'U_AVATAR' => sprintf(
+            'D_GROUP'         => Work::clean_field($group_data['name']),
+            'U_AVATAR'        => sprintf(
                 '%s%s/%s',
                 $work->config['site_url'],
                 $work->config['avatar_folder'],
                 $user_data['avatar']
             ),
-            'U_PROFILE_EDIT' => sprintf(
+            'U_PROFILE_EDIT'  => sprintf(
                 '%s?action=profile&amp;subact=saveprofile&amp;uid=%d',
                 $work->config['site_url'],
                 $uid
-            )
-        ));
+            ),
+        ]);
         foreach ($language as $key => $val) {
             $template->add_string_ar(
                 [
-                    'D_DIR_LANG' => $val['value'],
+                    'D_DIR_LANG'  => $val['value'],
                     'D_NAME_LANG' => $val['name'],
                 ],
                 'SELECT_LANGUAGE[' . $key . ']'
@@ -487,7 +489,7 @@ if ($subact === 'regist') {
         foreach ($themes as $key => $val) {
             $template->add_string_ar(
                 [
-                    'D_DIR_THEME' => $val,
+                    'D_DIR_THEME'  => $val,
                     'D_NAME_THEME' => ucfirst($val),
                 ],
                 'SELECT_THEME[' . $key . ']'
@@ -508,8 +510,8 @@ if ($subact === 'regist') {
             '*',
             TBL_USERS,
             [
-                'where' => '`id` = :id',
-                'params' => [':id' => $uid]
+                'where'  => '`id` = :id',
+                'params' => [':id' => $uid],
             ]
         );
         $user_data = $db->res_row();
@@ -523,8 +525,8 @@ if ($subact === 'regist') {
             '*',
             TBL_GROUP,
             [
-                'where' => '`id` = :id',
-                'params' => [':id' => $user_data['group_id']]
+                'where'  => '`id` = :id',
+                'params' => [':id' => $user_data['group_id']],
             ]
         );
         $group_data = $db->res_row();
@@ -537,8 +539,8 @@ if ($subact === 'regist') {
                 '*',
                 TBL_GROUP,
                 [
-                    'where' => '`id` = :id',
-                    'params' => [':id' => $user_data['group_id']]
+                    'where'  => '`id` = :id',
+                    'params' => [':id' => $user_data['group_id']],
                 ]
             );
             $group_data = $db->res_row();
@@ -551,22 +553,22 @@ if ($subact === 'regist') {
         // Настройка шаблона для просмотра профиля
         $template->add_case('PROFILE_BLOCK', 'PROFILE_VIEW');
         $title = $name_block;
-        $template->add_string_ar(array(
-            'NAME_BLOCK' => $name_block,
-            'L_EMAIL' => $work->lang['profile']['email'],
+        $template->add_string_ar([
+            'NAME_BLOCK'  => $name_block,
+            'L_EMAIL'     => $work->lang['profile']['email'],
             'L_REAL_NAME' => $work->lang['profile']['real_name'],
-            'L_AVATAR' => $work->lang['profile']['avatar'],
-            'L_GROUP' => $work->lang['main']['group'],
-            'D_EMAIL' => $work->filt_email($user_data['email']),
+            'L_AVATAR'    => $work->lang['profile']['avatar'],
+            'L_GROUP'     => $work->lang['main']['group'],
+            'D_EMAIL'     => $work->filt_email($user_data['email']),
             'D_REAL_NAME' => Work::clean_field($user_data['real_name']),
-            'D_GROUP' => Work::clean_field($group_data['name']),
-            'U_AVATAR' => sprintf(
+            'D_GROUP'     => Work::clean_field($group_data['name']),
+            'U_AVATAR'    => sprintf(
                 '%s%s/%s',
                 $work->config['site_url'],
                 $work->config['avatar_folder'],
                 $user_data['avatar']
-            )
-        ));
+            ),
+        ]);
     }
 } else {
     header('Location: ' . $work->config['site_url']);

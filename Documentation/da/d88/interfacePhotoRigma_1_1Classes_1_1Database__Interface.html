@@ -172,7 +172,7 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <dl class="section note"><dt>Заметки</dt><dd>Интерфейс поддерживает только MySQL (MariaDB) и PostgreSQL.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Методы интерфейса изменили свою реализацию в отличие от предыдущей версии. Убедитесь, что вы изучили новую документацию по методам перед использованием. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00081">81</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00083">83</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="a73d8e6acdfb996002f980ab7c9c18515" name="a73d8e6acdfb996002f980ab7c9c18515"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a73d8e6acdfb996002f980ab7c9c18515">&#9670;&#160;</a></span>delete()</h2>
@@ -457,7 +457,8 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </ul>
 </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
-<li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
+<li>where (string|array): Условие WHERE. Может быть строкой (например, "status =
+                                  1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>
 <li>group (string): Группировка GROUP BY. Должна быть строкой с именами полей (например, "category_id").</li>
 <li>order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и направлением (например, "created_at DESC").</li>
 <li>limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой с диапазоном (например, "0, 10").</li>
@@ -624,7 +625,7 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>,</code>. Пример: "id", ["id", "name"]. </td></tr>
+    <tr><td class="paramtype">string&#160;|&#160;array</td><td class="paramname">$select</td><td>Список полей для выборки. Может быть строкой (имя одного поля) или массивом (список полей). Если передан массив, он преобразуется в строку с разделителем <code>, </code>. Пример: "id", ["id", "name"]. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$from_tbl</td><td>Имя таблицы, из которой выбираются данные. Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$options</td><td>Массив опций для формирования запроса. Поддерживаемые ключи:<ul>
 <li>where (string|array): Условие WHERE. Может быть строкой (например, "status = 1") или ассоциативным массивом (например, ["id" =&gt; 1, "status" =&gt; "active"]).</li>

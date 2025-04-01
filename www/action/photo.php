@@ -40,13 +40,13 @@
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *              Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -95,19 +95,19 @@ $db->join(
     [
         TBL_PHOTO . '.`file`',
         TBL_PHOTO . '.`category`',
-        TBL_CATEGORY . '.`folder`'
+        TBL_CATEGORY . '.`folder`',
     ], // Список полей для выборки
     TBL_PHOTO, // Основная таблица
     [
         [
-            'type' => 'LEFT', // Тип JOIN
+            'type'  => 'LEFT', // Тип JOIN
             'table' => TBL_CATEGORY, // Таблица для JOIN
-            'on' => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`' // Условие JOIN
-        ]
+            'on'    => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`', // Условие JOIN
+        ],
     ],
     [
-        'where' => TBL_PHOTO . '.`id` = :id', // Условие WHERE
-        'params' => [':id' => $photo_id] // Параметры для prepared statements
+        'where'  => TBL_PHOTO . '.`id` = :id', // Условие WHERE
+        'params' => [':id' => $photo_id], // Параметры для prepared statements
     ]
 );
 
@@ -138,8 +138,8 @@ $template->template_file = 'photo.html';
 $template->add_if_ar([
     'EDIT_BLOCK' => false,
     'RATE_PHOTO' => false,
-    'RATE_USER' => false,
-    'RATE_MODER' => false
+    'RATE_USER'  => false,
+    'RATE_MODER' => false,
 ]);
 
 if ($photo_id !== 0) {
@@ -158,24 +158,24 @@ if ($photo_id !== 0) {
             TBL_CATEGORY . '.`folder`',
             TBL_CATEGORY . '.`name` AS `category_name`',
             TBL_CATEGORY . '.`description` AS `category_description`',
-            TBL_USERS . '.`real_name`' // Добавляем поле real_name из таблицы TBL_USERS
+            TBL_USERS . '.`real_name`', // Добавляем поле real_name из таблицы TBL_USERS
         ], // Список полей для выборки
         TBL_PHOTO, // Основная таблица
         [
             [
-                'type' => 'LEFT', // Тип JOIN
+                'type'  => 'LEFT', // Тип JOIN
                 'table' => TBL_CATEGORY, // Таблица для JOIN
-                'on' => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`' // Условие JOIN
+                'on'    => TBL_PHOTO . '.`category` = ' . TBL_CATEGORY . '.`id`', // Условие JOIN
             ],
             [
-                'type' => 'LEFT', // Тип JOIN
+                'type'  => 'LEFT', // Тип JOIN
                 'table' => TBL_USERS, // Таблица для JOIN
-                'on' => TBL_PHOTO . '.`user_upload` = ' . TBL_USERS . '.`id`' // Условие JOIN
-            ]
+                'on'    => TBL_PHOTO . '.`user_upload` = ' . TBL_USERS . '.`id`', // Условие JOIN
+            ],
         ],
         [
-            'where' => TBL_PHOTO . '.`id` = :id', // Условие WHERE
-            'params' => [':id' => $photo_id] // Параметры для prepared statements
+            'where'  => TBL_PHOTO . '.`id` = :id', // Условие WHERE
+            'params' => [':id' => $photo_id], // Параметры для prepared statements
         ]
     );
 
@@ -211,16 +211,16 @@ if ($photo_id !== 0) {
             '`rate`',
             TBL_RATE_USER,
             [
-                'where' => '`id_foto` = :id_foto AND `id_user` = :id_user',
-                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']]
+                'where'  => '`id_foto` = :id_foto AND `id_user` = :id_user',
+                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]
         );
         $temp = $db->res_row();
         $rate_user = $temp ? $temp['rate'] : false;
 
         if ($user->user['pic_rate_user'] && !$rate_user && $work->check_input('_POST', 'rate_user', [
-                'isset' => true,
-                'empty' => true,
+                'isset'  => true,
+                'empty'  => true,
                 'regexp' => '/^-?[0-9]+$/',
             ]) && abs($_POST['rate_user']) <= $work->config['max_rate']) {
             // Вызов метода для обработки оценки пользователя
@@ -231,8 +231,8 @@ if ($photo_id !== 0) {
                 ['`rate_user`' => ':rate_user'],
                 TBL_PHOTO,
                 [
-                    'where' => '`id` = :id',
-                    'params' => [':id' => $photo_id, ':rate_user' => $rate_user]
+                    'where'  => '`id` = :id',
+                    'params' => [':id' => $photo_id, ':rate_user' => $rate_user],
                 ]
             );
 
@@ -250,16 +250,16 @@ if ($photo_id !== 0) {
             '`rate`',
             TBL_RATE_MODER,
             [
-                'where' => '`id_foto` = :id_foto AND `id_user` = :id_user',
-                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']]
+                'where'  => '`id_foto` = :id_foto AND `id_user` = :id_user',
+                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]
         );
         $temp = $db->res_row();
         $rate_moder = $temp ? $temp['rate'] : false;
 
         if ($user->user['pic_rate_moder'] && !$rate_moder && $work->check_input('_POST', 'rate_moder', [
-                'isset' => true,
-                'empty' => true,
+                'isset'  => true,
+                'empty'  => true,
                 'regexp' => '/^-?[0-9]+$/',
             ]) && abs($_POST['rate_moder']) <= $work->config['max_rate']) {
             // Вызов метода для обработки оценки модератора
@@ -270,8 +270,8 @@ if ($photo_id !== 0) {
                 ['`rate_moder`' => ':rate_moder'],
                 TBL_PHOTO,
                 [
-                    'where' => '`id` = :id',
-                    'params' => [':id' => $photo_id, ':rate_moder' => $rate_moder]
+                    'where'  => '`id` = :id',
+                    'params' => [':id' => $photo_id, ':rate_moder' => $rate_moder],
                 ]
             );
 
@@ -325,8 +325,8 @@ if ($photo_id !== 0) {
         // Проверка категории
         $category = true;
         if (!$work->check_input('_POST', 'name_category', [
-            'isset' => true,
-            'empty' => true,
+            'isset'  => true,
+            'empty'  => true,
             'regexp' => '/^[0-9]+$/',
         ])) {
             $category = false;
@@ -340,8 +340,8 @@ if ($photo_id !== 0) {
                 '*', // Список полей для выборки
                 TBL_CATEGORY, // Имя таблицы
                 [
-                    'where' => $select_cat, // Условие WHERE
-                    'params' => [':id' => $_POST['name_category']] // Параметры для prepared statements
+                    'where'  => $select_cat, // Условие WHERE
+                    'params' => [':id' => $_POST['name_category']], // Параметры для prepared statements
                 ]
             );
             $temp_category_data = $db->res_row();
@@ -359,8 +359,8 @@ if ($photo_id !== 0) {
                 '`folder`', // Список полей для выборки
                 TBL_CATEGORY, // Имя таблицы
                 [
-                    'where' => '`id` = :id', // Условие WHERE
-                    'params' => [':id' => $_POST['name_category']] // Параметры для prepared statements
+                    'where'  => '`id` = :id', // Условие WHERE
+                    'params' => [':id' => $_POST['name_category']], // Параметры для prepared statements
                 ]
             );
             $temp_new_category_data = $db->res_row();
@@ -458,21 +458,21 @@ if ($photo_id !== 0) {
         // Обновляем данные в таблице фотографий
         $db->update(
             [
-                '`name`' => ':name',
+                '`name`'        => ':name',
                 '`description`' => ':desc',
-                '`category`' => ':cat',
-                '`file`' => ':file',
+                '`category`'    => ':cat',
+                '`file`'        => ':file',
             ],
             TBL_PHOTO, // Таблица
             [
-                'where' => '`id` = :id', // Условие WHERE
+                'where'  => '`id` = :id', // Условие WHERE
                 'params' => [
-                    ':id' => $photo_id,
+                    ':id'   => $photo_id,
                     ':name' => $photo['name'],
                     ':desc' => $photo['description'],
-                    ':cat' => $photo['category_id'],
-                    ':file' => $photo['file'] ?? $photo_data['file']
-                ] // Параметры для prepared statements
+                    ':cat'  => $photo['category_id'],
+                    ':file' => $photo['file'] ?? $photo_data['file'],
+                ], // Параметры для prepared statements
             ]
         );
 
@@ -519,11 +519,11 @@ if ($photo_id !== 0) {
             if ($val['id'] === $photo_data['category']) {
                 $template->add_string_ar([
                     'D_SELECTED_CATEGORY' => (string)$val['id'],
-                    'L_SELECT_CATEGORY' => Work::clean_field($val['name']),
+                    'L_SELECT_CATEGORY'   => Work::clean_field($val['name']),
                 ]);
             }
             $template->add_string_ar([
-                'D_ID_CATEGORY' => (string)$val['id'],
+                'D_ID_CATEGORY'   => (string)$val['id'],
                 'D_NAME_CATEGORY' => $val['name'],
             ], 'SELECT_CATEGORY[' . $key . ']');
         }
@@ -532,25 +532,25 @@ if ($photo_id !== 0) {
         $template->add_string('CSRF_TOKEN', $user->csrf_token());
         // Добавляем данные в шаблон
         $template->add_string_ar([
-            'L_NAME_BLOCK' => $work->lang['photo']['edit'] . ' - ' . Work::clean_field($photo_data['name']),
-            'L_NAME_PHOTO' => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
+            'L_NAME_BLOCK'        => $work->lang['photo']['edit'] . ' - ' . Work::clean_field($photo_data['name']),
+            'L_NAME_PHOTO'        => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
             'L_DESCRIPTION_PHOTO' => $work->lang['main']['description_of'] . ' ' . $work->lang['photo']['of_photo'],
-            'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
-            'L_NAME_FILE' => $work->lang['photo']['filename'],
-            'L_EDIT_THIS' => $work->lang['photo']['save'],
-            'D_NAME_FILE' => $photo_data['file'],
-            'D_NAME_PHOTO' => $photo_data['name'],
+            'L_NAME_CATEGORY'     => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
+            'L_NAME_FILE'         => $work->lang['photo']['filename'],
+            'L_EDIT_THIS'         => $work->lang['photo']['save'],
+            'D_NAME_FILE'         => $photo_data['file'],
+            'D_NAME_PHOTO'        => $photo_data['name'],
             'D_DESCRIPTION_PHOTO' => $photo_data['description'],
-            'U_EDITED' => sprintf(
+            'U_EDITED'            => sprintf(
                 '%s?action=photo&amp;subact=saveedit&amp;id=%d',
                 $work->config['site_url'],
                 $photo_data['id']
             ),
-            'U_PHOTO' => sprintf(
+            'U_PHOTO'             => sprintf(
                 '%s?action=attach&amp;foto=%d&amp;thumbnail=1',
                 $work->config['site_url'],
                 $photo_data['id']
-            )
+            ),
         ]);
     } elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
         '_GET',
@@ -566,11 +566,11 @@ if ($photo_id !== 0) {
                 'SUM(CASE WHEN `category` = 0 AND `user_upload` = :user_upload THEN 1 ELSE 0 END) AS `count_user_category`, SUM(CASE WHEN `category` = 0 THEN 1 ELSE 0 END) AS `count_category`, COUNT(*) AS `count_total`',
                 TBL_PHOTO,
                 [
-                    'where' => '`id` != :photo_id',
+                    'where'  => '`id` != :photo_id',
                     'params' => [
                         ':user_upload' => $photo_data['user_upload'],
-                        ':photo_id' => $photo_id
-                    ]
+                        ':photo_id'    => $photo_id,
+                    ],
                 ]
             );
 
@@ -588,9 +588,9 @@ if ($photo_id !== 0) {
                     $work->config['site_url'],
                     $photo_data['user_upload']
                 ),
-                $result['count_category'] > 0 => sprintf('%s?action=category&cat=user', $work->config['site_url']),
-                $result['count_total'] > 0 => sprintf('%s?action=category', $work->config['site_url']),
-                default => $work->config['site_url']
+                $result['count_category'] > 0      => sprintf('%s?action=category&cat=user', $work->config['site_url']),
+                $result['count_total'] > 0         => sprintf('%s?action=category', $work->config['site_url']),
+                default                            => $work->config['site_url']
             };
         } else {
             // Запрос для обычной категории
@@ -598,11 +598,11 @@ if ($photo_id !== 0) {
                 'SUM(CASE WHEN `category` = :category THEN 1 ELSE 0 END) AS `count_category`, COUNT(*) AS `count_total`',
                 TBL_PHOTO,
                 [
-                    'where' => '`id` != :photo_id',
+                    'where'  => '`id` != :photo_id',
                     'params' => [
                         ':category' => $photo_data['category'],
-                        ':photo_id' => $photo_id
-                    ]
+                        ':photo_id' => $photo_id,
+                    ],
                 ]
             );
 
@@ -620,8 +620,8 @@ if ($photo_id !== 0) {
                     $work->config['site_url'],
                     $photo_data['category']
                 ),
-                $result['count_total'] > 0 => sprintf('%s?action=category', $work->config['site_url']),
-                default => $work->config['site_url']
+                $result['count_total'] > 0    => sprintf('%s?action=category', $work->config['site_url']),
+                default                       => $work->config['site_url']
             };
         }
 
@@ -648,36 +648,40 @@ if ($photo_id !== 0) {
 
         // Добавляем основные данные в шаблон
         $template->add_string_ar([
-            'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . Work::clean_field($photo_data['name']),
-            'L_DESCRIPTION_BLOCK' => Work::clean_field($photo_data['description']),
-            'L_USER_ADD' => $work->lang['main']['user_add'],
-            'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
+            'L_NAME_BLOCK'           => $work->lang['photo']['title'] . ' - ' . Work::clean_field($photo_data['name']),
+            'L_DESCRIPTION_BLOCK'    => Work::clean_field($photo_data['description']),
+            'L_USER_ADD'             => $work->lang['main']['user_add'],
+            'L_NAME_CATEGORY'        => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
             'L_DESCRIPTION_CATEGORY' => $work->lang['main']['description_of'] . ' ' . $work->lang['category']['of_category'],
-            'D_NAME_PHOTO' => Work::clean_field($photo_data['name']),
-            'D_DESCRIPTION_PHOTO' => Work::clean_field($photo_data['description']),
-            'U_PHOTO' => sprintf('%s?action=attach&foto=%d', $work->config['site_url'], $photo_data['id'])
+            'D_NAME_PHOTO'           => Work::clean_field($photo_data['name']),
+            'D_DESCRIPTION_PHOTO'    => Work::clean_field($photo_data['description']),
+            'U_PHOTO'                => sprintf(
+                '%s?action=attach&foto=%d',
+                $work->config['site_url'],
+                $photo_data['id']
+            ),
         ]);
 
         // Если пользователь имеет права на редактирование/удаление
         if (($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) {
             $template->add_string_ar([
-                'L_EDIT_BLOCK' => $work->lang['photo']['edit'],
+                'L_EDIT_BLOCK'           => $work->lang['photo']['edit'],
                 'L_CONFIRM_DELETE_BLOCK' => $work->lang['photo']['confirm_delete'] . ' ' . Work::clean_field(
                     $photo_data['name']
                 ),
-                'L_DELETE_BLOCK' => $work->lang['photo']['delete'],
-                'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
-                'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
-                'U_EDIT_BLOCK' => sprintf(
+                'L_DELETE_BLOCK'         => $work->lang['photo']['delete'],
+                'L_CONFIRM_DELETE'       => $work->lang['main']['delete'],
+                'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
+                'U_EDIT_BLOCK'           => sprintf(
                     '%s?action=photo&subact=edit&id=%d',
                     $work->config['site_url'],
                     $photo_data['id']
                 ),
-                'U_DELETE_BLOCK' => sprintf(
+                'U_DELETE_BLOCK'         => sprintf(
                     '%s?action=photo&subact=delete&id=%d',
                     $work->config['site_url'],
                     $photo_data['id']
-                )
+                ),
             ]);
             $template->add_if('EDIT_BLOCK', true);
         }
@@ -689,42 +693,46 @@ if ($photo_id !== 0) {
                 '%s?action=profile&subact=profile&uid=%d',
                 $work->config['site_url'],
                 $photo_data['user_upload']
-            ) : ''
+            ) : '',
         ]);
 
         // Добавляем данные о категории
         if ($photo_data['category'] === 0) {
             $template->add_string_ar([
-                'D_NAME_CATEGORY' => $photo_data['category_name'] . ' ' . ($photo_data['real_name'] ?? ''),
+                'D_NAME_CATEGORY'        => $photo_data['category_name'] . ' ' . ($photo_data['real_name'] ?? ''),
                 'D_DESCRIPTION_CATEGORY' => $photo_data['category_description'] . ' ' . ($photo_data['real_name'] ?? ''),
-                'U_CATEGORY' => sprintf(
+                'U_CATEGORY'             => sprintf(
                     '%s?action=category&cat=user&id=%d',
                     $work->config['site_url'],
                     $photo_data['user_upload']
-                )
+                ),
             ]);
         } else {
             $template->add_string_ar([
-                'D_NAME_CATEGORY' => $photo_data['category_name'],
+                'D_NAME_CATEGORY'        => $photo_data['category_name'],
                 'D_DESCRIPTION_CATEGORY' => $photo_data['category_description'],
-                'U_CATEGORY' => sprintf('%s?action=category&cat=%d', $work->config['site_url'], $photo_data['category'])
+                'U_CATEGORY'             => sprintf(
+                    '%s?action=category&cat=%d',
+                    $work->config['site_url'],
+                    $photo_data['category']
+                ),
             ]);
         }
 
         // Добавляем данные об оценках
         $template->add_string_ar([
-            'L_RATE_USER' => $work->lang['photo']['rate_user'] . ': ' . $photo_data['rate_user'],
+            'L_RATE_USER'  => $work->lang['photo']['rate_user'] . ': ' . $photo_data['rate_user'],
             'L_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $photo_data['rate_moder'],
-            'D_RATE_USER' => (string)$photo_data['rate_user'],
+            'D_RATE_USER'  => (string)$photo_data['rate_user'],
             'D_RATE_MODER' => (string)$photo_data['rate_moder'],
-            'D_MAX_RATE' => (string)$work->config['max_rate']
+            'D_MAX_RATE'   => (string)$work->config['max_rate'],
         ]);
 
         // Проверка возможности оценки пользователем
         if ($user->user['pic_rate_user']) {
             $db->select('`rate`', TBL_RATE_USER, [
-                'where' => '`id_foto` = :id_foto AND `id_user` = :id_user',
-                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']]
+                'where'  => '`id_foto` = :id_foto AND `id_user` = :id_user',
+                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]);
             $user_rate = $db->res_row() === false;
 
@@ -745,8 +753,8 @@ if ($photo_id !== 0) {
         // Проверка возможности оценки модератором
         if ($user->user['pic_rate_moder']) {
             $db->select('`rate`', TBL_RATE_MODER, [
-                'where' => '`id_foto` = :id_foto AND `id_user` = :id_user',
-                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']]
+                'where'  => '`id_foto` = :id_foto AND `id_user` = :id_user',
+                'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]);
             $moder_rate = $db->res_row() === false;
 
@@ -773,11 +781,15 @@ if ($photo_id !== 0) {
             $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
             $template->add_string_ar([
-                'L_RATE' => $work->lang['photo']['rate_you'],
-                'L_USER_RATE' => $work->lang['photo']['if_user'],
+                'L_RATE'       => $work->lang['photo']['rate_you'],
+                'L_USER_RATE'  => $work->lang['photo']['if_user'],
                 'L_MODER_RATE' => $work->lang['photo']['if_moder'],
-                'L_RATE_THIS' => $work->lang['photo']['rate'],
-                'U_RATE' => sprintf('%s?action=photo&subact=rate&id=%d', $work->config['site_url'], $photo_data['id'])
+                'L_RATE_THIS'  => $work->lang['photo']['rate'],
+                'U_RATE'       => sprintf(
+                    '%s?action=photo&subact=rate&id=%d',
+                    $work->config['site_url'],
+                    $photo_data['id']
+                ),
             ]);
         }
     }
@@ -815,11 +827,11 @@ if ($photo_id !== 0) {
             $val['name'] .= ' ' . $user->user['real_name'];
             $template->add_string_ar([
                 'D_SELECTED_CATEGORY' => (string)$val['id'],
-                'L_SELECT_CATEGORY' => Work::clean_field($val['name']),
+                'L_SELECT_CATEGORY'   => Work::clean_field($val['name']),
             ]);
         }
         $template->add_string_ar([
-            'D_ID_CATEGORY' => (string)$val['id'],
+            'D_ID_CATEGORY'   => (string)$val['id'],
             'D_NAME_CATEGORY' => Work::clean_field($val['name']),
         ], 'UPLOAD_CATEGORY[' . $key . ']');
     }
@@ -828,14 +840,14 @@ if ($photo_id !== 0) {
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
     // Добавляем данные в шаблон
     $template->add_string_ar([
-        'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['photo']['upload'],
-        'L_NAME_PHOTO' => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
+        'L_NAME_BLOCK'        => $work->lang['photo']['title'] . ' - ' . $work->lang['photo']['upload'],
+        'L_NAME_PHOTO'        => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
         'L_DESCRIPTION_PHOTO' => $work->lang['main']['description_of'] . ' ' . $work->lang['photo']['of_photo'],
-        'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
-        'L_UPLOAD_THIS' => $work->lang['photo']['upload'],
-        'L_FILE_PHOTO' => $work->lang['photo']['select_file'],
-        'D_MAX_FILE_SIZE' => (string)$max_size,
-        'U_UPLOADED' => sprintf('%s?action=photo&subact=uploaded', $work->config['site_url'])
+        'L_NAME_CATEGORY'     => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
+        'L_UPLOAD_THIS'       => $work->lang['photo']['upload'],
+        'L_FILE_PHOTO'        => $work->lang['photo']['select_file'],
+        'D_MAX_FILE_SIZE'     => (string)$max_size,
+        'U_UPLOADED'          => sprintf('%s?action=photo&subact=uploaded', $work->config['site_url']),
     ]);
 } elseif ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
     '_GET',
@@ -884,8 +896,8 @@ if ($photo_id !== 0) {
     } else {
         // Формируем условие для выборки категории
         $category_condition = $user->user['cat_user'] || $user->user['pic_moderate'] ? [
-            'where' => '`id` = :id',
-            'params' => [':id' => $_POST['name_category']]
+            'where'  => '`id` = :id',
+            'params' => [':id' => $_POST['name_category']],
         ] : ['where' => '`id` != 0 AND `id` = :id', 'params' => [':id' => $_POST['name_category']]];
 
         // Выполняем запрос к базе данных для проверки существования категории
@@ -902,7 +914,7 @@ if ($photo_id !== 0) {
 
         // Проверяем корректность загруженного файла через $work->check_input
         if ($work->check_input('_FILES', 'file_photo', [
-            'isset' => true,
+            'isset'    => true,
             'max_size' => $max_size,
         ])) {
             // Разделяем имя файла на базовое имя и расширение
@@ -973,24 +985,24 @@ if ($photo_id !== 0) {
         $photo['description'] = $photo['description'] ?: ($work->lang['photo']['no_description'] . ' (' . $file_name . ')');
 
         $query = [
-            '`file`' => ':file',
-            '`name`' => ':name',
+            '`file`'        => ':file',
+            '`name`'        => ':name',
             '`description`' => ':desc',
-            '`category`' => ':cat',
+            '`category`'    => ':cat',
             '`date_upload`' => ':date',
             '`user_upload`' => ':user',
-            '`rate_user`' => ':r_user',
-            '`rate_moder`' => ':r_moder'
+            '`rate_user`'   => ':r_user',
+            '`rate_moder`'  => ':r_moder',
         ];
         $params = [
-            ':file' => $file_name,
-            ':name' => $photo['name'],
-            ':desc' => $photo['description'],
-            ':cat' => $photo['category_id'],
-            ':date' => date('Y-m-d H:i:s'),
-            ':user' => $user->user['id'],
-            ':r_user' => '0',
-            ':r_moder' => '0'
+            ':file'    => $file_name,
+            ':name'    => $photo['name'],
+            ':desc'    => $photo['description'],
+            ':cat'     => $photo['category_id'],
+            ':date'    => date('Y-m-d H:i:s'),
+            ':user'    => $user->user['id'],
+            ':r_user'  => '0',
+            ':r_moder' => '0',
         ];
 
         // Вставка данных в базу данных
@@ -1023,23 +1035,23 @@ if ($photo_id !== 0) {
     $template->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
     $photo_data['file'] = 'no_foto.png';
 
-    $template->add_string_ar(array(
-        'L_NAME_BLOCK' => $work->lang['photo']['title'] . ' - ' . $work->lang['main']['no_foto'],
-        'L_DESCRIPTION_BLOCK' => $work->lang['main']['no_foto'],
-        'L_USER_ADD' => $work->lang['main']['user_add'],
-        'L_NAME_CATEGORY' => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
+    $template->add_string_ar([
+        'L_NAME_BLOCK'           => $work->lang['photo']['title'] . ' - ' . $work->lang['main']['no_foto'],
+        'L_DESCRIPTION_BLOCK'    => $work->lang['main']['no_foto'],
+        'L_USER_ADD'             => $work->lang['main']['user_add'],
+        'L_NAME_CATEGORY'        => $work->lang['main']['name_of'] . ' ' . $work->lang['category']['of_category'],
         'L_DESCRIPTION_CATEGORY' => $work->lang['main']['description_of'] . ' ' . $work->lang['category']['of_category'],
-        'D_NAME_PHOTO' => $work->lang['main']['no_foto'],
-        'D_DESCRIPTION_PHOTO' => $work->lang['main']['no_foto'],
-        'D_USER_ADD' => $work->lang['main']['no_user_add'],
-        'D_NAME_CATEGORY' => $work->lang['main']['no_category'],
+        'D_NAME_PHOTO'           => $work->lang['main']['no_foto'],
+        'D_DESCRIPTION_PHOTO'    => $work->lang['main']['no_foto'],
+        'D_USER_ADD'             => $work->lang['main']['no_user_add'],
+        'D_NAME_CATEGORY'        => $work->lang['main']['no_category'],
         'D_DESCRIPTION_CATEGORY' => $work->lang['main']['no_category'],
-        'D_RATE_USER' => $work->lang['photo']['rate_user'] . ': ' . $work->lang['main']['no_foto'],
-        'D_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $work->lang['main']['no_foto'],
-        'U_CATEGORY' => $work->config['site_url'],
-        'U_USER_ADD' => '',
-        'U_PHOTO' => sprintf('%s?action=attach&amp;foto=0', $work->config['site_url']),
-    ));
+        'D_RATE_USER'            => $work->lang['photo']['rate_user'] . ': ' . $work->lang['main']['no_foto'],
+        'D_RATE_MODER'           => $work->lang['photo']['rate_moder'] . ': ' . $work->lang['main']['no_foto'],
+        'U_CATEGORY'             => $work->config['site_url'],
+        'U_USER_ADD'             => '',
+        'U_PHOTO'                => sprintf('%s?action=attach&amp;foto=0', $work->config['site_url']),
+    ]);
 
     $photo['path'] = sprintf(
         '%s%s/%s',
@@ -1051,10 +1063,10 @@ if ($photo_id !== 0) {
 
 if (!empty($photo['path'])) {
     $size_photo = $work->size_image($photo['path']);
-    $template->add_string_ar(array(
-        'D_FOTO_WIDTH' => (string)$size_photo['width'],
-        'D_FOTO_HEIGHT' => (string)$size_photo['height']
-    ));
+    $template->add_string_ar([
+        'D_FOTO_WIDTH'  => (string)$size_photo['width'],
+        'D_FOTO_HEIGHT' => (string)$size_photo['height'],
+    ]);
 }
 
 if ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(

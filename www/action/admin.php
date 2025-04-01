@@ -4,7 +4,8 @@
  * @file        action/admin.php
  * @brief       Администрирование сайта.
  *
- * @details     Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции включают:
+ * @details     Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции
+ *              включают:
  *              - Управление общими настройками сайта (название, описание, мета-теги, размеры изображений и т.д.).
  *              - Управление пользователями (редактирование прав, групп, поиск пользователей).
  *              - Управление группами (редактирование прав групп, создание и удаление групп).
@@ -31,13 +32,13 @@
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *              Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -73,11 +74,11 @@ $template->template_file = 'admin.html';
 // Инициализация флагов для шаблона
 $template->add_if_ar([
     'SESSION_ADMIN_ON' => false, // Флаг активности сессии администратора
-    'NEED_FIND' => false,        // Флаг необходимости поиска
-    'NEED_USER' => false,        // Флаг необходимости отображения пользователей
-    'FIND_USER' => false,        // Флаг найденных пользователей
-    'SELECT_GROUP' => false,     // Флаг выбора группы
-    'EDIT_GROUP' => false        // Флаг редактирования группы
+    'NEED_FIND'        => false,        // Флаг необходимости поиска
+    'NEED_USER'        => false,        // Флаг необходимости отображения пользователей
+    'FIND_USER'        => false,        // Флаг найденных пользователей
+    'SELECT_GROUP'     => false,     // Флаг выбора группы
+    'EDIT_GROUP'       => false,        // Флаг редактирования группы
 ]);
 
 // Проверяем условия для входа в административную панель
@@ -169,40 +170,40 @@ if (!empty($user->user['admin']) && $work->check_input(
 
             // Массив правил для обработки настроек
             $config_rules = [
-                'title_name' => ['regexp' => REG_NAME],
-                'title_description' => ['regexp' => REG_NAME],
-                'meta_description' => ['regexp' => REG_NAME],
-                'meta_keywords' => ['regexp' => REG_NAME],
-                'gal_width' => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
-                'left_panel' => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
-                'right_panel' => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
-                'language' => [
-                    'regexp' => REG_LOGIN,
+                'title_name'           => ['regexp' => REG_NAME],
+                'title_description'    => ['regexp' => REG_NAME],
+                'meta_description'     => ['regexp' => REG_NAME],
+                'meta_keywords'        => ['regexp' => REG_NAME],
+                'gal_width'            => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
+                'left_panel'           => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
+                'right_panel'          => ['regexp' => '/^([0-9]+)(\%){0,1}$/'],
+                'language'             => [
+                    'regexp'    => REG_LOGIN,
                     'condition' => static function () use ($work) {
                         return is_dir($work->config['site_dir'] . 'language/' . $_POST['language']);
-                    }
+                    },
                 ],
-                'themes' => [
-                    'regexp' => REG_LOGIN,
+                'themes'               => [
+                    'regexp'    => REG_LOGIN,
                     'condition' => static function () use ($work) {
                         return is_dir($work->config['site_dir'] . 'themes/' . $_POST['themes']);
-                    }
+                    },
                 ],
-                'max_file_size' => ['regexp' => '/^[0-9]+$/'],
+                'max_file_size'        => ['regexp' => '/^[0-9]+$/'],
                 'max_file_size_letter' => ['regexp' => '/^(B|K|M|G)$/'],
-                'max_photo_w' => ['regexp' => '/^[0-9]+$/'],
-                'max_photo_h' => ['regexp' => '/^[0-9]+$/'],
-                'temp_photo_w' => ['regexp' => '/^[0-9]+$/'],
-                'temp_photo_h' => ['regexp' => '/^[0-9]+$/'],
-                'max_avatar_w' => ['regexp' => '/^[0-9]+$/'],
-                'max_avatar_h' => ['regexp' => '/^[0-9]+$/'],
-                'copyright_year' => ['regexp' => '/^[0-9\-]+$/'],
-                'copyright_text' => ['regexp' => REG_NAME],
-                'copyright_url' => ['regexp' => '/^.+$/'],
-                'last_news' => ['regexp' => '/^[0-9]+$/'],
-                'best_user' => ['regexp' => '/^[0-9]+$/'],
-                'max_rate' => ['regexp' => '/^[0-9]+$/'],
-                'time_user_online' => ['regexp' => '/^[0-9]+$/'],
+                'max_photo_w'          => ['regexp' => '/^[0-9]+$/'],
+                'max_photo_h'          => ['regexp' => '/^[0-9]+$/'],
+                'temp_photo_w'         => ['regexp' => '/^[0-9]+$/'],
+                'temp_photo_h'         => ['regexp' => '/^[0-9]+$/'],
+                'max_avatar_w'         => ['regexp' => '/^[0-9]+$/'],
+                'max_avatar_h'         => ['regexp' => '/^[0-9]+$/'],
+                'copyright_year'       => ['regexp' => '/^[0-9\-]+$/'],
+                'copyright_text'       => ['regexp' => REG_NAME],
+                'copyright_url'        => ['regexp' => '/^.+$/'],
+                'last_news'            => ['regexp' => '/^[0-9]+$/'],
+                'best_user'            => ['regexp' => '/^[0-9]+$/'],
+                'max_rate'             => ['regexp' => '/^[0-9]+$/'],
+                'time_user_online'     => ['regexp' => '/^[0-9]+$/'],
             ];
 
             // Новый конфиг
@@ -245,8 +246,8 @@ if (!empty($user->user['admin']) && $work->check_input(
                     ['`value`' => ':value'], // Данные для обновления
                     TBL_CONFIG, // Таблица
                     [
-                        'where' => '`name` = :name', // Условие WHERE
-                        'params' => [':value' => $value, ':name' => $name] // Параметры для prepared statements
+                        'where'  => '`name` = :name', // Условие WHERE
+                        'params' => [':value' => $value, ':name' => $name], // Параметры для prepared statements
                     ]
                 );
 
@@ -276,86 +277,86 @@ if (!empty($user->user['admin']) && $work->check_input(
         // Добавление данных в шаблон
         $template->add_case('ADMIN_BLOCK', 'ADMIN_SETTINGS');
         $template->add_string_ar([
-            'L_NAME_BLOCK' => $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['settings'],
-            'L_MAIN_SETTINGS' => $work->lang['admin']['main_settings'],
-            'L_TITLE_NAME' => $work->lang['admin']['title_name'],
-            'L_TITLE_NAME_DESCRIPTION' => $work->lang['admin']['title_name_description'],
-            'L_TITLE_DESCRIPTION' => $work->lang['admin']['title_description'],
+            'L_NAME_BLOCK'                    => $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['settings'],
+            'L_MAIN_SETTINGS'                 => $work->lang['admin']['main_settings'],
+            'L_TITLE_NAME'                    => $work->lang['admin']['title_name'],
+            'L_TITLE_NAME_DESCRIPTION'        => $work->lang['admin']['title_name_description'],
+            'L_TITLE_DESCRIPTION'             => $work->lang['admin']['title_description'],
             'L_TITLE_DESCRIPTION_DESCRIPTION' => $work->lang['admin']['title_description_description'],
-            'L_META_DESCRIPTION' => $work->lang['admin']['meta_description'],
-            'L_META_DESCRIPTION_DESCRIPTION' => $work->lang['admin']['meta_description_description'],
-            'L_META_KEYWORDS' => $work->lang['admin']['meta_keywords'],
-            'L_META_KEYWORDS_DESCRIPTION' => $work->lang['admin']['meta_keywords_description'],
-            'L_APPEARANCE_SETTINGS' => $work->lang['admin']['appearance_settings'],
-            'L_GAL_WIDTH' => $work->lang['admin']['gal_width'],
-            'L_GAL_WIDTH_DESCRIPTION' => $work->lang['admin']['gal_width_description'],
-            'L_LEFT_PANEL' => $work->lang['admin']['left_panel'],
-            'L_LEFT_PANEL_DESCRIPTION' => $work->lang['admin']['left_panel_description'],
-            'L_RIGHT_PANEL' => $work->lang['admin']['right_panel'],
-            'L_RIGHT_PANEL_DESCRIPTION' => $work->lang['admin']['right_panel_description'],
-            'L_LANGUAGE' => $work->lang['admin']['language'],
-            'L_LANGUAGE_DESCRIPTION' => $work->lang['admin']['language_description'],
-            'L_THEMES' => $work->lang['admin']['themes'],
-            'L_THEMES_DESCRIPTION' => $work->lang['admin']['themes_description'],
-            'L_SIZE_SETTINGS' => $work->lang['admin']['size_settings'],
-            'L_MAX_FILE_SIZE' => $work->lang['admin']['max_file_size'],
-            'L_MAX_FILE_SIZE_DESCRIPTION' => $work->lang['admin']['max_file_size_description'],
-            'L_MAX_PHOTO' => $work->lang['admin']['max_photo'],
-            'L_MAX_PHOTO_DESCRIPTION' => $work->lang['admin']['max_photo_description'],
-            'L_TEMP_PHOTO' => $work->lang['admin']['temp_photo'],
-            'L_TEMP_PHOTO_DESCRIPTION' => $work->lang['admin']['temp_photo_description'],
-            'L_MAX_AVATAR' => $work->lang['admin']['max_avatar'],
-            'L_MAX_AVATAR_DESCRIPTION' => $work->lang['admin']['max_avatar_description'],
-            'L_COPYRIGHT_SETTINGS' => $work->lang['admin']['copyright_settings'],
-            'L_COPYRIGHT_YEAR' => $work->lang['admin']['copyright_year'],
-            'L_COPYRIGHT_YEAR_DESCRIPTION' => $work->lang['admin']['copyright_year_description'],
-            'L_COPYRIGHT_TEXT' => $work->lang['admin']['copyright_text'],
-            'L_COPYRIGHT_TEXT_DESCRIPTION' => $work->lang['admin']['copyright_text_description'],
-            'L_COPYRIGHT_URL' => $work->lang['admin']['copyright_url'],
-            'L_COPYRIGHT_URL_DESCRIPTION' => $work->lang['admin']['copyright_url_description'],
-            'L_ADDITIONAL_SETTINGS' => $work->lang['admin']['additional_settings'],
-            'L_LAST_NEWS' => $work->lang['admin']['last_news'],
-            'L_LAST_NEWS_DESCRIPTION' => $work->lang['admin']['last_news_description'],
-            'L_BEST_USER' => $work->lang['admin']['best_user'],
-            'L_BEST_USER_DESCRIPTION' => $work->lang['admin']['best_user_description'],
-            'L_MAX_RATE' => $work->lang['admin']['max_rate'],
-            'L_MAX_RATE_DESCRIPTION' => $work->lang['admin']['max_rate_description'],
-            'L_TIME_ONLINE' => $work->lang['admin']['time_online'],
-            'L_TIME_ONLINE_DESCRIPTION' => $work->lang['admin']['time_online_description'],
-            'L_SAVE_SETTINGS' => $work->lang['admin']['save_settings'],
-            'D_TITLE_NAME' => $work->config['title_name'],
-            'D_TITLE_DESCRIPTION' => $work->config['title_description'],
-            'D_META_DESCRIPTION' => $work->config['meta_description'],
-            'D_META_KEYWORDS' => $work->config['meta_keywords'],
-            'D_GAL_WIDTH' => $work->config['gal_width'],
-            'D_LEFT_PANEL' => $work->config['left_panel'],
-            'D_RIGHT_PANEL' => $work->config['right_panel'],
-            'D_MAX_FILE_SIZE' => $max_file_size,
-            'D_SELECTED_SIZE' => strtoupper($max_file_size_letter), // Буква размера в верхнем регистре
-            'L_SELECTED_SIZE' => $max_file_size_letter === 'b' ? $max_file_size_letter : strtoupper(
+            'L_META_DESCRIPTION'              => $work->lang['admin']['meta_description'],
+            'L_META_DESCRIPTION_DESCRIPTION'  => $work->lang['admin']['meta_description_description'],
+            'L_META_KEYWORDS'                 => $work->lang['admin']['meta_keywords'],
+            'L_META_KEYWORDS_DESCRIPTION'     => $work->lang['admin']['meta_keywords_description'],
+            'L_APPEARANCE_SETTINGS'           => $work->lang['admin']['appearance_settings'],
+            'L_GAL_WIDTH'                     => $work->lang['admin']['gal_width'],
+            'L_GAL_WIDTH_DESCRIPTION'         => $work->lang['admin']['gal_width_description'],
+            'L_LEFT_PANEL'                    => $work->lang['admin']['left_panel'],
+            'L_LEFT_PANEL_DESCRIPTION'        => $work->lang['admin']['left_panel_description'],
+            'L_RIGHT_PANEL'                   => $work->lang['admin']['right_panel'],
+            'L_RIGHT_PANEL_DESCRIPTION'       => $work->lang['admin']['right_panel_description'],
+            'L_LANGUAGE'                      => $work->lang['admin']['language'],
+            'L_LANGUAGE_DESCRIPTION'          => $work->lang['admin']['language_description'],
+            'L_THEMES'                        => $work->lang['admin']['themes'],
+            'L_THEMES_DESCRIPTION'            => $work->lang['admin']['themes_description'],
+            'L_SIZE_SETTINGS'                 => $work->lang['admin']['size_settings'],
+            'L_MAX_FILE_SIZE'                 => $work->lang['admin']['max_file_size'],
+            'L_MAX_FILE_SIZE_DESCRIPTION'     => $work->lang['admin']['max_file_size_description'],
+            'L_MAX_PHOTO'                     => $work->lang['admin']['max_photo'],
+            'L_MAX_PHOTO_DESCRIPTION'         => $work->lang['admin']['max_photo_description'],
+            'L_TEMP_PHOTO'                    => $work->lang['admin']['temp_photo'],
+            'L_TEMP_PHOTO_DESCRIPTION'        => $work->lang['admin']['temp_photo_description'],
+            'L_MAX_AVATAR'                    => $work->lang['admin']['max_avatar'],
+            'L_MAX_AVATAR_DESCRIPTION'        => $work->lang['admin']['max_avatar_description'],
+            'L_COPYRIGHT_SETTINGS'            => $work->lang['admin']['copyright_settings'],
+            'L_COPYRIGHT_YEAR'                => $work->lang['admin']['copyright_year'],
+            'L_COPYRIGHT_YEAR_DESCRIPTION'    => $work->lang['admin']['copyright_year_description'],
+            'L_COPYRIGHT_TEXT'                => $work->lang['admin']['copyright_text'],
+            'L_COPYRIGHT_TEXT_DESCRIPTION'    => $work->lang['admin']['copyright_text_description'],
+            'L_COPYRIGHT_URL'                 => $work->lang['admin']['copyright_url'],
+            'L_COPYRIGHT_URL_DESCRIPTION'     => $work->lang['admin']['copyright_url_description'],
+            'L_ADDITIONAL_SETTINGS'           => $work->lang['admin']['additional_settings'],
+            'L_LAST_NEWS'                     => $work->lang['admin']['last_news'],
+            'L_LAST_NEWS_DESCRIPTION'         => $work->lang['admin']['last_news_description'],
+            'L_BEST_USER'                     => $work->lang['admin']['best_user'],
+            'L_BEST_USER_DESCRIPTION'         => $work->lang['admin']['best_user_description'],
+            'L_MAX_RATE'                      => $work->lang['admin']['max_rate'],
+            'L_MAX_RATE_DESCRIPTION'          => $work->lang['admin']['max_rate_description'],
+            'L_TIME_ONLINE'                   => $work->lang['admin']['time_online'],
+            'L_TIME_ONLINE_DESCRIPTION'       => $work->lang['admin']['time_online_description'],
+            'L_SAVE_SETTINGS'                 => $work->lang['admin']['save_settings'],
+            'D_TITLE_NAME'                    => $work->config['title_name'],
+            'D_TITLE_DESCRIPTION'             => $work->config['title_description'],
+            'D_META_DESCRIPTION'              => $work->config['meta_description'],
+            'D_META_KEYWORDS'                 => $work->config['meta_keywords'],
+            'D_GAL_WIDTH'                     => $work->config['gal_width'],
+            'D_LEFT_PANEL'                    => $work->config['left_panel'],
+            'D_RIGHT_PANEL'                   => $work->config['right_panel'],
+            'D_MAX_FILE_SIZE'                 => $max_file_size,
+            'D_SELECTED_SIZE'                 => strtoupper($max_file_size_letter), // Буква размера в верхнем регистре
+            'L_SELECTED_SIZE'                 => $max_file_size_letter === 'b' ? $max_file_size_letter : strtoupper(
                 $max_file_size_letter
             ) . 'b', // Формируем метку размера
-            'D_MAX_PHOTO_W' => $work->config['max_photo_w'],
-            'D_MAX_PHOTO_H' => $work->config['max_photo_h'],
-            'D_TEMP_PHOTO_W' => $work->config['temp_photo_w'],
-            'D_TEMP_PHOTO_H' => $work->config['temp_photo_h'],
-            'D_MAX_AVATAR_W' => $work->config['max_avatar_w'],
-            'D_MAX_AVATAR_H' => $work->config['max_avatar_h'],
-            'D_COPYRIGHT_YEAR' => $work->config['copyright_year'],
-            'D_COPYRIGHT_TEXT' => $work->config['copyright_text'],
-            'D_COPYRIGHT_URL' => $work->config['copyright_url'],
-            'D_LAST_NEWS' => $work->config['last_news'],
-            'D_BEST_USER' => $work->config['best_user'],
-            'D_MAX_RATE' => $work->config['max_rate'],
-            'D_TIME_ONLINE' => $work->config['time_user_online'],
-            'CSRF_TOKEN' => $user->csrf_token(),
+            'D_MAX_PHOTO_W'                   => $work->config['max_photo_w'],
+            'D_MAX_PHOTO_H'                   => $work->config['max_photo_h'],
+            'D_TEMP_PHOTO_W'                  => $work->config['temp_photo_w'],
+            'D_TEMP_PHOTO_H'                  => $work->config['temp_photo_h'],
+            'D_MAX_AVATAR_W'                  => $work->config['max_avatar_w'],
+            'D_MAX_AVATAR_H'                  => $work->config['max_avatar_h'],
+            'D_COPYRIGHT_YEAR'                => $work->config['copyright_year'],
+            'D_COPYRIGHT_TEXT'                => $work->config['copyright_text'],
+            'D_COPYRIGHT_URL'                 => $work->config['copyright_url'],
+            'D_LAST_NEWS'                     => $work->config['last_news'],
+            'D_BEST_USER'                     => $work->config['best_user'],
+            'D_MAX_RATE'                      => $work->config['max_rate'],
+            'D_TIME_ONLINE'                   => $work->config['time_user_online'],
+            'CSRF_TOKEN'                      => $user->csrf_token(),
         ]);
 
         // Добавление языков в шаблон
         foreach ($language as $key => $val) {
             $template->add_string_ar(
                 [
-                    'D_DIR_LANG' => $val['value'],
+                    'D_DIR_LANG'  => $val['value'],
                     'D_NAME_LANG' => $val['name'],
                 ],
                 'SELECT_LANGUAGE[' . $key . ']'
@@ -375,7 +376,7 @@ if (!empty($user->user['admin']) && $work->check_input(
         foreach ($themes as $key => $val) {
             $template->add_string_ar(
                 [
-                    'D_DIR_THEME' => $val,
+                    'D_DIR_THEME'  => $val,
                     'D_NAME_THEME' => ucfirst($val),
                 ],
                 'SELECT_THEME[' . $key . ']'
@@ -407,14 +408,14 @@ if (!empty($user->user['admin']) && $work->check_input(
         );
 
         if ($work->check_input('_GET', 'uid', [
-            'isset' => true,
-            'empty' => true,
-            'regexp' => '/^[0-9]+$/',
-            'not_zero' => true
+            'isset'    => true,
+            'empty'    => true,
+            'regexp'   => '/^[0-9]+$/',
+            'not_zero' => true,
         ])) {
             // Проверяем существование пользователя с указанным uid
             $db->select('*', TBL_USERS, [
-                'where' => '`id` = :uid',
+                'where'  => '`id` = :uid',
                 'params' => [':uid' => $_GET['uid']],
             ]);
             $user_data = $db->res_row();
@@ -435,90 +436,8 @@ if (!empty($user->user['admin']) && $work->check_input(
                         );
                     }
                     $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
-                    // Обновление группы пользователя
-                    if ($work->check_input('_POST', 'group', [
-                            'isset' => true,
-                            'empty' => true,
-                            'regexp' => '/^[0-9]+$/',
-                            'not_zero' => true
-                        ]) && (int)$_POST['group'] !== $user_data['group_id']) {
-                        $query = ['group_id' => $_POST['group']];
-                        $new_user_data = $user_data;
-
-                        // Получаем данные новой группы
-                        $db->select('`id`, `user_rights`', TBL_GROUP, [
-                            'where' => '`id` = :group_id',
-                            'params' => [':group_id' => $_POST['group']],
-                        ]);
-                        $group_data = $db->res_row();
-
-                        if ($group_data) {
-                            foreach ($group_data as $key => $value) {
-                                if ($key === 'id') {
-                                    $new_user_data['group_id'] = $value;
-                                } else {
-                                    $query["`$key`"] = ":$key";
-                                    $params[":$key"] = $value;
-                                    $new_user_data[$key] = $value;
-                                }
-                            }
-
-                            $params[':uid'] = $_GET['uid'];
-                            // Обновляем данные пользователя в БД
-                            $db->update($query, TBL_USERS, [
-                                'where' => '`id` = :uid',
-                                'params' => $params,
-                            ]);
-                            $rows = $db->get_affected_rows();
-
-                            if ($rows > 0) {
-                                $processed_rights = $user->process_user_rights($new_user_data['user_rights']);
-                                unset($new_user_data['user_rights']);
-                                $user_data = array_merge($new_user_data, $processed_rights);
-                            } else {
-                                throw new RuntimeException(
-                                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: {$_GET['uid']}"
-                                );
-                            }
-                        } else {
-                            throw new RuntimeException(
-                                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы | ID группы: {$_POST['group']}"
-                            );
-                        }
-                    } else {
-                        // Обновление прав доступа пользователя
-                        $new_user_rights = [];
-
-                        foreach ($user_permission_fields as $field) {
-                            if ($work->check_input('_POST', $field, ['isset' => true])) {
-                                $_POST[$field] = in_array($_POST[$field], ['on', 1, true], true);
-                            } else {
-                                $_POST[$field] = false;
-                            }
-
-                            $new_user_rights[$field] = $_POST[$field];
-                        }
-
-                        $encoded_user_rights = $user->encode_user_rights($new_user_rights);
-
-                        $db->update(
-                            ['`user_rights`' => ':u_rights'],
-                            TBL_USERS,
-                            [
-                                'where' => '`id` = :uid',
-                                'params' => [
-                                    ':uid' => $_GET['uid'],
-                                    ':u_rights' => $encoded_user_rights
-                                ],
-                            ]
-                        );
-
-                        $rows = $db->get_affected_rows();
-
-                        if ($rows > 0) {
-                            $user_data = array_merge($user_data, $new_user_rights); // Обновляем данные в памяти
-                        }
-                    }
+                    // Обновление данные  пользователя
+                    $user_data = $user->update_user_rights($_GET['uid'], $user_data, $_POST);
                 }
 
                 // Получаем список групп для отображения в шаблоне
@@ -531,7 +450,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                     foreach ($groups as $key => $val) {
                         $template->add_string_ar(
                             [
-                                'D_GROUP_ID' => (string)$val['id'],
+                                'D_GROUP_ID'   => (string)$val['id'],
                                 'D_GROUP_NAME' => $val['name'],
                             ],
                             'GROUP_USER[' . $key . ']'
@@ -559,19 +478,19 @@ if (!empty($user->user['admin']) && $work->check_input(
                     // Добавляем основные данные пользователя в шаблон
                     $template->add_if('FIND_USER', true);
                     $template->add_string_ar([
-                        'L_LOGIN' => $work->lang['admin']['login'],
-                        'L_EMAIL' => $work->lang['admin']['email'],
-                        'L_REAL_NAME' => $work->lang['admin']['real_name'],
-                        'L_AVATAR' => $work->lang['admin']['avatar'],
-                        'L_GROUP' => $work->lang['main']['group'],
+                        'L_LOGIN'       => $work->lang['admin']['login'],
+                        'L_EMAIL'       => $work->lang['admin']['email'],
+                        'L_REAL_NAME'   => $work->lang['admin']['real_name'],
+                        'L_AVATAR'      => $work->lang['admin']['avatar'],
+                        'L_GROUP'       => $work->lang['main']['group'],
                         'L_USER_RIGHTS' => $work->lang['admin']['user_rights'],
-                        'L_HELP_EDIT' => $work->lang['admin']['help_edit_user'],
-                        'L_SAVE_USER' => $work->lang['admin']['save_user'],
-                        'D_LOGIN' => $user_data['login'],
-                        'D_EMAIL' => $user_data['email'],
-                        'D_REAL_NAME' => $user_data['real_name'],
-                        'U_AVATAR' => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'],
-                        'CSRF_TOKEN' => $user->csrf_token(),
+                        'L_HELP_EDIT'   => $work->lang['admin']['help_edit_user'],
+                        'L_SAVE_USER'   => $work->lang['admin']['save_user'],
+                        'D_LOGIN'       => $user_data['login'],
+                        'D_EMAIL'       => $user_data['email'],
+                        'D_REAL_NAME'   => $user_data['real_name'],
+                        'U_AVATAR'      => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'],
+                        'CSRF_TOKEN'    => $user->csrf_token(),
                     ]);
                 } else {
                     throw new RuntimeException(
@@ -604,11 +523,11 @@ if (!empty($user->user['admin']) && $work->check_input(
 
                 // Выполняем запрос к БД
                 $db->select('*', TBL_USERS, [
-                    'where' => '(`real_name` LIKE :real_name_query OR `email` LIKE :email_query OR `login` LIKE :login_query)',
+                    'where'  => '(`real_name` LIKE :real_name_query OR `email` LIKE :email_query OR `login` LIKE :login_query)',
                     'params' => [
                         ':real_name_query' => $search_query,
-                        ':email_query' => $search_query,
-                        ':login_query' => $search_query,
+                        ':email_query'     => $search_query,
+                        ':login_query'     => $search_query,
                     ],
                 ]);
                 $found_users = $db->res_arr();
@@ -640,13 +559,13 @@ if (!empty($user->user['admin']) && $work->check_input(
             $template->add_string_ar([
                 'L_SEARCH_USER' => $work->lang['admin']['search_user'],
                 'L_HELP_SEARCH' => $work->lang['admin']['help_search_user'],
-                'L_SEARCH' => $work->lang['main']['search'],
+                'L_SEARCH'      => $work->lang['main']['search'],
                 'D_SEARCH_USER' => $work->check_input(
                     '_POST',
                     'search_user',
                     ['isset' => true, 'empty' => true]
                 ) ? Work::clean_field($_POST['search_user']) : '',
-                'CSRF_TOKEN' => $user->csrf_token(),
+                'CSRF_TOKEN'    => $user->csrf_token(),
             ]);
         }
 
@@ -683,71 +602,15 @@ if (!empty($user->user['admin']) && $work->check_input(
 
             // Выбираем данные группы по ID
             $db->select('*', TBL_GROUP, [
-                'where' => '`id` = :id_group',
+                'where'  => '`id` = :id_group',
                 'params' => [':id_group' => $_POST['id_group']],
             ]);
             $group_data = $db->res_row();
 
             if ($group_data) {
-                // Обновляем название группы
-                if ($work->check_input(
-                    '_POST',
-                    'name_group',
-                    ['isset' => true, 'empty' => true, 'regexp' => REG_NAME]
-                ) && $_POST['name_group'] !== $group_data['name']) {
-                    $clean_name = Work::clean_field($_POST['name_group']);
-                    $db->update(
-                        ['name' => ':name'],
-                        TBL_GROUP,
-                        [
-                            'where' => '`id` = :id_group',
-                            'params' => [
-                                ':name' => $clean_name,
-                                ':id_group' => $_POST['id_group'],
-                            ],
-                        ]
-                    );
-                    $rows = $db->get_affected_rows();
-                    if ($rows > 0) {
-                        $group_data['name'] = $clean_name;
-                    }
-                }
-
-                $new_group_rights = [];
-
-                // Обновляем права доступа группы
-                foreach ($group_permission_fields as $value) {
-                    if ($work->check_input('_POST', $value, ['isset' => true, 'empty' => true])) {
-                        $_POST[$value] = in_array($_POST[$value], ['on', 1, '1', true], true);
-                    } else {
-                        $_POST[$value] = false;
-                    }
-                    $new_group_rights[$value] = $_POST[$value];
-                }
-
-                $encoded_group_rights = $user->encode_user_rights($new_group_rights);
-
-                $db->update(
-                    ['`user_rights`' => ':u_rights'],
-                    TBL_GROUP,
-                    [
-                        'where' => '`id` = :id_group',
-                        'params' => [
-                            ':u_rights' => $encoded_group_rights,
-                            ':id_group' => $_POST['id_group'],
-                        ],
-                    ]
-                );
-                $rows = $db->get_affected_rows();
-                if ($rows > 0) {
-                    $group_data = array_merge($group_data, $new_group_rights);
-                } else {
-                    $group_data = array_merge($group_data, $user->process_user_rights($group_data['user_rights']));
-                }
-                if (isset($group_data['user_rights'])) {
-                    unset($group_data['user_rights']);
-                }
-                $_POST['group'] = $_POST['id_group'];
+                // Обновляем данные группы
+                $group_data = $user->update_group_data($group_data, $_POST);
+                $_POST['group'] = $group_data['id'];
             }
         }
 
@@ -768,7 +631,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 
             // Выбираем данные группы по ID
             $db->select('*', TBL_GROUP, [
-                'where' => '`id` = :group_id',
+                'where'  => '`id` = :group_id',
                 'params' => [':group_id' => $_POST['group']],
             ]);
             $group_data = $db->res_row();
@@ -791,16 +654,17 @@ if (!empty($user->user['admin']) && $work->check_input(
                 // Добавляем основные данные группы в шаблон
                 $template->add_if('EDIT_GROUP', true);
                 $template->add_string_ar([
-                    'L_NAME_GROUP' => $work->lang['main']['group'],
+                    'L_NAME_GROUP'   => $work->lang['main']['group'],
                     'L_GROUP_RIGHTS' => $work->lang['admin']['group_rights'],
-                    'L_SAVE_GROUP' => $work->lang['admin']['save_group'],
-                    'D_ID_GROUP' => (string)$group_data['id'],
-                    'D_NAME_GROUP' => $group_data['name'],
+                    'L_SAVE_GROUP'   => $work->lang['admin']['save_group'],
+                    'D_ID_GROUP'     => (string)$group_data['id'],
+                    'D_NAME_GROUP'   => $group_data['name'],
                 ]);
             }
             $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
             $template->add_string('CSRF_TOKEN', $user->csrf_token());
-        } elseif ($db->select('*', TBL_GROUP)) {
+        } else {
+            $db->select('*', TBL_GROUP);
             // Получаем список всех групп
             $groups = $db->res_arr();
 
@@ -808,7 +672,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 foreach ($groups as $key => $val) {
                     $template->add_string_ar(
                         [
-                            'D_ID_GROUP' => (string)$val['id'],
+                            'D_ID_GROUP'   => (string)$val['id'],
                             'D_NAME_GROUP' => $val['name'],
                         ],
                         'SELECT_GROUP[' . $key . ']'
@@ -825,7 +689,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $template->add_if('SELECT_GROUP', true);
                 $template->add_string_ar([
                     'L_SELECT_GROUP' => $work->lang['admin']['select_group'],
-                    'L_EDIT' => $work->lang['admin']['edit_group'],
+                    'L_EDIT'         => $work->lang['admin']['edit_group'],
                 ]);
                 $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
                 $template->add_string('CSRF_TOKEN', $user->csrf_token());
@@ -856,7 +720,7 @@ if (!empty($user->user['admin']) && $work->check_input(
         $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
         $template->add_if('SESSION_ADMIN_ON', true);
         $template->add_string_ar([
-            'L_NAME_BLOCK' => $work->lang['admin']['title'],
+            'L_NAME_BLOCK'    => $work->lang['admin']['title'],
             'L_SELECT_SUBACT' => $work->lang['admin']['select_subact'],
         ]);
 
@@ -876,11 +740,11 @@ if (!empty($user->user['admin']) && $work->check_input(
     // Добавляем блок администрирования в шаблон
     $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
     $template->add_string_ar([
-        'L_NAME_BLOCK' => $work->lang['admin']['title'],
+        'L_NAME_BLOCK'       => $work->lang['admin']['title'],
         'L_ENTER_ADMIN_PASS' => $work->lang['admin']['admin_pass'],
-        'L_PASSWORD' => $work->lang['profile']['password'],
-        'L_ENTER' => $work->lang['main']['enter'],
-        'CSRF_TOKEN' => $user->csrf_token(),
+        'L_PASSWORD'         => $work->lang['profile']['password'],
+        'L_ENTER'            => $work->lang['main']['enter'],
+        'CSRF_TOKEN'         => $user->csrf_token(),
     ]);
 
     // Инициализация переменных для ядра

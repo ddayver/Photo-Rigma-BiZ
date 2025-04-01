@@ -144,8 +144,10 @@ $(function(){initNavTree('dd/df8/profile_8php.html','../../'); initResizable(tru
 </ul>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user-&gt;session['login_id']}". </td></tr>
-    <tr><td class="paramname">LogicException</td><td>Если не удалось получить данные группы пользователя. Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user-&gt;session['login_id']}".</td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID:
+                              {$user-&gt;session['login_id']}". </td></tr>
+    <tr><td class="paramname">LogicException</td><td>Если не удалось получить данные группы пользователя. Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID:
+             {$user-&gt;session['login_id']}".</td></tr>
   </table>
   </dd>
 </dl>

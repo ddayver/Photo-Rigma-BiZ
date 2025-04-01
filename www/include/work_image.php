@@ -15,7 +15,8 @@
  *              Класс предоставляет методы для работы с изображениями, включая изменение размеров, вывод через HTTP,
  *              обработку отсутствующих изображений, корректировку расширения файла в соответствии с его MIME-типом
  *              и логирование ошибок. Публичные методы класса являются редиректами
- *              на защищённые методы с суффиксом `_internal`, что обеспечивает более гибкую архитектуру (паттерн "фасад").
+ *              на защищённые методы с суффиксом `_internal`, что обеспечивает более гибкую архитектуру (паттерн
+ *              "фасад").
  *
  * @see         PhotoRigma::Classes::Work_Image_Interface Интерфейс для работы с изображениями.
  * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с изображениями.
@@ -24,15 +25,16 @@
  * @see         index.php Файл, который подключает work_image.php.
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в обработке изображений.
- *              Класс поддерживает работу с библиотеками GraphicsMagick, ImageMagick и GD для изменения размеров изображений.
+ *              Класс поддерживает работу с библиотеками GraphicsMagick, ImageMagick и GD для изменения размеров
+ *              изображений.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -62,9 +64,9 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 /**
  * @interface Work_Image_Interface
- * @brief Интерфейс для работы с изображениями.
+ * @brief     Интерфейс для работы с изображениями.
  *
- * @details Интерфейс определяет методы для выполнения операций с изображениями:
+ * @details   Интерфейс определяет методы для выполнения операций с изображениями:
  *          - Вычисление размеров эскизов.
  *          - Изменение размеров изображений.
  *          - Обработка отсутствующих изображений.
@@ -73,11 +75,11 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *
  * @callgraph
  *
- * @see PhotoRigma::Classes::Work_Image Класс, реализующий данный интерфейс.
- * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
- * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+ * @see       PhotoRigma::Classes::Work_Image Класс, реализующий данный интерфейс.
+ * @see       PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+ * @see       PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  *
- * @note Используются константы:
+ * @note      Используются константы:
  *       - `MAX_IMAGE_WIDTH = 5000`: Максимальная ширина изображения (в пикселях).
  *       - `MAX_IMAGE_HEIGHT = 5000`: Максимальная высота изображения (в пикселях).
  *
@@ -90,7 +92,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 interface Work_Image_Interface
 {
     /**
-     * @brief Вычисляет размеры для вывода эскиза изображения.
+     * @brief   Вычисляет размеры для вывода эскиза изображения.
      *
      * @details Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения
      *          и конфигурационных параметров (`temp_photo_w` и `temp_photo_h`). Если изображение меньше
@@ -121,14 +123,14 @@ interface Work_Image_Interface
      * $sizes = $image->size_image($path);
      * echo "Ширина: {$sizes['width']}, Высота: {$sizes['height']}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::size_image()
+     * @see     PhotoRigma::Classes::Work_Image::size_image()
      *      Публичный метод-редирект для вызова этой логики.
      *
      */
     public function size_image(string $path_image): array;
 
     /**
-     * @brief Изменяет размер изображения.
+     * @brief   Изменяет размер изображения.
      *
      * @details Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров.
      *          Размеры эскиза рассчитываются на основе конфигурации (`temp_photo_w`, `temp_photo_h`)
@@ -139,8 +141,9 @@ interface Work_Image_Interface
      *
      * @callgraph
      *
-     * @param string $full_path Путь к исходному изображению.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $full_path      Путь к исходному изображению.
+     *                               Путь должен быть абсолютным, и файл должен существовать и быть доступным для
+     *                               чтения.
      * @param string $thumbnail_path Путь для сохранения эскиза.
      *                               Путь должен быть абсолютным, и директория должна быть доступна для записи.
      *
@@ -166,16 +169,16 @@ interface Work_Image_Interface
      *     echo "Ошибка при создании эскиза.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Image::image_resize()
+     * @see     PhotoRigma::Classes::Work_Image::image_resize()
      *      Публичный метод-редирект для вызова этой логики.
      */
     public function image_resize(string $full_path, string $thumbnail_path): bool;
 
     /**
-     * @brief Возвращает данные для отсутствующего изображения.
+     * @brief   Возвращает данные для отсутствующего изображения.
      *
      * @details Метод формирует массив данных, который используется для представления информации
      *          об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено
@@ -209,14 +212,14 @@ interface Work_Image_Interface
      * echo "URL изображения: {$noPhotoData['url']}\n";
      * echo "Описание: {$noPhotoData['description']}\n";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::no_photo()
+     * @see     PhotoRigma::Classes::Work_Image::no_photo()
      *      Публичный метод-редирект для вызова этой логики.
      *
      */
     public function no_photo(): array;
 
     /**
-     * @brief Вывод изображения через HTTP.
+     * @brief   Вывод изображения через HTTP.
      *
      * @details Метод проверяет существование и доступность файла, определяет его MIME-тип
      *          и отправляет содержимое файла через HTTP. Если файл не найден или недоступен,
@@ -231,7 +234,8 @@ interface Work_Image_Interface
      * @param string $name_file Имя файла для заголовка Content-Disposition.
      *                          Имя должно быть корректным (например, без запрещённых символов).
      *
-     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
+     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого
+     *              файла.
      *
      * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
@@ -241,18 +245,18 @@ interface Work_Image_Interface
      * $image = new \PhotoRigma\Classes\Work_Image();
      * $image->image_attach('/path/to/image.jpg', 'example.jpg');
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::image_attach()
+     * @see     PhotoRigma::Classes::Work_Image::image_attach()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field()
+     * @see     PhotoRigma::Classes::Work::clean_field()
      *      Публичный метод для очистки строк от HTML-тегов и специальных символов.
      *
      */
     public function image_attach(string $full_path, string $name_file): void;
 
     /**
-     * @brief Корректировка расширения файла в соответствии с его MIME-типом.
+     * @brief   Корректировка расширения файла в соответствии с его MIME-типом.
      *
      * @details Метод проверяет MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу.
      *          Если у файла отсутствует расширение, оно добавляется автоматически. Если расширение уже корректное,
@@ -282,16 +286,16 @@ interface Work_Image_Interface
      * $corrected_path = $image->fix_file_extension($full_path);
      * echo "Исправленный путь: {$corrected_path}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::fix_file_extension()
+     * @see     PhotoRigma::Classes::Work_Image::fix_file_extension()
      *      Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
     public function fix_file_extension(string $full_path): string;
 
     /**
-     * @brief Удаляет директорию и её содержимое, предварительно проверяя права доступа.
+     * @brief   Удаляет директорию и её содержимое, предварительно проверяя права доступа.
      *
      * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
      *          Он выполняет следующие действия:
@@ -299,7 +303,8 @@ interface Work_Image_Interface
      *          - Проверяет права доступа к директории (должна быть доступна для записи).
      *          - Рекурсивно удаляет все файлы внутри директории.
      *          - Удаляет саму директорию.
-     *          Метод может быть вызван через публичный метод-редирект `PhotoRigma::Classes::Work_Image::remove_directory()`.
+     *          Метод может быть вызван через публичный метод-редирект
+     *          `PhotoRigma::Classes::Work_Image::remove_directory()`.
      *
      * @callgraph
      *
@@ -315,7 +320,7 @@ interface Work_Image_Interface
      *                           - Если не удалось удалить файл внутри директории.
      *                           - Если не удалось удалить саму директорию.
      *
-     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     * @note    Метод рекурсивно удаляет все файлы внутри директории.
      *
      * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
      *
@@ -328,23 +333,24 @@ interface Work_Image_Interface
      *     echo "Директория успешно удалена!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::remove_directory() Публичный метод-редирект для вызова этой логики.
+     * @see     PhotoRigma::Classes::Work_Image::remove_directory() Публичный метод-редирект для вызова этой логики.
      */
     public function remove_directory(string $path): bool;
 
     /**
-     * @brief Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.
+     * @brief   Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.
      *
      * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
      *          Он выполняет следующие действия:
      *          - Проверяет права доступа к родительским директориям.
      *          - Рекурсивно создает директории для галереи и миниатюр.
      *          - Копирует и модифицирует файлы `index.php` для новой директории галереи и миниатюр.
-     *          Метод может быть вызван через публичный метод-редирект `PhotoRigma::Classes::Work_Image::create_directory()`.
+     *          Метод может быть вызван через публичный метод-редирект
+     *          `PhotoRigma::Classes::Work_Image::create_directory()`.
      *
      * @callgraph
      *
-     * @param string $directory_name Имя директории.
+     * @param string $directory_name  Имя директории.
      *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
      *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
      *
@@ -356,7 +362,7 @@ interface Work_Image_Interface
      *                           - Если исходные файлы `index.php` не существуют.
      *                           - Если не удалось прочитать или записать файлы `index.php`.
      *
-     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     * @note    Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
      *
      * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
      *
@@ -369,16 +375,18 @@ interface Work_Image_Interface
      *     echo "Директории успешно созданы!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования путей.
+     * @see     PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования
+     *          путей.
      *
-     * @see PhotoRigma::Classes::Work_Image::_create_directory_internal() Метод, который реализует в классе заявленный в интерфейсе.
+     * @see     PhotoRigma::Classes::Work_Image::_create_directory_internal() Метод, который реализует в классе
+     *          заявленный в интерфейсе.
      */
     public function create_directory(string $directory_name): bool;
 }
 
 /**
- * @class Work_Image
- * @brief Класс для работы с изображениями.
+ * @class   Work_Image
+ * @brief   Класс для работы с изображениями.
  *
  * @details Класс `Work_Image` реализует интерфейс `Work_Image_Interface` и предоставляет методы для:
  *          - Загрузки, обработки и сохранения изображений.
@@ -394,12 +402,12 @@ interface Work_Image_Interface
  * @callergraph
  * @callgraph
  *
- * @see PhotoRigma::Classes::Work_Image_Interface Интерфейс для работы с изображениями.
- * @see PhotoRigma::Classes::Work Родительский класс, от которого наследуется текущий класс.
- * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
- * @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+ * @see     PhotoRigma::Classes::Work_Image_Interface Интерфейс для работы с изображениями.
+ * @see     PhotoRigma::Classes::Work Родительский класс, от которого наследуется текущий класс.
+ * @see     PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+ * @see     PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  *
- * @note Этот класс реализует интерфейс `Work_Image_Interface`.
+ * @note    Этот класс реализует интерфейс `Work_Image_Interface`.
  *       Используются константы:
  *       - `MAX_IMAGE_WIDTH = 5000`: Максимальная ширина изображения (в пикселях).
  *       - `MAX_IMAGE_HEIGHT = 5000`: Максимальная высота изображения (в пикселях).
@@ -428,7 +436,7 @@ class Work_Image implements Work_Image_Interface
     private array $config; ///< Конфигурация приложения.
 
     /**
-     * @brief Конструктор класса.
+     * @brief   Конструктор класса.
      *
      * @details Инициализирует объект класса `Work_Image` с переданной конфигурацией.
      * Этот класс является дочерним для PhotoRigma::Classes::Work.
@@ -441,7 +449,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @throws InvalidArgumentException Если параметр $config не является массивом.
      *
-     * @note Конфигурация должна содержать все необходимые параметры для корректной работы класса.
+     * @note    Конфигурация должна содержать все необходимые параметры для корректной работы класса.
      *       Параметры сохраняются в свойство $this->config.
      *
      * @warning Отсутствие необходимых ключей в массиве $config может привести к ошибкам при работе класса.
@@ -455,8 +463,8 @@ class Work_Image implements Work_Image_Interface
      * ];
      * $workImage = new \PhotoRigma\Classes\Work_Image($config);
      * @endcode
-     * @see PhotoRigma::Classes::Work Родительский класс, который создаёт объект класса Work_Image.
-     * @see PhotoRigma::Classes::Work_Image::$config Свойство, содержащее конфигурацию приложения.
+     * @see     PhotoRigma::Classes::Work Родительский класс, который создаёт объект класса Work_Image.
+     * @see     PhotoRigma::Classes::Work_Image::$config Свойство, содержащее конфигурацию приложения.
      *
      */
     public function __construct(array $config)
@@ -465,7 +473,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Получает значение приватного свойства.
+     * @brief   Получает значение приватного свойства.
      *
      * @details Метод позволяет получить доступ к приватному свойству `$config`.
      * Если запрашиваемое свойство не существует, выбрасывается исключение.
@@ -481,7 +489,7 @@ class Work_Image implements Work_Image_Interface
      *
      * @throws InvalidArgumentException Если запрашиваемое свойство не существует.
      *
-     * @note Этот метод предназначен только для доступа к свойству `$config`.
+     * @note    Этот метод предназначен только для доступа к свойству `$config`.
      *       Любые другие запросы будут игнорироваться с выбросом исключения.
      *
      * @warning Попытка доступа к несуществующему свойству вызовет исключение.
@@ -492,7 +500,7 @@ class Work_Image implements Work_Image_Interface
      * $workImage = new \PhotoRigma\Classes\Work_Image(['temp_photo_w' => 800]);
      * echo $workImage->config['temp_photo_w']; // Выведет: 800
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::$config Свойство, к которому обращается метод.
+     * @see     PhotoRigma::Classes::Work_Image::$config Свойство, к которому обращается метод.
      *
      */
     public function &__get(string $name)
@@ -507,7 +515,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Устанавливает значение приватного свойства.
+     * @brief   Устанавливает значение приватного свойства.
      *
      * @details Метод позволяет изменить значение приватного свойства `$config`.
      * Если переданное имя свойства не соответствует `$config`, выбрасывается исключение.
@@ -515,15 +523,15 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @param string $name Имя свойства:
-     *                     - Допустимое значение: 'config'.
-     *                     - Если указано другое имя, выбрасывается исключение.
-     * @param mixed $value Новое значение свойства:
-     *                     - Может быть любого типа, но рекомендуется использовать массив для конфигурации.
+     * @param string $name  Имя свойства:
+     *                      - Допустимое значение: 'config'.
+     *                      - Если указано другое имя, выбрасывается исключение.
+     * @param mixed  $value Новое значение свойства:
+     *                      - Может быть любого типа, но рекомендуется использовать массив для конфигурации.
      *
      * @throws InvalidArgumentException Если переданное имя свойства не соответствует `$config`.
      *
-     * @note Этот метод предназначен только для изменения свойства `$config`.
+     * @note    Этот метод предназначен только для изменения свойства `$config`.
      *       Любые другие попытки установки значений будут игнорироваться с выбросом исключения.
      *
      * @warning Попытка установки значения для несуществующего свойства вызовет исключение.
@@ -535,7 +543,7 @@ class Work_Image implements Work_Image_Interface
      * $workImage->config = ['temp_photo_w' => 1024];
      * echo $workImage->config['temp_photo_w']; // Выведет: 1024
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::$config Свойство, которое изменяет метод.
+     * @see     PhotoRigma::Classes::Work_Image::$config Свойство, которое изменяет метод.
      *
      */
     public function __set(string $name, array $value)
@@ -555,246 +563,521 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Вычисляет размеры для вывода эскиза изображения.
+     * @brief   Создает директории для категории и копирует файлы index.php через вызов защищённого метода.
      *
-     * @details Публичная обёртка для вызова защищённого метода `_size_image_internal`, который рассчитывает ширину и высоту эскиза
-     *          на основе реальных размеров изображения и конфигурационных параметров (`temp_photo_w` и `temp_photo_h`).
-     *          Если изображение меньше целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются
-     *          пропорционально.
+     * @details Этот публичный метод является редиректом, который вызывает защищённый метод
+     * `_create_directory_internal()` для выполнения создания директорий и копирования файлов `index.php`.
+     * Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют.
+     * Метод предназначен для использования вне класса.
      *
      * @callergraph
      * @callgraph
      *
-     * @param string $path_image Путь к файлу изображения.
-     *                           Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $directory_name  Имя директории.
+     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
+     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
      *
-     * @return array Массив с шириной и высотой эскиза.
-     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
-     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
-     *               Размеры могут совпадать с оригинальными размерами изображения,
-     *               если оно меньше целевого размера.
+     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
      *
-     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если родительская директория недоступна для записи.
+     *                           - Если не удалось создать директории.
+     *                           - Если исходные файлы `index.php` не существуют.
+     *                           - Если не удалось прочитать или записать файлы `index.php`.
      *
-     * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w` и `temp_photo_h`).
-     *          Если эти параметры некорректны, результат может быть непредсказуемым.
+     * @note    Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     *
+     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+     *
+     * Пример внешнего вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Work_Image();
+     * $directoryName = 'new_category';
+     * $result = $object->create_directory($directoryName);
+     * if ($result) {
+     *     echo "Директории успешно созданы!";
+     * }
+     * @endcode
+     * @see     PhotoRigma::Classes::Work::create_directory() Метод-фасад в родительском классе Work.
+     * @see     PhotoRigma::Classes::Work_Image::_create_directory_internal() Защищённый метод, реализующий основную
+     *          логику.
+     * @see     PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования
+     *          путей.
+     *
+     */
+    public function create_directory(string $directory_name): bool
+    {
+        return $this->_create_directory_internal($directory_name);
+    }
+
+    /**
+     * @brief   Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.
+     *
+     * @details Этот защищенный метод выполняет следующие действия:
+     *          - Проверяет права доступа к родительским директориям.
+     *          - Рекурсивно создает директории для галереи и миниатюр.
+     *          - Копирует и модифицирует файлы `index.php` для новой директории галереи и миниатюр.
+     *          Метод вызывается через публичный метод-редирект `PhotoRigma::Classes::Work_Image::create_directory()`
+     *          и предназначен для использования внутри класса или его наследников.
+     *
+     * @callergraph
+     *
+     * @param string $directory_name  Имя директории.
+     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
+     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
+     *
+     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     *
+     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
+     *                           - Если родительская директория недоступна для записи.
+     *                           - Если не удалось создать директории.
+     *                           - Если исходные файлы `index.php` не существуют.
+     *                           - Если не удалось прочитать или записать файлы `index.php`.
+     *
+     * @note    Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     *
+     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+     *
+     * Пример вызова метода внутри класса или наследника:
+     * @code
+     * $directoryName = 'new_category';
+     * $result = $this->_create_directory_internal($directoryName);
+     * if ($result) {
+     *     echo "Директории успешно созданы!";
+     * }
+     * @endcode
+     * @see     PhotoRigma::Classes::Work_Image::create_directory() Публичный метод-редирект для вызова этой логики.
+     *
+     * @see     PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования
+     *          путей.
+     */
+    protected function _create_directory_internal(string $directory_name): bool
+    {
+        // Формируем пути для галереи и миниатюр с использованием sprintf()
+        $gallery_path = sprintf(
+            '%s/%s/%s',
+            $this->config['site_dir'],
+            $this->config['gallery_folder'],
+            $directory_name
+        );
+        $thumbnail_path = sprintf(
+            '%s/%s/%s',
+            $this->config['site_dir'],
+            $this->config['thumbnail_folder'],
+            $directory_name
+        );
+
+        // Проверяем права доступа к родительским директориям
+        if (!is_writable(dirname($gallery_path))) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
+                    $gallery_path
+                )
+            );
+        }
+        if (!is_writable(dirname($thumbnail_path))) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
+                    $thumbnail_path
+                )
+            );
+        }
+
+        // Создаем директории рекурсивно
+        if (!mkdir($gallery_path, 0755, true) || !is_dir($gallery_path) || !mkdir(
+            $thumbnail_path,
+            0755,
+            true
+        ) || !is_dir($thumbnail_path)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: $directory_name"
+            );
+        }
+
+        // Определяем пути к исходным файлам index.php
+        $gallery_index_file = sprintf('%s/%s/index.php', $this->config['site_dir'], $this->config['gallery_folder']);
+        $thumbnail_index_file = sprintf(
+            '%s/%s/index.php',
+            $this->config['site_dir'],
+            $this->config['thumbnail_folder']
+        );
+
+        // Проверяем существование исходных файлов index.php
+        if (!is_file($gallery_index_file)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $gallery_index_file"
+            );
+        }
+        if (!is_file($thumbnail_index_file)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $thumbnail_index_file"
+            );
+        }
+
+        // Копируем index.php в новую директорию галереи
+        $gallery_index_content = file_get_contents($gallery_index_file);
+        if ($gallery_index_content === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $gallery_index_file"
+            );
+        }
+        $gallery_index_content = strtr($gallery_index_content, [
+            'gallery/index.php' => "gallery/$directory_name/index.php",
+        ]);
+        if (file_put_contents($gallery_path . '/index.php', $gallery_index_content, LOCK_EX) === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $gallery_path/index.php"
+            );
+        }
+
+        // Копируем index.php в новую директорию миниатюр
+        $thumbnail_index_content = file_get_contents($thumbnail_index_file);
+        if ($thumbnail_index_content === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $thumbnail_index_file"
+            );
+        }
+        $thumbnail_index_content = strtr($thumbnail_index_content, [
+            'thumbnail/index.php' => "thumbnail/$directory_name/index.php",
+        ]);
+        if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content, LOCK_EX) === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $thumbnail_path/index.php"
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * @brief   Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).
+     *
+     * @details Публичная обёртка для вызова защищённого метода `_fix_file_extension_internal`, который проверяет
+     *          MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу. Если у файла отсутствует
+     *          расширение, оно добавляется автоматически. Если расширение уже корректное, файл остаётся без изменений.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $full_path Полный путь к файлу.
+     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     *                          Формат пути должен соответствовать регулярному выражению /^[a-zA-Z0-9\/\.\-_]+$/.
+     *
+     * @return string Полный путь к файлу с правильным расширением.
+     *                Если расширение было изменено или добавлено, возвращается новый путь.
+     *                Если расширение уже корректное, возвращается исходный путь.
+     *
+     * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не
+     *                                  существует.
+     * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
+     * @throws Exception
+     *
+     * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
+     *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
      *
      * Пример использования:
      * @code
      * // Создание экземпляра класса Work_Image
-     * $image = new Work_Image();
+     * $image = new PhotoRigma::Classes::Work_Image();
      *
-     * // Вычисление размеров эскиза для изображения
-     * $path = '/path/to/image.jpg';
-     * $sizes = $image->size_image($path);
-     *
-     * // Вывод результатов
-     * echo "Ширина: {$sizes['width']}, Высота: {$sizes['height']}";
+     * // Корректировка расширения файла
+     * $full_path = '/path/to/file_without_extension';
+     * $corrected_path = $image->fix_file_extension($full_path);
+     * echo "Исправленный путь: {$corrected_path}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::_size_image_internal() Защищённый метод, выполняющий основную логику.
-     * @see PhotoRigma::Classes::Work::size_image() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот метод.
+     * @see     PhotoRigma::Classes::Work::fix_file_extension() Этот метод вызывается через класс Work.
+     * @see     PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
+     * @see     PhotoRigma::Classes::Work_Image::_fix_file_extension_internal() Защищённый метод, выполняющий основную
+     *          логику.
      */
-    public function size_image(string $path_image): array
+    public function fix_file_extension(string $full_path): string
     {
-        return $this->_size_image_internal($path_image);
+        return $this->_fix_file_extension_internal($full_path);
     }
 
     /**
-     * @brief Вычисляет размеры для вывода эскиза изображения.
+     * @brief   Корректировка расширения файла в соответствии с его MIME-типом (защищённый метод).
      *
-     * @details Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения
-     *          и конфигурационных параметров (`temp_photo_w` и `temp_photo_h`). Если изображение меньше
-     *          целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются
-     *          пропорционально. Этот метод является защищённым и предназначен для использования внутри класса
-     *          или его наследников. Основная логика метода вызывается через публичный метод size_image().
+     * @details Метод проверяет MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу.
+     *          Если у файла отсутствует расширение, оно добавляется автоматически. Если расширение уже корректное,
+     *          файл остаётся без изменений. Этот метод является защищённым и предназначен для использования внутри
+     *          класса или его наследников. Основная логика вызывается через публичный метод fix_file_extension().
      *
      * @callergraph
      * @callgraph
      *
-     * @param string $path_image Путь к файлу изображения.
-     *                           Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $full_path Полный путь к файлу.
+     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     *                          Формат пути должен соответствовать регулярному выражению /^[a-zA-Z0-9\/\.\-_]+$/.
      *
-     * @return array Массив с шириной и высотой эскиза.
-     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
-     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
-     *               Размеры могут совпадать с оригинальными размерами изображения,
-     *               если оно меньше целевого размера.
+     * @return string Полный путь к файлу с правильным расширением.
+     *                Если расширение было изменено или добавлено, возвращается новый путь.
+     *                Если расширение уже корректное, возвращается исходный путь.
      *
-     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
+     * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не
+     *                                  существует.
+     * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
+     * @throws Exception
      *
-     * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w` и `temp_photo_h`).
-     *          Если эти параметры некорректны, результат может быть непредсказуемым.
+     * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
+     *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
      *
      * Пример использования:
      * @code
-     * // Вычисление размеров эскиза для изображения
-     * $path = '/path/to/image.jpg';
-     * $sizes = $this->_size_image_internal($path);
-     * echo "Ширина: {$sizes['width']}, Высота: {$sizes['height']}";
+     * // Корректировка расширения файла
+     * $full_path = '/path/to/file_without_extension';
+     * $corrected_path = $this->_fix_file_extension_internal($full_path);
+     * echo "Исправленный путь: {$corrected_path}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::calculate_thumbnail_size()
-     *      Метод, используемый для расчёта размера эскиза.
+     * @see     PhotoRigma::Classes::Work_Image::fix_file_extension()
+     *      Публичный метод, вызывающий этот защищённый метод.
+     * @see     PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Image::size_image()
-     *      Публичный метод-редирект для вызова этой логики.
      */
-    protected function _size_image_internal(string $path_image): array
+    protected function _fix_file_extension_internal(string $full_path): string
     {
-        // Проверяем существование файла
-        if (!file_exists($path_image)) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден | Путь: '$path_image'"
+        // Проверка корректности пути
+        if (!filter_var($full_path, FILTER_VALIDATE_REGEXP, [
+            'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/'],
+        ])) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Путь: \$full_path = $full_path"
             );
         }
-        // Получаем размеры изображения
-        $size = getimagesize($path_image);
-        if ($size === false) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: '$path_image'"
+        // Нормализация пути через realpath()
+        $normalized_path = realpath($full_path);
+        if (!$normalized_path) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
             );
         }
-        // Используем готовый метод для расчёта размеров эскиза
-        return $this->calculate_thumbnail_size($size);
+        // Проверка существования файла и прав доступа
+        if (!is_file($normalized_path)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
+            );
+        }
+        if (!is_readable($normalized_path)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: \$full_path = $full_path"
+            );
+        }
+        // Определение реального MIME-типа файла
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $real_mime_type = finfo_file($finfo, $normalized_path);
+        finfo_close($finfo);
+        // Список соответствий MIME-типов и расширений
+        $mime_to_extension = [
+            'image/jpeg'                => 'jpg',
+            'image/png'                 => 'png',
+            'image/gif'                 => 'gif',
+            'image/webp'                => 'webp',
+            'image/tiff'                => 'tiff',
+            'image/svg+xml'             => 'svg',
+            'image/bmp'                 => 'bmp',
+            'image/x-icon'              => 'ico',
+            'image/avif'                => 'avif',
+            'image/heic'                => 'heic',
+            'image/vnd.adobe.photoshop' => 'psd',
+            'image/x-canon-cr2'         => 'cr2',
+            'image/x-nikon-nef'         => 'nef',
+            'image/x-xbitmap'           => 'xbm',
+            'image/x-portable-anymap'   => 'pnm',
+            'image/x-pcx'               => 'pcx',
+        ];
+        // Проверка поддержки MIME-типа
+        if (!array_key_exists($real_mime_type, $mime_to_extension)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип файла | Получено: $real_mime_type"
+            );
+        }
+        // Получение правильного расширения
+        $correct_extension = $mime_to_extension[$real_mime_type];
+        // Проверка текущего расширения файла
+        $current_extension = pathinfo($normalized_path, PATHINFO_EXTENSION);
+        if (empty($current_extension)) {
+            // Если расширение отсутствует, добавляем его
+            $new_full_path = $normalized_path . '.' . $correct_extension;
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '$correct_extension' к файлу | Путь: $normalized_path"
+            );
+            return $new_full_path;
+        }
+        if (strtolower($current_extension) === $correct_extension) {
+            return $normalized_path; // Расширение уже корректное
+        }
+        // Формирование нового пути с правильным расширением
+        $new_full_path = preg_replace('/\.[^.]+$/', '.' . $correct_extension, $normalized_path);
+        log_in_file(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: $normalized_path, Новый путь: $new_full_path"
+        );
+        return $new_full_path;
     }
 
     /**
-     * @brief Расчёт размера эскиза.
+     * @brief   Вывод изображения через HTTP.
      *
-     * @details Метод вычисляет ширину и высоту эскиза на основе реальных размеров изображения
-     *          и конфигурационных параметров (`temp_photo_w` и `temp_photo_h`).
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     * @details Публичная обёртка для вызова защищённого метода `_image_attach_internal`, который проверяет
+     *          существование и доступность файла, определяет его MIME-тип и отправляет содержимое файла через HTTP.
+     *          Если файл не найден или недоступен, возвращается HTTP-статус 404. Если возникли проблемы с чтением
+     *          файла или определением MIME-типа, возвращается HTTP-статус 500. Метод завершает выполнение скрипта
+     *          после отправки заголовков и содержимого файла.
      *
      * @callergraph
      * @callgraph
      *
-     * @param array $size Массив с реальными размерами изображения.
-     *                    - Индекс 0: int — Ширина изображения (должна быть положительным целым числом).
-     *                    - Индекс 1: int — Высота изображения (должна быть положительным целым числом).
+     * @param string $full_path Полный путь к файлу.
+     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $name_file Имя файла для заголовка Content-Disposition.
+     *                          Имя должно быть корректным (например, без запрещённых символов).
      *
-     * @return array Массив с шириной и высотой эскиза.
-     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
-     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
+     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого
+     *              файла.
      *
-     * @throws InvalidArgumentException Если массив `$size` не содержит двух положительных целых чисел.
-     *      Пример сообщения:
+     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
-     *          Некорректные размеры изображения.
-     *          Требуется массив с двумя положительными целыми числами.
-     *          Получено: width = [значение], height = [значение]
-     *
-     * @throws RuntimeException Если значения `temp_photo_w` или `temp_photo_h` в конфигурации некорректны.
-     *      Пример сообщения:
-     *
-     *          Некорректная конфигурация temp_photo_w или temp_photo_h
-     *          Значения должны быть числами ≥ 0.
-     *          Получено: temp_photo_w = [значение], temp_photo_h = [значение]
-     *
-     * @see PhotoRigma::Classes::Work_Image::size_image()
-     *      Вычисляет размеры для вывода эскиза изображения.
-     * @see PhotoRigma::Classes::Work_Image::image_resize()
-     *      Изменяет размер изображения.
-     *
-     * @see PhotoRigma::Classes::Work_Image::$config
-     *      Массив с конфигурацией приложения.
-     * @todo Перевести аргументы на массивовые значения ($size[0] -> $size['width']; $size[1] -> $size['height']).
-     *
-     * Пример вызова метода внутри класса:
+     * Пример использования:
      * @code
-     * // Исходные размеры изображения
-     * $originalSize = [1920, 1080];
+     * // Создание экземпляра класса Work_Image
+     * $image = new PhotoRigma::Classes::Work_Image();
      *
-     * // Конфигурация приложения
-     * $this->config['temp_photo_w'] = 800;
-     * $this->config['temp_photo_h'] = 600;
-     *
-     * // Вычисление размеров эскиза
-     * $thumbnailSize = $this->calculate_thumbnail_size($originalSize);
-     *
-     * // Результат
-     * echo "Ширина эскиза: {$thumbnailSize['width']}, Высота эскиза: {$thumbnailSize['height']}";
-     * // Вывод: Ширина эскиза: 800, Высота эскиза: 450
+     * // Вызов метода для вывода изображения через HTTP
+     * $image->image_attach('/path/to/image.jpg', 'example.jpg');
      * @endcode
+     * @throws Exception
+     * @see     PhotoRigma::Classes::Work_Image::_image_attach_internal() Защищённый метод, выполняющий основную
+     *          логику.
+     * @see     PhotoRigma::Classes::Work::image_attach() Этот метод вызывается через класс Work.
+     * @see     PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see     PhotoRigma::Classes::Work::clean_field() Публичный метод для очистки данных.
+     *
      */
-    private function calculate_thumbnail_size(array $size): array
+    #[NoReturn] public function image_attach(string $full_path, string $name_file): void
     {
-        // Валидация параметра $size
-        if (!isset($size[0], $size[1]) || !is_int($size[0]) || !is_int($size[1]) || $size[0] <= 0 || $size[1] <= 0) {
-            throw new InvalidArgumentException(
-                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректные размеры изображения | " . "Требуется массив с двумя положительными целыми числами. Получено: width = " . ($size[0] ?? 'undefined') . ", height = " . ($size[1] ?? 'undefined')
-            );
-        }
-
-        // Валидация конфигурации
-        if (!isset($this->config['temp_photo_w'], $this->config['temp_photo_h']) || !is_numeric(
-            $this->config['temp_photo_w']
-        ) || !is_numeric(
-            $this->config['temp_photo_h']
-        ) || $this->config['temp_photo_w'] < 0 || $this->config['temp_photo_h'] < 0) {
-            throw new RuntimeException(
-                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректная конфигурация temp_photo_w или temp_photo_h | " . "Значения должны быть числами ≥ 0. Получено: temp_photo_w = " . ($this->config['temp_photo_w'] ?? 'undefined') . ", temp_photo_h = " . ($this->config['temp_photo_h'] ?? 'undefined')
-            );
-        }
-
-        // Преобразуем конфигурацию в целые числа
-        $target_width = (int)$this->config['temp_photo_w'];
-        $target_height = (int)$this->config['temp_photo_h'];
-
-        // Вычисляем коэффициенты масштабирования через match
-        $ratio_width = match (true) {
-            $target_width > 0 => $size[0] / $target_width,
-            default => 1,
-        };
-
-        $ratio_height = match (true) {
-            $target_height > 0 => $size[1] / $target_height,
-            default => 1,
-        };
-
-        // Если исходное изображение меньше целевого размера, возвращаем оригинальные размеры
-        if ($size[0] < $target_width && $size[1] < $target_height && $target_width > 0 && $target_height > 0) {
-            return [
-                'width' => $size[0],
-                'height' => $size[1]
-            ];
-        }
-
-        // Масштабируем изображение пропорционально
-        if ($ratio_width < $ratio_height) {
-            return [
-                'width' => (int)($size[0] / $ratio_height),
-                'height' => (int)($size[1] / $ratio_height)
-            ];
-        }
-
-        return [
-            'width' => (int)($size[0] / $ratio_width),
-            'height' => (int)($size[1] / $ratio_width)
-        ];
+        $this->_image_attach_internal($full_path, $name_file);
     }
 
     /**
-     * @brief Изменяет размер изображения.
+     * @brief   Вывод изображения через HTTP.
      *
-     * @details Публичная обёртка для вызова защищённого метода `_image_resize_internal`, который изменяет размер исходного изображения
-     *          и создаёт эскиз заданных размеров. Размеры эскиза рассчитываются на основе конфигурации (`temp_photo_w`, `temp_photo_h`)
-     *          с использованием метода `calculate_thumbnail_size`. Если файл эскиза уже существует и его размеры совпадают с рассчитанными,
-     *          метод завершает работу без изменений. В противном случае создаётся новый эскиз с использованием одной из доступных библиотек:
+     * @details Метод проверяет существование и доступность файла, определяет его MIME-тип
+     *          и отправляет содержимое файла через HTTP. Если файл не найден или недоступен,
+     *          возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением
+     *          MIME-типа, возвращается HTTP-статус 500. Этот метод является защищённым и предназначен
+     *          для использования внутри класса или его наследников. Основная логика метода вызывается
+     *          через публичный метод image_attach(). Метод завершает выполнение скрипта после отправки
+     *          заголовков и содержимого файла.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string $full_path Полный путь к файлу.
+     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $name_file Имя файла для заголовка Content-Disposition.
+     *                          Имя должно быть корректным (например, без запрещённых символов).
+     *
+     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого
+     *              файла.
+     *
+     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
+     *
+     * Пример использования:
+     * @code
+     * // Вызов защищённого метода внутри класса или наследника
+     * $this->_image_attach_internal('/path/to/image.jpg', 'example.jpg');
+     * @endcode
+     * @throws Exception
+     * @see     PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @see     PhotoRigma::Classes::Work::clean_field()
+     *      Публичный метод-редирект для вызова этой логики.
+     *
+     * @see     PhotoRigma::Classes::Work_Image::image_attach()
+     *      Публичный метод-редирект для вызова этой логики.
+     */
+    #[NoReturn] protected function _image_attach_internal(string $full_path, string $name_file): void
+    {
+        // Проверяем существование и доступность файла
+        if (!is_file($full_path) || !is_readable($full_path)) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: $full_path"
+            );
+            header("HTTP/1.0 404 Not Found");
+            exit;
+        }
+        // Получаем MIME-тип и размеры изображения через finfo
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime_type = finfo_file($finfo, $full_path);
+        finfo_close($finfo);
+        if (!$mime_type || !str_starts_with($mime_type, 'image/')) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: $full_path"
+            );
+            header("HTTP/1.0 500 Internal Server Error");
+            exit;
+        }
+        // Проверяем размер файла
+        $file_size = filesize($full_path);
+        if ($file_size === false || $file_size > 10 * 1024 * 1024) { // Ограничение: 10 МБ
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: $full_path, Размер: $file_size"
+            );
+            header("HTTP/1.0 413 Payload Too Large");
+            exit;
+        }
+        // Устанавливаем заголовки для вывода изображения
+        header("Content-Type: " . $mime_type);
+        header("Content-Disposition: inline; filename=\"" . Work::clean_field($name_file) . "\"");
+        header("Content-Length: " . $file_size);
+
+        // Дополнительные заголовки для безопасности
+        header("X-Content-Type-Options: nosniff");
+        header("X-Frame-Options: DENY");
+        header("X-XSS-Protection: 1; mode=block");
+        header("Referrer-Policy: no-referrer");
+        header("Content-Security-Policy: default-src 'self'; img-src 'self' data:;");
+
+        flush();
+        // Открываем файл и отправляем его содержимое
+        $fh = fopen($full_path, 'rb');
+        if ($fh === false) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: $full_path"
+            );
+            header("HTTP/1.0 500 Internal Server Error");
+            exit;
+        }
+        fpassthru($fh);
+        fclose($fh);
+        exit;
+    }
+
+    /**
+     * @brief   Изменяет размер изображения.
+     *
+     * @details Публичная обёртка для вызова защищённого метода `_image_resize_internal`, который изменяет размер
+     *          исходного изображения и создаёт эскиз заданных размеров. Размеры эскиза рассчитываются на основе
+     *          конфигурации (`temp_photo_w`, `temp_photo_h`) с использованием метода `calculate_thumbnail_size`. Если
+     *          файл эскиза уже существует и его размеры совпадают с рассчитанными, метод завершает работу без
+     *          изменений. В противном случае создаётся новый эскиз с использованием одной из доступных библиотек:
      *          GraphicsMagick, ImageMagick или GD (в порядке приоритета).
      *
      * @callergraph
      * @callgraph
      *
-     * @param string $full_path Путь к исходному изображению.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $full_path      Путь к исходному изображению.
+     *                               Путь должен быть абсолютным, и файл должен существовать и быть доступным для
+     *                               чтения.
      * @param string $thumbnail_path Путь для сохранения эскиза.
      *                               Путь должен быть абсолютным, и директория должна быть доступна для записи.
      *
      * @return bool True, если операция выполнена успешно, иначе False.
      *
      * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws RuntimeException|Exception Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws RuntimeException|Exception Если возникли ошибки при проверке файлов, директорий или размеров
+     *                                    изображения.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w`, `temp_photo_h`).
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
@@ -815,10 +1098,11 @@ class Work_Image implements Work_Image_Interface
      *     echo "Ошибка при создании эскиза.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see     PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal() Защищённый метод, выполняющий основную логику.
-     * @see PhotoRigma::Classes::Work::image_resize() Этот метод вызывается через класс Work.
+     * @see     PhotoRigma::Classes::Work_Image::_image_resize_internal() Защищённый метод, выполняющий основную
+     *          логику.
+     * @see     PhotoRigma::Classes::Work::image_resize() Этот метод вызывается через класс Work.
      */
     public function image_resize(string $full_path, string $thumbnail_path): bool
     {
@@ -826,7 +1110,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Изменяет размер изображения.
+     * @brief   Изменяет размер изображения.
      *
      * @details Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров.
      *          Размеры эскиза рассчитываются на основе конфигурации (`temp_photo_w`, `temp_photo_h`)
@@ -840,8 +1124,9 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @param string $full_path Путь к исходному изображению.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $full_path      Путь к исходному изображению.
+     *                               Путь должен быть абсолютным, и файл должен существовать и быть доступным для
+     *                               чтения.
      * @param string $thumbnail_path Путь для сохранения эскиза.
      *                               Путь должен быть абсолютным, и директория должна быть доступна для записи.
      *
@@ -866,17 +1151,17 @@ class Work_Image implements Work_Image_Interface
      *     echo "Ошибка при создании эскиза.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::image_resize()
+     * @see     PhotoRigma::Classes::Work_Image::image_resize()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Classes::Work_Image::calculate_thumbnail_size()
+     * @see     PhotoRigma::Classes::Work_Image::calculate_thumbnail_size()
      *      Метод для расчёта размеров эскиза.
-     * @see PhotoRigma::Classes::Work_Image::process_image_resize_gmagick()
+     * @see     PhotoRigma::Classes::Work_Image::process_image_resize_gmagick()
      *      Обработка через GraphicsMagick.
-     * @see PhotoRigma::Classes::Work_Image::process_image_resize_imagick()
+     * @see     PhotoRigma::Classes::Work_Image::process_image_resize_imagick()
      *      Обработка через ImageMagick.
-     * @see PhotoRigma::Classes::Work_Image::process_image_resize_gd()
+     * @see     PhotoRigma::Classes::Work_Image::process_image_resize_gd()
      *      Обработка через GD.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -893,7 +1178,7 @@ class Work_Image implements Work_Image_Interface
         $path_errors = [];
         foreach (['full_path' => $full_path, 'thumbnail_path' => $thumbnail_path] as $key => $path) {
             if (!filter_var($path, FILTER_VALIDATE_REGEXP, [
-                'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/']
+                'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/'],
             ])) {
                 $path_errors[] = "Некорректный формат пути: \$$key = $path.";
             }
@@ -951,14 +1236,14 @@ class Work_Image implements Work_Image_Interface
         finfo_close($finfo);
         // Блок 5: Подготовка данных для обработки изображения
         $original_data = [
-            'path' => $full_path,
-            'type' => $mime_type,
-            'width' => $full_size[0],
+            'path'   => $full_path,
+            'type'   => $mime_type,
+            'width'  => $full_size[0],
             'height' => $full_size[1],
         ];
         $thumbnail_data = [
-            'path' => $thumbnail_path,
-            'width' => $photo['width'],
+            'path'   => $thumbnail_path,
+            'width'  => $photo['width'],
             'height' => $photo['height'],
             'exists' => $thumbnail_exists,
         ];
@@ -986,7 +1271,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.
+     * @brief   Обработка создания эскиза изображения с использованием библиотеки GraphicsMagick.
      *
      * @details Метод выполняет следующие шаги:
      * 1. Проверяет поддержку MIME-типа через массив разрешённых форматов.
@@ -1003,25 +1288,29 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @param array $original_data Данные об оригинальном изображении:
-     *                             - 'path' (string): Абсолютный путь к исходному файлу.
-     *                             - 'type' (string): MIME-тип изображения (например, 'image/jpeg').
+     * @param array $original_data                    Данные об оригинальном изображении:
+     *                                                - 'path' (string): Абсолютный путь к исходному файлу.
+     *                                                - 'type' (string): MIME-тип изображения (например, 'image/jpeg').
      *                                                Должен быть одним из разрешённых MIME-типов.
-     *                             - 'width' (int): Ширина исходного изображения (положительное число).
-     *                             - 'height' (int): Высота исходного изображения (положительное число).
-     * @param array $thumbnail_data Данные об эскизе:
-     *                              - 'path' (string): Абсолютный путь для сохранения эскиза.
-     *                              - 'width' (int): Желаемая ширина эскиза (положительное число).
-     *                              - 'height' (int): Желаемая высота эскиза (положительное число).
-     *                              - 'exists' (bool): Существует ли файл эскиза (`true` или `false`).
+     *                                                - 'width' (int): Ширина исходного изображения (положительное
+     *                                                число).
+     *                                                - 'height' (int): Высота исходного изображения (положительное
+     *                                                число).
+     * @param array $thumbnail_data                   Данные об эскизе:
+     *                                                - 'path' (string): Абсолютный путь для сохранения эскиза.
+     *                                                - 'width' (int): Желаемая ширина эскиза (положительное число).
+     *                                                - 'height' (int): Желаемая высота эскиза (положительное число).
+     *                                                - 'exists' (bool): Существует ли файл эскиза (`true` или
+     *                                                `false`).
      *
      * @return bool True, если эскиз создан успешно.
      *
-     * @throws GmagickException Если возникает ошибка при работе с GraphicsMagick (например, при загрузке или обработке изображения).*@throws \GmagickException
+     * @throws GmagickException Если возникает ошибка при работе с GraphicsMagick (например, при загрузке или обработке
+     *                          изображения).*@throws \GmagickException
      * @throws Exception
      *
-     * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
-     *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
+     * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении
+     *          файлов). Убедитесь, что скрипт имеет необходимые права на запись и чтение.
      * @warning Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.
      *
      * Пример вызова метода внутри класса:
@@ -1045,9 +1334,9 @@ class Work_Image implements Work_Image_Interface
      *     echo "Не удалось создать эскиз.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal()
+     * @see     PhotoRigma::Classes::Work_Image::_image_resize_internal()
      *      Метод, вызывающий этот приватный метод.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -1055,16 +1344,16 @@ class Work_Image implements Work_Image_Interface
     {
         // Разрешённые MIME-типы и их соответствие форматам GraphicsMagick
         $gmagick_formats = [
-            'image/jpeg' => 'JPEG',
-            'image/png' => 'PNG',
-            'image/gif' => 'GIF',
-            'image/webp' => 'WEBP',
-            'image/tiff' => 'TIFF',
+            'image/jpeg'    => 'JPEG',
+            'image/png'     => 'PNG',
+            'image/gif'     => 'GIF',
+            'image/webp'    => 'WEBP',
+            'image/tiff'    => 'TIFF',
             'image/svg+xml' => 'SVG',
-            'image/bmp' => 'BMP',
-            'image/x-icon' => 'ICO', // Иконки
-            'image/avif' => 'AVIF', // Современный формат
-            'image/heic' => 'HEIC', // Формат с камер iPhone
+            'image/bmp'     => 'BMP',
+            'image/x-icon'  => 'ICO', // Иконки
+            'image/avif'    => 'AVIF', // Современный формат
+            'image/heic'    => 'HEIC', // Формат с камер iPhone
         ];
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $gmagick_formats)) {
@@ -1152,7 +1441,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Обработка создания эскиза изображения с использованием библиотеки ImageMagick.
+     * @brief   Обработка создания эскиза изображения с использованием библиотеки ImageMagick.
      *
      * @details Метод выполняет следующие шаги:
      * 1. Проверяет поддержку MIME-типа через массив разрешённых форматов.
@@ -1169,24 +1458,28 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @param array $original_data Данные об оригинальном изображении:
-     *                             - 'path' (string): Абсолютный путь к исходному файлу.
-     *                             - 'type' (string): MIME-тип изображения (например, 'image/jpeg').
+     * @param array $original_data                    Данные об оригинальном изображении:
+     *                                                - 'path' (string): Абсолютный путь к исходному файлу.
+     *                                                - 'type' (string): MIME-тип изображения (например, 'image/jpeg').
      *                                                Должен быть одним из разрешённых MIME-типов.
-     *                             - 'width' (int): Ширина исходного изображения (положительное число).
-     *                             - 'height' (int): Высота исходного изображения (положительное число).
-     * @param array $thumbnail_data Данные об эскизе:
-     *                              - 'path' (string): Абсолютный путь для сохранения эскиза.
-     *                              - 'width' (int): Желаемая ширина эскиза (положительное число).
-     *                              - 'height' (int): Желаемая высота эскиза (положительное число).
-     *                              - 'exists' (bool): Существует ли файл эскиза (`true` или `false`).
+     *                                                - 'width' (int): Ширина исходного изображения (положительное
+     *                                                число).
+     *                                                - 'height' (int): Высота исходного изображения (положительное
+     *                                                число).
+     * @param array $thumbnail_data                   Данные об эскизе:
+     *                                                - 'path' (string): Абсолютный путь для сохранения эскиза.
+     *                                                - 'width' (int): Желаемая ширина эскиза (положительное число).
+     *                                                - 'height' (int): Желаемая высота эскиза (положительное число).
+     *                                                - 'exists' (bool): Существует ли файл эскиза (`true` или
+     *                                                `false`).
      *
      * @return bool True, если эскиз создан успешно.
      *
-     * @throws Exception Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке изображения).
+     * @throws Exception Если возникает ошибка при работе с ImageMagick (например, при загрузке или обработке
+     *                   изображения).
      *
-     * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
-     *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
+     * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении
+     *          файлов). Убедитесь, что скрипт имеет необходимые права на запись и чтение.
      * @warning Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.
      *
      * Пример вызова метода внутри класса:
@@ -1210,9 +1503,9 @@ class Work_Image implements Work_Image_Interface
      *     echo "Не удалось создать эскиз.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal()
+     * @see     PhotoRigma::Classes::Work_Image::_image_resize_internal()
      *      Метод, вызывающий этот приватный метод.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -1220,22 +1513,22 @@ class Work_Image implements Work_Image_Interface
     {
         // Разрешённые MIME-типы и их соответствие форматам ImageMagick
         $imagick_formats = [
-            'image/jpeg' => 'JPEG',
-            'image/png' => 'PNG',
-            'image/gif' => 'GIF',
-            'image/webp' => 'WEBP',
-            'image/tiff' => 'TIFF',
-            'image/svg+xml' => 'SVG',
-            'image/bmp' => 'BMP',
-            'image/x-icon' => 'ICO', // Иконки
-            'image/avif' => 'AVIF', // Современный формат
-            'image/heic' => 'HEIC', // Формат с камер iPhone
+            'image/jpeg'                => 'JPEG',
+            'image/png'                 => 'PNG',
+            'image/gif'                 => 'GIF',
+            'image/webp'                => 'WEBP',
+            'image/tiff'                => 'TIFF',
+            'image/svg+xml'             => 'SVG',
+            'image/bmp'                 => 'BMP',
+            'image/x-icon'              => 'ICO', // Иконки
+            'image/avif'                => 'AVIF', // Современный формат
+            'image/heic'                => 'HEIC', // Формат с камер iPhone
             'image/vnd.adobe.photoshop' => 'PSD', // Photoshop Document
-            'image/x-canon-cr2' => 'CR2', // RAW Canon
-            'image/x-nikon-nef' => 'NEF', // RAW Nikon
-            'image/x-xbitmap' => 'XBM', // X Bitmap
-            'image/x-portable-anymap' => 'PNM', // Portable Any Map
-            'image/x-pcx' => 'PCX', // PCX
+            'image/x-canon-cr2'         => 'CR2', // RAW Canon
+            'image/x-nikon-nef'         => 'NEF', // RAW Nikon
+            'image/x-xbitmap'           => 'XBM', // X Bitmap
+            'image/x-portable-anymap'   => 'PNM', // Portable Any Map
+            'image/x-pcx'               => 'PCX', // PCX
         ];
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $imagick_formats)) {
@@ -1317,7 +1610,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Обработка создания эскиза изображения с использованием библиотеки GD.
+     * @brief   Обработка создания эскиза изображения с использованием библиотеки GD.
      *
      * @details Метод выполняет следующие шаги:
      * 1. Проверяет поддержку MIME-типа через массив разрешённых форматов.
@@ -1334,29 +1627,32 @@ class Work_Image implements Work_Image_Interface
      * @callergraph
      * @callgraph
      *
-     * @param array $original_data Данные об оригинальном изображении:
-     *                             - 'path' (string): Абсолютный путь к исходному файлу.
-     *                             - 'type' (string): MIME-тип изображения (например, 'image/jpeg').
+     * @param array $original_data                    Данные об оригинальном изображении:
+     *                                                - 'path' (string): Абсолютный путь к исходному файлу.
+     *                                                - 'type' (string): MIME-тип изображения (например, 'image/jpeg').
      *                                                Должен быть одним из разрешённых MIME-типов.
-     *                             - 'width' (int): Ширина исходного изображения (положительное число).
-     *                             - 'height' (int): Высота исходного изображения (положительное число).
-     * @param array $thumbnail_data Данные об эскизе:
-     *                              - 'path' (string): Абсолютный путь для сохранения эскиза.
-     *                              - 'width' (int): Желаемая ширина эскиза (положительное число).
-     *                              - 'height' (int): Желаемая высота эскиза (положительное число).
-     *                              - 'exists' (bool): Существует ли файл эскиза (`true` или `false`).
+     *                                                - 'width' (int): Ширина исходного изображения (положительное
+     *                                                число).
+     *                                                - 'height' (int): Высота исходного изображения (положительное
+     *                                                число).
+     * @param array $thumbnail_data                   Данные об эскизе:
+     *                                                - 'path' (string): Абсолютный путь для сохранения эскиза.
+     *                                                - 'width' (int): Желаемая ширина эскиза (положительное число).
+     *                                                - 'height' (int): Желаемая высота эскиза (положительное число).
+     *                                                - 'exists' (bool): Существует ли файл эскиза (`true` или
+     *                                                `false`).
      *
      * @return bool True, если эскиз создан успешно.
      *
      * @throws InvalidArgumentException Если MIME-тип или тип изображения не поддерживаются.
      *      Пример сообщения:
      *          Неподдерживаемый MIME-тип для GD | Получено: [значение]
-     * @throws RuntimeException|Exception Если возникает ошибка при работе с GD (например, при загрузке, обработке или сохранении изображения).
-     *      Пример сообщения:
-     *          Не удалось создать ресурс изображения через GD | Путь: [значение]
+     * @throws RuntimeException|Exception Если возникает ошибка при работе с GD (например, при загрузке, обработке или
+     *                                    сохранении изображения). Пример сообщения: Не удалось создать ресурс
+     *                                    изображения через GD | Путь: [значение]
      *
-     * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении файлов).
-     *          Убедитесь, что скрипт имеет необходимые права на запись и чтение.
+     * @warning Метод чувствителен к правам доступа при работе с файлами (например, при переименовании или удалении
+     *          файлов). Убедитесь, что скрипт имеет необходимые права на запись и чтение.
      * @warning Ограничение памяти (25% от доступной) может быть недостаточным для больших изображений.
      * @warning Поддержка форматов зависит от текущей версии GD. Например, WebP может быть недоступен.
      *
@@ -1381,10 +1677,10 @@ class Work_Image implements Work_Image_Interface
      *     echo "Не удалось создать эскиз.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Image::_image_resize_internal()
+     * @see     PhotoRigma::Classes::Work_Image::_image_resize_internal()
      *      Метод, вызывающий этот приватный метод.
      */
     private function process_image_resize_gd(array $original_data, array $thumbnail_data): bool
@@ -1392,8 +1688,8 @@ class Work_Image implements Work_Image_Interface
         // Разрешённые MIME-типы и их соответствие константам IMAGETYPE_*
         $gd_mime_to_type = [
             'image/jpeg' => IMAGETYPE_JPEG,
-            'image/png' => IMAGETYPE_PNG,
-            'image/gif' => IMAGETYPE_GIF,
+            'image/png'  => IMAGETYPE_PNG,
+            'image/gif'  => IMAGETYPE_GIF,
             'image/webp' => IMAGETYPE_WEBP,
         ];
         // Проверка MIME-типа
@@ -1444,13 +1740,13 @@ class Work_Image implements Work_Image_Interface
         try {
             // Создание исходного изображения
             $imorig = match ($image_type) {
-                IMAGETYPE_GIF => imagecreatefromgif($original_data['path']),
+                IMAGETYPE_GIF  => imagecreatefromgif($original_data['path']),
                 IMAGETYPE_JPEG => imagecreatefromjpeg($original_data['path']),
-                IMAGETYPE_PNG => imagecreatefrompng($original_data['path']),
+                IMAGETYPE_PNG  => imagecreatefrompng($original_data['path']),
                 IMAGETYPE_WEBP => function_exists('imagecreatefromwebp') ? imagecreatefromwebp(
                     $original_data['path']
                 ) : null,
-                default => throw new InvalidArgumentException(
+                default        => throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый тип изображения для GD | Путь: {$original_data['path']}"
                 ),
             };
@@ -1490,13 +1786,13 @@ class Work_Image implements Work_Image_Interface
             }
             // Сохраняем новый эскиз
             $save_function = match ($image_type) {
-                IMAGETYPE_GIF => 'imagegif',
+                IMAGETYPE_GIF  => 'imagegif',
                 IMAGETYPE_JPEG => 'imagejpeg',
-                IMAGETYPE_PNG => 'imagepng',
+                IMAGETYPE_PNG  => 'imagepng',
                 IMAGETYPE_WEBP => function_exists('imagewebp') ? 'imagewebp' : throw new RuntimeException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Функция imagewebp недоступна в текущей версии GD"
                 ),
-                default => throw new InvalidArgumentException(
+                default        => throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый тип изображения для GD | Путь: {$original_data['path']}"
                 ),
             };
@@ -1532,7 +1828,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Возвращает данные для отсутствующего изображения.
+     * @brief   Возвращает данные для отсутствующего изображения.
      *
      * @details Публичная обёртка для вызова защищённого метода `_no_photo_internal`, который формирует массив данных
      *          для представления информации об отсутствующем изображении. Это может быть полезно, например,
@@ -1575,9 +1871,9 @@ class Work_Image implements Work_Image_Interface
      * echo "Рейтинг: {$noPhotoData['rate']}\n";
      * echo "Пользователь: {$noPhotoData['real_name']}\n";
      * @endcode
-     * @see PhotoRigma::Classes::Work::no_photo() Этот метод вызывается через класс Work.
+     * @see     PhotoRigma::Classes::Work::no_photo() Этот метод вызывается через класс Work.
      *
-     * @see PhotoRigma::Classes::Work_Image::_no_photo_internal() Защищённый метод, выполняющий основную логику.
+     * @see     PhotoRigma::Classes::Work_Image::_no_photo_internal() Защищённый метод, выполняющий основную логику.
      */
     public function no_photo(): array
     {
@@ -1585,7 +1881,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Возвращает данные для отсутствующего изображения.
+     * @brief   Возвращает данные для отсутствующего изображения.
      *
      * @details Метод формирует массив данных, который используется для представления информации
      *          об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено
@@ -1620,331 +1916,32 @@ class Work_Image implements Work_Image_Interface
      * echo "URL изображения: {$noPhotoData['url']}\n";
      * echo "Описание: {$noPhotoData['description']}\n";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::$config
+     * @see     PhotoRigma::Classes::Work_Image::$config
      *      Свойство конфигурации проекта в классе.
      *
-     * @see PhotoRigma::Classes::Work_Image::no_photo()
+     * @see     PhotoRigma::Classes::Work_Image::no_photo()
      *      Публичный метод-редирект для вызова этой логики.
      */
     protected function _no_photo_internal(): array
     {
         return [
-            'url' => sprintf('%s?action=photo&id=0', $this->config['site_url']),
-            'thumbnail_url' => sprintf('%s?action=attach&foto=0&thumbnail=1', $this->config['site_url']),
-            'name' => 'No photo',
-            'description' => 'No photo available',
-            'category_name' => 'No category',
+            'url'                  => sprintf('%s?action=photo&id=0', $this->config['site_url']),
+            'thumbnail_url'        => sprintf('%s?action=attach&foto=0&thumbnail=1', $this->config['site_url']),
+            'name'                 => 'No photo',
+            'description'          => 'No photo available',
+            'category_name'        => 'No category',
             'category_description' => 'No category available',
-            'rate' => 'Rate: 0/0',
-            'url_user' => '',
-            'real_name' => 'No user',
-            'full_path' => $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png',
-            'thumbnail_path' => $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/no_foto.png',
-            'file' => 'no_foto.png'
+            'rate'                 => 'Rate: 0/0',
+            'url_user'             => '',
+            'real_name'            => 'No user',
+            'full_path'            => $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png',
+            'thumbnail_path'       => $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/no_foto.png',
+            'file'                 => 'no_foto.png',
         ];
     }
 
     /**
-     * @brief Вывод изображения через HTTP.
-     *
-     * @details Публичная обёртка для вызова защищённого метода `_image_attach_internal`, который проверяет существование
-     *          и доступность файла, определяет его MIME-тип и отправляет содержимое файла через HTTP. Если файл не найден
-     *          или недоступен, возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением
-     *          MIME-типа, возвращается HTTP-статус 500. Метод завершает выполнение скрипта после отправки заголовков
-     *          и содержимого файла.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param string $full_path Полный путь к файлу.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
-     * @param string $name_file Имя файла для заголовка Content-Disposition.
-     *                          Имя должно быть корректным (например, без запрещённых символов).
-     *
-     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
-     *
-     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
-     *
-     * Пример использования:
-     * @code
-     * // Создание экземпляра класса Work_Image
-     * $image = new PhotoRigma::Classes::Work_Image();
-     *
-     * // Вызов метода для вывода изображения через HTTP
-     * $image->image_attach('/path/to/image.jpg', 'example.jpg');
-     * @endcode
-     * @throws Exception
-     * @see PhotoRigma::Classes::Work_Image::_image_attach_internal() Защищённый метод, выполняющий основную логику.
-     * @see PhotoRigma::Classes::Work::image_attach() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field() Публичный метод для очистки данных.
-     *
-     */
-    #[NoReturn] public function image_attach(string $full_path, string $name_file): void
-    {
-        $this->_image_attach_internal($full_path, $name_file);
-    }
-
-    /**
-     * @brief Вывод изображения через HTTP.
-     *
-     * @details Метод проверяет существование и доступность файла, определяет его MIME-тип
-     *          и отправляет содержимое файла через HTTP. Если файл не найден или недоступен,
-     *          возвращается HTTP-статус 404. Если возникли проблемы с чтением файла или определением
-     *          MIME-типа, возвращается HTTP-статус 500. Этот метод является защищённым и предназначен
-     *          для использования внутри класса или его наследников. Основная логика метода вызывается
-     *          через публичный метод image_attach(). Метод завершает выполнение скрипта после отправки
-     *          заголовков и содержимого файла.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param string $full_path Полный путь к файлу.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
-     * @param string $name_file Имя файла для заголовка Content-Disposition.
-     *                          Имя должно быть корректным (например, без запрещённых символов).
-     *
-     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
-     *
-     * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
-     *
-     * Пример использования:
-     * @code
-     * // Вызов защищённого метода внутри класса или наследника
-     * $this->_image_attach_internal('/path/to/image.jpg', 'example.jpg');
-     * @endcode
-     * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field()
-     *      Публичный метод-редирект для вызова этой логики.
-     *
-     * @see PhotoRigma::Classes::Work_Image::image_attach()
-     *      Публичный метод-редирект для вызова этой логики.
-     */
-    #[NoReturn] protected function _image_attach_internal(string $full_path, string $name_file): void
-    {
-        // Проверяем существование и доступность файла
-        if (!is_file($full_path) || !is_readable($full_path)) {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: $full_path"
-            );
-            header("HTTP/1.0 404 Not Found");
-            exit;
-        }
-        // Получаем MIME-тип и размеры изображения через finfo
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime_type = finfo_file($finfo, $full_path);
-        finfo_close($finfo);
-        if (!$mime_type || !str_starts_with($mime_type, 'image/')) {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: $full_path"
-            );
-            header("HTTP/1.0 500 Internal Server Error");
-            exit;
-        }
-        // Проверяем размер файла
-        $file_size = filesize($full_path);
-        if ($file_size === false || $file_size > 10 * 1024 * 1024) { // Ограничение: 10 МБ
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: $full_path, Размер: $file_size"
-            );
-            header("HTTP/1.0 413 Payload Too Large");
-            exit;
-        }
-        // Устанавливаем заголовки для вывода изображения
-        header("Content-Type: " . $mime_type);
-        header("Content-Disposition: inline; filename=\"" . Work::clean_field($name_file) . "\"");
-        header("Content-Length: " . $file_size);
-
-        // Дополнительные заголовки для безопасности
-        header("X-Content-Type-Options: nosniff");
-        header("X-Frame-Options: DENY");
-        header("X-XSS-Protection: 1; mode=block");
-        header("Referrer-Policy: no-referrer");
-        header("Content-Security-Policy: default-src 'self'; img-src 'self' data:;");
-
-        flush();
-        // Открываем файл и отправляем его содержимое
-        $fh = fopen($full_path, 'rb');
-        if ($fh === false) {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: $full_path"
-            );
-            header("HTTP/1.0 500 Internal Server Error");
-            exit;
-        }
-        fpassthru($fh);
-        fclose($fh);
-        exit;
-    }
-
-    /**
-     * @brief Корректировка расширения файла в соответствии с его MIME-типом (публичный интерфейс).
-     *
-     * @details Публичная обёртка для вызова защищённого метода `_fix_file_extension_internal`, который проверяет MIME-тип файла
-     *          и корректирует его расширение на основе соответствия MIME-типу. Если у файла отсутствует расширение, оно добавляется
-     *          автоматически. Если расширение уже корректное, файл остаётся без изменений.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param string $full_path Полный путь к файлу.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
-     *                          Формат пути должен соответствовать регулярному выражению /^[a-zA-Z0-9\/\.\-_]+$/.
-     *
-     * @return string Полный путь к файлу с правильным расширением.
-     *                Если расширение было изменено или добавлено, возвращается новый путь.
-     *                Если расширение уже корректное, возвращается исходный путь.
-     *
-     * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не существует.
-     * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
-     * @throws Exception
-     *
-     * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
-     *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
-     *
-     * Пример использования:
-     * @code
-     * // Создание экземпляра класса Work_Image
-     * $image = new PhotoRigma::Classes::Work_Image();
-     *
-     * // Корректировка расширения файла
-     * $full_path = '/path/to/file_without_extension';
-     * $corrected_path = $image->fix_file_extension($full_path);
-     * echo "Исправленный путь: {$corrected_path}";
-     * @endcode
-     * @see PhotoRigma::Classes::Work::fix_file_extension() Этот метод вызывается через класс Work.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
-     *
-     * @see PhotoRigma::Classes::Work_Image::_fix_file_extension_internal() Защищённый метод, выполняющий основную логику.
-     */
-    public function fix_file_extension(string $full_path): string
-    {
-        return $this->_fix_file_extension_internal($full_path);
-    }
-
-    /**
-     * @brief Корректировка расширения файла в соответствии с его MIME-типом (защищённый метод).
-     *
-     * @details Метод проверяет MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу.
-     *          Если у файла отсутствует расширение, оно добавляется автоматически. Если расширение уже корректное,
-     *          файл остаётся без изменений. Этот метод является защищённым и предназначен для использования внутри класса
-     *          или его наследников. Основная логика вызывается через публичный метод fix_file_extension().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param string $full_path Полный путь к файлу.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
-     *                          Формат пути должен соответствовать регулярному выражению /^[a-zA-Z0-9\/\.\-_]+$/.
-     *
-     * @return string Полный путь к файлу с правильным расширением.
-     *                Если расширение было изменено или добавлено, возвращается новый путь.
-     *                Если расширение уже корректное, возвращается исходный путь.
-     *
-     * @throws InvalidArgumentException Если путь к файлу некорректен, имеет недопустимый формат или файл не существует.
-     * @throws RuntimeException Если MIME-тип файла не поддерживается или файл недоступен для чтения.
-     * @throws Exception
-     *
-     * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
-     *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
-     *
-     * Пример использования:
-     * @code
-     * // Корректировка расширения файла
-     * $full_path = '/path/to/file_without_extension';
-     * $corrected_path = $this->_fix_file_extension_internal($full_path);
-     * echo "Исправленный путь: {$corrected_path}";
-     * @endcode
-     * @see PhotoRigma::Classes::Work_Image::fix_file_extension()
-     *      Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     *
-     */
-    protected function _fix_file_extension_internal(string $full_path): string
-    {
-        // Проверка корректности пути
-        if (!filter_var($full_path, FILTER_VALIDATE_REGEXP, [
-            'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/']
-        ])) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Путь: \$full_path = $full_path"
-            );
-        }
-        // Нормализация пути через realpath()
-        $normalized_path = realpath($full_path);
-        if (!$normalized_path) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
-            );
-        }
-        // Проверка существования файла и прав доступа
-        if (!is_file($normalized_path)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
-            );
-        }
-        if (!is_readable($normalized_path)) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: \$full_path = $full_path"
-            );
-        }
-        // Определение реального MIME-типа файла
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $real_mime_type = finfo_file($finfo, $normalized_path);
-        finfo_close($finfo);
-        // Список соответствий MIME-типов и расширений
-        $mime_to_extension = [
-            'image/jpeg' => 'jpg',
-            'image/png' => 'png',
-            'image/gif' => 'gif',
-            'image/webp' => 'webp',
-            'image/tiff' => 'tiff',
-            'image/svg+xml' => 'svg',
-            'image/bmp' => 'bmp',
-            'image/x-icon' => 'ico',
-            'image/avif' => 'avif',
-            'image/heic' => 'heic',
-            'image/vnd.adobe.photoshop' => 'psd',
-            'image/x-canon-cr2' => 'cr2',
-            'image/x-nikon-nef' => 'nef',
-            'image/x-xbitmap' => 'xbm',
-            'image/x-portable-anymap' => 'pnm',
-            'image/x-pcx' => 'pcx',
-        ];
-        // Проверка поддержки MIME-типа
-        if (!array_key_exists($real_mime_type, $mime_to_extension)) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип файла | Получено: $real_mime_type"
-            );
-        }
-        // Получение правильного расширения
-        $correct_extension = $mime_to_extension[$real_mime_type];
-        // Проверка текущего расширения файла
-        $current_extension = pathinfo($normalized_path, PATHINFO_EXTENSION);
-        if (empty($current_extension)) {
-            // Если расширение отсутствует, добавляем его
-            $new_full_path = $normalized_path . '.' . $correct_extension;
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '$correct_extension' к файлу | Путь: $normalized_path"
-            );
-            return $new_full_path;
-        }
-        if (strtolower($current_extension) === $correct_extension) {
-            return $normalized_path; // Расширение уже корректное
-        }
-        // Формирование нового пути с правильным расширением
-        $new_full_path = preg_replace('/\.[^.]+$/', '.' . $correct_extension, $normalized_path);
-        log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: $normalized_path, Новый путь: $new_full_path"
-        );
-        return $new_full_path;
-    }
-
-    /**
-     * @brief Удаляет директорию и её содержимое через вызов защищённого метода `_remove_directory_internal()`.
+     * @brief   Удаляет директорию и её содержимое через вызов защищённого метода `_remove_directory_internal()`.
      *
      * @details Этот публичный метод является редиректом, который вызывает защищённый метод
      * `_remove_directory_internal()` для выполнения удаления директории и её содержимого.
@@ -1966,7 +1963,7 @@ class Work_Image implements Work_Image_Interface
      *                           - Если не удалось удалить файл внутри директории.
      *                           - Если не удалось удалить саму директорию.
      *
-     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     * @note    Метод рекурсивно удаляет все файлы внутри директории.
      *
      * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
      *
@@ -1979,9 +1976,10 @@ class Work_Image implements Work_Image_Interface
      *     echo "Директория успешно удалена!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work::remove_directory() Метод из родительского класса, используемый как редирект.
+     * @see     PhotoRigma::Classes::Work::remove_directory() Метод из родительского класса, используемый как редирект.
      *
-     * @see PhotoRigma::Classes::Work_Image::_remove_directory_internal() Защищённый метод, реализующий основную логику удаления.
+     * @see     PhotoRigma::Classes::Work_Image::_remove_directory_internal() Защищённый метод, реализующий основную
+     *          логику удаления.
      */
     public function remove_directory(string $path): bool
     {
@@ -1989,7 +1987,7 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Удаляет директорию и её содержимое, предварительно проверяя права доступа.
+     * @brief   Удаляет директорию и её содержимое, предварительно проверяя права доступа.
      *
      * @details Этот защищенный метод выполняет следующие действия:
      *          - Проверяет существование указанной директории.
@@ -2013,7 +2011,7 @@ class Work_Image implements Work_Image_Interface
      *                           - Если не удалось удалить файл внутри директории.
      *                           - Если не удалось удалить саму директорию.
      *
-     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     * @note    Метод рекурсивно удаляет все файлы внутри директории.
      *
      * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
      *
@@ -2025,7 +2023,7 @@ class Work_Image implements Work_Image_Interface
      *     echo "Директория успешно удалена!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::remove_directory() Публичный метод-редирект для вызова этой логики.
+     * @see     PhotoRigma::Classes::Work_Image::remove_directory() Публичный метод-редирект для вызова этой логики.
      *
      */
     protected function _remove_directory_internal(string $path): bool
@@ -2060,186 +2058,222 @@ class Work_Image implements Work_Image_Interface
     }
 
     /**
-     * @brief Создает директории для категории и копирует файлы index.php через вызов защищённого метода.
+     * @brief   Вычисляет размеры для вывода эскиза изображения.
      *
-     * @details Этот публичный метод является редиректом, который вызывает защищённый метод
-     * `_create_directory_internal()` для выполнения создания директорий и копирования файлов `index.php`.
-     * Дополнительные проверки или преобразования данных перед вызовом защищённого метода отсутствуют.
-     * Метод предназначен для использования вне класса.
+     * @details Публичная обёртка для вызова защищённого метода `_size_image_internal`, который рассчитывает ширину и
+     *          высоту эскиза на основе реальных размеров изображения и конфигурационных параметров (`temp_photo_w` и
+     *          `temp_photo_h`). Если изображение меньше целевого размера, возвращаются оригинальные размеры. В
+     *          противном случае размеры масштабируются пропорционально.
      *
      * @callergraph
      * @callgraph
      *
-     * @param string $directory_name Имя директории.
-     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
-     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
+     * @param string $path_image Путь к файлу изображения.
+     *                           Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
      *
-     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     * @return array Массив с шириной и высотой эскиза.
+     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
+     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
+     *               Размеры могут совпадать с оригинальными размерами изображения,
+     *               если оно меньше целевого размера.
      *
-     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
-     *                           - Если родительская директория недоступна для записи.
-     *                           - Если не удалось создать директории.
-     *                           - Если исходные файлы `index.php` не существуют.
-     *                           - Если не удалось прочитать или записать файлы `index.php`.
+     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
      *
-     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w` и `temp_photo_h`).
+     *          Если эти параметры некорректны, результат может быть непредсказуемым.
      *
-     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
-     *
-     * Пример внешнего вызова метода:
+     * Пример использования:
      * @code
-     * $object = new \PhotoRigma\Classes\Work_Image();
-     * $directoryName = 'new_category';
-     * $result = $object->create_directory($directoryName);
-     * if ($result) {
-     *     echo "Директории успешно созданы!";
-     * }
+     * // Создание экземпляра класса Work_Image
+     * $image = new Work_Image();
+     *
+     * // Вычисление размеров эскиза для изображения
+     * $path = '/path/to/image.jpg';
+     * $sizes = $image->size_image($path);
+     *
+     * // Вывод результатов
+     * echo "Ширина: {$sizes['width']}, Высота: {$sizes['height']}";
      * @endcode
-     * @see PhotoRigma::Classes::Work::create_directory() Метод-фасад в родительском классе Work.
-     * @see PhotoRigma::Classes::Work_Image::_create_directory_internal() Защищённый метод, реализующий основную логику.
-     * @see PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования путей.
+     * @see     PhotoRigma::Classes::Work_Image::_size_image_internal() Защищённый метод, выполняющий основную логику.
+     * @see     PhotoRigma::Classes::Work::size_image() Этот метод вызывается через класс Work.
+     * @see     PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal() Метод, вызывающий этот метод.
      *
      */
-    public function create_directory(string $directory_name): bool
+    public function size_image(string $path_image): array
     {
-        return $this->_create_directory_internal($directory_name);
+        return $this->_size_image_internal($path_image);
     }
 
     /**
-     * @brief Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.
+     * @brief   Вычисляет размеры для вывода эскиза изображения.
      *
-     * @details Этот защищенный метод выполняет следующие действия:
-     *          - Проверяет права доступа к родительским директориям.
-     *          - Рекурсивно создает директории для галереи и миниатюр.
-     *          - Копирует и модифицирует файлы `index.php` для новой директории галереи и миниатюр.
-     *          Метод вызывается через публичный метод-редирект `PhotoRigma::Classes::Work_Image::create_directory()`
-     *          и предназначен для использования внутри класса или его наследников.
+     * @details Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения
+     *          и конфигурационных параметров (`temp_photo_w` и `temp_photo_h`). Если изображение меньше
+     *          целевого размера, возвращаются оригинальные размеры. В противном случае размеры масштабируются
+     *          пропорционально. Этот метод является защищённым и предназначен для использования внутри класса
+     *          или его наследников. Основная логика метода вызывается через публичный метод size_image().
      *
      * @callergraph
+     * @callgraph
      *
-     * @param string $directory_name Имя директории.
-     *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
-     *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
+     * @param string $path_image Путь к файлу изображения.
+     *                           Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
      *
-     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     * @return array Массив с шириной и высотой эскиза.
+     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
+     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
+     *               Размеры могут совпадать с оригинальными размерами изображения,
+     *               если оно меньше целевого размера.
      *
-     * @throws RuntimeException Выбрасывается исключение в следующих случаях:
-     *                           - Если родительская директория недоступна для записи.
-     *                           - Если не удалось создать директории.
-     *                           - Если исходные файлы `index.php` не существуют.
-     *                           - Если не удалось прочитать или записать файлы `index.php`.
+     * @throws RuntimeException Если файл не существует или не удалось получить размеры изображения.
      *
-     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w` и `temp_photo_h`).
+     *          Если эти параметры некорректны, результат может быть непредсказуемым.
      *
-     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
-     *
-     * Пример вызова метода внутри класса или наследника:
+     * Пример использования:
      * @code
-     * $directoryName = 'new_category';
-     * $result = $this->_create_directory_internal($directoryName);
-     * if ($result) {
-     *     echo "Директории успешно созданы!";
-     * }
+     * // Вычисление размеров эскиза для изображения
+     * $path = '/path/to/image.jpg';
+     * $sizes = $this->_size_image_internal($path);
+     * echo "Ширина: {$sizes['width']}, Высота: {$sizes['height']}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::create_directory() Публичный метод-редирект для вызова этой логики.
+     * @see     PhotoRigma::Classes::Work_Image::calculate_thumbnail_size()
+     *      Метод, используемый для расчёта размера эскиза.
      *
-     * @see PhotoRigma::Classes::Work_Image::$config Конфигурационные параметры, используемые для формирования путей.
+     * @see     PhotoRigma::Classes::Work_Image::size_image()
+     *      Публичный метод-редирект для вызова этой логики.
      */
-    protected function _create_directory_internal(string $directory_name): bool
+    protected function _size_image_internal(string $path_image): array
     {
-        // Формируем пути для галереи и миниатюр с использованием sprintf()
-        $gallery_path = sprintf(
-            '%s/%s/%s',
-            $this->config['site_dir'],
-            $this->config['gallery_folder'],
-            $directory_name
-        );
-        $thumbnail_path = sprintf(
-            '%s/%s/%s',
-            $this->config['site_dir'],
-            $this->config['thumbnail_folder'],
-            $directory_name
-        );
+        // Проверяем существование файла
+        if (!file_exists($path_image)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден | Путь: '$path_image'"
+            );
+        }
+        // Получаем размеры изображения
+        $size = getimagesize($path_image);
+        if ($size === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: '$path_image'"
+            );
+        }
+        // Используем готовый метод для расчёта размеров эскиза
+        return $this->calculate_thumbnail_size($size);
+    }
 
-        // Проверяем права доступа к родительским директориям
-        if (!is_writable(dirname($gallery_path))) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
-                    $gallery_path
-                )
-            );
-        }
-        if (!is_writable(dirname($thumbnail_path))) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
-                    $thumbnail_path
-                )
-            );
-        }
-
-        // Создаем директории рекурсивно
-        if (!mkdir($gallery_path, 0755, true) || !is_dir($gallery_path) || !mkdir(
-            $thumbnail_path,
-            0755,
-            true
-        ) || !is_dir($thumbnail_path)) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: $directory_name"
-            );
-        }
-
-        // Определяем пути к исходным файлам index.php
-        $gallery_index_file = sprintf('%s/%s/index.php', $this->config['site_dir'], $this->config['gallery_folder']);
-        $thumbnail_index_file = sprintf(
-            '%s/%s/index.php',
-            $this->config['site_dir'],
-            $this->config['thumbnail_folder']
-        );
-
-        // Проверяем существование исходных файлов index.php
-        if (!is_file($gallery_index_file)) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $gallery_index_file"
-            );
-        }
-        if (!is_file($thumbnail_index_file)) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $thumbnail_index_file"
-            );
-        }
-
-        // Копируем index.php в новую директорию галереи
-        $gallery_index_content = file_get_contents($gallery_index_file);
-        if ($gallery_index_content === false) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $gallery_index_file"
-            );
-        }
-        $gallery_index_content = strtr($gallery_index_content, [
-            'gallery/index.php' => "gallery/$directory_name/index.php"
-        ]);
-        if (file_put_contents($gallery_path . '/index.php', $gallery_index_content, LOCK_EX) === false) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $gallery_path/index.php"
-            );
-        }
-
-        // Копируем index.php в новую директорию миниатюр
-        $thumbnail_index_content = file_get_contents($thumbnail_index_file);
-        if ($thumbnail_index_content === false) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $thumbnail_index_file"
-            );
-        }
-        $thumbnail_index_content = strtr($thumbnail_index_content, [
-            'thumbnail/index.php' => "thumbnail/$directory_name/index.php"
-        ]);
-        if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content, LOCK_EX) === false) {
-            throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $thumbnail_path/index.php"
+    /**
+     * @brief   Расчёт размера эскиза.
+     *
+     * @details Метод вычисляет ширину и высоту эскиза на основе реальных размеров изображения
+     *          и конфигурационных параметров (`temp_photo_w` и `temp_photo_h`).
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $size Массив с реальными размерами изображения.
+     *                    - Индекс 0: int — Ширина изображения (должна быть положительным целым числом).
+     *                    - Индекс 1: int — Высота изображения (должна быть положительным целым числом).
+     *
+     * @return array Массив с шириной и высотой эскиза.
+     *               - Ключ 'width': int — Ширина эскиза (целое число ≥ 0).
+     *               - Ключ 'height': int — Высота эскиза (целое число ≥ 0).
+     *
+     * @throws InvalidArgumentException Если массив `$size` не содержит двух положительных целых чисел.
+     *      Пример сообщения:
+     *
+     *          Некорректные размеры изображения.
+     *          Требуется массив с двумя положительными целыми числами.
+     *          Получено: width = [значение], height = [значение]
+     *
+     * @throws RuntimeException Если значения `temp_photo_w` или `temp_photo_h` в конфигурации некорректны.
+     *      Пример сообщения:
+     *
+     *          Некорректная конфигурация temp_photo_w или temp_photo_h
+     *          Значения должны быть числами ≥ 0.
+     *          Получено: temp_photo_w = [значение], temp_photo_h = [значение]
+     *
+     * @see     PhotoRigma::Classes::Work_Image::size_image()
+     *      Вычисляет размеры для вывода эскиза изображения.
+     * @see     PhotoRigma::Classes::Work_Image::image_resize()
+     *      Изменяет размер изображения.
+     *
+     * @see     PhotoRigma::Classes::Work_Image::$config
+     *      Массив с конфигурацией приложения.
+     * @todo    Перевести аргументы на массивовые значения ($size[0] -> $size['width']; $size[1] -> $size['height']).
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * // Исходные размеры изображения
+     * $originalSize = [1920, 1080];
+     *
+     * // Конфигурация приложения
+     * $this->config['temp_photo_w'] = 800;
+     * $this->config['temp_photo_h'] = 600;
+     *
+     * // Вычисление размеров эскиза
+     * $thumbnailSize = $this->calculate_thumbnail_size($originalSize);
+     *
+     * // Результат
+     * echo "Ширина эскиза: {$thumbnailSize['width']}, Высота эскиза: {$thumbnailSize['height']}";
+     * // Вывод: Ширина эскиза: 800, Высота эскиза: 450
+     * @endcode
+     */
+    private function calculate_thumbnail_size(array $size): array
+    {
+        // Валидация параметра $size
+        if (!isset($size[0], $size[1]) || !is_int($size[0]) || !is_int($size[1]) || $size[0] <= 0 || $size[1] <= 0) {
+            throw new InvalidArgumentException(
+                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректные размеры изображения | " . "Требуется массив с двумя положительными целыми числами. Получено: width = " . ($size[0] ?? 'undefined') . ", height = " . ($size[1] ?? 'undefined')
             );
         }
 
-        return true;
+        // Валидация конфигурации
+        if (!isset($this->config['temp_photo_w'], $this->config['temp_photo_h']) || !is_numeric(
+            $this->config['temp_photo_w']
+        ) || !is_numeric(
+            $this->config['temp_photo_h']
+        ) || $this->config['temp_photo_w'] < 0 || $this->config['temp_photo_h'] < 0) {
+            throw new RuntimeException(
+                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректная конфигурация temp_photo_w или temp_photo_h | " . "Значения должны быть числами ≥ 0. Получено: temp_photo_w = " . ($this->config['temp_photo_w'] ?? 'undefined') . ", temp_photo_h = " . ($this->config['temp_photo_h'] ?? 'undefined')
+            );
+        }
+
+        // Преобразуем конфигурацию в целые числа
+        $target_width = (int)$this->config['temp_photo_w'];
+        $target_height = (int)$this->config['temp_photo_h'];
+
+        // Вычисляем коэффициенты масштабирования через match
+        $ratio_width = match (true) {
+            $target_width > 0 => $size[0] / $target_width,
+            default           => 1,
+        };
+
+        $ratio_height = match (true) {
+            $target_height > 0 => $size[1] / $target_height,
+            default            => 1,
+        };
+
+        // Если исходное изображение меньше целевого размера, возвращаем оригинальные размеры
+        if ($size[0] < $target_width && $size[1] < $target_height && $target_width > 0 && $target_height > 0) {
+            return [
+                'width'  => $size[0],
+                'height' => $size[1],
+            ];
+        }
+
+        // Масштабируем изображение пропорционально
+        if ($ratio_width < $ratio_height) {
+            return [
+                'width'  => (int)($size[0] / $ratio_height),
+                'height' => (int)($size[1] / $ratio_height),
+            ];
+        }
+
+        return [
+            'width'  => (int)($size[0] / $ratio_width),
+            'height' => (int)($size[1] / $ratio_width),
+        ];
     }
 }

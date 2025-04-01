@@ -2,13 +2,15 @@
 
 /**
  * @file        action/main.php
- * @brief       Главная страница. Формирует и выводит последние новости проекта, проверяя права пользователя на их просмотр.
+ * @brief       Главная страница. Формирует и выводит последние новости проекта, проверяя права пользователя на их
+ *              просмотр.
  *
  * @details     Этот файл отвечает за формирование главной страницы сайта. Основная логика включает:
  *              - Загрузку последних новостей (количество определяется конфигурацией `last_news`).
  *              - Проверку прав пользователя на просмотр новостей (`$user->user['news_view']`).
  *              - Обработку ошибок при получении данных из базы данных.
- *              - Формирование ссылок для редактирования или удаления новостей (если пользователь имеет соответствующие права).
+ *              - Формирование ссылок для редактирования или удаления новостей (если пользователь имеет соответствующие
+ *              права).
  *              - Использование всех ресурсов из пространства имён `PhotoRigma\Classes`.
  *
  * @section     Основные функции
@@ -39,13 +41,13 @@
  *              Используется конфигурация `last_news` для определения количества новостей.
  *              Реализованы меры безопасности для предотвращения прямого вызова файла и SQL-инъекций.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -89,22 +91,22 @@ if (!empty($news) && $user->user['news_view']) {
         // Добавляем строки для шаблона: заголовок, дата и текст новости
         $template->add_string_ar([
             'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field($value['name_post']),
-            'L_NEWS_DATA' => $work->lang['main']['data_add'] . ': ' . $value['data_post'] . ' (' . $value['data_last_edit'] . ').',
-            'L_TEXT_POST' => trim(nl2br(Work::ubb($value['text_post'])))
+            'L_NEWS_DATA'        => $work->lang['main']['data_add'] . ': ' . $value['data_post'] . ' (' . $value['data_last_edit'] . ').',
+            'L_TEXT_POST'        => trim(nl2br(Work::ubb($value['text_post']))),
         ], 'LAST_NEWS[' . $key . ']');
 
         // Устанавливаем флаги для условных блоков шаблона
         $template->add_if_ar([
             'USER_EXISTS' => false,
-            'EDIT_SHORT' => false,
-            'EDIT_LONG' => false
+            'EDIT_SHORT'  => false,
+            'EDIT_LONG'   => false,
         ], 'LAST_NEWS[' . $key . ']');
 
         // Проверяем, существует ли пользователь, добавивший новость.
         // Выполняем запрос с использованием плейсхолдеров.
         $db->select('`real_name`', TBL_USERS, [
-            'where' => '`id` = :user_id',
-            'params' => [':user_id' => $value['user_post']]
+            'where'  => '`id` = :user_id',
+            'params' => [':user_id' => $value['user_post']],
         ]);
 
         // Получаем результат запроса
@@ -119,44 +121,44 @@ if (!empty($news) && $user->user['news_view']) {
         // Если пользователь найден, добавляем данные о нем в шаблон
         $template->add_if('USER_EXISTS', true, 'LAST_NEWS[' . $key . ']');
         $template->add_string_ar([
-            'L_USER_ADD' => $work->lang['main']['user_add'],
-            'U_PROFILE_USER_POST' => sprintf(
+            'L_USER_ADD'            => $work->lang['main']['user_add'],
+            'U_PROFILE_USER_POST'   => sprintf(
                 '%s?action=profile&amp;subact=profile&amp;uid=%d',
                 $work->config['site_url'],
                 $value['user_post']
             ),
-            'D_REAL_NAME_USER_POST' => Work::clean_field($user_add['real_name'])
+            'D_REAL_NAME_USER_POST' => Work::clean_field($user_add['real_name']),
         ], 'LAST_NEWS[' . $key . ']');
 
         // Проверяем права пользователя на редактирование или удаление новости.
         // Используем match для проверки прав.
         $can_edit = match (true) {
             $user->user['news_moderate'], $user->user['id'] !== 0 && $user->user['id'] === $value['user_post'] => true,
-            default => false,
+            default                                                                                            => false,
         };
 
         if ($can_edit) {
             $template->add_if('EDIT_SHORT', true, 'LAST_NEWS[' . $key . ']');
             $template->add_string_ar([
-                'L_EDIT_BLOCK' => $work->lang['main']['edit_news'],
-                'L_DELETE_BLOCK' => $work->lang['main']['delete_news'],
+                'L_EDIT_BLOCK'           => $work->lang['main']['edit_news'],
+                'L_DELETE_BLOCK'         => $work->lang['main']['delete_news'],
                 'L_CONFIRM_DELETE_BLOCK' => sprintf(
                     '%s %s?',
                     $work->lang['main']['confirm_delete_news'],
                     Work::clean_field($value['name_post'])
                 ),
-                'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
-                'L_CANCEL_DELETE' => $work->lang['main']['cancel'],
-                'U_EDIT_BLOCK' => sprintf(
+                'L_CONFIRM_DELETE'       => $work->lang['main']['delete'],
+                'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
+                'U_EDIT_BLOCK'           => sprintf(
                     '%s?action=news&amp;subact=edit&amp;news=%d',
                     $work->config['site_url'],
                     $value['id']
                 ),
-                'U_DELETE_BLOCK' => sprintf(
+                'U_DELETE_BLOCK'         => sprintf(
                     '%s?action=news&subact=delete&news=%d',
                     $work->config['site_url'],
                     $value['id']
-                )
+                ),
             ], 'LAST_NEWS[' . $key . ']');
         }
     }
@@ -164,13 +166,13 @@ if (!empty($news) && $user->user['news_view']) {
     // Если новостей нет или пользователь не имеет права их просматривать, добавляем сообщение об отсутствии новостей
     $template->add_if_ar([
         'USER_EXISTS' => false,
-        'EDIT_SHORT' => false,
-        'EDIT_LONG' => false
+        'EDIT_SHORT'  => false,
+        'EDIT_LONG'   => false,
     ], 'LAST_NEWS[0]');
 
     $template->add_string_ar([
         'L_TITLE_NEWS_BLOCK' => $work->lang['main']['no_news'],
-        'L_NEWS_DATA' => '',
-        'L_TEXT_POST' => $work->lang['main']['no_news']
+        'L_NEWS_DATA'        => '',
+        'L_TEXT_POST'        => $work->lang['main']['no_news'],
     ], 'LAST_NEWS[0]');
 }

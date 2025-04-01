@@ -1,0 +1,7 @@
+<map id="update_user_rights" name="update_user_rights">
+<area shape="rect" id="Node000001" title="Обновляет права пользователя или группу через Админку." alt="" coords="5,31,137,55"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="187,5,321,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,31,171,26,172,32,137,37"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="185,55,323,79"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="137,49,169,53,169,59,137,54"/>
+</map>

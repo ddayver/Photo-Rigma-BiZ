@@ -10,12 +10,13 @@
  * @date        2025-02-11
  * @namespace   PhotoRigma\\Classes
  *
- * @details     Этот файл содержит основной класс приложения `Work`, который объединяет подклассы для выполнения различных задач.
- *              Класс предоставляет:
+ * @details     Этот файл содержит основной класс приложения `Work`, который объединяет подклассы для выполнения
+ *              различных задач. Класс предоставляет:
  *              - Хранилище для данных о конфигурации.
  *              - Механизмы для работы с безопасностью, включая проверку входных данных и защиту от спам-ботов.
  *              - Механизмы для работы с изображениями через интерфейс `Work_Image_Interface`.
- *              - Класс Work_Helper предоставляет методы для очистки строк, преобразования размеров и проверки MIME-типов.
+ *              - Класс Work_Helper предоставляет методы для очистки строк, преобразования размеров и проверки
+ *              MIME-типов.
  *              - Интеграцию с интерфейсами для работы с базой данных, обработкой данных.
  *              - Механизмы для управления директориями, пользовательской статистикой и другими компонентами системы.
  *
@@ -23,7 +24,8 @@
  * @see         PhotoRigma::Classes::Work_Security_Interface Интерфейс для работы с безопасностью приложения.
  * @see         PhotoRigma::Classes::Work_Image_Interface Интерфейс, определяющий методы для работы с изображениями.
  * @see         PhotoRigma::Classes::Work_Template_Interface Интерфейс для работы с шаблонами.
- * @see         PhotoRigma::Classes::Work_Helper_Interface Интерфейс для вспомогательных функций, таких как очистка строк и проверка MIME-типов.
+ * @see         PhotoRigma::Classes::Work_Helper_Interface Интерфейс для вспомогательных функций, таких как очистка
+ *              строк и проверка MIME-типов.
  * @see         PhotoRigma::Classes::Work_CoreLogic_Interface Интерфейс для реализации основной логики приложения.
  * @see         PhotoRigma::Classes::User_Interface Интерфейс для работы с пользователями.
  * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
@@ -33,13 +35,13 @@
  *
  * @todo        Реализовать поддержку кэширования языковых переменных с хранением в формате JSON в файлах.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. Все права защищены.
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать
- *              и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное
- *              программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части
- *                программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -77,9 +79,11 @@ use function PhotoRigma\Include\log_in_file;
  *
  * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
  * @see         PhotoRigma::Classes::Work_Security Класс для работы с безопасностью приложения.
- * @see         PhotoRigma::Classes::Work_Image Класс, реализующий интерфейс `Work_Image_Interface` для работы с изображениями.
+ * @see         PhotoRigma::Classes::Work_Image Класс, реализующий интерфейс `Work_Image_Interface` для работы с
+ *              изображениями.
  * @see         PhotoRigma::Classes::Work_Template Класс для работы с шаблонами.
- * @see         PhotoRigma::Classes::Work_Helper Класс для очистки строк, преобразования размеров и проверки MIME-типов.
+ * @see         PhotoRigma::Classes::Work_Helper Класс для очистки строк, преобразования размеров и проверки
+ *              MIME-типов.
  * @see         PhotoRigma::Classes::Work_CoreLogic Класс для реализации основной логики приложения.
  * @see         PhotoRigma::Classes::User Класс для работы с пользователями.
  *
@@ -118,20 +122,21 @@ class Work
     private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
 
     /**
-     * @brief Конструктор класса.
+     * @brief   Конструктор класса.
      *
      * @details Этот метод вызывается автоматически при создании нового объекта класса.
      *          Используется для инициализации основных компонентов приложения:
      *          - Загрузка конфигурации из базы данных (таблица TBL_CONFIG).
-     *          - Инициализация дочерних классов: Work_Helper, Work_Security, Work_Image, Work_Template, Work_CoreLogic.
+     *          - Инициализация дочерних классов: Work_Helper, Work_Security, Work_Image, Work_Template,
+     *          Work_CoreLogic.
      *          - Установка кодировки UTF-8 для работы с мультибайтовыми строками.
      *
      * @callgraph
      *
-     * @param Database_Interface $db Объект для работы с базой данных.
-     * @param array $config Конфигурация приложения.
+     * @param Database_Interface $db     Объект для работы с базой данных.
+     * @param array              $config Конфигурация приложения.
      *
-     * @note В конструкторе инициализируются 5 дочерних классов:
+     * @note    В конструкторе инициализируются 5 дочерних классов:
      *       - Work_Helper: Для вспомогательных функций.
      *       - Work_Security: Для работы с безопасностью.
      *       - Work_Image: Для работы с изображениями.
@@ -139,8 +144,8 @@ class Work
      *       - Work_CoreLogic: Для реализации бизнес-логики приложения.
      *       Также используется константа TBL_CONFIG для загрузки конфигурации из базы данных.
      *
-     * @warning Если таблица TBL_CONFIG отсутствует или данные не загружены, это может привести к неполному функционированию приложения.
-     *          Ошибки записываются в лог через log_in_file.
+     * @warning Если таблица TBL_CONFIG отсутствует или данные не загружены, это может привести к неполному
+     *          функционированию приложения. Ошибки записываются в лог через log_in_file.
      *
      * Пример создания объекта класса Work:
      * @code
@@ -152,12 +157,12 @@ class Work
      * $work = new \PhotoRigma\Classes\Work($db, $config);
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
-     * @see PhotoRigma::Classes::Work::$security Свойство, содержащее объект Work_Security.
-     * @see PhotoRigma::Classes::Work::$image Свойство, содержащее объект Work_Image.
-     * @see PhotoRigma::Classes::Work::$template Свойство, содержащее объект Work_Template.
-     * @see PhotoRigma::Classes::Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
-     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
+     * @see     PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
+     * @see     PhotoRigma::Classes::Work::$security Свойство, содержащее объект Work_Security.
+     * @see     PhotoRigma::Classes::Work::$image Свойство, содержащее объект Work_Image.
+     * @see     PhotoRigma::Classes::Work::$template Свойство, содержащее объект Work_Template.
+     * @see     PhotoRigma::Classes::Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
+     * @see     PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
      */
     public function __construct(Database_Interface $db, array $config, array &$session)
@@ -182,7 +187,7 @@ class Work
     }
 
     /**
-     * @brief Преобразование размера в байты.
+     * @brief   Преобразование размера в байты.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода return_bytes() класса Work_Helper.
      *          Метод преобразует размер, заданный в формате "число[K|M|G]", в количество байт.
@@ -219,7 +224,7 @@ class Work
      * $bytes = \PhotoRigma\Classes\Work::return_bytes('abc');
      * echo $bytes; // Выведет: 0
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::return_bytes()
+     * @see     PhotoRigma::Classes::Work_Helper::return_bytes()
      *      Публичный метод в классе Work_Helper.
      *
      */
@@ -229,7 +234,7 @@ class Work
     }
 
     /**
-     * @brief Транслитерация строки и замена знаков пунктуации на "_".
+     * @brief   Транслитерация строки и замена знаков пунктуации на "_".
      *
      * @details Этот метод является делегатом (метод-редирект) для метода encodename() класса Work_Helper.
      *          Метод выполняет транслитерацию не латинских символов в латиницу и заменяет знаки пунктуации на "_".
@@ -260,7 +265,7 @@ class Work
      * $encoded = \PhotoRigma\Classes\Work::encodename('12345');
      * echo $encoded; // Выведет: 12345
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::encodename()
+     * @see     PhotoRigma::Classes::Work_Helper::encodename()
      *      Публичный метод в классе Work_Helper.
      *
      */
@@ -270,11 +275,11 @@ class Work
     }
 
     /**
-     * @brief Преобразование BBCode в HTML.
+     * @brief   Преобразование BBCode в HTML.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода ubb() класса Work_Helper.
-     *          Метод преобразует BBCode-теги в соответствующие HTML-теги с учетом рекурсивной обработки вложенных тегов.
-     *          Поддерживаются следующие BBCode-теги:
+     *          Метод преобразует BBCode-теги в соответствующие HTML-теги с учетом рекурсивной обработки вложенных
+     *          тегов. Поддерживаются следующие BBCode-теги:
      *          - [b]Жирный текст[/b]
      *          - [u]Подчёркнутый текст[/u]
      *          - [i]Курсив[/i]
@@ -289,7 +294,8 @@ class Work
      *          - [br] — перенос строки
      *          - [left], [center], [right] — выравнивание текста
      *          - [img]Изображение[/img]
-     *          Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных тегов.
+     *          Метод защищает от XSS-атак, проверяет корректность URL и ограничивает глубину рекурсии для вложенных
+     *          тегов.
      *
      * @callgraph
      *
@@ -310,16 +316,17 @@ class Work
      * echo $html; // Выведет: <strong>Bold text</strong>
      *
      * $html = \PhotoRigma\Classes\Work::ubb('[url=https://example.com]Example[/url]');
-     * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer" title="Example">Example</a>
+     * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer"
+     * title="Example">Example</a>
      *
      * $html = \PhotoRigma\Classes\Work::ubb('[invalid]Invalid tag[/invalid]');
      * echo $html; // Выведет: [invalid]Invalid tag[/invalid]
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Helper::ubb()
+     * @see     PhotoRigma::Classes::Work_Helper::ubb()
      *      Публичный метод в классе Work_Helper.
      */
     public static function ubb(string $text): string
@@ -328,7 +335,7 @@ class Work
     }
 
     /**
-     * @brief Разбивка строки на несколько строк ограниченной длины.
+     * @brief   Разбивка строки на несколько строк ограниченной длины.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода utf8_wordwrap() класса Work_Helper.
      *          Метод разбивает строку на несколько строк, каждая из которых имеет длину не более указанной.
@@ -338,11 +345,11 @@ class Work
      *
      * @callgraph
      *
-     * @param string $str Исходная строка.
-     *                    Рекомендуется использовать строки в кодировке UTF-8.
-     *                    Если строка пустая или её длина меньше или равна $width, она возвращается без изменений.
-     * @param int $width Максимальная длина строки (по умолчанию 70).
-     *                   Должен быть положительным целым числом.
+     * @param string $str   Исходная строка.
+     *                      Рекомендуется использовать строки в кодировке UTF-8.
+     *                      Если строка пустая или её длина меньше или равна $width, она возвращается без изменений.
+     * @param int    $width Максимальная длина строки (по умолчанию 70).
+     *                      Должен быть положительным целым числом.
      * @param string $break Символ разрыва строки (по умолчанию PHP_EOL).
      *                      Не должен быть пустой строкой.
      *
@@ -374,10 +381,10 @@ class Work
      * echo $wrapped; // Выведет: Empty break
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
+     * @see     PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
      *      Публичный метод в классе Work_Helper.
      */
     public static function utf8_wordwrap(string $str, int $width = 70, string $break = PHP_EOL): string
@@ -388,7 +395,7 @@ class Work
     // Устаревшие методы, будут удалены в ближайших версиях.
 
     /**
-     * @brief Проверка MIME-типа файла через доступные библиотеки.
+     * @brief   Проверка MIME-типа файла через доступные библиотеки.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода validate_mime_type() класса Work_Helper.
      *          Метод проверяет, поддерживается ли указанный MIME-тип хотя бы одной из доступных библиотек:
@@ -405,8 +412,8 @@ class Work
      *
      * @return bool True, если MIME-тип поддерживается хотя бы одной библиотекой, иначе false.
      *
-     * @warning Метод зависит от доступности библиотек (Imagick, Gmagick) и встроенных функций PHP по работе с изображениями (GD).
-     *          Если ни одна из библиотек недоступна, метод может некорректно работать.
+     * @warning Метод зависит от доступности библиотек (Imagick, Gmagick) и встроенных функций PHP по работе с
+     *          изображениями (GD). Если ни одна из библиотек недоступна, метод может некорректно работать.
      *
      * Пример использования:
      * @code
@@ -421,10 +428,10 @@ class Work
      * var_dump($is_supported); // Выведет: false
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Helper::validate_mime_type()
+     * @see     PhotoRigma::Classes::Work_Helper::validate_mime_type()
      *      Публичный метод, вызывающий этот защищённый метод.
      */
     public static function validate_mime_type(string $real_mime_type): bool
@@ -433,7 +440,7 @@ class Work
     }
 
     /**
-     * @brief Магический метод для получения значений свойств `$config` и `$lang`.
+     * @brief   Магический метод для получения значений свойств `$config` и `$lang`.
      *
      * @details Этот метод вызывается автоматически при попытке получить значение недоступного свойства.
      *          Доступ разрешён только к свойствам `$config` и `$lang`. Если запрашивается другое свойство,
@@ -450,7 +457,7 @@ class Work
      *
      * @throws InvalidArgumentException Если запрашиваемое свойство не существует или недоступно.
      *
-     * @note Этот метод предназначен только для доступа к свойствам `$config` и `$lang`.
+     * @note    Этот метод предназначен только для доступа к свойствам `$config` и `$lang`.
      *       Любые другие запросы будут игнорироваться с выбросом исключения.
      *
      * @warning Попытка доступа к несуществующему свойству вызовет исключение.
@@ -462,9 +469,9 @@ class Work
      * echo $work->config['key']; // Выведет значение ключа 'key' из конфигурации
      * echo $work->lang['message']; // Выведет значение ключа 'message' из языковых данных
      * @endcode
-     * @see PhotoRigma::Classes::Work::$lang Свойство, содержащее языковые данные.
+     * @see     PhotoRigma::Classes::Work::$lang Свойство, содержащее языковые данные.
      *
-     * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
+     * @see     PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
      */
     public function &__get(string $name): array
     {
@@ -485,30 +492,32 @@ class Work
     }
 
     /**
-     * @brief Устанавливает значение свойства `$config`.
+     * @brief   Устанавливает значение свойства `$config`.
      *
      * @details Этот метод вызывается автоматически при попытке установить значение недоступного свойства.
      *          Доступ разрешён только к свойству `$config`. Если запрашивается другое свойство,
      *          выбрасывается исключение Exception.
      *          Значение `$config` должно быть массивом, где ключи и значения являются строками.
      *          При успешном обновлении конфигурации:
-     *          - Изменения логируются с помощью функции log_in_file (за исключением ключей из списка exclude_from_logging).
-     *          - Обновлённая конфигурация передаётся в дочерние классы ($this->image, $this->template, $this->core_logic)
-     *            через их свойства config.
+     *          - Изменения логируются с помощью функции log_in_file (за исключением ключей из списка
+     *          exclude_from_logging).
+     *          - Обновлённая конфигурация передаётся в дочерние классы ($this->image, $this->template,
+     *          $this->core_logic) через их свойства config.
      *
      * @callergraph
      * @callgraph
      *
-     * @param string $name Имя свойства:
-     *                     - Допустимое значение: 'config'.
-     *                     - Если указано другое имя, выбрасывается исключение.
-     * @param mixed $value Значение свойства:
-     *                     - Должен быть массивом, где ключи и значения являются строками.
+     * @param string $name  Имя свойства:
+     *                      - Допустимое значение: 'config'.
+     *                      - Если указано другое имя, выбрасывается исключение.
+     * @param mixed  $value Значение свойства:
+     *                      - Должен быть массивом, где ключи и значения являются строками.
      *
-     * @throws InvalidArgumentException Если значение некорректно (не массив или содержатся некорректные ключи/значения).
+     * @throws InvalidArgumentException Если значение некорректно (не массив или содержатся некорректные
+     *                                  ключи/значения).
      * @throws Exception Если запрашивается несуществующее свойство.*@throws \Exception
      *
-     * @note Этот метод предназначен только для изменения свойства `$config`.
+     * @note    Этот метод предназначен только для изменения свойства `$config`.
      *       Логирование изменений выполняется только для определённых ключей.
      *
      * @warning Некорректные данные (не массив, нестроковые ключи или значения) вызывают исключение.
@@ -522,12 +531,12 @@ class Work
      *     'language' => 'en'
      * ];
      * @endcode
-     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
+     * @see     PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
-     * @see PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$config Свойство дочернего класса Work_CoreLogic.
-     * @see PhotoRigma::Classes::Work_Image::$config Свойство дочернего класса Work_Image.
-     * @see PhotoRigma::Classes::Work_Template::$config Свойство дочернего класса Work_Template.
+     * @see     PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
+     * @see     PhotoRigma::Classes::Work_CoreLogic::$config Свойство дочернего класса Work_CoreLogic.
+     * @see     PhotoRigma::Classes::Work_Image::$config Свойство дочернего класса Work_Image.
+     * @see     PhotoRigma::Classes::Work_Template::$config Свойство дочернего класса Work_Template.
      */
     public function __set(string $name, array $value)
     {
@@ -601,7 +610,7 @@ class Work
     // Методы из под-класса Work_Security.
 
     /**
-     * @brief Устанавливает языковые данные из файла и передаёт их в дочерние классы.
+     * @brief   Устанавливает языковые данные из файла и передаёт их в дочерние классы.
      *
      * @details Этот метод используется для установки массива языковых данных ($lang) из файла.
      *          Выполняются следующие шаги:
@@ -610,7 +619,8 @@ class Work
      *          3. Загружаются данные из файла, которые должны быть массивом с ключом `'lang'`.
      *          4. Проверяется корректность массива через метод `process_lang_array()`.
      *          5. Логируются изменения (если они есть).
-     *          6. Обновляются языковые данные в текущем классе и передаются в дочерние классы (`Work_Template` и `Work_CoreLogic`).
+     *          6. Обновляются языковые данные в текущем классе и передаются в дочерние классы (`Work_Template` и
+     *          `Work_CoreLogic`).
      *
      * @param string $lang Имя файла языковых данных:
      *                     - Должен быть непустой строкой.
@@ -618,22 +628,25 @@ class Work
      *                     - По умолчанию: `'main'`.
      *
      * @throws InvalidArgumentException Если имя файла некорректно (пустое или не существует).
-     *                                  Пример сообщения: "Некорректное имя языкового файла | Поле не должно быть пустым".
-     *                                  Если массив языковых данных некорректен (не содержит ключ `'lang'` или содержит ошибки).
-     *                                  Пример сообщения: "Обнаружены ошибки в массиве языковых данных | Ошибки: [список ошибок]".
+     *                                  Пример сообщения: "Некорректное имя языкового файла | Поле не должно быть
+     *                                  пустым". Если массив языковых данных некорректен (не содержит ключ `'lang'` или
+     *                                  содержит ошибки). Пример сообщения: "Обнаружены ошибки в массиве языковых
+     *                                  данных | Ошибки: [список ошибок]".
      * @throws RuntimeException         Если файл языковых данных недоступен для чтения.
      * @throws Exception
-     *                                  Пример сообщения: "Файл языковых данных недоступен для чтения | Путь: [путь к файлу]".
+     *                                  Пример сообщения: "Файл языковых данных недоступен для чтения | Путь: [путь к
+     *                                  файлу]".
      *
-     * @see PhotoRigma::Include::log_in_file() Внешняя функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::process_lang_array() Метод для проверки корректности массива языковых данных.
+     * @see     PhotoRigma::Include::log_in_file() Внешняя функция для логирования ошибок.
+     * @see     PhotoRigma::Classes::Work::process_lang_array() Метод для проверки корректности массива языковых
+     *          данных.
      *
-     * @see PhotoRigma::Classes::Work::$lang Свойство класса Work, которое изменяется.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$lang Свойство дочернего класса Work_CoreLogic.
-     * @see PhotoRigma::Classes::Work_Template::$lang Свойство дочернего класса Work_Template.
-     * @todo Интегрировать в систему кеширования языковых переменных.
+     * @see     PhotoRigma::Classes::Work::$lang Свойство класса Work, которое изменяется.
+     * @see     PhotoRigma::Classes::Work_CoreLogic::$lang Свойство дочернего класса Work_CoreLogic.
+     * @see     PhotoRigma::Classes::Work_Template::$lang Свойство дочернего класса Work_Template.
+     * @todo    Интегрировать в систему кеширования языковых переменных.
      *
-     * @note Файл языковых данных должен быть доступен для чтения.
+     * @note    Файл языковых данных должен быть доступен для чтения.
      *       Массив языковых данных должен содержать ключ `'lang'`.
      *
      * @warning Если файл языковых данных отсутствует или содержит ошибки, метод выбрасывает исключение.
@@ -715,7 +728,7 @@ class Work
     }
 
     /**
-     * @brief Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.
+     * @brief   Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения.
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет, что ключи первого уровня массива являются строками.
@@ -738,10 +751,11 @@ class Work
      *
      * @return array Массив с результатами обработки:
      *               - `'errors'` (array): Массив ошибок, если они есть (например, некорректные ключи или значения).
-     *               - `'changes'` (array): Массив изменений, если значения были очищены (содержит оригинальные и очищенные значения).
+     *               - `'changes'` (array): Массив изменений, если значения были очищены (содержит оригинальные и
+     *               очищенные значения).
      *               - `'result'` (array): Обработанный массив языковых переменных.
      *
-     * @note Используется метод `clean_field()` для очистки значений (защита от XSS).
+     * @note    Используется метод `clean_field()` для очистки значений (защита от XSS).
      *
      * @warning Метод чувствителен к структуре входного массива. Некорректная структура может привести к ошибкам.
      *
@@ -755,15 +769,15 @@ class Work
      * ]);
      * print_r($result);
      * @endcode
-     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки и экранирования полей (защита от XSS).
+     * @see     PhotoRigma::Classes::Work::clean_field() Метод для очистки и экранирования полей (защита от XSS).
      *
      */
     private function process_lang_array(array $lang): array
     {
         $result = [
-            'errors' => [],
+            'errors'  => [],
             'changes' => [],
-            'result' => $lang, // Инициализируем результат исходным массивом
+            'result'  => $lang, // Инициализируем результат исходным массивом
         ];
 
         foreach ($lang as $name => $keys) {
@@ -807,7 +821,7 @@ class Work
                 if ($original_value !== $cleaned_value) {
                     $result['changes']["{$name}['$key']"] = [
                         'original' => $original_value,
-                        'cleaned' => $cleaned_value,
+                        'cleaned'  => $cleaned_value,
                     ];
                     $value = $cleaned_value; // Обновляем значение
                 }
@@ -821,11 +835,11 @@ class Work
     }
 
     /**
-     * @brief Очистка строки от HTML-тегов и специальных символов.
+     * @brief   Очистка строки от HTML-тегов и специальных символов.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода clean_field() класса Work_Helper.
-     *          Метод удаляет HTML-теги и экранирует специальные символы, такие как `&lt;`, `&gt;`, `&amp;`, `&quot;`, `&#039;`.
-     *          Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
+     *          Метод удаляет HTML-теги и экранирует специальные символы, такие как `&lt;`, `&gt;`, `&amp;`, `&quot;`,
+     *          `&#039;`. Используется для защиты от XSS-атак и других проблем, связанных с некорректными данными.
      *
      * @callgraph
      *
@@ -844,7 +858,7 @@ class Work
      * $cleaned = Work::clean_field($dirty_input);
      * echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
      * @endcode
-     * @see PhotoRigma::Classes::Work_Helper::clean_field()
+     * @see     PhotoRigma::Classes::Work_Helper::clean_field()
      *      Публичный метод в классе Work_Helper.
      *
      */
@@ -854,7 +868,7 @@ class Work
     }
 
     /**
-     * @brief Установка объекта пользователя через сеттер.
+     * @brief   Установка объекта пользователя через сеттер.
      *
      * @details Этот метод позволяет установить объект пользователя ($user).
      *          Метод выполняет следующие действия:
@@ -870,7 +884,7 @@ class Work
      *
      * @throws InvalidArgumentException Если передан некорректный объект (не экземпляр класса User).
      *
-     * @note Метод проверяет тип переданного объекта.
+     * @note    Метод проверяет тип переданного объекта.
      *       Объект пользователя передаётся в дочерние классы для дальнейшего использования.
      *
      * @warning Некорректный объект (не экземпляр класса User) вызывает исключение.
@@ -881,11 +895,11 @@ class Work
      * $user = new \PhotoRigma\Classes\User();
      * $work->set_user($user);
      * @endcode
-     * @see PhotoRigma::Classes::Work_Template::$user Свойство дочернего класса Work_Template.
-     * @see PhotoRigma::Include::log_in_file() Логирует ошибки.
+     * @see     PhotoRigma::Classes::Work_Template::$user Свойство дочернего класса Work_Template.
+     * @see     PhotoRigma::Include::log_in_file() Логирует ошибки.
      *
-     * @see PhotoRigma::Classes::User Класс с объектом пользователя.
-     * @see PhotoRigma::Classes::Work_CoreLogic::$user Свойство дочернего класса Work_CoreLogic.
+     * @see     PhotoRigma::Classes::User Класс с объектом пользователя.
+     * @see     PhotoRigma::Classes::Work_CoreLogic::$user Свойство дочернего класса Work_CoreLogic.
      */
     public function set_user(User $user): void
     {
@@ -896,7 +910,7 @@ class Work
     // Методы из под-класса Work_CoreLogic.
 
     /**
-     * @brief Универсальная проверка входных данных.
+     * @brief   Универсальная проверка входных данных.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода check_input() класса Work_Security.
      *          Метод выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES)
@@ -910,21 +924,24 @@ class Work
      * @callgraph
      *
      * @param string $source_name Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
-     *                            Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'.
-     * @param string $field Поле для проверки (имя ключа в массиве источника данных).
-     *                      Указывается имя ключа, которое необходимо проверить.
-     * @param array $options Дополнительные параметры проверки:
-     *                       - 'isset' (bool, опционально): Проверять наличие поля в источнике данных.
-     *                       - 'empty' (bool, опционально): Проверять, что значение поля не пустое.
-     *                       - 'regexp' (string|false, опционально): Регулярное выражение для проверки значения поля.
-     *                       - 'not_zero' (bool, опционально): Проверять, что значение поля не равно нулю.
-     *                       - 'max_size' (int, опционально): Максимальный размер файла (в байтах) для $_FILES.
+     *                            Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE',
+     *                            '_FILES'.
+     * @param string $field       Поле для проверки (имя ключа в массиве источника данных).
+     *                            Указывается имя ключа, которое необходимо проверить.
+     * @param array  $options     Дополнительные параметры проверки:
+     *                            - 'isset' (bool, опционально): Проверять наличие поля в источнике данных.
+     *                            - 'empty' (bool, опционально): Проверять, что значение поля не пустое.
+     *                            - 'regexp' (string|false, опционально): Регулярное выражение для проверки значения
+     *                            поля.
+     *                            - 'not_zero' (bool, опционально): Проверять, что значение поля не равно нулю.
+     *                            - 'max_size' (int, опционально): Максимальный размер файла (в байтах) для $_FILES.
      *
      * @return bool True, если данные прошли проверку, иначе False.
      *              Для $_FILES также учитывается корректность MIME-типа и размера файла.
      *
      * @warning Метод зависит от корректности данных в источниках ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).
-     *          Если источник данных повреждён или содержит некорректные значения, результат может быть непредсказуемым.
+     *          Если источник данных повреждён или содержит некорректные значения, результат может быть
+     *          непредсказуемым.
      *
      * Пример использования:
      * @code
@@ -940,12 +957,12 @@ class Work
      * }
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Security::check_input()
+     * @see     PhotoRigma::Classes::Work_Security::check_input()
      *      Реализация метода внутри класса Work_Security.
-     * @see PhotoRigma::Classes::Work::validate_mime_type()
+     * @see     PhotoRigma::Classes::Work::validate_mime_type()
      *      Метод для проверки поддерживаемых MIME-типов.
      */
     public function check_input(string $source_name, string $field, array $options = []): bool
@@ -954,18 +971,18 @@ class Work
     }
 
     /**
-     * @brief Проверяет URL на наличие вредоносного кода.
+     * @brief   Проверяет URL на наличие вредоносного кода.
      *
      * @details Метод проверяет строку запроса ($_SERVER['REQUEST_URI']) на наличие запрещённых паттернов,
-     *          определяемых в массиве Work_Security::compiled_rules. Если формат URL некорректен или найден запрещённый паттерн,
-     *          метод возвращает false. Этот метод является делегатом (метод-редирект) для метода url_check()
-     *          класса Work_Security.
+     *          определяемых в массиве Work_Security::compiled_rules. Если формат URL некорректен или найден
+     *          запрещённый паттерн, метод возвращает false. Этот метод является делегатом (метод-редирект) для метода
+     *          url_check() класса Work_Security.
      *
      * @callgraph
      *
      * @return bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.
      *
-     * @note Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].
+     * @note    Метод работает с глобальным массивом $_SERVER['REQUEST_URI'].
      *
      * @warning Метод зависит от корректности данных в свойстве Work_Security::compiled_rules.
      *          Если правила некорректны, результат может быть непредсказуемым.
@@ -979,9 +996,9 @@ class Work
      * }
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Classes::Work_Security::url_check()
+     * @see     PhotoRigma::Classes::Work_Security::url_check()
      *      Реализация метода внутри класса Work_Security.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -991,26 +1008,26 @@ class Work
     }
 
     /**
-     * @brief Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.
+     * @brief   Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода check_field() класса Work_Security.
      *          Метод выполняет следующие проверки:
      *          - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
-     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок компиляции).
+     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок
+     *            компиляции).
      *          - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
      *          - Проверяет, что значение не содержит запрещённых паттернов из Work_Security::compiled_rules.
      *
      * @callgraph
      *
-     * @param string $field Значение поля для проверки.
-     *                      Указывается строковое значение, которое необходимо проверить.
-     * @param string|false $regexp Регулярное выражение (необязательно). Если задано, значение должно соответствовать этому выражению.
-     *                              Если регулярное выражение некорректно (например, содержит ошибки компиляции),
-     *                              метод завершает выполнение с ошибкой.
-     *                              По умолчанию false.
-     * @param bool $not_zero Флаг, указывающий, что значение не должно быть числом 0.
-     *                       Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
-     *                       По умолчанию false.
+     * @param string       $field    Значение поля для проверки.
+     *                               Указывается строковое значение, которое необходимо проверить.
+     * @param string|false $regexp   Регулярное выражение (необязательно). Если задано, значение должно соответствовать
+     *                               этому выражению. Если регулярное выражение некорректно (например, содержит ошибки
+     *                               компиляции), метод завершает выполнение с ошибкой. По умолчанию false.
+     * @param bool         $not_zero Флаг, указывающий, что значение не должно быть числом 0.
+     *                               Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
+     *                               По умолчанию false.
      *
      * @return bool True, если поле прошло все проверки, иначе False.
      *              Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов
@@ -1029,10 +1046,10 @@ class Work
      * }
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Security::check_field()
+     * @see     PhotoRigma::Classes::Work_Security::check_field()
      *      Реализация метода внутри класса Work_Security.
      */
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool
@@ -1041,7 +1058,7 @@ class Work
     }
 
     /**
-     * @brief Генерирует математический CAPTCHA-вопрос и ответ.
+     * @brief   Генерирует математический CAPTCHA-вопрос и ответ.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода gen_captcha() класса Work_Security.
      *          Метод создаёт случайное математическое выражение (сложение или умножение)
@@ -1066,7 +1083,7 @@ class Work
      * // Пример вывода: Вопрос: 2 x (3 + 4), Ответ: 14
      * @endcode
      * @throws RandomException
-     * @see PhotoRigma::Classes::Work_Security::gen_captcha()
+     * @see     PhotoRigma::Classes::Work_Security::gen_captcha()
      *      Реализация метода внутри класса Work_Security.
      *
      */
@@ -1078,12 +1095,12 @@ class Work
     // Методы из под-класса Work_Template.
 
     /**
-     * @brief Заменяет символы в email-адресах для "обмана" ботов.
+     * @brief   Заменяет символы в email-адресах для "обмана" ботов.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода filt_email() класса Work_Security.
-     *          Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг email-адресов ботами.
-     *          Проверяет, что входной email не пустой и соответствует формату email. Если email некорректен или пуст,
-     *          метод возвращает пустую строку.
+     *          Метод заменяет символы '@' и '.' на '[at]' и '[dot]', чтобы затруднить автоматический парсинг
+     *          email-адресов ботами. Проверяет, что входной email не пустой и соответствует формату email. Если email
+     *          некорректен или пуст, метод возвращает пустую строку.
      *
      * @callgraph
      *
@@ -1105,10 +1122,10 @@ class Work
      * echo $filteredEmail; // Выведет: example[at]example[dot]com
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Security::filt_email()
+     * @see     PhotoRigma::Classes::Work_Security::filt_email()
      *      Реализация метода внутри класса Work_Security.
      */
     public function filt_email(string $email): string
@@ -1117,22 +1134,23 @@ class Work
     }
 
     /**
-     * @brief Формирует информационную строку для категории или пользовательского альбома.
+     * @brief   Формирует информационную строку для категории или пользовательского альбома.
      *
      * @details Метод является редиректом, вызывающим метод `category()` из дочернего класса `Work_CoreLogic`.
      *          Основная логика включает:
      *          - Получение данных о категории или пользовательском альбоме из базы данных.
      *          - Подсчет количества фотографий.
      *          - Получение данных о последней и лучшей фотографии (если разрешено отображение).
-     *          - Для корневой категории (`$cat_id = 0`) подсчет количества уникальных пользователей, загрузивших фотографии.
+     *          - Для корневой категории (`$cat_id = 0`) подсчет количества уникальных пользователей, загрузивших
+     *          фотографии.
      *          - Формирование результирующего массива с информацией о категории или альбоме.
      *
      * @callgraph
      *
-     * @param int $cat_id Идентификатор категории или пользователя (если `$user_flag = 1`). По умолчанию: `0`.
-     *                    Должен быть целым числом >= `0`.
-     * @param int $user_flag Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском альбоме (`1`).
-     *                       По умолчанию: `0`. Допустимые значения: `0` или `1`.
+     * @param int $cat_id    Идентификатор категории или пользователя (если `$user_flag = 1`). По умолчанию: `0`.
+     *                       Должен быть целым числом >= `0`.
+     * @param int $user_flag Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском альбоме
+     *                       (`1`). По умолчанию: `0`. Допустимые значения: `0` или `1`.
      *
      * @return array Информационная строка для категории или пользовательского альбома:
      *               - 'name' (string): Название категории или альбома.
@@ -1147,7 +1165,7 @@ class Work
      * @throws InvalidArgumentException Если входные параметры имеют некорректный тип или значение.
      * @throws PDOException Если возникают ошибки при получении данных из базы данных.
      *
-     * @note Используются константы:
+     * @note    Используются константы:
      *       - TBL_CATEGORY: Таблица для хранения данных о категориях.
      *       - TBL_USERS: Таблица для хранения данных о пользователях.
      *       - TBL_PHOTO: Таблица для хранения данных о фотографиях.
@@ -1162,9 +1180,9 @@ class Work
      * $categoryData = $work->category(123, 0);
      * print_r($categoryData);
      * @endcode
-     * @see PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
+     * @see     PhotoRigma::Classes::Work::clean_field() Метод для очистки данных.
      *
-     * @see PhotoRigma::Classes::Work_CoreLogic::category() Метод из дочернего класса, реализующий основную логику.
+     * @see     PhotoRigma::Classes::Work_CoreLogic::category() Метод из дочернего класса, реализующий основную логику.
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array
     {
@@ -1172,15 +1190,17 @@ class Work
     }
 
     /**
-     * @brief Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах сайта.
+     * @brief   Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблицах
+     *          сайта.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода del_photo() класса Work_CoreLogic.
      *          Метод выполняет удаление изображения с указанным идентификатором, включая следующие шаги:
-     *          1. Удаляет файлы из каталогов полноразмерных изображений и эскизов, используя пути, заданные в конфигурации (`$this->config`).
-     *             Перед удалением проверяется существование файлов.
+     *          1. Удаляет файлы из каталогов полноразмерных изображений и эскизов, используя пути, заданные в
+     *          конфигурации (`$this->config`). Перед удалением проверяется существование файлов.
      *          2. Удаляет запись об изображении из таблицы `TBL_PHOTO`.
      *          3. Удаляет связанные записи из таблиц `TBL_RATE_USER` и `TBL_RATE_MODER`.
-     *          4. Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью функции `log_in_file()`.
+     *          4. Логирует ошибки, возникающие при удалении файлов или выполнении запросов к базе данных, с помощью
+     *          функции `log_in_file()`.
      *
      * @callgraph
      *
@@ -1197,8 +1217,10 @@ class Work
      *          Не удалось найти изображение | Переменная $photo_id = [значение]
      * @throws Exception
      *
-     * @warning Метод чувствителен к правам доступа при удалении файлов. Убедитесь, что скрипт имеет необходимые права на запись и чтение.
-     * @warning Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор изображения.
+     * @warning Метод чувствителен к правам доступа при удалении файлов. Убедитесь, что скрипт имеет необходимые права
+     *          на запись и чтение.
+     * @warning Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор
+     *          изображения.
      *
      * Пример использования:
      * @code
@@ -1210,12 +1232,12 @@ class Work
      *     echo "Не удалось удалить изображение.";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_CoreLogic::del_photo()
+     * @see     PhotoRigma::Classes::Work_CoreLogic::del_photo()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @note Используются константы:
+     * @note    Используются константы:
      *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
      *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
      *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
@@ -1227,7 +1249,7 @@ class Work
     }
 
     /**
-     * @brief Получает данные о новостях в зависимости от типа запроса.
+     * @brief   Получает данные о новостях в зависимости от типа запроса.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода news() класса Work_CoreLogic.
      *          Метод выполняет запросы к базе данных для получения данных о новостях, включая следующие шаги:
@@ -1240,11 +1262,12 @@ class Work
      *
      * @callgraph
      *
-     * @param int $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
+     * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра $act).
      *                                 Должен быть положительным целым числом.
-     * @param string $act Тип запроса:
+     * @param string $act              Тип запроса:
      *                                 - 'id': Получение новости по её ID.
-     *                                 - 'last': Получение списка новостей с сортировкой по дате последнего редактирования.
+     *                                 - 'last': Получение списка новостей с сортировкой по дате последнего
+     *                                 редактирования.
      *
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
@@ -1255,7 +1278,7 @@ class Work
      *      Пример сообщения:
      *          Не удалось получить данные из базы данных | Тип запроса: '$act'
      *
-     * @note Используются константы:
+     * @note    Используются константы:
      *       - TBL_NEWS: Таблица для хранения данных о новостях.
      *
      * @warning Метод чувствителен к корректности входных параметров $news_id_or_limit и $act.
@@ -1275,7 +1298,7 @@ class Work
      * $newsList = $work->news(10, 'last');
      * print_r($newsList);
      * @endcode
-     * @see PhotoRigma::Classes::Work_CoreLogic::news()
+     * @see     PhotoRigma::Classes::Work_CoreLogic::news()
      *      Публичный метод-редирект для вызова этой логики.
      *
      */
@@ -1287,7 +1310,7 @@ class Work
     // Методы из под-класса Work_Image.
 
     /**
-     * @brief Загружает доступные языки из директории /language/.
+     * @brief   Загружает доступные языки из директории /language/.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода get_languages() класса Work_CoreLogic.
      *          Метод выполняет загрузку доступных языков, включая следующие шаги:
@@ -1321,9 +1344,9 @@ class Work
      * $languages = $work->get_languages();
      * print_r($languages);
      * @endcode
-     * @see PhotoRigma::Classes::Work_CoreLogic::get_languages()
+     * @see     PhotoRigma::Classes::Work_CoreLogic::get_languages()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -1333,7 +1356,7 @@ class Work
     }
 
     /**
-     * @brief Загружает доступные темы из директории /themes/.
+     * @brief   Загружает доступные темы из директории /themes/.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода get_themes() класса Work_CoreLogic.
      *          Метод выполняет загрузку доступных тем, включая следующие шаги:
@@ -1364,9 +1387,9 @@ class Work
      * $themes = $work->get_themes();
      * print_r($themes);
      * @endcode
-     * @see PhotoRigma::Classes::Work_CoreLogic::get_themes()
+     * @see     PhotoRigma::Classes::Work_CoreLogic::get_themes()
      *      Публичный метод-редирект для вызова этой логики.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -1376,10 +1399,10 @@ class Work
     }
 
     /**
-     * @brief Генерирует блок данных для вывода изображений различных типов.
+     * @brief   Генерирует блок данных для вывода изображений различных типов.
      *
-     * @details Этот метод является делегатом (метод-редирект), вызывающим метод `create_photo()` из дочернего класса `Work_Image`.
-     *          Основная логика метода включает:
+     * @details Этот метод является делегатом (метод-редирект), вызывающим метод `create_photo()` из дочернего класса
+     *          `Work_Image`. Основная логика метода включает:
      *          1. Проверку прав пользователя на просмотр изображений (`$this->user->user['pic_view']`).
      *          2. Формирование SQL-запроса для получения данных изображения:
      *             - Для типа `'top'`: Выбирает лучшее изображение с учетом рейтинга.
@@ -1393,12 +1416,12 @@ class Work
      * @callergraph
      * @callgraph
      *
-     * @param string $type Тип изображения:
-     *                     - `'top'`: Лучшее изображение (по рейтингу).
-     *                     - `'last'`: Последнее загруженное изображение.
-     *                     - `'cat'`: Изображение из конкретной категории (требует указания `$id_photo`).
-     *                     - `'rand'`: Любое случайное изображение.
-     * @param int $id_photo Идентификатор фото. Используется только при `$type == 'cat'`. Должен быть >= `0`.
+     * @param string $type     Тип изображения:
+     *                         - `'top'`: Лучшее изображение (по рейтингу).
+     *                         - `'last'`: Последнее загруженное изображение.
+     *                         - `'cat'`: Изображение из конкретной категории (требует указания `$id_photo`).
+     *                         - `'rand'`: Любое случайное изображение.
+     * @param int    $id_photo Идентификатор фото. Используется только при `$type == 'cat'`. Должен быть >= `0`.
      *
      * @return array Массив данных для вывода изображения:
      *               - `'name_block'`         (string): Название блока изображения (например, "Лучшее фото").
@@ -1416,20 +1439,24 @@ class Work
      *               - `'height'`             (int): Высота изображения после масштабирования.
      *
      * @throws InvalidArgumentException Если передан недопустимый `$type` или `$id_photo < 0`.
-     *                                  Пример сообщения: "Некорректный идентификатор фотографии | Значение: {$id_photo}".
+     *                                  Пример сообщения: "Некорректный идентификатор фотографии | Значение:
+     *                                  {$id_photo}".
      * @throws PDOException            Если произошла ошибка при выборке данных из базы данных.
-     *                                  Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}".
+     *                                  Пример сообщения: "Ошибка базы данных | Не удалось получить данные категории с
+     *                                  ID: {$photo_data['category']}".
      * @throws RuntimeException|Exception         Если файл изображения недоступен или не существует.
      *
-     * @note Используются следующие константы:
+     * @note    Используются следующие константы:
      *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
      *       - TBL_USERS: Таблица для хранения данных о пользователях.
      *       - TBL_CATEGORY: Таблица для хранения данных о категориях.
      *
      * @warning Метод чувствителен к правам доступа пользователя (`$this->user->user['pic_view']`).
      *          Убедитесь, что пользователь имеет право на просмотр изображений.
-     * @warning Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через `generate_photo_data()`.
-     * @warning Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри `$this->config['gallery_folder']`.
+     * @warning Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через
+     *          `generate_photo_data()`.
+     * @warning Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри
+     *          `$this->config['gallery_folder']`.
      *
      * Пример использования:
      * @code
@@ -1438,8 +1465,8 @@ class Work
      * $imageData = $work->create_photo('top', 0);
      * print_r($imageData);
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::create_photo() Метод из дочернего класса, реализующий основную логику.
-     * @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+     * @see     PhotoRigma::Classes::Work_Image::create_photo() Метод из дочернего класса, реализующий основную логику.
+     * @see     PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
      *
      */
     public function create_photo(string $type = 'top', int $id_photo = 0): array
@@ -1448,7 +1475,8 @@ class Work
     }
 
     /**
-     * @brief Обрабатывает добавление новой оценки и пересчитывает среднюю оценку через вызов метода из дочернего класса.
+     * @brief   Обрабатывает добавление новой оценки и пересчитывает среднюю оценку через вызов метода из дочернего
+     *          класса.
      *
      * @details Этот публичный метод является редиректом, который вызывает метод `process_rating()` из дочернего класса
      * `PhotoRigma::Classes::Work_CoreLogic`. Вызываемый метод выполняет следующие действия:
@@ -1460,14 +1488,14 @@ class Work
      *
      * @callgraph
      *
-     * @param string $table Имя таблицы для вставки оценки.
-     *                      Должен быть строкой, соответствующей существующей таблице в базе данных.
-     * @param int $photo_id ID фотографии.
-     *                      Должен быть положительным целым числом.
-     * @param int $user_id ID пользователя.
-     *                     Должен быть положительным целым числом.
-     * @param int $rate_value Значение оценки.
-     *                        Должен быть целым числом в диапазоне допустимых значений (например, 1–5).
+     * @param string $table      Имя таблицы для вставки оценки.
+     *                           Должен быть строкой, соответствующей существующей таблице в базе данных.
+     * @param int    $photo_id   ID фотографии.
+     *                           Должен быть положительным целым числом.
+     * @param int    $user_id    ID пользователя.
+     *                           Должен быть положительным целым числом.
+     * @param int    $rate_value Значение оценки.
+     *                           Должен быть целым числом в диапазоне допустимых значений (например, 1–5).
      *
      * @return float Возвращает число с плавающей точкой, представляющее среднюю оценку.
      *               Если оценок нет, возвращается `0`.
@@ -1475,7 +1503,7 @@ class Work
      * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку.
      *                           Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
      *
-     * @note Метод использует базу данных для вставки и выборки данных.
+     * @note    Метод использует базу данных для вставки и выборки данных.
      *
      * @warning Убедитесь, что таблица существует и данные корректны перед вызовом метода.
      *
@@ -1485,7 +1513,8 @@ class Work
      * $averageRate = $object->process_rating('ratings', 123, 456, 5);
      * echo "Средняя оценка: {$averageRate}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_CoreLogic::process_rating() Метод из дочернего класса, реализующий основную логику.
+     * @see     PhotoRigma::Classes::Work_CoreLogic::process_rating() Метод из дочернего класса, реализующий основную
+     *          логику.
      *
      */
     public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float
@@ -1494,11 +1523,11 @@ class Work
     }
 
     /**
-     * @brief Метод формирует массив данных для меню в зависимости от типа и активного пункта.
+     * @brief   Метод формирует массив данных для меню в зависимости от типа и активного пункта.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода create_menu() класса Work_Template.
-     *          Он передает выполнение логики формирования данных для меню в метод create_menu() подкласса Work_Template.
-     *          Поддерживаемые типы меню:
+     *          Он передает выполнение логики формирования данных для меню в метод create_menu() подкласса
+     *          Work_Template. Поддерживаемые типы меню:
      *          - 0: Горизонтальное краткое меню.
      *          - 1: Вертикальное боковое меню.
      *          Для каждого пункта меню проверяются права доступа текущего пользователя (на основе свойств User).
@@ -1508,10 +1537,10 @@ class Work
      *
      * @param string $action Активный пункт меню.
      *                       Указывается строка, соответствующая активному пункту меню (например, 'home', 'profile').
-     * @param int $menu Тип меню:
-     *                  - 0: Горизонтальное краткое меню.
-     *                  - 1: Вертикальное боковое меню.
-     *                  Другие значения недопустимы и приведут к выбросу исключения InvalidArgumentException.
+     * @param int    $menu   Тип меню:
+     *                       - 0: Горизонтальное краткое меню.
+     *                       - 1: Вертикальное боковое меню.
+     *                       Другие значения недопустимы и приведут к выбросу исключения InvalidArgumentException.
      *
      * @return array Массив с данными для меню.
      *               Каждый элемент массива содержит:
@@ -1522,7 +1551,7 @@ class Work
      * @throws InvalidArgumentException Если передан некорректный $menu или $action.
      * @throws RuntimeException Если произошла ошибка при выполнении запроса к базе данных.
      *
-     * @note Данные для меню берутся из таблицы TBL_MENU.
+     * @note    Данные для меню берутся из таблицы TBL_MENU.
      *       Для получения дополнительной информации см. структуру таблицы.
      *
      * @warning Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.
@@ -1537,10 +1566,10 @@ class Work
      * $long_menu = $work->create_menu('profile', 1); // Создание вертикального меню
      * print_r($long_menu);
      * @endcode
-     * @see PhotoRigma::Classes::Work::clean_field()
+     * @see     PhotoRigma::Classes::Work::clean_field()
      *      Статический метод для очистки данных.
      *
-     * @see PhotoRigma::Classes::Work_Template::create_menu()
+     * @see     PhotoRigma::Classes::Work_Template::create_menu()
      *      Публичный метод, который вызывает этот внутренний метод.
      */
     public function create_menu(string $action, int $menu): array
@@ -1549,22 +1578,26 @@ class Work
     }
 
     /**
-     * @brief Формирование блока пользователя.
+     * @brief   Формирование блока пользователя.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода template_user() класса Work_Template.
      *          Метод формирует массив данных для блока пользователя в зависимости от статуса авторизации:
-     *          - Если пользователь не авторизован, формируется блок со ссылками на вход, восстановление пароля и регистрацию.
+     *          - Если пользователь не авторизован, формируется блок со ссылками на вход, восстановление пароля и
+     *          регистрацию.
      *          - Если пользователь авторизован, формируется блок с приветствием, группой и аватаром.
-     *          Для авторизованных пользователей проверяется существование аватара и его MIME-тип через Work::validate_mime_type().
-     *          Если аватар недоступен или имеет недопустимый MIME-тип, используется дефолтный аватар (NO_USER_AVATAR).
+     *          Для авторизованных пользователей проверяется существование аватара и его MIME-тип через
+     *          Work::validate_mime_type(). Если аватар недоступен или имеет недопустимый MIME-тип, используется
+     *          дефолтный аватар (NO_USER_AVATAR).
      *
      * @callgraph
      *
      * @return array Массив с данными для блока пользователя:
      *               - Для неавторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока.
-     *                 - 'L_LOGIN', 'L_PASSWORD', 'L_ENTER', 'L_FORGOT_PASSWORD', 'L_REGISTRATION': Локализованные строки.
-     *                 - 'U_LOGIN', 'U_FORGOT_PASSWORD', 'U_REGISTRATION': URL для входа, восстановления пароля и регистрации.
+     *                 - 'L_LOGIN', 'L_PASSWORD', 'L_ENTER', 'L_FORGOT_PASSWORD', 'L_REGISTRATION': Локализованные
+     *                 строки.
+     *                 - 'U_LOGIN', 'U_FORGOT_PASSWORD', 'U_REGISTRATION': URL для входа, восстановления пароля и
+     *                 регистрации.
      *               - Для авторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока.
      *                 - 'L_HI_USER': Приветствие с именем пользователя.
@@ -1585,12 +1618,12 @@ class Work
      * $user_block = $work->template_user();
      * print_r($user_block);
      * @endcode
-     * @see PhotoRigma::Classes::Work::validate_mime_type()
+     * @see     PhotoRigma::Classes::Work::validate_mime_type()
      *      Метод для проверки MIME-типа файла.
      *
-     * @see PhotoRigma::Classes::Work_Template::template_user()
+     * @see     PhotoRigma::Classes::Work_Template::template_user()
      *      Публичный метод, который вызывает этот внутренний метод.
-     * @see PhotoRigma::Classes::Work::clean_field()
+     * @see     PhotoRigma::Classes::Work::clean_field()
      *      Метод для очистки данных.
      */
     public function template_user(): array
@@ -1601,12 +1634,12 @@ class Work
     // Статические методы из под-класса Work_Helper.
 
     /**
-     * @brief Генерирует массив статистических данных для шаблона.
+     * @brief   Генерирует массив статистических данных для шаблона.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода template_stat() класса Work_Template.
      *          Метод выполняет запросы к базе данных для получения статистической информации о пользователях,
-     *          категориях, фотографиях, оценках и онлайн-пользователях. Результат формируется в виде ассоциативного массива,
-     *          который используется для отображения статистики на странице.
+     *          категориях, фотографиях, оценках и онлайн-пользователях. Результат формируется в виде ассоциативного
+     *          массива, который используется для отображения статистики на странице.
      *
      * @callgraph
      *
@@ -1627,7 +1660,8 @@ class Work
      *               - L_STAT_RATE_MODER: Подпись для количества модераторских оценок.
      *               - D_STAT_RATE_MODER: Количество модераторских оценок.
      *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
-     *               - D_STAT_ONLINE: Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии онлайн-пользователей.
+     *               - D_STAT_ONLINE: Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии
+     *               онлайн-пользователей.
      *
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      *
@@ -1641,9 +1675,9 @@ class Work
      * $statData = $work->template_stat();
      * print_r($statData);
      * @endcode
-     * @see PhotoRigma::Classes::Work_Template::template_stat()
+     * @see     PhotoRigma::Classes::Work_Template::template_stat()
      *      Публичный метод, который вызывает этот внутренний метод.
-     * @see PhotoRigma::Classes::Work::clean_field()
+     * @see     PhotoRigma::Classes::Work::clean_field()
      *      Метод для очистки данных.
      *
      */
@@ -1653,12 +1687,14 @@ class Work
     }
 
     /**
-     * @brief Формирует список пользователей, загрузивших наибольшее количество изображений.
+     * @brief   Формирует список пользователей, загрузивших наибольшее количество изображений.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода template_best_user() класса Work_Template.
      *          Метод выполняет запрос к базе данных с использованием JOIN для получения списка пользователей,
-     *          которые загрузили наибольшее количество фотографий. Результат формируется в виде ассоциативного массива,
-     *          который используется для отображения в шаблоне. Если данные отсутствуют, добавляется запись "пустого" пользователя.
+     *          которые загрузили наибольшее количество фотографий. Результат формируется в виде ассоциативного
+     *          массива,
+     *          который используется для отображения в шаблоне. Если данные отсутствуют, добавляется запись "пустого"
+     *          пользователя.
      *
      * @callgraph
      *
@@ -1676,7 +1712,7 @@ class Work
      *
      * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      *
-     * @note Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя:
+     * @note    Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя:
      *       - user_url: null
      *       - user_name: '---'
      *       - user_photo: '-'
@@ -1690,10 +1726,10 @@ class Work
      * $bestUsers = $work->template_best_user(5);
      * print_r($bestUsers);
      * @endcode
-     * @see PhotoRigma::Classes::Work::clean_field()
+     * @see     PhotoRigma::Classes::Work::clean_field()
      *      Метод для очистки данных.
      *
-     * @see PhotoRigma::Classes::Work_Template::template_best_user()
+     * @see     PhotoRigma::Classes::Work_Template::template_best_user()
      *      Публичный метод, который вызывает этот внутренний метод.
      */
     public function template_best_user(int $best_user = 1): array
@@ -1702,7 +1738,7 @@ class Work
     }
 
     /**
-     * @brief Вычисляет размеры для вывода эскиза изображения.
+     * @brief   Вычисляет размеры для вывода эскиза изображения.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода size_image() класса Work_Image.
      *          Метод рассчитывает ширину и высоту эскиза на основе реальных размеров изображения
@@ -1733,7 +1769,7 @@ class Work
      * $thumbnail_size = $work->size_image('/path/to/image.jpg');
      * echo "Ширина: {$thumbnail_size['width']}, Высота: {$thumbnail_size['height']}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::size_image()
+     * @see     PhotoRigma::Classes::Work_Image::size_image()
      *      Публичный метод-редирект для вызова этой логики.
      *
      */
@@ -1743,7 +1779,7 @@ class Work
     }
 
     /**
-     * @brief Изменяет размер изображения.
+     * @brief   Изменяет размер изображения.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода image_resize() класса Work_Image.
      *          Метод изменяет размер исходного изображения и создаёт эскиз заданных размеров.
@@ -1755,15 +1791,17 @@ class Work
      *
      * @callgraph
      *
-     * @param string $full_path Путь к исходному изображению.
-     *                          Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
+     * @param string $full_path      Путь к исходному изображению.
+     *                               Путь должен быть абсолютным, и файл должен существовать и быть доступным для
+     *                               чтения.
      * @param string $thumbnail_path Путь для сохранения эскиза.
      *                               Путь должен быть абсолютным, и директория должна быть доступна для записи.
      *
      * @return bool True, если операция выполнена успешно, иначе False.
      *
      * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws RuntimeException|Exception Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws RuntimeException|Exception Если возникли ошибки при проверке файлов, директорий или размеров
+     *                                    изображения.
      *
      * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w`, `temp_photo_h`).
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
@@ -1779,10 +1817,10 @@ class Work
      *     echo "Не удалось создать эскиз.";
      * }
      * @endcode
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
-     * @see PhotoRigma::Classes::Work_Image::image_resize()
+     * @see     PhotoRigma::Classes::Work_Image::image_resize()
      *      Публичный метод-редирект для вызова этой логики.
      */
     public function image_resize(string $full_path, string $thumbnail_path): bool
@@ -1791,7 +1829,7 @@ class Work
     }
 
     /**
-     * @brief Возвращает данные для отсутствующего изображения.
+     * @brief   Возвращает данные для отсутствующего изображения.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода no_photo() класса Work_Image.
      *          Метод формирует массив данных, который используется для представления информации
@@ -1826,7 +1864,7 @@ class Work
      * echo "URL изображения: {$noPhotoData['url']}\n";
      * echo "Описание: {$noPhotoData['description']}\n";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::no_photo()
+     * @see     PhotoRigma::Classes::Work_Image::no_photo()
      *      Публичный метод-редирект для вызова этой логики.
      *
      */
@@ -1836,7 +1874,7 @@ class Work
     }
 
     /**
-     * @brief Вывод изображения через HTTP.
+     * @brief   Вывод изображения через HTTP.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода image_attach() класса Work_Image.
      *          Метод проверяет существование и доступность файла, определяет его MIME-тип
@@ -1852,7 +1890,8 @@ class Work
      * @param string $name_file Имя файла для заголовка Content-Disposition.
      *                          Имя должно быть корректным (например, без запрещённых символов).
      *
-     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого файла.
+     * @return void Метод ничего не возвращает. Завершает выполнение скрипта после отправки заголовков и содержимого
+     *              файла.
      *
      * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *
@@ -1863,12 +1902,12 @@ class Work
      * $work->image_attach('/path/to/image.jpg', 'image.jpg');
      * @endcode
      * @throws Exception
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
-     * @see PhotoRigma::Classes::Work::clean_field()
+     * @see     PhotoRigma::Classes::Work::clean_field()
      *      Публичный метод для очистки строк от HTML-тегов и специальных символов.
      *
-     * @see PhotoRigma::Classes::Work_Image::image_attach()
+     * @see     PhotoRigma::Classes::Work_Image::image_attach()
      *      Публичный метод-редирект для вызова этой логики.
      */
     #[NoReturn] public function image_attach(string $full_path, string $name_file): void
@@ -1879,7 +1918,7 @@ class Work
     // Внутренние методы класса Work.
 
     /**
-     * @brief Корректировка расширения файла в соответствии с его MIME-типом.
+     * @brief   Корректировка расширения файла в соответствии с его MIME-типом.
      *
      * @details Этот метод является делегатом (метод-редирект) для метода fix_file_extension() класса Work_Image.
      *          Метод проверяет MIME-тип файла и корректирует его расширение на основе соответствия MIME-типу.
@@ -1910,9 +1949,9 @@ class Work
      * $fixed_path = $work->fix_file_extension('/path/to/file');
      * echo "Исправленный путь: {$fixed_path}";
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::fix_file_extension()
+     * @see     PhotoRigma::Classes::Work_Image::fix_file_extension()
      *      Публичный метод, вызывающий этот защищённый метод.
-     * @see PhotoRigma::Include::log_in_file()
+     * @see     PhotoRigma::Include::log_in_file()
      *      Функция для логирования ошибок.
      *
      */
@@ -1922,7 +1961,7 @@ class Work
     }
 
     /**
-     * @brief Удаляет директорию и её содержимое через вызов метода из дочернего класса.
+     * @brief   Удаляет директорию и её содержимое через вызов метода из дочернего класса.
      *
      * @details Этот публичный метод является редиректом, который вызывает метод
      * `PhotoRigma::Classes::Work_Image::remove_directory()` из дочернего класса `Work_Image`.
@@ -1944,7 +1983,7 @@ class Work
      *                           - Если не удалось удалить файл внутри директории.
      *                           - Если не удалось удалить саму директорию.
      *
-     * @note Метод рекурсивно удаляет все файлы внутри директории.
+     * @note    Метод рекурсивно удаляет все файлы внутри директории.
      *
      * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
      *
@@ -1957,7 +1996,8 @@ class Work
      *     echo "Директория успешно удалена!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::remove_directory() Метод из дочернего класса, реализующий основную логику.
+     * @see     PhotoRigma::Classes::Work_Image::remove_directory() Метод из дочернего класса, реализующий основную
+     *          логику.
      *
      */
     public function remove_directory(string $path): bool
@@ -1966,7 +2006,7 @@ class Work
     }
 
     /**
-     * @brief Создает директории для категории и копирует файлы index.php через вызов метода из дочернего класса.
+     * @brief   Создает директории для категории и копирует файлы index.php через вызов метода из дочернего класса.
      *
      * @details Этот публичный метод является редиректом, который вызывает метод
      * `PhotoRigma::Classes::Work_Image::create_directory()` из дочернего класса `Work_Image`.
@@ -1975,7 +2015,7 @@ class Work
      *
      * @callgraph
      *
-     * @param string $directory_name Имя директории.
+     * @param string $directory_name  Имя директории.
      *                                Должен быть строкой, содержащей только допустимые символы для имён директорий.
      *                                Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
      *
@@ -1987,7 +2027,7 @@ class Work
      *                           - Если исходные файлы `index.php` не существуют.
      *                           - Если не удалось прочитать или записать файлы `index.php`.
      *
-     * @note Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
+     * @note    Метод использует конфигурационные параметры `site_dir`, `gallery_folder` и `thumbnail_folder`.
      *
      * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
      *
@@ -2000,7 +2040,8 @@ class Work
      *     echo "Директории успешно созданы!";
      * }
      * @endcode
-     * @see PhotoRigma::Classes::Work_Image::create_directory() Метод из дочернего класса, реализующий основную логику.
+     * @see     PhotoRigma::Classes::Work_Image::create_directory() Метод из дочернего класса, реализующий основную
+     *          логику.
      *
      */
     public function create_directory(string $directory_name): bool
