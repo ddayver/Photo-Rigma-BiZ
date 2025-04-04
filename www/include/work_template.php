@@ -1042,15 +1042,8 @@ class Work_Template implements Work_Template_Interface
         $stat['rate_moder'] = $rate_moder_stats ? (int)$rate_moder_stats['rate_moder'] : 0;
         // Получение онлайн-пользователей
         $this->db->select(
-            ['`id`', '`real_name`'],
-            TBL_USERS,
-            [
-                'where'  => '`date_last_activ` >= (:current_time - INTERVAL :online_user SECOND)',
-                'params' => [
-                    ':current_time' => date('Y-m-d H:i:s'),
-                    ':online_user'  => (int)$this->config['time_user_online'],
-                ],
-            ]
+            '*',
+            VIEW_USERS_ONLINE
         );
         $online_users_data = $this->db->res_arr();
         $stat['online'] = $online_users_data ? implode(', ', array_map(function ($user) {

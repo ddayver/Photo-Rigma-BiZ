@@ -54,12 +54,15 @@ var namespacePhotoRigma =
       [ "TBL_CATEGORY", "db/d02/namespacePhotoRigma_1_1Include.html#af7d24f8d6208f91370d570179ecc7588", null ],
       [ "TBL_CONFIG", "db/d02/namespacePhotoRigma_1_1Include.html#a31ed4ca28158fa3c806e4651efec5f7a", null ],
       [ "TBL_GROUP", "db/d02/namespacePhotoRigma_1_1Include.html#a9d321afcd9daf1261fb27494a9dd07cf", null ],
+      [ "TBL_LOG_QUERY", "db/d02/namespacePhotoRigma_1_1Include.html#a749279561540b285930c441e1d3e3a27", null ],
       [ "TBL_MENU", "db/d02/namespacePhotoRigma_1_1Include.html#ada271cee9d3954ad84aa243510683da6", null ],
       [ "TBL_NEWS", "db/d02/namespacePhotoRigma_1_1Include.html#a26ebc544afff0aad8a2ae5ca6005ed08", null ],
       [ "TBL_PHOTO", "db/d02/namespacePhotoRigma_1_1Include.html#ad9e6d56867d93f4ff111db359d732510", null ],
       [ "TBL_RATE_MODER", "db/d02/namespacePhotoRigma_1_1Include.html#a1872acdf0e01ae25ad823ea5e2e59d57", null ],
       [ "TBL_RATE_USER", "db/d02/namespacePhotoRigma_1_1Include.html#a1ece13b85e14fdb7d1a6b62a6933fe89", null ],
-      [ "TBL_USERS", "db/d02/namespacePhotoRigma_1_1Include.html#a2a3024d0b4853a913d3baa522a035f91", null ]
+      [ "TBL_USERS", "db/d02/namespacePhotoRigma_1_1Include.html#a2a3024d0b4853a913d3baa522a035f91", null ],
+      [ "VIEW_RANDOM_PHOTO", "db/d02/namespacePhotoRigma_1_1Include.html#ab5250fb6270e7f419c4f6b4c225ab78b", null ],
+      [ "VIEW_USERS_ONLINE", "db/d02/namespacePhotoRigma_1_1Include.html#ade923b91d229c67d7b053979351c0376", null ]
     ] ],
     [ "Language", "dc/d7a/namespacePhotoRigma_1_1Language.html", [
       [ "$lang", "de/d8e/group__LanguageEnglish.html#ga7714b111b644017933931ec69a154102", null ],

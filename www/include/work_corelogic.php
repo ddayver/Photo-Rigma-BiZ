@@ -1265,20 +1265,18 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             };
 
             // Выполнение запроса к базе данных
-            $this->db->select(
-                [
-                    '`id`',
-                    '`file`',
-                    '`name`',
-                    '`description`',
-                    '`category`',
-                    '`rate_user`',
-                    '`rate_moder`',
-                    '`user_upload`',
-                ],
-                TBL_PHOTO,
-                $options
-            );
+            if ($type === 'rand') {
+                $this->db->select(
+                    '*',
+                    VIEW_RANDOM_PHOTO
+                );
+            } else {
+                $this->db->select(
+                    '*',
+                    TBL_PHOTO,
+                    $options
+                );
+            }
             $photo_data = $this->db->res_row();
 
             // Если изображение не найдено, возвращаем данные по умолчанию

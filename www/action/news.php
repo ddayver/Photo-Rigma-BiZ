@@ -436,7 +436,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
         // Получение списка годов
         $db->select(
-            'DISTINCT DATE_FORMAT(`data_last_edit`, \'%Y\') AS `year`',
+            'DISTINCT ' . $db->format_date('`data_last_edit`', '%Y') . ' AS `year`',
             TBL_NEWS,
             [
                 'order' => '`data_last_edit` ASC',
@@ -455,7 +455,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'COUNT(*) AS `count_news`',
                 TBL_NEWS,
                 [
-                    'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
+                    'where'  => $db->format_date('`data_last_edit`', '%Y') . ' = :year',
                     'params' => [':year' => $year_data['year']],
                 ]
             );
@@ -493,10 +493,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
             // Получение списка месяцев
             $db->select(
-                'DISTINCT DATE_FORMAT(`data_last_edit`, \'%m\') AS `month`',
+                'DISTINCT ' . $db->format_date('`data_last_edit`', '%m') . ' AS `month`',
                 TBL_NEWS,
                 [
-                    'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year',
+                    'where'  => $db->format_date('`data_last_edit`', '%Y') . ' = :year',
                     'params' => [':year' => $year],
                     'order'  => '`data_last_edit` ASC',
                 ]
@@ -514,7 +514,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'COUNT(*) AS `count_news`',
                     TBL_NEWS,
                     [
-                        'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
+                        'where'  => $db->format_date('`data_last_edit`', '%Y') . ' = :year AND ' . $db->format_date(
+                            '`data_last_edit`',
+                            '%m'
+                        ) . ' = :month',
                         'params' => [':year' => $year, ':month' => $month_data['month']],
                     ]
                 );
@@ -548,7 +551,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 '*',
                 TBL_NEWS,
                 [
-                    'where'  => 'DATE_FORMAT(`data_last_edit`, \'%Y\') = :year AND DATE_FORMAT(`data_last_edit`, \'%m\') = :month',
+                    'where'  => $db->format_date('`data_last_edit`', '%Y') . ' = :year AND ' . $db->format_date(
+                        '`data_last_edit`',
+                        '%m'
+                    ) . ' = :month',
                     'params' => [':year' => $year, ':month' => $month],
                     'order'  => '`data_last_edit` ASC',
                 ]

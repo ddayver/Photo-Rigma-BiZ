@@ -68,3 +68,90 @@ ALTER TABLE `users` CHANGE `group` `group_id` INT(10) UNSIGNED NOT NULL DEFAULT 
 
 -- 14. Добавление нового столбца `theme` после чтолбца `language` в группе в таблице `users` (с значением по-умолчанию 'default')
 ALTER TABLE `users` ADD `theme` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'default' COMMENT 'Тема сайта' AFTER `language`;
+
+--15. Добавляем "представления" для сложных запросов, отличающихся своим форматом между MySQL и PostgreSQL
+CREATE VIEW `users_online` AS
+SELECT `id`, `real_name`
+FROM `users`
+WHERE `date_last_activ` >= NOW() - INTERVAL (
+    SELECT `value` FROM `config` WHERE `name` = 'time_user_online'
+) SECOND;
+
+CREATE VIEW `random_photo` AS
+SELECT `id`, `file`, `name`, `description`, `category`, `rate_user`, `rate_moder`, `user_upload`
+FROM `photo`
+ORDER BY rand()
+LIMIT 1;
+
+-- 16. Добавляем таблицу `query_logs` для логирования медленных запросов и запросов без плейсхолдеров.
+CREATE TABLE IF NOT EXISTS `query_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор записи',
+  `query_hash` char(32) NOT NULL COMMENT 'Хэш запроса для проверки дублирования',
+  `query_text` text NOT NULL COMMENT 'Текст SQL-запроса',
+  `created_at` timestamp NULL DEFAULT current_timestamp() COMMENT 'Время первого логирования',
+  `last_used_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Время последнего использования',
+  `usage_count` int(11) NOT NULL DEFAULT 1 COMMENT 'Количество использований запроса',
+  `reason` enum('slow','no_placeholders','other') DEFAULT 'other' COMMENT 'Причина логирования: медленный запрос, отсутствие плейсхолдеров или другое',
+  `execution_time` float DEFAULT NULL COMMENT 'Время выполнения запроса (в миллисекундах)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `query_hash` (`query_hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Логирование SQL-запросов для анализа производительности';
+
+-- 17. Добавляем тригеры для автоматического перерасчета рейтинга фотографий после изменения в таблицах с оценками.
+DELIMITER $$
+
+-- Триггеры для rate_user
+CREATE TRIGGER update_rate_user_after_insert
+AFTER INSERT ON rate_user
+FOR EACH ROW
+BEGIN
+    UPDATE photo
+    SET rate_user = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_user
+        WHERE id_foto = NEW.id_foto
+    )
+    WHERE id = NEW.id_foto;
+END$$
+
+CREATE TRIGGER update_rate_user_after_delete
+AFTER DELETE ON rate_user
+FOR EACH ROW
+BEGIN
+    UPDATE photo
+    SET rate_user = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_user
+        WHERE id_foto = OLD.id_foto
+    )
+    WHERE id = OLD.id_foto;
+END$$
+
+-- Триггеры для rate_moder
+CREATE TRIGGER update_rate_moder_after_insert
+AFTER INSERT ON rate_moder
+FOR EACH ROW
+BEGIN
+    UPDATE photo
+    SET rate_moder = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_moder
+        WHERE id_foto = NEW.id_foto
+    )
+    WHERE id = NEW.id_foto;
+END$$
+
+CREATE TRIGGER update_rate_moder_after_delete
+AFTER DELETE ON rate_moder
+FOR EACH ROW
+BEGIN
+    UPDATE photo
+    SET rate_moder = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_moder
+        WHERE id_foto = OLD.id_foto
+    )
+    WHERE id = OLD.id_foto;
+END$$
+
+DELIMITER ;

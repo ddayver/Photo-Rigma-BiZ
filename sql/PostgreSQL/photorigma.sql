@@ -16,6 +16,62 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: update_rate_moder(); Type: FUNCTION; Schema: public; Owner: photorigma
+--
+
+CREATE FUNCTION public.update_rate_moder() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    UPDATE photo
+    SET rate_moder = (
+        SELECT COALESCE(AVG(rate), 0)
+        FROM rate_moder
+        WHERE id_foto = NEW.id_foto
+    )
+    WHERE id = NEW.id_foto;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_rate_moder() OWNER TO photorigma;
+
+--
+-- Name: FUNCTION update_rate_moder(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_rate_moder() IS 'Изменение оценки модератора к фотографии';
+
+
+--
+-- Name: update_rate_user(); Type: FUNCTION; Schema: public; Owner: photorigma
+--
+
+CREATE FUNCTION public.update_rate_user() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    UPDATE photo
+    SET rate_user = (
+        SELECT COALESCE(AVG(rate), 0)
+        FROM rate_user
+        WHERE id_foto = NEW.id_foto
+    )
+    WHERE id = NEW.id_foto;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_rate_user() OWNER TO photorigma;
+
+--
+-- Name: FUNCTION update_rate_user(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_rate_user() IS 'Изменение оценки пользователя к фотографии';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -492,6 +548,193 @@ ALTER SEQUENCE public.photo_id_seq OWNED BY public.photo.id;
 
 
 --
+-- Name: query_logs; Type: TABLE; Schema: public; Owner: photorigma
+--
+
+CREATE TABLE public.query_logs (
+    id integer NOT NULL,
+    query_hash character(32) NOT NULL,
+    query_text text NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    last_used_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    usage_count integer DEFAULT 1 NOT NULL,
+    reason text DEFAULT 'other'::text,
+    execution_time double precision,
+    CONSTRAINT query_logs_reason_check CHECK ((reason = ANY (ARRAY['slow'::text, 'no_placeholders'::text, 'other'::text])))
+);
+
+
+ALTER TABLE public.query_logs OWNER TO photorigma;
+
+--
+-- Name: TABLE query_logs; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON TABLE public.query_logs IS 'Логирование SQL-запросов для анализа производительности';
+
+
+--
+-- Name: COLUMN query_logs.id; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.id IS 'Уникальный идентификатор записи';
+
+
+--
+-- Name: COLUMN query_logs.query_hash; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.query_hash IS 'Хэш запроса для проверки дублирования';
+
+
+--
+-- Name: COLUMN query_logs.query_text; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.query_text IS 'Текст SQL-запроса';
+
+
+--
+-- Name: COLUMN query_logs.created_at; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.created_at IS 'Время первого логирования';
+
+
+--
+-- Name: COLUMN query_logs.last_used_at; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.last_used_at IS 'Время последнего использования';
+
+
+--
+-- Name: COLUMN query_logs.usage_count; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.usage_count IS 'Количество использований запроса';
+
+
+--
+-- Name: COLUMN query_logs.reason; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.reason IS 'Причина логирования: медленный запрос, отсутствие плейсхолдеров или другое';
+
+
+--
+-- Name: COLUMN query_logs.execution_time; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.query_logs.execution_time IS 'Время выполнения запроса (в миллисекундах)';
+
+
+--
+-- Name: query_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+--
+
+CREATE SEQUENCE public.query_logs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.query_logs_id_seq OWNER TO photorigma;
+
+--
+-- Name: query_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+--
+
+ALTER SEQUENCE public.query_logs_id_seq OWNED BY public.query_logs.id;
+
+
+--
+-- Name: random_photo; Type: VIEW; Schema: public; Owner: photorigma
+--
+
+CREATE VIEW public.random_photo AS
+ SELECT id,
+    file,
+    name,
+    description,
+    category,
+    rate_user,
+    rate_moder,
+    user_upload
+   FROM public.photo
+  ORDER BY (random())
+ LIMIT 1;
+
+
+ALTER VIEW public.random_photo OWNER TO photorigma;
+
+--
+-- Name: VIEW random_photo; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON VIEW public.random_photo IS 'Случайное фото из галереи';
+
+
+--
+-- Name: COLUMN random_photo.id; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.id IS 'Идентификатор';
+
+
+--
+-- Name: COLUMN random_photo.file; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.file IS 'Имя файла';
+
+
+--
+-- Name: COLUMN random_photo.name; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.name IS 'Название фотографии';
+
+
+--
+-- Name: COLUMN random_photo.description; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.description IS 'Описание фотографии';
+
+
+--
+-- Name: COLUMN random_photo.category; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.category IS 'Идентификатор раздела';
+
+
+--
+-- Name: COLUMN random_photo.rate_user; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.rate_user IS 'Оценка от пользователя';
+
+
+--
+-- Name: COLUMN random_photo.rate_moder; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.rate_moder IS 'Оценка от модератора';
+
+
+--
+-- Name: COLUMN random_photo.user_upload; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.random_photo.user_upload IS 'Идентификатор пользователя, залившего фото';
+
+
+--
 -- Name: rate_moder; Type: TABLE; Schema: public; Owner: photorigma
 --
 
@@ -717,6 +960,42 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: users_online; Type: VIEW; Schema: public; Owner: photorigma
+--
+
+CREATE VIEW public.users_online AS
+ SELECT id,
+    real_name
+   FROM public.users
+  WHERE (date_last_activ >= (now() - ( SELECT (((config.value)::text || ' seconds'::text))::interval AS "interval"
+           FROM public.config
+          WHERE ((config.name)::text = 'time_user_online'::text))));
+
+
+ALTER VIEW public.users_online OWNER TO photorigma;
+
+--
+-- Name: VIEW users_online; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON VIEW public.users_online IS 'Список пользователей онлайн';
+
+
+--
+-- Name: COLUMN users_online.id; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users_online.id IS 'Идентификатор пользователя';
+
+
+--
+-- Name: COLUMN users_online.real_name; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users_online.real_name IS 'Отображаемое имя пользователя';
+
+
+--
 -- Name: category id; Type: DEFAULT; Schema: public; Owner: photorigma
 --
 
@@ -745,6 +1024,13 @@ ALTER TABLE ONLY public.photo ALTER COLUMN id SET DEFAULT nextval('public.photo_
 
 
 --
+-- Name: query_logs id; Type: DEFAULT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.query_logs ALTER COLUMN id SET DEFAULT nextval('public.query_logs_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: photorigma
 --
 
@@ -755,123 +1041,109 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.category (id, folder, name, description) FROM stdin;
-0	user	Пользовательский альбом	Персональный пользовательский альбом
-\.
+INSERT INTO public.category VALUES (0, 'user', 'Пользовательский альбом', 'Персональный пользовательский альбом');
 
 
 --
 -- Data for Name: config; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.config (name, value) FROM stdin;
-best_user	5
-copyright_text	Проекты Rigma.BiZ
-copyright_url	http://rigma.biz/
-copyright_year	2008-2013
-gal_width	95%
-language	russian
-last_news	5
-left_panel	250
-max_avatar_h	100
-max_avatar_w	100
-max_file_size	2M
-max_photo_h	480
-max_photo_w	640
-max_rate	2
-meta_description	Rigma.BiZ - фотогалерея Gold Rigma
-meta_keywords	Rigma.BiZ photo gallery Gold Rigma
-right_panel	250
-temp_photo_h	200
-temp_photo_w	200
-themes	default
-title_description	Фотогалерея Rigma и Co
-title_name	Rigma Foto
-time_user_online	900
-\.
+INSERT INTO public.config VALUES ('best_user', '5');
+INSERT INTO public.config VALUES ('copyright_text', 'Проекты Rigma.BiZ');
+INSERT INTO public.config VALUES ('copyright_url', 'http://rigma.biz/');
+INSERT INTO public.config VALUES ('copyright_year', '2008-2013');
+INSERT INTO public.config VALUES ('gal_width', '95%');
+INSERT INTO public.config VALUES ('language', 'russian');
+INSERT INTO public.config VALUES ('last_news', '5');
+INSERT INTO public.config VALUES ('left_panel', '250');
+INSERT INTO public.config VALUES ('max_avatar_h', '100');
+INSERT INTO public.config VALUES ('max_avatar_w', '100');
+INSERT INTO public.config VALUES ('max_file_size', '2M');
+INSERT INTO public.config VALUES ('max_photo_h', '480');
+INSERT INTO public.config VALUES ('max_photo_w', '640');
+INSERT INTO public.config VALUES ('max_rate', '2');
+INSERT INTO public.config VALUES ('meta_description', 'Rigma.BiZ - фотогалерея Gold Rigma');
+INSERT INTO public.config VALUES ('meta_keywords', 'Rigma.BiZ photo gallery Gold Rigma');
+INSERT INTO public.config VALUES ('right_panel', '250');
+INSERT INTO public.config VALUES ('temp_photo_h', '200');
+INSERT INTO public.config VALUES ('temp_photo_w', '200');
+INSERT INTO public.config VALUES ('themes', 'default');
+INSERT INTO public.config VALUES ('title_description', 'Фотогалерея Rigma и Co');
+INSERT INTO public.config VALUES ('title_name', 'Rigma Foto');
+INSERT INTO public.config VALUES ('time_user_online', '900');
 
 
 --
 -- Data for Name: db_version; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.db_version (ver) FROM stdin;
-0.4.0
-\.
+INSERT INTO public.db_version VALUES ('0.4.0');
 
 
 --
 -- Data for Name: groups; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.groups (id, name, user_rights) FROM stdin;
-0	Гость	{"admin": 0, "cat_user": 0, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 0, "comment_add": 0, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 0, "pic_rate_moder": 0, "comment_moderate": 0}
-1	Пользователь	{"admin": 0, "cat_user": 1, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 1, "pic_rate_moder": 0, "comment_moderate": 0}
-2	Модератор	{"admin": 0, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 0, "pic_rate_moder": 1, "comment_moderate": 1}
-3	Администратор	{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}
-\.
+INSERT INTO public.groups VALUES (0, 'Гость', '{"admin": 0, "cat_user": 0, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 0, "comment_add": 0, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 0, "pic_rate_moder": 0, "comment_moderate": 0}');
+INSERT INTO public.groups VALUES (1, 'Пользователь', '{"admin": 0, "cat_user": 1, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 1, "pic_rate_moder": 0, "comment_moderate": 0}');
+INSERT INTO public.groups VALUES (2, 'Модератор', '{"admin": 0, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 0, "pic_rate_moder": 1, "comment_moderate": 1}');
+INSERT INTO public.groups VALUES (3, 'Администратор', '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}');
 
 
 --
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.menu (id, action, url_action, name_action, short, long, user_login, user_access) FROM stdin;
-1	main	./	home	1	1	\N	\N
-2	regist	?action=profile&subact=regist	regist	1	1	0	\N
-3	category	?action=category	category	1	1	\N	\N
-4	user_category	?action=category&cat=user	user_category	0	1	\N	\N
-5	you_category	?action=category&cat=user&id=curent	you_category	0	1	1	cat_user
-6	upload	?action=photo&subact=upload	upload	0	1	1	pic_upload
-7	add_category	?action=category&subact=add	add_category	0	1	1	cat_moderate
-8	search	?action=search	search	1	1	\N	\N
-9	news	?action=news	news	1	1	\N	news_view
-10	news_add	?action=news&subact=add	news_add	0	1	1	news_add
-11	profile	?action=profile&subact=profile	profile	1	1	1	\N
-12	admin	?action=admin	admin	1	1	1	admin
-13	logout	?action=profile&subact=logout	logout	1	1	1	\N
-\.
+INSERT INTO public.menu VALUES (1, 'main', './', 'home', 1, 1, NULL, NULL);
+INSERT INTO public.menu VALUES (2, 'regist', '?action=profile&subact=regist', 'regist', 1, 1, 0, NULL);
+INSERT INTO public.menu VALUES (3, 'category', '?action=category', 'category', 1, 1, NULL, NULL);
+INSERT INTO public.menu VALUES (4, 'user_category', '?action=category&cat=user', 'user_category', 0, 1, NULL, NULL);
+INSERT INTO public.menu VALUES (5, 'you_category', '?action=category&cat=user&id=curent', 'you_category', 0, 1, 1, 'cat_user');
+INSERT INTO public.menu VALUES (6, 'upload', '?action=photo&subact=upload', 'upload', 0, 1, 1, 'pic_upload');
+INSERT INTO public.menu VALUES (7, 'add_category', '?action=category&subact=add', 'add_category', 0, 1, 1, 'cat_moderate');
+INSERT INTO public.menu VALUES (8, 'search', '?action=search', 'search', 1, 1, NULL, NULL);
+INSERT INTO public.menu VALUES (9, 'news', '?action=news', 'news', 1, 1, NULL, 'news_view');
+INSERT INTO public.menu VALUES (10, 'news_add', '?action=news&subact=add', 'news_add', 0, 1, 1, 'news_add');
+INSERT INTO public.menu VALUES (11, 'profile', '?action=profile&subact=profile', 'profile', 1, 1, 1, NULL);
+INSERT INTO public.menu VALUES (12, 'admin', '?action=admin', 'admin', 1, 1, 1, 'admin');
+INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', 'logout', 1, 1, 1, NULL);
 
 
 --
 -- Data for Name: news; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.news (id, data_post, data_last_edit, user_post, name_post, text_post) FROM stdin;
-\.
 
 
 --
 -- Data for Name: photo; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.photo (id, file, name, description, category, date_upload, user_upload, rate_user, rate_moder) FROM stdin;
-\.
+
+
+--
+-- Data for Name: query_logs; Type: TABLE DATA; Schema: public; Owner: photorigma
+--
+
 
 
 --
 -- Data for Name: rate_moder; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.rate_moder (id_foto, id_user, rate) FROM stdin;
-\.
 
 
 --
 -- Data for Name: rate_user; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.rate_user (id_foto, id_user, rate) FROM stdin;
-\.
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-COPY public.users (id, login, password, real_name, email, avatar, language, date_regist, date_last_activ, date_last_logout, group_id, user_rights, theme) FROM stdin;
-1	admin	$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW	Администратор	admin@rigma.biz	no_avatar.jpg	russian	2009-01-20 12:31:35	2025-02-28 21:04:24	2025-02-27 09:45:08	3	{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}	default
-\.
+INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-02-28 21:04:24', '2025-02-27 09:45:08', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default');
 
 
 --
@@ -900,6 +1172,13 @@ SELECT pg_catalog.setval('public.news_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
+
+
+--
+-- Name: query_logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+--
+
+SELECT pg_catalog.setval('public.query_logs_id_seq', 1, false);
 
 
 --
@@ -966,6 +1245,14 @@ ALTER TABLE ONLY public.photo
 
 
 --
+-- Name: query_logs query_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.query_logs
+    ADD CONSTRAINT query_logs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: rate_moder rate_moder_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
 --
 
@@ -995,6 +1282,41 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: query_logs_query_hash_key; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE UNIQUE INDEX query_logs_query_hash_key ON public.query_logs USING btree (query_hash);
+
+
+--
+-- Name: rate_moder update_rate_moder_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER update_rate_moder_after_delete AFTER DELETE ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder();
+
+
+--
+-- Name: rate_moder update_rate_moder_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER update_rate_moder_after_insert AFTER INSERT ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder();
+
+
+--
+-- Name: rate_user update_rate_user_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER update_rate_user_after_delete AFTER DELETE ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user();
+
+
+--
+-- Name: rate_user update_rate_user_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER update_rate_user_after_insert AFTER INSERT ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user();
 
 
 --

@@ -1,6 +1,7 @@
 var interfacePhotoRigma_1_1Classes_1_1Database__Interface =
 [
     [ "delete", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a73d8e6acdfb996002f980ab7c9c18515", null ],
+    [ "format_date", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#ac0e58b1bf2a72bbbaa896b9849ed0e42", null ],
     [ "get_affected_rows", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a2c437dae4e310529391e7f5388b133ba", null ],
     [ "get_last_insert_id", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#abafff8c03a52d73e37072449448e5a3c", null ],
     [ "insert", "da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#a6e5af1f386c0c7968aa10ea928c7a110", null ],

@@ -578,6 +578,43 @@ interface Database_Interface
      *
      */
     public function get_last_insert_id(): int;
+
+    /**
+     * @brief   Форматирует дату в зависимости от типа СУБД.
+     *
+     * @details Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс.
+     *          Метод должен формировать SQL-выражение для форматирования даты в зависимости от типа используемой СУБД.
+     *          Основные требования к реализации:
+     *          - Проверка типа СУБД.
+     *          - Поддержка форматирования для MariaDB (MySQL), PostgreSQL и SQLite.
+     *          - Генерация исключения, если тип СУБД не поддерживается.
+     *          Метод предназначен для использования вне класса (например, через публичный метод-редирект).
+     *
+     * @callgraph
+     *
+     * @param string $column Название столбца с датой.
+     *                       Должен быть непустой строкой в формате имени столбца таблицы в БД.
+     * @param string $format Формат даты (в стиле MariaDB).
+     *                       Должен соответствовать формату MariaDB.
+     *
+     * @return string SQL-выражение для форматирования даты.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     *
+     * @note    Метод использует функции форматирования даты, специфичные для каждой СУБД.
+     * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
+     *
+     * Пример вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Database();
+     * $result = $object->format_date('created_at', '%Y-%m-%d');
+     * echo $result;
+     * // Результат для MySQL: DATE_FORMAT(created_at, '%Y-%m-%d')
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::format_date() Пример реализации метода в классе.
+     *
+     */
+    public function format_date(string $column, string $format): string;
 }
 
 /**
@@ -619,6 +656,9 @@ class Database implements Database_Interface
     private object|null $res_query = null;    ///< Результат выполнения подготовленного выражения (PDOStatement)
     private int $aff_rows = 0;        ///< Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)
     private int $insert_id = 0;       ///< ID последней вставленной строки после выполнения INSERT-запроса
+    private string $db_type;     ///< Тип базы данных (mysql, pgsql)
+    private array $format_cache = []; ///< Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite)
+    private array $query_cache = []; ///< Кэш для хранения результатов проверки существования запросов
 
     /**
      * @brief   Конструктор класса.
@@ -684,6 +724,8 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип базы данных | Значение: {$db_config['dbtype']}"
             );
         }
+        // Сохраняем тип используемой базы данных
+        $this->db_type = $db_config['dbtype'];
         // Проверка корректности dbname и dbuser
         if (empty($db_config['dbname']) || empty($db_config['dbuser'])) {
             throw new InvalidArgumentException(
@@ -927,6 +969,597 @@ class Database implements Database_Interface
 
         // === 5. Выполнение запроса ===
         return $this->execute_query($params);
+    }
+
+    /**
+     * @brief   Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).
+     *
+     * @details Этот метод выполняет следующие шаги:
+     *          1. Обрабатывает условие `WHERE`:
+     *             - Если `where` является строкой, она используется как есть.
+     *             - Если `where` является массивом, он преобразуется в SQL-условие.
+     *          2. Обрабатывает ограничение `LIMIT`:
+     *             - Проверяет, что значение является числом или строкой, и добавляет его к строке запроса.
+     *          3. Возвращает результат:
+     *             - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
+     *             - Обновлённый массив параметров для подготовленного выражения.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $options     Опции запроса:
+     *                           - where (string|array): Условие WHERE.
+     *                           Может быть строкой или ассоциативным массивом.
+     *                           Если передан неверный тип, выбрасывается исключение
+     *                           InvalidArgumentException.
+     *                           - group (string): Группировка GROUP BY.
+     *                           Должна быть строкой. Если передан неверный тип, выбрасывается исключение
+     *                           InvalidArgumentException.
+     *                           - order (string): Сортировка ORDER BY.
+     *                           Должна быть строкой. Если передан неверный тип, выбрасывается исключение
+     *                           InvalidArgumentException.
+     *                           - limit (int|string): Ограничение LIMIT.
+     *                           Должно быть числом или строкой (например "0, 10"). Если передан неверный
+     *                           тип, выбрасывается исключение InvalidArgumentException.
+     *                           - params (array): Параметры для подготовленного выражения (необязательно).
+     *                           Если параметры не соответствуют условиям, выбрасывается исключение
+     *                           InvalidArgumentException.
+     *
+     * @return array Массив с двумя элементами:
+     *               - string $conditions - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
+     *               - array $params - Обновлённый массив параметров для подготовленного выражения.
+     *
+     * @throws InvalidArgumentException Если параметры имеют недопустимый тип.
+     *
+     * Пример использования метода build_conditions():
+     * @code
+     * $options = [
+     *     'where' => ['id' => 1, 'status' => 'active'],
+     *     'group' => 'category_id',
+     *     'order' => 'created_at DESC',
+     *     'limit' => 10,
+     *     'params' => [':id' => 1, ':status' => 'active'],
+     * ];
+     * [$conditions, $params] = $this->build_conditions($options);
+     * echo "Условия: $conditions\n";
+     * print_r($params);
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::update()
+     *      Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
+     * @see     PhotoRigma::Classes::Database::select()
+     *      Метод, который вызывает build_conditions() для формирования SELECT-запроса.
+     * @see     PhotoRigma::Classes::Database::join()
+     *      Метод, который вызывает build_conditions() для формирования JOIN-запроса.
+     *
+     * @see     PhotoRigma::Classes::Database::delete()
+     *      Метод, который вызывает build_conditions() для формирования DELETE-запроса.
+     */
+    private function build_conditions(array $options): array
+    {
+        $conditions = '';
+        $params = $options['params'] ?? [];
+
+        // === 1. Обработка WHERE ===
+        if (isset($options['where'])) {
+            if (is_string($options['where'])) {
+                // Если where — строка, добавляем её напрямую
+                $conditions .= ' WHERE ' . $options['where'];
+            } elseif (is_array($options['where'])) {
+                // Если where — массив, обрабатываем его
+                $conditions .= ' WHERE ' . implode(' AND ', $options['where']);
+            } else {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
+                        $options['where']
+                    )
+                );
+            }
+        }
+
+        // === 2. Обработка GROUP BY ===
+        if (isset($options['group'])) {
+            if (is_string($options['group'])) {
+                $conditions .= ' GROUP BY ' . $options['group'];
+            } else {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype(
+                        $options['group']
+                    )
+                );
+            }
+        }
+
+        // === 3. Обработка ORDER BY ===
+        if (isset($options['order'])) {
+            if (is_string($options['order'])) {
+                $conditions .= ' ORDER BY ' . $options['order'];
+            } else {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype(
+                        $options['order']
+                    )
+                );
+            }
+        }
+
+        // === 4. Обработка LIMIT ===
+        if (isset($options['limit'])) {
+            if (is_numeric($options['limit'])) {
+                $conditions .= ' LIMIT ' . (int)$options['limit'];
+            } elseif (is_string($options['limit']) && preg_match('/^\d+\s*,\s*\d+$/', $options['limit'])) {
+                [$offset, $count] = array_map('intval', explode(',', $options['limit']));
+                $conditions .= ' LIMIT ' . $offset . ', ' . $count;
+            } else {
+                throw new InvalidArgumentException(
+                    "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
+                        $options['limit']
+                    ) . " ($options[limit])"
+                );
+            }
+        }
+
+        return [$conditions, $params];
+    }
+
+    /**
+     * @brief   Выполняет SQL-запрос с использованием подготовленных выражений.
+     *
+     * @details Этот метод выполняет следующие шаги:
+     *          1. Проверяет состояние результата запроса и тип аргументов:
+     *             - Убедитесь, что `$res_query` является экземпляром `\PDOStatement`.
+     *             - Проверяется, что `$txt_query` является строкой.
+     *             - Проверяется, что `$params` является массивом.
+     *          2. Очищает внутренние свойства для вывода результата запроса:
+     *             - Обнуляет `$res_query`, `$aff_rows`, `$insert_id`.
+     *          3. Подготавливает и выполняет SQL-запрос с использованием PDO:
+     *             - Использует `$pdo->prepare()` для подготовки запроса.
+     *             - Выполняет запрос с переданными параметрами.
+     *             - Получает количество затронутых строк (`$aff_rows`) и ID последней вставленной записи
+     *             (`$insert_id`).
+     *          4. Логирует медленные запросы:
+     *             - Измеряет время выполнения запроса.
+     *             - Если время выполнения превышает пороговое значение (200 мс), логирует запрос с помощью
+     *             `log_in_file()`.
+     *          5. Возвращает результат выполнения запроса:
+     *             - Возвращает `true`, если запрос успешно выполнен.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $params Массив параметров для подготовленного выражения (необязательно).
+     *                      Если параметры не соответствуют плейсхолдерам, выбрасывается исключение
+     *                      \\PDOException.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен.
+     *
+     * @throws InvalidArgumentException Если аргументы неверного типа.
+     * @throws PDOException|Exception Если возникает ошибка при выполнении запроса.
+     *
+     * Пример использования метода execute_query():
+     * @code
+     * $query = "SELECT * FROM users WHERE id = :id";
+     * $params = [':id' => 1];
+     * $this->execute_query($query, $params);
+     * echo "Запрос выполнен успешно!";
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$pdo
+     *      Объект PDO, используемый для выполнения запроса.
+     * @see     PhotoRigma::Classes::Database::$res_query
+     *      Результат подготовленного выражения.
+     * @see     PhotoRigma::Classes::Database::$aff_rows
+     *      Количество затронутых строк после выполнения запроса.
+     * @see     PhotoRigma::Classes::Database::$insert_id
+     *      ID последней вставленной записи.
+     * @see     PhotoRigma::Classes::Database::$txt_query
+     *      Свойство, в которое помещается текст SQL-запроса.
+     * @see     PhotoRigma::Classes::Database::delete()
+     *      Метод, который вызывает execute_query() для выполнения DELETE-запроса.
+     * @see     PhotoRigma::Classes::Database::truncate()
+     *      Метод, который вызывает execute_query() для выполнения TRUNCATE-запроса.
+     * @see     PhotoRigma::Classes::Database::update()
+     *      Метод, который вызывает execute_query() для выполнения UPDATE-запроса.
+     * @see     PhotoRigma::Classes::Database::insert()
+     *      Метод, который вызывает execute_query() для выполнения INSERT-запроса.
+     * @see     PhotoRigma::Classes::Database::select()
+     *      Метод, который вызывает execute_query() для выполнения SELECT-запроса.
+     * @see     PhotoRigma::Classes::Database::join()
+     *      Метод, который вызывает execute_query() для выполнения JOIN-запроса.
+     * @see     PhotoRigma::Classes::Database::log_query()
+     *      Метод логирования медленніх запросов и запросов без плейсхолдеров.
+     *
+     */
+    private function execute_query(array $params = []): bool
+    {
+        // Валидация состояния запроса и аргументов
+        if (isset($this->res_query) && !($this->res_query instanceof PDOStatement)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное состояние результата запроса | Текущее значение: " . gettype(
+                    $this->res_query
+                )
+            );
+        }
+        // Очистка внутренних свойств для вывода результата запроса
+        $this->res_query = null;
+        $this->aff_rows = 0;
+        $this->insert_id = 0;
+        // Валидация аргументов
+        if (!is_string($this->txt_query)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип SQL-запроса | Ожидалась строка, получено: " . gettype(
+                    $this->txt_query
+                )
+            );
+        }
+
+        // Финальное преобразование запроса в нужный формат СУБД.
+        $this->convert_query();
+
+        // Начало замера времени
+        $start_time = microtime(true);
+        $this->res_query = $this->pdo->prepare($this->txt_query);
+        $this->res_query->execute($params);
+        $this->aff_rows = $this->res_query->rowCount();
+        $this->insert_id = (int)$this->pdo->lastInsertId();
+        // Конец замера времени
+        $end_time = microtime(true);
+        $execution_time = ($end_time - $start_time) * 1000; // Время в миллисекундах
+        // Логирование медленных запросов
+        $slow_query_threshold = 200; // Порог в миллисекундах
+        if ($execution_time > $slow_query_threshold) {
+            // Сохраняем запрос в БД
+            $this->log_query('slow', $execution_time);
+        } elseif (empty($params)) {
+            // Сохраняем запрос в БД с пустым плейсхолдером
+            $this->log_query('no_placeholders', $execution_time);
+        }
+        // Очистка строки запроса после её выполнения
+        $this->txt_query = null;
+        return true;
+    }
+
+    /**
+     * @brief   Производит финальное преобразование SQL-запроса в зависимости от типа СУБД.
+     *
+     * @details Этот метод выполняет финальное преобразование SQL-запроса для совместимости с целевой СУБД:
+     *          - Для MariaDB (MySQL) запрос остается без изменений.
+     *          - Для PostgreSQL заменяет обратные кавычки (\`) на двойные кавычки (").
+     *          - Для SQLite удаляет все обратные кавычки (\`).
+     *          Если тип СУБД не поддерживается, выбрасывается исключение.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $this->db_type = 'pgsql';
+     * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
+     * $this->convert_query();
+     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$txt_query Текст запроса к СУБД.
+     * @see     PhotoRigma::Classes::Database::execute_query() Метод, из которого вызывается данный метод.
+     *
+     * @see     PhotoRigma::Classes::Database::$db_type Тип используемой СУБД.
+     */
+    private function convert_query(): void
+    {
+        // Проверяем целевую СУБД
+        $this->txt_query = match ($this->db_type) {
+            'mysql'  => $this->txt_query, // Для MariaDB остается оригинал
+            'pgsql'  => str_replace('`', '"', $this->txt_query), // Для PostgreSQL преобразуем ` в "
+            'sqlite' => str_replace('`', '', $this->txt_query), // Для SQLite удаляем `
+            default  => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
+            ),
+        };
+    }
+
+    /**
+     * @brief   Логирует медленные запросы и запросы без использования плейсхолдеров.
+     *
+     * @details Этот метод выполняет логирование SQL-запросов в таблицу логов. Метод выполняет следующие шаги:
+     *          1. Проверяет, что запрос существует, является строкой и не является запросом к таблице логов.
+     *          2. Обрезает запрос до допустимой длины (например, 65,535 символов для TEXT в MySQL).
+     *          3. Хэширует запрос для проверки на дублирование.
+     *          4. Проверяет, существует ли запрос в таблице логов:
+     *             - Если запрос уже существует, обновляет счетчик использования, время последнего использования и
+     *             максимальное время выполнения.
+     *             - Если запрос не существует, сохраняет его в таблицу логов.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     *
+     * @param string     $reason             Причина логирования запроса.
+     *                                       Допустимые значения: 'slow' (медленный запрос), 'no_placeholders' (без
+     *                                       плейсхолдеров), 'other' (другое). По умолчанию: 'other'.
+     * @param float|null $execution_time_ms  Время выполнения запроса в миллисекундах.
+     *                                       Должно быть положительным числом или null.
+     *                                       Используется только для новых запросов или обновления максимального
+     *                                       времени выполнения.
+     *
+     * @note    Метод использует кэширование (`$query_cache`) для оптимизации проверки существования запросов.
+     * @warning Убедитесь, что `$txt_query` содержит корректный SQL-запрос перед вызовом метода.
+     *          Также учтите, что слишком длинные запросы будут обрезаны до 65,535 символов.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $this->txt_query = "SELECT * FROM users WHERE id = 1";
+     * $this->log_query('slow', 1200.5); // Логирование медленного запроса с временем выполнения 1200.5 мс
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$txt_query Текущий SQL-запрос.
+     * @see     PhotoRigma::Classes::Database::execute_query() Метод, из которого вызывается данный метод.
+     *
+     * @see     PhotoRigma::Classes::Database::$pdo Объект PDO для подключения к базе данных.
+     * @see     PhotoRigma::Classes::Database::$query_cache Кэш для хранения результатов проверки существования
+     *          запросов.
+     */
+    private function log_query(string $reason = 'other', ?float $execution_time_ms = null): void
+    {
+        // Проверяем, что запрос существует, является строкой и не является запросом к таблице логов
+        if (!is_string($this->txt_query) || empty($this->txt_query) || str_contains($this->txt_query, TBL_LOG_QUERY)) {
+            return;
+        }
+
+        // Проверяем и нормализуем время выполнения (минимальное значение 0)
+        $execution_time_ms = max(0, $execution_time_ms ?? 0);
+
+        // Обрезаем запрос до допустимой длины (например, 65,530 символов для TEXT в MySQL)
+        $max_query_length = 65530; // Максимальная длина для TEXT
+        $log_txt_query = strlen($this->txt_query) > $max_query_length ? substr(
+            $this->txt_query,
+            0,
+            $max_query_length
+        ) . '...' // Добавляем суффикс, если текст обрезан
+            : $this->txt_query;
+
+        // Проверяем значение $reason через match
+        $reason = match ($reason) {
+            'slow', 'no_placeholders' => $reason, // Оставляем только допустимые значения
+            default                   => 'other',
+        };
+
+        // Хэшируем запрос для проверки на дублирование
+        $hash = md5($this->txt_query);
+
+        // Проверяем кэш на наличие запроса
+        if (!isset($this->query_cache[$hash])) {
+            // Если запроса нет в кэше, проверяем его наличие в базе данных
+            $stmt = $this->pdo->prepare(
+                "SELECT id, usage_count, execution_time FROM " . TBL_LOG_QUERY . " WHERE query_hash = :hash"
+            );
+            $stmt->execute([':hash' => $hash]);
+            $this->query_cache[$hash] = $stmt->fetch(PDO::FETCH_ASSOC); // Сохраняем результат в кэше
+        }
+
+        if ($this->query_cache[$hash]) {
+            // Если запрос уже существует, обновляем счетчик использования, время последнего использования и максимальное время выполнения
+            $new_usage_count = $this->query_cache[$hash]['usage_count'] + 1;
+            $max_execution_time = max(
+                (float)($this->query_cache[$hash]['execution_time'] ?? 0),
+                (float)($execution_time_ms ?? 0)
+            );
+
+            $stmt = $this->pdo->prepare(
+                "UPDATE " . TBL_LOG_QUERY . "
+            SET usage_count = :usage_count, last_used_at = CURRENT_TIMESTAMP, execution_time = :execution_time
+            WHERE id = :id"
+            );
+            $stmt->execute([
+                ':usage_count'    => $new_usage_count,
+                ':execution_time' => $max_execution_time,
+                ':id'             => $this->query_cache[$hash]['id'],
+            ]);
+        } else {
+            // Если запрос не существует, сохраняем его в таблицу логов
+            $stmt = $this->pdo->prepare(
+                "INSERT INTO " . TBL_LOG_QUERY . " (query_hash, query_text, reason, execution_time)
+            VALUES (:hash, :text, :reason, :execution_time)"
+            );
+            $stmt->execute([
+                ':hash'           => $hash,
+                ':text'           => $log_txt_query,
+                ':reason'         => $reason,
+                ':execution_time' => $execution_time_ms, // Время в миллисекундах
+            ]);
+        }
+    }
+
+    /**
+     * @brief   Форматирует дату в зависимости от типа СУБД.
+     *
+     * @details Этот метод является публичным редиректом, вызывающим защищённый метод `_format_date_internal()`.
+     *          Метод выполняет формирование SQL-выражения для форматирования даты в зависимости от типа используемой
+     *          СУБД. Параметры передаются напрямую в защищённый метод без дополнительной обработки. Основная логика
+     *          описана в методе `_format_date_internal()`.
+     *
+     * @callgraph
+     *
+     * @param string $column Название столбца с датой.
+     *                       Должен быть непустой строкой в формате имени столбца таблицы в БД.
+     * @param string $format Формат даты (в стиле MariaDB).
+     *                       Должен соответствовать формату MariaDB.
+     *
+     * @return string SQL-выражение для форматирования даты.
+     *
+     * @note    Метод использует функции форматирования даты, специфичные для каждой СУБД.
+     * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
+     *
+     * Пример внешнего вызова метода:
+     * @code
+     * $object = new \PhotoRigma\Classes\Database();
+     * $result = $object->format_date('created_at', '%Y-%m-%d');
+     * echo $result;
+     * // Результат для MySQL: DATE_FORMAT(created_at, '%Y-%m-%d')
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::_format_date_internal() Защищённый метод, реализующий основную логику
+     *          форматирования даты.
+     *
+     */
+    public function format_date(string $column, string $format): string
+    {
+        return $this->_format_date_internal($column, $format);
+    }
+
+    /**
+     * @brief   Форматирует дату в зависимости от типа СУБД.
+     *
+     * @details Этот метод формирует SQL-выражение для форматирования даты в зависимости от типа используемой СУБД.
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет тип СУБД (`$db_type`).
+     *          2. Для MariaDB (MySQL) использует функцию `DATE_FORMAT`.
+     *          3. Для PostgreSQL преобразует формат через метод `convert_to_postgres_format` и использует функцию
+     *          `TO_CHAR`.
+     *          4. Для SQLite преобразует формат через метод `convert_to_sqlite_format` и использует функцию
+     *          `strftime`.
+     *          5. Если тип СУБД не поддерживается, выбрасывает исключение.
+     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     *          Основная логика метода вызывается через публичный метод-редирект `format_date()`.
+     *
+     * @callgraph
+     *
+     * @param string $column Название столбца с датой.
+     *                       Должен быть непустой строкой в формате имени столбца таблицы в БД.
+     * @param string $format Формат даты (в стиле MariaDB).
+     *                       Должен соответствовать формату MariaDB.
+     *
+     * @return string SQL-выражение для форматирования даты.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     *
+     * @note    Метод использует функции форматирования даты, специфичные для каждой СУБД.
+     * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $this->_format_date_internal('created_at', '%Y-%m-%d');
+     * // Результат для MySQL: DATE_FORMAT(created_at, '%Y-%m-%d')
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$db_type Тип используемой СУБД.
+     * @see     PhotoRigma::Classes::Database::convert_to_postgres_format() Преобразовывает формат даты в стиль
+     *          PostgreSQL.
+     * @see     PhotoRigma::Classes::Database::convert_to_sqlite_format() Преобразовывает формат даты в стиль SQLite.
+     * @see     PhotoRigma::Classes::Database::format_date() Публичный метод-редирект для вызова этой логики.
+     *
+     */
+    protected function _format_date_internal(string $column, string $format): string
+    {
+        // Используем match для выбора логики в зависимости от типа СУБД
+        return match ($this->db_type) {
+            'mysql'  => "DATE_FORMAT($column, '$format')", // Для MariaDB используем DATE_FORMAT
+            'pgsql'  => "TO_CHAR($column, '" . $this->convert_to_postgres_format(
+                $format
+            ) . "')", // Для PostgreSQL преобразуем формат
+            'sqlite' => "strftime('" . $this->convert_to_sqlite_format(
+                $format
+            ) . "', $column)", // Для SQLite используем strftime
+            default  => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
+            ),
+        };
+    }
+
+    /**
+     * @brief   Преобразует формат даты из стиля MariaDB в стиль PostgreSQL.
+     *
+     * @details Этот метод преобразует формат даты из стиля MariaDB в стиль PostgreSQL.
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет, есть ли уже преобразованный формат в кэше (`$format_cache`).
+     *          2. Если формат отсутствует в кэше, создает карту соответствия между форматами MariaDB и PostgreSQL.
+     *          3. Преобразует формат с использованием карты соответствия и сохраняет результат в кэше.
+     *          4. Возвращает преобразованный формат из кэша.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     *
+     * @param string $mysql_format  Формат даты в стиле MariaDB.
+     *                              Должен быть строкой, соответствующей формату MariaDB (например, '%Y-%m-%d').
+     *
+     * @return string Формат даты в стиле PostgreSQL.
+     *
+     * @note    Метод использует кэширование для оптимизации повторных преобразований.
+     * @warning Убедитесь, что входной формат `$mysql_format` соответствует спецификации MariaDB.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $converted_format = $this->convert_to_postgres_format('%Y-%m-%d');
+     * echo $converted_format; // Результат: YYYY-MM-DD
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$format_cache Свойство класса для кеширования преобразованных форматов.
+     * @see     PhotoRigma::Classes::Database::_format_date_internal() Защищённый метод, вызывающий этот метод для
+     *          преобразования формата даты.
+     *
+     */
+    private function convert_to_postgres_format(string $mysql_format): string
+    {
+        // Проверяем, есть ли уже преобразованный формат в кэше
+        if (!isset($this->format_cache['pgsql'][$mysql_format])) {
+            $format_map = [
+                '%Y' => 'YYYY', // Год (например, 2023)
+                '%m' => 'MM',   // Месяц (например, 01..12)
+                '%d' => 'DD',   // День месяца (например, 01..31)
+                '%H' => 'HH24', // Часы в 24-часовом формате
+                '%i' => 'MI',   // Минуты (00..59)
+                '%s' => 'SS',   // Секунды (00..59)
+                '%a' => 'Dy',   // Сокращенное название дня недели (например, Mon)
+                '%W' => 'Day',  // Полное название дня недели (например, Monday)
+            ];
+            // Преобразуем формат MariaDB в формат PostgreSQL и кэшируем результат
+            $this->format_cache['pgsql'][$mysql_format] = strtr($mysql_format, $format_map);
+        }
+        return $this->format_cache['pgsql'][$mysql_format];
+    }
+
+    /**
+     * @brief   Преобразует формат даты из стиля MariaDB в стиль SQLite.
+     *
+     * @details Этот метод преобразует формат даты из стиля MariaDB в стиль SQLite.
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет, есть ли уже преобразованный формат в кэше (`$format_cache`).
+     *          2. Если формат отсутствует в кэше, создает карту соответствия между форматами MariaDB и SQLite.
+     *          3. Преобразует формат с использованием карты соответствия и сохраняет результат в кэше.
+     *          4. Возвращает преобразованный формат из кэша.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     *
+     * @param string $mysql_format  Формат даты в стиле MariaDB.
+     *                              Должен быть строкой, соответствующей формату MariaDB (например, '%Y-%m-%d').
+     *
+     * @return string Формат даты в стиле SQLite.
+     *
+     * @note    Метод использует кэширование для оптимизации повторных преобразований.
+     * @warning Убедитесь, что входной формат `$mysql_format` соответствует спецификации MariaDB.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $converted_format = $this->convert_to_sqlite_format('%Y-%m-%d');
+     * echo $converted_format; // Результат: %Y-%m-%d
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$format_cache Свойство класса для кеширования преобразованных форматов.
+     * @see     PhotoRigma::Classes::Database::_format_date_internal() Защищённый метод, вызывающий этот метод для
+     *          преобразования формата даты.
+     *
+     */
+    private function convert_to_sqlite_format(string $mysql_format): string
+    {
+        // Проверяем, есть ли уже преобразованный формат в кэше
+        if (!isset($this->format_cache['sqlite'][$mysql_format])) {
+            $format_map = [
+                '%Y' => '%Y', // Год (например, 2023)
+                '%m' => '%m', // Месяц (например, 01..12)
+                '%d' => '%d', // День месяца (например, 01..31)
+                '%H' => '%H', // Часы в 24-часовом формате
+                '%i' => '%M', // Минуты (00..59)
+                '%s' => '%S', // Секунды (00..59)
+                '%a' => '%w', // День недели (0=воскресенье, 6=суббота)
+                '%W' => '%W', // Номер недели в году
+            ];
+            // Преобразуем формат MariaDB в формат SQLite и кэшируем результат
+            $this->format_cache['sqlite'][$mysql_format] = strtr($mysql_format, $format_map);
+        }
+        return $this->format_cache['sqlite'][$mysql_format];
     }
 
     /**
@@ -1232,18 +1865,18 @@ class Database implements Database_Interface
         }
         // === 2. Определение типа запроса ===
         if ($type === 'ignore') {
-            $query_type = 'INSERT IGNORE INTO ';
+            $query_type = 'INSERT IGNORE INTO';
         } elseif ($type === 'replace') {
-            $query_type = 'REPLACE INTO ';
+            $query_type = 'REPLACE INTO';
         } else {
-            $query_type = 'INSERT INTO '; // По умолчанию или если указано 'into'
+            $query_type = 'INSERT INTO'; // По умолчанию или если указано 'into'
         }
         // === 3. Подготовка данных для запроса ===
         $keys = implode(', ', array_keys($insert));
         $values = implode(', ', $insert);
 
         // === 4. Формирование базового запроса ===
-        $this->txt_query = "$query_type$to_tbl ($keys) VALUES ($values)";
+        $this->txt_query = "$query_type $to_tbl ($keys) VALUES ($values)";
         // === 5. Выполнение запроса ===
         return $this->execute_query($options['params']);
     }
@@ -1797,246 +2430,6 @@ class Database implements Database_Interface
 
         // Выполнение запроса
         return $this->execute_query($params);
-    }
-
-    /**
-     * @brief   Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).
-     *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Обрабатывает условие `WHERE`:
-     *             - Если `where` является строкой, она используется как есть.
-     *             - Если `where` является массивом, он преобразуется в SQL-условие.
-     *          2. Обрабатывает ограничение `LIMIT`:
-     *             - Проверяет, что значение является числом или строкой, и добавляет его к строке запроса.
-     *          3. Возвращает результат:
-     *             - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
-     *             - Обновлённый массив параметров для подготовленного выражения.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param array $options     Опции запроса:
-     *                           - where (string|array): Условие WHERE.
-     *                           Может быть строкой или ассоциативным массивом.
-     *                           Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *                           - group (string): Группировка GROUP BY.
-     *                           Должна быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *                           - order (string): Сортировка ORDER BY.
-     *                           Должна быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *                           - limit (int|string): Ограничение LIMIT.
-     *                           Должно быть числом или строкой (например "0, 10"). Если передан неверный
-     *                           тип, выбрасывается исключение InvalidArgumentException.
-     *                           - params (array): Параметры для подготовленного выражения (необязательно).
-     *                           Если параметры не соответствуют условиям, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *
-     * @return array Массив с двумя элементами:
-     *               - string $conditions - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
-     *               - array $params - Обновлённый массив параметров для подготовленного выражения.
-     *
-     * @throws InvalidArgumentException Если параметры имеют недопустимый тип.
-     *
-     * Пример использования метода build_conditions():
-     * @code
-     * $options = [
-     *     'where' => ['id' => 1, 'status' => 'active'],
-     *     'group' => 'category_id',
-     *     'order' => 'created_at DESC',
-     *     'limit' => 10,
-     *     'params' => [':id' => 1, ':status' => 'active'],
-     * ];
-     * [$conditions, $params] = $this->build_conditions($options);
-     * echo "Условия: $conditions\n";
-     * print_r($params);
-     * @endcode
-     * @see     PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
-     * @see     PhotoRigma::Classes::Database::select()
-     *      Метод, который вызывает build_conditions() для формирования SELECT-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *      Метод, который вызывает build_conditions() для формирования JOIN-запроса.
-     *
-     * @see     PhotoRigma::Classes::Database::delete()
-     *      Метод, который вызывает build_conditions() для формирования DELETE-запроса.
-     */
-    private function build_conditions(array $options): array
-    {
-        $conditions = '';
-        $params = $options['params'] ?? [];
-
-        // === 1. Обработка WHERE ===
-        if (isset($options['where'])) {
-            if (is_string($options['where'])) {
-                // Если where — строка, добавляем её напрямую
-                $conditions .= ' WHERE ' . $options['where'];
-            } elseif (is_array($options['where'])) {
-                // Если where — массив, обрабатываем его
-                $conditions .= ' WHERE ' . implode(' AND ', $options['where']);
-            } else {
-                throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
-                        $options['where']
-                    )
-                );
-            }
-        }
-
-        // === 2. Обработка GROUP BY ===
-        if (isset($options['group'])) {
-            if (is_string($options['group'])) {
-                $conditions .= ' GROUP BY ' . $options['group'];
-            } else {
-                throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype(
-                        $options['group']
-                    )
-                );
-            }
-        }
-
-        // === 3. Обработка ORDER BY ===
-        if (isset($options['order'])) {
-            if (is_string($options['order'])) {
-                $conditions .= ' ORDER BY ' . $options['order'];
-            } else {
-                throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype(
-                        $options['order']
-                    )
-                );
-            }
-        }
-
-        // === 4. Обработка LIMIT ===
-        if (isset($options['limit'])) {
-            if (is_numeric($options['limit'])) {
-                $conditions .= ' LIMIT ' . (int)$options['limit'];
-            } elseif (is_string($options['limit']) && preg_match('/^\d+\s*,\s*\d+$/', $options['limit'])) {
-                [$offset, $count] = array_map('intval', explode(',', $options['limit']));
-                $conditions .= ' LIMIT ' . $offset . ', ' . $count;
-            } else {
-                throw new InvalidArgumentException(
-                    "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
-                        $options['limit']
-                    ) . " ($options[limit])"
-                );
-            }
-        }
-
-        return [$conditions, $params];
-    }
-
-    /**
-     * @brief   Выполняет SQL-запрос с использованием подготовленных выражений.
-     *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет состояние результата запроса и тип аргументов:
-     *             - Убедитесь, что `$res_query` является экземпляром `\PDOStatement`.
-     *             - Проверяется, что `$txt_query` является строкой.
-     *             - Проверяется, что `$params` является массивом.
-     *          2. Очищает внутренние свойства для вывода результата запроса:
-     *             - Обнуляет `$res_query`, `$aff_rows`, `$insert_id`.
-     *          3. Подготавливает и выполняет SQL-запрос с использованием PDO:
-     *             - Использует `$pdo->prepare()` для подготовки запроса.
-     *             - Выполняет запрос с переданными параметрами.
-     *             - Получает количество затронутых строк (`$aff_rows`) и ID последней вставленной записи
-     *             (`$insert_id`).
-     *          4. Логирует медленные запросы:
-     *             - Измеряет время выполнения запроса.
-     *             - Если время выполнения превышает пороговое значение (200 мс), логирует запрос с помощью
-     *             `log_in_file()`.
-     *          5. Возвращает результат выполнения запроса:
-     *             - Возвращает `true`, если запрос успешно выполнен.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param array $params Массив параметров для подготовленного выражения (необязательно).
-     *                      Если параметры не соответствуют плейсхолдерам, выбрасывается исключение
-     *                      \\PDOException.
-     *
-     * @return bool Возвращает true, если запрос успешно выполнен.
-     *
-     * @throws InvalidArgumentException Если аргументы неверного типа.
-     * @throws PDOException|Exception Если возникает ошибка при выполнении запроса.
-     *
-     * Пример использования метода execute_query():
-     * @code
-     * $query = "SELECT * FROM users WHERE id = :id";
-     * $params = [':id' => 1];
-     * $this->execute_query($query, $params);
-     * echo "Запрос выполнен успешно!";
-     * @endcode
-     * @see     PhotoRigma::Include::log_in_file()
-     *      Логирует медленные запросы.
-     * @see     PhotoRigma::Classes::Database::$pdo
-     *      Объект PDO, используемый для выполнения запроса.
-     * @see     PhotoRigma::Classes::Database::$res_query
-     *      Результат подготовленного выражения.
-     * @see     PhotoRigma::Classes::Database::$aff_rows
-     *      Количество затронутых строк после выполнения запроса.
-     * @see     PhotoRigma::Classes::Database::$insert_id
-     *      ID последней вставленной записи.
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *      Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::delete()
-     *      Метод, который вызывает execute_query() для выполнения DELETE-запроса.
-     * @see     PhotoRigma::Classes::Database::truncate()
-     *      Метод, который вызывает execute_query() для выполнения TRUNCATE-запроса.
-     * @see     PhotoRigma::Classes::Database::update()
-     *      Метод, который вызывает execute_query() для выполнения UPDATE-запроса.
-     * @see     PhotoRigma::Classes::Database::insert()
-     *      Метод, который вызывает execute_query() для выполнения INSERT-запроса.
-     * @see     PhotoRigma::Classes::Database::select()
-     *      Метод, который вызывает execute_query() для выполнения SELECT-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *      Метод, который вызывает execute_query() для выполнения JOIN-запроса.
-     *
-     */
-    private function execute_query(array $params = []): bool
-    {
-        // Валидация состояния запроса и аргументов
-        if (isset($this->res_query) && !($this->res_query instanceof PDOStatement)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное состояние результата запроса | Текущее значение: " . gettype(
-                    $this->res_query
-                )
-            );
-        }
-        // Очистка внутренних свойств для вывода результата запроса
-        $this->res_query = null;
-        $this->aff_rows = 0;
-        $this->insert_id = 0;
-        // Валидация аргументов
-        if (!is_string($this->txt_query)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип SQL-запроса | Ожидалась строка, получено: " . gettype(
-                    $this->txt_query
-                )
-            );
-        }
-        // Начало замера времени
-        $start_time = microtime(true);
-        $this->res_query = $this->pdo->prepare($this->txt_query);
-        $this->res_query->execute($params);
-        $this->aff_rows = $this->res_query->rowCount();
-        $this->insert_id = (int)$this->pdo->lastInsertId();
-        // Конец замера времени
-        $end_time = microtime(true);
-        $execution_time = ($end_time - $start_time) * 1000; // Время в миллисекундах
-        // Логирование медленных запросов
-        $slow_query_threshold = 200; // Порог в миллисекундах
-        if ($execution_time > $slow_query_threshold) {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Обнаружен медленный запрос | Время выполнения: $execution_time мс | SQL: $this->txt_query"
-            );
-        }
-        // Очистка строки запроса после её выполнения
-        $this->txt_query = null;
-        return true;
     }
 
     /**

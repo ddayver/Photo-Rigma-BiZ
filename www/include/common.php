@@ -86,6 +86,12 @@ define('TBL_RATE_USER', '`rate_user`'); ///< Таблица с оценками 
 define('TBL_RATE_MODER', '`rate_moder`'); ///< Таблица с оценками фотографий от модераторов
 define('TBL_USERS', '`users`'); ///< Таблица пользователей
 define('TBL_GROUP', '`groups`'); ///< Таблица групп пользователей с их правами
+define(
+    'TBL_LOG_QUERY',
+    'query_logs'
+); ///< Таблица для логирования медленных запросов, запросов без плейсхолдеров (имя не экранируется для совместимости с различными базами)
+define('VIEW_RANDOM_PHOTO', '`random_photo`'); ///< Представление с одним случайным фото
+define('VIEW_USERS_ONLINE', '`users_online`'); ///< Представление со списком онлайн пользователей
 define('DEFAULT_GROUP', 1); ///< Группа по-умолчанию для новых пользователей
 define('MAX_LOGIN_ATTEMPTS', 5); ///< Максимальное количество попыток входа в админку
 define(
@@ -451,9 +457,9 @@ function log_in_file(string $txt, bool $die = false): bool
         // Добавление трассировки, если DEBUG_GALLERY включен
         if (defined('DEBUG_GALLERY')) {
             $trace_depth = match (true) {
-                DEBUG_GALLERY === false => 0,
+                DEBUG_GALLERY === false                                           => 0,
                 is_int(DEBUG_GALLERY) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9 => DEBUG_GALLERY,
-                default => 5, // Глубина трассировки по умолчанию
+                default                                                           => 5, // Глубина трассировки по умолчанию
             };
             if ($trace_depth > 0) {
                 $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, $trace_depth + 1);

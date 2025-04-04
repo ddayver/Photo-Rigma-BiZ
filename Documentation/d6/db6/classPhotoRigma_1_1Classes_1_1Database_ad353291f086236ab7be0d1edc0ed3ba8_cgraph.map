@@ -1,5 +1,9 @@
 <map id="_truncate_internal" name="_truncate_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="5,5,130,30"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="178,5,282,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,15,162,15,162,20,130,20"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="5,31,130,55"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="178,31,282,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,40,162,40,162,46,130,46"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0" title="Производит финальное преобразование SQL&#45;запроса в зависимости от типа СУБД." alt="" coords="330,5,432,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="282,32,314,26,315,31,283,37"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="343,55,419,79"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="283,49,328,56,327,61,282,54"/>
 </map>

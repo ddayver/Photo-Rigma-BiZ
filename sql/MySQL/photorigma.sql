@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Мар 19 2025 г., 19:08
+-- Время создания: Апр 04 2025 г., 19:58
 -- Версия сервера: 10.11.11-MariaDB
--- Версия PHP: 8.4.5
+-- Версия PHP: 8.4.6RC1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `name` varchar(50) NOT NULL COMMENT 'Название раздела',
   `description` varchar(250) NOT NULL COMMENT 'Описание раздела',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица разделов';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица разделов';
 
 --
 -- ССЫЛКИ ТАБЛИЦЫ `category`:
@@ -56,7 +56,7 @@ INSERT INTO `category` (`id`, `folder`, `name`, `description`) VALUES
 -- Структура таблицы `config`
 --
 -- Создание: Янв 29 2025 г., 23:43
--- Последнее обновление: Мар 19 2025 г., 08:19
+-- Последнее обновление: Мар 20 2025 г., 22:18
 --
 
 DROP TABLE IF EXISTS `config`;
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 INSERT INTO `config` (`name`, `value`) VALUES
 ('best_user', '5'),
 ('copyright_text', 'Проекты Rigma.BiZ'),
-('copyright_url', 'http://rigma.biz/'),
+('copyright_url', 'https://rigma.biz/'),
 ('copyright_year', '2008-2025'),
 ('gal_width', '95%'),
 ('language', 'russian'),
@@ -131,7 +131,7 @@ INSERT INTO `db_version` (`ver`) VALUES
 -- Структура таблицы `groups`
 --
 -- Создание: Мар 19 2025 г., 09:52
--- Последнее обновление: Мар 19 2025 г., 18:29
+-- Последнее обновление: Апр 01 2025 г., 21:55
 --
 
 DROP TABLE IF EXISTS `groups`;
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `user_login` tinyint(1) DEFAULT NULL COMMENT 'Проверка - зарегистрирован ли пользователь',
   `user_access` varchar(250) DEFAULT NULL COMMENT 'Дополнительные права',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица пунктов меню' ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица пунктов меню' ROW_FORMAT=DYNAMIC;
 
 --
 -- ССЫЛКИ ТАБЛИЦЫ `menu`:
@@ -219,10 +219,12 @@ CREATE TABLE IF NOT EXISTS `news` (
   `name_post` varchar(50) NOT NULL COMMENT 'Название новости',
   `text_post` text NOT NULL COMMENT 'Текст новости',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Новости сайта' ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Новости сайта' ROW_FORMAT=DYNAMIC;
 
 --
 -- ССЫЛКИ ТАБЛИЦЫ `news`:
+--   `user_post`
+--       `users` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -246,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `photo` (
   `rate_user` double NOT NULL DEFAULT 0 COMMENT 'Оценка от пользователя',
   `rate_moder` double NOT NULL DEFAULT 0 COMMENT 'Оценка от модератора',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='таблица размещения фотографий' ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='таблица размещения фотографий' ROW_FORMAT=DYNAMIC;
 
 --
 -- ССЫЛКИ ТАБЛИЦЫ `photo`:
@@ -254,6 +256,33 @@ CREATE TABLE IF NOT EXISTS `photo` (
 --       `category` -> `id`
 --   `user_upload`
 --       `users` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `query_logs`
+--
+-- Создание: Апр 04 2025 г., 17:55
+-- Последнее обновление: Апр 04 2025 г., 19:18
+--
+
+DROP TABLE IF EXISTS `query_logs`;
+CREATE TABLE IF NOT EXISTS `query_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор записи',
+  `query_hash` char(32) NOT NULL COMMENT 'Хэш запроса для проверки дублирования',
+  `query_text` text NOT NULL COMMENT 'Текст SQL-запроса',
+  `created_at` timestamp NULL DEFAULT current_timestamp() COMMENT 'Время первого логирования',
+  `last_used_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Время последнего использования',
+  `usage_count` int(11) NOT NULL DEFAULT 1 COMMENT 'Количество использований запроса',
+  `reason` enum('slow','no_placeholders','other') DEFAULT 'other' COMMENT 'Причина логирования: медленный запрос, отсутствие плейсхолдеров или другое',
+  `execution_time` float DEFAULT NULL COMMENT 'Время выполнения запроса (в миллисекундах)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `query_hash` (`query_hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Логирование SQL-запросов для анализа производительности';
+
+--
+-- ССЫЛКИ ТАБЛИЦЫ `query_logs`:
 --
 
 -- --------------------------------------------------------
@@ -281,6 +310,36 @@ CREATE TABLE IF NOT EXISTS `rate_moder` (
 --       `users` -> `id`
 --
 
+--
+-- Триггеры `rate_moder`
+--
+DROP TRIGGER IF EXISTS `update_rate_moder_after_delete`;
+DELIMITER $$
+CREATE TRIGGER `update_rate_moder_after_delete` AFTER DELETE ON `rate_moder` FOR EACH ROW BEGIN
+    UPDATE photo
+    SET rate_moder = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_moder
+        WHERE id_foto = OLD.id_foto
+    )
+    WHERE id = OLD.id_foto;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `update_rate_moder_after_insert`;
+DELIMITER $$
+CREATE TRIGGER `update_rate_moder_after_insert` AFTER INSERT ON `rate_moder` FOR EACH ROW BEGIN
+    UPDATE photo
+    SET rate_moder = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_moder
+        WHERE id_foto = NEW.id_foto
+    )
+    WHERE id = NEW.id_foto;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -306,13 +365,43 @@ CREATE TABLE IF NOT EXISTS `rate_user` (
 --       `users` -> `id`
 --
 
+--
+-- Триггеры `rate_user`
+--
+DROP TRIGGER IF EXISTS `update_rate_user_after_delete`;
+DELIMITER $$
+CREATE TRIGGER `update_rate_user_after_delete` AFTER DELETE ON `rate_user` FOR EACH ROW BEGIN
+    UPDATE photo
+    SET rate_user = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_user
+        WHERE id_foto = OLD.id_foto
+    )
+    WHERE id = OLD.id_foto;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `update_rate_user_after_insert`;
+DELIMITER $$
+CREATE TRIGGER `update_rate_user_after_insert` AFTER INSERT ON `rate_user` FOR EACH ROW BEGIN
+    UPDATE photo
+    SET rate_user = (
+        SELECT IFNULL(AVG(rate), 0)
+        FROM rate_user
+        WHERE id_foto = NEW.id_foto
+    )
+    WHERE id = NEW.id_foto;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `users`
 --
 -- Создание: Мар 19 2025 г., 09:52
--- Последнее обновление: Мар 19 2025 г., 18:34
+-- Последнее обновление: Апр 04 2025 г., 19:18
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -332,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Права доступа' CHECK (json_valid(`user_rights`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица данных пользователя' ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица данных пользователя' ROW_FORMAT=DYNAMIC;
 
 --
 -- ССЫЛКИ ТАБЛИЦЫ `users`:
@@ -345,7 +434,27 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, `language`, `theme`, `date_regist`, `date_last_activ`, `date_last_logout`, `group_id`, `user_rights`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-03-19 16:34:47', '2025-03-11 14:57:03', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-04 16:18:09', '2025-04-02 19:52:30', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `random_photo`
+--
+DROP TABLE IF EXISTS `random_photo`;
+
+DROP VIEW IF EXISTS `random_photo`;
+CREATE VIEW `random_photo`  AS SELECT `photo`.`id` AS `id`, `photo`.`file` AS `file`, `photo`.`name` AS `name`, `photo`.`description` AS `description`, `photo`.`category` AS `category`, `photo`.`rate_user` AS `rate_user`, `photo`.`rate_moder` AS `rate_moder`, `photo`.`user_upload` AS `user_upload` FROM `photo` ORDER BY rand() ASC LIMIT 0, 1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `users_online`
+--
+DROP TABLE IF EXISTS `users_online`;
+
+DROP VIEW IF EXISTS `users_online`;
+CREATE VIEW `users_online`  AS SELECT `users`.`id` AS `id`, `users`.`real_name` AS `real_name` FROM `users` WHERE `users`.`date_last_activ` >= current_timestamp() - interval (select `config`.`value` from `config` where `config`.`name` = 'time_user_online') second ;
 
 
 --
@@ -382,6 +491,14 @@ USE `phpmyadmin`;
 --
 
 --
+-- Метаданные для таблицы query_logs
+--
+
+--
+-- Метаданные для таблицы random_photo
+--
+
+--
 -- Метаданные для таблицы rate_moder
 --
 
@@ -394,6 +511,10 @@ USE `phpmyadmin`;
 --
 
 --
+-- Метаданные для таблицы users_online
+--
+
+--
 -- Метаданные для базы данных photorigma
 --
 
@@ -402,6 +523,7 @@ USE `phpmyadmin`;
 --
 
 INSERT INTO `pma__relation` (`master_db`, `master_table`, `master_field`, `foreign_db`, `foreign_table`, `foreign_field`) VALUES
+('photorigma', 'news', 'user_post', 'photorigma', 'users', 'id'),
 ('photorigma', 'photo', 'category', 'photorigma', 'category', 'id'),
 ('photorigma', 'photo', 'user_upload', 'photorigma', 'users', 'id'),
 ('photorigma', 'rate_moder', 'id_foto', 'photorigma', 'photo', 'id'),

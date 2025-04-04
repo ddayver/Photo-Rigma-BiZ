@@ -15,3 +15,4 @@ doc_gen.bat
 *.css~
 .gitconfig-*
 /.idea/
+sql_*.txt

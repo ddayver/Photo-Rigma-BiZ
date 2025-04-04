@@ -4,4 +4,8 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,31,154,26,155,32,122,37"/>
 <area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="175,55,279,79"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="122,49,160,55,159,60,122,54"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0" title="Производит финальное преобразование SQL&#45;запроса в зависимости от типа СУБД." alt="" coords="332,29,434,54"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="279,56,316,50,317,55,280,61"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="345,79,421,103"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="280,72,330,80,329,85,279,78"/>
 </map>

@@ -180,11 +180,14 @@ if ($subact === 'logout') {
 
     // Обновление данных пользователя через плейсхолдеры
     $db->update([
-        '`date_last_activ`'  => null,
-        '`date_last_logout`' => date('Y-m-d H:i:s'),
+        '`date_last_activ`'  => ':last_activ',
+        '`date_last_logout`' => 'NOW()',
     ], TBL_USERS, [
         'where'  => '`id` = :user_id',
-        'params' => [':user_id' => $user->session['login_id']],
+        'params' => [
+            ':user_id'     => $user->session['login_id'],
+            ':last_activ'  => null, // Передаем NULL как значение
+        ],
     ]);
 
     // Проверка успешности обновления

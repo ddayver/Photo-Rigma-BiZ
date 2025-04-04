@@ -5,7 +5,7 @@ var indexSectionsWithContent =
   2: "p",
   3: "acdimnprstuvw",
   4: "_abcdefgijlmnprstuv",
-  5: "$cdeilmrt",
+  5: "$cdeilmrtv",
   6: "aceilmnprsvавдикмнопрсфя",
   7: "bloprtuзс📸"
 };

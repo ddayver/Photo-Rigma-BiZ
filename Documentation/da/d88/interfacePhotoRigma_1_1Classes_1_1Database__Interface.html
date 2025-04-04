@@ -153,6 +153,9 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <tr class="memitem:abafff8c03a52d73e37072449448e5a3c" id="r_abafff8c03a52d73e37072449448e5a3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abafff8c03a52d73e37072449448e5a3c">get_last_insert_id</a> ()</td></tr>
 <tr class="memdesc:abafff8c03a52d73e37072449448e5a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ID последней вставленной строки.  <br /></td></tr>
 <tr class="separator:abafff8c03a52d73e37072449448e5a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0e58b1bf2a72bbbaa896b9849ed0e42" id="r_ac0e58b1bf2a72bbbaa896b9849ed0e42"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0e58b1bf2a72bbbaa896b9849ed0e42">format_date</a> (string $column, string $format)</td></tr>
+<tr class="memdesc:ac0e58b1bf2a72bbbaa896b9849ed0e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Форматирует дату в зависимости от типа СУБД.  <br /></td></tr>
+<tr class="separator:ac0e58b1bf2a72bbbaa896b9849ed0e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс Database_Interface определяет методы для работы с базой данных. </p>
@@ -242,6 +245,57 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515">Database</a>.</p>
+
+</div>
+</div>
+<a id="ac0e58b1bf2a72bbbaa896b9849ed0e42" name="ac0e58b1bf2a72bbbaa896b9849ed0e42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0e58b1bf2a72bbbaa896b9849ed0e42">&#9670;&#160;</a></span>format_date()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">format_date </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$column</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$format</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Форматирует дату в зависимости от типа СУБД. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод должен формировать SQL-выражение для форматирования даты в зависимости от типа используемой СУБД. Основные требования к реализации:</p><ul>
+<li>Проверка типа СУБД.</li>
+<li>Поддержка форматирования для MariaDB (MySQL), PostgreSQL и SQLite.</li>
+<li>Генерация исключения, если тип СУБД не поддерживается. Метод предназначен для использования вне класса (например, через публичный метод-редирект).</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$column</td><td>Название столбца с датой. Должен быть непустой строкой в формате имени столбца таблицы в БД. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$format</td><td>Формат даты (в стиле MariaDB). Должен соответствовать формату MariaDB.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>string SQL-выражение для форматирования даты.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если тип СУБД не поддерживается.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод использует функции форматирования даты, специфичные для каждой СУБД. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что <code>$column</code> и <code>$format</code> содержат корректные значения перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Database();</div>
+<div class="line">$result = $object-&gt;format_date(<span class="stringliteral">&#39;created_at&#39;</span>, <span class="stringliteral">&#39;%Y-%m-%d&#39;</span>);</div>
+<div class="line">echo $result;</div>
+<div class="line"><span class="comment">// Результат для MySQL: DATE_FORMAT(created_at, &#39;%Y-%m-%d&#39;)</span></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac0e58b1bf2a72bbbaa896b9849ed0e42" title="Форматирует дату в зависимости от типа СУБД.">PhotoRigma\Classes\Database\format_date()</a> Пример реализации метода в классе. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac0e58b1bf2a72bbbaa896b9849ed0e42">Database</a>.</p>
 
 </div>
 </div>

@@ -1009,9 +1009,9 @@ class User implements User_Interface
 
         // Обновляем данные о последней активности пользователя
         if (!$this->db->update(
-            ['`date_last_activ`' => ':current_time'],
+            ['`date_last_activ`' => 'NOW()'],
             TBL_USERS,
-            ['where' => '`id` = :user_id', 'params' => [':user_id' => $user_id, ':current_time' => date('Y-m-d H:i:s')]]
+            ['where' => '`id` = :user_id', 'params' => [':user_id' => $user_id]]
         )) {
             throw new RuntimeException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось обновить дату последней активности пользователя с ID: $user_id"
