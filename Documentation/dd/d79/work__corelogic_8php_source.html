@@ -921,10 +921,10 @@ $(function(){initNavTree('dd/d79/work__corelogic_8php_source.html','../../'); in
 <div class="line"><a id="l02245" name="l02245"></a><span class="lineno"> 2245</span>            [<span class="stringliteral">&#39;params&#39;</span> =&gt; $query_rate]</div>
 <div class="line"><a id="l02246" name="l02246"></a><span class="lineno"> 2246</span>        );</div>
 <div class="line"><a id="l02247" name="l02247"></a><span class="lineno"> 2247</span> </div>
-<div class="line"><a id="l02248" name="l02248"></a><span class="lineno"> 2248</span>        <span class="comment">// Пересчет средней оценки</span></div>
-<div class="line"><a id="l02249" name="l02249"></a><span class="lineno"> 2249</span>        $this-&gt;db-&gt;select(<span class="stringliteral">&#39;`rate`&#39;</span>, $table, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;`id_foto` = :id_foto&#39;</span>, <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:id_foto&#39;</span> =&gt; $photo_id]]);</div>
-<div class="line"><a id="l02250" name="l02250"></a><span class="lineno"> 2250</span>        $rate = $this-&gt;db-&gt;res_arr();</div>
-<div class="line"><a id="l02251" name="l02251"></a><span class="lineno"> 2251</span>        <span class="keywordflow">return</span> $rate ? array_sum(array_column($rate, <span class="stringliteral">&#39;rate&#39;</span>)) / count($rate) : 0;</div>
+<div class="line"><a id="l02248" name="l02248"></a><span class="lineno"> 2248</span>        <span class="comment">// Получение средней оценки (перерасчет выполняется внутри СУБД с помощью Тригеров и функций).</span></div>
+<div class="line"><a id="l02249" name="l02249"></a><span class="lineno"> 2249</span>        $this-&gt;db-&gt;select($table, TBL_PHOTO, [<span class="stringliteral">&#39;where&#39;</span> =&gt; <span class="stringliteral">&#39;`id` = :id_foto&#39;</span>, <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:id_foto&#39;</span> =&gt; $photo_id]]);</div>
+<div class="line"><a id="l02250" name="l02250"></a><span class="lineno"> 2250</span>        $rate = $this-&gt;db-&gt;res_row();</div>
+<div class="line"><a id="l02251" name="l02251"></a><span class="lineno"> 2251</span>        <span class="keywordflow">return</span> $rate ? $rate[trim($table, <span class="charliteral">&#39;`&#39;</span>)] : 0;</div>
 <div class="line"><a id="l02252" name="l02252"></a><span class="lineno"> 2252</span>    }</div>
 </div>
 <div class="line"><a id="l02253" name="l02253"></a><span class="lineno"> 2253</span>}</div>

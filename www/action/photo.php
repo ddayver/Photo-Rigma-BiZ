@@ -224,25 +224,7 @@ if ($photo_id !== 0) {
                 'regexp' => '/^-?[0-9]+$/',
             ]) && abs($_POST['rate_user']) <= $work->config['max_rate']) {
             // Вызов метода для обработки оценки пользователя
-            $rate_user = $work->process_rating(TBL_RATE_USER, $photo_id, $user->user['id'], $_POST['rate_user']);
-
-            // Обновление средней оценки в таблице фотографий
-            $db->update(
-                ['`rate_user`' => ':rate_user'],
-                TBL_PHOTO,
-                [
-                    'where'  => '`id` = :id',
-                    'params' => [':id' => $photo_id, ':rate_user' => $rate_user],
-                ]
-            );
-
-            $affected_rows = $db->get_affected_rows();
-            if ($affected_rows === 0) {
-                throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить оценку пользователя в таблице фотографий | ID фотографии: $photo_id"
-                );
-            }
-            $photo_data['rate_user'] = $rate_user;
+            $photo_data['rate_user'] = $work->process_rating(TBL_RATE_USER, $photo_id, $user->user['id'], $_POST['rate_user']);
         }
 
         // Проверка текущей оценки модератора
@@ -263,25 +245,7 @@ if ($photo_id !== 0) {
                 'regexp' => '/^-?[0-9]+$/',
             ]) && abs($_POST['rate_moder']) <= $work->config['max_rate']) {
             // Вызов метода для обработки оценки модератора
-            $rate_moder = $work->process_rating(TBL_RATE_MODER, $photo_id, $user->user['id'], $_POST['rate_moder']);
-
-            // Обновление средней оценки в таблице фотографий
-            $db->update(
-                ['`rate_moder`' => ':rate_moder'],
-                TBL_PHOTO,
-                [
-                    'where'  => '`id` = :id',
-                    'params' => [':id' => $photo_id, ':rate_moder' => $rate_moder],
-                ]
-            );
-
-            $affected_rows = $db->get_affected_rows();
-            if ($affected_rows === 0) {
-                throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить оценку модератора в таблице фотографий | ID фотографии: $photo_id"
-                );
-            }
-            $photo_data['rate_moder'] = $rate_moder;
+            $photo_data['rate_moder'] = $work->process_rating(TBL_RATE_MODER, $photo_id, $user->user['id'], $_POST['rate_moder']);
         }
     } elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
         '_GET',

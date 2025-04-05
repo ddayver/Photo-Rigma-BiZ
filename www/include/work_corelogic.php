@@ -406,7 +406,7 @@ interface Work_CoreLogic_Interface
      *          Убедитесь, что пользователь имеет право на просмотр изображений.
      * @warning Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию.
      * @warning Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри директории
-     *          галлереи.
+     *          галереи.
      *
      * Пример вызова метода:
      * @code
@@ -2245,9 +2245,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             ['params' => $query_rate]
         );
 
-        // Пересчет средней оценки
-        $this->db->select('`rate`', $table, ['where' => '`id_foto` = :id_foto', 'params' => [':id_foto' => $photo_id]]);
-        $rate = $this->db->res_arr();
-        return $rate ? array_sum(array_column($rate, 'rate')) / count($rate) : 0;
+        // Получение средней оценки (перерасчет выполняется внутри СУБД с помощью Тригеров и функций).
+        $this->db->select($table, TBL_PHOTO, ['where' => '`id` = :id_foto', 'params' => [':id_foto' => $photo_id]]);
+        $rate = $this->db->res_row();
+        return $rate ? $rate[trim($table, '`')] : 0;
     }
 }

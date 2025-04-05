@@ -1281,7 +1281,7 @@ class Database implements Database_Interface
      *
      * @note    Метод использует кэширование (`$query_cache`) для оптимизации проверки существования запросов.
      * @warning Убедитесь, что `$txt_query` содержит корректный SQL-запрос перед вызовом метода.
-     *          Также учтите, что слишком длинные запросы будут обрезаны до 65,535 символов.
+     *          Также учтите, что слишком длинные запросы будут обрезаны до 65,530 символа.
      *
      * Пример вызова метода внутри класса:
      * @code
@@ -1303,9 +1303,9 @@ class Database implements Database_Interface
         }
 
         // Проверяем и нормализуем время выполнения (минимальное значение 0)
-        $execution_time_ms = max(0, $execution_time_ms ?? 0);
+        $execution_time_ms = max(0.0, (float)($execution_time_ms ?? 0));
 
-        // Обрезаем запрос до допустимой длины (например, 65,530 символов для TEXT в MySQL)
+        // Обрезаем запрос до допустимой длины (например, 65,530 символа для TEXT в MySQL)
         $max_query_length = 65530; // Максимальная длина для TEXT
         $log_txt_query = strlen($this->txt_query) > $max_query_length ? substr(
             $this->txt_query,
@@ -1336,9 +1336,10 @@ class Database implements Database_Interface
         if ($this->query_cache[$hash]) {
             // Если запрос уже существует, обновляем счетчик использования, время последнего использования и максимальное время выполнения
             $new_usage_count = $this->query_cache[$hash]['usage_count'] + 1;
+            $execution_time_ms = $execution_time_ms ?? 0.0;
             $max_execution_time = max(
                 (float)($this->query_cache[$hash]['execution_time'] ?? 0),
-                (float)($execution_time_ms ?? 0)
+                (float)$execution_time_ms
             );
 
             $stmt = $this->pdo->prepare(
