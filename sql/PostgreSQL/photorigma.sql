@@ -17,6 +17,27 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: root
+--
+
+CREATE FUNCTION public.prevent_deletion_of_service_groups() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    -- Проверяем, является ли id служебным
+    IF OLD.id BETWEEN 0 AND 3 THEN
+        -- Просто выходим без ошибки (удаление игнорируется)
+        RETURN NULL;
+    END IF;
+    -- Разрешаем удаление
+    RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO root;
+
+--
 -- Name: update_rate_moder(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
@@ -1292,6 +1313,13 @@ CREATE UNIQUE INDEX query_logs_query_hash_key ON public.query_logs USING btree (
 
 
 --
+-- Name: groups trg_prevent_deletion; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER trg_prevent_deletion BEFORE DELETE ON public.groups FOR EACH ROW EXECUTE FUNCTION public.prevent_deletion_of_service_groups();
+
+
+--
 -- Name: rate_moder update_rate_moder_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
 --
 
@@ -1317,6 +1345,70 @@ CREATE TRIGGER update_rate_user_after_delete AFTER DELETE ON public.rate_user FO
 --
 
 CREATE TRIGGER update_rate_user_after_insert AFTER INSERT ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user();
+
+
+--
+-- Name: rate_moder m_rate_photo; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.rate_moder
+    ADD CONSTRAINT m_rate_photo FOREIGN KEY (id_foto) REFERENCES public.photo(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: rate_moder m_rate_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.rate_moder
+    ADD CONSTRAINT m_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: news news_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.news
+    ADD CONSTRAINT news_users FOREIGN KEY (user_post) REFERENCES public.users(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: photo photo_category; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.photo
+    ADD CONSTRAINT photo_category FOREIGN KEY (category) REFERENCES public.category(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: photo photo_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.photo
+    ADD CONSTRAINT photo_users FOREIGN KEY (user_upload) REFERENCES public.users(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: rate_user u_rate_photo; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.rate_user
+    ADD CONSTRAINT u_rate_photo FOREIGN KEY (id_foto) REFERENCES public.photo(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: rate_user u_rate_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.rate_user
+    ADD CONSTRAINT u_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: users users_groups; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_groups FOREIGN KEY (group_id) REFERENCES public.groups(id) ON DELETE RESTRICT;
 
 
 --

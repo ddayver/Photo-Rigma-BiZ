@@ -595,6 +595,35 @@ interface User_Interface
      *
      */
     public function process_user_rights(string $user_rights): array;
+
+    /**
+     * @brief   Установка объекта Work через сеттер.
+     *
+     * @details Этот метод позволяет установить объект Work ($work).
+     *          Метод выполняет следующие действия:
+     *          1. Проверяет, что переданный объект является экземпляром класса Work.
+     *          2. Присваивает объект свойству $work текущего класса.
+     *
+     * @param Work $work Объект Work:
+     *                   - Должен быть экземпляром класса Work.
+     *
+     * @throws InvalidArgumentException Если передан некорректный объект (не экземпляр класса Work).
+     *
+     * @note    Метод проверяет тип переданного объекта.
+     *       Объект Work используется для дальнейшего взаимодействия в текущем классе.
+     *
+     * @warning Некорректный объект (не экземпляр класса Work) вызывает исключение.
+     *
+     * Пример использования метода:
+     * @code
+     * $user = new \PhotoRigma\Classes\User();
+     * $work = new \PhotoRigma\Classes\Work();
+     * $user->set_work($work);
+     * @endcode
+     * @see     PhotoRigma::Classes::Work Класс с объектом Work.
+     *
+     */
+    public function set_work(Work $work): void;
 }
 
 /**
@@ -1655,6 +1684,7 @@ class User implements User_Interface
      *               - Все поля, указанные в свойстве класса `user_right_fields`.
      *
      * @throws RuntimeException Выбрасывается, если произошла ошибка при обновлении данных в БД.
+     * @throws \Exception
      *
      * @note    Метод использует свойство класса `user_right_fields` для определения допустимых полей прав группы.
      * @warning Убедитесь, что входные данные корректны. Невалидные данные могут привести к исключениям.
@@ -2227,6 +2257,7 @@ class User implements User_Interface
      *               - Все поля, указанные в свойстве класса `user_right_fields`.
      *
      * @throws RuntimeException Выбрасывается, если:
+     * @throws \Exception
      *                           - Не удалось получить данные группы из БД.
      *                           - Произошла ошибка при обновлении данных пользователя в БД.
      *
@@ -2277,6 +2308,7 @@ class User implements User_Interface
             $group_data = $this->db->res_row();
 
             if ($group_data) {
+                $query = [];
                 foreach ($group_data as $key => $value) {
                     if ($key === 'id') {
                         // Обновляем ID группы пользователя
@@ -2307,7 +2339,7 @@ class User implements User_Interface
                     $new_user_data = array_merge($new_user_data, $processed_rights);
                 } else {
                     throw new RuntimeException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: {$user_id}"
+                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: $user_id"
                     );
                 }
             } else {
@@ -2318,7 +2350,7 @@ class User implements User_Interface
             }
         } else {
             // Обновление прав доступа пользователя
-            // Получаем список всех полей прав доступа
+            $new_user_rights = [];
             foreach ($this->user_right_fields['all'] as $field) {
                 if ($this->work->check_input('_POST', $field, ['isset' => true])) {
                     // Если поле существует и имеет допустимое значение, устанавливаем его в true

@@ -51,3 +51,13 @@ BEGIN
     )
     WHERE id = OLD.id_foto;
 END;
+
+CREATE TRIGGER trg_prevent_deletion
+BEFORE DELETE ON groups
+FOR EACH ROW
+WHEN OLD.id BETWEEN 0 AND 3
+BEGIN
+    -- Просто игнорируем удаление
+    SELECT RAISE(IGNORE);
+END;
+

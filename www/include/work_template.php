@@ -287,6 +287,62 @@ interface Work_Template_Interface
      *      Публичный метод, который вызывает этот внутренний метод.
      */
     public function template_best_user(int $best_user = 1): array;
+
+    /**
+     * @brief   Установка языковых данных через сеттер.
+     *
+     * @details Метод позволяет установить массив языковых данных.
+     *          Если передан некорректный тип данных или `null`, выбрасывается исключение.
+     *
+     * @param array $lang Языковые данные:
+     *                    - Должен быть массивом.
+     *                    - Каждый ключ должен быть строкой, а значение — допустимым для языковых данных.
+     *
+     * @return void Метод ничего не возвращает.
+     *
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
+     *
+     * @note    Убедитесь, что передаваемые языковые данные корректны и соответствуют ожидаемому формату.
+     * @warning Не передавайте пустые или некорректные данные, так как это может привести к ошибкам.
+     *
+     * Пример использования метода:
+     * @code
+     * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
+     * $template->set_lang(['key' => 'value']);
+     * @endcode
+     * @see     PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
+     *
+     * @see     PhotoRigma::Classes::Work_Template::$lang Свойство, которое изменяет метод.
+     */
+    public function set_lang(array $lang): void;
+
+    /**
+     * @brief   Установка данных пользователя через сеттер.
+     *
+     * @details Метод позволяет установить объект пользователя.
+     *          Если передан некорректный тип данных или `null`, выбрасывается исключение.
+     *
+     * @param User $user Объект пользователя:
+     *                   - Должен быть экземпляром класса User.
+     *
+     * @return void Метод ничего не возвращает.
+     *
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
+     *
+     * @note    Убедитесь, что передаваемый объект пользователя является экземпляром класса User.
+     * @warning Не передавайте null или некорректные объекты, так как это может привести к ошибкам.
+     *
+     * Пример использования метода:
+     * @code
+     * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
+     * $user = new \PhotoRigma\Classes\User();
+     * $template->set_user($user);
+     * @endcode
+     * @see     PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
+     *
+     * @see     PhotoRigma::Classes::Work_Template::$user Свойство, которое изменяет метод.
+     */
+    public function set_user(User $user): void;
 }
 
 /**
@@ -461,74 +517,6 @@ class Work_Template implements Work_Template_Interface
     }
 
     /**
-     * @brief   Установка языковых данных через сеттер.
-     *
-     * @details Метод позволяет установить массив языковых данных.
-     *          Если передан некорректный тип данных или `null`, выбрасывается исключение.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param array $lang Языковые данные:
-     *                    - Должен быть массивом.
-     *                    - Каждый ключ должен быть строкой, а значение — допустимым для языковых данных.
-     *
-     * @return void Метод ничего не возвращает.
-     *
-     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
-     *
-     * @note    Убедитесь, что передаваемые языковые данные корректны и соответствуют ожидаемому формату.
-     * @warning Не передавайте пустые или некорректные данные, так как это может привести к ошибкам.
-     *
-     * Пример использования метода:
-     * @code
-     * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
-     * $template->set_lang(['key' => 'value']);
-     * @endcode
-     * @see     PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
-     *
-     * @see     PhotoRigma::Classes::Work_Template::$lang Свойство, которое изменяет метод.
-     */
-    public function set_lang(array $lang): void
-    {
-        $this->lang = $lang;
-    }
-
-    /**
-     * @brief   Установка данных пользователя через сеттер.
-     *
-     * @details Метод позволяет установить объект пользователя.
-     *          Если передан некорректный тип данных или `null`, выбрасывается исключение.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param User $user Объект пользователя:
-     *                   - Должен быть экземпляром класса User.
-     *
-     * @return void Метод ничего не возвращает.
-     *
-     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
-     *
-     * @note    Убедитесь, что передаваемый объект пользователя является экземпляром класса User.
-     * @warning Не передавайте null или некорректные объекты, так как это может привести к ошибкам.
-     *
-     * Пример использования метода:
-     * @code
-     * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
-     * $user = new \PhotoRigma\Classes\User();
-     * $template->set_user($user);
-     * @endcode
-     * @see     PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
-     *
-     * @see     PhotoRigma::Classes::Work_Template::$user Свойство, которое изменяет метод.
-     */
-    public function set_user(User $user): void
-    {
-        $this->user = $user;
-    }
-
-    /**
      * @brief   Метод формирует массив данных для меню в зависимости от типа и активного пункта.
      *
      * @details Этот метод является редиректом на защищённый метод `_create_menu_internal()`.
@@ -697,11 +685,9 @@ class Work_Template implements Work_Template_Interface
                 }
             }
 
-            if ($menu_item['user_access'] !== null) {
-                // user_access: NULL - всем, иначе проверяем значение в $this->user->user
-                if (empty($this->user->user[$menu_item['user_access']])) {
-                    $is_visible = false;
-                }
+            // user_access: NULL - всем, иначе проверяем значение в $this->user->user
+            if (($menu_item['user_access'] !== null) && empty($this->user->user[$menu_item['user_access']])) {
+                $is_visible = false;
             }
             // Если пункт меню видим, добавляем его в результат
             if ($is_visible) {
@@ -715,6 +701,74 @@ class Work_Template implements Work_Template_Interface
             }
         }
         return $menu_items;
+    }
+
+    /**
+     * @brief   Установка языковых данных через сеттер.
+     *
+     * @details Метод позволяет установить массив языковых данных.
+     *          Если передан некорректный тип данных или `null`, выбрасывается исключение.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $lang Языковые данные:
+     *                    - Должен быть массивом.
+     *                    - Каждый ключ должен быть строкой, а значение — допустимым для языковых данных.
+     *
+     * @return void Метод ничего не возвращает.
+     *
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
+     *
+     * @note    Убедитесь, что передаваемые языковые данные корректны и соответствуют ожидаемому формату.
+     * @warning Не передавайте пустые или некорректные данные, так как это может привести к ошибкам.
+     *
+     * Пример использования метода:
+     * @code
+     * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
+     * $template->set_lang(['key' => 'value']);
+     * @endcode
+     * @see     PhotoRigma::Classes::Work::set_lang() Метод в родительском классе Work, который вызывает этот метод.
+     *
+     * @see     PhotoRigma::Classes::Work_Template::$lang Свойство, которое изменяет метод.
+     */
+    public function set_lang(array $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @brief   Установка данных пользователя через сеттер.
+     *
+     * @details Метод позволяет установить объект пользователя.
+     *          Если передан некорректный тип данных или `null`, выбрасывается исключение.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param User $user Объект пользователя:
+     *                   - Должен быть экземпляром класса User.
+     *
+     * @return void Метод ничего не возвращает.
+     *
+     * @throws InvalidArgumentException Если передан некорректный тип данных или `null`.
+     *
+     * @note    Убедитесь, что передаваемый объект пользователя является экземпляром класса User.
+     * @warning Не передавайте null или некорректные объекты, так как это может привести к ошибкам.
+     *
+     * Пример использования метода:
+     * @code
+     * $template = new \PhotoRigma\Classes\Work_Template($config, $db, $work);
+     * $user = new \PhotoRigma\Classes\User();
+     * $template->set_user($user);
+     * @endcode
+     * @see     PhotoRigma::Classes::Work::set_user() Метод в родительском классе Work, который вызывает этот метод.
+     *
+     * @see     PhotoRigma::Classes::Work_Template::$user Свойство, которое изменяет метод.
+     */
+    public function set_user(User $user): void
+    {
+        $this->user = $user;
     }
 
     /**

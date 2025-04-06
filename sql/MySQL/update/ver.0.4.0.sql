@@ -155,3 +155,66 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- 18. Тригер для запрета удаления служебных групп в таблице `groups`
+DELIMITER $$
+
+CREATE TRIGGER trg_prevent_deletion
+BEFORE DELETE ON groups
+FOR EACH ROW
+BEGIN
+    -- Проверяем, является ли id служебным
+    IF OLD.id BETWEEN 0 AND 3 THEN
+        -- Генерируем пустое действие (игнорируем удаление)
+        SIGNAL SQLSTATE '01000';
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- 19. Преобразование таблиц в InnoDB
+ALTER TABLE `category` ENGINE = InnoDB;
+ALTER TABLE `config` ENGINE = InnoDB;
+ALTER TABLE `db_version` ENGINE = InnoDB;
+ALTER TABLE `groups` ENGINE = InnoDB;
+ALTER TABLE `menu` ENGINE = InnoDB;
+ALTER TABLE `news` ENGINE = InnoDB;
+ALTER TABLE `news` CHANGE `user_post` `user_post` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор добавившего новость пользователя';
+ALTER TABLE `photo` ENGINE = InnoDB;
+ALTER TABLE `photo` CHANGE `category` `category` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор раздела', CHANGE `user_upload` `user_upload` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор пользователя, залившего фото';
+ALTER TABLE `users` ENGINE = InnoDB;
+ALTER TABLE `rate_moder` DROP PRIMARY KEY;
+ALTER TABLE `rate_moder` ENGINE = InnoDB ROW_FORMAT = DYNAMIC;
+ALTER TABLE `rate_moder` CHANGE `id_foto` `id_foto` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор фото', CHANGE `id_user` `id_user` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор пользователя';
+ALTER TABLE `rate_moder` ADD PRIMARY KEY(`id_foto`, `id_user`);
+ALTER TABLE `rate_user` DROP PRIMARY KEY;
+ALTER TABLE `rate_user` ENGINE = InnoDB ROW_FORMAT = DYNAMIC;
+ALTER TABLE `rate_user` CHANGE `id_foto` `id_foto` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор фото', CHANGE `id_user` `id_user` INT(10) UNSIGNED NOT NULL COMMENT 'Идентификатор пользователя';
+ALTER TABLE `rate_user` ADD PRIMARY KEY(`id_foto`, `id_user`);
+
+-- 20. Добавление внешних ключей к таблицам.
+ALTER TABLE news
+    ADD CONSTRAINT news_users FOREIGN KEY (user_post) REFERENCES users(id) ON DELETE RESTRICT;
+
+ALTER TABLE photo
+    ADD CONSTRAINT photo_category FOREIGN KEY (category) REFERENCES category(id) ON DELETE RESTRICT;
+
+ALTER TABLE photo
+    ADD CONSTRAINT photo_users FOREIGN KEY (user_upload) REFERENCES users(id) ON DELETE RESTRICT;
+
+ALTER TABLE users
+    ADD CONSTRAINT users_groups FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE RESTRICT;
+
+ALTER TABLE rate_moder
+    ADD CONSTRAINT m_rate_photo FOREIGN KEY (id_foto) REFERENCES photo(id) ON DELETE RESTRICT;
+
+ALTER TABLE rate_user
+    ADD CONSTRAINT u_rate_photo FOREIGN KEY (id_foto) REFERENCES photo(id) ON DELETE RESTRICT;
+
+ALTER TABLE rate_moder
+    ADD CONSTRAINT m_rate_users FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE RESTRICT;
+
+ALTER TABLE rate_user
+    ADD CONSTRAINT u_rate_users FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE RESTRICT;
+
+

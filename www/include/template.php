@@ -803,6 +803,7 @@ class Template
      * @throws InvalidArgumentException Выбрасывается, если параметр `$csrf_token` некорректен (пустой или содержит
      *                                  недопустимые символы).
      * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     * @throws \Exception
      *
      * @note    Метод использует шаблон `header.html` для формирования заголовка. Убедитесь, что шаблон существует и
      *          доступен.
@@ -1545,6 +1546,8 @@ class Template
      * @throws InvalidArgumentException Выбрасывается, если входные параметры некорректны (например, отрицательный
      *                                  `login_id` или пустой `csrf_token`).
      * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     * @throws \Random\RandomException
+     * @throws \Exception
      *
      * @note    Метод использует шаблон `footer.html` для формирования подвала. Убедитесь, что шаблон существует и
      *          доступен.
