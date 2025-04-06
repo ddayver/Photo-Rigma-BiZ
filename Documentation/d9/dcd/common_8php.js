@@ -8,6 +8,7 @@ var common_8php =
     [ "PhotoRigma\\Include\\DEFAULT_AVATAR", "db/d02/namespacePhotoRigma_1_1Include.html#a834e1bd7ce0d2d35485d68dff3f8c594", null ],
     [ "PhotoRigma\\Include\\DEFAULT_GROUP", "db/d02/namespacePhotoRigma_1_1Include.html#a2790a51795c400a411236e4651f1b3f1", null ],
     [ "PhotoRigma\\Include\\DIE_IF_ERROR", "db/d02/namespacePhotoRigma_1_1Include.html#ad3a0fb3868a188b480b4695a8a91442c", null ],
+    [ "PhotoRigma\\Include\\KEY_SESSION", "db/d02/namespacePhotoRigma_1_1Include.html#a2d14fb72179e20da7bf885771d2fb72e", null ],
     [ "PhotoRigma\\Include\\LOCKOUT_TIME", "db/d02/namespacePhotoRigma_1_1Include.html#a1c726f497331dad6f276df319b20b076", null ],
     [ "PhotoRigma\\Include\\LOG_DIR", "db/d02/namespacePhotoRigma_1_1Include.html#a1c3394673d867f3293d98eb77f069fd1", null ],
     [ "PhotoRigma\\Include\\LOG_LIFETIME_DAYS", "db/d02/namespacePhotoRigma_1_1Include.html#a97db6f3e6431bb4ff9a3521a93dbacaf", null ],

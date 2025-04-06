@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📸_0',['Photo Rigma BiZ 📸',['../index.html',1,'']]]
+  ['📜_20лицензия_0',['📜 Лицензия',['../index.html#autotoc_md66',1,'']]]
 ];

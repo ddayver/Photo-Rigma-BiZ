@@ -130,11 +130,16 @@ class Work
      *          - Инициализация дочерних классов: Work_Helper, Work_Security, Work_Image, Work_Template,
      *          Work_CoreLogic.
      *          - Установка кодировки UTF-8 для работы с мультибайтовыми строками.
+     *          - Подключение сессии для хранения пользовательских данных.
      *
      * @callgraph
      *
-     * @param Database_Interface $db     Объект для работы с базой данных.
-     * @param array              $config Конфигурация приложения.
+     * @param Database_Interface  $db       Объект для работы с базой данных.
+     * @param array               $config   Конфигурация приложения.
+     *                                      Должна содержать ключи, такие как 'app_name', 'debug_mode' и другие
+     *                                      настройки.
+     * @param array              &$session  Ссылка на массив сессии для хранения пользовательских данных.
+     *                                      Массив должен быть доступен для записи и чтения.
      *
      * @note    В конструкторе инициализируются 5 дочерних классов:
      *       - Work_Helper: Для вспомогательных функций.
@@ -154,20 +159,25 @@ class Work
      *     'app_name' => 'PhotoRigma',
      *     'debug_mode' => true,
      * ];
-     * $work = new \PhotoRigma\Classes\Work($db, $config);
+     * session_start();
+     * $work = new \PhotoRigma\Classes\Work($db, $config, $_SESSION);
      * @endcode
-     * @throws Exception
+     *
+     * @throws Exception Выбрасывается в случае ошибок при загрузке конфигурации или инициализации компонентов.
+     *
      * @see     PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
      * @see     PhotoRigma::Classes::Work::$security Свойство, содержащее объект Work_Security.
      * @see     PhotoRigma::Classes::Work::$image Свойство, содержащее объект Work_Image.
      * @see     PhotoRigma::Classes::Work::$template Свойство, содержащее объект Work_Template.
      * @see     PhotoRigma::Classes::Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
      * @see     PhotoRigma::Include::log_in_file() Логирует ошибки.
-     *
      */
     public function __construct(Database_Interface $db, array $config, array &$session)
     {
-        $this->session = &$session;
+        if (!isset($session[KEY_SESSION])) {
+            $session[KEY_SESSION] = [];
+        }
+        $this->session = &$session[KEY_SESSION];
         $this->config = $config;
         // Загружаем конфигурацию из базы данных
         $db->select('*', TBL_CONFIG, ['params' => []]);
@@ -180,7 +190,7 @@ class Work
             );
         }
         // Инициализация подклассов
-        $this->security = new Work_Security();
+        $this->security = new Work_Security($this->session);
         $this->image = new Work_Image($this->config);
         $this->template = new Work_Template($db, $this->config);
         $this->core_logic = new Work_CoreLogic($db, $this->config, $this);

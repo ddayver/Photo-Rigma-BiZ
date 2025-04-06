@@ -1,12 +1,16 @@
 var searchData=
 [
-  ['main_20language_20variables_0',['Main Language Variables',['../d4/d2d/group__LanguageEnglishMain.html',1,'']]],
-  ['main_2ephp_1',['main.php',['../da/d71/action_2main_8php.html',1,'(Глобальное пространство имён)'],['../d4/d40/language_2english_2main_8php.html',1,'(Глобальное пространство имён)'],['../da/d32/language_2russian_2main_8php.html',1,'(Глобальное пространство имён)']]],
-  ['max_5fimage_5fheight_2',['MAX_IMAGE_HEIGHT',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a09a081b5d674123079734cef551329c9',1,'PhotoRigma::Classes::Work_Image']]],
-  ['max_5fimage_5fwidth_3',['MAX_IMAGE_WIDTH',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a030bd442b445d4a25e28afd6b37accc6',1,'PhotoRigma::Classes::Work_Image']]],
-  ['max_5flog_5fsize_4',['MAX_LOG_SIZE',['../db/d02/namespacePhotoRigma_1_1Include.html#a53cff4e23bb5f13e5e08ca5e8b58d740',1,'PhotoRigma::Include']]],
-  ['max_5flogin_5fattempts_5',['MAX_LOGIN_ATTEMPTS',['../db/d02/namespacePhotoRigma_1_1Include.html#a0c9fe713d3d1b6f166d8768aaf619275',1,'PhotoRigma::Include']]],
-  ['menu_20item_20variables_6',['Menu Item Variables',['../d3/db1/group__LanguageEnglishMenu.html',1,'']]],
-  ['merge_5fuser_5fwith_5fgroup_7',['merge_user_with_group',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea',1,'PhotoRigma::Classes::User']]],
-  ['module_8',['Node Module',['..//home/victoria/Photo-Rigma-BiZ/www/badword/README.md#autotoc_md3',1,'']]]
+  ['language_20variables_0',['Language Variables',['../de/d8e/group__LanguageEnglish.html',1,'English Language Variables'],['../d4/d2d/group__LanguageEnglishMain.html',1,'Main Language Variables']]],
+  ['languages_1',['Languages',['..//home/victoria/Photo-Rigma-BiZ/www/badword/README.md#autotoc_md2',1,'']]],
+  ['lists_2',['Users of these lists',['../d2/d0c/md_badword_2USERS.html',1,'']]],
+  ['load_5fauthenticated_5fuser_3',['load_authenticated_user',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9',1,'PhotoRigma::Classes::User']]],
+  ['load_5fguest_5fuser_4',['load_guest_user',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc',1,'PhotoRigma::Classes::User']]],
+  ['localhost_5fserver_5',['LOCALHOST_SERVER',['../de/d90/namespacePhotoRigma.html#adb6cc58d5735a7f6aa966e727899e7e9',1,'PhotoRigma']]],
+  ['lockout_5ftime_6',['LOCKOUT_TIME',['../db/d02/namespacePhotoRigma_1_1Include.html#a1c726f497331dad6f276df319b20b076',1,'PhotoRigma::Include']]],
+  ['log_5fdir_7',['LOG_DIR',['../db/d02/namespacePhotoRigma_1_1Include.html#a1c3394673d867f3293d98eb77f069fd1',1,'PhotoRigma::Include']]],
+  ['log_5fin_5ffile_8',['log_in_file',['../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0',1,'PhotoRigma::Include']]],
+  ['log_5flifetime_5fdays_9',['LOG_LIFETIME_DAYS',['../db/d02/namespacePhotoRigma_1_1Include.html#a97db6f3e6431bb4ff9a3521a93dbacaf',1,'PhotoRigma::Include']]],
+  ['log_5fquery_10',['log_query',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2',1,'PhotoRigma::Classes::Database']]],
+  ['login_20and_20registration_20variables_11',['Login and Registration Variables',['../d0/d17/group__LanguageEnglishLogin.html',1,'']]],
+  ['login_5fuser_12',['login_user',['../d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interface.html#a9f839b5040591e4ea416cfc8f2ec8f44',1,'PhotoRigma\Classes\User_Interface\login_user()'],['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a9f839b5040591e4ea416cfc8f2ec8f44',1,'PhotoRigma\Classes\User\login_user()']]]
 ];

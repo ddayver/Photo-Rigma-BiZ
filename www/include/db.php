@@ -1336,7 +1336,6 @@ class Database implements Database_Interface
         if ($this->query_cache[$hash]) {
             // Если запрос уже существует, обновляем счетчик использования, время последнего использования и максимальное время выполнения
             $new_usage_count = $this->query_cache[$hash]['usage_count'] + 1;
-            $execution_time_ms = $execution_time_ms ?? 0.0;
             $max_execution_time = max(
                 (float)($this->query_cache[$hash]['execution_time'] ?? 0),
                 (float)$execution_time_ms

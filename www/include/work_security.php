@@ -333,16 +333,20 @@ class Work_Security implements Work_Security_Interface
 {
     // Свойства:
     private array $compiled_rules = []; ///< Предварительно скомпилированные правила защиты.
+    private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
 
     /**
      * @brief   Конструктор класса.
      *
      * @details Инициализирует предварительно скомпилированные правила защиты из массива $array_rules.
-     * Эти правила используются для проверки URL и входных данных на наличие вредоносных паттернов.
-     * Этот класс является дочерним для PhotoRigma::Classes::Work.
+     *          Эти правила используются для проверки URL и входных данных на наличие вредоносных паттернов.
+     *          Этот класс является дочерним для PhotoRigma::Classes::Work.
      *
      * @callergraph
      * @callgraph
+     *
+     * @param array &$session Ссылка на массив сессии для хранения пользовательских данных.
+     *                        Массив должен быть доступен для записи и чтения.
      *
      * @see     PhotoRigma::Classes::Work Родительский класс.
      * @see     PhotoRigma::Classes::Work_Security::$compiled_rules Свойство, содержащее предварительно
@@ -356,7 +360,7 @@ class Work_Security implements Work_Security_Interface
      *
      * Пример создания объекта класса Work_Security:
      * @code
-     * $security = new \PhotoRigma\Classes\Work_Security();
+     * $security = new \PhotoRigma\Classes\Work_Security($_SESSION);
      *
      * // Пример проверки входных данных
      * $input = "SELECT * FROM users WHERE id = 1";
@@ -368,8 +372,9 @@ class Work_Security implements Work_Security_Interface
      * }
      * @endcode
      */
-    public function __construct()
+    public function __construct(array &$session)
     {
+        $this->session = &$session;
         $array_rules = [
             // SQL-инъекции
             'http_',
@@ -613,6 +618,101 @@ class Work_Security implements Work_Security_Interface
     }
 
     /**
+     * @brief        Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим
+     *          условиям.
+     *
+     * @details      Метод выполняет следующие проверки:
+     *          - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
+     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок
+     *            компиляции).
+     *          - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
+     *          - Проверяет, что значение не содержит запрещённых паттернов из $this->compiled_rules.
+     *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод check_field().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string       $field    Значение поля для проверки.
+     *                               Указывается строковое значение, которое необходимо проверить.
+     * @param string|false $regexp   Регулярное выражение (необязательно). Если задано, значение должно соответствовать
+     *                               этому выражению. Если регулярное выражение некорректно (например, содержит ошибки
+     *                               компиляции), метод завершает выполнение с ошибкой.
+     * @param bool         $not_zero Флаг, указывающий, что значение не должно быть числом 0.
+     *                               Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
+     *
+     * @return bool True, если поле прошло все проверки, иначе False.
+     *              Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов
+     *              и выполнение условия $not_zero (если оно задано).
+     *
+     * @warning      Метод зависит от корректности данных в свойстве $this->compiled_rules.
+     *          Если правила некорректны, результат может быть непредсказуемым.
+     *
+     * Пример использования:
+     * @code
+     * // Проверка поля на соответствие регулярному выражению и условию not_zero
+     * $field_value = "example123";
+     * $regexp = "/^[a-z0-9]+$/i";
+     * $is_valid = $this->_check_field_internal($field_value, $regexp, true);
+     * if ($is_valid) {
+     *     echo "Поле прошло проверку.";
+     * } else {
+     *     echo "Поле не прошло проверку.";
+     * }
+     * @endcode
+     * @throws Exception
+     * @see          PhotoRigma::Classes::Work_Security::$compiled_rules
+     *      Свойство, содержащее массив скомпилированных правил для проверки.
+     *
+     * @see          PhotoRigma::Classes::Work_Security::check_field()
+     *      Публичный метод, который вызывает этот внутренний метод.
+     * @see          PhotoRigma::Include::log_in_file()
+     *      Функция для логирования ошибок.
+     * @noinspection OneTimeUseVariablesInspection
+     */
+    protected function _check_field_internal(string $field, string|false $regexp = false, bool $not_zero = false): bool
+    {
+        if ($regexp !== false) {
+            $is_valid_regexp = preg_match($regexp, '') !== false;
+            if (!$is_valid_regexp) {
+                $errorMessage = match (preg_last_error()) {
+                    PREG_INTERNAL_ERROR        => "Внутренняя ошибка регулярного выражения.",
+                    PREG_BACKTRACK_LIMIT_ERROR => "Превышен лимит обратного отслеживания.",
+                    PREG_RECURSION_LIMIT_ERROR => "Превышен лимит рекурсии.",
+                    PREG_BAD_UTF8_ERROR        => "Некорректная UTF-8 строка.",
+                    PREG_BAD_UTF8_OFFSET_ERROR => "Некорректный смещение UTF-8.",
+                    default                    => "Неизвестная ошибка регулярного выражения.",
+                };
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в регулярном выражении | Регулярное выражение: $regexp, Причина: $errorMessage"
+                );
+                return false;
+            }
+            if (!preg_match($regexp, $field)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля не соответствует регулярному выражению | Поле: '$field', Регулярное выражение: $regexp"
+                );
+                return false;
+            }
+        }
+        if ($not_zero && $field === '0') {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля равно 0, но флаг not_zero установлен | Поле: '$field'"
+            );
+            return false;
+        }
+        foreach ($this->compiled_rules as $rule) {
+            if (preg_match($rule, $field)) {
+                log_in_file(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля содержит запрещённый паттерн | Поле: '$field', Паттерн: $rule"
+                );
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * @brief   Универсальная проверка входных данных.
      *
      * @details Этот метод является публичным редиректом на защищённый метод `_check_input_internal`.
@@ -753,7 +853,7 @@ class Work_Security implements Work_Security_Interface
         $source = match ($source_name) {
             '_GET'     => $_GET,
             '_POST'    => $_POST,
-            '_SESSION' => $_SESSION,
+            '_SESSION' => $this->session,
             '_COOKIE'  => $_COOKIE,
             '_FILES'   => $_FILES,
             default    => null,
@@ -803,100 +903,6 @@ class Work_Security implements Work_Security_Interface
             $options['regexp'] ?? false,
             $options['not_zero'] ?? false
         );
-    }
-
-    /**
-     * @brief   Внутренний метод для проверки содержимого поля на соответствие регулярному выражению или другим
-     *          условиям.
-     *
-     * @details Метод выполняет следующие проверки:
-     *          - Если задано регулярное выражение ($regexp), проверяет соответствие значения этому выражению.
-     *            При этом также проверяется корректность самого регулярного выражения (например, отсутствие ошибок
-     *            компиляции).
-     *          - Если флаг $not_zero установлен, проверяет, что значение не является числом 0.
-     *          - Проверяет, что значение не содержит запрещённых паттернов из $this->compiled_rules.
-     *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод check_field().
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param string       $field    Значение поля для проверки.
-     *                               Указывается строковое значение, которое необходимо проверить.
-     * @param string|false $regexp   Регулярное выражение (необязательно). Если задано, значение должно соответствовать
-     *                               этому выражению. Если регулярное выражение некорректно (например, содержит ошибки
-     *                               компиляции), метод завершает выполнение с ошибкой.
-     * @param bool         $not_zero Флаг, указывающий, что значение не должно быть числом 0.
-     *                               Если флаг установлен, а значение равно '0', проверка завершается с ошибкой.
-     *
-     * @return bool True, если поле прошло все проверки, иначе False.
-     *              Проверки включают соответствие регулярному выражению, отсутствие запрещённых паттернов
-     *              и выполнение условия $not_zero (если оно задано).
-     *
-     * @warning Метод зависит от корректности данных в свойстве $this->compiled_rules.
-     *          Если правила некорректны, результат может быть непредсказуемым.
-     *
-     * Пример использования:
-     * @code
-     * // Проверка поля на соответствие регулярному выражению и условию not_zero
-     * $field_value = "example123";
-     * $regexp = "/^[a-z0-9]+$/i";
-     * $is_valid = $this->_check_field_internal($field_value, $regexp, true);
-     * if ($is_valid) {
-     *     echo "Поле прошло проверку.";
-     * } else {
-     *     echo "Поле не прошло проверку.";
-     * }
-     * @endcode
-     * @throws Exception
-     * @see     PhotoRigma::Classes::Work_Security::$compiled_rules
-     *      Свойство, содержащее массив скомпилированных правил для проверки.
-     *
-     * @see     PhotoRigma::Classes::Work_Security::check_field()
-     *      Публичный метод, который вызывает этот внутренний метод.
-     * @see     PhotoRigma::Include::log_in_file()
-     *      Функция для логирования ошибок.
-     */
-    protected function _check_field_internal(string $field, string|false $regexp = false, bool $not_zero = false): bool
-    {
-        if ($regexp !== false) {
-            $is_valid_regexp = preg_match($regexp, '') !== false;
-            if (!$is_valid_regexp) {
-                $errorMessage = match (preg_last_error()) {
-                    PREG_INTERNAL_ERROR        => "Внутренняя ошибка регулярного выражения.",
-                    PREG_BACKTRACK_LIMIT_ERROR => "Превышен лимит обратного отслеживания.",
-                    PREG_RECURSION_LIMIT_ERROR => "Превышен лимит рекурсии.",
-                    PREG_BAD_UTF8_ERROR        => "Некорректная UTF-8 строка.",
-                    PREG_BAD_UTF8_OFFSET_ERROR => "Некорректный смещение UTF-8.",
-                    default                    => "Неизвестная ошибка регулярного выражения.",
-                };
-                log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в регулярном выражении | Регулярное выражение: $regexp, Причина: $errorMessage"
-                );
-                return false;
-            }
-            if (!preg_match($regexp, $field)) {
-                log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля не соответствует регулярному выражению | Поле: '$field', Регулярное выражение: $regexp"
-                );
-                return false;
-            }
-        }
-        if ($not_zero && $field === '0') {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля равно 0, но флаг not_zero установлен | Поле: '$field'"
-            );
-            return false;
-        }
-        foreach ($this->compiled_rules as $rule) {
-            if (preg_match($rule, $field)) {
-                log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля содержит запрещённый паттерн | Поле: '$field', Паттерн: $rule"
-                );
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

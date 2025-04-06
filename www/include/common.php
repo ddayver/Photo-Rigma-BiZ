@@ -106,6 +106,10 @@ define(
     'MAX_LOG_SIZE',
     10485760
 ); ///< 10 MB - максимальный размер лога (предварительно вычисленное значение: 10 * 1024 * 1024 = 10485760)
+define(
+    'KEY_SESSION',
+    hash('sha256', 'PhotoRigma_' . gethostname())
+); ///< Ключ для использования в глобальном массиве $_SESSION
 
 /**
  * @def     REG_LOGIN
@@ -457,9 +461,9 @@ function log_in_file(string $txt, bool $die = false): bool
         // Добавление трассировки, если DEBUG_GALLERY включен
         if (defined('DEBUG_GALLERY')) {
             $trace_depth = match (true) {
-                DEBUG_GALLERY === false                                           => 0,
+                DEBUG_GALLERY === false => 0,
                 is_int(DEBUG_GALLERY) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9 => DEBUG_GALLERY,
-                default                                                           => 5, // Глубина трассировки по умолчанию
+                default => 5, // Глубина трассировки по умолчанию
             };
             if ($trace_depth > 0) {
                 $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, $trace_depth + 1);

@@ -437,8 +437,6 @@ interface User_Interface
      *
      * @see     PhotoRigma::Classes::User::delete_group() Пример реализации метода в классе.
      *
-     * @todo    Реализовать метод в классах, использующих интерфейс.
-     *
      * @warning Убедитесь, что входные данные корректны перед вызовом метода.
      *
      * Пример вызова метода:
@@ -617,7 +615,7 @@ interface User_Interface
  * @see     PhotoRigma::Classes::User_Interface Интерфейс, который реализует класс.
  * @see     PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
  *
- * @todo    Внедрить ряд методов по работе с группами и пользователями (добавление, изменение, удаление, вход).
+ * @todo    Внедрить ряд методов по работе с группами (добавление, удаление) и пользователями (удаление).
  * @note    Используются константы с именами таблиц в базе данных.
  * @warning Класс зависит от глобального массива $_SESSION.
  *
@@ -674,7 +672,10 @@ class User implements User_Interface
     public function __construct(Database_Interface $db, array &$session)
     {
         $this->db = $db;
-        $this->session = &$session;
+        if (!isset($session[KEY_SESSION])) {
+            $session[KEY_SESSION] = [];
+        }
+        $this->session = &$session[KEY_SESSION];
         $this->all_right_fields();
         $this->initialize_user();
     }
@@ -1124,7 +1125,6 @@ class User implements User_Interface
      * @see     User::$user Свойство, содержащее данные о текущем пользователе.
      *
      * @see     User::$user_right_fields Свойство, содержащее допустимые значения прав пользоватлей и груп.
-     * @todo    Добавить скрытый "шифрованный ключ" к массиву `$session` для повышения безопасности.
      *
      * Пример использования метода:
      * @code

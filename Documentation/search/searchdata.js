@@ -1,11 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "$123456:_abcdefghijlmnoprstuvwабвдезиклмнопрстуфшя✨🎮💻📌📑📜📸🚀🛠",
+  0: "$123456:_abcdefghijklmnoprstuvwабвдезиклмнопрстуфшя✨🎮💻📌📑📜📸🚀🛠",
   1: "dtuw",
   2: "p",
   3: "acdimnprstuvw",
   4: "_abcdefgijlmnprstuv",
-  5: "$cdeilmrtv",
+  5: "$cdeiklmrtv",
   6: "aceilmnprsvавдикмнопрсфя",
   7: "bloprtuзс📸"
 };
