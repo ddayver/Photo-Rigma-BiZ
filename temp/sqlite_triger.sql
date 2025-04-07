@@ -1,4 +1,5 @@
 -- Триггеры для rate_user
+
 CREATE TRIGGER update_rate_user_after_insert
 AFTER INSERT ON rate_user
 FOR EACH ROW
@@ -9,7 +10,8 @@ BEGIN
         FROM rate_user
         WHERE id_foto = NEW.id_foto
     )
-    WHERE id = NEW.id_foto;
+    WHERE id = NEW.id_foto
+      AND EXISTS (SELECT 1 FROM photo WHERE id = NEW.id_foto);
 END;
 
 CREATE TRIGGER update_rate_user_after_delete
@@ -22,10 +24,12 @@ BEGIN
         FROM rate_user
         WHERE id_foto = OLD.id_foto
     )
-    WHERE id = OLD.id_foto;
+    WHERE id = OLD.id_foto
+      AND EXISTS (SELECT 1 FROM photo WHERE id = OLD.id_foto);
 END;
 
 -- Триггеры для rate_moder
+
 CREATE TRIGGER update_rate_moder_after_insert
 AFTER INSERT ON rate_moder
 FOR EACH ROW
@@ -36,7 +40,8 @@ BEGIN
         FROM rate_moder
         WHERE id_foto = NEW.id_foto
     )
-    WHERE id = NEW.id_foto;
+    WHERE id = NEW.id_foto
+      AND EXISTS (SELECT 1 FROM photo WHERE id = NEW.id_foto);
 END;
 
 CREATE TRIGGER update_rate_moder_after_delete
@@ -49,9 +54,11 @@ BEGIN
         FROM rate_moder
         WHERE id_foto = OLD.id_foto
     )
-    WHERE id = OLD.id_foto;
+    WHERE id = OLD.id_foto
+      AND EXISTS (SELECT 1 FROM photo WHERE id = OLD.id_foto);
 END;
 
+-- Предотвращение удаления служебных групп.
 CREATE TRIGGER trg_prevent_deletion
 BEFORE DELETE ON groups
 FOR EACH ROW

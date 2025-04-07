@@ -193,8 +193,6 @@ interface Work_CoreLogic_Interface
      *
      * @note    Используются константы:
      *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
-     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
-     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
      *       Конфигурационные ключи:
      *       - site_dir: Базовый путь к директории сайта.
      *       - thumbnail_folder: Путь к каталогу эскизов.
@@ -1499,8 +1497,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @note    Используются константы:
      *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
-     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
-     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
      *       Конфигурационные ключи:
      *       - site_dir: Базовый путь к директории сайта.
      *       - thumbnail_folder: Путь к каталогу эскизов.
@@ -1563,8 +1559,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      * @note    Используются константы:
      *       - TBL_PHOTO: Таблица для хранения данных об изображениях.
-     *       - TBL_RATE_USER: Таблица для хранения пользовательских оценок изображений.
-     *       - TBL_RATE_MODER: Таблица для хранения оценок модераторов.
      *       Конфигурационные ключи:
      *       - site_dir: Базовый путь к директории сайта.
      *       - thumbnail_folder: Путь к каталогу эскизов.
@@ -1653,9 +1647,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
             );
         }
-        // Удаление связанных записей из других таблиц
-        $this->db->delete(TBL_RATE_USER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
-        $this->db->delete(TBL_RATE_MODER, ['where' => '`id_foto` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
         return true;
     }
 

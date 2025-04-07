@@ -64,9 +64,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a82d7359ac20005ddda09f8a9bb46afbe",
-"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#abafff8c03a52d73e37072449448e5a3c",
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2"
+"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1f3df8874c79377e6a8b4398ea6ad774",
+"da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html",
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a18e3eac65d39ced5231d9b3e3630ba75"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

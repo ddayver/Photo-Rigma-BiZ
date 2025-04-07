@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 06 2025 г., 22:58
+-- Время создания: Апр 07 2025 г., 10:01
 -- Версия сервера: 10.11.11-MariaDB
 -- Версия PHP: 8.4.6RC1
 
@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `photo` (
 -- Структура таблицы `query_logs`
 --
 -- Создание: Апр 04 2025 г., 17:55
--- Последнее обновление: Апр 06 2025 г., 19:11
+-- Последнее обновление: Апр 07 2025 г., 09:23
 --
 
 DROP TABLE IF EXISTS `query_logs`;
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `query_logs` (
 --
 -- Структура таблицы `rate_moder`
 --
--- Создание: Апр 06 2025 г., 22:25
+-- Создание: Апр 07 2025 г., 08:03
 --
 
 DROP TABLE IF EXISTS `rate_moder`;
@@ -330,26 +330,30 @@ CREATE TABLE IF NOT EXISTS `rate_moder` (
 DROP TRIGGER IF EXISTS `update_rate_moder_after_delete`;
 DELIMITER $$
 CREATE TRIGGER `update_rate_moder_after_delete` AFTER DELETE ON `rate_moder` FOR EACH ROW BEGIN
-    UPDATE photo
-    SET rate_moder = (
-        SELECT IFNULL(AVG(rate), 0)
-        FROM rate_moder
-        WHERE id_foto = OLD.id_foto
-    )
-    WHERE id = OLD.id_foto;
+    IF EXISTS (SELECT 1 FROM photo WHERE id = OLD.id_foto) THEN
+        UPDATE photo
+        SET rate_moder = (
+            SELECT IFNULL(AVG(rate), 0)
+            FROM rate_moder
+            WHERE id_foto = OLD.id_foto
+        )
+        WHERE id = OLD.id_foto;
+    END IF;
 END
 $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `update_rate_moder_after_insert`;
 DELIMITER $$
 CREATE TRIGGER `update_rate_moder_after_insert` AFTER INSERT ON `rate_moder` FOR EACH ROW BEGIN
-    UPDATE photo
-    SET rate_moder = (
-        SELECT IFNULL(AVG(rate), 0)
-        FROM rate_moder
-        WHERE id_foto = NEW.id_foto
-    )
-    WHERE id = NEW.id_foto;
+    IF EXISTS (SELECT 1 FROM photo WHERE id = NEW.id_foto) THEN
+        UPDATE photo
+        SET rate_moder = (
+            SELECT IFNULL(AVG(rate), 0)
+            FROM rate_moder
+            WHERE id_foto = NEW.id_foto
+        )
+        WHERE id = NEW.id_foto;
+    END IF;
 END
 $$
 DELIMITER ;
@@ -359,7 +363,7 @@ DELIMITER ;
 --
 -- Структура таблицы `rate_user`
 --
--- Создание: Апр 06 2025 г., 22:25
+-- Создание: Апр 07 2025 г., 08:03
 --
 
 DROP TABLE IF EXISTS `rate_user`;
@@ -385,26 +389,30 @@ CREATE TABLE IF NOT EXISTS `rate_user` (
 DROP TRIGGER IF EXISTS `update_rate_user_after_delete`;
 DELIMITER $$
 CREATE TRIGGER `update_rate_user_after_delete` AFTER DELETE ON `rate_user` FOR EACH ROW BEGIN
-    UPDATE photo
-    SET rate_user = (
-        SELECT IFNULL(AVG(rate), 0)
-        FROM rate_user
-        WHERE id_foto = OLD.id_foto
-    )
-    WHERE id = OLD.id_foto;
+    IF EXISTS (SELECT 1 FROM photo WHERE id = OLD.id_foto) THEN
+        UPDATE photo
+        SET rate_user = (
+            SELECT IFNULL(AVG(rate), 0)
+            FROM rate_user
+            WHERE id_foto = OLD.id_foto
+        )
+        WHERE id = OLD.id_foto;
+    END IF;
 END
 $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `update_rate_user_after_insert`;
 DELIMITER $$
 CREATE TRIGGER `update_rate_user_after_insert` AFTER INSERT ON `rate_user` FOR EACH ROW BEGIN
-    UPDATE photo
-    SET rate_user = (
-        SELECT IFNULL(AVG(rate), 0)
-        FROM rate_user
-        WHERE id_foto = NEW.id_foto
-    )
-    WHERE id = NEW.id_foto;
+    IF EXISTS (SELECT 1 FROM photo WHERE id = NEW.id_foto) THEN
+        UPDATE photo
+        SET rate_user = (
+            SELECT IFNULL(AVG(rate), 0)
+            FROM rate_user
+            WHERE id_foto = NEW.id_foto
+        )
+        WHERE id = NEW.id_foto;
+    END IF;
 END
 $$
 DELIMITER ;
@@ -415,6 +423,7 @@ DELIMITER ;
 -- Структура таблицы `users`
 --
 -- Создание: Апр 06 2025 г., 22:00
+-- Последнее обновление: Апр 07 2025 г., 09:23
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -448,7 +457,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, `language`, `theme`, `date_regist`, `date_last_activ`, `date_last_logout`, `group_id`, `user_rights`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-06 19:11:03', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-07 09:23:56', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
 
 -- --------------------------------------------------------
 
@@ -489,15 +498,15 @@ ALTER TABLE `photo`
 -- Ограничения внешнего ключа таблицы `rate_moder`
 --
 ALTER TABLE `rate_moder`
-  ADD CONSTRAINT `m_rate_photo` FOREIGN KEY (`id_foto`) REFERENCES `photo` (`id`),
-  ADD CONSTRAINT `m_rate_users` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `m_rate_photo` FOREIGN KEY (`id_foto`) REFERENCES `photo` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `m_rate_users` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `rate_user`
 --
 ALTER TABLE `rate_user`
-  ADD CONSTRAINT `u_rate_photo` FOREIGN KEY (`id_foto`) REFERENCES `photo` (`id`),
-  ADD CONSTRAINT `u_rate_users` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `u_rate_photo` FOREIGN KEY (`id_foto`) REFERENCES `photo` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `u_rate_users` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `users`

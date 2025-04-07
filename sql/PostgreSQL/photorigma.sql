@@ -17,13 +17,12 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: root
+-- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
 CREATE FUNCTION public.prevent_deletion_of_service_groups() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-BEGIN
+    AS $$BEGIN
     -- Проверяем, является ли id служебным
     IF OLD.id BETWEEN 0 AND 3 THEN
         -- Просто выходим без ошибки (удаление игнорируется)
@@ -35,63 +34,99 @@ END;
 $$;
 
 
-ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO root;
+ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO photorigma;
 
 --
--- Name: update_rate_moder(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: update_rate_moder_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
-CREATE FUNCTION public.update_rate_moder() RETURNS trigger
+CREATE FUNCTION public.update_rate_moder_after_delete() RETURNS trigger
     LANGUAGE plpgsql
     AS $$BEGIN
-    UPDATE photo
-    SET rate_moder = (
-        SELECT COALESCE(AVG(rate), 0)
-        FROM rate_moder
-        WHERE id_foto = NEW.id_foto
-    )
-    WHERE id = NEW.id_foto;
+    IF EXISTS (SELECT 1 FROM photo WHERE id = OLD.id_foto) THEN
+        UPDATE photo
+        SET rate_moder = (
+            SELECT COALESCE(AVG(rate), 0)
+            FROM rate_moder
+            WHERE id_foto = OLD.id_foto
+        )
+        WHERE id = OLD.id_foto;
+    END IF;
+    RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_rate_moder_after_delete() OWNER TO photorigma;
+
+--
+-- Name: update_rate_moder_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma
+--
+
+CREATE FUNCTION public.update_rate_moder_after_insert() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    IF EXISTS (SELECT 1 FROM photo WHERE id = NEW.id_foto) THEN
+        UPDATE photo
+        SET rate_moder = (
+            SELECT COALESCE(AVG(rate), 0)
+            FROM rate_moder
+            WHERE id_foto = NEW.id_foto
+        )
+        WHERE id = NEW.id_foto;
+    END IF;
     RETURN NEW;
 END;
 $$;
 
 
-ALTER FUNCTION public.update_rate_moder() OWNER TO photorigma;
+ALTER FUNCTION public.update_rate_moder_after_insert() OWNER TO photorigma;
 
 --
--- Name: FUNCTION update_rate_moder(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: update_rate_user_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
-COMMENT ON FUNCTION public.update_rate_moder() IS 'Изменение оценки модератора к фотографии';
-
-
---
--- Name: update_rate_user(); Type: FUNCTION; Schema: public; Owner: photorigma
---
-
-CREATE FUNCTION public.update_rate_user() RETURNS trigger
+CREATE FUNCTION public.update_rate_user_after_delete() RETURNS trigger
     LANGUAGE plpgsql
     AS $$BEGIN
-    UPDATE photo
-    SET rate_user = (
-        SELECT COALESCE(AVG(rate), 0)
-        FROM rate_user
-        WHERE id_foto = NEW.id_foto
-    )
-    WHERE id = NEW.id_foto;
+    IF EXISTS (SELECT 1 FROM photo WHERE id = OLD.id_foto) THEN
+        UPDATE photo
+        SET rate_user = (
+            SELECT COALESCE(AVG(rate), 0)
+            FROM rate_user
+            WHERE id_foto = OLD.id_foto
+        )
+        WHERE id = OLD.id_foto;
+    END IF;
+    RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_rate_user_after_delete() OWNER TO photorigma;
+
+--
+-- Name: update_rate_user_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma
+--
+
+CREATE FUNCTION public.update_rate_user_after_insert() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    IF EXISTS (SELECT 1 FROM photo WHERE id = NEW.id_foto) THEN
+        UPDATE photo
+        SET rate_user = (
+            SELECT COALESCE(AVG(rate), 0)
+            FROM rate_user
+            WHERE id_foto = NEW.id_foto
+        )
+        WHERE id = NEW.id_foto;
+    END IF;
     RETURN NEW;
 END;
 $$;
 
 
-ALTER FUNCTION public.update_rate_user() OWNER TO photorigma;
-
---
--- Name: FUNCTION update_rate_user(); Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON FUNCTION public.update_rate_user() IS 'Изменение оценки пользователя к фотографии';
-
+ALTER FUNCTION public.update_rate_user_after_insert() OWNER TO photorigma;
 
 SET default_tablespace = '';
 
@@ -1323,28 +1358,28 @@ CREATE TRIGGER trg_prevent_deletion BEFORE DELETE ON public.groups FOR EACH ROW 
 -- Name: rate_moder update_rate_moder_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
 --
 
-CREATE TRIGGER update_rate_moder_after_delete AFTER DELETE ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder();
+CREATE TRIGGER update_rate_moder_after_delete AFTER DELETE ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder_after_delete();
 
 
 --
 -- Name: rate_moder update_rate_moder_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma
 --
 
-CREATE TRIGGER update_rate_moder_after_insert AFTER INSERT ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder();
+CREATE TRIGGER update_rate_moder_after_insert AFTER INSERT ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder_after_insert();
 
 
 --
 -- Name: rate_user update_rate_user_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
 --
 
-CREATE TRIGGER update_rate_user_after_delete AFTER DELETE ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user();
+CREATE TRIGGER update_rate_user_after_delete AFTER DELETE ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user_after_delete();
 
 
 --
 -- Name: rate_user update_rate_user_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma
 --
 
-CREATE TRIGGER update_rate_user_after_insert AFTER INSERT ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user();
+CREATE TRIGGER update_rate_user_after_insert AFTER INSERT ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user_after_insert();
 
 
 --
@@ -1352,7 +1387,7 @@ CREATE TRIGGER update_rate_user_after_insert AFTER INSERT ON public.rate_user FO
 --
 
 ALTER TABLE ONLY public.rate_moder
-    ADD CONSTRAINT m_rate_photo FOREIGN KEY (id_foto) REFERENCES public.photo(id) ON DELETE RESTRICT;
+    ADD CONSTRAINT m_rate_photo FOREIGN KEY (id_foto) REFERENCES public.photo(id) ON DELETE CASCADE;
 
 
 --
@@ -1360,7 +1395,7 @@ ALTER TABLE ONLY public.rate_moder
 --
 
 ALTER TABLE ONLY public.rate_moder
-    ADD CONSTRAINT m_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE RESTRICT;
+    ADD CONSTRAINT m_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -1392,7 +1427,7 @@ ALTER TABLE ONLY public.photo
 --
 
 ALTER TABLE ONLY public.rate_user
-    ADD CONSTRAINT u_rate_photo FOREIGN KEY (id_foto) REFERENCES public.photo(id) ON DELETE RESTRICT;
+    ADD CONSTRAINT u_rate_photo FOREIGN KEY (id_foto) REFERENCES public.photo(id) ON DELETE CASCADE;
 
 
 --
@@ -1400,7 +1435,7 @@ ALTER TABLE ONLY public.rate_user
 --
 
 ALTER TABLE ONLY public.rate_user
-    ADD CONSTRAINT u_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE RESTRICT;
+    ADD CONSTRAINT u_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --

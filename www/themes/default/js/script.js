@@ -23,15 +23,12 @@ $(document).ready(function () {
     $('.ui.icon.button').popup();
     $('.ui.dropdown').dropdown();
     $('.ui.sticky').sticky({context: '#short_menu'});
-    console.log('Initializing readonly ratings...');
 
     function initializeReadOnlyRating() {
         $('.readonly-rating').each(function () {
             const ratingContainer = $(this);
             const maxRating = parseFloat(ratingContainer.attr('data-max-rating')) || 1;
             const ratingValue = parseFloat(ratingContainer.attr('data-rating')) || 0;
-
-            console.log(`Processing rating: value=${ratingValue}, max=${maxRating}`);
 
             const totalIcons = 2 * maxRating + 1;
 
@@ -71,7 +68,6 @@ $(document).ready(function () {
 
                 const fillPercent = `${fractionalPart * 100}%`;
                 partialIcon.css('--fill-percent', fillPercent);
-                console.log(`Set --fill-percent to ${fillPercent}`);
             }
         });
     }

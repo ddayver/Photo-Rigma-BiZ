@@ -159,6 +159,9 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 <tr class="memitem:a6031ba212847fdf2810753c120c4b4d2" id="r_a6031ba212847fdf2810753c120c4b4d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6031ba212847fdf2810753c120c4b4d2">process_user_rights</a> (string $user_rights)</td></tr>
 <tr class="memdesc:a6031ba212847fdf2810753c120c4b4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обрабатывает поле <code>user_rights</code>, преобразуя его из строки JSON в массив прав.  <br /></td></tr>
 <tr class="separator:a6031ba212847fdf2810753c120c4b4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad034c9b358516e12c6d2f6b31e2c2e05" id="r_ad034c9b358516e12c6d2f6b31e2c2e05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad034c9b358516e12c6d2f6b31e2c2e05">set_work</a> (<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a> $work)</td></tr>
+<tr class="memdesc:ad034c9b358516e12c6d2f6b31e2c2e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Установка объекта Work через сеттер.  <br /></td></tr>
+<tr class="separator:ad034c9b358516e12c6d2f6b31e2c2e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с пользователями и группами. </p>
@@ -591,6 +594,55 @@ $(function(){initNavTree('d0/d4f/interfacePhotoRigma_1_1Classes_1_1User__Interfa
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав.">PhotoRigma\Classes\User\process_user_rights()</a> Пример реализации метода в классе. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2">User</a>.</p>
+
+</div>
+</div>
+<a id="ad034c9b358516e12c6d2f6b31e2c2e05" name="ad034c9b358516e12c6d2f6b31e2c2e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad034c9b358516e12c6d2f6b31e2c2e05">&#9670;&#160;</a></span>set_work()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set_work </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a></td>          <td class="paramname"><span class="paramname"><em>$work</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Установка объекта Work через сеттер. </p>
+<p>Этот метод позволяет установить объект Work ($work). Метод выполняет следующие действия:</p><ol type="1">
+<li>Проверяет, что переданный объект является экземпляром класса Work.</li>
+<li>Присваивает объект свойству $work текущего класса.</li>
+</ol>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">Work</td><td class="paramname">$work</td><td>Объект Work:<ul>
+<li>Должен быть экземпляром класса Work.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если передан некорректный объект (не экземпляр класса Work).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Метод проверяет тип переданного объекта. Объект Work используется для дальнейшего взаимодействия в текущем классе.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Некорректный объект (не экземпляр класса Work) вызывает исключение.</dd></dl>
+<p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
+<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new \PhotoRigma\Classes\Work();</div>
+<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;set_work(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>);</div>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00187">index.php:187</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a> Класс с объектом Work. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad034c9b358516e12c6d2f6b31e2c2e05">User</a>.</p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00187">PhotoRigma\$work</a>.</p>
 
 </div>
 </div>

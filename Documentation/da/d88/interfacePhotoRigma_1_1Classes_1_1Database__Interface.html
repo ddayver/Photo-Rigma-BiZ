@@ -156,6 +156,15 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 <tr class="memitem:ac0e58b1bf2a72bbbaa896b9849ed0e42" id="r_ac0e58b1bf2a72bbbaa896b9849ed0e42"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0e58b1bf2a72bbbaa896b9849ed0e42">format_date</a> (string $column, string $format)</td></tr>
 <tr class="memdesc:ac0e58b1bf2a72bbbaa896b9849ed0e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Форматирует дату в зависимости от типа СУБД.  <br /></td></tr>
 <tr class="separator:ac0e58b1bf2a72bbbaa896b9849ed0e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc4126846a2eb1bc11d7418b8f120ecf" id="r_afc4126846a2eb1bc11d7418b8f120ecf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc4126846a2eb1bc11d7418b8f120ecf">begin_transaction</a> (string $context='')</td></tr>
+<tr class="memdesc:afc4126846a2eb1bc11d7418b8f120ecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Начинает транзакцию в базе данных.  <br /></td></tr>
+<tr class="separator:afc4126846a2eb1bc11d7418b8f120ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71aacc1f4ddbd5575362b54ac80cd0d7" id="r_a71aacc1f4ddbd5575362b54ac80cd0d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71aacc1f4ddbd5575362b54ac80cd0d7">commit_transaction</a> (string $context='')</td></tr>
+<tr class="memdesc:a71aacc1f4ddbd5575362b54ac80cd0d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Подтверждает транзакцию в базе данных.  <br /></td></tr>
+<tr class="separator:a71aacc1f4ddbd5575362b54ac80cd0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa54f5f05128d55871aa9303134170376" id="r_aa54f5f05128d55871aa9303134170376"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa54f5f05128d55871aa9303134170376">rollback_transaction</a> (string $context='')</td></tr>
+<tr class="memdesc:aa54f5f05128d55871aa9303134170376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отменяет транзакцию в базе данных.  <br /></td></tr>
+<tr class="separator:aa54f5f05128d55871aa9303134170376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс Database_Interface определяет методы для работы с базой данных. </p>
@@ -177,6 +186,86 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 
 <p class="definition">См. определение в файле <a class="el" href="../../dc/d82/db_8php_source.html">db.php</a> строка <a class="el" href="../../dc/d82/db_8php_source.html#l00083">83</a></p>
 </div><h2 class="groupheader">Методы</h2>
+<a id="afc4126846a2eb1bc11d7418b8f120ecf" name="afc4126846a2eb1bc11d7418b8f120ecf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc4126846a2eb1bc11d7418b8f120ecf">&#9670;&#160;</a></span>begin_transaction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">begin_transaction </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$context</em></span><span class="paramdefsep"> = </span><span class="paramdefval">''</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Начинает транзакцию в базе данных. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод предназначен для начала транзакции в базе данных через объект PDO. После начала транзакции рекомендуется записать лог с указанием контекста. Реализация должна принимать параметры напрямую без дополнительной обработки.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$context</td><td>Контекст транзакции (необязательный параметр). Используется для описания цели или места начала транзакции. По умолчанию: пустая строка.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>Выбрасывается, если произошла ошибка при начале транзакции.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация метода должна использовать логирование для записи информации о начале транзакции. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что соединение с базой данных установлено перед вызовом метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Database();</div>
+<div class="line">$object-&gt;begin_transaction(<span class="stringliteral">&#39;Сохранение данных пользователя&#39;</span>);</div>
+<div class="line"><span class="comment">// Лог: [DB] Транзакция начата | Контекст: Сохранение данных пользователя</span></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#afc4126846a2eb1bc11d7418b8f120ecf" title="Начинает транзакцию в базе данных.">PhotoRigma\Classes\Database\begin_transaction()</a> Реализация метода в классе Database. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#afc4126846a2eb1bc11d7418b8f120ecf">Database</a>.</p>
+
+</div>
+</div>
+<a id="a71aacc1f4ddbd5575362b54ac80cd0d7" name="a71aacc1f4ddbd5575362b54ac80cd0d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71aacc1f4ddbd5575362b54ac80cd0d7">&#9670;&#160;</a></span>commit_transaction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">commit_transaction </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$context</em></span><span class="paramdefsep"> = </span><span class="paramdefval">''</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Подтверждает транзакцию в базе данных. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод предназначен для подтверждения транзакции в базе данных через объект PDO. После подтверждения транзакции рекомендуется записать лог с указанием контекста. Реализация должна принимать параметры напрямую без дополнительной обработки.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$context</td><td>Контекст транзакции (необязательный параметр). Используется для описания цели или места подтверждения транзакции. По умолчанию: пустая строка.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>Выбрасывается, если произошла ошибка при подтверждении транзакции.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация метода должна использовать логирование для записи информации о подтверждении транзакции. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что транзакция была начата перед вызовом этого метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Database();</div>
+<div class="line">$object-&gt;commit_transaction(<span class="stringliteral">&#39;Сохранение данных пользователя&#39;</span>);</div>
+<div class="line"><span class="comment">// Лог: [DB] Транзакция подтверждена | Контекст: Сохранение данных пользователя</span></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a71aacc1f4ddbd5575362b54ac80cd0d7" title="Подтверждает транзакцию в базе данных.">PhotoRigma\Classes\Database\commit_transaction()</a> Реализация метода в классе Database. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a71aacc1f4ddbd5575362b54ac80cd0d7">Database</a>.</p>
+
+</div>
+</div>
 <a id="a73d8e6acdfb996002f980ab7c9c18515" name="a73d8e6acdfb996002f980ab7c9c18515"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a73d8e6acdfb996002f980ab7c9c18515">&#9670;&#160;</a></span>delete()</h2>
 
@@ -642,6 +731,46 @@ $(function(){initNavTree('da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Int
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d" title="Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query.">PhotoRigma\Classes\Database\res_row()</a> Метод, который реализует в классе заявленную логику. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d">Database</a>.</p>
+
+</div>
+</div>
+<a id="aa54f5f05128d55871aa9303134170376" name="aa54f5f05128d55871aa9303134170376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa54f5f05128d55871aa9303134170376">&#9670;&#160;</a></span>rollback_transaction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rollback_transaction </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$context</em></span><span class="paramdefsep"> = </span><span class="paramdefval">''</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отменяет транзакцию в базе данных. </p>
+<p>Этот метод является частью контракта, который должны реализовать классы, использующие интерфейс. Метод предназначен для отмены транзакции в базе данных через объект PDO. После отмены транзакции рекомендуется записать лог с указанием контекста. Реализация должна принимать параметры напрямую без дополнительной обработки.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$context</td><td>Контекст транзакции (необязательный параметр). Используется для описания цели или места отмены транзакции. По умолчанию: пустая строка.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>Выбрасывается, если произошла ошибка при отмене транзакции.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация метода должна использовать логирование для записи информации об отмене транзакции. </dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что транзакция была начата перед вызовом этого метода.</dd></dl>
+<p>Пример вызова метода: </p><div class="fragment"><div class="line">$object = new \PhotoRigma\Classes\Database();</div>
+<div class="line">$object-&gt;rollback_transaction(<span class="stringliteral">&#39;Отмена сохранения данных пользователя&#39;</span>);</div>
+<div class="line"><span class="comment">// Лог: [DB] Транзакция отменена | Контекст: Отмена сохранения данных пользователя</span></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa54f5f05128d55871aa9303134170376" title="Отменяет транзакцию в базе данных.">PhotoRigma\Classes\Database\rollback_transaction()</a> Реализация метода в классе Database. </dd></dl>
+
+<p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa54f5f05128d55871aa9303134170376">Database</a>.</p>
 
 </div>
 </div>
