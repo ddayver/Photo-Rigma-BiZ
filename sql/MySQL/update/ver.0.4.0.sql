@@ -80,8 +80,12 @@ WHERE `date_last_activ` >= NOW() - INTERVAL (
 CREATE VIEW `random_photo` AS
 SELECT `id`, `file`, `name`, `description`, `category`, `rate_user`, `rate_moder`, `user_upload`
 FROM `photo`
-ORDER BY rand()
-LIMIT 1;
+WHERE `id` = (
+    SELECT `id`
+    FROM `photo`
+    ORDER BY RAND()
+    LIMIT 1
+);
 
 -- 16. Добавляем таблицу `query_logs` для логирования медленных запросов и запросов без плейсхолдеров.
 CREATE TABLE IF NOT EXISTS `query_logs` (
@@ -167,7 +171,7 @@ DELIMITER ;
 -- 18. Тригер для запрета удаления служебных групп в таблице `groups`
 DELIMITER $$
 
-CREATE TRIGGER trg_prevent_deletion
+CREATE TRIGGER trg_prevent_deletion_groups
 BEFORE DELETE ON groups
 FOR EACH ROW
 BEGIN
@@ -225,4 +229,27 @@ ALTER TABLE rate_moder
 ALTER TABLE rate_user
     ADD CONSTRAINT u_rate_users FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE;
 
+-- 21. Тригер для запрета удаления служебных групп в таблице `category`
+DELIMITER $$
 
+CREATE TRIGGER trg_prevent_deletion_category
+BEFORE DELETE ON category
+FOR EACH ROW
+BEGIN
+    -- Проверяем, является ли id служебным
+    IF OLD.id = 0 THEN
+        -- Генерируем пустое действие (игнорируем удаление)
+        SIGNAL SQLSTATE '01000';
+    END IF;
+END$$
+
+DELIMITER ;
+
+--22. Добавление индексов для оптимизации запросов к БД.
+ALTER TABLE `config` ADD INDEX(`value`);
+ALTER TABLE `users` ADD INDEX(`user_rights`);
+ALTER TABLE `news` ADD INDEX(`data_last_edit`);
+ALTER TABLE `photo` ADD INDEX(`date_upload`);
+CREATE INDEX `idx_photo_category_user_upload` ON `photo`(`category`, `user_upload`);
+ALTER TABLE `users` ADD INDEX(`date_last_activ`);
+CREATE INDEX `idx_photo_user_upload_group` ON `photo`(`user_upload`, `id`);

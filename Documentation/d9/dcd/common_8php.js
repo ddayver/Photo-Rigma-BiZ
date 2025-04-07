@@ -17,6 +17,8 @@ var common_8php =
     [ "PhotoRigma\\Include\\REG_EMAIL", "db/d02/namespacePhotoRigma_1_1Include.html#ae61eeb74d6e738c902452868f3b3ca32", null ],
     [ "PhotoRigma\\Include\\REG_LOGIN", "db/d02/namespacePhotoRigma_1_1Include.html#abcaad3156cca5ada2c3a8df418291208", null ],
     [ "PhotoRigma\\Include\\REG_NAME", "db/d02/namespacePhotoRigma_1_1Include.html#a328f2af671059a9d73b0cfef6c3a644f", null ],
+    [ "PhotoRigma\\Include\\SQL_ANALYZE", "db/d02/namespacePhotoRigma_1_1Include.html#aca9a93b4473c15d082956140fb4d2c61", null ],
+    [ "PhotoRigma\\Include\\SQL_LOG", "db/d02/namespacePhotoRigma_1_1Include.html#a20041a7cce31381ae5d8327ce409894c", null ],
     [ "PhotoRigma\\Include\\TBL_CATEGORY", "db/d02/namespacePhotoRigma_1_1Include.html#af7d24f8d6208f91370d570179ecc7588", null ],
     [ "PhotoRigma\\Include\\TBL_CONFIG", "db/d02/namespacePhotoRigma_1_1Include.html#a31ed4ca28158fa3c806e4651efec5f7a", null ],
     [ "PhotoRigma\\Include\\TBL_GROUP", "db/d02/namespacePhotoRigma_1_1Include.html#a9d321afcd9daf1261fb27494a9dd07cf", null ],

@@ -816,6 +816,11 @@ class Database implements Database_Interface
         }
         // Сохраняем тип используемой базы данных
         $this->db_type = $db_config['dbtype'];
+        // Определяем charset в зависимости от типа СУБД
+        $charset = match ($this->db_type) {
+            'mysql' => 'charset=utf8mb4',
+            default => '', // Для PostgreSQL и SQLite charset не используется
+        };
         // Проверка корректности dbname и dbuser
         if (empty($db_config['dbname']) || empty($db_config['dbuser'])) {
             throw new InvalidArgumentException(
@@ -833,8 +838,8 @@ class Database implements Database_Interface
                 );
             } else {
                 try {
-                    $dsn = "{$db_config['dbtype']}:unix_socket={$db_config['dbsock']};dbname={$db_config['dbname']};charset=utf8mb4";
-                    $this->pdo = new PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
+                    $dsn = "{$db_config['dbtype']}:unix_socket={$db_config['dbsock']};dbname={$db_config['dbname']};";
+                    $this->pdo = new PDO($dsn . $charset, $db_config['dbuser'], $db_config['dbpass'], [
                         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                         PDO::ATTR_EMULATE_PREPARES   => false,
@@ -860,14 +865,14 @@ class Database implements Database_Interface
             );
         }
         if (!filter_var($db_config['dbhost'], FILTER_VALIDATE_IP) && !preg_match(
-            '/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            $db_config['dbhost']
-        ) && strtolower($db_config['dbhost']) !== 'localhost') {
+                '/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+                $db_config['dbhost']
+            ) && strtolower($db_config['dbhost']) !== 'localhost') {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный хост базы данных | Значение: {$db_config['dbhost']}"
             );
         }
-        $dsn = "{$db_config['dbtype']}:host={$db_config['dbhost']};dbname={$db_config['dbname']};charset=utf8mb4";
+        $dsn = "{$db_config['dbtype']}:host={$db_config['dbhost']};dbname={$db_config['dbname']};";
         if (!empty($db_config['dbport'])) {
             if (!is_numeric($db_config['dbport']) || $db_config['dbport'] < 1 || $db_config['dbport'] > 65535) {
                 throw new InvalidArgumentException(
@@ -877,7 +882,7 @@ class Database implements Database_Interface
             $dsn .= ";port={$db_config['dbport']}";
         }
         try {
-            $this->pdo = new PDO($dsn, $db_config['dbuser'], $db_config['dbpass'], [
+            $this->pdo = new PDO($dsn . $charset, $db_config['dbuser'], $db_config['dbpass'], [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false,
@@ -1434,21 +1439,30 @@ class Database implements Database_Interface
         // Финальное преобразование запроса в нужный формат СУБД.
         $this->convert_query();
 
+        // Выполняем EXPLAIN ANALYZE, если включено
+        if (SQL_ANALYZE) {
+            $this->log_explain($params);
+        }
+
         // Начало замера времени
         $start_time = microtime(true);
         $this->res_query = $this->pdo->prepare($this->txt_query);
         $this->res_query->execute($params);
         $this->aff_rows = $this->res_query->rowCount();
-        $this->insert_id = (int)$this->pdo->lastInsertId();
-        // Конец замера времени
+        // Проверяем, является ли запрос INSERT
+        if (stripos(trim($this->txt_query), 'INSERT') === 0) {
+            $this->insert_id = (int)$this->pdo->lastInsertId();
+        } else {
+            $this->insert_id = 0; // Для всех остальных запросов
+        }        // Конец замера времени
         $end_time = microtime(true);
         $execution_time = ($end_time - $start_time) * 1000; // Время в миллисекундах
         // Логирование медленных запросов
         $slow_query_threshold = 200; // Порог в миллисекундах
-        if ($execution_time > $slow_query_threshold) {
+        if (SQL_LOG && $execution_time > $slow_query_threshold) {
             // Сохраняем запрос в БД
             $this->log_query('slow', $execution_time);
-        } elseif (empty($params)) {
+        } elseif (SQL_LOG && empty($params)) {
             // Сохраняем запрос в БД с пустым плейсхолдером
             $this->log_query('no_placeholders', $execution_time);
         }
@@ -1494,6 +1508,129 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
             ),
         };
+    }
+
+    /**
+     * @brief   Логирует результат анализа SQL-запроса с помощью EXPLAIN или EXPLAIN ANALYZE.
+     *
+     * @details Этот метод выполняет анализ SQL-запроса с помощью команды EXPLAIN или EXPLAIN ANALYZE.
+     *          - Для запросов INSERT, UPDATE, DELETE, TRUNCATE используется только EXPLAIN.
+     *          - Для SELECT-запросов используется EXPLAIN ANALYZE.
+     *          Результат анализа записывается в лог вместе с текстом запроса и параметрами.
+     *          В случае ошибки при выполнении EXPLAIN также записывается сообщение об ошибке.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $params Параметры для подготовленного запроса.
+     *                      Должен быть ассоциативным массивом, где ключи соответствуют плейсхолдерам в запросе.
+     *                      Если параметры отсутствуют, можно передать пустой массив.
+     *
+     * @throws Exception Выбрасывается, если произошла ошибка при выполнении EXPLAIN (например, синтаксическая ошибка в
+     *                   запросе).
+     *
+     * @note    Метод использует PDO для выполнения EXPLAIN и логирует результаты через log_in_file.
+     * @warning Убедитесь, что текст запроса ($this->txt_query) корректен перед вызовом метода.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * $this->txt_query = "SELECT * FROM users WHERE id = :id";
+     * $this->log_explain([':id' => 1]);
+     * // Лог: Отчет по анализу с помощью EXPLAIN ANALYZE:
+     * // Запрос: SELECT * FROM users WHERE id = :id
+     * // Параметры: {"id":1}
+     * // EXPLAIN ANALYZE Результат:
+     * // ...
+     * @endcode
+     * @see     PhotoRigma::Include::log_in_file() Логирует сообщения в файл.
+     *
+     * @see     PhotoRigma::Classes::Database::$txt_query Текущий SQL-запрос.
+     * @see     PhotoRigma::Classes::Database::$pdo Объект PDO для подключения к базе данных.
+     */
+    private function log_explain(array $params): void
+    {
+        $explain = '';
+        try {
+            // Определяем, нужно ли добавлять ANALYZE
+            $is_write_query = stripos(trim($this->txt_query), 'INSERT') === 0 || stripos(
+                    trim($this->txt_query),
+                    'UPDATE'
+                ) === 0 || stripos(trim($this->txt_query), 'DELETE') === 0 || stripos(
+                    trim($this->txt_query),
+                    'TRUNCATE'
+                ) === 0;
+
+            // Определяем тип EXPLAIN в зависимости от СУБД и версии
+            if ($this->db_type === 'sqlite') {
+                $explain = 'EXPLAIN'; // Для SQLite всегда только EXPLAIN
+            } elseif ($this->db_type === 'mysql') {
+                // Для MySQL или MariaDB проверяем версию и тип СУБД
+                try {
+                    $stmt = $this->pdo->query("SELECT VERSION()");
+                    $version = $stmt->fetchColumn();
+
+                    // Проверяем, является ли СУБД MariaDB
+                    $is_mariadb = stripos($version, 'mariadb') !== false;
+
+                    // Извлекаем числовую часть версии (например, "8.0.30" -> 8.0)
+                    preg_match('/^(\d+\.\d+)/', $version, $matches);
+                    $numeric_version = $matches[1] ?? null;
+
+                    // Определяем, поддерживается ли ANALYZE
+                    $supports_analyze = !$is_mariadb && $numeric_version !== null && version_compare(
+                            $numeric_version,
+                            '5.7',
+                            '>='
+                        );
+
+                    $explain = $is_write_query || !$supports_analyze ? 'EXPLAIN' // Без ANALYZE для INSERT/UPDATE/DELETE/TRUNCATE или для MariaDB/MySQL < 5.7
+                        : 'EXPLAIN ANALYZE';
+                } catch (Exception) {
+                    // Если не удалось получить версию, используем только EXPLAIN
+                    $explain = 'EXPLAIN';
+                }
+            } elseif ($this->db_type === 'pgsql') {
+                $explain = $is_write_query ? 'EXPLAIN' // Без ANALYZE для INSERT/UPDATE/DELETE/TRUNCATE
+                    : 'EXPLAIN ANALYZE'; // С ANALYZE для SELECT
+            } else {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
+                );
+            }
+
+            // Выполняем EXPLAIN (или EXPLAIN ANALYZE)
+            $stmt = $this->pdo->prepare("$explain $this->txt_query");
+            $stmt->execute($params);
+
+            // Получаем результат
+            $explain_rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Форматируем результат для логирования
+            $explain_result = '';
+            foreach ($explain_rows as $row) {
+                $explain_result .= implode(
+                        ' | ',
+                        array_map(static fn($key, $value) => "$key: $value", array_keys($row), $row)
+                    ) . PHP_EOL;
+            }
+
+            // Логируем результат
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отчет по анализу с помощью $explain: | " . "Запрос: " . $this->txt_query . PHP_EOL . "Параметры: " . (!empty($params) ? json_encode(
+                    $params,
+                    JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+                ) : "отсутствуют") . PHP_EOL . "$explain Результат:" . PHP_EOL . $explain_result
+            );
+        } catch (Exception $e) {
+            // Логируем ошибку
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при выполнении $explain: | " . "Запрос: " . $this->txt_query . PHP_EOL . "Параметры: " . (!empty($params) ? json_encode(
+                    $params,
+                    JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+                ) : "отсутствуют") . PHP_EOL . "Сообщение об ошибке: {$e->getMessage()}"
+            );
+        }
     }
 
     /**
@@ -1548,10 +1685,10 @@ class Database implements Database_Interface
         // Обрезаем запрос до допустимой длины (например, 65,530 символа для TEXT в MySQL)
         $max_query_length = 65530; // Максимальная длина для TEXT
         $log_txt_query = strlen($this->txt_query) > $max_query_length ? substr(
-            $this->txt_query,
-            0,
-            $max_query_length
-        ) . '...' // Добавляем суффикс, если текст обрезан
+                $this->txt_query,
+                0,
+                $max_query_length
+            ) . '...' // Добавляем суффикс, если текст обрезан
             : $this->txt_query;
 
         // Проверяем значение $reason через match
@@ -1689,11 +1826,11 @@ class Database implements Database_Interface
         return match ($this->db_type) {
             'mysql'  => "DATE_FORMAT($column, '$format')", // Для MariaDB используем DATE_FORMAT
             'pgsql'  => "TO_CHAR($column, '" . $this->convert_to_postgres_format(
-                $format
-            ) . "')", // Для PostgreSQL преобразуем формат
+                    $format
+                ) . "')", // Для PostgreSQL преобразуем формат
             'sqlite' => "strftime('" . $this->convert_to_sqlite_format(
-                $format
-            ) . "', $column)", // Для SQLite используем strftime
+                    $format
+                ) . "', $column)", // Для SQLite используем strftime
             default  => throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
             ),

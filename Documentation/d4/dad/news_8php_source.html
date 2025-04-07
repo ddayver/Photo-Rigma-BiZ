@@ -490,7 +490,7 @@ $(function(){initNavTree('d4/dad/news_8php_source.html','../../'); initResizable
 <div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>            <span class="stringliteral">&#39;DISTINCT &#39;</span> . <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;format_date(<span class="stringliteral">&#39;`data_last_edit`&#39;</span>, <span class="stringliteral">&#39;%Y&#39;</span>) . <span class="stringliteral">&#39; AS `year`&#39;</span>,</div>
 <div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>            TBL_NEWS,</div>
 <div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>            [</div>
-<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>                <span class="stringliteral">&#39;order&#39;</span> =&gt; <span class="stringliteral">&#39;`data_last_edit` ASC&#39;</span>,</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>                <span class="stringliteral">&#39;order&#39;</span> =&gt; <span class="stringliteral">&#39;`year` ASC&#39;</span>,</div>
 <div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>            ]</div>
 <div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>        );</div>
 <div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        $years_list = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;res_arr();</div>
@@ -549,7 +549,7 @@ $(function(){initNavTree('d4/dad/news_8php_source.html','../../'); initResizable
 <div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>                [</div>
 <div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>                    <span class="stringliteral">&#39;where&#39;</span>  =&gt; <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;format_date(<span class="stringliteral">&#39;`data_last_edit`&#39;</span>, <span class="stringliteral">&#39;%Y&#39;</span>) . <span class="stringliteral">&#39; = :year&#39;</span>,</div>
 <div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>                    <span class="stringliteral">&#39;params&#39;</span> =&gt; [<span class="stringliteral">&#39;:year&#39;</span> =&gt; $year],</div>
-<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>                    <span class="stringliteral">&#39;order&#39;</span>  =&gt; <span class="stringliteral">&#39;`data_last_edit` ASC&#39;</span>,</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>                    <span class="stringliteral">&#39;order&#39;</span>  =&gt; <span class="stringliteral">&#39;`month` ASC&#39;</span>,</div>
 <div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>                ]</div>
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>            );</div>
 <div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>            $months_list = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;res_arr();</div>

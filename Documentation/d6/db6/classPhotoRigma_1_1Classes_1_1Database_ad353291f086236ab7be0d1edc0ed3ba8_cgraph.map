@@ -1,9 +1,11 @@
 <map id="_truncate_internal" name="_truncate_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="5,31,130,55"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="178,31,282,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,40,162,40,162,46,130,46"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="5,55,130,79"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="178,55,282,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,64,162,64,162,70,130,70"/>
 <area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0" title="Производит финальное преобразование SQL&#45;запроса в зависимости от типа СУБД." alt="" coords="330,5,432,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="282,32,314,26,315,31,283,37"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="343,55,419,79"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="283,49,328,56,327,61,282,54"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="269,52,326,33,327,38,271,57"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="338,55,424,79"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="282,64,323,64,323,70,282,70"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="343,104,419,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="271,77,329,97,328,102,269,82"/>
 </map>

@@ -439,7 +439,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             'DISTINCT ' . $db->format_date('`data_last_edit`', '%Y') . ' AS `year`',
             TBL_NEWS,
             [
-                'order' => '`data_last_edit` ASC',
+                'order' => '`year` ASC',
             ]
         );
         $years_list = $db->res_arr();
@@ -498,7 +498,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 [
                     'where'  => $db->format_date('`data_last_edit`', '%Y') . ' = :year',
                     'params' => [':year' => $year],
-                    'order'  => '`data_last_edit` ASC',
+                    'order'  => '`month` ASC',
                 ]
             );
             $months_list = $db->res_arr();

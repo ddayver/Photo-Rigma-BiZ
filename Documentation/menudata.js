@@ -40,6 +40,7 @@ var menudata={children:[
 {text:"l",url:"namespacemembers.html#index_l"},
 {text:"m",url:"namespacemembers.html#index_m"},
 {text:"r",url:"namespacemembers.html#index_r"},
+{text:"s",url:"namespacemembers.html#index_s"},
 {text:"t",url:"namespacemembers.html#index_t"},
 {text:"v",url:"namespacemembers.html#index_v"}]},
 {text:"Функции",url:"namespacemembers_func.html"},
@@ -53,6 +54,7 @@ var menudata={children:[
 {text:"l",url:"namespacemembers_vars.html#index_l"},
 {text:"m",url:"namespacemembers_vars.html#index_m"},
 {text:"r",url:"namespacemembers_vars.html#index_r"},
+{text:"s",url:"namespacemembers_vars.html#index_s"},
 {text:"t",url:"namespacemembers_vars.html#index_t"},
 {text:"v",url:"namespacemembers_vars.html#index_v"}]}]}]},
 {text:"Классы",url:"annotated.html",children:[

@@ -16,6 +16,92 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE ONLY public.users DROP CONSTRAINT users_groups;
+ALTER TABLE ONLY public.rate_user DROP CONSTRAINT u_rate_users;
+ALTER TABLE ONLY public.rate_user DROP CONSTRAINT u_rate_photo;
+ALTER TABLE ONLY public.photo DROP CONSTRAINT photo_users;
+ALTER TABLE ONLY public.photo DROP CONSTRAINT photo_category;
+ALTER TABLE ONLY public.news DROP CONSTRAINT news_users;
+ALTER TABLE ONLY public.rate_moder DROP CONSTRAINT m_rate_users;
+ALTER TABLE ONLY public.rate_moder DROP CONSTRAINT m_rate_photo;
+DROP TRIGGER update_rate_user_after_insert ON public.rate_user;
+DROP TRIGGER update_rate_user_after_delete ON public.rate_user;
+DROP TRIGGER update_rate_moder_after_insert ON public.rate_moder;
+DROP TRIGGER update_rate_moder_after_delete ON public.rate_moder;
+DROP TRIGGER trg_prevent_deletion_groups ON public.groups;
+DROP TRIGGER trg_prevent_deletion_category ON public.category;
+DROP INDEX public.query_logs_query_hash_key;
+DROP INDEX public.idx_users_user_rights;
+DROP INDEX public.idx_users_date_last_activ;
+DROP INDEX public.idx_photo_user_upload_group;
+DROP INDEX public.idx_photo_date_upload;
+DROP INDEX public.idx_photo_category_user_upload;
+DROP INDEX public.idx_news_data_last_edit;
+DROP INDEX public.idx_config_value;
+ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
+ALTER TABLE ONLY public.users DROP CONSTRAINT users_login_key;
+ALTER TABLE ONLY public.rate_user DROP CONSTRAINT rate_user_pkey;
+ALTER TABLE ONLY public.rate_moder DROP CONSTRAINT rate_moder_pkey;
+ALTER TABLE ONLY public.query_logs DROP CONSTRAINT query_logs_pkey;
+ALTER TABLE ONLY public.photo DROP CONSTRAINT photo_pkey;
+ALTER TABLE ONLY public.news DROP CONSTRAINT news_pkey;
+ALTER TABLE ONLY public.menu DROP CONSTRAINT menu_pkey;
+ALTER TABLE ONLY public.groups DROP CONSTRAINT group_pkey;
+ALTER TABLE ONLY public.db_version DROP CONSTRAINT db_version_pkey;
+ALTER TABLE ONLY public.config DROP CONSTRAINT config_pkey;
+ALTER TABLE ONLY public.category DROP CONSTRAINT category_pkey;
+ALTER TABLE public.users ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.query_logs ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.photo ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.news ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.menu ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.category ALTER COLUMN id DROP DEFAULT;
+DROP VIEW public.users_online;
+DROP SEQUENCE public.users_id_seq;
+DROP TABLE public.users;
+DROP TABLE public.rate_user;
+DROP TABLE public.rate_moder;
+DROP VIEW public.random_photo;
+DROP SEQUENCE public.query_logs_id_seq;
+DROP TABLE public.query_logs;
+DROP SEQUENCE public.photo_id_seq;
+DROP TABLE public.photo;
+DROP SEQUENCE public.news_id_seq;
+DROP TABLE public.news;
+DROP SEQUENCE public.menu_id_seq;
+DROP TABLE public.menu;
+DROP TABLE public.groups;
+DROP TABLE public.db_version;
+DROP TABLE public.config;
+DROP SEQUENCE public.category_id_seq;
+DROP TABLE public.category;
+DROP FUNCTION public.update_rate_user_after_insert();
+DROP FUNCTION public.update_rate_user_after_delete();
+DROP FUNCTION public.update_rate_moder_after_insert();
+DROP FUNCTION public.update_rate_moder_after_delete();
+DROP FUNCTION public.prevent_deletion_of_service_groups();
+DROP FUNCTION public.prevent_deletion_of_service_categories();
+--
+-- Name: prevent_deletion_of_service_categories(); Type: FUNCTION; Schema: public; Owner: photorigma
+--
+
+CREATE FUNCTION public.prevent_deletion_of_service_categories() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    -- Проверяем, является ли id служебным
+    IF OLD.id = 0 THEN
+        -- Просто выходим без ошибки (удаление игнорируется)
+        RETURN NULL;
+    END IF;
+
+    -- Разрешаем удаление
+    RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.prevent_deletion_of_service_categories() OWNER TO photorigma;
+
 --
 -- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
@@ -721,8 +807,10 @@ CREATE VIEW public.random_photo AS
     rate_moder,
     user_upload
    FROM public.photo
-  ORDER BY (random())
- LIMIT 1;
+  WHERE (id = ( SELECT photo_1.id
+           FROM public.photo photo_1
+          ORDER BY (random())
+         LIMIT 1));
 
 
 ALTER VIEW public.random_photo OWNER TO photorigma;
@@ -731,63 +819,7 @@ ALTER VIEW public.random_photo OWNER TO photorigma;
 -- Name: VIEW random_photo; Type: COMMENT; Schema: public; Owner: photorigma
 --
 
-COMMENT ON VIEW public.random_photo IS 'Случайное фото из галереи';
-
-
---
--- Name: COLUMN random_photo.id; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.id IS 'Идентификатор';
-
-
---
--- Name: COLUMN random_photo.file; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.file IS 'Имя файла';
-
-
---
--- Name: COLUMN random_photo.name; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.name IS 'Название фотографии';
-
-
---
--- Name: COLUMN random_photo.description; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.description IS 'Описание фотографии';
-
-
---
--- Name: COLUMN random_photo.category; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.category IS 'Идентификатор раздела';
-
-
---
--- Name: COLUMN random_photo.rate_user; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.rate_user IS 'Оценка от пользователя';
-
-
---
--- Name: COLUMN random_photo.rate_moder; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.rate_moder IS 'Оценка от модератора';
-
-
---
--- Name: COLUMN random_photo.user_upload; Type: COMMENT; Schema: public; Owner: photorigma
---
-
-COMMENT ON COLUMN public.random_photo.user_upload IS 'Идентификатор пользователя, залившего фото';
+COMMENT ON VIEW public.random_photo IS 'Случайно фото';
 
 
 --
@@ -1106,8 +1138,6 @@ INSERT INTO public.category VALUES (0, 'user', 'Пользовательский
 
 INSERT INTO public.config VALUES ('best_user', '5');
 INSERT INTO public.config VALUES ('copyright_text', 'Проекты Rigma.BiZ');
-INSERT INTO public.config VALUES ('copyright_url', 'http://rigma.biz/');
-INSERT INTO public.config VALUES ('copyright_year', '2008-2013');
 INSERT INTO public.config VALUES ('gal_width', '95%');
 INSERT INTO public.config VALUES ('language', 'russian');
 INSERT INTO public.config VALUES ('last_news', '5');
@@ -1127,6 +1157,8 @@ INSERT INTO public.config VALUES ('themes', 'default');
 INSERT INTO public.config VALUES ('title_description', 'Фотогалерея Rigma и Co');
 INSERT INTO public.config VALUES ('title_name', 'Rigma Foto');
 INSERT INTO public.config VALUES ('time_user_online', '900');
+INSERT INTO public.config VALUES ('copyright_year', '2008-2025');
+INSERT INTO public.config VALUES ('copyright_url', 'https://rigma.biz/');
 
 
 --
@@ -1199,7 +1231,7 @@ INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', '
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-02-28 21:04:24', '2025-02-27 09:45:08', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default');
+INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default');
 
 
 --
@@ -1234,7 +1266,7 @@ SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 -- Name: query_logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
 --
 
-SELECT pg_catalog.setval('public.query_logs_id_seq', 1, false);
+SELECT pg_catalog.setval('public.query_logs_id_seq', 17, true);
 
 
 --
@@ -1341,6 +1373,55 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: idx_config_value; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_config_value ON public.config USING btree (value);
+
+
+--
+-- Name: idx_news_data_last_edit; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_news_data_last_edit ON public.news USING btree (data_last_edit);
+
+
+--
+-- Name: idx_photo_category_user_upload; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_photo_category_user_upload ON public.photo USING btree (category, user_upload);
+
+
+--
+-- Name: idx_photo_date_upload; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_photo_date_upload ON public.photo USING btree (date_upload);
+
+
+--
+-- Name: idx_photo_user_upload_group; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_photo_user_upload_group ON public.photo USING btree (user_upload, id);
+
+
+--
+-- Name: idx_users_date_last_activ; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_date_last_activ ON public.users USING btree (date_last_activ);
+
+
+--
+-- Name: idx_users_user_rights; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_user_rights ON public.users USING btree (user_rights);
+
+
+--
 -- Name: query_logs_query_hash_key; Type: INDEX; Schema: public; Owner: photorigma
 --
 
@@ -1348,10 +1429,17 @@ CREATE UNIQUE INDEX query_logs_query_hash_key ON public.query_logs USING btree (
 
 
 --
--- Name: groups trg_prevent_deletion; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: category trg_prevent_deletion_category; Type: TRIGGER; Schema: public; Owner: photorigma
 --
 
-CREATE TRIGGER trg_prevent_deletion BEFORE DELETE ON public.groups FOR EACH ROW EXECUTE FUNCTION public.prevent_deletion_of_service_groups();
+CREATE TRIGGER trg_prevent_deletion_category BEFORE DELETE ON public.category FOR EACH ROW EXECUTE FUNCTION public.prevent_deletion_of_service_categories();
+
+
+--
+-- Name: groups trg_prevent_deletion_groups; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER trg_prevent_deletion_groups BEFORE DELETE ON public.groups FOR EACH ROW EXECUTE FUNCTION public.prevent_deletion_of_service_groups();
 
 
 --

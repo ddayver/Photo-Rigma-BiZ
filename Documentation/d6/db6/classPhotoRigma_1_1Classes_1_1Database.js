@@ -28,6 +28,7 @@ var classPhotoRigma_1_1Classes_1_1Database =
     [ "get_last_insert_id", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abafff8c03a52d73e37072449448e5a3c", null ],
     [ "insert", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110", null ],
     [ "join", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a", null ],
+    [ "log_explain", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce", null ],
     [ "log_query", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2", null ],
     [ "res_arr", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a0bfd8e43ae69ed64120dd984b9e288a4", null ],
     [ "res_row", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a974af553ef190897a8849c77166ea32d", null ],

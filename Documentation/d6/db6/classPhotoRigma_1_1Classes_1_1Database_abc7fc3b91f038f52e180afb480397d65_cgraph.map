@@ -1,7 +1,9 @@
 <map id="execute_query" name="execute_query">
-<area shape="rect" id="Node000001" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="5,31,110,55"/>
+<area shape="rect" id="Node000001" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="5,55,110,79"/>
 <area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0" title="Производит финальное преобразование SQL&#45;запроса в зависимости от типа СУБД." alt="" coords="158,5,260,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,32,142,26,143,31,110,37"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="171,55,247,79"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="110,49,156,56,155,61,110,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,52,153,33,155,38,99,57"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="166,55,252,79"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="110,64,150,64,150,70,110,70"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="171,104,247,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="99,77,157,97,155,102,97,82"/>
 </map>

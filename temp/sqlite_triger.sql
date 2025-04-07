@@ -59,10 +59,20 @@ BEGIN
 END;
 
 -- Предотвращение удаления служебных групп.
-CREATE TRIGGER trg_prevent_deletion
+CREATE TRIGGER trg_prevent_deletion_groups
 BEFORE DELETE ON groups
 FOR EACH ROW
 WHEN OLD.id BETWEEN 0 AND 3
+BEGIN
+    -- Просто игнорируем удаление
+    SELECT RAISE(IGNORE);
+END;
+
+-- Предотвращение удаления служебных категорий.
+CREATE TRIGGER trg_prevent_deletion_category
+BEFORE DELETE ON category
+FOR EACH ROW
+WHEN OLD.id = 0
 BEGIN
     -- Просто игнорируем удаление
     SELECT RAISE(IGNORE);

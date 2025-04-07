@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 07 2025 г., 10:01
+-- Время создания: Апр 07 2025 г., 16:06
 -- Версия сервера: 10.11.11-MariaDB
 -- Версия PHP: 8.4.6RC1
 
@@ -52,19 +52,35 @@ CREATE TABLE IF NOT EXISTS `category` (
 INSERT INTO `category` (`id`, `folder`, `name`, `description`) VALUES
 (0, 'user', 'Пользовательский альбом', 'Персональный пользовательский альбом');
 
+--
+-- Триггеры `category`
+--
+DROP TRIGGER IF EXISTS `trg_prevent_deletion_category`;
+DELIMITER $$
+CREATE TRIGGER `trg_prevent_deletion_category` BEFORE DELETE ON `category` FOR EACH ROW BEGIN
+    -- Проверяем, является ли id служебным
+    IF OLD.id = 0 THEN
+        -- Генерируем пустое действие (игнорируем удаление)
+        SIGNAL SQLSTATE '01000';
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `config`
 --
--- Создание: Апр 06 2025 г., 21:31
+-- Создание: Апр 07 2025 г., 15:30
 --
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `name` varchar(50) NOT NULL COMMENT 'Имя параметра',
   `value` varchar(255) NOT NULL COMMENT 'Значение параметра',
-  PRIMARY KEY (`name`)
+  PRIMARY KEY (`name`),
+  KEY `value` (`value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица параметров';
 
 --
@@ -76,29 +92,29 @@ CREATE TABLE IF NOT EXISTS `config` (
 --
 
 INSERT INTO `config` (`name`, `value`) VALUES
-('best_user', '5'),
-('copyright_text', 'Проекты Rigma.BiZ'),
-('copyright_url', 'https://rigma.biz/'),
-('copyright_year', '2008-2025'),
-('gal_width', '95%'),
-('language', 'russian'),
-('last_news', '5'),
-('left_panel', '250'),
 ('max_avatar_h', '100'),
 ('max_avatar_w', '100'),
-('max_file_size', '5M'),
-('max_photo_h', '480'),
-('max_photo_w', '640'),
 ('max_rate', '2'),
-('meta_description', 'Rigma.BiZ - фотогалерея Gold Rigma'),
-('meta_keywords', 'Rigma.BiZ photo gallery Gold Rigma'),
-('right_panel', '250'),
 ('temp_photo_h', '200'),
 ('temp_photo_w', '200'),
-('themes', 'default'),
+('copyright_year', '2008-2025'),
+('left_panel', '250'),
+('right_panel', '250'),
+('max_photo_h', '480'),
+('best_user', '5'),
+('last_news', '5'),
+('max_file_size', '5M'),
+('max_photo_w', '640'),
 ('time_user_online', '900'),
-('title_description', 'Фотогалерея Rigma и Co'),
-('title_name', 'Rigma Foto');
+('gal_width', '95%'),
+('themes', 'default'),
+('copyright_url', 'https://rigma.biz/'),
+('title_name', 'Rigma Foto'),
+('meta_description', 'Rigma.BiZ - фотогалерея Gold Rigma'),
+('meta_keywords', 'Rigma.BiZ photo gallery Gold Rigma'),
+('language', 'russian'),
+('copyright_text', 'Проекты Rigma.BiZ'),
+('title_description', 'Фотогалерея Rigma и Co');
 
 -- --------------------------------------------------------
 
@@ -158,9 +174,9 @@ INSERT INTO `groups` (`id`, `name`, `user_rights`) VALUES
 --
 -- Триггеры `groups`
 --
-DROP TRIGGER IF EXISTS `trg_prevent_deletion`;
+DROP TRIGGER IF EXISTS `trg_prevent_deletion_groups`;
 DELIMITER $$
-CREATE TRIGGER `trg_prevent_deletion` BEFORE DELETE ON `groups` FOR EACH ROW BEGIN
+CREATE TRIGGER `trg_prevent_deletion_groups` BEFORE DELETE ON `groups` FOR EACH ROW BEGIN
     -- Проверяем, является ли id служебным
     IF OLD.id BETWEEN 0 AND 3 THEN
         -- Генерируем пустое действие (игнорируем удаление)
@@ -219,7 +235,7 @@ INSERT INTO `menu` (`id`, `action`, `url_action`, `name_action`, `short`, `long`
 --
 -- Структура таблицы `news`
 --
--- Создание: Апр 06 2025 г., 22:40
+-- Создание: Апр 07 2025 г., 15:33
 --
 
 DROP TABLE IF EXISTS `news`;
@@ -231,7 +247,8 @@ CREATE TABLE IF NOT EXISTS `news` (
   `name_post` varchar(50) NOT NULL COMMENT 'Название новости',
   `text_post` text NOT NULL COMMENT 'Текст новости',
   PRIMARY KEY (`id`),
-  KEY `news_users` (`user_post`)
+  KEY `news_users` (`user_post`),
+  KEY `data_last_edit` (`data_last_edit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Новости сайта' ROW_FORMAT=DYNAMIC;
 
 --
@@ -245,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `news` (
 --
 -- Структура таблицы `photo`
 --
--- Создание: Апр 06 2025 г., 22:45
+-- Создание: Апр 07 2025 г., 15:44
 --
 
 DROP TABLE IF EXISTS `photo`;
@@ -260,8 +277,9 @@ CREATE TABLE IF NOT EXISTS `photo` (
   `rate_user` double NOT NULL DEFAULT 0 COMMENT 'Оценка от пользователя',
   `rate_moder` double NOT NULL DEFAULT 0 COMMENT 'Оценка от модератора',
   PRIMARY KEY (`id`),
-  KEY `photo_category` (`category`),
-  KEY `photo_users` (`user_upload`)
+  KEY `date_upload` (`date_upload`),
+  KEY `idx_photo_category_user_upload` (`category`,`user_upload`),
+  KEY `idx_photo_user_upload_group` (`user_upload`,`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='таблица размещения фотографий' ROW_FORMAT=DYNAMIC;
 
 --
@@ -278,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `photo` (
 -- Структура таблицы `query_logs`
 --
 -- Создание: Апр 04 2025 г., 17:55
--- Последнее обновление: Апр 07 2025 г., 09:23
+-- Последнее обновление: Апр 07 2025 г., 15:10
 --
 
 DROP TABLE IF EXISTS `query_logs`;
@@ -422,8 +440,8 @@ DELIMITER ;
 --
 -- Структура таблицы `users`
 --
--- Создание: Апр 06 2025 г., 22:00
--- Последнее обновление: Апр 07 2025 г., 09:23
+-- Создание: Апр 07 2025 г., 15:42
+-- Последнее обновление: Апр 07 2025 г., 15:10
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -443,7 +461,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Права доступа' CHECK (json_valid(`user_rights`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
-  KEY `users_groups` (`group_id`)
+  KEY `users_groups` (`group_id`),
+  KEY `user_rights` (`user_rights`(768)),
+  KEY `date_last_activ` (`date_last_activ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица данных пользователя' ROW_FORMAT=DYNAMIC;
 
 --
@@ -457,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, `language`, `theme`, `date_regist`, `date_last_activ`, `date_last_logout`, `group_id`, `user_rights`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-07 09:23:56', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-07 15:10:36', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
 
 -- --------------------------------------------------------
 
@@ -466,7 +486,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, 
 --
 DROP TABLE IF EXISTS `random_photo`;
 DROP VIEW IF EXISTS `random_photo`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `random_photo`  AS SELECT `photo`.`id` AS `id`, `photo`.`file` AS `file`, `photo`.`name` AS `name`, `photo`.`description` AS `description`, `photo`.`category` AS `category`, `photo`.`rate_user` AS `rate_user`, `photo`.`rate_moder` AS `rate_moder`, `photo`.`user_upload` AS `user_upload` FROM `photo` ORDER BY rand() ASC LIMIT 0, 1 ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `random_photo`  AS SELECT `photo`.`id` AS `id`, `photo`.`file` AS `file`, `photo`.`name` AS `name`, `photo`.`description` AS `description`, `photo`.`category` AS `category`, `photo`.`rate_user` AS `rate_user`, `photo`.`rate_moder` AS `rate_moder`, `photo`.`user_upload` AS `user_upload` FROM `photo` WHERE `photo`.`id` = (select `photo`.`id` from `photo` order by rand() limit 1) ;
 
 -- --------------------------------------------------------
 

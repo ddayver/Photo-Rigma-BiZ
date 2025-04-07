@@ -110,6 +110,8 @@ define(
     'KEY_SESSION',
     hash('sha256', 'PhotoRigma_' . gethostname())
 ); ///< Ключ для использования в глобальном массиве $_SESSION
+define('SQL_LOG', true); ///< Включить логирование запросов без плейсхолдеров и медленных запросов
+define('SQL_ANALYZE', true); ///< Включить анализ запросов с помощью EXPLAIN/EXPLAIN ANALYZE
 
 /**
  * @def     REG_LOGIN
