@@ -1,489 +1,643 @@
 <!-- SELECT_ADMIN_BLOCK_BEGIN -->
 <!-- CASE_ADMIN_START -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="news_data"></td>
-									<td class="category_center">
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="toolbox icon"></i> {L_NAME_BLOCK}
+						</div>
+					</div>
+					<div class="ui attached segment field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
 <!-- IF_SESSION_ADMIN_ON_BEGIN -->
-										<div  align="center">
-											<table cellspacing="0" cellpadding="0" border="0">
-												<tr>
-													<td class="category_center">
-														{L_SELECT_SUBACT}
-														<hr class="line" />
-													</td>
-            									</tr>
-												<tr>
-													<td class="news_data">
+						<div style="text-align: center;">
+							<h4 class="ui inverted block header">{L_SELECT_SUBACT}</h4>
+							<div class="ui vertical buttons news_data">
 <!-- ARRAY_SELECT_SUBACT_BEGIN -->
-														&bull;&nbsp;<a href="{U_SUBACT}" title="{L_SUBACT}">{L_SUBACT}</a><br />
+								<button class="ui inverted base circular button" onclick="window.location.href='{U_SUBACT}'">{L_SUBACT}</button>
 <!-- ARRAY_SELECT_SUBACT_END -->
-													</td>
-    	        								</tr>
-											</table>
-										</div>
+							</div>
+						</div>
 <!-- IF_SESSION_ADMIN_ON_ELSE -->
-										<form name="login_admin" action="" method="post">
-											<table cellspacing="0" cellpadding="0" border="0" width="100%">
-												<tr>
-													<td class="category_center" align="center">
-														<br />
-														{L_ENTER_ADMIN_PASS}
-														<br /><br />
-														<input class="form" type="password" name="admin_password" />
-														<br /><br />
-														<input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_ENTER}" title="{L_ENTER}" />
-														<br />
-													</td>
-            									</tr>
-											</table>
-										</form>
+						<form name="login_admin" action="" method="post" style="text-align: center; margin-top: 15px;">
+							<h4 class="ui inverted block header">{L_ENTER_ADMIN_PASS}</h4>
+							<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+							<div class="small ui icon input custom-input">
+								<input class="small ui bordered input" type="password" name="admin_password" placeholder="{L_PASSWORD}...">
+								<i class="key icon"></i>
+							</div>
+							<div style="margin: 10px 0;">
+								<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_ENTER}" value="true">
+									{L_ENTER}
+								</button>
+							</div>
+						</form>
 <!-- IF_SESSION_ADMIN_ON_END -->
-									</td>
-									<td class="news_data"></td>
-								</tr>
-							</table>
+					</div>
+				</div>
 <!-- BREAK_ADMIN_START -->
 <!-- CASE_ADMIN_SETTINGS -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="news_data"></td>
-									<td class="category_center">
-										<div align="center">
-											<form method="post" action="">
-												<table cellspacing="0" border="0" cellpadding="2">
-													<tr>
-														<td colspan="2" class="category_center"><i><b>{L_MAIN_SETTINGS}</b></i></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_TITLE_NAME}</b><br /><span class="description">{L_TITLE_NAME_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="title_name" value="{D_TITLE_NAME}" size="30" maxlength="50" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_TITLE_DESCRIPTION}</b><br /><span class="description">{L_TITLE_DESCRIPTION_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="title_description" value="{D_TITLE_DESCRIPTION}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_META_DESCRIPTION}</b><br /><span class="description">{L_META_DESCRIPTION_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="meta_description" value="{D_META_DESCRIPTION}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_META_KEYWORDS}</b><br /><span class="description">{L_META_KEYWORDS_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="meta_keywords" value="{D_META_KEYWORDS}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td colspan="2" class="category_center"><i><b>{L_APPEARANCE_SETTINGS}</b></i></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_GAL_WIDTH}</b><br /><span class="description">{L_GAL_WIDTH_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="gal_width" value="{D_GAL_WIDTH}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_LEFT_PANEL}</b><br /><span class="description">{L_LEFT_PANEL_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="left_panel" value="{D_LEFT_PANEL}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_RIGHT_PANEL}</b><br /><span class="description">{L_RIGHT_PANEL_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="right_panel" value="{D_RIGHT_PANEL}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_LANGUAGE}</b><br /><span class="description">{L_LANGUAGE_DESCRIPTION}</span>
-														</td>
-														<td>
-															<select name="language">
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="tools icon"></i> {L_NAME_BLOCK}
+						</div>
+					</div>
+					<form method="post" action="" class="ui grid">
+						<div class="row middle aligned tiny-space">
+							<div class="sixteen wide column category_center" style="margin-top: 15px;">
+								<i><b>{L_MAIN_SETTINGS}</b></i><input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_TITLE_NAME}</b><br>
+								<span class="description">{L_TITLE_NAME_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="title_name" value="{D_TITLE_NAME}" maxlength="50" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_TITLE_DESCRIPTION}</b><br>
+								<span class="description">{L_TITLE_DESCRIPTION_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="title_description" value="{D_TITLE_DESCRIPTION}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_META_DESCRIPTION}</b><br>
+								<span class="description">{L_META_DESCRIPTION_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="meta_description" value="{D_META_DESCRIPTION}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_META_KEYWORDS}</b><br>
+								<span class="description">{L_META_KEYWORDS_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="meta_keywords" value="{D_META_KEYWORDS}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="sixteen wide column category_center">
+								<i><b>{L_APPEARANCE_SETTINGS}</b></i>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_GAL_WIDTH}</b><br>
+								<span class="description">{L_GAL_WIDTH_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="gal_width" value="{D_GAL_WIDTH}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_LEFT_PANEL}</b><br>
+								<span class="description">{L_LEFT_PANEL_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="left_panel" value="{D_LEFT_PANEL}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_RIGHT_PANEL}</b><br>
+								<span class="description">{L_RIGHT_PANEL_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="right_panel" value="{D_RIGHT_PANEL}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_LANGUAGE}</b><br>
+								<span class="description">{L_LANGUAGE_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<div class="ui inverted small dropdown selection">
+									<input type="hidden" name="language" value="{D_SELECTED_LANG}">
+									<i class="dropdown icon"></i>
+									<div class="default text">{L_SELECTED_LANG}</div>
+									<div class="menu">
 <!-- ARRAY_SELECT_LANGUAGE_BEGIN -->
-																<option value="{D_DIR_LANG}"{D_SELECTED_LANG}>{D_NAME_LANG}</option>
+										<div class="item" data-value="{D_DIR_LANG}">{D_NAME_LANG}</div>
 <!-- ARRAY_SELECT_LANGUAGE_END -->
-															</select>
-														</td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_THEMES}</b><br /><span class="description">{L_THEMES_DESCRIPTION}</span>
-														</td>
-														<td>
-															<select name="themes">
-<!-- ARRAY_SELECT_THEMES_BEGIN -->
-																<option value="{D_DIR_THEMES}"{D_SELECTED_THEMES}>{D_DIR_THEMES}</option>
-<!-- ARRAY_SELECT_THEMES_END -->
-															</select>
-														</td>
-													</tr>
-													<tr>
-														<td colspan="2" class="category_center"><i><b>{L_SIZE_SETTINGS}</b></i></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_MAX_FILE_SIZE}</b><br /><span class="description">{L_MAX_FILE_SIZE_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="max_file_size" value="{D_MAX_FILE_SIZE}" size="20" maxlength="255" class="form_textarea" /><select name="max_file_size_letter"><option value="B"{D_SEL_B}>b</option><option value="K"{D_SEL_K}>Kb</option><option value="M"{D_SEL_M}>Mb</option><option value="G"{D_SEL_G}>Gb</option></select></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_MAX_PHOTO}</b><br /><span class="description">{L_MAX_PHOTO_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="max_photo_w" value="{D_MAX_PHOTO_W}" size="10" maxlength="255" class="form_textarea" />&nbsp;x&nbsp;<input type="text" name="max_photo_h" value="{D_MAX_PHOTO_H}" size="10" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_TEMP_PHOTO}</b><br /><span class="description">{L_TEMP_PHOTO_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="temp_photo_w" value="{D_TEMP_PHOTO_W}" size="10" maxlength="255" class="form_textarea" />&nbsp;x&nbsp;<input type="text" name="temp_photo_h" value="{D_TEMP_PHOTO_H}" size="10" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_MAX_AVATAR}</b><br /><span class="description">{L_MAX_AVATAR_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="max_avatar_w" value="{D_MAX_AVATAR_W}" size="10" maxlength="255" class="form_textarea" />&nbsp;x&nbsp;<input type="text" name="max_avatar_h" value="{D_MAX_AVATAR_H}" size="10" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td colspan="2" class="category_center"><i><b>{L_COPYRIGHT_SETTINGS}</b></i></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_COPYRIGHT_YEAR}</b><br /><span class="description">{L_COPYRIGHT_YEAR_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="copyright_year" value="{D_COPYRIGHT_YEAR}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_COPYRIGHT_TEXT}</b><br /><span class="description">{L_COPYRIGHT_TEXT_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="copyright_text" value="{D_COPYRIGHT_TEXT}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_COPYRIGHT_URL}</b><br /><span class="description">{L_COPYRIGHT_URL_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="copyright_url" value="{D_COPYRIGHT_URL}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td colspan="2" class="category_center"><i><b>{L_ADDITIONAL_SETTINGS}</b></i></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_LAST_NEWS}</b><br /><span class="description">{L_LAST_NEWS_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="last_news" value="{D_LAST_NEWS}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_BEST_USER}</b><br /><span class="description">{L_BEST_USER_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="best_user" value="{D_BEST_USER}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td class="news_data">
-															<b>{L_MAX_RATE}</b><br /><span class="description">{L_MAX_RATE_DESCRIPTION}</span>
-														</td>
-														<td><input type="text" name="max_rate" value="{D_MAX_RATE}" size="30" maxlength="255" class="form_textarea" /></td>
-													</tr>
-													<tr>
-														<td colspan="2" class="category_center"><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SAVE_SETTINGS}" title="{L_SAVE_SETTINGS}" /></td>
-													</tr>
-												</table>
-											</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_THEMES}</b><br>
+								<span class="description">{L_THEMES_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<div class="ui inverted small dropdown selection">
+									<input type="hidden" name="language" value="{D_SELECTED_THEME}">
+									<i class="dropdown icon"></i>
+									<div class="default text">{L_SELECTED_THEME}</div>
+									<div class="menu">
+<!-- ARRAY_SELECT_THEME_BEGIN -->
+										<div class="item" data-value="{D_DIR_THEME}">{D_NAME_THEME}</div>
+<!-- ARRAY_SELECT_THEME_END -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="sixteen wide column category_center">
+								<i><b>{L_SIZE_SETTINGS}</b></i>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_MAX_FILE_SIZE}</b><br>
+								<span class="description">{L_MAX_FILE_SIZE_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column">
+								<div class="ui action input custom-input" style="width: 90%;">
+									<input type="text" name="max_file_size" value="{D_MAX_FILE_SIZE}" maxlength="255" class="form_textarea" style="width: 40% !important;">
+									<div class="ui inverted small dropdown selection" style="width: 40% !important;">
+										<input type="hidden" name="max_file_size_letter" value="{D_SELECTED_SIZE}">
+										<i class="dropdown icon"></i>
+										<div class="default text">{L_SELECTED_SIZE}</div>
+										<div class="menu">
+											<div class="item" data-value="B">b</div>
+											<div class="item" data-value="K">Kb</div>
+											<div class="item" data-value="M">Mb</div>
+											<div class="item" data-value="G">Gb</div>
 										</div>
-									</td>
-									<td class="news_data"></td>
-								</tr>
-							</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_MAX_PHOTO}</b><br>
+								<span class="description">{L_MAX_PHOTO_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column">
+								<div class="ui action input custom-input" style="display: flex; align-items: center;">
+									<input type="text" name="max_photo_w" value="{D_MAX_PHOTO_W}" maxlength="255" class="form_textarea" style="width: 35%;">
+									<i class="times inverted icon" style="margin: 0 3px;"></i>
+									<input type="text" name="max_photo_h" value="{D_MAX_PHOTO_H}" maxlength="255" class="form_textarea" style="width: 35%;">
+								</div>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_TEMP_PHOTO}</b><br>
+								<span class="description">{L_TEMP_PHOTO_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column">
+								<div class="ui action input custom-input" style="display: flex; align-items: center;">
+									<input type="text" name="temp_photo_w" value="{D_TEMP_PHOTO_W}" maxlength="255" class="form_textarea" style="width: 35%">
+									<i class="times inverted icon" style="margin: 0 3px;"></i>
+									<input type="text" name="temp_photo_h" value="{D_TEMP_PHOTO_H}" maxlength="255" class="form_textarea" style="width: 35%">
+								</div>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_MAX_AVATAR}</b><br>
+								<span class="description">{L_MAX_AVATAR_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column">
+								<div class="ui action input custom-input" style="display: flex; align-items: center;">
+									<input type="text" name="max_avatar_w" value="{D_MAX_AVATAR_W}" maxlength="255" class="form_textarea" style="width: 35%">
+									<i class="times inverted icon" style="margin: 0 3px;"></i>
+									<input type="text" name="max_avatar_h" value="{D_MAX_AVATAR_H}" maxlength="255" class="form_textarea" style="width: 35%">
+								</div>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="sixteen wide column category_center">
+								<i><b>{L_COPYRIGHT_SETTINGS}</b></i>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_COPYRIGHT_YEAR}</b><br>
+								<span class="description">{L_COPYRIGHT_YEAR_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="copyright_year" value="{D_COPYRIGHT_YEAR}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_COPYRIGHT_TEXT}</b><br>
+								<span class="description">{L_COPYRIGHT_TEXT_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="copyright_text" value="{D_COPYRIGHT_TEXT}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_COPYRIGHT_URL}</b><br>
+								<span class="description">{L_COPYRIGHT_URL_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="copyright_url" value="{D_COPYRIGHT_URL}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="sixteen wide column category_center">
+								<i><b>{L_ADDITIONAL_SETTINGS}</b></i>
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_LAST_NEWS}</b><br>
+								<span class="description">{L_LAST_NEWS_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="last_news" value="{D_LAST_NEWS}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_BEST_USER}</b><br>
+								<span class="description">{L_BEST_USER_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="best_user" value="{D_BEST_USER}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_MAX_RATE}</b><br>
+								<span class="description">{L_MAX_RATE_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="max_rate" value="{D_MAX_RATE}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space">
+							<div class="nine wide column news_data">
+								<b>{L_TIME_ONLINE}</b><br>
+								<span class="description">{L_TIME_ONLINE_DESCRIPTION}</span>
+							</div>
+							<div class="seven wide column ui action input custom-input">
+								<input type="text" name="time_user_online" value="{D_TIME_ONLINE}" maxlength="255" class="ui input">
+							</div>
+						</div>
+						<div class="row middle aligned tiny-space" style="text-align: center; margin-top: 15px; margin-bottom: 20px !important;">
+							<div class="sixteen wide column" style="text-align: center;">
+								<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_SETTINGS}" value="true">
+									<i class="save outline icon"></i> {L_SAVE_SETTINGS}
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
 <!-- BREAK_ADMIN_SETTINGS -->
 <!-- CASE_ADMIN_USER -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="category_center"></td>
-									<td class="category_center">
-										<div align="center">
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="user secret icon"></i> {L_NAME_BLOCK}
+						</div>
+					</div>
 <!-- IF_NEED_FIND_BEGIN -->
-											<form name="search" action="" method="post">
-												<table border="0" width="100%" cellspacing="0" cellpadding="0" class="category_center">
-													<tr>
-														<td>{L_SEARCH_USER}</td>
-													</tr>
-													<tr>
-														<td><input class="form" size="50" type="text" name="search_user" value="{D_SEARCH_USER}"/></td>
-													</tr>
-													<tr>
-														<td class="regist">
-															<hr class="line" />{L_HELP_SEARCH}<hr class="line" />
-														</td>
-													</tr>
-													<tr>
-														<td><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
-													</tr>
-												</table>
-											</form>
+					<div class="category_center">
+						<div class="no-space" style="text-align: center;">
+							<form name="search" action="" method="post">
+								<div class="middle aligned tiny-space" style="margin-bottom: 15px;">
+									<label>{L_SEARCH_USER}:</label>
+									<div class="ui action input custom-input">
+										<input class="ui input" type="text" name="search_user" value="{D_SEARCH_USER}">
+										<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+									</div>
+								</div>
+								<div class="regist" style="margin: 15px 0;">
+									<div class="custom-divider"></div>
+									{L_HELP_SEARCH}
+									<div class="custom-divider"></div>
+								</div>
+								<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SEARCH}" value="true">
+									{L_SEARCH}
+								</button>
+							</form>
+						</div>
+					</div>
 <!-- IF_NEED_USER_BEGIN -->
-											<table cellpadding="0" cellspacing="0" border="0" width="100%" class="category_center">
-												<tr>
-													<td>
+					<div class="ui attached horizontal wrapping segments">
 <!-- ARRAY_FIND_USER_BEGIN -->
-														<div class="mini_photo_category">&nbsp;&bull;&nbsp;<a href="{U_FIND_USER}" title="{D_FIND_USER}">{D_FIND_USER}</a></div>
+						<div class="ui compact inverted transparent segment" style="border-radius: 10px;">
+							&nbsp;&bull;&nbsp;<a href="{U_FIND_USER}" title="{D_FIND_USER}">{D_FIND_USER}</a>
+						</div>
 <!-- ARRAY_FIND_USER_END -->
-													</td>
-												</tr>
-											</table>
+					</div>
 <!-- IF_NEED_USER_END -->
 <!-- IF_NEED_FIND_END -->
 <!-- IF_FIND_USER_BEGIN -->
-											<form name="save_user" action="" method="post">
-												<table border="0" cellspacing="1" cellpadding="0" class="news_data">
-													<tr>
-														<td width="50%">{L_LOGIN}:</td>
-														<td width="50%">{D_LOGIN}</td>
-													</tr>
-													<tr>
-														<td>{L_REAL_NAME}:</td>
-														<td>{D_REAL_NAME}</td>
-													</tr>
-													<tr>
-														<td>{L_EMAIL}:</td>
-														<td>{D_EMAIL}</td>
-													</tr>
-													<tr>
-														<td>{L_AVATAR}:</td>
-														<td>
-															<img src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0" class="image" />
-														</td>
-													</tr>
-													<tr>
-														<td><b>{L_GROUP}*</b>:</td>
-														<td>
-															<select name="group">
+					<div style="margin: 25px;">
+						<form name="save_user" action="" method="post">
+							<div class="ui grid">
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_LOGIN}:</div>
+									<div class="seven wide column">{D_LOGIN}<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}"></div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_REAL_NAME}:</div>
+									<div class="seven wide column">{D_REAL_NAME}</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_EMAIL}:</div>
+									<div class="seven wide column">{D_EMAIL}</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_AVATAR}:</div>
+									<div class="seven wide column">
+										<img src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" class="ui small rounded image">
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column"><b>{L_GROUP}*</b>:</div>
+									<div class="seven wide column">
+										<div class="ui inverted small dropdown selection">
+											<input type="hidden" name="group" value="{D_SELECTED_GROUP}">
+											<i class="dropdown icon"></i>
+											<div class="default text">{L_SELECTED_GROUP}</div>
+											<div class="menu">
 <!-- ARRAY_GROUP_USER_BEGIN -->
-																<option value="{D_GROUP_ID}"{D_GROUP_SELECTED}>{D_GROUP_NAME}</option>
+												<div class="item" data-value="{D_GROUP_ID}">{D_GROUP_NAME}</div>
 <!-- ARRAY_GROUP_USER_END -->
-															</select>
-														</td>
-													</tr>
-													<tr>
-														<td colspan="2" class="category_center"><b>{L_USER_RIGHTS}</b></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_VIEW}:</td>
-														<td><input type="checkbox" name="pic_view"{D_PIC_VIEW} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_RATE_USER}:</td>
-														<td><input type="checkbox" name="pic_rate_user"{D_PIC_RATE_USER} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_RATE_MODER}:</td>
-														<td><input type="checkbox" name="pic_rate_moder"{D_PIC_RATE_MODER} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_UPLOAD}:</td>
-														<td><input type="checkbox" name="pic_upload"{D_PIC_UPLOAD} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_MODERATE}:</td>
-														<td><input type="checkbox" name="pic_moderate"{D_PIC_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_CAT_MODERATE}:</td>
-														<td><input type="checkbox" name="cat_moderate"{D_CAT_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_CAT_USER}:</td>
-														<td><input type="checkbox" name="cat_user"{D_CAT_USER} /></td>
-													</tr>
-													<tr>
-														<td>{L_COMMENT_VIEW}:</td>
-														<td><input type="checkbox" name="comment_view"{D_COMMENT_VIEW} /></td>
-													</tr>
-													<tr>
-														<td>{L_COMMENT_ADD}:</td>
-														<td><input type="checkbox" name="comment_add"{D_COMMENT_ADD} /></td>
-													</tr>
-													<tr>
-														<td>{L_COMMENT_MODERATE}:</td>
-														<td><input type="checkbox" name="comment_moderate"{D_COMMENT_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_NEWS_VIEW}:</td>
-														<td><input type="checkbox" name="news_view"{D_NEWS_VIEW} /></td>
-													</tr>
-													<tr>
-														<td>{L_NEWS_ADD}:</td>
-														<td><input type="checkbox" name="news_add"{D_NEWS_ADD} /></td>
-													</tr>
-													<tr>
-														<td>{L_NEWS_MODERATE}:</td>
-														<td><input type="checkbox" name="news_moderate"{D_NEWS_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_ADMIN}:</td>
-														<td><input type="checkbox" name="admin"{D_ADMIN} /></td>
-													</tr>
-													<tr>
-														<td class="regist" colspan="2">
-															<hr class="line" /><b>*</b> {L_HELP_EDIT}<hr class="line" />
-														</td>
-													</tr>
-													<tr>
-														<td class="regist" colspan="2">
-															<input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SAVE_USER}" title="{L_SAVE_USER}" />
-														</td>
-													</tr>
-												</table>
-											</form>
-<!-- IF_FIND_USER_END -->
+											</div>
 										</div>
-									</td>
-									<td class="regist"></td>
-								</tr>
-							</table>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column center aligned">
+										<b>{L_USER_RIGHTS}</b>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_VIEW}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_view"{D_PIC_VIEW}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_RATE_USER}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_rate_user"{D_PIC_RATE_USER}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_RATE_MODER}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_rate_moder"{D_PIC_RATE_MODER}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_UPLOAD}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_upload"{D_PIC_UPLOAD}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_moderate"{D_PIC_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_CAT_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="cat_moderate"{D_CAT_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_CAT_USER}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="cat_user"{D_CAT_USER}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_COMMENT_VIEW}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="comment_view"{D_COMMENT_VIEW}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_COMMENT_ADD}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="comment_add"{D_COMMENT_ADD}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_COMMENT_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="comment_moderate"{D_COMMENT_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_NEWS_VIEW}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="news_view"{D_NEWS_VIEW}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_NEWS_ADD}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="news_add"{D_NEWS_ADD}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_NEWS_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="news_moderate"{D_NEWS_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_ADMIN}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="admin"{D_ADMIN}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column regist" style="text-align: center;">
+										<div class="custom-divider"></div>
+										<b>*</b> {L_HELP_EDIT}
+										<div class="custom-divider"></div>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column center aligned">
+										<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_USER}" value="true">
+											<i class="save outline icon"></i> {L_SAVE_USER}
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+<!-- IF_FIND_USER_END -->
+				</div>
 <!-- BREAK_ADMIN_USER -->
 <!-- CASE_ADMIN_GROUP -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{L_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="category_center"></td>
-									<td class="category_center">
-										<div align="center">
+				<div class="ui segment field_big block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="users cog icon"></i> {L_NAME_BLOCK}
+						</div>
+					</div>
+					<div class="tiny-space">
 <!-- IF_SELECT_GROUP_BEGIN -->
-											<form name="select" action="" method="post">
-												<table border="0" width="100%" cellspacing="0" cellpadding="0" class="category_center">
-													<tr>
-														<td>{L_SELECT_GROUP}</td>
-													</tr>
-													<tr>
-														<td>
-															<select name="group">
+						<form name="select" action="" method="post">
+							<div class="middle aligned tiny-space" style="margin-bottom: 15px; text-align: center;">
+								<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+								<label>{L_SELECT_GROUP}:</label>
+								<div class="ui action input custom-input">
+									<div class="ui inverted small dropdown selection">
+										<input type="hidden" name="group" value="{D_SELECTED_GROUP}">
+										<i class="dropdown icon"></i>
+										<div class="default text">{L_SELECTED_GROUP}</div>
+										<div class="menu">
 <!-- ARRAY_SELECT_GROUP_BEGIN -->
-																<option value="{D_ID_GROUP}">{D_NAME_GROUP}</option>
+											<div class="item" data-value="{D_ID_GROUP}">{D_NAME_GROUP}</div>
 <!-- ARRAY_SELECT_GROUP_END -->
-															</select>
-														</td>
-													</tr>
-													<tr>
-														<td><input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_EDIT}" title="{L_EDIT}" /></td>
-													</tr>
-												</table>
-											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tiny-space" style="text-align: center;">
+								<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_EDIT}" value="true">
+									{L_EDIT}
+								</button>
+							</div>
+						</form>
 <!-- IF_SELECT_GROUP_END -->
 <!-- IF_EDIT_GROUP_BEGIN -->
-											<form name="save_group" action="" method="post">
-												<table border="0" cellspacing="1" cellpadding="0" class="news_data">
-													<tr>
-														<td colspan="2" class="category_center"><b>{L_GROUP_RIGHTS}</b><input type="hidden" name="id_group" value="{D_ID_GROUP}" /></td>
-													</tr>
-													<tr>
-														<td><b>{L_NAME_GROUP}</b>:</td>
-														<td><input class="form_textarea" name="name_group" type="text" size="20" maxlength="50" value="{D_NAME_GROUP}"/></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_VIEW}:</td>
-														<td><input type="checkbox" name="pic_view"{D_PIC_VIEW} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_RATE_USER}:</td>
-														<td><input type="checkbox" name="pic_rate_user"{D_PIC_RATE_USER} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_RATE_MODER}:</td>
-														<td><input type="checkbox" name="pic_rate_moder"{D_PIC_RATE_MODER} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_UPLOAD}:</td>
-														<td><input type="checkbox" name="pic_upload"{D_PIC_UPLOAD} /></td>
-													</tr>
-													<tr>
-														<td>{L_PIC_MODERATE}:</td>
-														<td><input type="checkbox" name="pic_moderate"{D_PIC_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_CAT_MODERATE}:</td>
-														<td><input type="checkbox" name="cat_moderate"{D_CAT_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_CAT_USER}:</td>
-														<td><input type="checkbox" name="cat_user"{D_CAT_USER} /></td>
-													</tr>
-													<tr>
-														<td>{L_COMMENT_VIEW}:</td>
-														<td><input type="checkbox" name="comment_view"{D_COMMENT_VIEW} /></td>
-													</tr>
-													<tr>
-														<td>{L_COMMENT_ADD}:</td>
-														<td><input type="checkbox" name="comment_add"{D_COMMENT_ADD} /></td>
-													</tr>
-													<tr>
-														<td>{L_COMMENT_MODERATE}:</td>
-														<td><input type="checkbox" name="comment_moderate"{D_COMMENT_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_NEWS_VIEW}:</td>
-														<td><input type="checkbox" name="news_view"{D_NEWS_VIEW} /></td>
-													</tr>
-													<tr>
-														<td>{L_NEWS_ADD}:</td>
-														<td><input type="checkbox" name="news_add"{D_NEWS_ADD} /></td>
-													</tr>
-													<tr>
-														<td>{L_NEWS_MODERATE}:</td>
-														<td><input type="checkbox" name="news_moderate"{D_NEWS_MODERATE} /></td>
-													</tr>
-													<tr>
-														<td>{L_ADMIN}:</td>
-														<td><input type="checkbox" name="admin"{D_ADMIN} /></td>
-													</tr>
-													<tr>
-														<td class="regist" colspan="2">
-															<input class="ui-corner-all no_jquery" name="submit" type="submit" value="{L_SAVE_GROUP}" title="{L_SAVE_GROUP}" />
-														</td>
-													</tr>
-												</table>
-											</form>
+						<form name="save_group" action="" method="post">
+							<div class="ui grid" style="margin: 5px;">
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column center aligned">
+										<b>{L_GROUP_RIGHTS}</b>
+										<input type="hidden" name="id_group" value="{D_ID_GROUP}">
+										<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column"><b>{L_NAME_GROUP}</b>:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input class="form_textarea" name="name_group" type="text" size="20" maxlength="50" value="{D_NAME_GROUP}">
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_VIEW}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_view"{D_PIC_VIEW}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_RATE_USER}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_rate_user"{D_PIC_RATE_USER}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_RATE_MODER}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_rate_moder"{D_PIC_RATE_MODER}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_UPLOAD}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_upload"{D_PIC_UPLOAD}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_PIC_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="pic_moderate"{D_PIC_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_CAT_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="cat_moderate"{D_CAT_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_CAT_USER}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="cat_user"{D_CAT_USER}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_COMMENT_VIEW}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="comment_view"{D_COMMENT_VIEW}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_COMMENT_ADD}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="comment_add"{D_COMMENT_ADD}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_COMMENT_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="comment_moderate"{D_COMMENT_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_NEWS_VIEW}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="news_view"{D_NEWS_VIEW}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_NEWS_ADD}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="news_add"{D_NEWS_ADD}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_NEWS_MODERATE}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="news_moderate"{D_NEWS_MODERATE}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_ADMIN}:</div>
+									<div class="seven wide column ui action input custom-input">
+										<input type="checkbox" name="admin"{D_ADMIN}>
+									</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column center aligned">
+										<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_GROUP}" value="true">
+											<i class="save outline icon"></i> {L_SAVE_GROUP}
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
 <!-- IF_EDIT_GROUP_END -->
-										</div>
-									</td>
-									<td class="regist"></td>
-								</tr>
-							</table>
+					</div>
+				</div>
 <!-- BREAK_ADMIN_GROUP -->
 <!-- CASE_DEFAULT -->
-<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_big">
-    <tr>
-        <td class="name_block_left">&nbsp;</td>
-        <td class="name_block">ERROR_CASE_BLOCK</td>
-        <td class="name_block_right">&nbsp;</td>
-    </tr>
-</table>
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+						<div class="ui center aligned header">
+							<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_ADMIN_BLOCK_END -->

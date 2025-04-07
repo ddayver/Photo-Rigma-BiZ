@@ -1,0 +1,13 @@
+<map id="initialize_user" name="initialize_user">
+<area shape="rect" id="Node000001" title="Инициализация данных пользователя." alt="" coords="5,31,105,55"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="153,55,315,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,47,137,51,137,57,105,52"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc" title="Метод загружает данные группы гостя из базы данных и сохраняет их в свойство $user." alt="" coords="384,5,501,30"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="105,37,369,20,369,25,105,42"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="289,51,372,32,373,37,290,57"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="570,31,709,55"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="315,60,555,45,555,51,315,65"/>
+<area shape="rect" id="Node000005" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea" title="Метод объединяет данные пользователя с данными его группы, применяя логику перезаписи значений." alt="" coords="363,104,522,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="290,77,373,97,372,102,289,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="502,22,555,29,554,35,501,28"/>
+</map>

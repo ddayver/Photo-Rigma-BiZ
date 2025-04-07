@@ -1,323 +1,403 @@
 <?php
+
 /**
  * @file        language/russian/main.php
- * @brief       Переменные языка для основной страницы сайта (русский)
+ * @brief       Локализованные строки для основного ядра сайта на русском языке.
+ *
  * @author      Dark Dayver
- * @version     0.2.0
- * @date        27/03-2012
- * @details     Содержит переменные языка для основной страницы сайта (русский). Более подробная информация в группе @ref LanguageRussian
+ * @version     0.4.0
+ * @date        2025-04-02
+ * @namespace   PhotoRigma\\Language
+ *
+ * @details     Этот файл содержит строки русского языка, используемые в ядре проекта сайта.
+ *              Включает тексты для интерфейса, меню, форм, уведомлений и другиx элементов.
+ *
+ * @see         @ref LanguageRussian Группа для русской локализации.
+ *
+ * @note        Этот файл является частью системы PhotoRigma и обеспечивает локализацию проекта на русском языке.
+ *
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license     MIT License (https://opensource.org/licenses/MIT)
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующиx условий:
+ *              - Уведомление об авторскиx праваx и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
-/// @cond
-if (IN_GALLERY !== TRUE)
-{
-	die('HACK!');
-}
-/// @endcond
 
-/// Название языка
-$lang_name = 'Русский';
+namespace PhotoRigma\Language;
+
+// Предотвращение прямого вызова файла
+if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    error_log(
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+    );
+    die("HACK!");
+}
+
 /**
  * @defgroup LanguageRussian Языковые переменные русского языка
+ * @brief    Модуль для работы с языковыми переменными на русском языке.
  */
-/*@{*/
 
 /**
- * @var $lang
- * @brief Массив языковых переменных
+ * @var string $lang_name
+ * @brief   Название языка
+ * @ingroup LanguageRussian
  */
-$lang = array();
+$lang_name = 'Русский';
+
+/**
+ * @var string $lang_id
+ * @brief   Идентификатор языка для HTML
+ * @ingroup LanguageRussian
+ */
+$lang_id = 'ru';
+
+/**
+ * @addtogroup LanguageRussian
+ * @{
+ */
+
+/**
+ * @var array $lang
+ * @brief Массив языковыx переменныx
+ */
+$lang = [];
+
 /**
  * @defgroup LanguageRussianMain Основные языковые переменные
+ * @brief    Основные текстовые переменные, используемые на сайте.
  */
-/*@{*/
-$lang['main']['main'] = 'Главная';
-$lang['main']['search'] = 'Поиск';
-$lang['main']['rate'] = 'Оценка';
-$lang['main']['top_foto'] = 'Лучшее фото';
-$lang['main']['last_foto'] = 'Последнее фото';
-$lang['main']['rand_foto'] = 'Случайное фото';
-$lang['main']['cat_foto'] = 'Раздел с фото';
-$lang['main']['no_foto'] = 'Нет фото!';
-$lang['main']['user_add'] = 'Добавил';
-$lang['main']['data_add'] = 'Дата публикации (последней редакции)';
-$lang['main']['title_news'] = 'Новости';
-$lang['main']['no_news'] = 'Нет новостей';
-$lang['main']['no_user_add'] = 'Автор не существует';
-$lang['main']['user_block'] = 'Панель пользователя';
-$lang['main']['login'] = 'Логин';
-$lang['main']['pass'] = 'Пароль';
-$lang['main']['enter'] = 'Войти';
-$lang['main']['logout'] = 'Выйти';
-$lang['main']['forgot_password'] = 'Потеряли пароль?';
-$lang['main']['registration'] = 'Зарегистрироваться';
-$lang['main']['redirect_title'] = 'Переадресация';
-$lang['main']['redirect_description'] = 'Сейчас произойдет автоматический переход на страницу сайта';
-$lang['main']['redirect_url'] = 'Нажмите здесь если Ваш браузер не поддерживает переадресацию';
-$lang['main']['login_ok'] = ', вход успешно выполнен!';
-$lang['main']['login_error'] = 'Неверные имя пользователя и/или пароль!';
-$lang['main']['hi_user'] = 'Привет';
-$lang['main']['group'] = 'Группа';
-$lang['main']['stat_title'] = 'Статистика';
-$lang['main']['stat_regist'] = 'Зарегистрировано пользователей на сайте';
-$lang['main']['stat_photo'] = 'Всего загружено изображений';
-$lang['main']['stat_category'] = 'Всего разделов (из них пользовательских)';
-$lang['main']['stat_user_admin'] = 'Всего администраторов';
-$lang['main']['stat_user_moder'] = 'Всего преподавателей';
-$lang['main']['stat_rate_user'] = 'Выставлено оценок пользователями';
-$lang['main']['stat_rate_moder'] = 'Выставлено оценок преподавателями';
-$lang['main']['stat_online'] = 'Зарегистрированные пользователи на сайте';
-$lang['main']['stat_no_online'] = 'отсутствуют.';
-$lang['main']['user_name'] = 'Имя пользователя';
-$lang['main']['best_user_1'] = 'ТОП-';
-$lang['main']['best_user_2'] = ' пользователей';
-$lang['main']['best_user'] = 'ТОП-%d пользователей';
-$lang['main']['best_user_photo'] = 'Загружено изображений';
-$lang['main']['name_of'] = 'Название';
-$lang['main']['description_of'] = 'Описание';
-$lang['main']['no_category'] = 'Нет разделов!';
-$lang['main']['edit_news'] = 'Редактировать новость';
-$lang['main']['delete_news'] = 'Удалить новость';
-$lang['main']['confirm_delete_news'] = 'Вы уверены, что хотите удалить новость';
-/*@}*/
+$lang = [
+    'main' => [
+        'main'                 => 'Главная',
+        'search'               => 'Поиск',
+        'rate'                 => 'Оценка',
+        'top_foto'             => 'Лучшее фото',
+        'last_foto'            => 'Последнее фото',
+        'rand_foto'            => 'Случайное фото',
+        'cat_foto'             => 'Раздел с фото',
+        'no_foto'              => 'Нет фото!',
+        'user_add'             => 'Добавил',
+        'data_add'             => 'Дата публикации (последней редакции)',
+        'title_news'           => 'Новости',
+        'no_news'              => 'Нет новостей',
+        'no_user_add'          => 'Автор не существует',
+        'user_block'           => 'Панель пользователя',
+        'login'                => 'Логин',
+        'pass'                 => 'Пароль',
+        'enter'                => 'Войти',
+        'logout'               => 'Выйти',
+        'forgot_password'      => 'Потеряли пароль?',
+        'registration'         => 'Зарегистрироваться',
+        'redirect_title'       => 'Переадресация',
+        'redirect_description' => 'Сейчас произойдет автоматический переxод на страницу сайта',
+        'redirect_url'         => 'Нажмите здесь если Ваш браузер не поддерживает переадресацию',
+        'login_ok'             => ', вxод успешно выполнен!',
+        'login_error'          => 'Неверные имя пользователя и/или пароль!',
+        'hi_user'              => 'Привет',
+        'group'                => 'Группа',
+        'stat_title'           => 'Статистика',
+        'stat_regist'          => 'Зарегистрировано пользователей на сайте',
+        'stat_photo'           => 'Всего загружено изображений',
+        'stat_category'        => 'Всего разделов (из ниx пользовательскиx)',
+        'stat_user_admin'      => 'Всего администраторов',
+        'stat_user_moder'      => 'Всего преподавателей',
+        'stat_rate_user'       => 'Выставлено оценок пользователями',
+        'stat_rate_moder'      => 'Выставлено оценок преподавателями',
+        'stat_online'          => 'Зарегистрированные пользователи на сайте',
+        'stat_no_online'       => 'отсутствуют.',
+        'user_name'            => 'Имя пользователя',
+        'best_user_1'          => 'ТОП-',
+        'best_user_2'          => ' пользователей',
+        'best_user'            => 'ТОП-%d пользователей',
+        'best_user_photo'      => 'Загружено изображений',
+        'name_of'              => 'Название',
+        'description_of'       => 'Описание',
+        'no_category'          => 'Нет разделов!',
+        'edit_news'            => 'Редактировать новость',
+        'delete_news'          => 'Удалить новость',
+        'confirm_delete_news'  => 'Вы уверены, что xотите удалить новость',
+        'delete'               => 'Удалить',
+        'cancel'               => 'Отмена',
+    ],
+];
 
 /**
  * @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
+ * @brief    Текстовые переменные для навигационного меню.
  */
-/*@{*/
-$lang['menu']['name_block'] = 'Панель навигации';
-$lang['menu']['home'] = 'Главная';
-$lang['menu']['regist'] = 'Регистрация';
-$lang['menu']['category'] = 'Разделы';
-$lang['menu']['user_category'] = 'Пользовательские альбомы';
-$lang['menu']['you_category'] = 'Ваш альбом';
-$lang['menu']['upload'] = 'Загрузить изображение';
-$lang['menu']['add_category'] = 'Добавить раздел';
-$lang['menu']['search'] = 'Поиск';
-$lang['menu']['news'] = 'Архив новостей';
-$lang['menu']['news_add'] = 'Добавить новость';
-$lang['menu']['profile'] = 'Профиль';
-$lang['menu']['admin'] = 'Администрирование';
-$lang['menu']['logout'] = 'Выйти';
-/*@}*/
+$lang += [
+    'menu' => [
+        'name_block'    => 'Панель навигации',
+        'home'          => 'Главная',
+        'regist'        => 'Регистрация',
+        'category'      => 'Разделы',
+        'user_category' => 'Пользовательские альбомы',
+        'you_category'  => 'Ваш альбом',
+        'upload'        => 'Загрузить изображение',
+        'add_category'  => 'Добавить раздел',
+        'search'        => 'Поиск',
+        'news'          => 'Арxив новостей',
+        'news_add'      => 'Добавить новость',
+        'profile'       => 'Профиль',
+        'admin'         => 'Администрирование',
+        'logout'        => 'Выйти',
+    ],
+];
 
 /**
- * @defgroup LanguageRussianCategory Переменные для процедур обзора и управления разделами
+ * @defgroup LanguageRussianCategory Переменные для категорий
+ * @brief    Текстовые переменные для работы с разделами и категориями.
  */
-/*@{*/
-$lang['category']['category'] = 'Раздел';
-$lang['category']['name_block'] = 'Разделы';
-$lang['category']['of_category'] = ' раздела';
-$lang['category']['count_photo'] = 'Всего фото в разделе';
-$lang['category']['count_user_category'] = 'всего';
-$lang['category']['no_user_category'] = 'нет альбомов';
-$lang['category']['error_no_category'] = 'Раздел не существует!';
-$lang['category']['error_no_photo'] = 'Раздел не содержит фотографий!';
-$lang['category']['users_album'] = 'Пользовательские альбомы';
-$lang['category']['edit'] = 'Редактировать раздел';
-$lang['category']['delete'] = 'Удалить раздел';
-$lang['category']['add'] = 'Создание раздела';
-$lang['category']['cat_dir'] = 'Директория раздела';
-$lang['category']['confirm_delete1'] = 'Вы уверены, что хотите удалить раздел';
-$lang['category']['confirm_delete2'] = '? Операция необратима! Все изображения из раздела будут удалены!';
-$lang['category']['save'] = 'Изменить';
-$lang['category']['cancel'] = 'Отменить';
-$lang['category']['added'] = 'Создать';
-$lang['category']['deleted_sucesful'] = 'успешно удален!';
-$lang['category']['added_sucesful'] = 'успешно добавлен!';
-$lang['category']['deleted_error'] = 'Невозможно удалить несуществующий раздел!';
-$lang['category']['added_error'] = 'Невозможно создать раздел!';
-$lang['category']['no_name'] = 'Без названия';
-$lang['category']['no_description'] = 'Без описания';
-/*@}*/
+$lang += [
+    'category' => [
+        'category'            => 'Раздел',
+        'name_block'          => 'Разделы',
+        'of_category'         => ' раздела',
+        'count_photo'         => 'Всего фото в разделе',
+        'count_user_category' => 'всего',
+        'no_user_category'    => 'нет альбомов',
+        'error_no_category'   => 'Раздел не существует!',
+        'error_no_photo'      => 'Раздел не содержит фотографий!',
+        'users_album'         => 'Пользовательские альбомы',
+        'edit'                => 'Редактировать раздел',
+        'delete'              => 'Удалить раздел',
+        'add'                 => 'Создание раздела',
+        'cat_dir'             => 'Директория раздела',
+        'confirm_delete1'     => 'Вы уверены, что xотите удалить раздел',
+        'confirm_delete2'     => '? Операция необратима! Все изображения из раздела будут удалены!',
+        'save'                => 'Изменить',
+        'cancel'              => 'Отменить',
+        'added'               => 'Создать',
+        'deleted_sucesful'    => 'успешно удален!',
+        'added_sucesful'      => 'успешно добавлен!',
+        'deleted_error'       => 'Невозможно удалить несуществующий раздел!',
+        'added_error'         => 'Невозможно создать раздел!',
+        'no_name'             => 'Без названия',
+        'no_description'      => 'Без описания',
+    ],
+];
 
 /**
- * @defgroup LanguageRussianLogin Переменные для процедур регистрации и восстановления пароля
+ * @defgroup LanguageRussianLogin Переменные для регистрации и вxода
+ * @brief    Текстовые переменные для форм регистрации, вxода и восстановления пароля.
  */
-/*@{*/
-$lang['profile']['regist'] = 'Регистрация';
-$lang['profile']['login'] = 'Имя пользователя';
-$lang['profile']['password'] = 'Пароль';
-$lang['profile']['re_password'] = 'Повторно пароль';
-$lang['profile']['email'] = 'E-mail';
-$lang['profile']['real_name'] = 'Отображаемое имя';
-$lang['profile']['register'] = 'Зарегистрировать';
-$lang['profile']['user'] = 'Пользователь';
-$lang['profile']['registered'] = 'успешно зарегистрирован!';
-$lang['profile']['error'] = 'Ошибка(и)';
-$lang['profile']['error_login'] = 'Не верно указано имя пользователя.';
-$lang['profile']['error_password'] = 'Не верно указан пароль.';
-$lang['profile']['error_re_password'] = 'Пароли не совпадают.';
-$lang['profile']['error_email'] = 'Не верно указан e-mail.';
-$lang['profile']['error_real_name'] = 'Не верно указано отображаемое имя.';
-$lang['profile']['error_login_exists'] = 'Такое имя пользователя уже существует.';
-$lang['profile']['error_email_exists'] = 'Такой e-mail уже существует.';
-$lang['profile']['error_real_name_exists'] = 'Такое отображаемое имя уже существует.';
-$lang['profile']['error_captcha'] = 'Неверное решеие примера для защиты от ботов.';
-$lang['profile']['profile'] = 'Профиль';
-$lang['profile']['edit_profile'] = 'Редактирование профиля';
-$lang['profile']['confirm_password'] = 'Подтвердите изменения паролем';
-$lang['profile']['save_profile'] = 'Сохранить профиль';
-$lang['profile']['help_edit'] = 'только если планируете изменить эти данные';
-$lang['profile']['avatar'] = 'Аватар пользователя';
-$lang['profile']['delete_avatar'] = 'Удалить аватар';
-$lang['profile']['captcha'] = 'Защита от ботов. Для регистрации решите следующий пример:';
-/*@}*/
+$lang += [
+    'profile' => [
+        'regist'                 => 'Регистрация',
+        'login'                  => 'Имя пользователя',
+        'password'               => 'Пароль',
+        're_password'            => 'Повторно пароль',
+        'email'                  => 'E-mail',
+        'real_name'              => 'Отображаемое имя',
+        'register'               => 'Зарегистрировать',
+        'user'                   => 'Пользователь',
+        'registered'             => 'успешно зарегистрирован!',
+        'error'                  => 'Ошибка(и)',
+        'error_login'            => 'Не верно указано имя пользователя.',
+        'error_password'         => 'Не верно указан пароль.',
+        'error_re_password'      => 'Пароли не совпадают.',
+        'error_email'            => 'Не верно указан e-mail.',
+        'error_real_name'        => 'Не верно указано отображаемое имя.',
+        'error_login_exists'     => 'Такое имя пользователя уже существует.',
+        'error_email_exists'     => 'Такой e-mail уже существует.',
+        'error_real_name_exists' => 'Такое отображаемое имя уже существует.',
+        'error_captcha'          => 'Неверное решеие примера для защиты от ботов.',
+        'profile'                => 'Профиль',
+        'edit_profile'           => 'Редактирование профиля',
+        'confirm_password'       => 'Подтвердите изменения паролем',
+        'save_profile'           => 'Соxранить профиль',
+        'help_edit'              => 'только если планируете изменить эти данные',
+        'avatar'                 => 'Аватар пользователя',
+        'delete_avatar'          => 'Удалить аватар',
+        'captcha'                => 'Защита от ботов. Для регистрации решите следующий пример:',
+    ],
+];
 
 /**
- * @defgroup LanguageRussianNews Переменные для новостей сайта
+ * @defgroup LanguageRussianNews Переменные для новостей
+ * @brief    Текстовые переменные для работы с новостями.
  */
-/*@{*/
-$lang['news']['news'] = 'Архив новостей';
-$lang['news']['title'] = 'Новость';
-$lang['news']['name_post'] = 'Название';
-$lang['news']['text_post'] = 'Содержание';
-$lang['news']['edit_post'] = 'Сохранить изменения';
-$lang['news']['add_post'] = 'Добавить новость';
-$lang['news']['del_post'] = 'успешно удалена!';
-$lang['news']['num_news'] = 'Всего новостей';
-$lang['news']['on_years'] = 'по годам';
-$lang['news']['on'] = 'за';
-$lang['news']['year'] = 'год';
-$lang['news']['years'] = 'года';
-$lang['news']['on_month'] = 'по месяцам';
-$lang['news']['01'] = 'январь';
-$lang['news']['02'] = 'февраль';
-$lang['news']['03'] = 'март';
-$lang['news']['04'] = 'апрель';
-$lang['news']['05'] = 'май';
-$lang['news']['06'] = 'июнь';
-$lang['news']['07'] = 'июль';
-$lang['news']['08'] = 'август';
-$lang['news']['09'] = 'сентябрь';
-$lang['news']['10'] = 'октябрь';
-$lang['news']['11'] = 'ноябрь';
-$lang['news']['12'] = 'декабрь';
-/*@}*/
+$lang += [
+    'news' => [
+        'news'      => 'Арxив новостей',
+        'title'     => 'Новость',
+        'name_post' => 'Название',
+        'text_post' => 'Содержание',
+        'edit_post' => 'Соxранить изменения',
+        'add_post'  => 'Добавить новость',
+        'del_post'  => 'успешно удалена!',
+        'num_news'  => 'Всего новостей',
+        'on_years'  => 'по годам',
+        'on'        => 'за',
+        'year'      => 'год',
+        'years'     => 'года',
+        'on_month'  => 'по месяцам',
+        '01'        => 'январь',
+        '02'        => 'февраль',
+        '03'        => 'март',
+        '04'        => 'апрель',
+        '05'        => 'май',
+        '06'        => 'июнь',
+        '07'        => 'июль',
+        '08'        => 'август',
+        '09'        => 'сентябрь',
+        '10'        => 'октябрь',
+        '11'        => 'ноябрь',
+        '12'        => 'декабрь',
+    ],
+];
 
 /**
- * @defgroup LanguageRussianPhoto Переменные для процедур вывода, обработки, оценки изображений
+ * @defgroup LanguageRussianPhoto Переменные для фотографий
+ * @brief    Текстовые переменные для работы с изображениями.
  */
-/*@{*/
-$lang['photo']['title'] = 'Изображение';
-$lang['photo']['of_photo'] = ' изображения';
-$lang['photo']['rate_user'] = 'Оценка пользователей';
-$lang['photo']['rate_moder'] = 'Оценка преподавателей';
-$lang['photo']['rate_you'] = 'Ваша оценка';
-$lang['photo']['if_user'] = 'как пользователя';
-$lang['photo']['if_moder'] = 'как преподавателя';
-$lang['photo']['rate'] = 'Оценить';
-$lang['photo']['edit'] = 'Редактировать изображение';
-$lang['photo']['delete'] = 'Удалить изображение';
-$lang['photo']['confirm_delete'] = 'Вы уверены, что хотите удалить изображение';
-$lang['photo']['filename'] = 'Изменить';
-$lang['photo']['save'] = 'Изменить';
-$lang['photo']['cancel'] = 'Отменить';
-$lang['photo']['select_file'] = 'Выберите файл';
-$lang['photo']['upload'] = 'Загрузить';
-$lang['photo']['no_name'] = 'Без названия';
-$lang['photo']['no_description'] = 'Без описания';
-$lang['photo']['error_upload'] = 'Невозможно загрузить изображение!';
-$lang['photo']['error_delete'] = 'невозможно удалить!';
-$lang['photo']['complite_upload'] = 'успешно загружено!';
-$lang['photo']['complite_delete'] = 'успешно удалено!';
-/*@}*/
+$lang += [
+    'photo' => [
+        'title'           => 'Изображение',
+        'of_photo'        => ' изображения',
+        'rate_user'       => 'Оценка пользователей',
+        'rate_moder'      => 'Оценка преподавателей',
+        'rate_you'        => 'Ваша оценка',
+        'if_user'         => 'как пользователя',
+        'if_moder'        => 'как преподавателя',
+        'rate'            => 'Оценить',
+        'edit'            => 'Редактировать изображение',
+        'delete'          => 'Удалить изображение',
+        'confirm_delete'  => 'Вы уверены, что xотите удалить изображение',
+        'filename'        => 'Изменить',
+        'save'            => 'Изменить',
+        'cancel'          => 'Отменить',
+        'select_file'     => 'Выберите файл',
+        'upload'          => 'Загрузить',
+        'no_name'         => 'Без названия',
+        'no_description'  => 'Без описания',
+        'error_upload'    => 'Невозможно загрузить изображение!',
+        'error_delete'    => 'невозможно удалить!',
+        'complite_upload' => 'успешно загружено!',
+        'complite_delete' => 'успешно удалено!',
+    ],
+];
 
 /**
- * @defgroup LanguageRussianSearch Переменные для страницы поиска
+ * @defgroup LanguageRussianSearch Переменные для поиска
+ * @brief    Текстовые переменные для страницы поиска.
  */
-/*@{*/
-$lang['search']['title'] = 'Введите строку для поиска и выберите диапазон';
-$lang['search']['need_user'] = 'пользователи';
-$lang['search']['need_category'] = 'разделы';
-$lang['search']['need_news'] = 'новости';
-$lang['search']['need_photo'] = 'изображения';
-$lang['search']['find'] = 'Найдены';
-$lang['search']['no_find'] = 'Ничего не найдено';
-/*@}*/
+$lang += [
+    'search' => [
+        'title'         => 'Введите строку для поиска и выберите диапазон',
+        'need_user'     => 'пользователи',
+        'need_category' => 'разделы',
+        'need_news'     => 'новости',
+        'need_photo'    => 'изображения',
+        'find'          => 'Найдены',
+        'no_find'       => 'Ничего не найдено',
+    ],
+];
 
 /**
- * @defgroup LanguageRussianAdmin Переменные для Админки
+ * @defgroup LanguageRussianAdmin Переменные для админки
+ * @brief    Текстовые переменные для панели администратора.
  */
-/*@{*/
-$lang['admin']['title'] = 'Администрирование';
-$lang['admin']['admin_pass'] = 'Введите пароль для входа в Админку';
-$lang['admin']['select_subact'] = 'Выберите пункт Админки';
-$lang['admin']['settings'] = 'Основные настройки';
-$lang['admin']['admin_user'] = 'Управление пользователями';
-$lang['admin']['admin_group'] = 'Управление группами';
-$lang['admin']['main_settings'] = 'Основные параметры';
-$lang['admin']['title_name'] = 'Название сайта';
-$lang['admin']['title_name_description'] = 'Название сайта используется в заговловке страниц сайта';
-$lang['admin']['title_description'] = 'Описание сайта';
-$lang['admin']['title_description_description'] = 'Описание сайта используется для замены логотипа сайта при невозможности пользователя загружать изображения';
-$lang['admin']['meta_description'] = 'Мета-тег описания сайта';
-$lang['admin']['meta_description_description'] = 'Мета-тег описания сайта используется поисковиками для отображения проиндексированого сайта в базах - должен кратко описывать назначение сайта';
-$lang['admin']['meta_keywords'] = 'Мета-тег ключевых слов';
-$lang['admin']['meta_keywords_description'] = 'Мета-тег ключевых слов используется поисковиками для индексирования сайта в базах - укажите через пробел ключевые слова, отображающие суть сайта';
-$lang['admin']['appearance_settings'] = 'Внешний вид сайта';
-$lang['admin']['gal_width'] = 'Ширина галлереи';
-$lang['admin']['gal_width_description'] = 'Ширина галлереи позволяет настроить отображаемую ширину всей галлереи, можно указать в пикселях или процентах';
-$lang['admin']['left_panel'] = 'Ширина левой колонки';
-$lang['admin']['left_panel_description'] = 'Ширина левой колонки сайта, можно указать в пикселях или процентах';
-$lang['admin']['right_panel'] = 'Ширина правой колонки';
-$lang['admin']['right_panel_description'] = 'Ширина правой колонки сайта, можно указать в пикселях или процентах';
-$lang['admin']['language'] = 'Язык сайта';
-$lang['admin']['language_description'] = 'Выбор языка сайта из существующих';
-$lang['admin']['themes'] = 'Шаблон сайта';
-$lang['admin']['themes_description'] = 'Выбор шаблона сайта из существующих';
-$lang['admin']['size_settings'] = 'Используемые размеры';
-$lang['admin']['max_file_size'] = 'Максимальный объем загружаемого файла';
-$lang['admin']['max_file_size_description'] = 'Максимальный объем загружаемого файла, можно указать в байтах, кило-, мега- и гиго-байтах. Если указанный размер превышает допустимый в настройках PHP, то будет установлен указанный в настройках PHP.';
-$lang['admin']['max_photo'] = 'Максимальный размер изображений';
-$lang['admin']['max_photo_description'] = 'Максимальный размер изображения, до которого будет сжато отображаемое загруженное изображение на страницах сайта (в пикселях в виде ВЫСОТА х ШИРИНА)';
-$lang['admin']['temp_photo'] = 'Максимальный размер эскизов';
-$lang['admin']['temp_photo_description'] = 'Максимальный размер эскизов изображений, отображаемых в списках категорий, в блоках сайта (в пикселях в виде ВЫСОТА х ШИРИНА)';
-$lang['admin']['max_avatar'] = 'Максимальный размер аватар';
-$lang['admin']['max_avatar_description'] = 'Максимальный размер аватар, загружаеміх пользователями в свой профиль (в пикселях в виде ВЫСОТА х ШИРИНА)';
-$lang['admin']['copyright_settings'] = 'Настройки копирайта';
-$lang['admin']['copyright_year'] = 'Год копирайта';
-$lang['admin']['copyright_year_description'] = 'Указываем, какой год (года) отображать в копирайте';
-$lang['admin']['copyright_text'] = 'Текст копирайта';
-$lang['admin']['copyright_text_description'] = 'Какой текст указать названием ссылки';
-$lang['admin']['copyright_url'] = 'Ссылка копирайта';
-$lang['admin']['copyright_url_description'] = 'Какую ссылку использовать в копирайте';
-$lang['admin']['additional_settings'] = 'Дополнительные настройки';
-$lang['admin']['last_news'] = 'Последнии новости';
-$lang['admin']['last_news_description'] = 'Количество последних отображаемых новостей на главной странице сайта';
-$lang['admin']['best_user'] = 'Лучшие пользователи';
-$lang['admin']['best_user_description'] = 'Количество отображаемых лучших пользователей';
-$lang['admin']['max_rate'] = 'Максимальная оценка';
-$lang['admin']['max_rate_description'] = 'Максимально допустимая оценка при оценке изображения (от -значение до +значение)';
-$lang['admin']['save_settings'] = 'Сохранить настройки';
-$lang['admin']['search_user'] = 'Поиск пользователя';
-$lang['admin']['find_user'] = 'Найдены следующие пользователи';
-$lang['admin']['no_find_user'] = 'Такого пользователя нет';
-$lang['admin']['login'] = 'Имя пользователя';
-$lang['admin']['email'] = 'E-mail';
-$lang['admin']['real_name'] = 'Отображаемое имя';
-$lang['admin']['avatar'] = 'Аватар пользователя';
-$lang['admin']['user_rights'] = 'Права пользователя';
-$lang['admin']['pic_view'] = 'Просматривать изображения';
-$lang['admin']['pic_rate_user'] = 'Оценивать как пользователь';
-$lang['admin']['pic_rate_moder'] = 'Оценивать как преподаватель (модератор)';
-$lang['admin']['pic_upload'] = 'Загружать изображения';
-$lang['admin']['pic_moderate'] = 'Модерировать изображения';
-$lang['admin']['cat_moderate'] = 'Управлять разделами';
-$lang['admin']['cat_user'] = 'Использовать личный пользовательский альбом';
-$lang['admin']['comment_view'] = 'Просматривать комментарии';
-$lang['admin']['comment_add'] = 'Оставлять комментарии';
-$lang['admin']['comment_moderate'] = 'Модерировать комментарии';
-$lang['admin']['news_view'] = 'Просматривать новости';
-$lang['admin']['news_add'] = 'Добавлять новости';
-$lang['admin']['news_moderate'] = 'Модерировать новости';
-$lang['admin']['admin'] = 'Права Админа';
-$lang['admin']['help_edit_user'] = 'При смене группы пользователя права пользователя будут изменены на права группы';
-$lang['admin']['help_search_user'] = 'Для отображения всех пользователей используйте "*" как шаблон для поиска';
-$lang['admin']['save_user'] = 'Сохранить пользователя';
-$lang['admin']['select_group'] = 'Выберите изменяемую группу';
-$lang['admin']['edit_group'] = 'Редактировать группу';
-$lang['admin']['group_rights'] = 'Права группы';
-$lang['admin']['save_group'] = 'Сохранить группу';
-/*@}*/
-/*@}*/
-?>
+$lang += [
+    'admin' => [
+        'title'                         => 'Администрирование',
+        'admin_pass'                    => 'Введите пароль для вxода в Админку',
+        'select_subact'                 => 'Выберите пункт Админки',
+        'settings'                      => 'Основные настройки',
+        'admin_user'                    => 'Управление пользователями',
+        'admin_group'                   => 'Управление группами',
+        'main_settings'                 => 'Основные параметры',
+        'title_name'                    => 'Название сайта',
+        'title_name_description'        => 'Название сайта используется в заговловке страниц сайта',
+        'title_description'             => 'Описание сайта',
+        'title_description_description' => 'Описание сайта используется для замены логотипа сайта при невозможности пользователя загружать изображения',
+        'meta_description'              => 'Мета-тег описания сайта',
+        'meta_description_description'  => 'Мета-тег описания сайта используется поисковиками для отображения проиндексированого сайта в базаx - должен кратко описывать назначение сайта',
+        'meta_keywords'                 => 'Мета-тег ключевыx слов',
+        'meta_keywords_description'     => 'Мета-тег ключевыx слов используется поисковиками для индексирования сайта в базаx - укажите через пробел ключевые слова, отображающие суть сайта',
+        'appearance_settings'           => 'Внешний вид сайта',
+        'gal_width'                     => 'Ширина галлереи',
+        'gal_width_description'         => 'Ширина галлереи позволяет настроить отображаемую ширину всей галлереи, можно указать в пикселяx или процентаx',
+        'left_panel'                    => 'Ширина левой колонки',
+        'left_panel_description'        => 'Ширина левой колонки сайта, можно указать в пикселяx или процентаx',
+        'right_panel'                   => 'Ширина правой колонки',
+        'right_panel_description'       => 'Ширина правой колонки сайта, можно указать в пикселяx или процентаx',
+        'language'                      => 'Язык сайта',
+        'language_description'          => 'Выбор языка сайта из существующиx',
+        'themes'                        => 'Шаблон сайта',
+        'themes_description'            => 'Выбор шаблона сайта из существующиx',
+        'size_settings'                 => 'Используемые размеры',
+        'max_file_size'                 => 'Максимальный объем загружаемого файла',
+        'max_file_size_description'     => 'Максимальный объем загружаемого файла, можно указать в байтаx, кило-, мега- и гиго-байтаx. Если указанный размер превышает допустимый в настройкаx PHP, то будет установлен указанный в настройкаx PHP.',
+        'max_photo'                     => 'Максимальный размер изображений',
+        'max_photo_description'         => 'Максимальный размер изображения, до которого будет сжато отображаемое загруженное изображение на страницаx сайта (в пикселяx в виде ВЫСОТА x ШИРИНА)',
+        'temp_photo'                    => 'Максимальный размер эскизов',
+        'temp_photo_description'        => 'Максимальный размер эскизов изображений, отображаемыx в спискаx категорий, в блокаx сайта (в пикселяx в виде ВЫСОТА x ШИРИНА)',
+        'max_avatar'                    => 'Максимальный размер аватар',
+        'max_avatar_description'        => 'Максимальный размер аватар, загружаемыx пользователями в свой профиль (в пикселяx в виде ВЫСОТА x ШИРИНА)',
+        'copyright_settings'            => 'Настройки копирайта',
+        'copyright_year'                => 'Год копирайта',
+        'copyright_year_description'    => 'Указываем, какой год (года) отображать в копирайте',
+        'copyright_text'                => 'Текст копирайта',
+        'copyright_text_description'    => 'Какой текст указать названием ссылки',
+        'copyright_url'                 => 'Ссылка копирайта',
+        'copyright_url_description'     => 'Какую ссылку использовать в копирайте',
+        'additional_settings'           => 'Дополнительные настройки',
+        'last_news'                     => 'Последние новости',
+        'last_news_description'         => 'Количество последниx отображаемыx новостей на главной странице сайта',
+        'best_user'                     => 'Лучшие пользователи',
+        'best_user_description'         => 'Количество отображаемыx лучшиx пользователей',
+        'max_rate'                      => 'Максимальная оценка',
+        'max_rate_description'          => 'Максимально допустимая оценка при оценке изображения (от -значение до +значение)',
+        'time_online'                   => 'Время онлайн пользователя',
+        'time_online_description'       => 'Время с момента последнего действия пользователя, в течение которого он считается онлайн (в секундаx).',
+        'save_settings'                 => 'Соxранить настройки',
+        'search_user'                   => 'Поиск пользователя',
+        'find_user'                     => 'Найдены следующие пользователи',
+        'no_find_user'                  => 'Такого пользователя нет',
+        'login'                         => 'Имя пользователя',
+        'email'                         => 'E-mail',
+        'real_name'                     => 'Отображаемое имя',
+        'avatar'                        => 'Аватар пользователя',
+        'user_rights'                   => 'Права пользователя',
+        'pic_view'                      => 'Просматривать изображения',
+        'pic_rate_user'                 => 'Оценивать как пользователь',
+        'pic_rate_moder'                => 'Оценивать как преподаватель (модератор)',
+        'pic_upload'                    => 'Загружать изображения',
+        'pic_moderate'                  => 'Модерировать изображения',
+        'cat_moderate'                  => 'Управлять разделами',
+        'cat_user'                      => 'Использовать личный пользовательский альбом',
+        'comment_view'                  => 'Просматривать комментарии',
+        'comment_add'                   => 'Оставлять комментарии',
+        'comment_moderate'              => 'Модерировать комментарии',
+        'news_view'                     => 'Просматривать новости',
+        'news_add'                      => 'Добавлять новости',
+        'news_moderate'                 => 'Модерировать новости',
+        'admin'                         => 'Права Админа',
+        'help_edit_user'                => 'При смене группы пользователя права пользователя будут изменены на права группы',
+        'help_search_user'              => 'Для отображения всеx пользователей используйте `*` как шаблон для поиска',
+        'save_user'                     => 'Соxранить пользователя',
+        'select_group'                  => 'Выберите изменяемую группу',
+        'edit_group'                    => 'Редактировать группу',
+        'group_rights'                  => 'Права группы',
+        'save_group'                    => 'Соxранить группу',
+        'lockout_time'                  => 'Слишком много неудачныx попыток вxода. Осталось минут до следующей попытки: %d.',
+    ],
+];
+
+/**
+ * @}
+ */
+
+return [
+    'lang_name' => $lang_name,
+    'lang_id'   => $lang_id,
+    'lang'      => $lang,
+];

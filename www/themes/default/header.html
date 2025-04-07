@@ -1,178 +1,135 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="ru">
 
 <head>
 	<title>{TITLE}</title>
-	<meta name="description" content="{META_DESRIPTION}" />
-	<meta name="keywords" content="{META_KEYWORDS}" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<meta name="description" content="{META_DESRIPTION}">
+	<meta name="keywords" content="{META_KEYWORDS}">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	{INSERT_HEADER}
-	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css" />
-	<link href="{THEME_URL}jquery-ui.min.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="{THEME_URL}js/jquery.min.js"></script>
-	<script type="text/javascript" src="{THEME_URL}js/jquery-ui.min.js"></script>
- <script type="text/javascript">
-$(function () {
-	$("input[type=submit]").removeClass("no_jquery");
-	$("button, input[type=submit]").button();
-	$("#set").buttonset();
-	$(".button_long")
-		.removeClass("ui-corner-all")
-		.filter(":first")
-			.addClass("ui-corner-top")
-		.end()
-		.filter(":last")
-			.addClass("ui-corner-bottom")
-		.end()
-		.button("option", "icons", {primary: "ui-icon-radio-on"});
-	$(".select").button({ disabled: true });
-	$(".vselect").button({ disabled: true }).button("option", "icons", {primary: "ui-icon-bullet"});
-	$(".edit").button({icons: {primary: "ui-icon-pencil"}, text: false});
-	$(".delete").button("option", "icons", {primary: "ui-icon-trash"}).button("option", "text", false);
-	$(".edit_delete").buttonset();
-	$(".long_edit_delete").buttonset();
-});
-</script>
+<!-- IF_LOCALHOST_SERVER_BEGIN -->
+	<link href="{THEME_URL}semantic.min.css" rel="stylesheet" type="text/css">
+	<script src="{THEME_URL}js/jquery.min.js" defer></script>
+	<script src="{THEME_URL}js/semantic.min.js" defer></script>
+<!-- IF_LOCALHOST_SERVER_ELSE -->
+    <link href="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.js" defer></script>
+<!-- IF_LOCALHOST_SERVER_END -->
+	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css">
+	<script src="{THEME_URL}js/script.js" defer></script>
+	<style>
+		:root {
+			--left-panel-width: {LEFT_PANEL_WIDHT}px;
+			--right-panel-width: {RIGHT_PANEL_WIDHT}px;
+		}
+	</style>
 </head>
 
-<body bgcolor="#141519;"{INSERT_BODY}>
-<div align="center">
-	<table class="my" width="{GALLERY_WIDHT}" cellspacing="0" cellpadding="0">
-		<tr>
-           	<td class="header">
-				<img src="{THEME_URL}images/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}" />
-			</td>
-		</tr>
-		<tr>
-			<td class="field_small_left">
-				<table cellpadding="0" cellspacing="0" width="100%">
-					<tr>
-						<td>
+<body>
+<div style="display: flex; justify-content: center; align-items: center;">
+	<div class="my" style="width: {GALLERY_WIDHT} !important; border-radius: 15px;">
+		<div class="header_site" style="border-radius: 15px;">
+			<img style="border-radius: 15px 0 0 15px; display: block;" src="{THEME_URL}images/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}">
+		</div>
+		<div class="mini ui inverted transparent segment no-space" id="short_menu">
+			<div class="mini ui inverted transparent sticky no-space">
+				<div style="display: flex; justify-content: space-between; align-items: center;">
+					<div>
 <!-- IF_SHORT_MENU_BEGIN -->
-							<table cellpadding="0" cellspacing="0" border="0">
-								<tr>
-									<td>
-										<div id="set">
+						<div class="small ui black inverted menu">
 <!-- ARRAY_SHORT_MENU_BEGIN -->
 <!-- IF_SHORT_MENU_URL_BEGIN -->
-											<button class="ui-corner-all" onclick="window.location.href='{U_SHORT_MENU}'" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+							<a class="item custom-menu" href="{U_SHORT_MENU}" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
 <!-- IF_SHORT_MENU_URL_ELSE -->
-											
-											<button class="select ui-corner-all" title="{L_SHORT_MENU}">{L_SHORT_MENU}</button>
+							<a class="item active" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
 <!-- IF_SHORT_MENU_URL_END -->
 <!-- ARRAY_SHORT_MENU_END -->
-										</div>
-									</td>
-								</tr>
-							</table>
+						</div>
 <!-- IF_SHORT_MENU_ELSE -->
 						&nbsp;
 <!-- IF_SHORT_MENU_END -->
-						</td>
-						<td>
-							<form name="search" action="{U_SEARCH}" method="post">
-								<table align="right" border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td><input class="form ui-corner-all" size="50" type="text" name="search_main_text" /></td>
-										<td><input class="ui-corner-all no_jquery" name="search" type="submit" value="{L_SEARCH}" title="{L_SEARCH}" /></td>
-									</tr>
-								</table>
-							</form>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td class="field">
-				<table cellpadding="0" cellspacing="0" width="100%">
-                       	<col width="{LEFT_PANEL_WIDHT}" />
-                        <col />
-                        <col />
-                        <col />
-                        <col width="{RIGHT_PANEL_WIDHT}"  />
-                	<tr class="td_spacer">
-						<td class="td_spacer" width="{LEFT_PANEL_WIDHT}"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="{LEFT_PANEL_WIDHT}" /></td>
-						<td class="td_spacer"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="1" /></td>
-						<td class="td_spacer" width="{RIGHT_PANEL_WIDHT}"><img src="{THEME_URL}images/spacer.gif" height="1" border="0" alt="" width="{RIGHT_PANEL_WIDHT}" /></td>
-					</tr>
-					<tr>
-						<td class="field">
+					</div>
+					<form name="search" action="{U_SEARCH}" method="post" style="display: flex; align-items: center;">
+						<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+						<div class="ui inverted icon input custom-input">
+							<input class="ui input" type="text" name="search_main_text" placeholder="{L_SEARCH}...">
+							<i class="search icon"></i>
+						</div>
+						<button class="small ui basic inverted button custom-input" name="search" type="submit" title="{L_SEARCH}">
+							{L_SEARCH}
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="grid-container">
+			<div class="left-panel">
 <!-- ARRAY_LEFT_PANEL_BEGIN -->
 <!-- SELECT_LEFT_BLOCK_BEGIN -->
 <!-- CASE_MENU -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{LONG_MENU_NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="bars icon"></i> {LONG_MENU_NAME_BLOCK}
+						</div>
+					</div>
 <!-- IF_LONG_MENU_BEGIN -->
-								<tr>
-									<td colspan="3">
-										<div id="vset">
+					<div class="ui buttons vertical" style="width: 100%;">
 <!-- ARRAY_LONG_MENU_BEGIN -->
 <!-- IF_LONG_MENU_URL_BEGIN -->
-											<button style="width:100%; text-align: left;" class="button_long ui-corner-all" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
+						<button style="width: 100%; text-align: left;" class="small ui inverted button" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">
+							<i class="folder outline icon"></i> {L_LONG_MENU}
+						</button>
 <!-- IF_LONG_MENU_URL_ELSE -->
-											<button style="width:100%; text-align: left;" class="vselect button_long ui-corner-all" id="vselect" title="{L_LONG_MENU}">{L_LONG_MENU}</button><br />
+						<button style="width: 100%; text-align: left;" class="small ui secondary active button" title="{L_LONG_MENU}">
+							<i class="folder open outline icon"></i> {L_LONG_MENU}
+						</button>
 <!-- IF_LONG_MENU_URL_END -->
 <!-- ARRAY_LONG_MENU_END -->
-										</div>
-									</td>
-								</tr>
+					</div>
 <!-- IF_LONG_MENU_END -->
-							</table>
+				</div>
 <!-- BREAK_MENU -->
 <!-- CASE_TOP_LAST_PHOTO -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">{NAME_BLOCK}</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-								<tr>
-                                	<td class="mini_photo"></td>
-									<td class="mini_photo"><a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> -&gt; <a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a></td>
-                                    <td class="mini_photo"></td>
-								</tr>
-								<tr>
-                                	<td class="mini_photo"></td>
-									<td class="mini_photo"><a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}"><img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}" border="0" /></a></td>
-                                    <td class="mini_photo"></td>
-								</tr>
-								<tr>
-                                	<td class="mini_photo"></td>
-									<td class="mini_photo">
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="camera retro icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="mini_photo" style="margin: 10px 0; text-align: center;">
+						<div style="margin-bottom: 10px;">
+							<a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> ->
+							<a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a>
+						</div>
+						<div style="margin-bottom: 10px;">
+							<a class="ui small rounded image" href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">
+								<img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}">
+							</a>
+						</div>
+						<div style="margin-bottom: 10px;">
 <!-- IF_USER_EXISTS_BEGIN -->
-										{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
+							{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
 <!-- IF_USER_EXISTS_ELSE -->
-										{D_REAL_NAME_USER_ADD}
+							{D_REAL_NAME_USER_ADD}
 <!-- IF_USER_EXISTS_END -->
-									</td>
-                                    <td class="mini_photo"></td>
-								</tr>
-								<tr>
-                                	<td class="mini_photo"></td>
-									<td class="mini_photo">{PHOTO_RATE}</td>
-                                    <td class="mini_photo"></td>
-								</tr>
-							</table>
+						</div>
+						<div>{PHOTO_RATE}</div>
+					</div>
+				</div>
 <!-- BREAK_TOP_LAST_PHOTO -->
 <!-- CASE_DEFAULT -->
-							<table cellpadding="0" cellspacing="0" border="0" width="100%" class="field_small">
-								<tr>
-									<td class="name_block_left">&nbsp;</td>
-									<td class="name_block">ERROR_CASE_BLOCK</td>
-									<td class="name_block_right">&nbsp;</td>
-								</tr>
-							</table>
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+						<div class="ui center aligned header">
+							<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+						</div>
+					</div>
+				</div>
 <!-- BREAK_DEFAULT -->
 <!-- SELECT_LEFT_BLOCK_END -->
 <!-- ARRAY_LEFT_PANEL_END -->
-						</td>
-						<td width="5px" class="td_spacer">&nbsp;</td>
-						<td class="field">
+			</div>
+			<div class="center-content">

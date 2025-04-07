@@ -1,0 +1,7 @@
+<map id="size_image" name="size_image">
+<area shape="rect" id="Node000001" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="5,5,92,30"/>
+<area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a887f702cc34cf74259c6f10365fc6c9b" title="Вычисляет размеры для вывода эскиза изображения." alt="" coords="140,5,282,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,15,124,15,124,20,92,20"/>
+<area shape="rect" id="Node000003" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c" title="Расчёт размера эскиза." alt="" coords="330,5,496,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="283,15,314,15,314,20,283,20"/>
+</map>

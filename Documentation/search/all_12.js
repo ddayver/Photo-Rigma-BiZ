@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['where',['where',['../classdb.html#a3d91c73d66310744d20c15945cd0ccb4',1,'db']]],
-  ['work',['work',['../classwork.html',1,'work'],['../classwork.html#a1c69e4c5de965a3854ac85f38db024f4',1,'work\work()']]],
-  ['work_2ephp',['work.php',['../work_8php.html',1,'']]]
+  ['join_0',['join',['../da/d88/interfacePhotoRigma_1_1Classes_1_1Database__Interface.html#aa2b6c23b3a70e9ef06c22d8a4885d69a',1,'PhotoRigma\Classes\Database_Interface\join()'],['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a',1,'PhotoRigma\Classes\Database\join()']]]
 ];

@@ -1,0 +1,39 @@
+# Запрет доступа ко всем скрытым файлам (начинающимся с точки)
+<FilesMatch "^\.">
+    <IfVersion >= 2.4>
+        Require all denied
+    </IfVersion>
+    <IfVersion < 2.4>
+        Order allow,deny
+        Deny from all
+    </IfVersion>
+</FilesMatch>
+
+# Запрет доступа к файлу конфигурации (config.php)
+<FilesMatch "config.php">
+    <IfVersion >= 2.4>
+        Require all denied
+    </IfVersion>
+    <IfVersion < 2.4>
+        Order allow,deny
+        Deny from all
+    </IfVersion>
+</FilesMatch>
+
+# Включение mod_rewrite
+RewriteEngine On
+
+# 1. profile/id_123.html -> ?action=profile&id=123
+RewriteRule ^([A-Za-z0-9]+)/id_([0-9]+)\.html$ /?action=$1&id=$2 [L,QSA]
+
+# 2. resend/login=user/email=user@example.com/resend.html -> ?action=resend&login=user&email=user@example.com&resend=true
+RewriteRule ^([A-Za-z0-9]+)/login=([^/]+)/email=([^/]+)/resend\.html$ /?action=$1&login=$2&email=$3&resend=true [L,QSA]
+
+# 3. activate/login=user/email=user@example.com/activated_code_abc123.html -> ?action=activate&login=user&email=user@example.com&activated_code=abc123
+RewriteRule ^([A-Za-z0-9]+)/login=([^/]+)/email=([^/]+)/activated_code_([A-Za-z0-9]+)\.html$ /?action=$1&login=$2&email=$3&activated_code=$4 [L,QSA]
+
+# 4. reset/login=user/email=user@example.com/ -> ?action=reset&login=user&email=user@example.com
+RewriteRule ^([A-Za-z0-9]+)/login=([^/]+)/email=([^/]+)/?$ /?action=$1&login=$2&email=$3 [L,QSA]
+
+# 5. home/ -> ?action=home
+RewriteRule ^([A-Za-z0-9]+)/?$ /?action=$1 [L,QSA]

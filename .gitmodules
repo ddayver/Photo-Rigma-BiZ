@@ -1,0 +1,4 @@
+[submodule "www/badword"]
+	path = www/badword
+	url = ../../LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words.git
+	branch = master

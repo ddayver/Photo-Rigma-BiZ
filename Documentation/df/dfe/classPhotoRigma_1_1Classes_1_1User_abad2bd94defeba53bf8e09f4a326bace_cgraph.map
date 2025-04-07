@@ -1,0 +1,5 @@
+<map id="add_new_user" name="add_new_user">
+<area shape="rect" id="Node000001" title="Добавляет нового пользователя в базу данных, выполняя валидацию входных данных." alt="" coords="5,5,111,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acd25145f48c04385645c77ce03ebd9bc" title="Удаляет ключ из указанного свойства объекта (user или session)." alt="" coords="159,5,292,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,15,143,15,143,20,111,20"/>
+</map>

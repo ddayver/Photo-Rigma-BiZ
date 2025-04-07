@@ -1,0 +1,7 @@
+<map id="encodename" name="encodename">
+<area shape="rect" id="Node000001" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot;." alt="" coords="405,12,500,37"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя." alt="" coords="214,5,357,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="389,27,358,27,358,22,389,22"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,5,166,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,27,166,27,166,22,198,22"/>
+</map>

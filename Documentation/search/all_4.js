@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['encodename',['encodename',['../classwork.html#abd4ee05da4428a5b4941fe29d2fa71aa',1,'work']]]
+  ['4_20администрирование_0',['4. Администрирование',['../index.html#autotoc_md55',1,'']]],
+  ['4_20настройте_20права_20доступа_1',['4. Настройте права доступа',['../index.html#autotoc_md42',1,'']]]
 ];

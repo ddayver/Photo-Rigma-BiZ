@@ -1,0 +1,5 @@
+<map id="edit_avatar" name="edit_avatar">
+<area shape="rect" id="Node000001" title="Обрабатывает загрузку аватара пользователя." alt="" coords="178,5,263,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,5,130,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,20,130,20,130,15,162,15"/>
+</map>

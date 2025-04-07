@@ -1,0 +1,13 @@
+<map id="ubb" name="ubb">
+<area shape="rect" id="Node000001" title="Преобразование BBCode в HTML." alt="" coords="5,19,48,44"/>
+<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразование BBCode в HTML (публичная обёртка)." alt="" coords="96,12,239,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,29,80,29,80,34,48,34"/>
+<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="287,12,468,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,29,271,29,271,34,240,34"/>
+<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ae7fce393b631f688e62115acde6b2641" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="722,5,865,58"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="469,15,516,10,595,7,674,10,707,14,706,19,673,16,595,12,517,16,469,20"/>
+<area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ade4e103eed321eb69427d7a05f8e939a" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов." alt="" coords="516,49,674,102"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="469,47,501,54,500,59,468,53"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="674,56,706,48,707,54,675,61"/>
+<area shape="poly" id="edge6_Node000005_Node000005" title=" " alt="" coords="556,49,556,39,563,30,576,25,595,23,616,25,629,32,626,36,614,30,595,28,577,30,566,34,561,41,561,49"/>
+</map>

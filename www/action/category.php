@@ -1,500 +1,853 @@
 <?php
+
 /**
  * @file        action/category.php
- * @brief       Обзор и управление разделами.
+ * @brief       Обзор и управление разделами галереи.
+ *
+ * @details     Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею.
+ *              Основные функции:
+ *              - Отображение списка категорий и фотографий в них.
+ *              - Редактирование названия и описания категорий.
+ *              - Удаление категорий и связанных с ними фотографий.
+ *              - Добавление новых категорий.
+ *              - Проверка прав доступа пользователя на выполнение операций.
+ *
+ * @section     Основные функции
+ * - Отображение списка категорий и фотографий.
+ * - Редактирование данных категорий.
+ * - Удаление категорий и связанных фотографий.
+ * - Добавление новых категорий.
+ * - Проверка прав доступа пользователя.
+ *
+ * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
+ *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
+ *
  * @author      Dark Dayver
- * @version     0.2.0
- * @date        28/03-2012
- * @details     Обзор, редактирование, удаление и добавление разделов в галерею.
+ * @version     0.4.0
+ * @date        2025-04-02
+ * @namespace   PhotoRigma\Action
+ *
+ * @see         PhotoRigma\Classes\Database Класс для работы с базой данных.
+ * @see         PhotoRigma\Classes\Template Класс для работы с шаблонами.
+ * @see         PhotoRigma\Classes\User Класс для работы с пользователями.
+ * @see         PhotoRigma\Classes\Work Класс для выполнения различных операций.
+ *
+ * @note        Этот файл является частью системы PhotoRigma.
+ *              Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
+ *              Используются подготовленные выражения для защиты от SQL-инъекций.
+ *
+ * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license     MIT License (https://opensource.org/licenses/MIT)
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
-/// @cond
-if (IN_GALLERY !== TRUE)
-{
-	die('HACK!');
+
+namespace PhotoRigma\Action;
+
+use PhotoRigma\Classes\Database;
+use PhotoRigma\Classes\Template;
+use PhotoRigma\Classes\User;
+use PhotoRigma\Classes\Work;
+use RuntimeException;
+
+/** @var Database $db */
+/** @var Work $work */
+/** @var User $user */
+/** @var Template $template */
+
+// Предотвращение прямого вызова файла
+if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    error_log(
+        date('H:i:s') . " [ERROR] | " . (filter_input(
+            INPUT_SERVER,
+            'REMOTE_ADDR',
+            FILTER_VALIDATE_IP
+        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+    );
+    die("HACK!");
 }
 
-include_once($work->config['site_dir'] . 'language/' . $work->config['language'] . '/main.php');
-
+// Установка файла шаблона
 $template->template_file = 'category.html';
 
-if (!$work->check_get('cat', TRUE, TRUE)) $cat = FALSE;
-else $cat = $_GET['cat'];
-$template->add_if_ar(array(
-	'ISSET_CATEGORY' => FALSE,
-	'EDIT_BLOCK'     => FALSE,
-	'ISSET_PIC'      => FALSE,
-	'USER_EXISTS'    => FALSE,
-	'CATEGORY_EDIT'  => FALSE
-));
-
-if ($cat == 'user' || $cat === 0)
-{
-	if (!$work->check_get('id', TRUE, TRUE, '^[0-9|curent]+\$'))
-	{
-		$action = 'user_category';
-		if ($db->select('DISTINCT `user_upload`', TBL_PHOTO, '`category` = 0', array('user_upload' => 'up')))
-		{
-			$temp = $db->res_arr();
-			$template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
-			if ($temp)
-			{
-				foreach ($temp as $key => $val)
-				{
-					if ($db->select('id', TBL_USERS, '`id` = ' . $val['user_upload']))
-					{
-						$temp2 = $db->res_row();
-						if ($temp2)
-						{
-							$temp_category = $work->category($val['user_upload'], 1);
-							$template->add_string_ar(array(
-									'D_NAME_CATEGORY'        => $temp_category['name'],
-									'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
-									'D_COUNT_PHOTO'          => $temp_category['count_photo'],
-									'D_LAST_PHOTO'           => $temp_category['last_photo'],
-									'D_TOP_PHOTO'            => $temp_category['top_photo'],
-									'U_CATEGORY'             => $temp_category['url_cat'],
-									'U_LAST_PHOTO'           => $temp_category['url_last_photo'],
-									'U_TOP_PHOTO'            => $temp_category['url_top_photo']
-								), 'LIST_CATEGORY[' . $key . ']');
-						}
-						else log_in_file('Unable to get the user category', DIE_IF_ERROR);
-					}
-					else log_in_file($db->error, DIE_IF_ERROR);
-				}
-
-				if ($db->select(array('name', 'description'), TBL_CATEGORY, '`id` = 0'))
-				{
-					$temp2 = $db->res_row();
-					if ($temp2)
-					{
-						$template->add_if('ISSET_CATEGORY', TRUE);
-						$template->add_string_ar(array(
-							'NAME_BLOCK'             => $lang['category']['users_album'],
-							'L_NAME_CATEGORY'        => $temp2['name'],
-							'L_DESCRIPTION_CATEGORY' => $temp2['description'],
-							'L_COUNT_PHOTO'          => $lang['category']['count_photo'],
-							'L_LAST_PHOTO'           => $lang['main']['last_foto'] . $lang['category']['of_category'],
-							'L_TOP_PHOTO'            => $lang['main']['top_foto'] . $lang['category']['of_category']
-						));
-					}
-					else log_in_file('Unable to get the user category', DIE_IF_ERROR);
-				}
-				else log_in_file($db->error, DIE_IF_ERROR);
-			}
-			else
-			{
-				$template->add_string_ar(array(
-					'NAME_BLOCK'             => $lang['category']['users_album'],
-					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . $lang['category']['of_category'],
-					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . $lang['category']['of_category'],
-					'L_COUNT_PHOTO'          => $lang['category']['count_photo'],
-					'L_LAST_PHOTO'           => $lang['main']['last_foto'] . $lang['category']['of_category'],
-					'L_TOP_PHOTO'            => $lang['main']['top_foto'] . $lang['category']['of_category'],
-					'L_NO_PHOTO'             => $lang['category']['no_user_category']
-				));
-			}
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-	}
-	else
-	{
-		if ($_GET['id'] == 'curent' && $user->user['id'] > 0) $cat_id = $user->user['id'];
-		else $cat_id = $_GET['id'];
-		if ($cat_id == $user->user['id'] && $user->user['id'] > 0) $action = 'you_category';
-
-		if ($db->select('id', TBL_PHOTO, '`category` = 0 AND `user_upload` = ' . $cat_id, array('date_upload' => 'down')))
-		{
-			$temp = $db->res_arr();
-			$template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
-			if ($temp && $user->user['pic_view'] == TRUE)
-			{
-				$template->add_if('ISSET_PIC', TRUE);
-				foreach ($temp as $key => $val)
-				{
-					$temp_category = $work->create_photo('cat', $val['id']);
-					$template->add_string_ar(array(
-							'L_USER_ADD'           => $lang['main']['user_add'],
-							'MAX_PHOTO_HEIGHT'     => $work->config['temp_photo_h'] + 10,
-							'PHOTO_WIDTH'          => $temp_category['width'],
-							'PHOTO_HEIGHT'         => $temp_category['height'],
-							'D_DESCRIPTION_PHOTO'  => $temp_category['description'],
-							'D_NAME_PHOTO'         => $temp_category['name'],
-							'D_REAL_NAME_USER_ADD' => $temp_category['real_name'],
-							'D_PHOTO_RATE'         => $temp_category['rate'],
-							'U_THUMBNAIL_PHOTO'    => $temp_category['thumbnail_url'],
-							'U_PHOTO'              => $temp_category['url'],
-							'U_PROFILE_USER_ADD'   => $temp_category['url_user']
-						), 'LIST_PIC[' . $key . ']');
-					if ($temp_category['url_user'] !== NULL) $template->add_if('USER_EXISTS', TRUE, 'LIST_PIC[' . $key . ']');
-				}
-				if ($db->select('real_name', TBL_USERS, '`id` = ' . $cat_id))
-				{
-					$temp_user = $db->res_row();
-					if ($temp_user)
-					{
-						if ($db->select(array('name', 'description'), TBL_CATEGORY, '`id` = 0'))
-						{
-							$temp2 = $db->res_row();
-							if ($temp2)
-							{
-								$template->add_string_ar(array(
-									'L_NAME_BLOCK'        => $lang['category']['category'] . ' - ' . $temp2['name'] . ' ' . $temp_user['real_name'],
-									'L_DESCRIPTION_BLOCK' => $temp2['description'] . ' ' . $temp_user['real_name']
-								));
-							}
-							else log_in_file('Unable to get the user category', DIE_IF_ERROR);
-						}
-						else log_in_file($db->error, DIE_IF_ERROR);
-					}
-					else log_in_file('Unable to get the user', DIE_IF_ERROR);
-				}
-				else log_in_file($db->error, DIE_IF_ERROR);
-			}
-			else
-			{
-				$template->add_string_ar(array(
-					'L_NAME_BLOCK'        => $lang['category']['name_block'],
-					'L_DESCRIPTION_BLOCK' => $lang['category']['error_no_category'],
-					'L_NO_PHOTO'          => $lang['category']['error_no_photo']
-				));
-			}
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-	}
+// Проверка и получение параметра 'cat' из GET-запроса
+if (!$work->check_input('_GET', 'cat', [
+    'isset'  => true,
+    'empty'  => true,
+    'regexp' => '/^[a-zA-Z0-9_-]+$/', // Разрешаем только буквы, цифры, подчеркивания и дефисы
+])) {
+    $cat = false; // Если проверка не прошла, категория не установлена
+} else {
+    $cat = $_GET['cat']; // Очищаем значение от потенциально опасных символов
 }
-elseif ($work->check_get('cat', TRUE, TRUE, '^[0-9]+\$'))
-{
-	if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'saveedit' && $user->user['cat_moderate'] == TRUE && $cat != 0)
-	{
-		if ($db->select('*', TBL_CATEGORY, '`id` = ' . $cat))
-		{
-			$temp = $db->res_row();
-			if ($temp)
-			{
-				if (!$work->check_post('name_category', TRUE, TRUE)) $name_category = $temp['name'];
-				else $name_category = $_POST['name_category'];
 
-				if (!$work->check_post('description_category', TRUE, TRUE)) $description_category = $temp['description'];
-				else $description_category = $_POST['description_category'];
+// Добавление начальных условий в шаблонизатор
+$template->add_if_ar([
+    'ISSET_CATEGORY' => false, // Категория не установлена
+    'EDIT_BLOCK'     => false,     // Блок редактирования не активен
+    'ISSET_PIC'      => false,      // Изображение не установлено
+    'USER_EXISTS'    => false,    // Пользователь не существует
+    'CATEGORY_EDIT'  => false,   // Редактирование категории не активно
+]);
 
-				if (!$db->update(array('name' => $name_category, 'description' => $description_category), TBL_CATEGORY, '`id` = ' . $cat)) log_in_file($db->error, DIE_IF_ERROR);
-			}
-			else log_in_file('Unable to get the category', DIE_IF_ERROR);
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-		header('Location: ' . $work->config['site_url'] . '?action=category&cat=' . $cat);
-		log_in_file('Hack attempt!');
-	}
+if ($cat === 'user' || $cat === 0) {
+    // Проверка параметра 'id' через современный метод check_input
+    if (!$work->check_input('_GET', 'id', [
+        'isset'  => true,
+        'empty'  => true,
+        'regexp' => '/^(?:[0-9]+|curent)$/',
+    ])) {
+        $action = 'user_category';
 
-	if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'edit' && $user->user['cat_moderate'] == TRUE && $cat != 0)
-	{
-		if ($db->select('*', TBL_CATEGORY, '`id` = ' . $cat))
-		{
-			$temp = $db->res_row();
-			$template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
-			if ($temp)
-			{
-				$template->add_if_ar(array(
-					'ISSET_CATEGORY' => TRUE,
-					'CATEGORY_EDIT'  => TRUE
-				));
-				$template->add_string_ar(array(
-					'L_NAME_BLOCK'           => $lang['category']['edit'] . ' - ' . $temp['name'],
-					'L_NAME_DIR'             => $lang['category']['cat_dir'],
-					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . ' ' . $lang['category']['of_category'],
-					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . ' ' . $lang['category']['of_category'],
-					'L_EDIT_THIS'            => $lang['category']['save'],
-					'D_NAME_DIR'             => $temp['folder'],
-					'D_NAME_CATEGORY'        => $temp['name'],
-					'D_DESCRIPTION_CATEGORY' => $temp['description'],
-					'U_EDITED'               => '?action=category&amp;subact=saveedit&amp;cat=' . $cat
-				));
-			}
-			else
-			{
-				$template->add_string_ar(array(
-					'L_NAME_BLOCK'  => $lang['category']['error_no_category'],
-					'L_NO_CATEGORY' => $lang['category']['error_no_category']
-				));
-			}
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-	}
-	elseif ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'delete' && $user->user['cat_moderate'] == TRUE && $cat != 0)
-	{
-		if ($db->select('*', TBL_CATEGORY, '`id` = ' . $cat))
-		{
-			$temp = $db->res_row();
-			if ($temp)
-			{
-				if ($db->select('id', TBL_PHOTO, '`category` = ' . $cat))
-				{
-					$temp2 = $db->res_row();
-					if ($temp2)
-					{
-						foreach ($temp2 as $val)
-						{
-							$work->del_photo($val['id']);
-						}
-					}
-				}
-				else log_in_file($db->error, DIE_IF_ERROR);
+        // Получение списка пользователей с категорией = 0 (используем JOIN)
+        // Связываем таблицы TBL_PHOTO и TBL_USERS через поле user_upload
+        $db->join(
+            [TBL_PHOTO . '.`user_upload`', TBL_USERS . '.`id`', TBL_USERS . '.`real_name`'], // Поля для выборки
+            TBL_PHOTO, // Основная таблица
+            [
+                [
+                    'type'  => 'LEFT', // Тип JOIN
+                    'table' => TBL_USERS, // Таблица для JOIN
+                    'on'    => TBL_PHOTO . '.`user_upload` = ' . TBL_USERS . '.`id`', // Условие JOIN
+                ],
+            ],
+            [
+                'where' => TBL_PHOTO . '.`category` = 0', // Условие WHERE
+                'order' => TBL_PHOTO . '.`user_upload` ASC', // Сортировка ORDER BY
+            ]
+        );
 
-				$cat_dir = dir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp['folder']);
-				while (FALSE !== ($entry = $cat_dir->read()))
-				{
-					if ($entry != '.' && $entry != '..') unlink($cat_dir->path . '/' . $entry);
-				}
-				$cat_dir->close();
+        $users_list = $db->res_arr();
+        $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 
-				$cat_dir = dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp['folder']);
-				while (FALSE !== ($entry = $cat_dir->read()))
-				{
-					if ($entry != '.' && $entry != '..') unlink($cat_dir->path . '/' . $entry);
-				}
-				$cat_dir->close();
+        if ($users_list) {
+            foreach ($users_list as $key => $user_data) {
+                // Получаем данные о категории пользователя
+                $photo_data = $work->category($user_data['user_upload'], 1);
+                $template->add_string_ar([
+                    'D_NAME_CATEGORY'        => $photo_data['name'],
+                    'D_DESCRIPTION_CATEGORY' => $photo_data['description'],
+                    'D_COUNT_PHOTO'          => (string)$photo_data['count_photo'],
+                    'D_LAST_PHOTO'           => $photo_data['last_photo'],
+                    'D_TOP_PHOTO'            => $photo_data['top_photo'],
+                    'U_CATEGORY'             => $photo_data['url_cat'],
+                    'U_LAST_PHOTO'           => $photo_data['url_last_photo'],
+                    'U_TOP_PHOTO'            => $photo_data['url_top_photo'],
+                ], 'LIST_CATEGORY[' . $key . ']');
+            }
 
-				rmdir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $temp['folder']);
-				rmdir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $temp['folder']);
+            // Получение данных категории с id = 0 (зарезервирована для "Пользовательских альбомов")
+            $db->select(
+                ['`name`', '`description`'],
+                TBL_CATEGORY,
+                [
+                    'where' => '`id` = 0',
+                ]
+            );
+            $category_data = $db->res_row();
 
-				if (!$db->delete(TBL_CATEGORY, '`id` = ' . $cat)) log_in_file($db->error, DIE_IF_ERROR);
+            if ($category_data) {
+                $template->add_if('ISSET_CATEGORY', true);
+                $template->add_string_ar([
+                    'NAME_BLOCK'             => $work->lang['category']['users_album'],
+                    'L_NAME_CATEGORY'        => $category_data['name'],
+                    'L_DESCRIPTION_CATEGORY' => $category_data['description'],
+                    'L_COUNT_PHOTO'          => $work->lang['category']['count_photo'],
+                    'L_LAST_PHOTO'           => $work->lang['main']['last_foto'] . $work->lang['category']['of_category'],
+                    'L_TOP_PHOTO'            => $work->lang['main']['top_foto'] . $work->lang['category']['of_category'],
+                ]);
+            } else {
+                // Если данные категории не найдены, выбрасываем исключение
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей"
+                );
+            }
+        } else {
+            // Если список пользователей пуст, отображаем сообщение об отсутствии данных
+            $template->add_string_ar([
+                'NAME_BLOCK'             => $work->lang['category']['users_album'],
+                'L_NAME_CATEGORY'        => $work->lang['main']['name_of'] . $work->lang['category']['of_category'],
+                'L_DESCRIPTION_CATEGORY' => $work->lang['main']['description_of'] . $work->lang['category']['of_category'],
+                'L_COUNT_PHOTO'          => $work->lang['category']['count_photo'],
+                'L_LAST_PHOTO'           => $work->lang['main']['last_foto'] . $work->lang['category']['of_category'],
+                'L_TOP_PHOTO'            => $work->lang['main']['top_foto'] . $work->lang['category']['of_category'],
+                'L_NO_PHOTO'             => $work->lang['category']['no_user_category'],
+            ]);
+        }
+    } else {
+        // Определение ID категории
+        if ($_GET['id'] === 'curent' && $user->user['id'] > 0) {
+            $cat_id = $user->user['id'];
+        } else {
+            $cat_id = $_GET['id'];
+        }
 
-				else log_in_file($db->error, DIE_IF_ERROR);
-				header('Location: ' . $work->config['site_url'] . '?action=category');
-				log_in_file('Hack attempt!');
-			}
-			else
-			{
-				header('Location: ' . $work->config['site_url']);
-				log_in_file('Hack attempt!');
-			}
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-	}
-	else
-	{
-		if ($db->select('id', TBL_PHOTO, '`category` = ' . $cat, array('date_upload' => 'down')))
-		{
-			$temp = $db->res_arr();
-			$template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
-			if ($temp && $user->user['pic_view'] == TRUE)
-			{
-				$template->add_if('ISSET_PIC', TRUE);
-				foreach ($temp as $key => $val)
-				{
-					$temp_category = $work->create_photo('cat', $val['id']);
-					$template->add_string_ar(array(
-							'L_USER_ADD'           => $lang['main']['user_add'],
-							'MAX_PHOTO_HEIGHT'     => $work->config['temp_photo_h'] + 10,
-							'PHOTO_WIDTH'          => $temp_category['width'],
-							'PHOTO_HEIGHT'         => $temp_category['height'],
-							'D_DESCRIPTION_PHOTO'  => $temp_category['description'],
-							'D_NAME_PHOTO'         => $temp_category['name'],
-							'D_REAL_NAME_USER_ADD' => $temp_category['real_name'],
-							'D_PHOTO_RATE'         => $temp_category['rate'],
-							'U_THUMBNAIL_PHOTO'    => $temp_category['thumbnail_url'],
-							'U_PHOTO'              => $temp_category['url'],
-							'U_PROFILE_USER_ADD'   => $temp_category['url_user']
-						), 'LIST_PIC[' . $key . ']');
-					if ($temp_category['url_user'] !== NULL) $template->add_if('USER_EXISTS', TRUE, 'LIST_PIC[' . $key . ']');
-				}
-				if ($db->select(array('name', 'description'), TBL_CATEGORY, '`id` = ' . $cat))
-				{
-					$temp2 = $db->res_row();
-					if ($temp2)
-					{
-						$template->add_if('EDIT_BLOCK', $user->user['cat_moderate']);
-						$template->add_string_ar(array(
-							'L_NAME_BLOCK'           => $lang['category']['category'] . ' - ' . $temp2['name'],
-							'L_DESCRIPTION_BLOCK'    => $temp2['description'],
-							'L_EDIT_BLOCK'           => $lang['category']['edit'],
-							'L_DELETE_BLOCK'         => $lang['category']['delete'],
-							'L_CONFIRM_DELETE_BLOCK' => $lang['category']['confirm_delete1'] . ' ' . $temp2['name'] . $lang['category']['confirm_delete2'],
-							'U_EDIT_BLOCK'           => '?action=category&amp;subact=edit&amp;cat=' . $cat,
-							'U_DELETE_BLOCK'         => '?action=category&amp;subact=delete&amp;cat=' . $cat,
-						));
-					}
-					else log_in_file('Unable to get the category', DIE_IF_ERROR);
-				}
-				else log_in_file($db->error, DIE_IF_ERROR);
-			}
-			else
-			{
-				if ($db->select(array('name', 'description'), TBL_CATEGORY, '`id` = ' . $cat))
-				{
-					$temp2 = $db->res_row();
-					if ($temp2)
-					{
-						$category_name = $lang['category']['category'] . ' - ' . $temp2['name'];
-						$category_description = $temp2['description'];
-						$if_edit = $user->user['cat_moderate'];
-						$pic_category = $lang['category']['error_no_photo'];
-					}
-					else
-					{
-						$category_name = $lang['category']['error_no_category'];
-						$category_description = '';
-						$if_edit = FALSE;
-						$pic_category = $lang['category']['error_no_category'];
-					}
-				}
-				else log_in_file($db->error, DIE_IF_ERROR);
-				$template->add_if('EDIT_BLOCK', $if_edit);
-				$template->add_string_ar(array(
-					'L_NAME_BLOCK'           => $category_name,
-					'L_DESCRIPTION_BLOCK'    => $category_description,
-					'L_EDIT_BLOCK'           => $lang['category']['edit'],
-					'L_DELETE_BLOCK'         => $lang['category']['delete'],
-					'L_CONFIRM_DELETE_BLOCK' => $lang['category']['confirm_delete1'] . ' ' . $category_name . $lang['category']['confirm_delete2'],
-					'U_EDIT_BLOCK'           => '?action=category&amp;subact=edit&amp;cat=' . $cat,
-					'U_DELETE_BLOCK'         => '?action=category&amp;subact=delete&amp;cat=' . $cat,
-					'L_NO_PHOTO'             => $pic_category
-				));
-			}
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-	}
+        if ($cat_id === $user->user['id'] && $user->user['id'] > 0) {
+            $action = 'you_category';
+        }
+
+        // Получение фотографий для категории = 0 и user_upload = $cat_id (используем JOIN)
+        $db->join(
+            [
+                TBL_PHOTO . '.`id`',
+                TBL_PHOTO . '.`file`',
+                TBL_PHOTO . '.`name`',
+                TBL_PHOTO . '.`description`',
+                TBL_USERS . '.`real_name`',
+            ], // Поля для выборки
+            TBL_PHOTO, // Основная таблица
+            [
+                [
+                    'type'  => 'LEFT', // Тип JOIN
+                    'table' => TBL_USERS, // Таблица для JOIN
+                    'on'    => TBL_PHOTO . '.`user_upload` = ' . TBL_USERS . '.`id`', // Условие JOIN
+                ],
+            ],
+            [
+                'where'    => TBL_PHOTO . '.`category` = :category AND ' . TBL_PHOTO . '.`user_upload` = :user_upload',
+                // Условие WHERE
+                'params'   => [
+                    ':category'    => 0,
+                    ':user_upload' => $cat_id,
+                ],
+                // Параметры для prepared statements
+                'order_by' => TBL_PHOTO . '.`date_upload` DESC',
+                // Сортировка ORDER BY
+            ]
+        );
+
+        // Получаем результат запроса
+        $photos_list = $db->res_arr();
+
+        $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
+
+        if ($photos_list && $user->user['pic_view']) {
+            $template->add_if('ISSET_PIC', true);
+
+            foreach ($photos_list as $key => $photo_data) {
+                // Формируем массив данных для отображения списка фотографий
+                $photo_info = $work->create_photo('cat', $photo_data['id']);
+                $template->add_string_ar([
+                    'L_USER_ADD'           => $work->lang['main']['user_add'],
+                    'MAX_PHOTO_HEIGHT'     => (string)($work->config['temp_photo_h'] + 10),
+                    'PHOTO_WIDTH'          => (string)$photo_info['width'],
+                    'PHOTO_HEIGHT'         => (string)$photo_info['height'],
+                    'D_DESCRIPTION_PHOTO'  => $photo_info['description'],
+                    'D_NAME_PHOTO'         => $photo_info['name'],
+                    'D_REAL_NAME_USER_ADD' => $photo_info['real_name'],
+                    'D_PHOTO_RATE'         => (string)$photo_info['rate'],
+                    'U_THUMBNAIL_PHOTO'    => $photo_info['thumbnail_url'],
+                    'U_PHOTO'              => $photo_info['url'],
+                    'U_PROFILE_USER_ADD'   => $photo_info['url_user'],
+                ], 'LIST_PIC[' . $key . ']');
+
+                if ($photo_info['url_user'] !== null) {
+                    $template->add_if('USER_EXISTS', true, 'LIST_PIC[' . $key . ']');
+                }
+            }
+
+            // Получение данных категории с id = 0 (зарезервирована для "Пользовательских альбомов")
+            $db->select(
+                ['`name`', '`description`'],
+                TBL_CATEGORY,
+                [
+                    'where' => '`id` = 0',
+                ]
+            );
+            $category_data = $db->res_row();
+
+            if ($category_data) {
+                // Формируем заголовок и описание блока для отображения данных категории
+                $template->add_string_ar([
+                    'L_NAME_BLOCK'        => $work->lang['category']['category'] . ' - ' . $category_data['name'] . ' ' . $photos_list[0]['real_name'],
+                    'L_DESCRIPTION_BLOCK' => $category_data['description'] . ' ' . $photos_list[0]['real_name'],
+                ]);
+            } else {
+                // Если данные категории не найдены, выбрасываем исключение
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей | ID: $cat_id"
+                );
+            }
+        } else {
+            // Если список фотографий пуст, отображаем сообщение об отсутствии данных
+            $template->add_string_ar([
+                'L_NAME_BLOCK'        => $work->lang['category']['name_block'],
+                'L_DESCRIPTION_BLOCK' => $work->lang['category']['error_no_category'],
+                'L_NO_PHOTO'          => $work->lang['category']['error_no_photo'],
+            ]);
+        }
+    }
+} elseif ($work->check_input('_GET', 'cat', [
+    'isset'  => true,   // Проверка, что параметр существует
+    'empty'  => true,   // Проверка, что параметр не пустой
+    'regexp' => '/^[0-9]+$/', // Регулярное выражение: только цифры
+])) {
+    if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+            'isset' => true,
+            'empty' => true,
+        ]) && $_GET['subact'] === 'saveedit') {
+        // Проверяем CSRF-токен
+        if (empty($_POST['csrf_token'] || $_POST['csrf_token'] === null) || !hash_equals(
+            $user->session['csrf_token'],
+            $_POST['csrf_token']
+        )) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            );
+        }
+        $user->unset_property_key('session', 'csrf_token');
+
+        // Получение данных категории через подготовленный запрос
+        $db->select('*', TBL_CATEGORY, [
+            'where'  => '`id` = :id',
+            'params' => [':id' => $cat],
+        ]);
+        $category_data = $db->res_row();
+
+        if ($category_data) {
+            // Проверка и получение имени категории с очисткой данных
+            if (!$work->check_input('_POST', 'name_category', [
+                'isset' => true,
+                'empty' => true,
+            ])) {
+                $name_category = $category_data['name'];
+            } else {
+                $name_category = Work::clean_field($_POST['name_category']);
+            }
+
+            // Проверка и получение описания категории с очисткой данных
+            if (!$work->check_input('_POST', 'description_category', [
+                'isset' => true,
+                'empty' => true,
+            ])) {
+                $description_category = $category_data['description'];
+            } else {
+                $description_category = Work::clean_field($_POST['description_category']);
+            }
+
+            // Обновление данных категории через подготовленный запрос.
+            // Используем плейсхолдеры для защиты от SQL-инъекций.
+            $db->update(
+                ['`name`' => ':name', '`description`' => ':desc'],
+                TBL_CATEGORY,
+                [
+                    'where'  => '`id` = :id',
+                    'params' => [':id' => $cat, ':name' => $name_category, ':desc' => $description_category],
+                ]
+            );
+
+            // Проверка количества затронутых строк
+            $affected_rows = $db->get_affected_rows();
+            if ($affected_rows === 0) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные категории | ID: $cat"
+                );
+            }
+        } else {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
+            );
+        }
+
+        // Перенаправление пользователя после успешного обновления
+        header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $cat));
+        exit;
+    }
+
+    if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+            'isset' => true,
+            'empty' => true,
+        ]) && $_GET['subact'] === 'edit') {
+        // Явное преобразование $cat в целое число для безопасности
+        $cat = (int)$cat;
+
+        // Получение данных категории через подготовленный запрос
+        $db->select('*', TBL_CATEGORY, [
+            'where'  => '`id` = :id',
+            'params' => [':id' => $cat],
+        ]);
+        $category_data = $db->res_row();
+
+        if ($category_data) {
+            // Добавляем шаблон для редактирования категории
+            $template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
+
+            // Добавляем CSRF-токен для защиты формы от CSRF-атак
+            $template->add_string('CSRF_TOKEN', $user->csrf_token());
+
+            // Добавляем данные в шаблон
+            $template->add_if_ar([
+                'ISSET_CATEGORY' => true,
+                'CATEGORY_EDIT'  => true,
+            ]);
+            $template->add_string_ar([
+                'L_NAME_BLOCK'           => sprintf('%s - %s', $work->lang['category']['edit'], $category_data['name']),
+                'L_NAME_DIR'             => $work->lang['category']['cat_dir'],
+                'L_NAME_CATEGORY'        => sprintf(
+                    '%s %s',
+                    $work->lang['main']['name_of'],
+                    $work->lang['category']['of_category']
+                ),
+                'L_DESCRIPTION_CATEGORY' => sprintf(
+                    '%s %s',
+                    $work->lang['main']['description_of'],
+                    $work->lang['category']['of_category']
+                ),
+                'L_EDIT_THIS'            => $work->lang['category']['save'],
+                'D_NAME_DIR'             => $category_data['folder'],
+                'D_NAME_CATEGORY'        => $category_data['name'],
+                'D_DESCRIPTION_CATEGORY' => $category_data['description'],
+                'U_EDITED'               => sprintf(
+                    '%s?action=category&subact=saveedit&cat=%d',
+                    $work->config['site_url'],
+                    $cat
+                ),
+                // Используем sprintf()
+            ]);
+        } else {
+            // Если данные категории не найдены, добавляем сообщение об ошибке
+            $template->add_string_ar([
+                'L_NAME_BLOCK'  => $work->lang['category']['error_no_category'],
+                'L_NO_CATEGORY' => $work->lang['category']['error_no_category'],
+            ]);
+        }
+    } elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+            'isset' => true,
+            'empty' => true,
+        ]) && $_GET['subact'] === 'delete') {
+        // Явное преобразование $cat в целое число для безопасности
+        $cat = (int)$cat;
+
+        // Получение данных категории через подготовленный запрос
+        $db->select('*', TBL_CATEGORY, [
+            'where'  => '`id` = :id',
+            'params' => [':id' => $cat],
+        ]);
+        $category_data = $db->res_row();
+
+        if ($category_data) {
+            // Удаление всех фотографий, связанных с категорией
+            $db->select('`id`', TBL_PHOTO, [
+                'where'  => '`category` = :category',
+                'params' => [':category' => $cat],
+            ]);
+            $photo_ids = $db->res_row();
+
+            if ($photo_ids) {
+                foreach ($photo_ids as $val) {
+                    $work->del_photo($val['id']);
+                }
+            }
+
+            // Удаление файлов из папки галереи
+            $gallery_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $category_data['folder'];
+            $work->remove_directory($gallery_path);
+
+            // Удаление файлов из папки миниатюр
+            $thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $category_data['folder'];
+            $work->remove_directory($thumbnail_path);
+
+            // Удаление категории из базы данных
+            $db->delete(TBL_CATEGORY, [
+                'where'  => '`id` = :id',
+                'params' => [':id' => $cat],
+            ]);
+
+            // Проверка количества затронутых строк
+            $affected_rows = $db->get_affected_rows();
+            if ($affected_rows === 0) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить категорию из базы данных | ID: $cat"
+                );
+            }
+
+            // Перенаправление пользователя после успешного удаления
+            header(sprintf('Location: %s?action=category', $work->config['site_url']));
+            exit;
+        }
+        // Если данные категории не найдены, перенаправляем на главную страницу
+        header(sprintf('Location: %s', $work->config['site_url']));
+        exit;
+    } else {
+        // Получение фотографий категории
+        $db->select('`id`', TBL_PHOTO, [
+            'where'  => '`category` = :category',
+            'order'  => '`date_upload` DESC',
+            'params' => [':category' => $cat],
+        ]);
+        $photos = $db->res_arr();
+        $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
+
+        if ($photos && $user->user['pic_view']) {
+            // Добавляем шаблон для отображения фотографий
+            $template->add_if('ISSET_PIC', true);
+
+            // Проходим по всем фотографиям и добавляем их данные в шаблон
+            foreach ($photos as $key => $val) {
+                $photo_data = $work->create_photo('cat', $val['id']);
+                $template->add_string_ar([
+                    'L_USER_ADD'           => $work->lang['main']['user_add'],
+                    'MAX_PHOTO_HEIGHT'     => (string)($work->config['temp_photo_h'] + 10),
+                    // Максимальная высота фото
+                    'PHOTO_WIDTH'          => (string)$photo_data['width'],
+                    // Ширина фото
+                    'PHOTO_HEIGHT'         => (string)$photo_data['height'],
+                    // Высота фото
+                    'D_DESCRIPTION_PHOTO'  => Work::clean_field($photo_data['description']),
+                    // Описание фото
+                    'D_NAME_PHOTO'         => Work::clean_field($photo_data['name']),
+                    // Название фото
+                    'D_REAL_NAME_USER_ADD' => Work::clean_field($photo_data['real_name']),
+                    // Имя пользователя, добавившего фото
+                    'D_PHOTO_RATE'         => $photo_data['rate'],
+                    // Рейтинг фото
+                    'U_THUMBNAIL_PHOTO'    => $photo_data['thumbnail_url'],
+                    // URL миниатюры
+                    'U_PHOTO'              => $photo_data['url'],
+                    // URL полноразмерного фото
+                    'U_PROFILE_USER_ADD'   => $photo_data['url_user'],
+                    // URL профиля пользователя
+                ], sprintf('LIST_PIC[%d]', $key));
+
+                // Проверяем, существует ли ссылка на профиль пользователя
+                if ($photo_data['url_user'] !== null) {
+                    $template->add_if('USER_EXISTS', true, sprintf('LIST_PIC[%d]', $key));
+                }
+            }
+
+            // Получение данных категории
+            $db->select(['`name`', '`description`'], TBL_CATEGORY, [
+                'where'  => '`id` = :id',
+                'params' => [':id' => $cat],
+            ]);
+            $category_data = $db->res_row();
+
+            if ($category_data) {
+                // Добавляем данные категории в шаблон
+                $template->add_if('EDIT_BLOCK', (bool)$user->user['cat_moderate']);
+                $template->add_string_ar([
+                    'L_NAME_BLOCK'           => sprintf(
+                        '%s - %s',
+                        $work->lang['category']['category'],
+                        Work::clean_field($category_data['name'])
+                    ),
+                    // Название категории
+                    'L_DESCRIPTION_BLOCK'    => Work::clean_field($category_data['description']),
+                    // Описание категории
+                    'L_EDIT_BLOCK'           => $work->lang['category']['edit'],
+                    // Текст кнопки "Редактировать"
+                    'L_DELETE_BLOCK'         => $work->lang['category']['delete'],
+                    // Текст кнопки "Удалить"
+                    'L_CONFIRM_DELETE_BLOCK' => sprintf(
+                        '%s %s%s',
+                        $work->lang['category']['confirm_delete1'],
+                        Work::clean_field($category_data['name']),
+                        $work->lang['category']['confirm_delete2']
+                    ),
+                    'L_CONFIRM_DELETE'       => $work->lang['main']['delete'],
+                    'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
+                    // Подтверждение удаления
+                    'U_EDIT_BLOCK'           => sprintf(
+                        '%s?action=category&subact=edit&cat=%d',
+                        $work->config['site_url'],
+                        $cat
+                    ),
+                    // Ссылка на редактирование категории
+                    'U_DELETE_BLOCK'         => sprintf(
+                        '%s?action=category&subact=delete&cat=%d',
+                        $work->config['site_url'],
+                        $cat
+                    ),
+                    // Ссылка на удаление категории
+                ]);
+            } else {
+                // Если данные категории не найдены, выбрасываем исключение
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
+                );
+            }
+        } else {
+            // Если фотографий нет, получаем данные категории
+            $db->select(['`name`', '`description`'], TBL_CATEGORY, [
+                'where'  => '`id` = :id',
+                'params' => [':id' => $cat],
+            ]);
+            $category_data = $db->res_row();
+
+            if ($category_data) {
+                // Формируем данные для отображения ошибки "Нет фотографий"
+                $category_name = sprintf(
+                    '%s - %s',
+                    $work->lang['category']['category'],
+                    Work::clean_field($category_data['name'])
+                );
+                $category_description = Work::clean_field($category_data['description']);
+                $if_edit = (bool)$user->user['cat_moderate'];
+                $pic_category = $work->lang['category']['error_no_photo'];
+            } else {
+                // Если данные категории не найдены, формируем сообщение об ошибке
+                $category_name = $work->lang['category']['error_no_category'];
+                $category_description = '';
+                $if_edit = false;
+                $pic_category = $work->lang['category']['error_no_category'];
+            }
+
+            // Добавляем данные в шаблон
+            $template->add_if('EDIT_BLOCK', $if_edit);
+            $template->add_string_ar([
+                'L_NAME_BLOCK'           => $category_name,
+                // Название категории
+                'L_DESCRIPTION_BLOCK'    => $category_description,
+                // Описание категории
+                'L_EDIT_BLOCK'           => $work->lang['category']['edit'],
+                // Текст кнопки "Редактировать"
+                'L_DELETE_BLOCK'         => $work->lang['category']['delete'],
+                // Текст кнопки "Удалить"
+                'L_CONFIRM_DELETE_BLOCK' => sprintf(
+                    '%s %s%s',
+                    $work->lang['category']['confirm_delete1'],
+                    $category_name,
+                    $work->lang['category']['confirm_delete2']
+                ),
+                'L_CONFIRM_DELETE'       => $work->lang['main']['delete'],
+                'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
+                // Подтверждение удаления
+                'U_EDIT_BLOCK'           => sprintf(
+                    '%s?action=category&subact=edit&cat=%d',
+                    $work->config['site_url'],
+                    $cat
+                ),
+                // Ссылка на редактирование категории
+                'U_DELETE_BLOCK'         => sprintf(
+                    '%s?action=category&subact=delete&cat=%d',
+                    $work->config['site_url'],
+                    $cat
+                ),
+                // Ссылка на удаление категории
+                'L_NO_PHOTO'             => $pic_category,
+                // Сообщение об отсутствии фотографий
+            ]);
+        }
+    }
+} elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+        'isset' => true,
+        'empty' => true,
+    ]) && $_GET['subact'] === 'add') {
+    // Устанавливаем действие "добавление категории"
+    $action = 'add_category';
+
+    // Добавляем шаблон для редактирования категории
+    $template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
+    $template->add_if('ISSET_CATEGORY', true);
+
+    // Добавляем CSRF-токен для защиты формы от CSRF-атак
+    $template->add_string('CSRF_TOKEN', $user->csrf_token());
+
+    // Добавляем данные в шаблон
+    $template->add_string_ar([
+        'L_NAME_BLOCK'           => $work->lang['category']['add'],
+        // Заголовок блока
+        'L_NAME_DIR'             => $work->lang['category']['cat_dir'],
+        // Название директории
+        'L_NAME_CATEGORY'        => sprintf(
+            '%s %s',
+            $work->lang['main']['name_of'],
+            $work->lang['category']['of_category']
+        ),
+        // Название категории
+        'L_DESCRIPTION_CATEGORY' => sprintf(
+            '%s %s',
+            $work->lang['main']['description_of'],
+            $work->lang['category']['of_category']
+        ),
+        // Описание категории
+        'L_EDIT_THIS'            => $work->lang['category']['added'],
+        // Текст кнопки "Добавить"
+        'D_NAME_DIR'             => '',
+        // Имя директории (пустое по умолчанию)
+        'D_NAME_CATEGORY'        => '',
+        // Имя категории (пустое по умолчанию)
+        'D_DESCRIPTION_CATEGORY' => '',
+        // Описание категории (пустое по умолчанию)
+        'U_EDITED'               => sprintf('%s?action=category&subact=saveadd', $work->config['site_url']),
+        // URL для отправки формы
+    ]);
+} elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
+        'isset' => true,
+        'empty' => true,
+    ]) && $_GET['subact'] === 'saveadd') {
+    // Проверяем CSRF-токен
+    if (empty($_POST['csrf_token']) || !hash_equals(
+        $user->session['csrf_token'],
+        $_POST['csrf_token']
+    )) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+        );
+    }
+    $user->unset_property_key('session', 'csrf_token');
+
+    // Определяем имя директории
+    if (!$work->check_input('_POST', 'name_dir', [
+        'isset' => true,
+        'empty' => true,
+    ])) {
+        $directory_name = time();
+    } else {
+        $directory_name = Work::encodename(Work::clean_field($_POST['name_dir']));
+    }
+
+    // Проверяем уникальность имени директории
+    $db->select('COUNT(*) AS `count_dir`', TBL_CATEGORY, [
+        'where'  => '`folder` = :folder',
+        'params' => [':folder' => $directory_name],
+    ]);
+    $directory_count_data = $db->res_row();
+
+    if ((isset($directory_count_data['count_dir']) && $directory_count_data['count_dir'] > 0) || is_dir(
+        $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $directory_name
+    ) || is_dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $directory_name)) {
+        $directory_name = time() . '_' . $directory_name;
+    }
+
+    // Определяем название категории
+    if (!$work->check_input('_POST', 'name_category', [
+        'isset' => true,
+        'empty' => true,
+    ])) {
+        $category_name = sprintf('%s (%s)', $work->lang['category']['no_name'], $directory_name);
+    } else {
+        $category_name = Work::clean_field($_POST['name_category']);
+    }
+
+    // Определяем описание категории
+    if (!$work->check_input('_POST', 'description_category', [
+        'isset' => true,
+        'empty' => true,
+    ])) {
+        $category_description = sprintf('%s (%s)', $work->lang['category']['no_description'], $directory_name);
+    } else {
+        $category_description = Work::clean_field($_POST['description_category']);
+    }
+
+    // Создаем директории и копируем index.php
+    $work->create_directory($directory_name);
+
+    // Добавляем категорию в базу данных
+    $db->insert([
+        '`folder`'      => ':folder',
+        '`name`'        => ':name',
+        '`description`' => ':desc',
+    ], TBL_CATEGORY, '', [
+        'params' => [
+            ':folder' => $directory_name,
+            ':name'   => $category_name,
+            ':desc'   => $category_description,
+        ],
+    ]);
+
+    // Получаем ID новой категории
+    $new_category_id = $db->get_last_insert_id();
+    if ($new_category_id === 0) {
+        throw new RuntimeException(
+            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: $directory_name"
+        );
+    }
+    // Перенаправляем пользователя после успешного добавления
+    header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $new_category_id));
+    exit;
+} else {
+    // Получаем список категорий
+    $db->select('`id`', TBL_CATEGORY, [
+        'where'  => '`id` != :id',
+        'params' => [':id' => 0],
+    ]);
+    $categories = $db->res_arr();
+    $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
+
+    if ($categories) {
+        foreach ($categories as $key => $val) {
+            $category_data = $work->category($val['id']);
+            $template->add_string_ar([
+                'D_NAME_CATEGORY'        => Work::clean_field($category_data['name']),
+                'D_DESCRIPTION_CATEGORY' => Work::clean_field($category_data['description']),
+                'D_COUNT_PHOTO'          => (string)$category_data['count_photo'],
+                'D_LAST_PHOTO'           => $category_data['last_photo'],
+                'D_TOP_PHOTO'            => $category_data['top_photo'],
+                'U_CATEGORY'             => $category_data['url_cat'],
+                'U_LAST_PHOTO'           => $category_data['url_last_photo'],
+                'U_TOP_PHOTO'            => $category_data['url_top_photo'],
+            ], 'LIST_CATEGORY[' . $key . ']');
+        }
+
+        // Добавляем данные для категории "Все фото"
+        $all_photos_category = $work->category(0, 0);
+        if ($all_photos_category['user_upload_count_data'] > 0) {
+            $template->add_string_ar([
+                'D_NAME_CATEGORY'        => Work::clean_field($all_photos_category['name']),
+                'D_DESCRIPTION_CATEGORY' => Work::clean_field($all_photos_category['description']),
+                'D_COUNT_PHOTO'          => (string)$all_photos_category['count_photo'],
+                'D_LAST_PHOTO'           => $all_photos_category['last_photo'],
+                'D_TOP_PHOTO'            => $all_photos_category['top_photo'],
+                'U_CATEGORY'             => $all_photos_category['url_cat'],
+                'U_LAST_PHOTO'           => $all_photos_category['url_last_photo'],
+                'U_TOP_PHOTO'            => $all_photos_category['url_top_photo'],
+            ], 'LIST_CATEGORY[' . (++$key) . ']');
+        }
+
+        $template->add_if('ISSET_CATEGORY', true);
+        $template->add_string_ar([
+            'NAME_BLOCK'             => $work->lang['category']['name_block'],
+            'L_NAME_CATEGORY'        => sprintf(
+                '%s %s',
+                $work->lang['main']['name_of'],
+                $work->lang['category']['of_category']
+            ),
+            'L_DESCRIPTION_CATEGORY' => sprintf(
+                '%s %s',
+                $work->lang['main']['description_of'],
+                $work->lang['category']['of_category']
+            ),
+            'L_COUNT_PHOTO'          => $work->lang['category']['count_photo'],
+            'L_LAST_PHOTO'           => sprintf(
+                '%s %s',
+                $work->lang['main']['last_foto'],
+                $work->lang['category']['of_category']
+            ),
+            'L_TOP_PHOTO'            => sprintf(
+                '%s %s',
+                $work->lang['main']['top_foto'],
+                $work->lang['category']['of_category']
+            ),
+        ]);
+    } else {
+        $template->add_string_ar([
+            'NAME_BLOCK'             => $work->lang['category']['name_block'],
+            'L_NAME_CATEGORY'        => sprintf(
+                '%s %s',
+                $work->lang['main']['name_of'],
+                $work->lang['category']['of_category']
+            ),
+            'L_DESCRIPTION_CATEGORY' => sprintf(
+                '%s %s',
+                $work->lang['main']['description_of'],
+                $work->lang['category']['of_category']
+            ),
+            'L_COUNT_PHOTO'          => $work->lang['category']['count_photo'],
+            'L_LAST_PHOTO'           => sprintf(
+                '%s %s',
+                $work->lang['main']['last_foto'],
+                $work->lang['category']['of_category']
+            ),
+            'L_TOP_PHOTO'            => sprintf(
+                '%s %s',
+                $work->lang['main']['top_foto'],
+                $work->lang['category']['of_category']
+            ),
+            'L_NO_PHOTO'             => $work->lang['main']['no_category'],
+        ]);
+    }
 }
-else
-{
-	if ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'add' && $user->user['cat_moderate'] == TRUE)
-	{
-		$action = 'add_category';
-		$template->add_case('CATEGORY_BLOCK', 'CATEGORY_EDIT');
-		$template->add_if('ISSET_CATEGORY', TRUE);
-		$template->add_string_ar(array(
-			'L_NAME_BLOCK'           => $lang['category']['add'],
-			'L_NAME_DIR'             => $lang['category']['cat_dir'],
-			'L_NAME_CATEGORY'        => $lang['main']['name_of'] . ' ' . $lang['category']['of_category'],
-			'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . ' ' . $lang['category']['of_category'],
-			'L_EDIT_THIS'            => $lang['category']['added'],
-			'D_NAME_DIR'             => '',
-			'D_NAME_CATEGORY'        => '',
-			'D_DESCRIPTION_CATEGORY' => '',
-			'U_EDITED'               => '?action=category&amp;subact=saveadd'
-		));
-	}
-	elseif ($work->check_get('subact', TRUE, TRUE) && $_GET['subact'] == 'saveadd' && $user->user['cat_moderate'] == TRUE)
-	{
-		if (!$work->check_post('name_dir', TRUE, TRUE)) $name_dir = time();
-		else $name_dir = $work->encodename($_POST['name_dir']);
-
-		if ($db->select('COUNT(*) AS `count_dir`', TBL_CATEGORY, '`folder` = \'' . $name_dir . '\''))
-		{
-			$temp = $db->res_row();
-			if ((isset($temp['count_dir']) && $temp['count_dir'] > 0) || is_dir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $name_dir) || is_dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $name_dir)) $name_dir = time() . '_' . $name_dir;
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-
-		if (!$work->check_post('name_category', TRUE, TRUE)) $name_category = $lang['category']['no_name'] . ' (' . $name_dir . ')';
-		else $name_category = $_POST['name_category'];
-
-		if (!$work->check_post('description_category', TRUE, TRUE)) $description_category = $lang['category']['no_description'] . ' (' . $name_dir . ')';
-		else $description_category = $_POST['description_category'];
-
-		if (mkdir($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $name_dir, 0777) && mkdir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $name_dir, 0777))
-		{
-			$index_in_gallery = @file_get_contents($work->config['site_dir'] . $work->config['gallery_folder'] . '/index.php');
-			if ($index_in_gallery !== FALSE && !empty($index_in_gallery))
-			{
-				$index_in_gallery = str_replace('gallery/index.php', 'gallery/' . $name_dir . '/index.php', $index_in_gallery);
-				if ($file = @fopen($work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $name_dir . '/index.php', 'w'))
-				{
-					@fwrite($file, $index_in_gallery);
-					@fclose($file);
-				}
-			}
-			$index_in_thumbnail = @file_get_contents($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/index.php');
-			if ($index_in_thumbnail !== FALSE && !empty($index_in_thumbnail))
-			{
-				$index_in_thumbnail = str_replace('thumbnail/index.php', 'thumbnail/' . $name_dir . '/index.php', $index_in_thumbnail);
-				if ($file = @fopen($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $name_dir . '/index.php', 'w'))
-				{
-					@fwrite($file, $index_in_thumbnail);
-					@fclose($file);
-				}
-			}
-			if ($db->insert(array('folder' => $name_dir, 'name' => $name_category, 'description' => $description_category), TBL_CATEGORY))
-			{
-				$new_cat = $db->insert_id;
-				if ($new_cat != 0)
-				{
-					header('Location: ' . $work->config['site_url'] . '?action=category&amp;cat=' . $new_cat);
-					log_in_file('Hack attempt!');
-				}
-				else
-				{
-					header('Location: ' . $work->config['site_url'] . '?action=category');
-					log_in_file('Hack attempt!');
-				}
-			}
-			else log_in_file($db->error, DIE_IF_ERROR);
-		}
-		else
-		{
-			header('Location: ' . $work->config['site_url'] . '?action=category&amp;subact=add');
-			log_in_file('Hack attempt!');
-		}
-	}
-	else
-	{
-		if ($db->select('id', TBL_CATEGORY, '`id` != 0'))
-		{
-			$temp = $db->res_arr();
-			$template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
-			if ($temp)
-			{
-				foreach ($temp as $key => $val)
-				{
-					$temp_category = $work->category($val['id'], 0);
-					$template->add_string_ar(array(
-							'D_NAME_CATEGORY'        => $temp_category['name'],
-							'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
-							'D_COUNT_PHOTO'          => $temp_category['count_photo'],
-							'D_LAST_PHOTO'           => $temp_category['last_photo'],
-							'D_TOP_PHOTO'            => $temp_category['top_photo'],
-							'U_CATEGORY'             => $temp_category['url_cat'],
-							'U_LAST_PHOTO'           => $temp_category['url_last_photo'],
-							'U_TOP_PHOTO'            => $temp_category['url_top_photo']
-						), 'LIST_CATEGORY[' . $key . ']');
-				}
-				$temp_category = $work->category(0, 0);
-				$template->add_string_ar(array(
-						'D_NAME_CATEGORY'        => $temp_category['name'],
-						'D_DESCRIPTION_CATEGORY' => $temp_category['description'],
-						'D_COUNT_PHOTO'          => $temp_category['count_photo'],
-						'D_LAST_PHOTO'           => $temp_category['last_photo'],
-						'D_TOP_PHOTO'            => $temp_category['top_photo'],
-						'U_CATEGORY'             => $temp_category['url_cat'],
-						'U_LAST_PHOTO'           => $temp_category['url_last_photo'],
-						'U_TOP_PHOTO'            => $temp_category['url_top_photo']
-					), 'LIST_CATEGORY[' . ++$key . ']');
-
-				$template->add_if('ISSET_CATEGORY', TRUE);
-				$template->add_string_ar(array(
-					'NAME_BLOCK'             => $lang['category']['name_block'],
-					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . $lang['category']['of_category'],
-					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . $lang['category']['of_category'],
-					'L_COUNT_PHOTO'          => $lang['category']['count_photo'],
-					'L_LAST_PHOTO'           => $lang['main']['last_foto'] . $lang['category']['of_category'],
-					'L_TOP_PHOTO'            => $lang['main']['top_foto'] . $lang['category']['of_category']
-				));
-			}
-			else
-			{
-				$template->add_string_ar(array(
-					'NAME_BLOCK'             => $lang['category']['name_block'],
-					'L_NAME_CATEGORY'        => $lang['main']['name_of'] . $lang['category']['of_category'],
-					'L_DESCRIPTION_CATEGORY' => $lang['main']['description_of'] . $lang['category']['of_category'],
-					'L_COUNT_PHOTO'          => $lang['category']['count_photo'],
-					'L_LAST_PHOTO'           => $lang['main']['last_foto'] . $lang['category']['of_category'],
-					'L_TOP_PHOTO'            => $lang['main']['top_foto'] . $lang['category']['of_category'],
-					'L_NO_PHOTO'             => $lang['main']['no_category']
-				));
-			}
-		}
-		else log_in_file($db->error, DIE_IF_ERROR);
-	}
-}
-/// @endcond
-?>
