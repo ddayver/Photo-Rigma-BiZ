@@ -13,7 +13,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-04-02
+ * @date        2025-04-07
  * @namespace   PhotoRigma
  *
  * @details     Этот файл содержит настройки, необходимые для конфигурации приложения:

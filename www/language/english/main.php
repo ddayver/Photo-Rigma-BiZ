@@ -6,7 +6,7 @@
  *
  * @author      Dark Dayver
  * @version     0.4.0
- * @date        2025-04-02
+ * @date        2025-04-07
  * @namespace   PhotoRigma\\Language
  *
  * @details     This file contains English language strings used in the core of the project.
