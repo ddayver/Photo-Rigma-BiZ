@@ -1,5 +1,5 @@
 <map id="commit_transaction" name="commit_transaction">
-<area shape="rect" id="Node000001" title="Подтверждает транзакцию в базе данных." alt="" coords="5,12,141,37"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a212cee52ddc3ef442f9fcce43910581c" title="Подтверждает транзакцию в базе данных." alt="" coords="189,5,331,44"/>
+<area shape="rect" id="Node000001" title="Подтверждает транзакцию в базе данных через вызов внутреннего метода." alt="" coords="5,12,141,37"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a212cee52ddc3ef442f9fcce43910581c" title="Подтверждает транзакцию в базе данных и записывает лог с указанием контекста." alt="" coords="189,5,331,44"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,22,173,22,173,27,141,27"/>
 </map>

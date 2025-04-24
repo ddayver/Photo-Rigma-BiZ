@@ -1,0 +1,5 @@
+<map id="User_Interface" name="User_Interface">
+<area shape="rect" id="Node000001" title="Интерфейс для работы с пользователями и группами." alt="" coords="5,5,113,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе." alt="" coords="34,78,84,103"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,46,62,78,56,78,56,46"/>
+</map>

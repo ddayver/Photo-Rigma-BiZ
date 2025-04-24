@@ -1,5 +1,5 @@
 <map id="begin_transaction" name="begin_transaction">
-<area shape="rect" id="Node000001" title="Начинает транзакцию в базе данных." alt="" coords="5,12,129,37"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a8a1b1a9978392cc3c94f942e63f5d37a" title="Начинает транзакцию в базе данных." alt="" coords="177,5,307,44"/>
+<area shape="rect" id="Node000001" title="Начинает транзакцию в базе данных через вызов внутреннего метода." alt="" coords="5,12,129,37"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a8a1b1a9978392cc3c94f942e63f5d37a" title="Начинает транзакцию в базе данных и записывает лог с указанием контекста." alt="" coords="177,5,307,44"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,22,161,22,161,27,129,27"/>
 </map>

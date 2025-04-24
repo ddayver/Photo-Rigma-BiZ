@@ -1,8 +1,22 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+/** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/admin.php
  * @brief       Администрирование сайта.
+ *
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      JsonException При выполнении методов, использующих JSON.
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ *
+ * @section     Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @author      Dark Dayver
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
+ * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции
  *              включают:
@@ -13,20 +27,24 @@
  *              - Логирование ошибок и подозрительных действий.
  *
  * @section     Основные функции
- * - Управление общими настройками сайта.
- * - Управление пользователями (редактирование, поиск, изменение прав).
- * - Управление группами (редактирование, изменение прав).
- * - Логирование ошибок и подозрительных действий.
+ *              - Управление общими настройками сайта.
+ *              - Управление пользователями (редактирование, поиск, изменение прав).
+ *              - Управление группами (редактирование, изменение прав).
+ *              - Логирование ошибок и подозрительных действий.
  *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
- * @namespace   PhotoRigma\Action
+ * @section     Обработка ошибок
+ *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *              - `JsonException`: При выполнении методов, использующих JSON.
+ *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
  * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
- * @see         PhotoRigma::Classes::User Класс для управления пользователями.
- * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *              - Вспомогательные функции:
+ *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *              - Файлы приложения:
+ *                - @see index.php Этот файл подключает action/admin.php по запросу из `$_GET`.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
@@ -34,11 +52,12 @@
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ *              копии или значимые части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -82,6 +101,7 @@ $template->add_if_ar([
 ]);
 
 // Проверяем условия для входа в административную панель
+/** @noinspection NotOptimalIfConditionsInspection */
 if ((!$work->check_input(
     '_SESSION',
     'admin_on',
@@ -91,10 +111,10 @@ if ((!$work->check_input(
     $work->check_input('_POST', 'admin_password', ['isset' => true, 'empty' => true])) {
     // Инициализация данных о попытках входа в сессии
     if (!isset($user->session['login_attempts'])) {
-        $user->session['login_attempts'] = 0;
+        $user->set_property_key('session', 'login_attempts', 0);
     }
     if (!isset($user->session['last_attempt_time'])) {
-        $user->session['last_attempt_time'] = 0;
+        $user->set_property_key('session', 'last_attempt_time', 0);
     }
 
     // Текущее время
@@ -103,7 +123,7 @@ if ((!$work->check_input(
     // Проверяем, прошло ли достаточно времени с момента последней попытки
     if ($current_time - $user->session['last_attempt_time'] > LOCKOUT_TIME) {
         // Сбрасываем счетчик попыток, если время истекло
-        $user->session['login_attempts'] = 0;
+        $user->set_property_key('session', 'login_attempts', 0);
     }
 
     // Проверяем, не превышено ли количество попыток
@@ -128,10 +148,10 @@ if ((!$work->check_input(
     // Проверяем пароль
     if (password_verify($_POST['admin_password'], $user->user['password'])) {
         // Открываем сессию для администратора
-        $user->session['admin_on'] = true;
+        $user->set_property_key('session', 'admin_on', true);
 
         // Сбрасываем счетчик попыток при успешном входе
-        $user->session['login_attempts'] = 0;
+        $user->set_property_key('session', 'login_attempts', 0);
 
         // Логируем успешный вход
         log_in_file(
@@ -139,8 +159,8 @@ if ((!$work->check_input(
         );
     } else {
         // Увеличиваем счетчик неудачных попыток
-        $user->session['login_attempts']++;
-        $user->session['last_attempt_time'] = $current_time;
+        $user->set_property_key('session', 'login_attempts', $user->session['login_attempts'] + 1);
+        $user->set_property_key('session', 'last_attempt_time', $current_time);
 
         // Логируем неудачную попытку входа
         log_in_file(
@@ -153,11 +173,13 @@ if ((!$work->check_input(
     }
 }
 
+/** @noinspection NotOptimalIfConditionsInspection */
 if (!empty($user->user['admin']) && $work->check_input(
     '_SESSION',
     'admin_on',
     ['isset' => true]
 ) && $user->session['admin_on']) {
+    /** @noinspection NotOptimalIfConditionsInspection */
     if ($work->check_input('_GET', 'subact', ['isset' => true, 'empty' => true]) && $_GET['subact'] === 'settings') {
         if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true])) {
             // Проверяем CSRF-токен
@@ -393,9 +415,11 @@ if (!empty($user->user['admin']) && $work->check_input(
         }
 
         // Инициализация переменных для ядра
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = ''; // Переменная для действия (используется в ядре)
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $work->lang['admin']['settings']; // Заголовок страницы (используется в ядре)
-    } elseif ($work->check_input(
+    } /** @noinspection NotOptimalIfConditionsInspection */ elseif ($work->check_input(
         '_GET',
         'subact',
         ['isset' => true, 'empty' => true]
@@ -574,9 +598,11 @@ if (!empty($user->user['admin']) && $work->check_input(
         }
 
         // Инициализация переменных для ядра
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = '';
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $work->lang['admin']['admin_user'];
-    } elseif ($work->check_input(
+    } /** @noinspection NotOptimalIfConditionsInspection */ elseif ($work->check_input(
         '_GET',
         'subact',
         ['isset' => true, 'empty' => true]
@@ -701,7 +727,9 @@ if (!empty($user->user['admin']) && $work->check_input(
         }
 
         // Инициализация переменных для ядра
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = '';
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $work->lang['admin']['admin_group'];
     } else {
         // Подготовка данных для выбора подразделов администрирования
@@ -737,7 +765,9 @@ if (!empty($user->user['admin']) && $work->check_input(
         }
 
         // Инициализация переменных для ядра
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = 'admin'; // Активный пункт меню - admin
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
     }
 } elseif ((!isset($user->session['admin_on']) || $user->session['admin_on'] !== true) && $user->user['admin']) {
@@ -752,7 +782,9 @@ if (!empty($user->user['admin']) && $work->check_input(
     ]);
 
     // Инициализация переменных для ядра
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $action = 'admin'; // Активный пункт меню - admin
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
 } else {
     Header('Location: ' . $work->config['site_url']);

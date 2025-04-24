@@ -1,9 +1,10 @@
 var classPhotoRigma_1_1Classes_1_1Work =
 [
     [ "__construct", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a0cf75f058a40065de0a52d9f2037960a", null ],
-    [ "__get", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a96d631a05b563f91f5494b409b357cbc", null ],
+    [ "__get", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a0acd7052f38245fd3723ea29c83bf3f3", null ],
     [ "__isset", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a0c45daa80235f514090aa7789f5e93b3", null ],
     [ "__set", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
+    [ "_set_lang_internal", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7242eaf597987690d29417061245346d", null ],
     [ "category", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4dfb943f9b750ec6e1e2924a9620c7f5", null ],
     [ "check_field", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7fd7e97a953487a9422281b97bd6f083", null ],
     [ "check_input", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d", null ],
@@ -23,7 +24,7 @@ var classPhotoRigma_1_1Classes_1_1Work =
     [ "process_rating", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a35f2b39b21e9ee39a5878708e9211198", null ],
     [ "remove_directory", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaaf358ddc8223e4a5a479f645fc43da8", null ],
     [ "set_lang", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aed2ddce38e1559f3014f076e11a2cbe9", null ],
-    [ "set_user", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac632034f4e83ba35a7b3e2124829e0c2", null ],
+    [ "set_user", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a75c62c77591a021c5555660ce20e84b3", null ],
     [ "size_image", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b", null ],
     [ "template_best_user", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9143fed87a3064985e0b51fe5fbb4ac3", null ],
     [ "template_stat", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a116ebcf799d07566a74e7e765aecc1b7", null ],

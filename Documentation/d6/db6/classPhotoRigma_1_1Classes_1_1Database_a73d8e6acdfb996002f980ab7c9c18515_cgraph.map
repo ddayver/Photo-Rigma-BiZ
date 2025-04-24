@@ -1,6 +1,6 @@
 <map id="delete" name="delete">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="5,31,62,55"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="110,31,222,55"/>
+<area shape="rect" id="Node000001" title="Удаляет данные из таблицы через вызов внутреннего метода." alt="" coords="5,31,62,55"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d" title="Формирует SQL&#45;запрос на удаление данных из таблицы, проверяет входные данные, обрабатывает недопустим..." alt="" coords="110,31,222,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,40,94,40,94,46,62,46"/>
 <area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="270,5,384,30"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,32,254,26,255,32,223,37"/>
@@ -10,6 +10,6 @@
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="368,51,427,33,429,38,370,57"/>
 <area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="441,55,526,79"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="380,64,425,64,425,70,380,70"/>
-<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="445,104,522,129"/>
+<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы." alt="" coords="445,104,522,129"/>
 <area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="370,77,431,97,430,102,368,83"/>
 </map>

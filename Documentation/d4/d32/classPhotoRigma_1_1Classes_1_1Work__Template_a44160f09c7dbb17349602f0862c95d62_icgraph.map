@@ -1,5 +1,5 @@
 <map id="_create_menu_internal" name="_create_menu_internal">
 <area shape="rect" id="Node000001" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="150,5,302,30"/>
-<area shape="rect" id="Node000002" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="5,5,102,30"/>
+<area shape="rect" id="Node000002" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="5,5,102,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,20,102,20,102,15,134,15"/>
 </map>

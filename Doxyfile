@@ -48,7 +48,7 @@ PROJECT_NAME           = Photo-Rigma-BiZ
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = 0.4.0
+PROJECT_NUMBER         = 0.4.1-rc1
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewers a
@@ -1082,19 +1082,25 @@ EXCLUDE                = /home/victoria/Photo-Rigma-BiZ/www/photo-rigmabiz.webpr
                          /home/victoria/Photo-Rigma-BiZ/www/photo-rigmabiz.session \
                          /home/victoria/Photo-Rigma-BiZ/www/action/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/avatar/index.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/badword/index.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/cache/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/gallery/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/gallery/user/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/include/index.php \
-                         /home/victoria/Photo-Rigma-BiZ/www/include/rev.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/include/ver.php \
                          /home/victoria/Photo-Rigma-BiZ/www/include/work-old.php \
                          /home/victoria/Photo-Rigma-BiZ/www/language/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/language/russian/index.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/language/english/index.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/log/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/thumbnail/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/thumbnail/user/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/themes/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/themes/default/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/themes/default/images/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/themes/default/js/index.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/themes/old/index.php \
+                         /home/victoria/Photo-Rigma-BiZ/www/themes/old/img/index.php \
                          /home/victoria/Photo-Rigma-BiZ/www/install/index.php
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or

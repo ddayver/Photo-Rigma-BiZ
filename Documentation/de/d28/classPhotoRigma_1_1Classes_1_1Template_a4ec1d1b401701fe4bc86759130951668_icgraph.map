@@ -1,0 +1,5 @@
+<map id="_create_template_internal" name="_create_template_internal">
+<area shape="rect" id="Node000001" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="168,5,338,30"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="5,5,120,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,20,120,20,120,15,152,15"/>
+</map>

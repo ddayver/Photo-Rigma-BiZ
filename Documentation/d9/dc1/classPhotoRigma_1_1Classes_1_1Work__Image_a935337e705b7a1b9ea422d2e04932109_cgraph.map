@@ -1,5 +1,5 @@
 <map id="create_directory" name="create_directory">
-<area shape="rect" id="Node000001" title="Создает директории для категории и копирует файлы index.php через вызов защищённого метода." alt="" coords="5,5,119,30"/>
+<area shape="rect" id="Node000001" title="Создаёт директории для категории и копирует файлы index.php через вызов внутреннего метода." alt="" coords="5,5,119,30"/>
 <area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#ae77f64cb663e7c3c35e7cbcdfd846cf2" title="Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа." alt="" coords="167,5,336,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,15,151,15,151,20,119,20"/>
 </map>

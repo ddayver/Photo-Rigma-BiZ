@@ -8,6 +8,6 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="268,51,327,33,328,38,269,57"/>
 <area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="340,55,426,79"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="279,64,325,64,325,70,279,70"/>
-<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="345,104,421,129"/>
+<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы." alt="" coords="345,104,421,129"/>
 <area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="269,77,331,97,329,102,268,83"/>
 </map>

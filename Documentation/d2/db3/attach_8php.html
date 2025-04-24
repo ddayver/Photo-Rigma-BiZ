@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -113,7 +113,7 @@ $(function(){initNavTree('d2/db3/attach_8php.html','../../'); initResizable(true
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d05/namespacePhotorigma.html">Photorigma</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">PhotoRigma\Action</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,36 +133,27 @@ $(function(){initNavTree('d2/db3/attach_8php.html','../../'); initResizable(true
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей. </p>
-<p>Файл используется для вывода фото из галереи по идентификатору, переданному через параметр &lsquo;$_GET['foto&rsquo;]<code>. Реализованы следующие особенности:</p><ul>
-<li>Проверка прав пользователя на просмотр изображений (</li>
-</ul>
-<p></code>$user-&gt;user['pic_view']<code>).</p><ul>
-<li>Ограничение доступа к файлам только внутри директории галереи.</li>
-<li>Проверка MIME-типа файла для предотвращения несанкционированного доступа.</li>
-<li>Поддержка создания миниатюр при наличии параметра</li>
-</ul>
-<p></code>$_GET['thumbnail']`.</p><ul>
-<li>Возврат данных об отсутствующем изображении, если файл недоступен.</li>
-</ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
-<ul>
-<li>Получение данных о фотографии из базы данных.</li>
-<li>Проверка прав доступа и безопасности пути к файлу.</li>
-<li>Создание миниатюр изображений.</li>
-<li>Логирование ошибок и подозрительных действий.</li>
-</ul>
+<p>@noinspection PhpUnhandledExceptionInspection @noinspection PhpUndefinedClassInspection</p>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">Exception</td><td>Если не удалось определить путь к фото или файл недоступен. Пример сообщения: "Не удалось определить путь к фото | Путь: {$photo_data['full_path']}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось определить путь к фото или файл недоступен. Пример сообщения: "Не удалось определить путь к фото | Путь: {$photo_data['full_path']}". </td></tr>
     <tr><td class="paramname">RuntimeException</td><td>Если возникла ошибка при создании миниатюры. Пример сообщения: "Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если пользователь не имеет прав на просмотр изображений. Пример сообщения: "Пользователь не имеет прав на просмотр изображений | ID: {$user-&gt;user['id']}".</td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если пользователь не имеет прав на просмотр изображений. Пример сообщения: "Пользователь не имеет прав на просмотр изображений | ID: {$user-&gt;user['id']}". </td></tr>
+    <tr><td class="paramname">Exception</td><td>При выполнении прочих методов классов, функций или операций.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-04-02 </dd></dl>
+<h1><a class="anchor" id="Связанные"></a>
+файлы и компоненты</h1>
+<ul>
+<li>Классы приложения:<ul>
+<li><dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.4.1-rc1 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-04-25 </dd></dl>
+</li>
+</ul>
+</li>
+</ul>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d2/db3/attach_8php_source.html">attach.php</a></p>
 </div></div><!-- contents -->

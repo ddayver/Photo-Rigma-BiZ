@@ -52,11 +52,7 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Файлы", "files.html", [
-      [ "Файлы", "files.html", "files_dup" ],
-      [ "Список членов всех файлов", "globals.html", [
-        [ "Указатель", "globals.html", null ],
-        [ "Переменные", "globals_vars.html", null ]
-      ] ]
+      [ "Файлы", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
@@ -64,9 +60,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32",
-"da/d80/interfacePhotoRigma_1_1Classes_1_1Work__Security__Interface.html#a7fd7e97a953487a9422281b97bd6f083",
-"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0524c883699d2510258de9ed3b7b3194"
+"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138",
+"da/d65/Work__CoreLogic_8php.html",
+"de/d8e/namespacePhotoRigma_1_1Action.html#a6828550a6d5ac9b06cda0b5c8457c5a2",
+"index.html#autotoc_md64"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

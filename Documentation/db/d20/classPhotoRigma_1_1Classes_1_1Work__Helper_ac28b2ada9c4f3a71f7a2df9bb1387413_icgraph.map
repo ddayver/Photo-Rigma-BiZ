@@ -1,5 +1,5 @@
 <map id="return_bytes" name="return_bytes">
-<area shape="rect" id="Node000001" title="Преобразование размера в байты (публичная обёртка)." alt="" coords="197,12,289,37"/>
-<area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразование размера в байты." alt="" coords="5,5,149,44"/>
+<area shape="rect" id="Node000001" title="Преобразует размер в байты через вызов внутреннего метода." alt="" coords="197,12,289,37"/>
+<area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов публичного метода в дочернем классе." alt="" coords="5,5,149,44"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,27,149,27,149,22,181,22"/>
 </map>

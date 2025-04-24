@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -103,25 +103,27 @@ $(function(){initNavTree('dd/da0/todo.html','../../'); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt>Пространство имен <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>  </dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000002"></a>Добавить поддержку SQLite.</p>
-<p class="interdd"><a class="anchor" id="_todo000003"></a>Закончить реализацию интерфейса и документирование класса.</p>
-<p class="enddd"><a class="anchor" id="_todo000008"></a>Реализовать поддержку кэширования языковых переменных с хранением в формате JSON в файлах. </p>
+<dt>Член <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad7c3527d920ebf2dbcbc0c51845835d6">Database::_format_date_internal</a>  (string $column, string $format)</dt>
+<dd><a class="anchor" id="_todo000005"></a>Добавить поддержку нативных форматов даты для PostgreSQL и SQLite. </dd>
+<dt>Член <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35">Database::build_conditions</a>  (array $options)</dt>
+<dd><a class="anchor" id="_todo000003"></a>Предусмотреть возможность в WHERE не только для 'AND', но и для других операторов через параметр 'operator'. </dd>
+<dt>Член <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0">Database::convert_query</a>  ()</dt>
+<dd><a class="anchor" id="_todo000004"></a>Добавить возможность преобразовывать запросы из формата PostgreSQL. </dd>
+<dt>Пространство имен <a class="el" href="../../d0/d05/namespacePhotorigma.html">Photorigma</a>  </dt>
+<dd><p class="startdd"><a class="anchor" id="_todo000001"></a>Полнотекстовый поиск для MySQL и PostgreSQL</p>
+<p class="interdd"><a class="anchor" id="_todo000002"></a>Добавить поддержку SQLite.</p>
+<p class="interdd"><a class="anchor" id="_todo000006"></a>Закончить реализацию и документирование класса.</p>
+<p class="interdd"><a class="anchor" id="_todo000011"></a>Закончить реализацию и документирование интерфейса.</p>
+<p class="enddd"><a class="anchor" id="_todo000012"></a>Реализовать поддержку кэширования языковых переменных с хранением в формате JSON в файлах. </p>
 </dd>
-<dt>Файл <a class="el" href="../../dd/d71/search_8php.html">search.php</a>  </dt>
-<dd><a class="anchor" id="_todo000001"></a>Полнотекстовый поиск для MySQL и PostgreSQL  </dd>
-<dt>Класс <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>  </dt>
-<dd><a class="anchor" id="_todo000004"></a>Внедрить ряд методов по работе с группами (добавление, удаление) и пользователями (удаление).  </dd>
 <dt>Член <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd">User::add_new_group</a>  (array $group_data)</dt>
-<dd><a class="anchor" id="_todo000005"></a>Продумать и реализовать метод. </dd>
+<dd><a class="anchor" id="_todo000008"></a>Продумать и реализовать метод. </dd>
 <dt>Член <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961">User::delete_group</a>  (int $group_id)</dt>
-<dd><a class="anchor" id="_todo000006"></a>Реализовать метод. </dd>
+<dd><a class="anchor" id="_todo000009"></a>Продумать и реализовать метод. </dd>
 <dt>Член <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb">User::delete_user</a>  (int $user_id)</dt>
-<dd><a class="anchor" id="_todo000007"></a>Продумать и реализовать метод. </dd>
-<dt>Член <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aed2ddce38e1559f3014f076e11a2cbe9">Work::set_lang</a>  (string $lang='main')</dt>
-<dd><a class="anchor" id="_todo000009"></a>Интегрировать в систему кеширования языковых переменных. </dd>
-<dt>Член <a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a87a203ec3e8e0964cd9637de5d35d22c">Work_Image::calculate_thumbnail_size</a>  (array $size)</dt>
-<dd><a class="anchor" id="_todo000010"></a>Перевести аргументы на массивовые значения ($size[0] -&gt; $size['width']; $size[1] -&gt; $size['height']).</dd>
+<dd><a class="anchor" id="_todo000010"></a>Продумать и реализовать метод. </dd>
+<dt>Член <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a7242eaf597987690d29417061245346d">Work::_set_lang_internal</a>  (string $lang='main')</dt>
+<dd><a class="anchor" id="_todo000013"></a>Интегрировать в систему кеширования языковых переменных.</dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

@@ -1,16 +1,23 @@
 <?php
 
+/** @noinspection PhpRedundantVariableDocTypeInspection */
+
 /**
  * @file        language/english/main.php
  * @brief       Localized strings for the core of the site in English.
  *
  * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
- * @namespace   PhotoRigma\\Language
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
+ * @namespace   PhotoRigma\Language
  *
  * @details     This file contains English language strings used in the core of the project.
  *              It includes texts for the interface, menus, forms, notifications, and other elements.
+ *
+ * @section     Main Functions
+ *              - Providing localized strings for the interface.
+ *              - Supporting multilingual functionality of the project.
+ *              - Simplifying text updates through centralized storage.
  *
  * @see         @ref LanguageEnglish Group for English localization.
  *
@@ -70,6 +77,7 @@ $lang_id = 'en';
  * @var array $lang
  * @brief Array of language variables
  */
+/** @noinspection PhpUnusedLocalVariableInspection */
 $lang = [];
 
 /**

@@ -1,5 +1,5 @@
 <map id="_delete_internal" name="_delete_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="110,5,222,30"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Формирует SQL&#45;запрос на удаление данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="5,5,62,30"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на удаление данных из таблицы, проверяет входные данные, обрабатывает недопустим..." alt="" coords="110,5,222,30"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Удаляет данные из таблицы через вызов внутреннего метода." alt="" coords="5,5,62,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,20,62,20,62,15,94,15"/>
 </map>

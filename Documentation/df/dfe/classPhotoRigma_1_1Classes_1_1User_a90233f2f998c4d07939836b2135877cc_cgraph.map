@@ -1,5 +1,7 @@
 <map id="load_guest_user" name="load_guest_user">
-<area shape="rect" id="Node000001" title="Метод загружает данные группы гостя из базы данных и сохраняет их в свойство $user." alt="" coords="5,5,122,30"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="170,5,308,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,15,154,15,154,20,122,20"/>
+<area shape="rect" id="Node000001" title="Метод загружает данные группы гостя из базы данных, обрабатывает права (user_rights) и сохраняет итог..." alt="" coords="5,12,122,37"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="170,12,308,37"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,22,154,22,154,27,122,27"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="356,5,501,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="308,22,341,22,341,27,308,27"/>
 </map>

@@ -1,25 +1,11 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+/** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/news.php
  * @brief       Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.
- *
- * @details     Этот файл отвечает за управление новостями в системе, включая:
- *              - Добавление новой новости (при наличии прав `$user->user['news_add']`).
- *              - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если
- *              пользователь является автором новости).
- *              - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является
- *              автором новости).
- *              - Отображение списка новостей с фильтрацией по годам и месяцам.
- *              - Защита от CSRF-атак при добавлении и редактировании новостей.
- *              - Логирование ошибок и подозрительных действий.
- *
- * @section     Основные функции
- * - Добавление новой новости.
- * - Редактирование существующей новости.
- * - Удаление новости.
- * - Отображение списка новостей с фильтрацией по годам и месяцам.
- * - Логирование ошибок и подозрительных действий.
  *
  * @throws      RuntimeException Если не удалось выполнить действие с новостью (например, добавление, редактирование
  *                               или удаление). Пример сообщения: Ошибка добавления новости | Данные:
@@ -28,28 +14,63 @@
  *              Пример сообщения: Новость не найдена | ID: {$news}.
  * @throws      RuntimeException Если CSRF-токен неверен.
  *              Пример сообщения: Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}.
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      JsonException При выполнении методов, использующих JSON.
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
  *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
- * @namespace   PhotoRigma\Action
+ * @section     Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @author      Dark Dayver
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
+ * @namespace   Photorigma\\Action
+ *
+ * @details     Этот файл отвечает за управление новостями в системе, включая:
+ *              - Добавление новой новости (при наличии прав `$user->user['news_add']`).
+ *              - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если
+ *                пользователь является автором новости).
+ *              - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является
+ *                автором новости).
+ *              - Отображение списка новостей с фильтрацией по годам и месяцам.
+ *              - Защита от CSRF-атак при добавлении и редактировании новостей.
+ *              - Логирование ошибок и подозрительных действий.
+ *
+ * @section     Основные функции
+ *              - Добавление новой новости.
+ *              - Редактирование существующей новости.
+ *              - Удаление новости.
+ *              - Отображение списка новостей с фильтрацией по годам и месяцам.
+ *              - Логирование ошибок и подозрительных действий.
+ *
+ * @section     Обработка ошибок
+ *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *              - `RuntimeException`: Если не удалось выполнить действие с новостью (например, добавление,
+ *                редактирование или удаление).
+ *              - `RuntimeException`: Если новость не найдена.
+ *              - `RuntimeException`: Если CSRF-токен неверен.
+ *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *              - `JsonException`: При выполнении методов, использующих JSON.
+ *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
  * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
- * @see         PhotoRigma::Classes::User Класс для управления пользователями.
- * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
- * @see         file index.php Этот файл подключает action/news.php по запросу из `$_GET`.
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *              - Вспомогательные функции:
+ *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *              - Файлы приложения:
+ *                - @see index.php Этот файл подключает action/news.php по запросу из `$_GET`.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ *              копии или значимые части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -79,7 +100,9 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 $template->template_file = 'news.html';
 
+/** @noinspection PhpUnusedLocalVariableInspection */
 $title = $work->lang['news']['title'];
+/** @noinspection PhpUnusedLocalVariableInspection */
 $action = '';
 
 // === Обработка параметра 'news' ===
@@ -101,6 +124,8 @@ if ($news !== false) {
     if (!$news_data) {
         $news = false; // Если новость не найдена, сбрасываем значение
     }
+} else {
+    $news_data = [];
 }
 
 // === Обработка параметра 'subact' ===
@@ -237,6 +262,7 @@ if ($subact === 'save') {
 }
 
 if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $news_data['user_post']))) {
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $title = $work->lang['main']['edit_news'];
 
     // Получение данных новости
@@ -327,7 +353,9 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
     header('Location: ' . $redirect_url);
     exit;
 } elseif ($subact === 'add' && $news === false && $user->user['news_add']) {
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $title = $work->lang['news']['add_post'];
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $action = 'news_add';
 
     $template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
@@ -413,7 +441,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         }
 
         // Устанавливаем заголовок страницы
+        /** @noinspection PhpConditionAlreadyCheckedInspection */
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = '';
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
             end($news_data)['name_post']
         );
@@ -432,6 +463,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         'regexp'   => '/^[0-9]{4}$/', // Добавлены ограничители "/"
         'not_zero' => true,
     ])) {
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = 'news';
 
         // Получение списка годов
@@ -478,6 +510,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
             'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'],
         ]);
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'];
     } else {
         $year = $_GET['y'];
@@ -489,6 +522,8 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             'regexp'   => '/^[0-9]{2}$/', // Добавлены ограничители "/"
             'not_zero' => true,
         ])) {
+            /** @noinspection PhpConditionAlreadyCheckedInspection */
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $action = '';
 
             // Получение списка месяцев
@@ -541,9 +576,12 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
                 'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'],
             ]);
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'];
         } else {
             $month = $_GET['m'];
+            /** @noinspection PhpConditionAlreadyCheckedInspection */
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $action = '';
 
             // Получение списка новостей за выбранный месяц и год
@@ -583,6 +621,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
                 'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'],
             ]);
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $title = $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'];
         }
     }

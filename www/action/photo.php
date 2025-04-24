@@ -1,8 +1,25 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+/** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/photo.php
  * @brief       Работа с фотографиями: вывод, редактирование, загрузка и обработка изображений, оценок.
+ *
+ * @throws      RuntimeException Если возникают ошибки при работе с базой данных или файловой системой.
+ *              Пример сообщения: "Не удалось получить данные фотографии | ID: $photo_id".
+ * @throws      RuntimeException Если пользователь не имеет прав на выполнение действия.
+ *              Пример сообщения: "Пользователь не имеет прав на редактирование фотографии | ID: {$user->user['id']}".
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ *
+ * @section     Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @author      Dark Dayver
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
+ * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление фотографиями в системе, включая:
  *              - Отображение фотографий с информацией о них (название, описание, категория, автор, оценки).
@@ -13,28 +30,28 @@
  *              - Логирование ошибок и подозрительных действий.
  *
  * @section     Основные функции
- * - Отображение фотографий с детальной информацией.
- * - Редактирование данных фотографии.
- * - Удаление фотографий.
- * - Загрузка новых фотографий.
- * - Оценка фотографий пользователями и модераторами.
- * - Логирование ошибок и подозрительных действий.
+ *              - Отображение фотографий с детальной информацией.
+ *              - Редактирование данных фотографии.
+ *              - Удаление фотографий.
+ *              - Загрузка новых фотографий.
+ *              - Оценка фотографий пользователями и модераторами.
+ *              - Логирование ошибок и подозрительных действий.
  *
- * @throws      RuntimeException Если возникают ошибки при работе с базой данных или файловой системой.
- *              Пример сообщения: "Не удалось получить данные фотографии | ID: $photo_id".
- * @throws      RuntimeException Если пользователь не имеет прав на выполнение действия.
- *              Пример сообщения: "Пользователь не имеет прав на редактирование фотографии | ID: {$user->user['id']}".
- *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
- * @namespace   PhotoRigma\Action
+ * @section     Обработка ошибок
+ *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *              - `RuntimeException`: Если возникают ошибки при работе с базой данных или файловой системой.
+ *              - `RuntimeException`: Если пользователь не имеет прав на выполнение действия.
+ *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
  * @see         PhotoRigma::Classes::Work Класс, содержащий основные методы для работы с данными.
- * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
- * @see         PhotoRigma::Classes::User Класс для управления пользователями.
- * @see         PhotoRigma::Classes::Template Класс для работы с шаблонами.
- * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
+ *              - Вспомогательные функции:
+ *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *              - Файлы приложения:
+ *                - @see index.php Этот файл подключает action/photo.php по запросу из `$_GET`.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
@@ -42,11 +59,12 @@
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ *              копии или значимые части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -187,6 +205,7 @@ if ($photo_id !== 0) {
         );
     }
 
+    /** @noinspection NotOptimalIfConditionsInspection */
     if (($user->user['pic_rate_user'] || $user->user['pic_rate_moder']) && $photo_data['user_upload'] !== $user->user['id'] && $work->check_input(
         '_GET',
         'subact',
@@ -224,7 +243,12 @@ if ($photo_id !== 0) {
                 'regexp' => '/^-?[0-9]+$/',
             ]) && abs($_POST['rate_user']) <= $work->config['max_rate']) {
             // Вызов метода для обработки оценки пользователя
-            $photo_data['rate_user'] = $work->process_rating(TBL_RATE_USER, $photo_id, $user->user['id'], $_POST['rate_user']);
+            $photo_data['rate_user'] = $work->process_rating(
+                TBL_RATE_USER,
+                $photo_id,
+                $user->user['id'],
+                $_POST['rate_user']
+            );
         }
 
         // Проверка текущей оценки модератора
@@ -245,9 +269,14 @@ if ($photo_id !== 0) {
                 'regexp' => '/^-?[0-9]+$/',
             ]) && abs($_POST['rate_moder']) <= $work->config['max_rate']) {
             // Вызов метода для обработки оценки модератора
-            $photo_data['rate_moder'] = $work->process_rating(TBL_RATE_MODER, $photo_id, $user->user['id'], $_POST['rate_moder']);
+            $photo_data['rate_moder'] = $work->process_rating(
+                TBL_RATE_MODER,
+                $photo_id,
+                $user->user['id'],
+                $_POST['rate_moder']
+            );
         }
-    } elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
+    } /** @noinspection NotOptimalIfConditionsInspection */ elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
         '_GET',
         'subact',
         [
@@ -407,12 +436,14 @@ if ($photo_id !== 0) {
             // Перемещаем файлы
             if (!rename($old_photo_path, $new_photo_path)) {
                 $photo['category_id'] = $photo_data['category'];
+                /** @noinspection PhpArrayWriteIsNotUsedInspection */
                 $photo['path'] = $old_photo_path;
             } else {
                 if (!rename($old_thumbnail_path, $new_thumbnail_path)) {
                     unlink($old_thumbnail_path);
                 }
                 $photo['category_id'] = $_POST['name_category'];
+                /** @noinspection PhpArrayWriteIsNotUsedInspection */
                 $photo['path'] = $new_photo_path;
             }
         } else {
@@ -444,6 +475,7 @@ if ($photo_id !== 0) {
         exit;
     }
 
+    /** @noinspection NotOptimalIfConditionsInspection */
     if ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
         '_GET',
         'subact',
@@ -516,7 +548,7 @@ if ($photo_id !== 0) {
                 $photo_data['id']
             ),
         ]);
-    } elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
+    } /** @noinspection NotOptimalIfConditionsInspection */ elseif ((($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) && $work->check_input(
         '_GET',
         'subact',
         [
@@ -757,7 +789,7 @@ if ($photo_id !== 0) {
             ]);
         }
     }
-} elseif ($work->check_input(
+} /** @noinspection NotOptimalIfConditionsInspection */ elseif ($work->check_input(
     '_GET',
     'subact',
     [
@@ -813,7 +845,7 @@ if ($photo_id !== 0) {
         'D_MAX_FILE_SIZE'     => (string)$max_size,
         'U_UPLOADED'          => sprintf('%s?action=photo&subact=uploaded', $work->config['site_url']),
     ]);
-} elseif ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
+} /** @noinspection NotOptimalIfConditionsInspection */ elseif ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
     '_GET',
     'subact',
     [
@@ -857,6 +889,7 @@ if ($photo_id !== 0) {
     // Проверяем категорию
     if (!$work->check_input('_POST', 'name_category', ['isset' => true, 'regexp' => '/^[0-9]+$/'])) {
         $submit_upload = false; // Если категория не указана или некорректна, отменяем загрузку
+        $category_data = [];
     } else {
         // Формируем условие для выборки категории
         $category_condition = $user->user['cat_user'] || $user->user['pic_moderate'] ? [
@@ -937,6 +970,8 @@ if ($photo_id !== 0) {
     if ($submit_upload) {
         // Проверяем правильность расширения
         $old_file_path = $photo['path'];
+        $file_info = pathinfo($photo['path']);
+        $file_name = $file_info['filename'] . '.' . $file_info['extension'];
         $photo['path'] = $work->fix_file_extension($photo['path']);
         if ($photo['path'] !== $old_file_path) {
             rename($old_file_path, $photo['path']);
@@ -997,6 +1032,7 @@ if ($photo_id !== 0) {
     exit;
 } else {
     $template->add_case('PHOTO_BLOCK', 'VIEW_PHOTO');
+    /** @noinspection PhpAutovivificationOnFalseValuesInspection */
     $photo_data['file'] = 'no_foto.png';
 
     $template->add_string_ar([
@@ -1033,6 +1069,7 @@ if (!empty($photo['path'])) {
     ]);
 }
 
+/** @noinspection NotOptimalIfConditionsInspection */
 if ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
     '_GET',
     'subact',

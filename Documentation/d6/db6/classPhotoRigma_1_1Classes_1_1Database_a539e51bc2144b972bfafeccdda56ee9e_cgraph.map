@@ -1,5 +1,5 @@
 <map id="update" name="update">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="5,31,66,55"/>
+<area shape="rect" id="Node000001" title="Выполняет SQL&#45;запрос на обновление данных в таблице через вызов внутреннего метода." alt="" coords="5,31,66,55"/>
 <area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="114,31,230,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,40,98,40,98,46,66,46"/>
 <area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="278,5,392,30"/>
@@ -10,6 +10,6 @@
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="376,51,435,33,437,38,378,57"/>
 <area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="449,55,534,79"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="388,64,433,64,433,70,388,70"/>
-<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы и запросы без использования плейсхолдеров." alt="" coords="453,104,530,129"/>
+<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы." alt="" coords="453,104,530,129"/>
 <area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="378,77,439,97,438,102,376,83"/>
 </map>

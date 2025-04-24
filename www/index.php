@@ -4,57 +4,123 @@
  * @file        index.php
  * @brief       Точка входа в приложение PhotoRigma.
  *
- * @throws      RuntimeException Если конфигурационный файл отсутствует или недоступен для чтения.
- *              Пример сообщения: "Конфигурационный файл отсутствует или не является файлом | Путь: config.php".
+ * @throws      RuntimeException Если конфигурационный файл отсутствует или недоступен для
+ *              чтения. Пример сообщения: "Конфигурационный файл отсутствует или не является
+ *              файлом | Путь: config.php".
  * @throws      RuntimeException Если обязательные файлы отсутствуют или недоступны для чтения.
- *              Пример сообщения: "Проверка обязательных файлов завершилась ошибкой | Ошибки: [список ошибок]".
+ *              Пример сообщения: "Проверка обязательных файлов завершилась ошибкой | Ошибки:
+ *              [список ошибок]".
  * @throws      RuntimeException Если файл действия не найден или недоступен для чтения.
- *              Пример сообщения: "Файл действий не найден или недоступен для чтения | Путь: [путь к файлу]".
- * @throws      PDOException Если возникла ошибка при работе с базой данных.
- *              Пример сообщения: "Ошибка базы данных | [сообщение об ошибке]".
- * @throws      Exception Если возникла непредвиденная ошибка.
- *              Пример сообщения: "Общая ошибка | [сообщение об ошибке]".
+ *              Пример сообщения: "Файл действий не найден или недоступен для чтения | Путь:
+ *              [путь к файлу]".
+ * @throws      PDOException Если возникла ошибка при работе с базой данных. Пример сообщения:
+ *              "Ошибка базы данных | [сообщение об ошибке]".
+ * @throws      Exception Если возникла непредвиденная ошибка. Пример сообщения: "Общая ошибка |
+ *              [сообщение об ошибке]".
  *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
+ * @section     Связанные файлы и компоненты
+ *              - Конфигурационные файлы:
+ *                - @author      Dark Dayver
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
  * @namespace   PhotoRigma
  *
  * @details     Этот файл является точкой входа в приложение и выполняет следующие задачи:
  *              - Подключает конфигурационный файл (`config.php`) и проверяет его доступность.
- *              - Проверяет наличие и доступность обязательных файлов (например, `common.php`, `db.php`).
+ *              - Проверяет наличие и доступность обязательных файлов (например, `common.php`,
+ *                `Database.php`).
  *              - Создаёт объекты основных классов (`Database`, `Work`, `Template`, `User`).
- *              - Обрабатывает действия пользователя через параметр `action`. Значение, получаемое из запроса в URL,
- *                указывает на действие, которое должно выполнить приложение.
+ *              - Обрабатывает действия пользователя через параметр `action`. Значение,
+ *                получаемое из запроса в URL, указывает на действие, которое должно выполнить
+ *                приложение.
  *              - Выводит шаблонные элементы страницы (шапку, подвал и содержимое).
- *              - Реализует централизованную систему обработки ошибок и их логирования на уровне ядра приложения.
+ *              - Реализует централизованную систему обработки ошибок и их логирования на уровне
+ *                ядра приложения.
  *
  * @section     Основные функции
- * - Подключение конфигурации и обязательных файлов.
- * - Инициализация основных классов (`Database`, `Work`, `Template`, `User`).
- * - Обработка действий пользователя через параметр `action`.
- * - Генерация HTML-контента страницы.
- * - Логирование ошибок и обработка исключений.
+ *              - Подключение конфигурации и обязательных файлов.
+ *              - Инициализация основных классов (`Database`, `Work`, `Template`, `User`).
+ *              - Обработка действий пользователя через параметр `action`.
+ *              - Генерация HTML-контента страницы.
+ *              - Логирование ошибок и обработка исключений.
+ *
+ * @section     Параметр `action`
+ *              Параметр `action` определяет действие, которое должно быть выполнено приложением.
+ *              Поддерживаемые значения:
+ *              - `admin`: Администрирование сайта.
+ *              - `attach`: Реализует безопасный вывод фото из галереи по идентификатору с
+ *                проверкой прав доступа и ограничением путей.
+ *              - `category`: Обзор и управление разделами галереи.
+ *              - `main`: Главная страница. Формирует и выводит последние новости проекта,
+ *                проверяя права пользователя на их просмотр.
+ *              - `news`: Реализует функциональность работы с новостями: добавление,
+ *                редактирование, удаление и отображение.
+ *              - `photo`: Работа с фотографиями: вывод, редактирование, загрузка и обработка
+ *                изображений, оценок.
+ *              - `profile`: Работа с пользователями: вход, выход, регистрация, редактирование и
+ *                просмотр профиля.
+ *              - `search`: Обработка поисковых запросов на сайте.
+ *
+ * @section     Обработка ошибок
+ *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *              - `RuntimeException`: Если конфигурационный файл или обязательные файлы
+ *                отсутствуют.
+ *              - `PDOException`: Если возникла ошибка при работе с базой данных.
+ *              - `Exception`: Если возникла непредвиденная ошибка.
  *
  * @see         config.php Файл конфигурации, содержащий параметры приложения.
- * @see         include/common.php Файл, содержащий глобальные константы и функции.
- * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
- * @see         PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
- * @see         PhotoRigma::Classes::Template Класс для генерации HTML-контента.
- * @see         PhotoRigma::Classes::User Класс для управления пользователями.
- * @see         PhotoRigma::Include::archive_old_logs Функция для архивации старых логов.
- * @see         PhotoRigma::Include::log_in_file Функция для логирования ошибок.
+ *                - @see include/constants.php Файл с глобальными константами приложения.
+ *                - @see include/session_init.php Файл для инициализации сессии.
+ *                - @see include/functions.php Файл с глобальными функциями приложения.
+ *              - Классы приложения:
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базами данных через PDO.
+ *                - @see PhotoRigma::Classes::Work_Helper Класс для выполнения вспомогательных задач.
+ *                - @see PhotoRigma::Classes::Work_CoreLogic Класс для выполнения базовой логики приложения.
+ *                - @see PhotoRigma::Classes::Work_Image Класс для работы с изображениями.
+ *                - @see PhotoRigma::Classes::Work_Template Класс для формирования данных для шаблонов.
+ *                - @see PhotoRigma::Classes::Work_Security Класс для обеспечения безопасности приложения.
+ *                - @see PhotoRigma::Classes::Work Основной класс приложения.
+ *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
+ *                - @see PhotoRigma::Classes::User Класс для работы с пользователями и хранения данных о текущем
+ *                пользователе.
+ *              - Интерфейсы:
+ *                - @see PhotoRigma::Interfaces::Database_Interface Интерфейс для работы с базами данных через PDO.
+ *                - @see PhotoRigma::Interfaces::Work_Helper_Interface Интерфейс для вспомогательных методов.
+ *                - @see PhotoRigma::Interfaces::Work_CoreLogic_Interface Интерфейс, определяющий контракт для классов,
+ *                  реализующих базовую логику приложения.
+ *                - @see PhotoRigma::Interfaces::Work_Image_Interface Интерфейс для работы с изображениями.
+ *                - @see PhotoRigma::Interfaces::Work_Template_Interface Интерфейс для формирования данных для
+ *                шаблонов.
+ *                - @see PhotoRigma::Interfaces::Work_Security_Interface Интерфейс для работы с безопасностью.
+ *                - @see PhotoRigma::Interfaces::Work_Interface Интерфейс для центральной точки приложения.
+ *                - @see PhotoRigma::Interfaces::Template_Interface Интерфейс для работы с шаблонами.
+ *                - @see PhotoRigma::Interfaces::User_Interface Интерфейс для работы с пользователями и группами.
+ *              - Вспомогательные функции:
+ *                - @see PhotoRigma::Include::archive_old_logs Функция для архивации старых логов.
+ *                - @see PhotoRigma::Include::log_in_file Функция для логирования ошибок.
  *
- * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в запуске и работе приложения.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в запуске и
+ *              работе приложения. Реализованы меры безопасности для предотвращения
+ *              несанкционированного доступа и выполнения действий.
+ *
+ * @section     Примеры использования
+ *              Примеры вызова файла через URL с использованием параметра `action`:
+ * @code
+ * http://example.com/index.php?action=admin
+ * http://example.com/index.php?action=attach&id=123
+ * http://example.com/index.php?action=category
+ * http://example.com/index.php?action=main
+ * http://example.com/index.php?action=profile&uid=9
+ * @endcode
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ *              копии или значимые части программного обеспечения.
  */
 
 declare(strict_types=1);
@@ -67,6 +133,7 @@ use BadMethodCallException;
 use DomainException;
 use Exception;
 use InvalidArgumentException;
+use JsonException;
 use LengthException;
 use LogicException;
 use OutOfBoundsException;
@@ -126,16 +193,27 @@ try {
      * @details Содержит пути к файлам, которые необходимы для работы приложения.
      */
     $required_files = [
-        $config['inc_dir'] . 'common.php',
-        $config['inc_dir'] . 'db.php',
-        $config['inc_dir'] . 'work_helper.php',
-        $config['inc_dir'] . 'work_corelogic.php',
-        $config['inc_dir'] . 'work_image.php',
-        $config['inc_dir'] . 'work_template.php',
-        $config['inc_dir'] . 'work_security.php',
-        $config['inc_dir'] . 'work.php',
-        $config['inc_dir'] . 'template.php',
-        $config['inc_dir'] . 'user.php',
+        $config['inc_dir'] . 'constants.php',
+        $config['inc_dir'] . 'session_init.php',
+        $config['inc_dir'] . 'functions.php',
+        $config['inc_dir'] . 'Database_Interface.php',
+        $config['inc_dir'] . 'Database.php',
+        $config['inc_dir'] . 'Work_Helper_Interface.php',
+        $config['inc_dir'] . 'Work_Helper.php',
+        $config['inc_dir'] . 'Work_CoreLogic_Interface.php',
+        $config['inc_dir'] . 'Work_CoreLogic.php',
+        $config['inc_dir'] . 'Work_Image_Interface.php',
+        $config['inc_dir'] . 'Work_Image.php',
+        $config['inc_dir'] . 'Work_Template_Interface.php',
+        $config['inc_dir'] . 'Work_Template.php',
+        $config['inc_dir'] . 'Work_Security_Interface.php',
+        $config['inc_dir'] . 'Work_Security.php',
+        $config['inc_dir'] . 'Work_Interface.php',
+        $config['inc_dir'] . 'Work.php',
+        $config['inc_dir'] . 'Template_Interface.php',
+        $config['inc_dir'] . 'Template.php',
+        $config['inc_dir'] . 'User_Interface.php',
+        $config['inc_dir'] . 'User.php',
     ];
 
     // Массив для хранения ошибок
@@ -170,7 +248,7 @@ try {
      * @brief   Создание объекта класса Database для работы с основной БД.
      * @details Инициализируется через конструктор с параметрами из массива $config['db'].
      * @see     PhotoRigma::Classes::Database Класс для работы с базой данных.
-     * @see     include/db.php Файл, содержащий реализацию класса Database.
+     * @see     include/Database.php Файл, содержащий реализацию класса Database.
      * @see     $config Массив конфигурации, используемый для подключения к БД.
      */
     $db = new Database($config['db']);
@@ -179,7 +257,7 @@ try {
      * @brief   Создание объекта класса Work.
      * @details Используется для выполнения различных вспомогательных операций.
      * @see     PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
-     * @see     include/work.php Файл, содержащий реализацию класса Work.
+     * @see     include/Work.php Файл, содержащий реализацию класса Work.
      * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения.
      * @see     PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
      * @see     PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
@@ -198,7 +276,7 @@ try {
      * @brief   Создание объекта класса User.
      * @details Используется для управления пользователями системы.
      * @see     PhotoRigma::Classes::User Класс для управления пользователями.
-     * @see     include/user.php Файл, содержащий реализацию класса User.
+     * @see     include/User.php Файл, содержащий реализацию класса User.
      */
     $user = new User($db, $_SESSION);
 
@@ -209,7 +287,7 @@ try {
      * @brief   Создание объекта класса Template.
      * @details Используется для генерации HTML-контента страниц.
      * @see     PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
-     * @see     include/template.php Файл, содержащий реализацию класса Template.
+     * @see     include/Template.php Файл, содержащий реализацию класса Template.
      * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию для шаблонов.
      * @see     PhotoRigma::Classes::Template::create_template() Метод для создания содержимого страницы.
      * @see     PhotoRigma::Classes::Template::page_header() Метод для добавления шапки страницы.
@@ -226,25 +304,26 @@ try {
     // Передаем объект User в класс Work
     $work->set_user($user);
 
-    // Загружаем языковый массив в классе Work и передаем его в класс Template
+    // Загружаем языковый массив в классе Work
     $work->set_lang();
-    $template->set_lang($work->lang);
 
     // Передаем объект Work в классы Template и User
     $template->set_work($work);
     $user->set_work($work);
 
     /** @var string $title
-     * @brief Добавление текста к заголовку страницы.
+     * @brief        Добавление текста к заголовку страницы.
+     * @noinspection PhpRedundantVariableDocTypeInspection
      */
     $title = '';
 
     /**
      * @var string $action
-     * @brief   Действие, которое необходимо выполнить.
-     * @details Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'.
+     * @brief        Действие, которое необходимо выполнить.
+     * @details      Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'.
      * Пример вызова действия 'profile':
      * $_GET['action'] = 'profile';
+     * @noinspection PhpRedundantVariableDocTypeInspection
      */
     $action = 'main'; // Значение по умолчанию
 
@@ -254,6 +333,7 @@ try {
      * - Формируется путь к файлу действия.
      * - Если файл не существует или недоступен, используется файл по умолчанию ('main.php').
      */
+    /** @noinspection NotOptimalIfConditionsInspection */
     if ($work->check_input(
         '_GET',
         'action',
@@ -329,11 +409,13 @@ try {
         );
 
         if (function_exists('\PhotoRigma\Include\log_in_file')) {
+            /** @noinspection PhpUnhandledExceptionInspection */
             log_in_file($message, true);
         } else {
             // Добавление трассировки, если DEBUG_GALLERY включен
             if (defined('DEBUG_GALLERY')) {
                 $trace_depth = 0;
+                /** @noinspection PhpStrictComparisonWithOperandsOfDifferentTypesInspection */
                 if (defined('DEBUG_GALLERY') && (DEBUG_GALLERY === true || (is_int(
                     DEBUG_GALLERY
                 ) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9))) {
@@ -347,18 +429,25 @@ try {
                     $trace_info = [];
                     foreach ($backtrace as $index => $trace) {
                         $step_number = $index + 1;
-                        $args = array_map(static function ($arg) {
-                            $arg_str = is_string($arg) ? $arg : json_encode(
-                                $arg,
-                                JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
-                            );
-                            return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
-                                $arg_str,
-                                0,
-                                80,
-                                'UTF-8'
-                            ) . '...' : $arg_str;
-                        }, $trace['args'] ?? []);
+                        $args = array_map(
+                            /**
+                             * @throws JsonException
+                             */
+                            static function ($arg) {
+                                $arg_str = is_string($arg) ? $arg : json_encode(
+                                    $arg,
+                                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                                );
+                                return mb_strlen($arg_str, 'UTF-8') > 80 ? mb_substr(
+                                    $arg_str,
+                                    0,
+                                    80,
+                                    'UTF-8'
+                                ) . '...' : $arg_str;
+                            },
+                            $trace['args'] ?? []
+                        );
+                        /** @noinspection PhpUnhandledExceptionInspection */
                         $trace_info[] = sprintf(
                             "Шаг %d:" . PHP_EOL . "  Файл: %s" . PHP_EOL . "  Строка: %s" . PHP_EOL . "  Функция: %s" . PHP_EOL . "  Аргументы: %s",
                             $step_number,
@@ -407,11 +496,11 @@ try {
 /** @dir include
  * @brief   Содержит вспомогательные классы и функции.
  * @details Примеры файлов:
- *          - common.php: Общие настройки и конфигурации.
- *          - db.php: Класс для работы с базой данных через PDO.
- *          - template.php: Класс для работы с HTML-шаблонами.
- *          - user.php: Класс для управления пользователями.
- *          - work.php: Вспомогательные функции и утилиты.
+ *          - functions.php: Общие настройки и конфигурации.
+ *          - Database.php: Класс для работы с базой данных через PDO.
+ *          - Template.php: Класс для работы с HTML-шаблонами.
+ *          - User.php: Класс для управления пользователями.
+ *          - Work.php: Вспомогательные функции и утилиты.
  */
 
 /** @dir install

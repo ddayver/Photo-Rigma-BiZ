@@ -1,5 +1,5 @@
 <map id="no_photo" name="no_photo">
-<area shape="rect" id="Node000001" title="Возвращает данные для отсутствующего изображения." alt="" coords="5,5,80,30"/>
+<area shape="rect" id="Node000001" title="Возвращает данные для отсутствующего изображения через вызов внутреннего метода." alt="" coords="5,5,80,30"/>
 <area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a2b5c40822e7f0dcc8beb47dad2660286" title="Возвращает данные для отсутствующего изображения." alt="" coords="128,5,258,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,15,113,15,113,20,80,20"/>
 </map>

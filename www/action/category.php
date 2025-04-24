@@ -1,8 +1,24 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+/** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/category.php
  * @brief       Обзор и управление разделами галереи.
+ *
+ * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
+ *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      JsonException При выполнении методов, использующих JSON.
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ *
+ * @section     Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @author      Dark Dayver
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
+ * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею.
  *              Основные функции:
@@ -13,24 +29,26 @@
  *              - Проверка прав доступа пользователя на выполнение операций.
  *
  * @section     Основные функции
- * - Отображение списка категорий и фотографий.
- * - Редактирование данных категорий.
- * - Удаление категорий и связанных фотографий.
- * - Добавление новых категорий.
- * - Проверка прав доступа пользователя.
+ *              - Отображение списка категорий и фотографий.
+ *              - Редактирование данных категорий.
+ *              - Удаление категорий и связанных фотографий.
+ *              - Добавление новых категорий.
+ *              - Проверка прав доступа пользователя.
  *
- * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
- *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
- *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
- * @namespace   PhotoRigma\Action
+ * @section     Обработка ошибок
+ *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *              - `RuntimeException`: Если возникают ошибки при выполнении операций с базой данных или файловой
+ *              системой.
+ *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *              - `JsonException`: При выполнении методов, использующих JSON.
+ *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
  * @see         PhotoRigma\Classes\Database Класс для работы с базой данных.
- * @see         PhotoRigma\Classes\Template Класс для работы с шаблонами.
- * @see         PhotoRigma\Classes\User Класс для работы с пользователями.
- * @see         PhotoRigma\Classes\Work Класс для выполнения различных операций.
+ *                - @see PhotoRigma\Classes\Template Класс для работы с шаблонами.
+ *                - @see PhotoRigma\Classes\User Класс для работы с пользователями.
+ *                - @see PhotoRigma\Classes\Work Класс для выполнения различных операций.
+ *              - Файлы приложения:
+ *                - @see index.php Этот файл подключает action/category.php по запросу из `$_GET`.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
@@ -38,11 +56,12 @@
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ *              копии или значимые части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -100,6 +119,7 @@ if ($cat === 'user' || $cat === 0) {
         'empty'  => true,
         'regexp' => '/^(?:[0-9]+|curent)$/',
     ])) {
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $action = 'user_category';
 
         // Получение списка пользователей с категорией = 0 (используем JOIN)
@@ -186,6 +206,7 @@ if ($cat === 'user' || $cat === 0) {
         }
 
         if ($cat_id === $user->user['id'] && $user->user['id'] > 0) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             $action = 'you_category';
         }
 
@@ -285,6 +306,7 @@ if ($cat === 'user' || $cat === 0) {
     'empty'  => true,   // Проверка, что параметр не пустой
     'regexp' => '/^[0-9]+$/', // Регулярное выражение: только цифры
 ])) {
+    /** @noinspection NotOptimalIfConditionsInspection */
     if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true,
@@ -357,6 +379,7 @@ if ($cat === 'user' || $cat === 0) {
         exit;
     }
 
+    /** @noinspection NotOptimalIfConditionsInspection */
     if ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
             'isset' => true,
             'empty' => true,
@@ -414,10 +437,14 @@ if ($cat === 'user' || $cat === 0) {
                 'L_NO_CATEGORY' => $work->lang['category']['error_no_category'],
             ]);
         }
-    } elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
-            'isset' => true,
-            'empty' => true,
-        ]) && $_GET['subact'] === 'delete') {
+    } /** @noinspection NotOptimalIfConditionsInspection */ elseif ($user->user['cat_moderate'] && $work->check_input(
+        '_GET',
+        'subact',
+        [
+                'isset' => true,
+                'empty' => true,
+            ]
+    ) && $_GET['subact'] === 'delete') {
         // Явное преобразование $cat в целое число для безопасности
         $cat = (int)$cat;
 
@@ -632,11 +659,16 @@ if ($cat === 'user' || $cat === 0) {
             ]);
         }
     }
-} elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
-        'isset' => true,
-        'empty' => true,
-    ]) && $_GET['subact'] === 'add') {
+} /** @noinspection NotOptimalIfConditionsInspection */ elseif ($user->user['cat_moderate'] && $work->check_input(
+    '_GET',
+    'subact',
+    [
+            'isset' => true,
+            'empty' => true,
+        ]
+) && $_GET['subact'] === 'add') {
     // Устанавливаем действие "добавление категории"
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $action = 'add_category';
 
     // Добавляем шаблон для редактирования категории
@@ -675,10 +707,14 @@ if ($cat === 'user' || $cat === 0) {
         'U_EDITED'               => sprintf('%s?action=category&subact=saveadd', $work->config['site_url']),
         // URL для отправки формы
     ]);
-} elseif ($user->user['cat_moderate'] && $work->check_input('_GET', 'subact', [
-        'isset' => true,
-        'empty' => true,
-    ]) && $_GET['subact'] === 'saveadd') {
+} /** @noinspection NotOptimalIfConditionsInspection */ elseif ($user->user['cat_moderate'] && $work->check_input(
+    '_GET',
+    'subact',
+    [
+            'isset' => true,
+            'empty' => true,
+        ]
+) && $_GET['subact'] === 'saveadd') {
     // Проверяем CSRF-токен
     if (empty($_POST['csrf_token']) || !hash_equals(
         $user->session['csrf_token'],
@@ -769,6 +805,7 @@ if ($cat === 'user' || $cat === 0) {
     $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 
     if ($categories) {
+        $key = 0;
         foreach ($categories as $key => $val) {
             $category_data = $work->category($val['id']);
             $template->add_string_ar([
@@ -784,7 +821,7 @@ if ($cat === 'user' || $cat === 0) {
         }
 
         // Добавляем данные для категории "Все фото"
-        $all_photos_category = $work->category(0, 0);
+        $all_photos_category = $work->category();
         if ($all_photos_category['user_upload_count_data'] > 0) {
             $template->add_string_ar([
                 'D_NAME_CATEGORY'        => Work::clean_field($all_photos_category['name']),

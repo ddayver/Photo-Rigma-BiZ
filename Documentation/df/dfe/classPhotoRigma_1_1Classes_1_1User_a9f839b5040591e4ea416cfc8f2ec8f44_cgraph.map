@@ -1,0 +1,5 @@
+<map id="login_user" name="login_user">
+<area shape="rect" id="Node000001" title="Проверяет данные пользователя для входа в систему через вызов внутреннего метода." alt="" coords="5,5,86,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6faeda51357eb02f3ea21011d8db4262" title="Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран..." alt="" coords="134,5,270,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,15,118,15,118,20,86,20"/>
+</map>

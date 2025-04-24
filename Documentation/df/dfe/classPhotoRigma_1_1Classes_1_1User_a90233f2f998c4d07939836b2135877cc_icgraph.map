@@ -1,6 +1,6 @@
 <map id="load_guest_user" name="load_guest_user">
-<area shape="rect" id="Node000001" title="Метод загружает данные группы гостя из базы данных и сохраняет их в свойство $user." alt="" coords="500,5,617,30"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4ed2627b2e687e62000e77ada58d072f" title="Инициализация данных пользователя." alt="" coords="143,5,242,30"/>
+<area shape="rect" id="Node000001" title="Метод загружает данные группы гостя из базы данных, обрабатывает права (user_rights) и сохраняет итог..." alt="" coords="500,5,617,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4ed2627b2e687e62000e77ada58d072f" title="Инициализация данных пользователя: определение типа пользователя (гость или аутентифицированный) на о..." alt="" coords="143,5,242,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="485,20,242,20,242,15,485,15"/>
 <area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="290,29,452,54"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="485,30,453,34,453,29,484,24"/>

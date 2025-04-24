@@ -1,0 +1,26 @@
+<map id="_process_user_rights_internal" name="_process_user_rights_internal">
+<area shape="rect" id="Node000001" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="877,125,1022,164"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="691,132,829,157"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="861,147,829,147,829,142,861,142"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="504,5,643,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="731,124,690,91,641,58,621,47,624,42,644,53,693,87,735,120"/>
+<area shape="rect" id="Node000005" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0e0a242e5a2f6555e5f5dd0d4f9c52a4" title="Обновляет права пользователя или группу через Админку." alt="" coords="504,68,643,107"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="702,130,638,110,639,105,704,125"/>
+<area shape="rect" id="Node000007" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a7bac0b0462dbce26194a9f412cc07c4c" title="Метод загружает права первого пользователя и первой группы из базы данных, извлекает имена полей (клю..." alt="" coords="143,134,246,158"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="675,148,247,149,247,143,675,142"/>
+<area shape="rect" id="Node000009" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a3d3625567d4ec81c5afe3f2221947ae9" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="294,183,456,208"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="676,161,643,166,457,189,457,184,642,161,675,156"/>
+<area shape="rect" id="Node000011" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a90233f2f998c4d07939836b2135877cc" title="Метод загружает данные группы гостя из базы данных, обрабатывает права (user_rights) и сохраняет итог..." alt="" coords="515,232,632,257"/>
+<area shape="poly" id="edge11_Node000002_Node000011" title=" " alt="" coords="727,168,644,216,606,234,604,229,641,212,725,163"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a8432fa6f08d4982b9c9d9aaede7de566" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="310,12,441,37"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="489,27,441,27,441,22,489,22"/>
+<area shape="rect" id="Node000006" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a54dd5e694d07ac47b91bf9a7cc58d9d2" title="Обновляет права пользователя или группу через вызов внутреннего метода." alt="" coords="310,75,441,100"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="489,90,441,90,441,85,489,85"/>
+<area shape="rect" id="Node000008" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0524c883699d2510258de9ed3b7b3194" title="Конструктор класса." alt="" coords="5,159,95,184"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="128,160,96,166,95,161,127,155"/>
+<area shape="rect" id="Node000010" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4ed2627b2e687e62000e77ada58d072f" title="Инициализация данных пользователя: определение типа пользователя (гость или аутентифицированный) на о..." alt="" coords="145,183,244,208"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="279,198,244,198,244,193,279,193"/>
+<area shape="poly" id="edge10_Node000010_Node000008" title=" " alt="" coords="129,187,95,181,95,176,130,182"/>
+<area shape="poly" id="edge13_Node000011_Node000009" title=" " alt="" coords="506,231,427,211,429,206,507,225"/>
+<area shape="poly" id="edge12_Node000011_Node000010" title=" " alt="" coords="499,244,401,236,294,222,242,211,243,206,294,217,402,231,500,238"/>
+</map>

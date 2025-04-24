@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.0</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -67,7 +67,7 @@ $(function() {
       <div id="nav-sync" class="sync"></div>
     </div>
   </div>
-  <div id="splitbar" style="-moz-user-select:none;"
+  <div id="splitbar" style="-moz-user-select:none;" 
        class="ui-resizable-handle">
   </div>
 </div>
@@ -106,14 +106,14 @@ $(function(){initNavTree('da/d71/action_2main_8php.html','../../'); initResizabl
 </div><!--header-->
 <div class="contents">
 
-<p>Главная страница. Формирует и выводит последние новости проекта, проверяя права пользователя на их просмотр.
+<p>Главная страница. Формирует и выводит последние новости проекта, проверяя права пользователя на их просмотр.  
 <a href="#details">Подробнее...</a></p>
 
 <p><a href="../../da/d71/action_2main_8php_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d05/namespacePhotorigma.html">Photorigma</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">PhotoRigma\Action</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,31 +127,26 @@ $(function(){initNavTree('da/d71/action_2main_8php.html','../../'); initResizabl
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Главная страница. Формирует и выводит последние новости проекта, проверяя права пользователя на их просмотр. </p>
-<p>Этот файл отвечает за формирование главной страницы сайта. Основная логика включает:</p><ul>
-<li>Загрузку последних новостей (количество определяется конфигурацией <code>last_news</code>).</li>
-<li>Проверку прав пользователя на просмотр новостей (&lsquo;$user-&gt;user['news_view&rsquo;]<code>).</code></li>
-<li><code>Обработку ошибок при получении данных из базы данных.</code></li>
-<li><code>Формирование ссылок для редактирования или удаления новостей (если пользователь имеет соответствующие права).</code></li>
-<li><code>Использование всех ресурсов из пространства имён</code><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>\Classes`.</li>
-</ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
-<ul>
-<li>Загрузка последних новостей.</li>
-<li>Проверка прав пользователя на просмотр новостей.</li>
-<li>Формирование ссылок для редактирования или удаления новостей.</li>
-<li>Логирование ошибок и подозрительных действий.</li>
-</ul>
+<p>@noinspection PhpUnhandledExceptionInspection @noinspection PhpUndefinedClassInspection</p>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>Если возникают ошибки при получении данных пользователя из базы данных. Пример сообщения: "Ошибка базы данных | Не удалось найти пользователя с ID: [ID пользователя]". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если пользователь не имеет прав на просмотр новостей. Пример сообщения: "Пользователь не имеет прав на просмотр новостей | ID: {$user-&gt;user['id']}".</td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если пользователь не имеет прав на просмотр новостей. Пример сообщения: "Пользователь не имеет прав на просмотр новостей | ID: {$user-&gt;user['id']}". </td></tr>
+    <tr><td class="paramname">Exception</td><td>При выполнении прочих методов классов, функций или операций.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.4.0 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-04-07 </dd></dl>
+<h1><a class="anchor" id="Связанные"></a>
+файлы и компоненты</h1>
+<ul>
+<li>Классы приложения:<ul>
+<li><dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.4.1-rc1 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-04-25 </dd></dl>
+</li>
+</ul>
+</li>
+</ul>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d71/action_2main_8php_source.html">main.php</a></p>
 </div></div><!-- contents -->

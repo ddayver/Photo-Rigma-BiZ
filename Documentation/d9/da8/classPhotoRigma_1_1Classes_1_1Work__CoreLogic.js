@@ -1,7 +1,7 @@
 var classPhotoRigma_1_1Classes_1_1Work__CoreLogic =
 [
-    [ "__construct", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4609bb638e265ca95f28d20758fc195b", null ],
-    [ "__get", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a96d631a05b563f91f5494b409b357cbc", null ],
+    [ "__construct", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a85980195f962ed7db9e0b940f5e6b3dd", null ],
+    [ "__get", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a0acd7052f38245fd3723ea29c83bf3f3", null ],
     [ "__isset", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a0c45daa80235f514090aa7789f5e93b3", null ],
     [ "__set", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a7c8aa5e8f1335dd150232b9ba442d694", null ],
     [ "_category_internal", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433", null ],
@@ -20,10 +20,10 @@ var classPhotoRigma_1_1Classes_1_1Work__CoreLogic =
     [ "news", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abfa7c6c53ae460403a3d0b3923e71a90", null ],
     [ "process_rating", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35f2b39b21e9ee39a5878708e9211198", null ],
     [ "set_lang", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aaf95d95540a3e47c5905a47db3424ed9", null ],
-    [ "set_user", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ac632034f4e83ba35a7b3e2124829e0c2", null ],
+    [ "set_user", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a75c62c77591a021c5555660ce20e84b3", null ],
     [ "$config", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#ab76f8f2ac851632a23ef69df2bd99dad", null ],
     [ "$db", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a18e3eac65d39ced5231d9b3e3630ba75", null ],
     [ "$lang", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a9fd8978d2c6cbdcfdd6be875be161b7b", null ],
-    [ "$user", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35c45cc33d8d420da794514df59466b7", null ],
-    [ "$work", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#aa1464d140ae01b78294ee8d81d3374d7", null ]
+    [ "$user", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#abbadc8b1002dc2bf9aca5109a7698b6b", null ],
+    [ "$work", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a440fb4e1ddf381895225c74da750d6ce", null ]
 ];

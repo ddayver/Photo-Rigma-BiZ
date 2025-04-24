@@ -1,5 +1,5 @@
 <map id="_template_best_user_internal" name="_template_best_user_internal">
 <area shape="rect" id="Node000001" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="189,5,331,44"/>
-<area shape="rect" id="Node000002" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="5,12,141,37"/>
+<area shape="rect" id="Node000002" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="5,12,141,37"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,27,141,27,141,22,173,22"/>
 </map>

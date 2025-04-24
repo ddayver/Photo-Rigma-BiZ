@@ -1,8 +1,29 @@
 <?php
 
+/** @noinspection DuplicatedCode */
+
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/profile.php
  * @brief       Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.
+ *
+ * @throws      RuntimeException Если не удалось выполнить действие с профилем (например, вход, выход, регистрация,
+ *                               редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID:
+ *                               {$user->session['login_id']}".
+ * @throws      LogicException Если не удалось получить данные группы пользователя.
+ *              Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID:
+ *              {$user->session['login_id']}".
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      JsonException При выполнении методов, использующих JSON.
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ *
+ * @section     Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @author      Dark Dayver
+ * @version     0.4.1-rc1
+ * @date        2025-04-25
+ * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление профилями пользователей, включая:
  *              - Вход и выход пользователя.
@@ -13,29 +34,28 @@
  *              - Логирование ошибок и подозрительных действий.
  *
  * @section     Основные функции
- * - Вход и выход пользователя.
- * - Регистрация новых пользователей.
- * - Редактирование профиля.
- * - Просмотр профиля другого пользователя.
- * - Логирование ошибок и подозрительных действий.
+ *              - Вход и выход пользователя.
+ *              - Регистрация новых пользователей.
+ *              - Редактирование профиля.
+ *              - Просмотр профиля другого пользователя.
+ *              - Логирование ошибок и подозрительных действий.
  *
- * @throws      RuntimeException Если не удалось выполнить действие с профилем (например, вход, выход, регистрация,
- *                               редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID:
- *                               {$user->session['login_id']}".
- * @throws      LogicException Если не удалось получить данные группы пользователя.
- *              Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID:
- *              {$user->session['login_id']}".
- *
- * @author      Dark Dayver
- * @version     0.4.0
- * @date        2025-04-07
- * @namespace   PhotoRigma\Action
+ * @section     Обработка ошибок
+ *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *              - `RuntimeException`: Если не удалось выполнить действие с профилем (например, вход, выход,
+ *                регистрация, редактирование).
+ *              - `LogicException`: Если не удалось получить данные группы пользователя.
+ *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *              - `JsonException`: При выполнении методов, использующих JSON.
+ *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
  * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- * @see         PhotoRigma::Classes::Database Класс для работы с базой данных.
- * @see         PhotoRigma::Classes::User Класс для управления пользователями.
- * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
- * @see         file index.php Этот файл подключает action/profile.php по запросу из `$_GET`.
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *              - Вспомогательные функции:
+ *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *              - Файлы приложения:
+ *                - @see index.php Этот файл подключает action/profile.php по запросу из `$_GET`.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
@@ -43,11 +63,12 @@
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
+ *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ *              копии или значимые части программного обеспечения.
  */
 
 namespace PhotoRigma\Action;
@@ -104,6 +125,7 @@ $redirect_url = match (true) {
 };
 
 if ($subact === 'saveprofile') {
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $subact = 'profile';
     if ($user->session['login_id'] === 0) {
         header('Location: ' . $redirect_url);
@@ -155,13 +177,12 @@ if ($subact === 'saveprofile') {
         }
 
         // Вызываем метод update_user_data для обновления данных пользователя
-        $rows = $user->update_user_data($user_id, $_POST, $_FILES, $max_size);
+        $user->update_user_data($user_id, $_POST, $_FILES, $max_size);
 
         // Переинициируем класс User для обновления данных в сессии.
         $user = new User($db, $_SESSION);
         $work->set_user($user);
         $work->set_lang();
-        $template->set_lang($work->lang);
         $template->set_work($work);
         header('Location: ' . $redirect_url);
         exit;
@@ -185,8 +206,8 @@ if ($subact === 'logout') {
     ], TBL_USERS, [
         'where'  => '`id` = :user_id',
         'params' => [
-            ':user_id'     => $user->session['login_id'],
-            ':last_activ'  => null, // Передаем NULL как значение
+            ':user_id'    => $user->session['login_id'],
+            ':last_activ' => null, // Передаем NULL как значение
         ],
     ]);
 
@@ -199,8 +220,8 @@ if ($subact === 'logout') {
     }
 
     // Безопасное завершение сессии
-    $user->session['login_id'] = 0;
-    $user->session['admin_on'] = false;
+    $user->set_property_key('session', 'login_id', 0);
+    $user->set_property_key('session', 'admin_on', false);
 
     // Регенерация session_id для безопасности
     session_regenerate_id(true);
@@ -208,7 +229,6 @@ if ($subact === 'logout') {
     $user = new User($db, $_SESSION);
     $work->set_user($user);
     $work->set_lang();
-    $template->set_lang($work->lang);
     $template->set_work($work);
 
     // Уничтожение сессии
@@ -236,12 +256,14 @@ if ($subact === 'regist') {
     $template->add_case('PROFILE_BLOCK', 'REGIST');
 
     // Задаем заголовок страницы
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $title = $work->lang['profile']['regist'];
+    /** @noinspection PhpUnusedLocalVariableInspection */
     $action = 'regist';
 
     // Генерируем CAPTCHA и сохраняем её ответ в сессии (хэшированный)
     $captcha = $work->gen_captcha();
-    $user->session['captcha'] = password_hash($captcha['answer'], PASSWORD_BCRYPT);
+    $user->set_property_key('session', 'captcha', password_hash($captcha['answer'], PASSWORD_BCRYPT));
 
     // Генерируем CSRF-токен для защиты от атак типа CSRF
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
@@ -312,11 +334,11 @@ if ($subact === 'regist') {
     $user->unset_property_key('session', 'csrf_token');
 
     // Вызываем метод add_user_data
-    $new_user = $user->add_new_user($_POST, $redirect_url);
+    $new_user = $user->add_new_user($_POST);
 
     // Обработка результата
     if ($new_user !== 0) {
-        $user->session['login_id'] = $new_user;
+        $user->set_property_key('session', 'login_id', $new_user);
         header('Location: ' . sprintf('%s?action=profile&subact=profile', $work->config['site_url']));
         exit;
     }
@@ -337,7 +359,7 @@ if ($subact === 'regist') {
     }
 
     // Сбрасываем ID пользователя в сессии
-    $user->session['login_id'] = 0;
+    $user->set_property_key('session', 'login_id', 0);
 
     // Проверяем CSRF-токен
     if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
@@ -351,12 +373,11 @@ if ($subact === 'regist') {
     $user_id = $user->login_user($_POST, $redirect_url);
 
     // Авторизуем пользователя
-    $user->session['login_id'] = $user_id; // Устанавливаем ID или 0, если пользователь не найден
+    $user->set_property_key('session', 'login_id', $user_id);
     // Инициализация ядра для пользователя (включая гостя)
     $user = new User($db, $_SESSION);
     $work->set_user($user);
     $work->set_lang();
-    $template->set_lang($work->lang);
     $template->set_work($work);
 
     // Перенаправляем пользователя на целевую страницу
@@ -380,21 +401,21 @@ if ($subact === 'regist') {
         $uid = (int)$user->session['login_id'];
     }
     // Проверка прав доступа
+    $db->select(
+        '*',
+        TBL_USERS,
+        [
+            'where'  => '`id` = :id',
+            'params' => [':id' => $uid],
+        ]
+    );
+    $user_data = $db->res_row();
+    if (!$user_data) {
+        header('Location: ' . $work->config['site_url']);
+        exit;
+    }
     if ($uid === $user->session['login_id'] || $user->user['admin']) {
         // Получение данных пользователя
-        $db->select(
-            '*',
-            TBL_USERS,
-            [
-                'where'  => '`id` = :id',
-                'params' => [':id' => $uid],
-            ]
-        );
-        $user_data = $db->res_row();
-        if (!$user_data) {
-            header('Location: ' . $work->config['site_url']);
-            exit;
-        }
         $name_block = $work->lang['profile']['edit_profile'] . ' ' . Work::clean_field($user_data['real_name']);
         $max_size_php = Work::return_bytes(ini_get('post_max_size'));
         $max_size = Work::return_bytes($work->config['max_file_size']);
@@ -434,6 +455,7 @@ if ($subact === 'regist') {
         }
         // Настройка шаблона для редактирования профиля
         $template->add_case('PROFILE_BLOCK', 'PROFILE_EDIT');
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $name_block;
         $language = $work->get_languages();
         $themes = $work->get_themes();
@@ -509,19 +531,6 @@ if ($subact === 'regist') {
         }
     } else {
         // Получение данных пользователя для просмотра
-        $db->select(
-            '*',
-            TBL_USERS,
-            [
-                'where'  => '`id` = :id',
-                'params' => [':id' => $uid],
-            ]
-        );
-        $user_data = $db->res_row();
-        if (!$user_data) {
-            header('Location: ' . $work->config['site_url']);
-            exit;
-        }
         $name_block = $work->lang['profile']['profile'] . ' ' . Work::clean_field($user_data['real_name']);
         // Получение данных группы
         $db->select(
@@ -555,6 +564,7 @@ if ($subact === 'regist') {
         }
         // Настройка шаблона для просмотра профиля
         $template->add_case('PROFILE_BLOCK', 'PROFILE_VIEW');
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $title = $name_block;
         $template->add_string_ar([
             'NAME_BLOCK'  => $name_block,

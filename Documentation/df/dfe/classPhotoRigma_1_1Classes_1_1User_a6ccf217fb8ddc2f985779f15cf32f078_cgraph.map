@@ -1,0 +1,5 @@
+<map id="encode_user_rights" name="encode_user_rights">
+<area shape="rect" id="Node000001" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="5,12,140,37"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="188,5,329,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,22,172,22,172,27,140,27"/>
+</map>

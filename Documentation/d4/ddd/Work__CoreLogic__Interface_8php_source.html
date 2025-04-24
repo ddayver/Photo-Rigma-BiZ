@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Photo-Rigma-BiZ: Исходный файл include/Work_CoreLogic_Interface.php</title>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Поиск',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d4/ddd/Work__CoreLogic__Interface_8php_source.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Work_CoreLogic_Interface.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d4/ddd/Work__CoreLogic__Interface_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">namespace </span>PhotoRigma\Interfaces;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>use Exception;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>use InvalidArgumentException;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>use PDOException;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>use RuntimeException;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">// Предотвращение прямого вызова файла</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !== <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    error_log(</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) . <span class="stringliteral">&quot; [ERROR] | &quot;</span> . (filter_input(</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            INPUT_SERVER,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            FILTER_VALIDATE_IP</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        ) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) . <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    );</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="};">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html">   78</a></span><span class="keyword">interface </span><a class="code hl_interface" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html">Work_CoreLogic_Interface</a></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>{</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#aaf95d95540a3e47c5905a47db3424ed9">  123</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a>(array $lang): void;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">  160</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">set_user</a>(<a class="code hl_interface" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html">User_Interface</a> <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>): void;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">  224</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">  273</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a>(<span class="keywordtype">int</span> $photo_id): bool;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">  326</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">news</a>(<span class="keywordtype">int</span> $news_id_or_limit, <span class="keywordtype">string</span> $act): array;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span></div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">  365</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>(): array;</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span></div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">  401</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>(): array;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span></div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">  468</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">create_photo</a>(<span class="keywordtype">string</span> $type = <span class="stringliteral">&#39;top&#39;</span>, <span class="keywordtype">int</span> $id_photo = 0): array;</div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span></div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno"><a class="line" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a35f2b39b21e9ee39a5878708e9211198">  517</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a35f2b39b21e9ee39a5878708e9211198">process_rating</a>(<span class="keywordtype">string</span> $table, <span class="keywordtype">int</span> $photo_id, <span class="keywordtype">int</span> $user_id, <span class="keywordtype">int</span> $rate_value): float;</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>}</div>
+</div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1User__Interface_html"><div class="ttname"><a href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html">PhotoRigma\Interfaces\User_Interface</a></div><div class="ttdoc">Интерфейс для работы с пользователями и группами.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/db5/User__Interface_8php_source.html#l00096">User_Interface.php:97</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html">PhotoRigma\Interfaces\Work_CoreLogic_Interface</a></div><div class="ttdoc">Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</div><div class="ttdef"><b>Определения</b> <a href="#l00078">Work_CoreLogic_Interface.php:79</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a35f2b39b21e9ee39a5878708e9211198"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a35f2b39b21e9ee39a5878708e9211198">PhotoRigma\Interfaces\Work_CoreLogic_Interface\process_rating</a></div><div class="ttdeci">process_rating(string $table, int $photo_id, int $user_id, int $rate_value)</div><div class="ttdoc">Добавляет новую оценку в таблицу и возвращает среднюю оценку фотографии.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a4dfb943f9b750ec6e1e2924a9620c7f5"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">PhotoRigma\Interfaces\Work_CoreLogic_Interface\category</a></div><div class="ttdeci">category(int $cat_id=0, int $user_flag=0)</div><div class="ttdoc">Формирует информационную строку для категории или пользовательского альбома.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a75c62c77591a021c5555660ce20e84b3"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">PhotoRigma\Interfaces\Work_CoreLogic_Interface\set_user</a></div><div class="ttdeci">set_user(User_Interface $user)</div><div class="ttdoc">Установка объекта, реализующего интерфейс User_Interface, через сеттер.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a84a1eeee53079a8e60fea1d1e0d94639"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">PhotoRigma\Interfaces\Work_CoreLogic_Interface\del_photo</a></div><div class="ttdeci">del_photo(int $photo_id)</div><div class="ttdoc">Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a8d2f43c00af0c9574caa0455df82c613"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">PhotoRigma\Interfaces\Work_CoreLogic_Interface\get_themes</a></div><div class="ttdeci">get_themes()</div><div class="ttdoc">Загружает доступные темы из директории /themes/.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a930a20fbdd1b0e274b7e648d966516c5"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">PhotoRigma\Interfaces\Work_CoreLogic_Interface\create_photo</a></div><div class="ttdeci">create_photo(string $type=&#39;top&#39;, int $id_photo=0)</div><div class="ttdoc">Генерирует блок данных для вывода изображений различных типов.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_a9c2ee4da4bf10547c3aff7296d707c66"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">PhotoRigma\Interfaces\Work_CoreLogic_Interface\get_languages</a></div><div class="ttdeci">get_languages()</div><div class="ttdoc">Загружает доступные языки из директории /language/.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_aaf95d95540a3e47c5905a47db3424ed9"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#aaf95d95540a3e47c5905a47db3424ed9">PhotoRigma\Interfaces\Work_CoreLogic_Interface\set_lang</a></div><div class="ttdeci">set_lang(array $lang)</div><div class="ttdoc">Установка языковых данных через сеттер.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface_html_abfa7c6c53ae460403a3d0b3923e71a90"><div class="ttname"><a href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">PhotoRigma\Interfaces\Work_CoreLogic_Interface\news</a></div><div class="ttdeci">news(int $news_id_or_limit, string $act)</div><div class="ttdoc">Получает данные о новостях в зависимости от типа запроса.</div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00281">index.php:281</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_afc238d5007d9f82f9c59e7d33f7a75c6"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">PhotoRigma\IN_GALLERY</a></div><div class="ttdeci">const IN_GALLERY</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00160">index.php:160</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../d4/ddd/Work__CoreLogic__Interface_8php.html">Work_CoreLogic_Interface.php</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

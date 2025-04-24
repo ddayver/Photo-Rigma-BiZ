@@ -1,5 +1,0 @@
-<map id="Work_CoreLogic_Interface" name="Work_CoreLogic_Interface">
-<area shape="rect" id="Node000001" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения." alt="" coords="5,5,181,30"/>
-<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс, реализующий интерфейс Work_CoreLogic_Interface для выполнения базовой логики приложения." alt="" coords="34,78,152,103"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,46,96,78,90,78,90,46"/>
-</map>

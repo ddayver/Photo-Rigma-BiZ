@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['main_2ephp_0',['main.php',['../da/d71/action_2main_8php.html',1,'(Глобальное пространство имён)'],['../d4/d40/language_2english_2main_8php.html',1,'(Глобальное пространство имён)'],['../da/d32/language_2russian_2main_8php.html',1,'(Глобальное пространство имён)']]]
+  ['index_2ephp_0',['index.php',['../de/d20/index_8php.html',1,'']]],
+  ['install_2ephp_1',['install.php',['../d8/daf/install_8php.html',1,'']]]
 ];

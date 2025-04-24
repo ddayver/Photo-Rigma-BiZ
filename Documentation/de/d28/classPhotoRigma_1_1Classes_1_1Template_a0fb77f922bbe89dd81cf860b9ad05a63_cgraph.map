@@ -1,7 +1,11 @@
 <map id="add_if_ar" name="add_if_ar">
-<area shape="rect" id="Node000001" title="Метод добавляет массив данных об условиях вывода фрагментов шаблона, с возможностью рекурсивного разм..." alt="" coords="5,5,80,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1c5d5f804563b88462ee58e079ce528d" title="Метод добавляет данные об условиях вывода фрагментов шаблона, с возможностью рекурсивного размещения." alt="" coords="128,5,184,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,15,112,15,112,20,80,20"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a88f4f4156291c8bd4a518291c30664bf" title="Метод проверяет существование рекурсивного блока массивов&#45;объектов, разбирает путь и возвращает струк..." alt="" coords="232,5,334,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="184,15,217,15,217,20,184,20"/>
+<area shape="rect" id="Node000001" title="Добавляет массив условий для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="5,5,80,30"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a6c3e3fa022904316d64e9fd16a930674" title="Метод добавляет массив данных об условиях вывода фрагментов шаблона, с возможностью рекурсивного разм..." alt="" coords="128,5,258,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,15,113,15,113,20,80,20"/>
+<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1c5d5f804563b88462ee58e079ce528d" title="Добавляет условие для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="306,5,362,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="259,15,290,15,290,20,259,20"/>
+<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#aa0dc0ea6cf7d29dfc8c4c51710110042" title="Метод добавляет данные об условиях вывода фрагментов шаблона, с возможностью рекурсивного размещения." alt="" coords="410,5,523,30"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="363,15,395,15,395,20,363,20"/>
+<area shape="rect" id="Node000005" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a88f4f4156291c8bd4a518291c30664bf" title="Метод проверяет путь, разбирает его на составные части и создает новый объект&#45;массив при необходимост..." alt="" coords="571,5,673,30"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="523,15,555,15,555,20,523,20"/>
 </map>

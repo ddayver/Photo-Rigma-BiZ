@@ -1,5 +1,5 @@
 <map id="__set" name="__set">
-<area shape="rect" id="Node000001" title="Устанавливает значение приватного свойства $template_file." alt="" coords="5,5,59,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#aeb30656300264153e8655b016d3a4278" title="Метод проверяет существование, тип и доступность файла шаблона для чтения." alt="" coords="107,5,228,30"/>
+<area shape="rect" id="Node000001" title="Устанавливает значение приватных свойств $template_file и $ins_header." alt="" coords="5,5,59,30"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#aeb30656300264153e8655b016d3a4278" title="Метод проверяет, является ли файл шаблона корректным и доступным для чтения." alt="" coords="107,5,228,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,15,91,15,91,20,59,20"/>
 </map>

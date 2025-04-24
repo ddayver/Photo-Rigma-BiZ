@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Photo-Rigma-BiZ: Исходный файл include/Work_Interface.php</title>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
+   </div>
+   <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Поиск',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d3/dee/Work__Interface_8php_source.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Work_Interface.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d3/dee/Work__Interface_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keyword">namespace </span>PhotoRigma\Interfaces;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">// Предотвращение прямого вызова файла</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>use Exception;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>use InvalidArgumentException;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>use JetBrains\PhpStorm\NoReturn;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>use JsonException;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>use PDOException;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>use Random;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>use RuntimeException;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !== <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    error_log(</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) . <span class="stringliteral">&quot; [ERROR] | &quot;</span> . (filter_input(</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            INPUT_SERVER,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            FILTER_VALIDATE_IP</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        ) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) . <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    );</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
+<div class="foldopen" id="foldopen00098" data-start="{" data-end="};">
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html">   98</a></span><span class="keyword">interface </span><a class="code hl_interface" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html">Work_Interface</a></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>{</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ac28b2ada9c4f3a71f7a2df9bb1387413">  141</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ac28b2ada9c4f3a71f7a2df9bb1387413">return_bytes</a>(<span class="keywordtype">string</span>|<span class="keywordtype">int</span> $val): int;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ad9ac814e0001840a4cdbf826d0d6e53e">  185</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ad9ac814e0001840a4cdbf826d0d6e53e">encodename</a>(<span class="keywordtype">string</span> $string): string;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a3163f8e7d71cad9003bf5b3efe644712">  239</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a3163f8e7d71cad9003bf5b3efe644712">ubb</a>(<span class="keywordtype">string</span> $text): string;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32">  290</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32">utf8_wordwrap</a>(<span class="keywordtype">string</span> $str, <span class="keywordtype">int</span> $width = 70, <span class="keywordtype">string</span> $break = PHP_EOL): string;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span></div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a41518918c225073130bc7a73983d72ff">  328</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a41518918c225073130bc7a73983d72ff">validate_mime_type</a>(<span class="keywordtype">string</span> $real_mime_type): bool;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span></div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3">  357</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3">clean_field</a>(<span class="keywordtype">string</span> $field): string;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span></div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aed2ddce38e1559f3014f076e11a2cbe9">  401</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aed2ddce38e1559f3014f076e11a2cbe9">set_lang</a>(<span class="keywordtype">string</span> $lang = <span class="stringliteral">&#39;main&#39;</span>): void;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span></div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">  434</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">set_user</a>(<a class="code hl_interface" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html">User_Interface</a> <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>): void;</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span></div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a6e6ea2a212c3c2dee206a1753b673b7d">  491</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a6e6ea2a212c3c2dee206a1753b673b7d">check_input</a>(<span class="keywordtype">string</span> $source_name, <span class="keywordtype">string</span> $field, array $options = []): bool;</div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span></div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">  525</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">url_check</a>(): bool;</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span></div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a7fd7e97a953487a9422281b97bd6f083">  574</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a7fd7e97a953487a9422281b97bd6f083">check_field</a>(<span class="keywordtype">string</span> $field, <span class="keywordtype">string</span>|<span class="keyword">false</span> $regexp = <span class="keyword">false</span>, <span class="keywordtype">bool</span> $not_zero = <span class="keyword">false</span>): bool;</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span></div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a19ab20c34a49c9684a03c09c62f8af46">  608</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a19ab20c34a49c9684a03c09c62f8af46">gen_captcha</a>(): array;</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span></div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a4289bbbeca07e599a9366a812d069972">  649</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a4289bbbeca07e599a9366a812d069972">filt_email</a>(<span class="keywordtype">string</span> $email): string;</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span></div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">  713</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">category</a>(<span class="keywordtype">int</span> $cat_id = 0, <span class="keywordtype">int</span> $user_flag = 0): array;</div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span></div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">  762</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">del_photo</a>(<span class="keywordtype">int</span> $photo_id): bool;</div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span></div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">  815</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">news</a>(<span class="keywordtype">int</span> $news_id_or_limit, <span class="keywordtype">string</span> $act): array;</div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span></div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">  854</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">get_languages</a>(): array;</div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span></div>
+<div class="line"><a id="l00890" name="l00890"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a8d2f43c00af0c9574caa0455df82c613">  890</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a8d2f43c00af0c9574caa0455df82c613">get_themes</a>(): array;</div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span></div>
+<div class="line"><a id="l00957" name="l00957"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">  957</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">create_photo</a>(<span class="keywordtype">string</span> $type = <span class="stringliteral">&#39;top&#39;</span>, <span class="keywordtype">int</span> $id_photo = 0): array;</div>
+<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span></div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a35f2b39b21e9ee39a5878708e9211198"> 1006</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a35f2b39b21e9ee39a5878708e9211198">process_rating</a>(<span class="keywordtype">string</span> $table, <span class="keywordtype">int</span> $photo_id, <span class="keywordtype">int</span> $user_id, <span class="keywordtype">int</span> $rate_value): float;</div>
+<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span></div>
+<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504"> 1066</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">create_menu</a>(<span class="keywordtype">string</span> <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#aa698a3e72116e8e778be0e95d908ee30">$action</a>, <span class="keywordtype">int</span> $menu): array;</div>
+<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span></div>
+<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774"> 1114</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">template_user</a>(): array;</div>
+<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span></div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a116ebcf799d07566a74e7e765aecc1b7"> 1170</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">template_stat</a>(): array;</div>
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span></div>
+<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3"> 1216</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">template_best_user</a>(<span class="keywordtype">int</span> $best_user = 1): array;</div>
+<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span></div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b"> 1259</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">size_image</a>(<span class="keywordtype">string</span> $path_image): array;</div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span></div>
+<div class="line"><a id="l01315" name="l01315"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af37eb2b0693905dd71dd677f86d47831"> 1315</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af37eb2b0693905dd71dd677f86d47831">image_resize</a>(<span class="keywordtype">string</span> $full_path, <span class="keywordtype">string</span> $thumbnail_path): bool;</div>
+<div class="line"><a id="l01316" name="l01316"></a><span class="lineno"> 1316</span></div>
+<div class="line"><a id="l01357" name="l01357"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1"> 1357</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1">no_photo</a>(): array;</div>
+<div class="line"><a id="l01358" name="l01358"></a><span class="lineno"> 1358</span></div>
+<div class="line"><a id="l01408" name="l01408"></a><span class="lineno"> 1408</span><span class="preprocessor">    #[NoReturn] public function image_attach(string $full_path, string $name_file): void;</span></div>
+<div class="line"><a id="l01409" name="l01409"></a><span class="lineno"> 1409</span></div>
+<div class="line"><a id="l01463" name="l01463"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a89d4e7cb491d0c91282d16ff5abe3138"> 1463</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a89d4e7cb491d0c91282d16ff5abe3138">fix_file_extension</a>(<span class="keywordtype">string</span> $full_path): string;</div>
+<div class="line"><a id="l01464" name="l01464"></a><span class="lineno"> 1464</span></div>
+<div class="line"><a id="l01504" name="l01504"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aaaf358ddc8223e4a5a479f645fc43da8"> 1504</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aaaf358ddc8223e4a5a479f645fc43da8">remove_directory</a>(<span class="keywordtype">string</span> $path): bool;</div>
+<div class="line"><a id="l01505" name="l01505"></a><span class="lineno"> 1505</span></div>
+<div class="line"><a id="l01542" name="l01542"></a><span class="lineno"><a class="line" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a935337e705b7a1b9ea422d2e04932109"> 1542</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a935337e705b7a1b9ea422d2e04932109">create_directory</a>(<span class="keywordtype">string</span> $directory_name): bool;</div>
+<div class="line"><a id="l01543" name="l01543"></a><span class="lineno"> 1543</span>}</div>
+</div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1User__Interface_html"><div class="ttname"><a href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html">PhotoRigma\Interfaces\User_Interface</a></div><div class="ttdoc">Интерфейс для работы с пользователями и группами.</div><div class="ttdef"><b>Определения</b> <a href="../../dc/db5/User__Interface_8php_source.html#l00096">User_Interface.php:97</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html">PhotoRigma\Interfaces\Work_Interface</a></div><div class="ttdoc">Интерфейс для центральной точки приложения.</div><div class="ttdef"><b>Определения</b> <a href="#l00098">Work_Interface.php:99</a></div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a096b7e5c3f9fb908fbb30e1adc2ac61b"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">PhotoRigma\Interfaces\Work_Interface\size_image</a></div><div class="ttdeci">size_image(string $path_image)</div><div class="ttdoc">Вычисляет размеры для вывода эскиза изображения.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a116ebcf799d07566a74e7e765aecc1b7"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">PhotoRigma\Interfaces\Work_Interface\template_stat</a></div><div class="ttdeci">template_stat()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a19ab20c34a49c9684a03c09c62f8af46"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a19ab20c34a49c9684a03c09c62f8af46">PhotoRigma\Interfaces\Work_Interface\gen_captcha</a></div><div class="ttdeci">gen_captcha()</div><div class="ttdoc">Генерирует математический CAPTCHA-вопрос и ответ.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a1e1a4ab6b213ada0d89c77a24d8ffe32"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a1e1a4ab6b213ada0d89c77a24d8ffe32">PhotoRigma\Interfaces\Work_Interface\url_check</a></div><div class="ttdeci">url_check()</div><div class="ttdoc">Проверяет URL на наличие вредоносного кода.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a1f3df8874c79377e6a8b4398ea6ad774"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">PhotoRigma\Interfaces\Work_Interface\template_user</a></div><div class="ttdeci">template_user()</div><div class="ttdoc">Формирует данные для блока пользователя.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Interfaces\Work_Interface\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразует BBCode в HTML.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a35f2b39b21e9ee39a5878708e9211198"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a35f2b39b21e9ee39a5878708e9211198">PhotoRigma\Interfaces\Work_Interface\process_rating</a></div><div class="ttdeci">process_rating(string $table, int $photo_id, int $user_id, int $rate_value)</div><div class="ttdoc">Добавляет новую оценку в таблицу и возвращает среднюю оценку фотографии.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Interfaces\Work_Interface\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверяет, поддерживается ли указанный MIME-тип изображения.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a4289bbbeca07e599a9366a812d069972"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a4289bbbeca07e599a9366a812d069972">PhotoRigma\Interfaces\Work_Interface\filt_email</a></div><div class="ttdeci">filt_email(string $email)</div><div class="ttdoc">Заменяет символы в email-адресах для защиты от парсинга ботами.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a4dfb943f9b750ec6e1e2924a9620c7f5"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">PhotoRigma\Interfaces\Work_Interface\category</a></div><div class="ttdeci">category(int $cat_id=0, int $user_flag=0)</div><div class="ttdoc">Формирует информационную строку для категории или пользовательского альбома.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a6e6ea2a212c3c2dee206a1753b673b7d"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a6e6ea2a212c3c2dee206a1753b673b7d">PhotoRigma\Interfaces\Work_Interface\check_input</a></div><div class="ttdeci">check_input(string $source_name, string $field, array $options=[])</div><div class="ttdoc">Проверяет входные данные из различных источников.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a75c62c77591a021c5555660ce20e84b3"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">PhotoRigma\Interfaces\Work_Interface\set_user</a></div><div class="ttdeci">set_user(User_Interface $user)</div><div class="ttdoc">Установка объекта пользователя через сеттер.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a7fd7e97a953487a9422281b97bd6f083"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a7fd7e97a953487a9422281b97bd6f083">PhotoRigma\Interfaces\Work_Interface\check_field</a></div><div class="ttdeci">check_field(string $field, string|false $regexp=false, bool $not_zero=false)</div><div class="ttdoc">Проверяет содержимое поля на соответствие регулярному выражению или другим условиям.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a84a1eeee53079a8e60fea1d1e0d94639"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">PhotoRigma\Interfaces\Work_Interface\del_photo</a></div><div class="ttdeci">del_photo(int $photo_id)</div><div class="ttdoc">Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a89d4e7cb491d0c91282d16ff5abe3138"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a89d4e7cb491d0c91282d16ff5abe3138">PhotoRigma\Interfaces\Work_Interface\fix_file_extension</a></div><div class="ttdeci">fix_file_extension(string $full_path)</div><div class="ttdoc">Выводит изображение через HTTP.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a8d2f43c00af0c9574caa0455df82c613"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a8d2f43c00af0c9574caa0455df82c613">PhotoRigma\Interfaces\Work_Interface\get_themes</a></div><div class="ttdeci">get_themes()</div><div class="ttdoc">Загружает доступные темы из директории /themes/.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a8ecb9d3a6cba675b7a2d72ddc14b53f3"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3">PhotoRigma\Interfaces\Work_Interface\clean_field</a></div><div class="ttdeci">static clean_field(string $field)</div><div class="ttdoc">Очищает строку от HTML-тегов и специальных символов.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a9143fed87a3064985e0b51fe5fbb4ac3"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">PhotoRigma\Interfaces\Work_Interface\template_best_user</a></div><div class="ttdeci">template_best_user(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a930a20fbdd1b0e274b7e648d966516c5"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">PhotoRigma\Interfaces\Work_Interface\create_photo</a></div><div class="ttdeci">create_photo(string $type=&#39;top&#39;, int $id_photo=0)</div><div class="ttdoc">Генерирует блок данных для вывода изображений различных типов.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a935337e705b7a1b9ea422d2e04932109"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a935337e705b7a1b9ea422d2e04932109">PhotoRigma\Interfaces\Work_Interface\create_directory</a></div><div class="ttdeci">create_directory(string $directory_name)</div><div class="ttdoc">Создаёт директории для категории и копирует файлы index.php.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_a9c2ee4da4bf10547c3aff7296d707c66"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">PhotoRigma\Interfaces\Work_Interface\get_languages</a></div><div class="ttdeci">get_languages()</div><div class="ttdoc">Загружает доступные языки из директории /language/.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Interfaces\Work_Interface\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивает строку на несколько строк ограниченной длины.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_aaaf358ddc8223e4a5a479f645fc43da8"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aaaf358ddc8223e4a5a479f645fc43da8">PhotoRigma\Interfaces\Work_Interface\remove_directory</a></div><div class="ttdeci">remove_directory(string $path)</div><div class="ttdoc">Удаляет директорию и её содержимое, предварительно проверяя права доступа.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_abfa7c6c53ae460403a3d0b3923e71a90"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">PhotoRigma\Interfaces\Work_Interface\news</a></div><div class="ttdeci">news(int $news_id_or_limit, string $act)</div><div class="ttdoc">Получает данные о новостях в зависимости от типа запроса.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_ac28b2ada9c4f3a71f7a2df9bb1387413"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ac28b2ada9c4f3a71f7a2df9bb1387413">PhotoRigma\Interfaces\Work_Interface\return_bytes</a></div><div class="ttdeci">static return_bytes(string|int $val)</div><div class="ttdoc">Преобразует размер в формате &quot;число[K|M|G]&quot; в количество байт.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Interfaces\Work_Interface\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерирует строку и заменяет знаки пунктуации на &quot;_&quot;.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_adfcd1cb7963a860013ca9ca1898f54f1"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1">PhotoRigma\Interfaces\Work_Interface\no_photo</a></div><div class="ttdeci">no_photo()</div><div class="ttdoc">Возвращает данные для отсутствующего изображения.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_aed2ddce38e1559f3014f076e11a2cbe9"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aed2ddce38e1559f3014f076e11a2cbe9">PhotoRigma\Interfaces\Work_Interface\set_lang</a></div><div class="ttdeci">set_lang(string $lang=&#39;main&#39;)</div><div class="ttdoc">Устанавливает языковые данные из файла и передаёт их в дочерние классы.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_af37eb2b0693905dd71dd677f86d47831"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af37eb2b0693905dd71dd677f86d47831">PhotoRigma\Interfaces\Work_Interface\image_resize</a></div><div class="ttdeci">image_resize(string $full_path, string $thumbnail_path)</div><div class="ttdoc">Изменяет размер изображения.</div></div>
+<div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Interface_html_af970fc714c16e27d2d60d698522a8504"><div class="ttname"><a href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">PhotoRigma\Interfaces\Work_Interface\create_menu</a></div><div class="ttdeci">create_menu(string $action, int $menu)</div><div class="ttdoc">Формирует массив данных для меню в зависимости от типа и активного пункта.</div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00281">index.php:281</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_aa698a3e72116e8e778be0e95d908ee30"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#aa698a3e72116e8e778be0e95d908ee30">PhotoRigma\$action</a></div><div class="ttdeci">$action</div><div class="ttdoc">Действие, которое необходимо выполнить.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00328">index.php:328</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_afc238d5007d9f82f9c59e7d33f7a75c6"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">PhotoRigma\IN_GALLERY</a></div><div class="ttdeci">const IN_GALLERY</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00160">index.php:160</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="../../d3/dee/Work__Interface_8php.html">Work_Interface.php</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

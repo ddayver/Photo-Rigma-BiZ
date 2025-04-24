@@ -1,5 +1,5 @@
 <map id="utf8_wordwrap" name="utf8_wordwrap">
-<area shape="rect" id="Node000001" title="Разбивка строки на несколько строк ограниченной длины (публичная обёртка)." alt="" coords="5,5,112,30"/>
+<area shape="rect" id="Node000001" title="Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода." alt="" coords="5,5,112,30"/>
 <area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a1f0724c64151f06d211ca5d639046f5f" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="160,5,322,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,15,144,15,144,20,112,20"/>
 </map>

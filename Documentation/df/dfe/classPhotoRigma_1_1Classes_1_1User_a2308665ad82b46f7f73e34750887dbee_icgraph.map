@@ -1,0 +1,5 @@
+<map id="_add_new_user_internal" name="_add_new_user_internal">
+<area shape="rect" id="Node000001" title="Добавляет нового пользователя в базу данных, выполняя валидацию входных данных." alt="" coords="159,5,320,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4375fc668762fd63651b09a2a04f35bb" title="Добавляет нового пользователя в базу данных через вызов внутреннего метода." alt="" coords="5,5,111,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,20,111,20,111,15,143,15"/>
+</map>

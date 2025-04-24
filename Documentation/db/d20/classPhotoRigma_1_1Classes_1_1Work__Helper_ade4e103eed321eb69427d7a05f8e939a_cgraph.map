@@ -1,6 +1,6 @@
 <map id="_process_bbcode_recursively" name="_process_bbcode_recursively">
-<area shape="rect" id="Node000001" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов." alt="" coords="5,29,198,54"/>
+<area shape="rect" id="Node000001" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="5,29,198,54"/>
 <area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="67,31,59,21,63,11,77,5,102,3,128,6,142,13,139,17,127,11,101,8,79,10,67,15,64,20,71,27"/>
-<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ae7fce393b631f688e62115acde6b2641" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="246,29,384,54"/>
+<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="246,29,384,54"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,39,230,39,230,44,198,44"/>
 </map>

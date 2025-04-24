@@ -108,7 +108,4 @@ var menudata={children:[
 {text:"e",url:"functions_vars.html#index_e"},
 {text:"m",url:"functions_vars.html#index_m"}]}]}]},
 {text:"Файлы",url:"files.html",children:[
-{text:"Файлы",url:"files.html"},
-{text:"Список членов всех файлов",url:"globals.html",children:[
-{text:"Указатель",url:"globals.html"},
-{text:"Переменные",url:"globals_vars.html"}]}]}]}
+{text:"Файлы",url:"files.html"}]}]}
