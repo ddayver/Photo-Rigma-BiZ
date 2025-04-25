@@ -40,10 +40,10 @@
 
 namespace PhotoRigma\Interfaces;
 
-// Предотвращение прямого вызова файла
 use Exception;
 use InvalidArgumentException;
 
+// Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
         date('H:i:s') . " [ERROR] | " . (filter_input(

@@ -138,6 +138,7 @@ use LengthException;
 use LogicException;
 use OutOfBoundsException;
 use PDOException;
+use PhotoRigma\Classes\Cache_Handler;
 use PhotoRigma\Classes\Database;
 use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
@@ -196,6 +197,8 @@ try {
         $config['inc_dir'] . 'constants.php',
         $config['inc_dir'] . 'session_init.php',
         $config['inc_dir'] . 'functions.php',
+        $config['inc_dir'] . 'Cache_Handler_Interface.php',
+        $config['inc_dir'] . 'Cache_Handler.php',
         $config['inc_dir'] . 'Database_Interface.php',
         $config['inc_dir'] . 'Database.php',
         $config['inc_dir'] . 'Work_Helper_Interface.php',
@@ -244,6 +247,18 @@ try {
     // Архивирование старых логов
     archive_old_logs();
 
+    /** @var PhotoRigma::Classes $cache
+     * @brief   Создание объекта класса Cache_Handler для работы с системами кеширования.
+     * @details Инициализируется через конструктор с параметрами из массива $config['cache'].
+     *          - Для файлового кеширования (`file`) требуется указать путь к директории кеша.
+     *          - Для Redis/Memcached требуется указать хост и порт.
+     *          Дополнительно может быть передан путь к корневой директории проекта ($config['site_dir']) для файлового кеширования.
+     * @see     PhotoRigma::Classes::Cache_Handler Класс для работы с системами кеширования.
+     * @see     include/Cache_Handler.php Файл, содержащий реализацию класса Cache_Handler.
+     * @see     $config Массив конфигурации, используемый для настройки системы кеширования.
+     */
+    $cache = new Cache_Handler($config['cache'], $config['site_dir']);
+
     /** @var PhotoRigma::Classes $db ::Database $db
      * @brief   Создание объекта класса Database для работы с основной БД.
      * @details Инициализируется через конструктор с параметрами из массива $config['db'].
@@ -253,16 +268,23 @@ try {
      */
     $db = new Database($config['db']);
 
-    /** @var PhotoRigma::Classes $work ::Work $work
+    /** @var PhotoRigma::Classes $work
      * @brief   Создание объекта класса Work.
-     * @details Используется для выполнения различных вспомогательных операций.
+     * @details Используется для выполнения различных вспомогательных операций приложения:
+     *          - Управление конфигурацией через свойство `$config`.
+     *          - Работа с безопасностью через методы, такие как `check_input` и `url_check`.
+     *          - Взаимодействие с системой кеширования через объект `$cache`.
+     *          Объект создаётся с использованием экземпляра базы данных (`$db`), массива конфигурации (`$config`),
+     *          ссылки на массив сессии (`$_SESSION`) и объекта кеширования (`$cache`).
+     *
      * @see     PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
      * @see     include/Work.php Файл, содержащий реализацию класса Work.
      * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения.
+     * @see     PhotoRigma::Classes::Work::$cache Свойство, содержащее объект для работы с кешем.
      * @see     PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
      * @see     PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
      */
-    $work = new Work($db, $config, $_SESSION);
+    $work = new Work($db, $config, $_SESSION, $cache);
 
     /**
      * Очищаем значение массива $config[], чтобы предотвратить его использование напрямую.
