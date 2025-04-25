@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -141,14 +141,14 @@ $(function(){initNavTree('da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Secu
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с безопасностью. </p>
-<p>Этот интерфейс определяет методы, которые должны быть реализованы классами, отвечающими за безопасность приложения. Все методы вызываются через класс <code>Work</code>. Интерфейс охватывает такие задачи, как:</p><ul>
+<p>Этот интерфейс определяет методы, которые должны быть реализованы классами, отвечающими за безопасность приложения. Все методы вызываются через класс <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>. Интерфейс охватывает такие задачи, как:</p><ul>
 <li>Проверка URL на наличие вредоносного кода (<code>url_check</code>).</li>
 <li>Проверка входных данных из различных источников (<code>check_input</code>).</li>
 <li>Проверка содержимого полей на соответствие регулярным выражениям или другим условиям (<code>check_field</code>).</li>
 <li>Генерация математических CAPTCHA-вопросов для защиты от спам-ботов (<code>gen_captcha</code>).</li>
 <li>Фильтрация email-адресов для защиты от парсинга ботами (<code>filt_email</code>). Методы интерфейса предназначены для обеспечения безопасности приложения и защиты от распространённых угроз, таких как SQL-инъекции, XSS-атаки, спам-боты и другие.</li>
 </ul>
-<dl class="section note"><dt>Заметки</dt><dd>Все методы данного интерфейса рекомендуется вызывать через класс <code>Work</code>, так как их поведение может быть непредсказуемым при прямом вызове.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Все методы данного интерфейса рекомендуется вызывать через класс <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, так как их поведение может быть непредсказуемым при прямом вызове.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Некорректная реализация методов может привести к уязвимостям в системе, таким как доступ к данным через межсайтовый скриптинг (XSS) или SQL-инъекции. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d7/d9e/Work__Security__Interface_8php_source.html">Work_Security_Interface.php</a> строка <a class="el" href="../../d7/d9e/Work__Security__Interface_8php_source.html#l00078">78</a></p>

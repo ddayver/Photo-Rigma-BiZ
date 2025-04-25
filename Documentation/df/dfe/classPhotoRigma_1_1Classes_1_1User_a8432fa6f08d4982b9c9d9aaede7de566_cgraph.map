@@ -1,19 +1,13 @@
 <map id="update_group_data" name="update_group_data">
-<area shape="rect" id="Node000001" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="5,82,137,107"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="185,75,323,114"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,92,169,92,169,97,137,97"/>
-<area shape="rect" id="Node000003" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="371,16,514,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,72,363,57,365,63,319,77"/>
-<area shape="rect" id="Node000006" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="376,82,510,107"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="323,92,360,92,360,97,323,97"/>
-<area shape="rect" id="Node000008" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="374,138,512,163"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="322,112,385,131,383,136,321,117"/>
-<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="562,12,728,51"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="515,32,547,31,547,36,515,37"/>
-<area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="776,5,919,58"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="728,29,761,29,761,34,728,34"/>
-<area shape="rect" id="Node000007" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="574,75,716,114"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="510,92,559,92,559,97,510,97"/>
-<area shape="rect" id="Node000009" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="572,138,718,176"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="512,150,557,151,556,157,512,155"/>
+<area shape="rect" id="Node000001" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="5,44,137,69"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="185,37,323,76"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,54,169,54,169,59,137,59"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="373,16,507,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="323,44,358,38,358,44,324,49"/>
+<area shape="rect" id="Node000005" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="371,68,509,93"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="324,63,356,67,355,72,323,68"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="559,5,701,44"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="507,25,544,24,544,29,508,30"/>
+<area shape="rect" id="Node000006" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="557,68,703,107"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="510,80,542,82,542,87,510,86"/>
 </map>

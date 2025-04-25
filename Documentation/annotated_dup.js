@@ -5,7 +5,6 @@ var annotated_dup =
         [ "Database", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html", "d6/db6/classPhotoRigma_1_1Classes_1_1Database" ],
         [ "Template", "de/d28/classPhotoRigma_1_1Classes_1_1Template.html", "de/d28/classPhotoRigma_1_1Classes_1_1Template" ],
         [ "User", "df/dfe/classPhotoRigma_1_1Classes_1_1User.html", "df/dfe/classPhotoRigma_1_1Classes_1_1User" ],
-        [ "Work", "d7/d53/classPhotoRigma_1_1Classes_1_1Work.html", "d7/d53/classPhotoRigma_1_1Classes_1_1Work" ],
         [ "Work_CoreLogic", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html", "d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic" ],
         [ "Work_Helper", "db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html", null ],
         [ "Work_Image", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html", "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image" ],
@@ -23,5 +22,6 @@ var annotated_dup =
         [ "Work_Security_Interface", "da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html", "da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface" ],
         [ "Work_Template_Interface", "d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html", "d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface" ]
       ] ]
-    ] ]
+    ] ],
+    [ "Work", "d3/d64/classWork.html", null ]
 ];

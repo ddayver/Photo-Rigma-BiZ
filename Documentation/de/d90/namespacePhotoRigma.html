@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1-rc1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -170,8 +170,8 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'])</td></tr>
 <tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a> для работы с основной БД.  <br /></td></tr>
 <tr class="separator:a1fa3127fc82f96b1436d871ef02be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48" id="r_a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>($db, $config, $_SESSION)</td></tr>
-<tr class="memdesc:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a>.  <br /></td></tr>
+<tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48" id="r_a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="../../d3/d64/classWork.html">Work</a>($db, $config, $_SESSION)</td></tr>
+<tr class="memdesc:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>.  <br /></td></tr>
 <tr class="separator:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a598ca4e71b15a1313ec95f0df1027ca5" id="r_a598ca4e71b15a1313ec95f0df1027ca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>($db, $_SESSION)</td></tr>
 <tr class="memdesc:a598ca4e71b15a1313ec95f0df1027ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a>.  <br /></td></tr>
@@ -214,25 +214,35 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li><code>RuntimeException</code>: Если путь к директории сайта некорректен или недоступен.</li>
 <li><code>RuntimeException</code>: Если обязательные директории отсутствуют или недоступны для записи.</li>
 </ul>
-<dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Массив, куда копируются настройки из <a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a>.<ul>
-<li>Файлы приложения:<ul>
-<li></li>
-</ul>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось определить HTTP_HOST или SCRIPT_NAME. Пример сообщения: "Не удалось определить HTTP_HOST. Проверьте настройки сервера.". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если путь к директории сайта некорректен или недоступен. Пример сообщения: "Директория недоступна для записи: {$config['site_dir']}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если обязательные директории отсутствуют или недоступны для записи. Пример сообщения: "Директория отсутствует или недоступна для записи: {$dir}".</td></tr>
+  </table>
+  </dd>
+</dl>
+<h1><a class="anchor" id="Связанные"></a>
+файлы и компоненты</h1>
+<ul>
+<li>Классы приложения:<ul>
+<li><dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::$config Массив, куда копируются настройки из <a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a>.</dd></dl>
 </li>
 </ul>
-</dd>
-<dd>
-<a class="el" href="../../de/d20/index_8php.html" title="Точка входа в приложение PhotoRigma.">index.php</a> Файл, который подключает <a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a>.</dd></dl>
+</li>
+<li>Файлы приложения:<ul>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d20/index_8php.html" title="Точка входа в приложение PhotoRigma.">index.php</a> Файл, который подключает <a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a>.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в настройке приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
-<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:</dd></dl>
+</li>
+</ul>
+</li>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
-</dd></dl>
 <p>Этот файл является точкой входа в приложение и выполняет следующие задачи:</p><ul>
 <li>Подключает конфигурационный файл (<code><a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a></code>) и проверяет его доступность.</li>
 <li>Проверяет наличие и доступность обязательных файлов (например, <code>common.php</code>, <code><a class="el" href="../../d2/d89/Database_8php.html" title="Класс для работы с базами данных через PDO.">Database.php</a></code>).</li>
-<li>Создаёт объекты основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a></code>, <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a></code>).</li>
+<li>Создаёт объекты основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a></code>, <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a></code>).</li>
 <li>Обрабатывает действия пользователя через параметр <code>action</code>. Значение, получаемое из запроса в URL, указывает на действие, которое должно выполнить приложение.</li>
 <li>Выводит шаблонные элементы страницы (шапку, подвал и содержимое).</li>
 <li>Реализует централизованную систему обработки ошибок и их логирования на уровне ядра приложения.</li>
@@ -241,7 +251,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 функции</h1>
 <ul>
 <li>Подключение конфигурации и обязательных файлов.</li>
-<li>Инициализация основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a></code>, <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a></code>).</li>
+<li>Инициализация основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a></code>, <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a></code>).</li>
 <li>Обработка действий пользователя через параметр <code>action</code>.</li>
 <li>Генерация HTML-контента страницы.</li>
 <li>Логирование ошибок и обработка исключений.</li>
@@ -318,7 +328,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 </ul>
 </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Основной класс приложения.<ul>
+PhotoRigma::Classes::Work Основной класс приложения.<ul>
 <li></li>
 </ul>
 </dd>
@@ -450,7 +460,7 @@ Functions</h1>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00328">328</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00436">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01389">Template\_page_header_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01624">Work\create_menu()</a>, <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00359">Work_Template\create_menu()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Interface\create_menu()</a>, <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01304">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00436">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01389">Template\_page_header_internal()</a>, <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00359">Work_Template\create_menu()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Interface\create_menu()</a>, <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01304">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
@@ -485,7 +495,7 @@ Functions</h1>
 </div><div class="memdoc">
 
 <p>Массив с настройками сервера. </p>
-<p>Содержит как редактируемые пользователем параметры (например, параметры БД), так и автоматически генерируемые параметры (например, URL сайта). После инициализации массив $config передаётся в свойство <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a>. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> @noinspection PhpRedundantVariableDocTypeInspection </dd></dl>
+<p>Содержит как редактируемые пользователем параметры (например, параметры БД), так и автоматически генерируемые параметры (например, URL сайта). После инициализации массив $config передаётся в свойство PhotoRigma::Classes::Work::$config. </p><dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::$config @noinspection PhpRedundantVariableDocTypeInspection </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00083">83</a></p>
 
@@ -706,8 +716,6 @@ Functions</h1>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00254">254</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00199">Work\__construct()</a>.</p>
-
 </div>
 </div>
 <a id="aee271b7ce67fbe00b9976e6c347cbfbf" name="aee271b7ce67fbe00b9976e6c347cbfbf"></a>
@@ -739,8 +747,6 @@ Functions</h1>
 </div><div class="memdoc">
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00220">220</a></p>
-
-<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00311">Work\__set()</a>.</p>
 
 </div>
 </div>
@@ -878,7 +884,7 @@ Functions</h1>
 <dd>
 <a class="el" href="../../df/d4d/Template_8php.html" title="Класс для работы с HTML-шаблонами, включая рендеринг и подстановку данных.">include/Template.php</a> Файл, содержащий реализацию класса <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a>. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, хранящее конфигурацию для шаблонов. </dd>
+PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию для шаблонов. </dd>
 <dd>
 <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода.">PhotoRigma\Classes\Template\create_template()</a> Метод для создания содержимого страницы. </dd>
 <dd>
@@ -949,7 +955,7 @@ Functions</h1>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00281">281</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02538">Template\_page_footer_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01165">Work\set_user()</a>, <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic_Interface\set_user()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Interface\set_user()</a> и <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Template_Interface\set_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02538">Template\_page_footer_internal()</a>, <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic_Interface\set_user()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Interface\set_user()</a> и <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Template_Interface\set_user()</a>.</p>
 
 </div>
 </div>
@@ -960,21 +966,21 @@ Functions</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$work = new <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>($db, $config, $_SESSION)</td>
+          <td class="memname">$work = new <a class="el" href="../../d3/d64/classWork.html">Work</a>($db, $config, $_SESSION)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Создание объекта класса <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a>. </p>
-<p>Используется для выполнения различных вспомогательных операций. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Класс для выполнения вспомогательных операций. </dd>
+<p>Создание объекта класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>. </p>
+<p>Используется для выполнения различных вспомогательных операций. </p><dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций. </dd>
 <dd>
-<a class="el" href="../../d1/dce/Work_8php.html" title="Файл содержит класс Work, который является основным классом приложения. Объединяет подклассы для выпо...">include/Work.php</a> Файл, содержащий реализацию класса <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a>. </dd>
+<a class="el" href="../../d1/dce/Work_8php.html" title="Файл содержит класс Work, который является основным классом приложения. Объединяет подклассы для выпо...">include/Work.php</a> Файл, содержащий реализацию класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство, хранящее конфигурацию приложения. </dd>
+PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки входных данных. </dd>
+PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных. </dd>
 <dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода через вызов внутреннего метода.">PhotoRigma\Classes\Work\url_check()</a> Метод для проверки URL на наличие вредоносного кода. </dd></dl>
+PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00265">265</a></p>
 

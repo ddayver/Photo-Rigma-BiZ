@@ -6,7 +6,7 @@
  *              хранение текущих настроек пользователя.
  *
  * @author      Dark Dayver
- * @version     0.4.1-rc1
+ * @version     0.4.1
  * @date        2025-04-25
  * @namespace   Photorigma\\Classes
  *

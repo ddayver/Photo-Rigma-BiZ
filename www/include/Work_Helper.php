@@ -5,7 +5,7 @@
  * @brief       Файл содержит класс Work_Helper, который предоставляет вспомогательные методы для работы с данными.
  *
  * @author      Dark Dayver
- * @version     0.4.1-rc1
+ * @version     0.4.1
  * @date        2025-04-25
  * @namespace   Photorigma\\Classes
  *

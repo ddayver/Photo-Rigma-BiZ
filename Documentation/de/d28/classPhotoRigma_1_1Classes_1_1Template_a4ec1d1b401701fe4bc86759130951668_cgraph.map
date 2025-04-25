@@ -1,19 +1,13 @@
 <map id="_create_template_internal" name="_create_template_internal">
-<area shape="rect" id="Node000001" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="5,97,176,121"/>
-<area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="224,38,367,76"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,93,208,76,209,82,143,99"/>
-<area shape="rect" id="Node000005" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Метод обрабатывает шаблон для подготовки его к выводу: рекурсивно обрабатывает объектные блоки,..." alt="" coords="244,125,347,149"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="176,118,229,125,228,131,175,123"/>
-<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="415,12,580,51"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="367,45,399,41,400,47,368,51"/>
-<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="628,5,772,58"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="581,29,613,29,613,34,581,34"/>
-<area shape="rect" id="Node000006" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ae37406467b40a7cfde9fd65298c93451" title="Метод обрабатывает блок выбора фрагмента шаблона, выбирая один из блоков CASE_ЗНАЧЕНИЕ или CASE_DEFAU..." alt="" coords="444,75,551,100"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="347,122,429,102,430,107,348,127"/>
-<area shape="rect" id="Node000007" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ad71a93e7a2b88a650bb2934d9d562b1d" title="Метод обрабатывает блоки условий вывода фрагментов шаблона, выбирая содержимое до _ELSE или после нег..." alt="" coords="455,125,540,149"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="348,134,440,134,440,140,348,140"/>
-<area shape="rect" id="Node000008" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a92761a765e0986cb9c76c3f308300767" title="Метод выполняет рекурсивную обработку блока массивов&#45;объектов, подготавливая их содержимое для вывода..." alt="" coords="441,174,554,199"/>
-<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="348,147,430,167,428,172,347,152"/>
-<area shape="rect" id="Node000009" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a44f0b05bafc7544682894dd955ffc785" title="Метод преобразует URL в &quot;красивый&quot; вид (например, ?action=profile&amp;id=123 → profile/id_123...." alt="" coords="441,223,554,248"/>
-<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="316,148,360,177,416,208,435,215,433,220,414,213,358,182,313,152"/>
+<area shape="rect" id="Node000001" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="5,80,176,105"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Метод обрабатывает шаблон для подготовки его к выводу: рекурсивно обрабатывает объектные блоки,..." alt="" coords="224,80,327,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,90,208,90,208,95,176,95"/>
+<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ae37406467b40a7cfde9fd65298c93451" title="Метод обрабатывает блок выбора фрагмента шаблона, выбирая один из блоков CASE_ЗНАЧЕНИЕ или CASE_DEFAU..." alt="" coords="378,5,485,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="300,77,374,41,387,35,389,39,376,45,303,82"/>
+<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ad71a93e7a2b88a650bb2934d9d562b1d" title="Метод обрабатывает блоки условий вывода фрагментов шаблона, выбирая содержимое до _ELSE или после нег..." alt="" coords="389,55,474,79"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="327,81,373,74,374,79,328,87"/>
+<area shape="rect" id="Node000005" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a92761a765e0986cb9c76c3f308300767" title="Метод выполняет рекурсивную обработку блока массивов&#45;объектов, подготавливая их содержимое для вывода..." alt="" coords="375,104,488,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="328,98,360,103,359,108,327,103"/>
+<area shape="rect" id="Node000006" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a44f0b05bafc7544682894dd955ffc785" title="Метод преобразует URL в &quot;красивый&quot; вид (например, ?action=profile&amp;id=123 → profile/id_123...." alt="" coords="375,153,488,178"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="304,103,376,138,390,144,387,149,374,143,301,108"/>
 </map>

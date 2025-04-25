@@ -5,7 +5,7 @@
  * @brief       Интерфейс для работы с HTML-шаблонами, включая рендеринг и подстановку данных.
  *
  * @author      Dark Dayver
- * @version     0.4.1-rc1
+ * @version     0.4.1
  * @date        2025-04-25
  * @namespace   Photorigma\\Interfaces
  *

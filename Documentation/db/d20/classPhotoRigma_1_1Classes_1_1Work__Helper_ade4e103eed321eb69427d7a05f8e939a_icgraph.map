@@ -1,10 +1,8 @@
 <map id="_process_bbcode_recursively" name="_process_bbcode_recursively">
-<area shape="rect" id="Node000001" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="433,29,626,54"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="563,17,552,10,529,8,509,10,498,15,496,20,502,27,498,31,491,21,494,11,508,5,530,3,554,5,566,12"/>
-<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="287,29,385,54"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="418,44,386,44,386,39,418,39"/>
-<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="197,29,239,54"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="271,44,239,44,239,39,271,39"/>
-<area shape="rect" id="Node000004" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов публичного метода в дочернем классе." alt="" coords="5,22,149,61"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="181,44,149,44,149,39,181,39"/>
+<area shape="rect" id="Node000001" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="242,29,434,54"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="372,17,361,10,338,8,318,10,307,15,305,20,311,27,306,31,299,21,303,11,316,5,338,3,362,5,374,12"/>
+<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="96,29,194,54"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="226,44,194,44,194,39,226,39"/>
+<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="5,29,48,54"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="80,44,48,44,48,39,80,39"/>
 </map>

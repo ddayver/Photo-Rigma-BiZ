@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['work_0',['Work',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html',1,'PhotoRigma::Classes']]],
+  ['work_0',['Work',['../d3/d64/classWork.html',1,'']]],
   ['work_2ephp_1',['Work.php',['../d1/dce/Work_8php.html',1,'']]],
   ['work_5fcorelogic_2',['Work_CoreLogic',['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html',1,'PhotoRigma::Classes']]],
   ['work_5fcorelogic_2ephp_3',['Work_CoreLogic.php',['../da/d65/Work__CoreLogic_8php.html',1,'']]],

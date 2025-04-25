@@ -1,11 +1,5 @@
 <map id="page_footer" name="page_footer">
-<area shape="rect" id="Node000001" title="Формирует подвал HTML&#45;страницы через вызов внутреннего метода." alt="" coords="5,19,95,44"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a289aef1b317a8dddb8e51e9f241174b3" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="143,19,288,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,29,127,29,127,34,95,34"/>
-<area shape="rect" id="Node000003" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="336,12,479,51"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="288,29,321,29,321,34,288,34"/>
-<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="527,12,693,51"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="480,29,512,29,512,34,480,34"/>
-<area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="741,5,884,58"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="693,29,726,29,726,34,693,34"/>
+<area shape="rect" id="Node000001" title="Формирует подвал HTML&#45;страницы через вызов внутреннего метода." alt="" coords="5,5,95,30"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a289aef1b317a8dddb8e51e9f241174b3" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="143,5,288,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,15,127,15,127,20,95,20"/>
 </map>
