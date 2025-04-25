@@ -148,33 +148,32 @@ class Work implements Work_Interface
      *
      * @details Этот метод вызывается автоматически при создании нового объекта класса.
      *          Используется для инициализации основных компонентов приложения:
-     *          - Загрузка конфигурации из базы данных (таблица TBL_CONFIG).
-     *          - Инициализация дочерних классов: Work_Helper, Work_Security, Work_Image, Work_Template,
-     *          Work_CoreLogic.
-     *          - Установка кодировки UTF-8 для работы с мультибайтовыми строками.
+     *          - Загрузка конфигурации через кеш (метод `load_cached_config`).
+     *          - Инициализация дочерних классов: Work_Security, Work_Image, Work_Template, Work_CoreLogic.
      *          - Подключение сессии для хранения пользовательских данных.
      *
      * @callgraph
      *
      * @param Database_Interface  $db       Объект для работы с базой данных.
+     *                                      Должен быть экземпляром класса, реализующего интерфейс `Database_Interface`.
      * @param array               $config   Конфигурация приложения.
      *                                      Должна содержать ключи, такие как 'app_name', 'debug_mode' и другие
      *                                      настройки.
+     *                                      Пример: ['app_name' => 'PhotoRigma', 'debug_mode' => true].
      * @param array              &$session  Ссылка на массив сессии для хранения пользовательских данных.
      *                                      Массив должен быть доступен для записи и чтения.
      *
-     * @note    В конструкторе инициализируются 5 дочерних классов:
-     *       - Work_Helper: Для вспомогательных функций.
-     *       - Work_Security: Для работы с безопасностью.
-     *       - Work_Image: Для работы с изображениями.
-     *       - Work_Template: Для работы с шаблонами.
-     *       - Work_CoreLogic: Для реализации бизнес-логики приложения.
-     *       Также используются константы:
-     *       - TBL_CONFIG для загрузки конфигурации из базы данных,
-     *       - KEY_SESSION для хранения пользовательских данных в сессии.
+     * @note    В конструкторе инициализируются следующие дочерние классы:
+     *          - `Work_Security`: Для работы с безопасностью.
+     *          - `Work_Image`: Для работы с изображениями.
+     *          - `Work_Template`: Для работы с шаблонами.
+     *          - `Work_CoreLogic`: Для реализации бизнес-логики приложения.
+     *          Также используются:
+     *          - Константа `KEY_SESSION` для хранения пользовательских данных в сессии.
+     *          - Метод `load_cached_config` для загрузки конфигурации из кеша.
      *
-     * @warning Если таблица TBL_CONFIG отсутствует или данные не загружены, это может привести к неполному
-     *          функционированию приложения. Ошибки записываются в лог через log_in_file.
+     * @warning Если файл кеша недоступен или данные в нём некорректны, это может привести к ошибкам инициализации.
+     *          Ошибки обрабатываются через исключения и не записываются в лог напрямую.
      *
      * Пример создания объекта класса Work:
      * @code
@@ -189,12 +188,18 @@ class Work implements Work_Interface
      *
      * @throws Exception Выбрасывается в случае ошибок при загрузке конфигурации или инициализации компонентов.
      *
-     * @see     PhotoRigma::Classes::Work::$config Свойство, содержащее конфигурацию.
-     * @see     PhotoRigma::Classes::Work::$security Свойство, содержащее объект Work_Security.
-     * @see     PhotoRigma::Classes::Work::$image Свойство, содержащее объект Work_Image.
-     * @see     PhotoRigma::Classes::Work::$template Свойство, содержащее объект Work_Template.
-     * @see     PhotoRigma::Classes::Work::$core_logic Свойство, содержащее объект Work_CoreLogic.
-     * @see     PhotoRigma::Include::log_in_file() Логирует ошибки.
+     * @see     PhotoRigma::Classes::Work::$config
+     *          Свойство, содержащее конфигурацию приложения.
+     * @see     PhotoRigma::Classes::Work::$security
+     *          Свойство, содержащее объект `Work_Security`.
+     * @see     PhotoRigma::Classes::Work::$image
+     *          Свойство, содержащее объект `Work_Image`.
+     * @see     PhotoRigma::Classes::Work::$template
+     *          Свойство, содержащее объект `Work_Template`.
+     * @see     PhotoRigma::Classes::Work::$core_logic
+     *          Свойство, содержащее объект `Work_CoreLogic`.
+     * @see     PhotoRigma::Classes::Work::load_cached_config()
+     *          Метод для загрузки конфигурации через кеш.
      */
     public function __construct(Database_Interface $db, array $config, array &$session)
     {
@@ -203,21 +208,158 @@ class Work implements Work_Interface
         }
         $this->session = &$session[KEY_SESSION];
         $this->config = $config;
-        // Загружаем конфигурацию из базы данных
-        $db->select('*', TBL_CONFIG, ['params' => []]);
-        $result = $db->res_arr();
-        if (is_array($result)) {
-            $this->config = array_merge($this->config, array_column($result, 'value', 'name'));
-        } else {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка загрузки конфигурации | Не удалось получить данные из таблицы " . TBL_CONFIG
-            );
-        }
+
+        // Загружаем конфигурацию через кеш
+        $cached_config = $this->load_cached_config($db);
+        $this->config = array_merge($this->config, $cached_config);
+
         // Инициализация подклассов
         $this->security = new Work_Security($this->session);
         $this->image = new Work_Image($this->config);
         $this->template = new Work_Template($db, $this->config);
         $this->core_logic = new Work_CoreLogic($db, $this->config, $this);
+    }
+
+    /**
+     * @brief   Проверяет актуальность кеша конфигурации и обновляет его при необходимости.
+     *
+     * @details Этот метод выполняет следующие действия:
+     *          1. Проверяет наличие файла кеша конфигурации.
+     *          2. Если файл существует, считывает таймстемп из него и проверяет его актуальность.
+     *             - Если таймстемп устарел или отсутствует, загружает данные из таблицы `TBL_CONFIG`.
+     *          3. Сохраняет новые данные в файл кеша и обновляет кеш.
+     *          4. Возвращает данные конфигурации из кеша.
+     *          Метод является приватным и предназначен только для использования внутри класса.
+     *
+     * @callergraph
+     *
+     * @param Database_Interface $db Объект базы данных для выполнения запросов.
+     *                               Должен быть экземпляром класса, реализующего интерфейс `Database_Interface`.
+     *
+     * @return array Ассоциативный массив с данными конфигурации.
+     *               Например: ['site_name' => 'PhotoRigma', 'theme' => 'dark'].
+     *
+     * @throws RuntimeException Выбрасывается, если:
+     *                                  - Не удалось создать или записать данные в директорию кеша.
+     *                                    Пример сообщения:
+     *                                        Не удалось создать директорию для кеша: [cache_dir]
+     *                                  - Файл кеша недоступен для чтения или записи.
+     *                                    Пример сообщения:
+     *                                        Файл кеша недоступен для записи: [cache_file]
+     *                                  - Не удалось получить дату последнего изменения таблицы `TBL_CONFIG`.
+     *                                    Пример сообщения:
+     *                                        Не удалось получить дату последнего изменения таблицы: [table_name]
+     *                                  - Не удалось загрузить данные из таблицы `TBL_CONFIG`.
+     *                                    Пример сообщения:
+     *                                        Не удалось загрузить данные из таблицы: [TBL_CONFIG]
+     * @throws JsonException     Выбрасывается, если произошла ошибка при кодировании или декодировании JSON.
+     *                                  - При вызове `json_encode()` для сохранения данных в кеш.
+     *                                  - При вызове `json_decode()` для чтения данных из кеша.
+     *                                  Пример сообщения:
+     *                                        Ошибка при кодировании/декодировании JSON: [подробное описание ошибки]
+     * @throws Exception         Выбрасывается, если произошла ошибка при выполнении SQL-запроса через `$db->select()`.
+     *                                  Пример сообщения:
+     *                                        Ошибка базы данных: [подробное описание ошибки]
+     *
+     * @note    Для указания таблиц базы данных используются константы:
+     *          - `TBL_CONFIG`: Таблица с настройками сервера. Например: '`config`'.
+     *          - `TBL_CHANGE_TIMESTAMP`: Таблица с временными метками изменений. Например: '`change_timestamp`'.
+     *          Данные кешируются в формате PHP-файла с использованием base64-кодирования для безопасности.
+     *
+     * @warning Убедитесь, что:
+     *          - Директория для кеша существует и доступна для записи.
+     *          - Файл кеша доступен для чтения и записи.
+     *          Несоблюдение этих условий может привести к ошибкам при работе с кешем.
+     *
+     * Пример вызова метода:
+     * @code
+     * $config = $this->load_cached_config($db);
+     * print_r($config);
+     * @endcode
+     * @see     PhotoRigma::Classes::Work::$config
+     *          Свойство, содержащее конфигурацию приложения.
+     * @see     PhotoRigma::Interfaces::Database_Interface
+     *          Интерфейс для работы с базой данных.
+     */
+    private function load_cached_config(Database_Interface $db): array
+    {
+        // Определяем путь к файлу кеша
+        $cache_dir = rtrim($this->config['site_dir'], '/') . '/cache/';
+        $cache_file = $cache_dir . 'config_cache.php';
+
+        // Проверяем права доступа к директории
+        if (!is_dir($cache_dir) && !mkdir($cache_dir, 0755, true) && !is_dir($cache_dir)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директорию для кеша: $cache_dir"
+            );
+        }
+        if (!is_writable($cache_dir)) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для кеша недоступна для записи: $cache_dir"
+            );
+        }
+
+        // Получаем время последнего изменения таблицы TBL_CONFIG из таблицы TBL_CHANGE_TIMESTAMP
+        $table_name = str_replace('`', '', TBL_CONFIG); // Убираем символы экранирования
+        $db->select('last_update', TBL_CHANGE_TIMESTAMP, [
+            'where'  => '`table_name` = :table_name',
+            'params' => [':table_name' => $table_name],
+        ]);
+        $timestamp_result = $db->res_row();
+
+        if (!$timestamp_result || !isset($timestamp_result['last_update'])) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить дату последнего изменения таблицы: $table_name"
+            );
+        }
+        $db_last_update = strtotime($timestamp_result['last_update']);
+
+        // Проверяем актуальность файла кеша
+        if (is_file($cache_file) && is_readable($cache_file)) {
+            // Проверяем права на запись в файл
+            if (!is_writable($cache_file)) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл кеша недоступен для записи: $cache_file"
+                );
+            }
+
+            // Подключаем файл кеша
+            $timestamp = null;
+            $config_data = null;
+            require $cache_file;
+
+            // Если таймстемп из файла больше или равен времени из БД, используем кеш
+            if ($timestamp !== null && $config_data !== null && $timestamp >= $db_last_update) {
+                return json_decode(base64_decode($config_data), true, 512, JSON_THROW_ON_ERROR);
+            }
+        }
+
+        // Кеш устарел или отсутствует, загружаем данные из БД
+        $db->select('*', TBL_CONFIG, ['params' => []]);
+        $result = $db->res_arr();
+        if ($result === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось загрузить данные из таблицы: " . TBL_CONFIG
+            );
+        }
+
+        // Преобразуем данные в ассоциативный массив
+        $config_data = array_column($result, 'value', 'name');
+
+        // Сохраняем данные в файл кеша
+        $encoded_config_data = base64_encode(json_encode($config_data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE));
+        $cache_content = "<?php" . PHP_EOL . "\$timestamp = '$db_last_update';" . PHP_EOL . "\$config_data = '$encoded_config_data';" . PHP_EOL;
+
+        if (file_put_contents($cache_file, $cache_content, LOCK_EX) === false) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать данные в файл кеша: $cache_file"
+            );
+        }
+
+        // Устанавливаем права доступа к файлу
+        chmod($cache_file, 0600);
+
+        return $config_data;
     }
 
     /**
@@ -370,7 +512,9 @@ class Work implements Work_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Несуществующее свойство | Свойство: $name"
             );
         }
-    }    /**
+    }
+
+    /**
      * @brief   Преобразует размер в байты через вызов публичного метода в дочернем классе.
      *
      * @details Этот статический метод является фасадом для вызова публичного метода return_bytes()
@@ -511,49 +655,6 @@ class Work implements Work_Interface
     public function category(int $cat_id = 0, int $user_flag = 0): array
     {
         return $this->core_logic->category($cat_id, $user_flag);
-    }    /**
-     * @brief   Транслитерация строки и замена знаков пунктуации на "_" через вызов публичного метода в дочернем
-     *          классе.
-     *
-     * @details Этот статический метод является фасадом для вызова публичного метода encodename()
-     *          в дочернем классе Work_Helper. Он выполняет транслитерацию не латинских символов в латиницу и заменяет
-     *          все символы, кроме букв и цифр, на `"_"`.
-     *
-     * @param string $string Исходная строка:
-     *                       - Если строка пустая, она возвращается без обработки.
-     *                       - Рекомендуется использовать строки в кодировке UTF-8.
-     *
-     * @return string Строка после транслитерации и замены символов:
-     *                - Если после обработки строка становится пустой, генерируется уникальная последовательность.
-     *
-     * @warning Если расширение `intl` недоступно, используется резервная таблица транслитерации.
-     *          Метод не гарантирует сохранение исходного формата строки, так как все специальные символы заменяются на
-     *          `"_"`.
-     *
-     * Пример использования:
-     * @code
-     * // Транслитерация строки с заменой знаков пунктуации
-     * $encoded = \PhotoRigma\Classes\Work::encodename('Привет, мир!');
-     * echo $encoded; // Выведет: Privet_mir
-     *
-     * // Обработка пустой строки
-     * $encoded = \PhotoRigma\Classes\Work::encodename('');
-     * echo $encoded; // Выведет: пустую строку
-     *
-     * // Обработка строки без кириллицы и знаков пунктуации
-     * $encoded = \PhotoRigma\Classes\Work::encodename('12345');
-     * echo $encoded; // Выведет: 12345
-     *
-     * // Генерация уникальной последовательности для пустой строки после обработки
-     * $encoded = \PhotoRigma\Classes\Work::encodename('!!!');
-     * echo $encoded; // Выведет: уникальную последовательность из 16 символов
-     * @endcode
-     * @see     PhotoRigma::Classes::Work_Helper::encodename()
-     *          Публичный метод в дочернем классе, реализующий основную логику.
-     */
-    public static function encodename(string $string): string
-    {
-        return Work_Helper::encodename($string);
     }
 
     /**
@@ -605,6 +706,51 @@ class Work implements Work_Interface
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
         return $this->security->check_field($field, $regexp, $not_zero);
+    }
+
+    /**
+     * @brief   Транслитерация строки и замена знаков пунктуации на "_" через вызов публичного метода в дочернем
+     *          классе.
+     *
+     * @details Этот статический метод является фасадом для вызова публичного метода encodename()
+     *          в дочернем классе Work_Helper. Он выполняет транслитерацию не латинских символов в латиницу и заменяет
+     *          все символы, кроме букв и цифр, на `"_"`.
+     *
+     * @param string $string Исходная строка:
+     *                       - Если строка пустая, она возвращается без обработки.
+     *                       - Рекомендуется использовать строки в кодировке UTF-8.
+     *
+     * @return string Строка после транслитерации и замены символов:
+     *                - Если после обработки строка становится пустой, генерируется уникальная последовательность.
+     *
+     * @warning Если расширение `intl` недоступно, используется резервная таблица транслитерации.
+     *          Метод не гарантирует сохранение исходного формата строки, так как все специальные символы заменяются на
+     *          `"_"`.
+     *
+     * Пример использования:
+     * @code
+     * // Транслитерация строки с заменой знаков пунктуации
+     * $encoded = \PhotoRigma\Classes\Work::encodename('Привет, мир!');
+     * echo $encoded; // Выведет: Privet_mir
+     *
+     * // Обработка пустой строки
+     * $encoded = \PhotoRigma\Classes\Work::encodename('');
+     * echo $encoded; // Выведет: пустую строку
+     *
+     * // Обработка строки без кириллицы и знаков пунктуации
+     * $encoded = \PhotoRigma\Classes\Work::encodename('12345');
+     * echo $encoded; // Выведет: 12345
+     *
+     * // Генерация уникальной последовательности для пустой строки после обработки
+     * $encoded = \PhotoRigma\Classes\Work::encodename('!!!');
+     * echo $encoded; // Выведет: уникальную последовательность из 16 символов
+     * @endcode
+     * @see     PhotoRigma::Classes::Work_Helper::encodename()
+     *          Публичный метод в дочернем классе, реализующий основную логику.
+     */
+    public static function encodename(string $string): string
+    {
+        return Work_Helper::encodename($string);
     }
 
     /**
@@ -660,7 +806,9 @@ class Work implements Work_Interface
     public function check_input(string $source_name, string $field, array $options = []): bool
     {
         return $this->security->check_input($source_name, $field, $options);
-    }    /**
+    }
+
+    /**
      * @brief   Преобразует BBCode в HTML через вызов публичного метода в дочернем классе.
      *
      * @details Этот статический метод является фасадом для вызова публичного метода ubb()
@@ -705,8 +853,6 @@ class Work implements Work_Interface
     {
         return Work_Helper::ubb($text);
     }
-
-
 
     /**
      * @brief   Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем классе.
@@ -763,8 +909,6 @@ class Work implements Work_Interface
         return Work_Helper::utf8_wordwrap($str, $width, $break);
     }
 
-
-
     /**
      * @brief   Проверяет MIME-тип файла через вызов публичного метода в дочернем классе.
      *
@@ -805,8 +949,6 @@ class Work implements Work_Interface
     {
         return Work_Helper::validate_mime_type($real_mime_type);
     }
-
-
 
     /**
      * @brief   Устанавливает языковые данные через вызов внутреннего метода.
