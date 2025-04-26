@@ -8,8 +8,8 @@
  *              Пример сообщения: "Некорректный формат HTTP_HOST | Значение: {$cookie_domain}".
  *
  * @author      Dark Dayver
- * @version     0.4.1
- * @date        2025-04-25
+ * @version     0.4.2
+ * @date        2025-04-27
  * @namespace   Photorigma\\Include
  *
  * @details     Этот файл содержит настройки и инициализацию сессий и куков, которые используются для управления

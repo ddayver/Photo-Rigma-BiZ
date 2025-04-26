@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -236,7 +236,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс для работы с изображениями. </p>
-<p>Этот класс реализует интерфейс <code>Work_Image_Interface</code> и предоставляет функционал для работы с изображениями. Он является дочерним классом для <code>PhotoRigma::Classes::Work</code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
+<p>Этот класс реализует интерфейс <code>Work_Image_Interface</code> и предоставляет функционал для работы с изображениями. Он является дочерним классом для <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a></code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code>Work</code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
 <li>Создание директорий для категорий и копирование файлов <code><a class="el" href="../../de/d20/index_8php.html" title="Точка входа в приложение PhotoRigma.">index.php</a></code>.</li>
 <li>Корректировка расширения файла в соответствии с его MIME-типом.</li>
 <li>Вывод изображений через HTTP с защитой от MIME-sniffing и кликджекинга.</li>
@@ -264,7 +264,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 </div><div class="memdoc">
 
 <p>Конструктор класса. </p>
-<p>Инициализирует объект класса <code>Work_Image</code> с переданной конфигурацией. Этот класс является дочерним для PhotoRigma::Classes::Work.</p>
+<p>Инициализирует объект класса <code>Work_Image</code> с переданной конфигурацией. Этот класс является дочерним для <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a>.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$config</td><td>Конфигурация приложения:<ul>
@@ -283,7 +283,7 @@ $(function(){initNavTree('d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html'
 <div class="line">];</div>
 <div class="line">$workImage = new \PhotoRigma\Classes\Work_Image(<a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>);</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Image_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Image\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Конфигурация приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../dd/dbc/Work__Image_8php_source.html#l00120">Work_Image.php:120</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work Родительский класс, который создаёт объект класса Work_Image. </dd>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Родительский класс, который создаёт объект класса Work_Image. </dd>
 <dd>
 <a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Image\$config</a> Свойство, содержащее конфигурацию приложения. </dd></dl>
 
@@ -1175,7 +1175,7 @@ if ($result) {
 </dl>
 <dl class="section see"><dt>См. также</dt><dd><code> <a class="el" href="#ae77f64cb663e7c3c35e7cbcdfd846cf2" title="Создает директории для категории и копирует файлы index.php, предварительно проверяя права доступа.">PhotoRigma\Classes\Work_Image\_create_directory_internal()</a> Защищённый метод, реализующий основную логику. </code></dd>
 <dd>
-<code> PhotoRigma::Classes::Work::create_directory() Метод-фасад в родительском классе для вызова этой логики. </code></dd></dl>
+<code> <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a935337e705b7a1b9ea422d2e04932109" title="Создает директории для категории и копирует файлы через вызов внутреннего метода.">PhotoRigma\Classes\Work\create_directory()</a> Метод-фасад в родительском классе для вызова этой логики. </code></dd></dl>
 
 <p>Замещает <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#a935337e705b7a1b9ea422d2e04932109">Work_Image_Interface</a>.</p>
 
@@ -1245,7 +1245,7 @@ if ($result) {
 <div class="line">echo <span class="stringliteral">&quot;Исправленный путь: {$corrected_path}&quot;</span>;</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#af7cd1deb24cdf852e9981eb4f2665ff1" title="Корректировка расширения файла в соответствии с его MIME-типом (защищённый метод).">PhotoRigma\Classes\Work_Image\_fix_file_extension_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::fix_file_extension() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Вывод изображения через HTTP через вызов внутреннего метода.">PhotoRigma\Classes\Work\fix_file_extension()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#a89d4e7cb491d0c91282d16ff5abe3138">Work_Image_Interface</a>.</p>
 
@@ -1334,7 +1334,7 @@ PhotoRigma::Classes::Work::fix_file_extension() Метод-фасад в род�
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения.">PhotoRigma\Classes\Work_Image\_image_resize_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::image_resize() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения через вызов внутреннего метода.">PhotoRigma\Classes\Work\image_resize()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#af37eb2b0693905dd71dd677f86d47831">Work_Image_Interface</a>.</p>
 
@@ -1402,7 +1402,7 @@ PhotoRigma::Classes::Work::image_resize() Метод-фасад в родите�
 <div class="line">echo <span class="stringliteral">&quot;Пользователь: {$noPhotoData[&#39;real_name&#39;]}\n&quot;</span>;</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a2b5c40822e7f0dcc8beb47dad2660286" title="Возвращает данные для отсутствующего изображения.">PhotoRigma\Classes\Work_Image\_no_photo_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::no_photo() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#adfcd1cb7963a860013ca9ca1898f54f1" title="Возвращает данные для отсутствующего изображения через вызов внутреннего метода.">PhotoRigma\Classes\Work\no_photo()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1">Work_Image_Interface</a>.</p>
 
@@ -1827,7 +1827,7 @@ PhotoRigma::Classes::Work::no_photo() Метод-фасад в родитель�
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a16c229fbb1b62aee5791544bc1086248" title="Удаляет директорию и её содержимое, предварительно проверяя права доступа.">PhotoRigma\Classes\Work_Image\_remove_directory_internal()</a> Защищённый метод, выполняющий основную логику удаления. </dd>
 <dd>
-PhotoRigma::Classes::Work::remove_directory() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aaaf358ddc8223e4a5a479f645fc43da8" title="Удаляет директорию и её содержимое через вызов внутреннего метода.">PhotoRigma\Classes\Work\remove_directory()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#aaaf358ddc8223e4a5a479f645fc43da8">Work_Image_Interface</a>.</p>
 
@@ -1900,7 +1900,7 @@ PhotoRigma::Classes::Work::remove_directory() Метод-фасад в роди�
 <div class="line">echo <span class="stringliteral">&quot;Ширина: {$sizes[&#39;width&#39;]}, Высота: {$sizes[&#39;height&#39;]}&quot;</span>;</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a887f702cc34cf74259c6f10365fc6c9b" title="Вычисляет размеры для вывода эскиза изображения.">PhotoRigma\Classes\Work_Image\_size_image_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::size_image() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения через вызов внутреннего метода.">PhotoRigma\Classes\Work\size_image()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b">Work_Image_Interface</a>.</p>
 
@@ -2081,7 +2081,7 @@ PhotoRigma::Classes::Work::image_attach() Метод-фасад в родите�
 <div class="line">$this-&gt;_image_attach_internal(<span class="stringliteral">&#39;/path/to/image.jpg&#39;</span>, <span class="stringliteral">&#39;example.jpg&#39;</span>);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Метод для очистки имени файла. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки имени файла. </dd>
 <dd>
 <a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html#aeabe138e0704bd8403da0faf894ad0df" title="Выводит изображение через HTTP.">PhotoRigma\Classes\Work_Image\image_attach()</a> Публичный метод, вызывающий этот защищённый метод. </dd></dl>
 

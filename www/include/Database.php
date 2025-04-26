@@ -5,8 +5,8 @@
  * @brief       Класс для работы с базами данных через PDO.
  *
  * @author      Dark Dayver
- * @version     0.4.1
- * @date        2025-04-25
+ * @version     0.4.2
+ * @date        2025-04-27
  * @namespace   Photorigma\\Classes
  *
  * @details     Этот файл содержит реализацию класса `Database`, который предоставляет методы для работы с различными
@@ -28,8 +28,6 @@
  *
  * @note        Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с базами данных.
  *
- * @todo        Добавить поддержку SQLite.
- *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
  *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
@@ -48,6 +46,7 @@ use PDO;
 use PDOException;
 use PDOStatement;
 use PhotoRigma\Interfaces\Database_Interface;
+use RuntimeException;
 
 use function PhotoRigma\Include\log_in_file;
 
@@ -68,7 +67,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @brief   Класс для работы с базами данных через PDO.
  *
  * @details Этот класс предоставляет функционал для выполнения операций с базами данных, таких как SELECT, INSERT,
- *          UPDATE, DELETE, TRUNCATE и JOIN. Поддерживаемые СУБД: MySQL (MariaDB) и PostgreSQL. Класс обеспечивает:
+ *          UPDATE, DELETE, TRUNCATE и JOIN. Поддерживаемые СУБД: MySQL (MariaDB), PostgreSQL и SQLite. Класс
+ *          обеспечивает:
  *          - Безопасное выполнение запросов через подготовленные выражения.
  *          - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной строки).
  *          - Форматирование даты с учётом специфики используемой СУБД.
@@ -115,60 +115,78 @@ class Database implements Database_Interface
      * @details Этот метод вызывается автоматически при создании нового объекта класса.
      *          Используется для установки соединения с базой данных на основе переданных параметров.
      *          Подключение выполняется в следующем порядке:
-     *          1. Через сокет (если указан параметр `dbsock`):
+     *          1. Для SQLite:
+     *             - Проверяется путь к файлу базы данных (`dbname`).
+     *             - Если файл не существует или недоступен для записи, выбрасываются соответствующие исключения.
+     *             - Формируется DSN для SQLite.
+     *          2. Для MySQL/PostgreSQL через сокет (если указан параметр `dbsock`):
      *             - Если путь к сокету некорректен или файл не существует, записывается предупреждение в лог.
      *             - Если подключение через сокет не удалось, выполняется попытка подключения через хост и порт.
-     *          2. Через хост и порт (если подключение через сокет не используется или не удалось).
+     *          3. Для MySQL/PostgreSQL через хост и порт (если подключение через сокет не используется или не
+     *          удалось).
      *          При возникновении ошибок валидации или подключения выбрасывается исключение.
      *          Важно: Если параметр `dbsock` указан, но файл сокета не существует, записывается предупреждение в лог,
      *          и выполняется попытка подключения через хост и порт.
      *
      * @callgraph
      *
-     * @param array $db_config   Массив с конфигурацией подключения:
-     *                           - string `dbtype`: Тип базы данных (mysql, pgsql). Обязательный параметр.
-     *                           Если передан недопустимый тип, выбрасывается исключение `InvalidArgumentException`.
-     *                           - string `dbsock` (опционально): Путь к сокету.
-     *                           Если путь некорректен или файл не существует, записывается предупреждение в лог.
-     *                           Если подключение через сокет не удалось, выполняется попытка подключения через хост и
-     *                           порт.
-     *                           - string `dbname`: Имя базы данных. Обязательный параметр.
-     *                           Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
-     *                           - string `dbuser`: Имя пользователя. Обязательный параметр.
-     *                           Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
-     *                           - string `dbpass`: Пароль пользователя. Обязательный параметр.
-     *                           - string `dbhost`: Хост базы данных. Обязательный параметр, если не используется
-     *                           сокет.
-     *                           Если хост некорректен, выбрасывается исключение `InvalidArgumentException`.
-     *                           - int `dbport` (опционально): Порт базы данных.
-     *                           Если порт некорректен, выбрасывается исключение `InvalidArgumentException`.
+     * @param array $db_config     Массив с конфигурацией подключения:
+     *                             - string `dbtype`: Тип базы данных (mysql, pgsql, sqlite). Обязательный параметр.
+     *                             Если передан недопустимый тип, выбрасывается исключение `InvalidArgumentException`.
+     *                             - string `dbsock` (опционально): Путь к сокету.
+     *                             Если путь некорректен или файл не существует, записывается предупреждение в лог.
+     *                             Если подключение через сокет не удалось, выполняется попытка подключения через хост
+     *                             и порт.
+     *                             - string `dbname`: Имя базы данных. Обязательный параметр.
+     *                             Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
+     *                             Для SQLite это путь к файлу базы данных.
+     *                             - string `dbuser`: Имя пользователя. Обязательный параметр (кроме SQLite).
+     *                             Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
+     *                             - string `dbpass`: Пароль пользователя. Обязательный параметр (кроме SQLite).
+     *                             - string `dbhost`: Хост базы данных. Обязательный параметр, если не используется
+     *                             сокет. Если хост некорректен, выбрасывается исключение `InvalidArgumentException`.
+     *                             - int `dbport` (опционально): Порт базы данных.
+     *                             Если порт некорректен, выбрасывается исключение `InvalidArgumentException`.
      *
      * @throws InvalidArgumentException Выбрасывается, если параметры конфигурации неверны:
      *                                  - Недопустимый тип базы данных (`dbtype`).
-     *                                  - Не указано имя базы данных (`dbname`) или пользователь (`dbuser`).
+     *                                  - Не указано имя базы данных (`dbname`) или пользователь (`dbuser`) (кроме
+     *                                  SQLite).
      *                                  - Некорректный хост (`dbhost`) или порт (`dbport`).
      *                                  Пример сообщения:
      *                                      Недопустимый тип базы данных | Значение: [dbtype]
      *                                  Пример сообщения:
      *                                      Не указан хост базы данных | Конфигурация: [json_encode($db_config)]
-     * @throws PDOException Выбрасывается, если произошла ошибка при подключении к базе данных:
+     * @throws RuntimeException         Выбрасывается в следующих случаях:
+     *                                  - Для SQLite: файл базы данных не существует.
+     *                                    Пример сообщения:
+     *                                        Файл базы данных SQLite не существует | Путь: [dbname]
+     *                                  - Для SQLite: файл базы данных недоступен для записи.
+     *                                    Пример сообщения:
+     *                                        Файл базы данных SQLite недоступен для записи | Путь: [dbname]
+     * @throws PDOException             Выбрасывается, если произошла ошибка при подключении к базе данных:
      *                                  - Ошибка подключения через сокет.
      *                                  - Ошибка подключения через хост и порт.
+     *                                  - Ошибка подключения к SQLite.
      *                                  Пример сообщения:
      *                                      Ошибка подключения через хост и порт | Хост: [dbhost], Порт: [dbport]
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании конфигурации в JSON.
+     *                                  Пример сообщения:
+     *                                      Ошибка подключения к SQLite | Путь: [dbname] | Сообщение: [текст_ошибки]
+     * @throws JsonException            Выбрасывается, если возникает ошибка при кодировании конфигурации в JSON.
      *                                  Пример сообщения:
      *                                      Ошибка кодирования конфигурации в JSON
-     * @throws Exception Выбрасывается, если возникает ошибка при логировании событий через `log_in_file()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка записи в лог | Сообщение: [текст_сообщения]
+     * @throws Exception                Выбрасывается, если возникает ошибка при логировании событий через
+     *                                  `log_in_file()`. Пример сообщения: Ошибка записи в лог | Сообщение:
+     *                                  [текст_сообщения]
      *
      * @warning Если параметр `dbsock` указан, но файл сокета не существует, выполняется попытка подключения через хост
      *          и порт. Убедитесь, что параметр `dbsock` содержит корректный путь.
+     *          Для SQLite убедитесь, что файл базы данных существует и доступен для записи.
      *
      * Пример использования конструктора:
      * @code
-     * $db_config = [
+     * // Пример для MySQL
+     * $db_config_mysql = [
      *     'dbtype' => 'mysql',
      *     'dbname' => 'test_db',
      *     'dbuser' => 'root',
@@ -176,7 +194,14 @@ class Database implements Database_Interface
      *     'dbhost' => 'localhost',
      *     'dbport' => 3306,
      * ];
-     * $db = new \PhotoRigma\Classes\Database($db_config);
+     * $db_mysql = new \PhotoRigma\Classes\Database($db_config_mysql);
+     *
+     * // Пример для SQLite
+     * $db_config_sqlite = [
+     *     'dbtype' => 'sqlite',
+     *     'dbname' => '/path/to/database.sqlite',
+     * ];
+     * $db_sqlite = new \PhotoRigma\Classes\Database($db_config_sqlite);
      * @endcode
      * @see     PhotoRigma::Classes::Database::$pdo
      *          Свойство, хранящее объект PDO для подключения к базе данных.
@@ -186,21 +211,24 @@ class Database implements Database_Interface
     public function __construct(array $db_config)
     {
         // Проверка допустимых значений dbtype
-        $allowed_dbtypes = ['mysql', 'pgsql'];
+        $allowed_dbtypes = ['mysql', 'pgsql', 'sqlite'];
         if (!in_array($db_config['dbtype'], $allowed_dbtypes, true)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип базы данных | Значение: {$db_config['dbtype']}"
             );
         }
+
         // Сохраняем тип используемой базы данных
         $this->db_type = $db_config['dbtype'];
+
         // Определяем charset в зависимости от типа СУБД
         $charset = match ($this->db_type) {
             'mysql' => 'charset=utf8mb4',
             default => '', // Для PostgreSQL и SQLite charset не используется
         };
-        // Проверка корректности dbname и dbuser
-        if (empty($db_config['dbname']) || empty($db_config['dbuser'])) {
+
+        // Проверка корректности dbname и dbuser (кроме SQLite)
+        if ($this->db_type !== 'sqlite' && (empty($db_config['dbname']) || empty($db_config['dbuser']))) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указано имя базы данных или пользователь | Конфигурация: " . json_encode(
                     $db_config,
@@ -208,6 +236,51 @@ class Database implements Database_Interface
                 )
             );
         }
+
+        // Обработка SQLite
+        if ($this->db_type === 'sqlite') {
+            if (empty($db_config['dbname'])) {
+                throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан путь к файлу базы данных SQLite | Конфигурация: " . json_encode(
+                        $db_config,
+                        JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+                    )
+                );
+            }
+
+            // Проверка существования файла
+            if (!is_file($db_config['dbname'])) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite не существует | Путь: {$db_config['dbname']}"
+                );
+            }
+
+            // Проверка прав доступа
+            if (!is_writable($db_config['dbname'])) {
+                throw new RuntimeException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite недоступен для записи | Путь: {$db_config['dbname']}"
+                );
+            }
+
+            // Формируем DSN для SQLite
+            $dsn = "sqlite:{$db_config['dbname']}";
+
+            try {
+                $this->pdo = new PDO($dsn, null, null, [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => false,
+                    PDO::ATTR_STRINGIFY_FETCHES  => false,
+                ]);
+                return; // Подключение успешно, завершаем выполнение метода
+            } catch (PDOException $e) {
+                throw new PDOException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения к SQLite | Путь: {$db_config['dbname']} | Сообщение: " . $e->getMessage(
+                    )
+                );
+            }
+        }
+
         // Проверка dbsock (первая попытка подключения через сокет)
         if (!empty($db_config['dbsock'])) {
             if (!is_string($db_config['dbsock']) || !file_exists($db_config['dbsock'])) {
@@ -233,6 +306,7 @@ class Database implements Database_Interface
                 }
             }
         }
+
         // Проверка dbhost и dbport (вторая попытка подключения через хост и порт)
         if (empty($db_config['dbhost'])) {
             throw new InvalidArgumentException(
@@ -948,8 +1022,9 @@ class Database implements Database_Interface
      *
      * @details Этот метод выполняет финальное преобразование SQL-запроса для обеспечения совместимости с целевой СУБД:
      *          - Для MariaDB (MySQL) запрос остается без изменений.
-     *          - Для PostgreSQL заменяет обратные кавычки (\`) на двойные кавычки (").
-     *          - Для SQLite удаляет все обратные кавычки (\`).
+     *          - Для PostgreSQL заменяет обратные кавычки (`) на двойные кавычки (").
+     *          - Для SQLite удаляет все обратные кавычки (`).
+     *          Экранированные кавычки оставляются без изменений.
      *          Если тип СУБД не поддерживается, выбрасывается исключение.
      *          Важно: На данный момент метод преобразует запросы только из формата MySQL. Преобразование из других
      *          форматов
@@ -997,8 +1072,16 @@ class Database implements Database_Interface
         // Проверяем целевую СУБД
         $this->txt_query = match ($this->db_type) {
             'mysql'  => $this->txt_query, // Для MariaDB остается оригинал
-            'pgsql'  => str_replace('`', '"', $this->txt_query), // Для PostgreSQL преобразуем ` в "
-            'sqlite' => str_replace('`', '', $this->txt_query), // Для SQLite удаляем `
+            'pgsql'  => preg_replace_callback(
+                '/(?<!\\\\)`/', // Ищем обратные апострофы, которые не экранированы
+                static fn ($matches) => '"', // Заменяем их на двойные кавычки
+                $this->txt_query
+            ),
+            'sqlite' => preg_replace_callback(
+                '/(?<!\\\\)`/', // Ищем обратные апострофы, которые не экранированы
+                static fn ($matches) => '', // Удаляем их
+                $this->txt_query
+            ),
             default  => throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
             ),

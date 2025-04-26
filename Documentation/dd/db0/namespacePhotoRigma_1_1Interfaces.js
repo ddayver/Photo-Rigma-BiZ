@@ -1,5 +1,6 @@
 var namespacePhotoRigma_1_1Interfaces =
 [
+    [ "Cache_Handler_Interface", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface" ],
     [ "Database_Interface", "d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html", "d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface" ],
     [ "Template_Interface", "da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html", "da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface" ],
     [ "User_Interface", "dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html", "dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface" ],

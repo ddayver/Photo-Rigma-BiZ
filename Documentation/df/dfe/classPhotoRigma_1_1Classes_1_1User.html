@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -152,7 +152,7 @@ $(function(){initNavTree('df/dfe/classPhotoRigma_1_1Classes_1_1User.html','../..
 <tr class="memdesc:ad677f704af643ac0152f7d46455bf769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает значение свойства в массивах <code>$user</code> или <code>$session</code> через вызов внутреннего метода.  <br /></td></tr>
 <tr class="separator:ad677f704af643ac0152f7d46455bf769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bb4e25a2291e3792c181a821de0c88c" id="r_a0bb4e25a2291e3792c181a821de0c88c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bb4e25a2291e3792c181a821de0c88c">set_work</a> (<a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html">Work_Interface</a> $work)</td></tr>
-<tr class="memdesc:a0bb4e25a2291e3792c181a821de0c88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает объект <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a> через вызов внутреннего метода.  <br /></td></tr>
+<tr class="memdesc:a0bb4e25a2291e3792c181a821de0c88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает объект Work через вызов внутреннего метода.  <br /></td></tr>
 <tr class="separator:a0bb4e25a2291e3792c181a821de0c88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0acd7052f38245fd3723ea29c83bf3f3" id="r_a0acd7052f38245fd3723ea29c83bf3f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0acd7052f38245fd3723ea29c83bf3f3">__get</a> (string $name)</td></tr>
 <tr class="memdesc:a0acd7052f38245fd3723ea29c83bf3f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получает значение приватного свойства.  <br /></td></tr>
@@ -269,7 +269,7 @@ $(function(){initNavTree('df/dfe/classPhotoRigma_1_1Classes_1_1User.html','../..
 <tr class="memdesc:af31e6e13ab6e21a8020e1573c9899c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Массив с полями наименований прав доступа  <br /></td></tr>
 <tr class="separator:af31e6e13ab6e21a8020e1573c9899c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a440fb4e1ddf381895225c74da750d6ce" id="r_a440fb4e1ddf381895225c74da750d6ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html">Work_Interface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a440fb4e1ddf381895225c74da750d6ce">$work</a> = null</td></tr>
-<tr class="memdesc:a440fb4e1ddf381895225c74da750d6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Свойство для объекта класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>.  <br /></td></tr>
+<tr class="memdesc:a440fb4e1ddf381895225c74da750d6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Свойство для объекта класса Work.  <br /></td></tr>
 <tr class="separator:a440fb4e1ddf381895225c74da750d6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
@@ -657,7 +657,7 @@ if ($userId &gt; 0) {
     echo "Ошибка регистрации."; }  </li>
 </ul>
 </dd></dl>
-<dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных. </dd>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция логирования ошибок. </dd>
 <dd>
@@ -942,7 +942,7 @@ PhotoRigma::Classes::$db Объект для работы с базой данн
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка входа.&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a6faeda51357eb02f3ea21011d8db4262"><div class="ttname"><a href="#a6faeda51357eb02f3ea21011d8db4262">PhotoRigma\Classes\User\_login_user_internal</a></div><div class="ttdeci">_login_user_internal(array $post, string $redirect_url)</div><div class="ttdoc">Проверяет данные пользователя для входа в систему с &quot;мягким&quot; обновлением паролей на новый формат хран...</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l02166">User.php:2166</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных. </dd>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
 <dd>
 <a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75" title="Объект для работы с базой данных.">PhotoRigma\Classes\User\$db</a> Свойство, содержащее объект класса Database. </dd>
 <dd>
@@ -1408,7 +1408,7 @@ $group_data = [
 
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l01836">1836</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l01953">encode_user_rights()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00315">process_user_rights()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a>, <a class="el" href="../../db/da2/User_8php_source.html#l01953">encode_user_rights()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00315">process_user_rights()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l01753">update_group_data()</a>.</p>
 <div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -1418,15 +1418,21 @@ $group_data = [
 <div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a846904b254f7b59e420e58a68604dc77_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a846904b254f7b59e420e58a68604dc77_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a846904b254f7b59e420e58a68604dc77_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a846904b254f7b59e420e58a68604dc77_cgraph">
-<area shape="rect" title="Обновляет данные группы в системе через Админку." alt="" coords="5,37,144,76"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="194,16,328,41"/>
-<area shape="poly" title=" " alt="" coords="144,44,178,38,179,44,145,49"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="192,68,330,93"/>
-<area shape="poly" title=" " alt="" coords="145,63,176,67,176,72,144,68"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="380,5,521,44"/>
-<area shape="poly" title=" " alt="" coords="328,25,364,24,364,29,328,30"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="378,68,523,107"/>
-<area shape="poly" title=" " alt="" coords="330,80,363,82,363,87,330,86"/>
+<area shape="rect" title="Обновляет данные группы в системе через Админку." alt="" coords="5,75,144,114"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="192,16,335,55"/>
+<area shape="poly" title=" " alt="" coords="138,72,184,57,185,63,140,77"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="196,82,330,107"/>
+<area shape="poly" title=" " alt="" coords="144,92,180,92,180,97,144,97"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="194,138,332,163"/>
+<area shape="poly" title=" " alt="" coords="143,112,205,131,204,136,141,117"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="383,12,548,51"/>
+<area shape="poly" title=" " alt="" coords="336,32,367,31,367,36,336,37"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="596,5,740,58"/>
+<area shape="poly" title=" " alt="" coords="549,29,581,29,581,34,549,34"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="395,75,536,114"/>
+<area shape="poly" title=" " alt="" coords="331,92,379,92,379,97,331,97"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="393,138,538,176"/>
+<area shape="poly" title=" " alt="" coords="333,150,377,151,377,157,333,155"/>
 </map>
 </div>
 <div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -1553,7 +1559,7 @@ $group_data = [
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка при обновлении данных.&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a2ca555fe6bbef0b0a691c03111ffe700"><div class="ttname"><a href="#a2ca555fe6bbef0b0a691c03111ffe700">PhotoRigma\Classes\User\_update_user_data_internal</a></div><div class="ttdeci">_update_user_data_internal(int $user_id, array $post_data, array $files_data, int $max_size)</div><div class="ttdoc">Обновляет данные существующего пользователя, включая пароль, email, имя и аватар.</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l02411">User.php:2411</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::check_input() Метод для проверки корректности входных данных. </dd>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки корректности входных данных. </dd>
 <dd>
 <a class="el" href="#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ...">PhotoRigma\Classes\User\edit_avatar()</a> Приватный метод для обработки загрузки аватара. </dd>
 <dd>
@@ -1571,9 +1577,15 @@ $group_data = [
 <div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a2ca555fe6bbef0b0a691c03111ffe700_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a2ca555fe6bbef0b0a691c03111ffe700_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a2ca555fe6bbef0b0a691c03111ffe700_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a2ca555fe6bbef0b0a691c03111ffe700_cgraph">
-<area shape="rect" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,5,186,30"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="234,5,319,30"/>
-<area shape="poly" title=" " alt="" coords="186,15,218,15,218,20,186,20"/>
+<area shape="rect" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,19,186,44"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="234,19,319,44"/>
+<area shape="poly" title=" " alt="" coords="186,29,218,29,218,34,186,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас..." alt="" coords="367,12,510,51"/>
+<area shape="poly" title=" " alt="" coords="320,29,352,29,352,34,320,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="558,12,737,51"/>
+<area shape="poly" title=" " alt="" coords="511,29,543,29,543,34,511,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a6731465132be58e4a625f9249cd5f7d8" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="785,5,970,58"/>
+<area shape="poly" title=" " alt="" coords="737,29,769,29,769,34,737,34"/>
 </map>
 </div>
 <div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -1690,7 +1702,7 @@ $group_data = [
 <dd>
 <a class="el" href="#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м...">PhotoRigma\Classes\User\process_user_rights()</a> Метод, декодирующий JSON-строку прав пользователя в массив. </dd>
 <dd>
-PhotoRigma::Classes::Work::check_input() Метод для проверки правильности входных данных. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
 <dd>
 <a class="el" href="#af31e6e13ab6e21a8020e1573c9899c5f" title="Массив с полями наименований прав доступа">PhotoRigma\Classes\User\$user_right_fields</a> Свойство, содержащее массив с допустимыми полями прав пользователя. </dd>
 <dd>
@@ -1778,7 +1790,7 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки пр
 <div class="line">    <span class="stringliteral">&#39;user_rights&#39;</span> =&gt; <span class="stringliteral">&#39;{&quot;read&quot;: true, &quot;write&quot;: true}&#39;</span></div>
 <div class="line">]);</div>
 <div class="line">echo <span class="stringliteral">&quot;Новая группа создана с ID: $groupId&quot;</span>;</div>
-</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000008">Необходимо сделать</a></b></dt><dd>Продумать и реализовать метод.</dd></dl>
+</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000007">Необходимо сделать</a></b></dt><dd>Продумать и реализовать метод.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод в текущей реализации не реализован и выбрасывает исключение. </dd></dl>
 
 <p>Замещает <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html#acb35e2058e1fa1189a515873e76e62dd">User_Interface</a>.</p>
@@ -2080,7 +2092,7 @@ if ($userId &gt; 0) {
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Удаление группы запрещено или произошла ошибка.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000009">Необходимо сделать</a></b></dt><dd>Продумать и реализовать метод.</dd></dl>
+</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000008">Необходимо сделать</a></b></dt><dd>Продумать и реализовать метод.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод в текущей реализации не реализован и выбрасывает исключение. </dd></dl>
 
 <p>Замещает <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html#a4045f753ad732e5f01bafd4b6c04d961">User_Interface</a>.</p>
@@ -2133,7 +2145,7 @@ if ($userId &gt; 0) {
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Не удалось удалить пользователя.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000010">Необходимо сделать</a></b></dt><dd>Продумать и реализовать метод.</dd></dl>
+</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000009">Необходимо сделать</a></b></dt><dd>Продумать и реализовать метод.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Метод в текущей реализации не реализован и выбрасывает исключение. </dd></dl>
 
 <p>Замещает <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html#ab2ab959808354af438bd760ef89d09eb">User_Interface</a>.</p>
@@ -2235,22 +2247,40 @@ if ($userId &gt; 0) {
 <div class="line">    echo <span class="stringliteral">&quot;Загрузка аватара не удалась.&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html_a1b1bd50120832a8df1d83411fc66162c"><div class="ttname"><a href="#a1b1bd50120832a8df1d83411fc66162c">PhotoRigma\Classes\User\edit_avatar</a></div><div class="ttdeci">edit_avatar(array $files_data, int $max_size)</div><div class="ttdoc">Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ...</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l02601">User.php:2601</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::$config Свойство класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>, содержащее конфигурацию приложения. </dd>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> Свойство класса Work, содержащее конфигурацию приложения. </dd>
 <dd>
-PhotoRigma::Classes::Work::encodename() Метод для генерации уникального имени файла. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас...">PhotoRigma\Classes\Work\encodename()</a> Метод для генерации уникального имени файла. </dd>
 <dd>
-PhotoRigma::Classes::Work::fix_file_extension() Метод для корректировки расширения файла на основе его MIME-типа. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a89d4e7cb491d0c91282d16ff5abe3138" title="Вывод изображения через HTTP через вызов внутреннего метода.">PhotoRigma\Classes\Work\fix_file_extension()</a> Метод для корректировки расширения файла на основе его MIME-типа. </dd>
 <dd>
-PhotoRigma::Classes::Work::check_input() Метод для проверки корректности входных данных. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки корректности входных данных. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l02601">2601</a></p>
 
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/dce/Work_8php_source.html#l00803">Work\encodename()</a>.</p>
+
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l02411">_update_user_data_internal()</a>.</p>
 <div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-22-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+  <img id="dynsection-22-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-22-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_cgraph" alt=""/></div>
+<map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_cgraph">
+<area shape="rect" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="5,19,91,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас..." alt="" coords="139,12,282,51"/>
+<area shape="poly" title=" " alt="" coords="91,29,123,29,123,34,91,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="330,12,508,51"/>
+<area shape="poly" title=" " alt="" coords="283,29,314,29,314,34,283,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a6731465132be58e4a625f9249cd5f7d8" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="556,5,742,58"/>
+<area shape="poly" title=" " alt="" coords="509,29,540,29,540,34,509,34"/>
+</map>
+</div>
+<div id="dynsection-23" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-23-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-23-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a1b1bd50120832a8df1d83411fc66162c_icgraph">
 <area shape="rect" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="406,5,491,30"/>
@@ -2319,11 +2349,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l02009">_encode_user_rights_internal()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l01836">_update_group_data_internal()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l02810">_update_user_rights_internal()</a>.</p>
-<div id="dynsection-23" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-23-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-24" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-24-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-23-content" class="dyncontent" style="display:none;">
+<div id="dynsection-24-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_cgraph">
 <area shape="rect" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="5,12,140,37"/>
@@ -2331,11 +2361,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <area shape="poly" title=" " alt="" coords="140,22,172,22,172,27,140,27"/>
 </map>
 </div>
-<div id="dynsection-24" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-24-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-25-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-24-content" class="dyncontent" style="display:none;">
+<div id="dynsection-25-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6ccf217fb8ddc2f985779f15cf32f078_icgraph">
 <area shape="rect" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="371,44,505,69"/>
@@ -2413,11 +2443,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l00586">load_authenticated_user()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00484">load_guest_user()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l00160">__construct()</a>.</p>
-<div id="dynsection-25" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-25-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-26" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-26-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-25-content" class="dyncontent" style="display:none;">
+<div id="dynsection-26-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_cgraph">
 <area shape="rect" title="Инициализация данных пользователя: определение типа пользователя (гость или аутентифицированный) на о..." alt="" coords="5,31,105,55"/>
@@ -2435,11 +2465,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <area shape="poly" title=" " alt="" coords="709,40,741,40,741,46,709,46"/>
 </map>
 </div>
-<div id="dynsection-26" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-26-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-27" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-27-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-26-content" class="dyncontent" style="display:none;">
+<div id="dynsection-27-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a4ed2627b2e687e62000e77ada58d072f_icgraph">
 <area shape="rect" title="Инициализация данных пользователя: определение типа пользователя (гость или аутентифицированный) на о..." alt="" coords="143,5,242,30"/>
@@ -2531,11 +2561,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l00484">load_guest_user()</a>, <a class="el" href="../../db/da2/User_8php_source.html#l00691">merge_user_with_group()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00315">process_user_rights()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l00423">initialize_user()</a>.</p>
-<div id="dynsection-27" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-27-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-28" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-28-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-27-content" class="dyncontent" style="display:none;">
+<div id="dynsection-28-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_cgraph">
 <area shape="rect" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="5,55,168,79"/>
@@ -2550,11 +2580,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <area shape="poly" title=" " alt="" coords="562,40,594,40,594,46,562,46"/>
 </map>
 </div>
-<div id="dynsection-28" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-28-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-29" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-29-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-28-content" class="dyncontent" style="display:none;">
+<div id="dynsection-29-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a3d3625567d4ec81c5afe3f2221947ae9_icgraph">
 <area shape="rect" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="290,5,452,30"/>
@@ -2634,11 +2664,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l00315">process_user_rights()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l00423">initialize_user()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00586">load_authenticated_user()</a>.</p>
-<div id="dynsection-29" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-29-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-30" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-30-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-29-content" class="dyncontent" style="display:none;">
+<div id="dynsection-30-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_cgraph">
 <area shape="rect" title="Метод загружает данные группы гостя из базы данных, обрабатывает права (user_rights) и сохраняет итог..." alt="" coords="5,12,122,37"/>
@@ -2648,11 +2678,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <area shape="poly" title=" " alt="" coords="308,22,341,22,341,27,308,27"/>
 </map>
 </div>
-<div id="dynsection-30" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-30-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-31" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-31-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-30-content" class="dyncontent" style="display:none;">
+<div id="dynsection-31-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a90233f2f998c4d07939836b2135877cc_icgraph">
 <area shape="rect" title="Метод загружает данные группы гостя из базы данных, обрабатывает права (user_rights) и сохраняет итог..." alt="" coords="500,5,617,30"/>
@@ -2739,11 +2769,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l02086">2086</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l02166">_login_user_internal()</a>.</p>
-<div id="dynsection-31" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-31-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-32" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-32-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-31-content" class="dyncontent" style="display:none;">
+<div id="dynsection-32-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a9f839b5040591e4ea416cfc8f2ec8f44_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a9f839b5040591e4ea416cfc8f2ec8f44_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a9f839b5040591e4ea416cfc8f2ec8f44_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a9f839b5040591e4ea416cfc8f2ec8f44_cgraph">
 <area shape="rect" title="Проверяет данные пользователя для входа в систему через вызов внутреннего метода." alt="" coords="5,5,86,30"/>
@@ -2814,11 +2844,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l00691">691</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l00586">load_authenticated_user()</a>.</p>
-<div id="dynsection-32" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-32-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-33" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-33-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-32-content" class="dyncontent" style="display:none;">
+<div id="dynsection-33-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_af4375f670c4016529de39c6a737806ea_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_af4375f670c4016529de39c6a737806ea_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_af4375f670c4016529de39c6a737806ea_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_af4375f670c4016529de39c6a737806ea_icgraph">
 <area shape="rect" title="Метод объединяет данные пользователя с данными его группы, применяя логику перезаписи значений,..." alt="" coords="500,5,660,30"/>
@@ -2887,11 +2917,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l00366">_process_user_rights_internal()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l01836">_update_group_data_internal()</a>, <a class="el" href="../../db/da2/User_8php_source.html#l02810">_update_user_rights_internal()</a>, <a class="el" href="../../db/da2/User_8php_source.html#l00227">all_right_fields()</a>, <a class="el" href="../../db/da2/User_8php_source.html#l00586">load_authenticated_user()</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00484">load_guest_user()</a>.</p>
-<div id="dynsection-33" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-33-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-34" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-34-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-33-content" class="dyncontent" style="display:none;">
+<div id="dynsection-34-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_cgraph">
 <area shape="rect" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="5,12,144,37"/>
@@ -2899,11 +2929,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <area shape="poly" title=" " alt="" coords="144,22,176,22,176,27,144,27"/>
 </map>
 </div>
-<div id="dynsection-34" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-34-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-35" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-35-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-34-content" class="dyncontent" style="display:none;">
+<div id="dynsection-35-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a6031ba212847fdf2810753c120c4b4d2_icgraph">
 <area shape="rect" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="691,132,829,157"/>
@@ -3002,11 +3032,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l00747">747</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l00800">_set_property_key_internal()</a>.</p>
-<div id="dynsection-35" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-35-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-36" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-36-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-36-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-35-content" class="dyncontent" style="display:none;">
+<div id="dynsection-36-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_ad677f704af643ac0152f7d46455bf769_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_ad677f704af643ac0152f7d46455bf769_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_ad677f704af643ac0152f7d46455bf769_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_ad677f704af643ac0152f7d46455bf769_cgraph">
 <area shape="rect" title="Устанавливает значение свойства в массивах $user или $session через вызов внутреннего метода." alt="" coords="5,5,125,30"/>
@@ -3032,7 +3062,7 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
       </table>
 </div><div class="memdoc">
 
-<p>Устанавливает объект <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a> через вызов внутреннего метода. </p>
+<p>Устанавливает объект Work через вызов внутреннего метода. </p>
 <p>Этот публичный метод является обёрткой для защищённого метода _set_work_internal(). Он проверяет корректность переданного объекта и устанавливает его в свойство <code>$work</code>. Если в сессии отсутствует тема (<code>theme</code>), она инициализируется значением из конфигурации объекта, реализующего интерфейс <code>Work_Interface</code>. Предназначен для прямого использования извне.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
@@ -3059,18 +3089,18 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <div class="line"> </div>
 <div class="line"><span class="comment">// Установка объекта Work</span></div>
 <div class="line"><a class="code hl_variable" href="#a54301e4038f95a7b17247e0d674ff3d6">$user</a>-&gt;set_work(<a class="code hl_variable" href="#a440fb4e1ddf381895225c74da750d6ce">$work</a>);</div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aaf0dcd4a67d4b0f9d67121936d09b848" title="Установка объекта Work_Interface через сеттер.">PhotoRigma\Classes\User\_set_work_internal()</a> Защищённый метод, реализующий основную логику установки объекта <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>. </dd></dl>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aaf0dcd4a67d4b0f9d67121936d09b848" title="Установка объекта Work_Interface через сеттер.">PhotoRigma\Classes\User\_set_work_internal()</a> Защищённый метод, реализующий основную логику установки объекта Work. </dd></dl>
 
 <p>Замещает <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html#a0bb4e25a2291e3792c181a821de0c88c">User_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l00854">854</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l00108">$work</a> и <a class="el" href="../../db/da2/User_8php_source.html#l00904">_set_work_internal()</a>.</p>
-<div id="dynsection-36" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-36-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-36-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-37" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-37-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-37-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-36-content" class="dyncontent" style="display:none;">
+<div id="dynsection-37-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a0bb4e25a2291e3792c181a821de0c88c_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a0bb4e25a2291e3792c181a821de0c88c_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a0bb4e25a2291e3792c181a821de0c88c_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a0bb4e25a2291e3792c181a821de0c88c_cgraph">
 <area shape="rect" title="Устанавливает объект Work через вызов внутреннего метода." alt="" coords="5,5,80,30"/>
@@ -3142,11 +3172,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l01514">_unset_property_key_internal()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../db/da2/User_8php_source.html#l01292">_add_new_user_internal()</a>.</p>
-<div id="dynsection-37" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-37-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-37-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-38" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-38-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-38-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-37-content" class="dyncontent" style="display:none;">
+<div id="dynsection-38-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_cgraph">
 <area shape="rect" title="Удаляет ключ из указанного свойства объекта (user или session) через вызов внутреннего метода." alt="" coords="5,12,139,37"/>
@@ -3154,11 +3184,11 @@ PhotoRigma::Classes::Work::check_input() Метод для проверки ко
 <area shape="poly" title=" " alt="" coords="139,22,171,22,171,27,139,27"/>
 </map>
 </div>
-<div id="dynsection-38" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-38-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-38-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-39" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-39-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-39-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-38-content" class="dyncontent" style="display:none;">
+<div id="dynsection-39-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_icgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_icgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_icgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_ab19c821428e4402d7669bc3940afe6d7_icgraph">
 <area shape="rect" title="Удаляет ключ из указанного свойства объекта (user или session) через вызов внутреннего метода." alt="" coords="368,5,501,30"/>
@@ -3243,24 +3273,30 @@ $group_data = [
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l01753">1753</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l01836">_update_group_data_internal()</a>.</p>
-<div id="dynsection-39" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-39-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-39-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-40" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-40-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-40-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-39-content" class="dyncontent" style="display:none;">
+<div id="dynsection-40-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a8432fa6f08d4982b9c9d9aaede7de566_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a8432fa6f08d4982b9c9d9aaede7de566_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a8432fa6f08d4982b9c9d9aaede7de566_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a8432fa6f08d4982b9c9d9aaede7de566_cgraph">
-<area shape="rect" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="5,44,137,69"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="185,37,323,76"/>
-<area shape="poly" title=" " alt="" coords="137,54,169,54,169,59,137,59"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="373,16,507,41"/>
-<area shape="poly" title=" " alt="" coords="323,44,358,38,358,44,324,49"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="371,68,509,93"/>
-<area shape="poly" title=" " alt="" coords="324,63,356,67,355,72,323,68"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="559,5,701,44"/>
-<area shape="poly" title=" " alt="" coords="507,25,544,24,544,29,508,30"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="557,68,703,107"/>
-<area shape="poly" title=" " alt="" coords="510,80,542,82,542,87,510,86"/>
+<area shape="rect" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="5,82,137,107"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="185,75,323,114"/>
+<area shape="poly" title=" " alt="" coords="137,92,169,92,169,97,137,97"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="371,16,514,55"/>
+<area shape="poly" title=" " alt="" coords="317,72,363,57,365,63,319,77"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6ccf217fb8ddc2f985779f15cf32f078" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="376,82,510,107"/>
+<area shape="poly" title=" " alt="" coords="323,92,360,92,360,97,323,97"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="374,138,512,163"/>
+<area shape="poly" title=" " alt="" coords="322,112,385,131,383,136,321,117"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="562,12,728,51"/>
+<area shape="poly" title=" " alt="" coords="515,32,547,31,547,36,515,37"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="776,5,919,58"/>
+<area shape="poly" title=" " alt="" coords="728,29,761,29,761,34,728,34"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="574,75,716,114"/>
+<area shape="poly" title=" " alt="" coords="510,92,559,92,559,97,510,97"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="572,138,718,176"/>
+<area shape="poly" title=" " alt="" coords="512,150,557,151,556,157,512,155"/>
 </map>
 </div>
 
@@ -3360,18 +3396,24 @@ $group_data = [
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l02315">2315</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l02411">_update_user_data_internal()</a>.</p>
-<div id="dynsection-40" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-40-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-40-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-41" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-41-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-41-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-40-content" class="dyncontent" style="display:none;">
+<div id="dynsection-41-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a855f88015180a39f2464a41a2ce2a5c2_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a855f88015180a39f2464a41a2ce2a5c2_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a855f88015180a39f2464a41a2ce2a5c2_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a855f88015180a39f2464a41a2ce2a5c2_cgraph">
-<area shape="rect" title="Обновляет данные существующего пользователя через вызов внутреннего метода." alt="" coords="5,5,130,30"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2ca555fe6bbef0b0a691c03111ffe700" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="178,5,358,30"/>
-<area shape="poly" title=" " alt="" coords="130,15,162,15,162,20,130,20"/>
-<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="406,5,491,30"/>
-<area shape="poly" title=" " alt="" coords="358,15,391,15,391,20,358,20"/>
+<area shape="rect" title="Обновляет данные существующего пользователя через вызов внутреннего метода." alt="" coords="5,19,130,44"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2ca555fe6bbef0b0a691c03111ffe700" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="178,19,358,44"/>
+<area shape="poly" title=" " alt="" coords="130,29,162,29,162,34,130,34"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="406,19,491,44"/>
+<area shape="poly" title=" " alt="" coords="358,29,391,29,391,34,358,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас..." alt="" coords="539,12,683,51"/>
+<area shape="poly" title=" " alt="" coords="492,29,524,29,524,34,492,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="731,12,909,51"/>
+<area shape="poly" title=" " alt="" coords="683,29,715,29,715,34,683,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a6731465132be58e4a625f9249cd5f7d8" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="957,5,1142,58"/>
+<area shape="poly" title=" " alt="" coords="910,29,941,29,941,34,910,34"/>
 </map>
 </div>
 
@@ -3468,11 +3510,11 @@ $group_data = [
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l02716">2716</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../db/da2/User_8php_source.html#l02810">_update_user_rights_internal()</a>.</p>
-<div id="dynsection-41" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-41-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-41-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-42" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-42-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-42-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-41-content" class="dyncontent" style="display:none;">
+<div id="dynsection-42-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../df/dfe/classPhotoRigma_1_1Classes_1_1User_a54dd5e694d07ac47b91bf9a7cc58d9d2_cgraph.png" border="0" usemap="#adf/dfe/classPhotoRigma_1_1Classes_1_1User_a54dd5e694d07ac47b91bf9a7cc58d9d2_cgraph" alt=""/></div>
 <map name="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a54dd5e694d07ac47b91bf9a7cc58d9d2_cgraph" id="adf/dfe/classPhotoRigma_1_1Classes_1_1User_a54dd5e694d07ac47b91bf9a7cc58d9d2_cgraph">
 <area shape="rect" title="Обновляет права пользователя или группу через вызов внутреннего метода." alt="" coords="5,44,137,69"/>
@@ -3624,7 +3666,7 @@ $group_data = [
 </table>
 </div><div class="memdoc">
 
-<p>Свойство для объекта класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>. </p>
+<p>Свойство для объекта класса Work. </p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../db/da2/User_8php_source.html">User.php</a> строка <a class="el" href="../../db/da2/User_8php_source.html#l00108">108</a></p>
 

@@ -7,8 +7,8 @@
  * @brief       Localized strings for the core of the site in English.
  *
  * @author      Dark Dayver
- * @version     0.4.1
- * @date        2025-04-25
+ * @version     0.4.2
+ * @date        2025-04-27
  * @namespace   PhotoRigma\Language
  *
  * @details     This file contains English language strings used in the core of the project.

@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -204,7 +204,7 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс для формирования данных для шаблонов. </p>
-<p>Этот класс реализует интерфейс <code>Work_Template_Interface</code> и предоставляет функционал для генерации данных, необходимых для отображения различных блоков на странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Он является дочерним классом для <code>PhotoRigma::Classes::Work</code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
+<p>Этот класс реализует интерфейс <code>Work_Template_Interface</code> и предоставляет функционал для генерации данных, необходимых для отображения различных блоков на странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Он является дочерним классом для <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a></code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code>Work</code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
 <li>Формирование данных для меню (<code>create_menu</code>).</li>
 <li>Генерация списка лучших пользователей (<code>template_best_user</code>).</li>
 <li>Генерация статистических данных (<code>template_stat</code>).</li>
@@ -266,8 +266,8 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html"><div class="ttname"><a href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html">PhotoRigma\Classes\Work_Template</a></div><div class="ttdoc">Класс для формирования данных для шаблонов.</div><div class="ttdef"><b>Определения</b> <a href="../../df/dbe/Work__Template_8php_source.html#l00106">Work_Template.php:107</a></div></div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work_Template\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных.</div><div class="ttdef"><b>Определения</b> <a href="../../df/dbe/Work__Template_8php_source.html#l00111">Work_Template.php:111</a></div></div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_Template\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Конфигурация приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../df/dbe/Work__Template_8php_source.html#l00109">Work_Template.php:109</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_aa3e9534005fd516d941f6a5569896e01"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">PhotoRigma\$template</a></div><div class="ttdeci">$template</div><div class="ttdoc">Создание объекта класса Template.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00298">index.php:298</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work Родительский класс, через который передаются зависимости. </dd>
+<div class="ttc" id="anamespacePhotoRigma_html_aa3e9534005fd516d941f6a5569896e01"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#aa3e9534005fd516d941f6a5569896e01">PhotoRigma\$template</a></div><div class="ttdeci">$template</div><div class="ttdoc">Создание объекта класса Template.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00320">index.php:320</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Родительский класс, через который передаются зависимости. </dd>
 <dd>
 <a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_Template\$config</a> Свойство, содержащее конфигурацию приложения. </dd>
 <dd>
@@ -534,20 +534,36 @@ $(function(){initNavTree('d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.ht
 <dd>
 <a class="el" href="#abbadc8b1002dc2bf9aca5109a7698b6b" title="Объект пользователя.">PhotoRigma\Classes\Work_Template\$user</a> Свойство, содержащее данные текущего пользователя. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Статический метод для очистки данных. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Статический метод для очистки данных. </dd>
 <dd>
 <a class="el" href="#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода.">PhotoRigma\Classes\Work_Template\create_menu()</a> Публичный метод, который вызывает этот внутренний метод. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00436">436</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00328">PhotoRigma\$action</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00350">PhotoRigma\$action</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00359">create_menu()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_cgraph" alt=""/></div>
+<map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_cgraph">
+<area shape="rect" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="5,19,158,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="206,12,349,51"/>
+<area shape="poly" title=" " alt="" coords="158,29,190,29,190,34,158,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="397,12,562,51"/>
+<area shape="poly" title=" " alt="" coords="350,29,381,29,381,34,350,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="610,5,754,58"/>
+<area shape="poly" title=" " alt="" coords="563,29,595,29,595,34,563,34"/>
+</map>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_icgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_icgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_icgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a44160f09c7dbb17349602f0862c95d62_icgraph">
 <area shape="rect" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="150,5,302,30"/>
@@ -646,7 +662,7 @@ PhotoRigma::Classes::Work::clean_field() Статический метод дл�
 <div class="line">$best_users = $this-&gt;<a class="code hl_function" href="#a7c272bd5112b72e9047a6dafdd9cfd8c">_template_best_user_internal</a>(3);</div>
 <div class="line">print_r($best_users);</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_a7c272bd5112b72e9047a6dafdd9cfd8c"><div class="ttname"><a href="#a7c272bd5112b72e9047a6dafdd9cfd8c">PhotoRigma\Classes\Work_Template\_template_best_user_internal</a></div><div class="ttdeci">_template_best_user_internal(int $best_user=1)</div><div class="ttdoc">Формирует список пользователей, загрузивших наибольшее количество изображений.</div><div class="ttdef"><b>Определения</b> <a href="../../df/dbe/Work__Template_8php_source.html#l00707">Work_Template.php:707</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::clean_field() Метод для очистки данных. </dd>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
 <dd>
 <a class="el" href="#a9fd8978d2c6cbdcfdd6be875be161b7b" title="Языковые данные.">PhotoRigma\Classes\Work_Template\$lang</a> Свойство, содержащее языковые строки. </dd>
 <dd>
@@ -656,12 +672,30 @@ PhotoRigma::Classes::Work::clean_field() Статический метод дл�
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00707">707</a></p>
 
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a>.</p>
+
 <p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00631">template_best_user()</a>.</p>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_cgraph" alt=""/></div>
+<map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_cgraph">
+<area shape="rect" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="5,12,148,51"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="196,12,339,51"/>
+<area shape="poly" title=" " alt="" coords="148,29,180,29,180,34,148,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="387,12,552,51"/>
+<area shape="poly" title=" " alt="" coords="340,29,371,29,371,34,340,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="600,5,744,58"/>
+<area shape="poly" title=" " alt="" coords="553,29,585,29,585,34,553,34"/>
+</map>
+</div>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_icgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_icgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_icgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a7c272bd5112b72e9047a6dafdd9cfd8c_icgraph">
 <area shape="rect" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="189,5,331,44"/>
@@ -755,7 +789,7 @@ PhotoRigma::Classes::Work::clean_field() Статический метод дл�
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Template_html_ad1a946d518250f1085369cfad3719cc3"><div class="ttname"><a href="#ad1a946d518250f1085369cfad3719cc3">PhotoRigma\Classes\Work_Template\_template_stat_internal</a></div><div class="ttdeci">_template_stat_internal()</div><div class="ttdoc">Генерирует массив статистических данных для шаблона.</div><div class="ttdef"><b>Определения</b> <a href="../../df/dbe/Work__Template_8php_source.html#l00898">Work_Template.php:898</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a18e3eac65d39ced5231d9b3e3630ba75" title="Объект для работы с базой данных.">PhotoRigma\Classes\Work_Template\$db</a> Свойство, содержащее объект для работы с базой данных. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Метод для очистки данных. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
 <dd>
 <a class="el" href="#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода.">PhotoRigma\Classes\Work_Template\template_stat()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
 <dd>
@@ -763,14 +797,30 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00898">898</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00112">$user</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00112">$user</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00823">template_stat()</a>.</p>
-<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_cgraph" alt=""/></div>
+<map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_cgraph">
+<area shape="rect" title="Генерирует массив статистических данных для шаблона." alt="" coords="5,19,162,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="210,12,353,51"/>
+<area shape="poly" title=" " alt="" coords="162,29,194,29,194,34,162,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="401,12,566,51"/>
+<area shape="poly" title=" " alt="" coords="354,29,385,29,385,34,354,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="614,5,758,58"/>
+<area shape="poly" title=" " alt="" coords="567,29,599,29,599,34,567,34"/>
+</map>
+</div>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_icgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_icgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_icgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_ad1a946d518250f1085369cfad3719cc3_icgraph">
 <area shape="rect" title="Генерирует массив статистических данных для шаблона." alt="" coords="154,5,310,30"/>
@@ -857,9 +907,9 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Метод для очистки данных. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd>
 <dd>
-PhotoRigma::Classes::Work::validate_mime_type() Метод для проверки MIME-типа файла. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME-тип файла через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод для проверки MIME-типа файла. </dd>
 <dd>
 <a class="el" href="#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода.">PhotoRigma\Classes\Work_Template\template_user()</a> Публичный метод, который вызывает этот внутренний метод. </dd>
 <dd>
@@ -867,12 +917,36 @@ PhotoRigma::Classes::Work::validate_mime_type() Метод для проверк
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l01105">1105</a></p>
 
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l00945">Work\validate_mime_type()</a>.</p>
+
 <p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l01038">template_user()</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_cgraph" alt=""/></div>
+<map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_cgraph">
+<area shape="rect" title="Формирование блока пользователя." alt="" coords="5,59,165,84"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="228,19,372,58"/>
+<area shape="poly" title=" " alt="" coords="164,57,212,49,213,54,165,62"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через вызов публичного метода в дочернем классе." alt="" coords="213,83,387,122"/>
+<area shape="poly" title=" " alt="" coords="165,80,198,85,197,90,164,86"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="435,15,600,54"/>
+<area shape="poly" title=" " alt="" coords="372,34,419,33,419,39,372,40"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="655,5,798,58"/>
+<area shape="poly" title=" " alt="" coords="600,31,639,30,639,35,601,36"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через доступные библиотеки через вызов внутреннего метода." alt="" coords="443,79,592,131"/>
+<area shape="poly" title=" " alt="" coords="387,101,427,101,427,107,387,106"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="648,83,805,135"/>
+<area shape="poly" title=" " alt="" coords="593,104,633,105,633,110,593,109"/>
+</map>
+</div>
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_icgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_icgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_icgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a4c85b7dc68591aedd8df9848c1a08dd0_icgraph">
 <area shape="rect" title="Формирование блока пользователя." alt="" coords="157,5,316,30"/>
@@ -953,23 +1027,29 @@ PhotoRigma::Classes::Work::validate_mime_type() Метод для проверк
 <div class="line">print_r($long_menu);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта.">PhotoRigma\Classes\Work_Template\_create_menu_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::create_menu() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода.">PhotoRigma\Classes\Work\create_menu()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00359">359</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00328">PhotoRigma\$action</a> и <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00436">_create_menu_internal()</a>.</p>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00350">PhotoRigma\$action</a> и <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00436">_create_menu_internal()</a>.</p>
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_af970fc714c16e27d2d60d698522a8504_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_af970fc714c16e27d2d60d698522a8504_cgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_af970fc714c16e27d2d60d698522a8504_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_af970fc714c16e27d2d60d698522a8504_cgraph">
-<area shape="rect" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="5,5,102,30"/>
-<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="150,5,302,30"/>
-<area shape="poly" title=" " alt="" coords="102,15,134,15,134,20,102,20"/>
+<area shape="rect" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="5,19,102,44"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="150,19,302,44"/>
+<area shape="poly" title=" " alt="" coords="102,29,134,29,134,34,102,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="350,12,493,51"/>
+<area shape="poly" title=" " alt="" coords="302,29,334,29,334,34,302,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="541,12,707,51"/>
+<area shape="poly" title=" " alt="" coords="494,29,526,29,526,34,494,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="755,5,898,58"/>
+<area shape="poly" title=" " alt="" coords="707,29,740,29,740,34,707,34"/>
 </map>
 </div>
 
@@ -1022,8 +1102,8 @@ PhotoRigma::Classes::Work::create_menu() Метод-фасад в родител
 <div class="line">    <span class="stringliteral">&#39;error_message&#39;</span>   =&gt; <span class="stringliteral">&#39;Произошла ошибка.&#39;</span>,</div>
 <div class="line">];</div>
 <div class="line">$w_template-&gt;set_lang($langData);</div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00265">index.php:265</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::set_lang() Метод в родительском классе <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>, который вызывает этот метод. </dd></dl>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00287">index.php:287</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\set_lang()</a> Метод в родительском классе Work, который вызывает этот метод. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#aaf95d95540a3e47c5905a47db3424ed9">Work_Template_Interface</a>.</p>
 
@@ -1144,23 +1224,29 @@ PhotoRigma::Classes::Work::create_menu() Метод-фасад в родител
 <div class="line">print_r($best_users);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений.">PhotoRigma\Classes\Work_Template\_template_best_user_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::template_best_user() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег...">PhotoRigma\Classes\Work\template_best_user()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3">Work_Template_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00631">631</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00707">_template_best_user_internal()</a>.</p>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a9143fed87a3064985e0b51fe5fbb4ac3_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a9143fed87a3064985e0b51fe5fbb4ac3_cgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a9143fed87a3064985e0b51fe5fbb4ac3_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a9143fed87a3064985e0b51fe5fbb4ac3_cgraph">
-<area shape="rect" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="5,12,141,37"/>
-<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="189,5,331,44"/>
-<area shape="poly" title=" " alt="" coords="141,22,173,22,173,27,141,27"/>
+<area shape="rect" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="5,19,141,44"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="189,12,331,51"/>
+<area shape="poly" title=" " alt="" coords="141,29,173,29,173,34,141,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="379,12,522,51"/>
+<area shape="poly" title=" " alt="" coords="331,29,363,29,363,34,331,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="570,12,736,51"/>
+<area shape="poly" title=" " alt="" coords="523,29,555,29,555,34,523,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="784,5,927,58"/>
+<area shape="poly" title=" " alt="" coords="736,29,769,29,769,34,736,34"/>
 </map>
 </div>
 
@@ -1229,23 +1315,29 @@ PhotoRigma::Classes::Work::template_best_user() Метод-фасад в род�
 <div class="line">print_r($stat_data);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона.">PhotoRigma\Classes\Work_Template\_template_stat_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::template_stat() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода.">PhotoRigma\Classes\Work\template_stat()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a116ebcf799d07566a74e7e765aecc1b7">Work_Template_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00823">823</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00898">_template_stat_internal()</a>.</p>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a116ebcf799d07566a74e7e765aecc1b7_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a116ebcf799d07566a74e7e765aecc1b7_cgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a116ebcf799d07566a74e7e765aecc1b7_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a116ebcf799d07566a74e7e765aecc1b7_cgraph">
-<area shape="rect" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода." alt="" coords="5,5,106,30"/>
-<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="154,5,310,30"/>
-<area shape="poly" title=" " alt="" coords="106,15,138,15,138,20,106,20"/>
+<area shape="rect" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода." alt="" coords="5,19,106,44"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="154,19,310,44"/>
+<area shape="poly" title=" " alt="" coords="106,29,138,29,138,34,106,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="358,12,501,51"/>
+<area shape="poly" title=" " alt="" coords="310,29,342,29,342,34,310,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="549,12,715,51"/>
+<area shape="poly" title=" " alt="" coords="502,29,534,29,534,34,502,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="763,5,906,58"/>
+<area shape="poly" title=" " alt="" coords="715,29,748,29,748,34,715,34"/>
 </map>
 </div>
 
@@ -1312,23 +1404,35 @@ PhotoRigma::Classes::Work::template_stat() Метод-фасад в родите
 <div class="line">print_r($user_block);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя.">PhotoRigma\Classes\Work_Template\_template_user_internal()</a> Защищённый метод, выполняющий основную логику. </dd>
 <dd>
-PhotoRigma::Classes::Work::template_user() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода.">PhotoRigma\Classes\Work\template_user()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a1f3df8874c79377e6a8b4398ea6ad774">Work_Template_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../df/dbe/Work__Template_8php_source.html">Work_Template.php</a> строка <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l01038">1038</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l01105">_template_user_internal()</a>.</p>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a1f3df8874c79377e6a8b4398ea6ad774_cgraph.png" border="0" usemap="#ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a1f3df8874c79377e6a8b4398ea6ad774_cgraph" alt=""/></div>
 <map name="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a1f3df8874c79377e6a8b4398ea6ad774_cgraph" id="ad4/d32/classPhotoRigma_1_1Classes_1_1Work__Template_a1f3df8874c79377e6a8b4398ea6ad774_cgraph">
-<area shape="rect" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="5,5,109,30"/>
-<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="157,5,316,30"/>
-<area shape="poly" title=" " alt="" coords="109,15,141,15,141,20,109,20"/>
+<area shape="rect" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="5,59,109,84"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="157,59,316,84"/>
+<area shape="poly" title=" " alt="" coords="109,69,141,69,141,74,109,74"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="380,19,523,58"/>
+<area shape="poly" title=" " alt="" coords="316,57,364,49,365,54,316,62"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через вызов публичного метода в дочернем классе." alt="" coords="364,83,538,122"/>
+<area shape="poly" title=" " alt="" coords="316,80,349,85,348,90,316,86"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="586,15,752,54"/>
+<area shape="poly" title=" " alt="" coords="523,34,571,33,571,39,523,40"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="806,5,950,58"/>
+<area shape="poly" title=" " alt="" coords="752,31,790,30,790,35,752,36"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через доступные библиотеки через вызов внутреннего метода." alt="" coords="594,79,744,131"/>
+<area shape="poly" title=" " alt="" coords="539,101,579,101,579,107,539,106"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="800,83,956,135"/>
+<area shape="poly" title=" " alt="" coords="744,104,784,105,784,110,744,109"/>
 </map>
 </div>
 

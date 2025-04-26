@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
   0: "$123456:_abcdefghijklmnoprstuvwабвдезиклмнопрстуфшя✨🎮💻📌📑📜📸🚀🛠",
-  1: "dtuw",
+  1: "cdtuw",
   2: "p",
   3: "acdfimnprstuw",
   4: "_abcdefgijlmnprstuv",

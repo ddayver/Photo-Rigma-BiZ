@@ -1,0 +1,7 @@
+<map id="return_bytes" name="return_bytes">
+<area shape="rect" id="Node000001" title="Преобразует размер в байты через вызов публичного метода в дочернем классе." alt="" coords="5,19,98,44"/>
+<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов внутреннего метода." alt="" coords="146,12,321,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,29,130,29,130,34,98,34"/>
+<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa85b3536adbc623cecafaf30fa666958" title="Преобразование размера в байты (защищённый метод)." alt="" coords="369,5,513,58"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="321,29,353,29,353,34,321,34"/>
+</map>

@@ -17,7 +17,7 @@ var interfacePhotoRigma_1_1Interfaces_1_1Work__Interface =
     [ "no_photo", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#adfcd1cb7963a860013ca9ca1898f54f1", null ],
     [ "process_rating", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a35f2b39b21e9ee39a5878708e9211198", null ],
     [ "remove_directory", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aaaf358ddc8223e4a5a479f645fc43da8", null ],
-    [ "set_lang", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#aed2ddce38e1559f3014f076e11a2cbe9", null ],
+    [ "set_lang", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#ae6a94cac0481f8a8ec6d71ddc120b1c6", null ],
     [ "set_user", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3", null ],
     [ "size_image", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a096b7e5c3f9fb908fbb30e1adc2ac61b", null ],
     [ "template_best_user", "da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a9143fed87a3064985e0b51fe5fbb4ac3", null ],

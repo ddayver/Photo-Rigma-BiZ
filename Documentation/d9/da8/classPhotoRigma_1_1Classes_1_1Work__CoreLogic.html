@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -234,7 +234,7 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс для выполнения базовой логики приложения. </p>
-<p>Этот класс реализует интерфейс <code>Work_CoreLogic_Interface</code> и предоставляет функционал для выполнения базовой логики приложения. Он является дочерним классом для <code>PhotoRigma::Classes::Work</code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
+<p>Этот класс реализует интерфейс <code>Work_CoreLogic_Interface</code> и предоставляет функционал для выполнения базовой логики приложения. Он является дочерним классом для <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a></code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code>Work</code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
 <li>Формирование информационных строк для категорий и пользовательских альбомов.</li>
 <li>Удаление изображений и связанных данных.</li>
 <li>Получение данных о новостях, языках и темах.</li>
@@ -269,7 +269,7 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </div><div class="memdoc">
 
 <p>Конструктор класса. </p>
-<p>Инициализирует зависимости: конфигурацию, базу данных и объект класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>. Этот класс является дочерним для <code>PhotoRigma::Classes::Work</code>. Все параметры обязательны для корректной работы класса. Алгоритм работы:</p><ol type="1">
+<p>Инициализирует зависимости: конфигурацию, базу данных и объект класса Work. Этот класс является дочерним для <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a></code>. Все параметры обязательны для корректной работы класса. Алгоритм работы:</p><ol type="1">
 <li>Сохраняет переданные зависимости в соответствующие свойства:<ul>
 <li><code>$config</code>: массив конфигурации приложения.</li>
 <li><code>$db</code>: объект для работы с базой данных.</li>
@@ -293,13 +293,14 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 </dd></dl>
 <p>Пример использования конструктора: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a> = [<span class="stringliteral">&#39;temp_photo_w&#39;</span> =&gt; 800];</div>
 <div class="line"><a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>();</div>
-<div class="line"><a class="code hl_variable" href="#a440fb4e1ddf381895225c74da750d6ce">$work</a> = <span class="keyword">new</span> Work();</div>
+<div class="line"><a class="code hl_variable" href="#a440fb4e1ddf381895225c74da750d6ce">$work</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>();</div>
 <div class="line">$corelogic = new \PhotoRigma\Classes\Work_CoreLogic(<a class="code hl_variable" href="#ab76f8f2ac851632a23ef69df2bd99dad">$config</a>, <a class="code hl_variable" href="#a18e3eac65d39ced5231d9b3e3630ba75">$db</a>, <a class="code hl_variable" href="#a440fb4e1ddf381895225c74da750d6ce">$work</a>);</div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Database_html"><div class="ttname"><a href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">PhotoRigma\Classes\Database</a></div><div class="ttdoc">Класс для работы с базами данных через PDO.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d89/Database_8php_source.html#l00100">Database.php:101</a></div></div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html_a18e3eac65d39ced5231d9b3e3630ba75"><div class="ttname"><a href="#a18e3eac65d39ced5231d9b3e3630ba75">PhotoRigma\Classes\Work_CoreLogic\$db</a></div><div class="ttdeci">Database_Interface $db</div><div class="ttdoc">Объект для работы с базой данных (обязательный).</div><div class="ttdef"><b>Определения</b> <a href="../../da/d65/Work__CoreLogic_8php_source.html#l00108">Work_CoreLogic.php:108</a></div></div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html_a440fb4e1ddf381895225c74da750d6ce"><div class="ttname"><a href="#a440fb4e1ddf381895225c74da750d6ce">PhotoRigma\Classes\Work_CoreLogic\$work</a></div><div class="ttdeci">Work_Interface $work</div><div class="ttdoc">Основной объект приложения (обязательный).</div><div class="ttdef"><b>Определения</b> <a href="../../da/d65/Work__CoreLogic_8php_source.html#l00109">Work_CoreLogic.php:109</a></div></div>
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__CoreLogic_html_ab76f8f2ac851632a23ef69df2bd99dad"><div class="ttname"><a href="#ab76f8f2ac851632a23ef69df2bd99dad">PhotoRigma\Classes\Work_CoreLogic\$config</a></div><div class="ttdeci">array $config</div><div class="ttdoc">Конфигурация приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../da/d65/Work__CoreLogic_8php_source.html#l00106">Work_CoreLogic.php:106</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work Родительский класс, через который передаются зависимости. </dd>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></div><div class="ttdoc">Основной класс приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00142">Work.php:143</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Родительский класс, через который передаются зависимости. </dd>
 <dd>
 <a class="el" href="#ab76f8f2ac851632a23ef69df2bd99dad" title="Конфигурация приложения.">PhotoRigma\Classes\Work_CoreLogic\$config</a> Свойство, содержащее конфигурацию приложения. </dd>
 <dd>
@@ -568,16 +569,34 @@ $(function(){initNavTree('d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.h
 <dd>
 <a class="el" href="#abbadc8b1002dc2bf9aca5109a7698b6b" title="Объект пользователя (может быть null при инициализации).">PhotoRigma\Classes\Work_CoreLogic\$user</a> Свойство, содержащее данные текущего пользователя. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Метод для очистки данных. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00465">465</a></p>
 
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a>.</p>
+
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00380">category()</a>.</p>
 <div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_cgraph">
+<area shape="rect" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="5,19,132,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="180,12,323,51"/>
+<area shape="poly" title=" " alt="" coords="132,29,164,29,164,34,132,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="371,12,536,51"/>
+<area shape="poly" title=" " alt="" coords="324,29,355,29,355,34,324,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="584,5,728,58"/>
+<area shape="poly" title=" " alt="" coords="537,29,569,29,569,34,537,34"/>
+</map>
+</div>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_af92390a67888a39d1aa0f3f10a045433_icgraph">
 <area shape="rect" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="124,5,250,30"/>
@@ -687,34 +706,40 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <dd>
 <a class="el" href="#a2a1c4758ea1c521d247be4556f58e5a6" title="Генерирует массив данных для вывода изображения, используя значения по умолчанию или данные,...">PhotoRigma\Classes\Work_CoreLogic\generate_photo_data()</a> Приватный метод для формирования массива данных по умолчанию. </dd>
 <dd>
-PhotoRigma::Classes::Work::size_image() Метод, используемый для вычисления размеров изображения. </dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a096b7e5c3f9fb908fbb30e1adc2ac61b" title="Вычисляет размеры для вывода эскиза изображения через вызов внутреннего метода.">PhotoRigma\Classes\Work\size_image()</a> Метод, используемый для вычисления размеров изображения. </dd>
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Метод для очистки данных. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод для очистки данных. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00841">841</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01066">generate_photo_data()</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a> и <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01066">generate_photo_data()</a>.</p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00740">create_photo()</a>.</p>
-<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph" alt=""/></div>
-<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph">
-<area shape="rect" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="5,5,158,30"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a2a1c4758ea1c521d247be4556f58e5a6" title="Генерирует массив данных для вывода изображения, используя значения по умолчанию или данные,..." alt="" coords="206,5,348,30"/>
-<area shape="poly" title=" " alt="" coords="158,15,190,15,190,20,158,20"/>
-</map>
-</div>
 <div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph" alt=""/></div>
+<map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_cgraph">
+<area shape="rect" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="5,47,158,72"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="206,12,349,51"/>
+<area shape="poly" title=" " alt="" coords="158,46,190,41,191,47,158,51"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a2a1c4758ea1c521d247be4556f58e5a6" title="Генерирует массив данных для вывода изображения, используя значения по умолчанию или данные,..." alt="" coords="206,75,348,100"/>
+<area shape="poly" title=" " alt="" coords="158,68,191,73,190,78,158,73"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="397,12,562,51"/>
+<area shape="poly" title=" " alt="" coords="350,29,381,29,381,34,350,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="610,5,754,58"/>
+<area shape="poly" title=" " alt="" coords="563,29,595,29,595,34,563,34"/>
+</map>
+</div>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a88355b68549854e972970158df564179_icgraph">
 <area shape="rect" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="150,5,302,30"/>
@@ -797,11 +822,11 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01216">1216</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01149">del_photo()</a>.</p>
-<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a818796fb684f095ff90ef5f03a894989_icgraph">
 <area shape="rect" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="131,5,264,30"/>
@@ -883,11 +908,11 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01364">1364</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01312">get_languages()</a>.</p>
-<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35ca0976dc523b429918f6904b8fc4c1_icgraph">
 <area shape="rect" title="Загружает доступные языки из директории /language/." alt="" coords="159,5,320,30"/>
@@ -966,11 +991,11 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01549">1549</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01498">get_themes()</a>.</p>
-<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_afd6b68f8d6f551886000447b30191b6a_icgraph">
 <area shape="rect" title="Загружает доступные темы из директории /themes/." alt="" coords="143,5,288,30"/>
@@ -1064,11 +1089,11 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01737">1737</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01669">news()</a>.</p>
-<div id="dynsection-8" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfae1b80256c5a8b8addb7770d8939cf_icgraph">
 <area shape="rect" title="Получает данные о новостях в зависимости от типа запроса." alt="" coords="106,5,214,30"/>
@@ -1163,11 +1188,11 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01895">1895</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01840">process_rating()</a>.</p>
-<div id="dynsection-9" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a517c04199a06dc9cc857bfe6a285d042_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a517c04199a06dc9cc857bfe6a285d042_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a517c04199a06dc9cc857bfe6a285d042_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a517c04199a06dc9cc857bfe6a285d042_icgraph">
 <area shape="rect" title="Добавляет новую оценку в таблицу, проверяет успешность вставки и возвращает среднюю оценку." alt="" coords="160,5,322,30"/>
@@ -1260,23 +1285,29 @@ PhotoRigma::Classes::Work::clean_field() Метод для очистки дан
 <div class="line">print_r($user_album_data);</div>
 </div><!-- fragment --><dl class="section see"><dt>См. также</dt><dd><a class="el" href="#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома.">PhotoRigma\Classes\Work_CoreLogic\_category_internal()</a> Защищённый метод, реализующий основную логику формирования информационной строки. </dd>
 <dd>
-PhotoRigma::Classes::Work::category() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м...">PhotoRigma\Classes\Work\category()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a4dfb943f9b750ec6e1e2924a9620c7f5">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00380">380</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00465">_category_internal()</a>.</p>
-<div id="dynsection-10" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a4dfb943f9b750ec6e1e2924a9620c7f5_cgraph">
-<area shape="rect" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м..." alt="" coords="5,5,76,30"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="124,5,250,30"/>
-<area shape="poly" title=" " alt="" coords="76,15,108,15,108,20,76,20"/>
+<area shape="rect" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м..." alt="" coords="5,19,76,44"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="124,19,250,44"/>
+<area shape="poly" title=" " alt="" coords="76,29,108,29,108,34,76,34"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="298,12,441,51"/>
+<area shape="poly" title=" " alt="" coords="250,29,282,29,282,34,250,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="489,12,655,51"/>
+<area shape="poly" title=" " alt="" coords="442,29,474,29,474,34,442,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="703,5,846,58"/>
+<area shape="poly" title=" " alt="" coords="655,29,688,29,688,34,655,34"/>
 </map>
 </div>
 
@@ -1346,25 +1377,31 @@ PhotoRigma::Classes::Work::category() Метод-фасад в родитель�
 <div class="line">print_r($category_photo);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов.">PhotoRigma\Classes\Work_CoreLogic\_create_photo_internal()</a> Защищённый метод, реализующий основную логику генерации блока данных для вывода изображений. </dd>
 <dd>
-PhotoRigma::Classes::Work::create_photo() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода.">PhotoRigma\Classes\Work\create_photo()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a930a20fbdd1b0e274b7e648d966516c5">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00740">740</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00841">_create_photo_internal()</a>.</p>
-<div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a930a20fbdd1b0e274b7e648d966516c5_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a930a20fbdd1b0e274b7e648d966516c5_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a930a20fbdd1b0e274b7e648d966516c5_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a930a20fbdd1b0e274b7e648d966516c5_cgraph">
-<area shape="rect" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода." alt="" coords="5,5,102,30"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="150,5,302,30"/>
-<area shape="poly" title=" " alt="" coords="102,15,134,15,134,20,102,20"/>
-<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a2a1c4758ea1c521d247be4556f58e5a6" title="Генерирует массив данных для вывода изображения, используя значения по умолчанию или данные,..." alt="" coords="350,5,492,30"/>
-<area shape="poly" title=" " alt="" coords="302,15,335,15,335,20,302,20"/>
+<area shape="rect" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода." alt="" coords="5,47,102,72"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="150,47,302,72"/>
+<area shape="poly" title=" " alt="" coords="102,57,134,57,134,62,102,62"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="350,12,493,51"/>
+<area shape="poly" title=" " alt="" coords="302,46,334,41,335,47,303,51"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a2a1c4758ea1c521d247be4556f58e5a6" title="Генерирует массив данных для вывода изображения, используя значения по умолчанию или данные,..." alt="" coords="350,75,493,100"/>
+<area shape="poly" title=" " alt="" coords="303,68,335,73,335,78,302,73"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="541,12,707,51"/>
+<area shape="poly" title=" " alt="" coords="494,29,526,29,526,34,494,34"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="755,5,898,58"/>
+<area shape="poly" title=" " alt="" coords="707,29,740,29,740,34,707,34"/>
 </map>
 </div>
 
@@ -1424,18 +1461,18 @@ PhotoRigma::Classes::Work::create_photo() Метод-фасад в родите�
 <div class="line">}</div>
 </div><!-- fragment --><dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a818796fb684f095ff90ef5f03a894989" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица...">PhotoRigma\Classes\Work_CoreLogic\_del_photo_internal()</a> Защищённый метод, реализующий основную логику удаления изображения. </dd>
 <dd>
-PhotoRigma::Classes::Work::del_photo() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором через вызов внутреннего метода.">PhotoRigma\Classes\Work\del_photo()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a84a1eeee53079a8e60fea1d1e0d94639">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01149">1149</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01216">_del_photo_internal()</a>.</p>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a84a1eeee53079a8e60fea1d1e0d94639_cgraph">
 <area shape="rect" title="Удаляет изображение с указанным идентификатором через вызов внутреннего метода." alt="" coords="5,5,83,30"/>
@@ -1528,11 +1565,11 @@ PhotoRigma::Classes::Work::del_photo() Метод-фасад в родитель
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01066">1066</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l00841">_create_photo_internal()</a>.</p>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a2a1c4758ea1c521d247be4556f58e5a6_icgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a2a1c4758ea1c521d247be4556f58e5a6_icgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a2a1c4758ea1c521d247be4556f58e5a6_icgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a2a1c4758ea1c521d247be4556f58e5a6_icgraph">
 <area shape="rect" title="Генерирует массив данных для вывода изображения, используя значения по умолчанию или данные,..." alt="" coords="350,5,492,30"/>
@@ -1594,18 +1631,18 @@ PhotoRigma::Classes::Work::del_photo() Метод-фасад в родитель
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a35ca0976dc523b429918f6904b8fc4c1" title="Загружает доступные языки из директории /language/.">PhotoRigma\Classes\Work_CoreLogic\_get_languages_internal()</a> Защищённый метод, реализующий основную логику загрузки доступных языков. </dd>
 <dd>
-PhotoRigma::Classes::Work::get_languages() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a9c2ee4da4bf10547c3aff7296d707c66" title="Загружает доступные языки из директории /language/ через вызов внутреннего метода.">PhotoRigma\Classes\Work\get_languages()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a9c2ee4da4bf10547c3aff7296d707c66">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01312">1312</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01364">_get_languages_internal()</a>.</p>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a9c2ee4da4bf10547c3aff7296d707c66_cgraph">
 <area shape="rect" title="Загружает доступные языки из директории /language/ через вызов внутреннего метода." alt="" coords="5,5,111,30"/>
@@ -1661,18 +1698,18 @@ PhotoRigma::Classes::Work::get_languages() Метод-фасад в родите
 <div class="line">}</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#afd6b68f8d6f551886000447b30191b6a" title="Загружает доступные темы из директории /themes/.">PhotoRigma\Classes\Work_CoreLogic\_get_themes_internal()</a> Защищённый метод, реализующий основную логику загрузки доступных тем. </dd>
 <dd>
-PhotoRigma::Classes::Work::get_themes() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8d2f43c00af0c9574caa0455df82c613" title="Загружает доступные темы из директории /themes/ через вызов внутреннего метода.">PhotoRigma\Classes\Work\get_themes()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a8d2f43c00af0c9574caa0455df82c613">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01498">1498</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01549">_get_themes_internal()</a>.</p>
-<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a8d2f43c00af0c9574caa0455df82c613_cgraph">
 <area shape="rect" title="Загружает доступные темы из директории /themes/ через вызов внутреннего метода." alt="" coords="5,5,95,30"/>
@@ -1747,18 +1784,18 @@ PhotoRigma::Classes::Work::get_themes() Метод-фасад в родител�
 <div class="line">print_r($news_list);</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#abfae1b80256c5a8b8addb7770d8939cf" title="Получает данные о новостях в зависимости от типа запроса.">PhotoRigma\Classes\Work_CoreLogic\_news_internal()</a> Защищённый метод, реализующий основную логику получения данных о новостях. </dd>
 <dd>
-PhotoRigma::Classes::Work::news() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#abfa7c6c53ae460403a3d0b3923e71a90" title="Получает данные о новостях в зависимости от типа запроса через вызов внутреннего метода.">PhotoRigma\Classes\Work\news()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#abfa7c6c53ae460403a3d0b3923e71a90">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01669">1669</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01737">_news_internal()</a>.</p>
-<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_abfa7c6c53ae460403a3d0b3923e71a90_cgraph">
 <area shape="rect" title="Получает данные о новостях в зависимости от типа запроса через вызов внутреннего метода." alt="" coords="5,5,58,30"/>
@@ -1847,18 +1884,18 @@ PhotoRigma::Classes::Work::news() Метод-фасад в родительск�
 <div class="line">echo <span class="stringliteral">&quot;Средняя оценка: {$averageRate}&quot;</span>;</div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a517c04199a06dc9cc857bfe6a285d042" title="Добавляет новую оценку в таблицу, проверяет успешность вставки и возвращает среднюю оценку.">PhotoRigma\Classes\Work_CoreLogic\_process_rating_internal()</a> Защищённый метод, реализующий основную логику добавления оценки и расчёта средней оценки. </dd>
 <dd>
-PhotoRigma::Classes::Work::process_rating() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a35f2b39b21e9ee39a5878708e9211198" title="Добавляет новую оценку в таблицу и возвращает среднюю оценку через вызов внутреннего метода.">PhotoRigma\Classes\Work\process_rating()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a35f2b39b21e9ee39a5878708e9211198">Work_CoreLogic_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html">Work_CoreLogic.php</a> строка <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01840">1840</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../da/d65/Work__CoreLogic_8php_source.html#l01895">_process_rating_internal()</a>.</p>
-<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35f2b39b21e9ee39a5878708e9211198_cgraph.png" border="0" usemap="#ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35f2b39b21e9ee39a5878708e9211198_cgraph" alt=""/></div>
 <map name="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35f2b39b21e9ee39a5878708e9211198_cgraph" id="ad9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic_a35f2b39b21e9ee39a5878708e9211198_cgraph">
 <area shape="rect" title="Добавляет новую оценку и возвращает среднюю оценку через вызов внутреннего метода." alt="" coords="5,5,112,30"/>
@@ -1916,7 +1953,7 @@ PhotoRigma::Classes::Work::process_rating() Метод-фасад в родит�
 <div class="line">    <span class="stringliteral">&#39;error_message&#39;</span>   =&gt; <span class="stringliteral">&#39;Произошла ошибка.&#39;</span>,</div>
 <div class="line">];</div>
 <div class="line">$corelogic-&gt;set_lang($langData);</div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::set_lang() Метод в родительском классе <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>, который вызывает этот метод. </dd></dl>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\set_lang()</a> Метод в родительском классе Work, который вызывает этот метод. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#aaf95d95540a3e47c5905a47db3424ed9">Work_CoreLogic_Interface</a>.</p>
 

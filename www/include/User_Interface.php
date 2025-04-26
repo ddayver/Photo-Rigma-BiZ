@@ -6,8 +6,8 @@
  *              хранение текущих настроек пользователя.
  *
  * @author      Dark Dayver
- * @version     0.4.1
- * @date        2025-04-25
+ * @version     0.4.2
+ * @date        2025-04-27
  * @namespace   Photorigma\\Interfaces
  *
  * @details     Этот файл содержит интерфейс `User_Interface`, который определяет методы для работы с пользователями:

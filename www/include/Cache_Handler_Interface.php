@@ -5,8 +5,8 @@
  * @brief       Интерфейс для работы с системами кеширования.
  *
  * @author      Dark Dayver
- * @version     0.4.1
- * @date        2025-04-25
+ * @version     0.4.2
+ * @date        2025-04-27
  * @namespace   PhotoRigma\\Interfaces
  *
  * @details     Этот файл содержит интерфейс `Cache_Handler_Interface`, который определяет контракт для работы с

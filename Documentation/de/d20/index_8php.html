@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -131,11 +131,14 @@ $(function(){initNavTree('de/d20/index_8php.html','../../'); initResizable(true)
 <tr class="separator:a630e9f4c562881099e95ce0355ae9d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab24faf4aa647cdcee494fc48524ad4ff" id="r_ab24faf4aa647cdcee494fc48524ad4ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#ab24faf4aa647cdcee494fc48524ad4ff">$errors</a> = []</td></tr>
 <tr class="separator:ab24faf4aa647cdcee494fc48524ad4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2dc76d756ec398393d4b1d23659276c" id="r_ac2dc76d756ec398393d4b1d23659276c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#ac2dc76d756ec398393d4b1d23659276c">$cache</a> = new <a class="el" href="../../d3/d14/classCache__Handler.html">Cache_Handler</a>($config['cache'], $config['site_dir'])</td></tr>
+<tr class="memdesc:ac2dc76d756ec398393d4b1d23659276c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d3/d14/classCache__Handler.html" title="Класс для работы с системами кеширования.">Cache_Handler</a> для работы с системами кеширования.  <br /></td></tr>
+<tr class="separator:ac2dc76d756ec398393d4b1d23659276c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'])</td></tr>
 <tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a> для работы с основной БД.  <br /></td></tr>
 <tr class="separator:a1fa3127fc82f96b1436d871ef02be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48" id="r_a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="../../d3/d64/classWork.html">Work</a>($db, $config, $_SESSION)</td></tr>
-<tr class="memdesc:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a>.  <br /></td></tr>
+<tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48" id="r_a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>($db, $config, $_SESSION, $cache)</td></tr>
+<tr class="memdesc:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a>.  <br /></td></tr>
 <tr class="separator:a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a598ca4e71b15a1313ec95f0df1027ca5" id="r_a598ca4e71b15a1313ec95f0df1027ca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>($db, $_SESSION)</td></tr>
 <tr class="memdesc:a598ca4e71b15a1313ec95f0df1027ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a>.  <br /></td></tr>
@@ -177,8 +180,8 @@ $(function(){initNavTree('de/d20/index_8php.html','../../'); initResizable(true)
 <ul>
 <li>Конфигурационные файлы:<ul>
 <li><dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.4.1 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-04-25 </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.4.2 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-04-27 </dd></dl>
 </li>
 </ul>
 </li>

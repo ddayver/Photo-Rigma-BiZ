@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -189,7 +189,7 @@ $(function(){initNavTree('db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Класс для выполнения вспомогательных задач. </p>
-<p>Этот класс реализует интерфейс <code>Work_Helper_Interface</code> и предоставляет статические методы для выполнения различных вспомогательных задач. Он является дочерним классом для <code>PhotoRigma::Classes::Work</code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code><a class="el" href="../../d3/d64/classWork.html" title="Основной класс приложения.">Work</a></code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
+<p>Этот класс реализует интерфейс <code>Work_Helper_Interface</code> и предоставляет статические методы для выполнения различных вспомогательных задач. Он является дочерним классом для <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a></code> и наследует его методы. Все методы данного класса рекомендуется вызывать через родительский класс <code>Work</code>, так как их поведение может быть непредсказуемым при прямом вызове. Основные возможности:</p><ul>
 <li>Очистка строк от HTML-тегов и специальных символов (<code>clean_field</code>).</li>
 <li>Преобразование размеров в байты (<code>return_bytes</code>).</li>
 <li>Транслитерация строк и замена знаков пунктуации (<code>encodename</code>).</li>
@@ -198,23 +198,23 @@ $(function(){initNavTree('db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html
 <li>Проверка MIME-типов файлов через доступные библиотеки (<code>validate_mime_type</code>). Методы класса предназначены для использования в различных частях приложения, таких как обработка пользовательского ввода, работа с файлами, генерация безопасного вывода и т.д.</li>
 </ul>
 <p>Пример использования класса: </p><div class="fragment"><div class="line"><span class="comment">// Очистка строки от HTML-тегов</span></div>
-<div class="line">$cleaned = \\PhotoRigma\\Classes\\Work::clean_field(<span class="stringliteral">&#39;&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&#39;</span>);</div>
+<div class="line">$cleaned = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3">\\PhotoRigma\\Classes\\Work::clean_field</a>(<span class="stringliteral">&#39;&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&#39;</span>);</div>
 <div class="line">echo $cleaned; <span class="comment">// Выведет: &lt;script&gt;alert(&amp;quot;XSS&amp;quot;)&lt;/script&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Преобразование размера в байты</span></div>
-<div class="line">$bytes = \\PhotoRigma\\Classes\\Work::return_bytes(<span class="stringliteral">&#39;2M&#39;</span>);</div>
+<div class="line">$bytes = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413">\\PhotoRigma\\Classes\\Work::return_bytes</a>(<span class="stringliteral">&#39;2M&#39;</span>);</div>
 <div class="line">echo $bytes; <span class="comment">// Выведет: 2097152</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Транслитерация строки</span></div>
-<div class="line">$encoded = \\PhotoRigma\\Classes\\Work::encodename(<span class="stringliteral">&#39;Привет, мир!&#39;</span>);</div>
+<div class="line">$encoded = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e">\\PhotoRigma\\Classes\\Work::encodename</a>(<span class="stringliteral">&#39;Привет, мир!&#39;</span>);</div>
 <div class="line">echo $encoded; <span class="comment">// Выведет: Privet_mir</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Преобразование BBCode в HTML</span></div>
-<div class="line">$html = \\PhotoRigma\\Classes\\Work::ubb(<span class="stringliteral">&#39;[b]Bold text[/b]&#39;</span>);</div>
+<div class="line">$html = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712">\\PhotoRigma\\Classes\\Work::ubb</a>(<span class="stringliteral">&#39;[b]Bold text[/b]&#39;</span>);</div>
 <div class="line">echo $html; <span class="comment">// Выведет: &lt;strong&gt;Bold text&lt;/strong&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Разбиение строки на части</span></div>
-<div class="line">$wrapped = \\PhotoRigma\\Classes\\Work::utf8_wordwrap(<span class="stringliteral">&#39;This is a very long string that needs to be wrapped.&#39;</span>, 10);</div>
+<div class="line">$wrapped = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32">\\PhotoRigma\\Classes\\Work::utf8_wordwrap</a>(<span class="stringliteral">&#39;This is a very long string that needs to be wrapped.&#39;</span>, 10);</div>
 <div class="line">echo $wrapped;</div>
 <div class="line"><span class="comment">// Выведет:</span></div>
 <div class="line"><span class="comment">// This is a</span></div>
@@ -224,8 +224,14 @@ $(function(){initNavTree('db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html
 <div class="line"><span class="comment">// wrapped.</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Проверка MIME-типа</span></div>
-<div class="line">$is_supported = \\PhotoRigma\\Classes\\Work::validate_mime_type(<span class="stringliteral">&#39;image/jpeg&#39;</span>);</div>
+<div class="line">$is_supported = <a class="code hl_function" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">\\PhotoRigma\\Classes\\Work::validate_mime_type</a>(<span class="stringliteral">&#39;image/jpeg&#39;</span>);</div>
 <div class="line">var_dump($is_supported); <span class="comment">// Выведет: true</span></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразует BBCode в HTML через вызов публичного метода в дочернем классе.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00849">Work.php:849</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверяет MIME-тип файла через вызов публичного метода в дочернем классе.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00945">Work.php:945</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_a8ecb9d3a6cba675b7a2d72ddc14b53f3"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3">PhotoRigma\Classes\Work\clean_field</a></div><div class="ttdeci">static clean_field(string $field)</div><div class="ttdoc">Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l01377">Work.php:1377</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем класс...</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00904">Work.php:904</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ac28b2ada9c4f3a71f7a2df9bb1387413"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413">PhotoRigma\Classes\Work\return_bytes</a></div><div class="ttdeci">static return_bytes(string|int $val)</div><div class="ttdoc">Преобразует размер в байты через вызов публичного метода в дочернем классе.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00587">Work.php:587</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас...</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00803">Work.php:803</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов.">PhotoRigma\Interfaces\Work_Helper_Interface</a> Интерфейс, который реализует данный класс. </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00112">112</a></p>
@@ -291,17 +297,67 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a76ecca6bcdca38a256cd4bdde4e03c22_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a76ecca6bcdca38a256cd4bdde4e03c22_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a76ecca6bcdca38a256cd4bdde4e03c22_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a76ecca6bcdca38a256cd4bdde4e03c22_icgraph">
-<area shape="rect" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="482,79,621,103"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ade4e103eed321eb69427d7a05f8e939a" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="242,29,434,54"/>
-<area shape="poly" title=" " alt="" coords="479,77,394,57,395,52,480,72"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="96,55,194,79"/>
-<area shape="poly" title=" " alt="" coords="467,89,194,73,194,67,467,83"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="297,128,379,153"/>
-<area shape="poly" title=" " alt="" coords="481,110,380,133,379,128,479,105"/>
-<area shape="poly" title=" " alt="" coords="372,17,361,10,338,8,318,10,307,15,305,20,311,27,306,31,299,21,303,11,316,5,338,3,362,5,374,12"/>
-<area shape="poly" title=" " alt="" coords="227,59,195,63,194,58,226,54"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="5,55,48,79"/>
-<area shape="poly" title=" " alt="" coords="80,70,48,70,48,64,80,64"/>
+<area shape="rect" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="1110,111,1248,136"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ade4e103eed321eb69427d7a05f8e939a" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="870,62,1062,86"/>
+<area shape="poly" title=" " alt="" coords="1107,109,1022,90,1023,84,1108,104"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="701,62,799,86"/>
+<area shape="poly" title=" " alt="" coords="1094,122,987,114,869,101,799,88,800,82,870,95,987,109,1095,116"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="925,248,1007,273"/>
+<area shape="poly" title=" " alt="" coords="1147,147,989,250,986,245,1144,142"/>
+<area shape="poly" title=" " alt="" coords="1003,50,991,43,966,40,943,42,931,47,929,52,935,60,931,63,923,53,927,43,942,37,966,35,993,38,1006,45"/>
+<area shape="poly" title=" " alt="" coords="854,77,799,77,799,71,854,71"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="518,12,560,37"/>
+<area shape="poly" title=" " alt="" coords="685,62,560,32,561,27,686,57"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов публичного метода в дочернем классе." alt="" coords="226,5,370,44"/>
+<area shape="poly" title=" " alt="" coords="502,27,370,27,370,22,502,22"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="678,416,822,455"/>
+<area shape="poly" title=" " alt="" coords="939,285,777,418,774,413,935,281"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="448,61,629,114"/>
+<area shape="poly" title=" " alt="" coords="742,401,731,343,710,270,676,195,654,159,628,128,614,116,618,112,632,124,659,156,681,192,715,268,736,342,747,400"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="457,138,620,191"/>
+<area shape="poly" title=" " alt="" coords="737,402,722,358,699,305,668,252,628,205,613,194,616,189,632,201,672,249,704,303,727,356,742,400"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="454,216,623,268"/>
+<area shape="poly" title=" " alt="" coords="728,404,687,343,660,311,629,283,611,271,614,267,632,279,663,307,691,340,733,401"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4ec1d1b401701fe4bc86759130951668" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="447,293,630,346"/>
+<area shape="poly" title=" " alt="" coords="707,409,629,360,606,349,608,344,632,356,710,405"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a289aef1b317a8dddb8e51e9f241174b3" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="460,370,618,423"/>
+<area shape="poly" title=" " alt="" coords="663,422,618,414,619,409,664,417"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#af50b710db64d502f42af9eed735a5bd7" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="456,448,621,500"/>
+<area shape="poly" title=" " alt="" coords="664,454,622,462,621,456,663,449"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="450,525,627,578"/>
+<area shape="poly" title=" " alt="" coords="710,466,632,515,608,527,606,522,629,510,707,462"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="450,602,627,655"/>
+<area shape="poly" title=" " alt="" coords="733,470,691,531,663,563,632,592,614,604,611,600,629,588,660,560,687,528,728,467"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="450,680,627,732"/>
+<area shape="poly" title=" " alt="" coords="742,471,727,515,704,568,672,622,632,669,616,681,613,677,628,665,668,618,699,565,722,513,737,469"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="467,757,610,810"/>
+<area shape="poly" title=" " alt="" coords="747,471,736,529,715,602,681,679,659,714,632,747,612,762,609,758,628,743,654,711,676,676,710,600,731,528,742,470"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения...." alt="" coords="453,833,624,872"/>
+<area shape="poly" title=" " alt="" coords="751,471,745,543,727,638,712,688,692,737,665,783,632,824,618,835,615,831,628,820,661,780,687,734,707,686,722,636,739,543,745,470"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м..." alt="" coords="211,68,385,107"/>
+<area shape="poly" title=" " alt="" coords="433,90,386,90,386,85,433,85"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="200,145,396,184"/>
+<area shape="poly" title=" " alt="" coords="442,167,396,167,396,162,442,162"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода." alt="" coords="198,223,398,261"/>
+<area shape="poly" title=" " alt="" coords="439,245,398,245,398,239,439,239"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="210,300,386,339"/>
+<area shape="poly" title=" " alt="" coords="432,322,386,322,386,317,432,317"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30" title="Формирует подвал HTML&#45;страницы через вызов внутреннего метода." alt="" coords="222,377,374,416"/>
+<area shape="poly" title=" " alt="" coords="444,399,374,399,374,394,444,394"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2" title="Формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента через вызов внутреннего мето..." alt="" coords="219,455,376,493"/>
+<area shape="poly" title=" " alt="" coords="441,477,377,477,377,471,441,471"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="213,525,383,578"/>
+<area shape="poly" title=" " alt="" coords="435,554,383,554,383,549,435,549"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода." alt="" coords="198,609,398,648"/>
+<area shape="poly" title=" " alt="" coords="434,631,398,631,398,626,434,626"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="197,687,399,725"/>
+<area shape="poly" title=" " alt="" coords="435,709,400,709,400,703,435,703"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a8432fa6f08d4982b9c9d9aaede7de566" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="214,764,382,803"/>
+<area shape="poly" title=" " alt="" coords="451,786,382,786,382,781,451,781"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa120c9e1e0a365baa86516f395843036" title="Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах." alt="" coords="216,833,380,872"/>
+<area shape="poly" title=" " alt="" coords="437,855,381,855,381,850,437,850"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода." alt="" coords="5,833,149,872"/>
+<area shape="poly" title=" " alt="" coords="200,855,149,855,149,850,200,850"/>
 </map>
 </div>
 
@@ -380,9 +436,17 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a6731465132be58e4a625f9249cd5f7d8_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a6731465132be58e4a625f9249cd5f7d8_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a6731465132be58e4a625f9249cd5f7d8_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a6731465132be58e4a625f9249cd5f7d8_icgraph">
-<area shape="rect" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="149,5,300,30"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="5,5,101,30"/>
-<area shape="poly" title=" " alt="" coords="133,20,101,20,101,15,133,15"/>
+<area shape="rect" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="955,19,1106,44"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="812,19,907,44"/>
+<area shape="poly" title=" " alt="" coords="939,34,907,34,907,29,939,29"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас..." alt="" coords="620,12,764,51"/>
+<area shape="poly" title=" " alt="" coords="796,34,764,34,764,29,796,29"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="429,12,572,51"/>
+<area shape="poly" title=" " alt="" coords="605,34,573,34,573,29,605,29"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2ca555fe6bbef0b0a691c03111ffe700" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="214,5,381,58"/>
+<area shape="poly" title=" " alt="" coords="413,34,381,34,381,29,413,29"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2" title="Обновляет данные существующего пользователя через вызов внутреннего метода." alt="" coords="5,12,166,51"/>
+<area shape="poly" title=" " alt="" coords="198,34,166,34,166,29,198,29"/>
 </map>
 </div>
 
@@ -485,12 +549,14 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ade4e103eed321eb69427d7a05f8e939a_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ade4e103eed321eb69427d7a05f8e939a_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ade4e103eed321eb69427d7a05f8e939a_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ade4e103eed321eb69427d7a05f8e939a_icgraph">
-<area shape="rect" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="242,29,434,54"/>
-<area shape="poly" title=" " alt="" coords="372,17,361,10,338,8,318,10,307,15,305,20,311,27,306,31,299,21,303,11,316,5,338,3,362,5,374,12"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="96,29,194,54"/>
-<area shape="poly" title=" " alt="" coords="226,44,194,44,194,39,226,39"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="5,29,48,54"/>
-<area shape="poly" title=" " alt="" coords="80,44,48,44,48,39,80,39"/>
+<area shape="rect" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="433,29,626,54"/>
+<area shape="poly" title=" " alt="" coords="563,17,552,10,529,8,509,10,498,15,496,20,502,27,498,31,491,21,494,11,508,5,530,3,554,5,566,12"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="287,29,385,54"/>
+<area shape="poly" title=" " alt="" coords="418,44,386,44,386,39,418,39"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="197,29,239,54"/>
+<area shape="poly" title=" " alt="" coords="271,44,239,44,239,39,271,39"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов публичного метода в дочернем классе." alt="" coords="5,22,149,61"/>
+<area shape="poly" title=" " alt="" coords="181,44,149,44,149,39,181,39"/>
 </map>
 </div>
 
@@ -560,9 +626,11 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa85b3536adbc623cecafaf30fa666958_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa85b3536adbc623cecafaf30fa666958_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa85b3536adbc623cecafaf30fa666958_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa85b3536adbc623cecafaf30fa666958_icgraph">
-<area shape="rect" title="Преобразование размера в байты (защищённый метод)." alt="" coords="146,5,294,30"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов внутреннего метода." alt="" coords="5,5,98,30"/>
-<area shape="poly" title=" " alt="" coords="130,20,98,20,98,15,130,15"/>
+<area shape="rect" title="Преобразование размера в байты (защищённый метод)." alt="" coords="337,12,485,37"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов внутреннего метода." alt="" coords="197,12,289,37"/>
+<area shape="poly" title=" " alt="" coords="322,27,289,27,289,22,322,22"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов публичного метода в дочернем классе." alt="" coords="5,5,149,44"/>
+<area shape="poly" title=" " alt="" coords="181,27,149,27,149,22,181,22"/>
 </map>
 </div>
 
@@ -673,9 +741,11 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0fe88f41126cc81f6153894bb8ac22f0_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0fe88f41126cc81f6153894bb8ac22f0_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0fe88f41126cc81f6153894bb8ac22f0_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0fe88f41126cc81f6153894bb8ac22f0_icgraph">
-<area shape="rect" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="96,5,194,30"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="5,5,48,30"/>
-<area shape="poly" title=" " alt="" coords="80,20,48,20,48,15,80,15"/>
+<area shape="rect" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="287,12,385,37"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="197,12,239,37"/>
+<area shape="poly" title=" " alt="" coords="271,27,239,27,239,22,271,22"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов публичного метода в дочернем классе." alt="" coords="5,5,149,44"/>
+<area shape="poly" title=" " alt="" coords="181,27,149,27,149,22,181,22"/>
 </map>
 </div>
 
@@ -765,9 +835,11 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a1f0724c64151f06d211ca5d639046f5f_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a1f0724c64151f06d211ca5d639046f5f_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a1f0724c64151f06d211ca5d639046f5f_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a1f0724c64151f06d211ca5d639046f5f_icgraph">
-<area shape="rect" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="160,5,322,30"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода." alt="" coords="5,5,112,30"/>
-<area shape="poly" title=" " alt="" coords="144,20,112,20,112,15,144,15"/>
+<area shape="rect" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="352,12,514,37"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода." alt="" coords="198,12,304,37"/>
+<area shape="poly" title=" " alt="" coords="336,27,305,27,305,22,336,22"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем класс..." alt="" coords="5,5,150,44"/>
+<area shape="poly" title=" " alt="" coords="182,27,150,27,150,22,182,22"/>
 </map>
 </div>
 
@@ -841,9 +913,19 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a95d88f48db4a5bac5b064e99d896c82f_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a95d88f48db4a5bac5b064e99d896c82f_icgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a95d88f48db4a5bac5b064e99d896c82f_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a95d88f48db4a5bac5b064e99d896c82f_icgraph">
-<area shape="rect" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="190,5,333,44"/>
-<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через доступные библиотеки через вызов внутреннего метода." alt="" coords="5,12,142,37"/>
-<area shape="poly" title=" " alt="" coords="174,27,142,27,142,22,174,22"/>
+<area shape="rect" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="888,51,1031,90"/>
+<area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через доступные библиотеки через вызов внутреннего метода." alt="" coords="703,58,840,83"/>
+<area shape="poly" title=" " alt="" coords="872,73,840,73,840,68,872,68"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через вызов публичного метода в дочернем классе." alt="" coords="481,51,655,90"/>
+<area shape="poly" title=" " alt="" coords="688,73,656,73,656,68,688,68"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="267,5,422,58"/>
+<area shape="poly" title=" " alt="" coords="465,55,422,48,423,42,466,50"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="256,83,433,135"/>
+<area shape="poly" title=" " alt="" coords="466,91,434,96,433,91,465,85"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных через вызов внутреннего метода." alt="" coords="15,12,198,51"/>
+<area shape="poly" title=" " alt="" coords="252,34,199,34,199,29,252,29"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="5,90,208,128"/>
+<area shape="poly" title=" " alt="" coords="240,112,208,112,208,106,240,106"/>
 </map>
 </div>
 
@@ -893,12 +975,14 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 // Создание экземпляра класса
 $dirty_input = '&lt;script&gt;alert("XSS")&lt;/script&gt;'; $cleaned = Work_Helper::clean_field($dirty_input); echo $cleaned; // Выведет: &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;  </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML-тегов и специальных символов (защищённый метод).">PhotoRigma\Classes\Work_Helper\_clean_field_internal()</a> Защищённый метод, выполняющий очистку. </dd>
 <dd>
-PhotoRigma::Classes::Work::clean_field() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\clean_field()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 <p></code></p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00145">145</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00184">_clean_field_internal()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l01377">Work\clean_field()</a>.</p>
 <div id="dynsection-11" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-11-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-11-summary" class="dynsummary" style="display:block;">
@@ -909,6 +993,64 @@ PhotoRigma::Classes::Work::clean_field() Метод-фасад в родител
 <area shape="rect" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="5,5,88,30"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="136,5,274,30"/>
 <area shape="poly" title=" " alt="" coords="88,15,120,15,120,20,88,20"/>
+</map>
+</div>
+<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0164ea6f8d933962bca588651baedd44_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0164ea6f8d933962bca588651baedd44_icgraph" alt=""/></div>
+<map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0164ea6f8d933962bca588651baedd44_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a0164ea6f8d933962bca588651baedd44_icgraph">
+<area shape="rect" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="870,406,952,431"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="678,399,822,438"/>
+<area shape="poly" title=" " alt="" coords="854,421,822,421,822,416,854,416"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="448,5,629,58"/>
+<area shape="poly" title=" " alt="" coords="743,384,734,319,715,236,700,192,681,149,657,109,628,72,615,61,618,57,632,68,661,106,685,147,705,190,720,235,740,318,749,383"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="457,83,620,135"/>
+<area shape="poly" title=" " alt="" coords="740,384,726,333,704,271,672,206,652,176,628,150,614,138,617,134,632,146,656,173,677,204,709,268,731,331,745,383"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="454,160,623,213"/>
+<area shape="poly" title=" " alt="" coords="733,386,693,307,664,264,629,227,612,215,615,211,632,223,668,261,698,304,738,383"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4ec1d1b401701fe4bc86759130951668" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="447,237,630,290"/>
+<area shape="poly" title=" " alt="" coords="721,389,680,346,629,305,609,293,611,288,632,300,683,342,724,385"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a289aef1b317a8dddb8e51e9f241174b3" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="460,315,618,367"/>
+<area shape="poly" title=" " alt="" coords="680,396,612,370,614,365,682,391"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#af50b710db64d502f42af9eed735a5bd7" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="456,392,621,445"/>
+<area shape="poly" title=" " alt="" coords="663,421,621,421,621,416,663,416"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="450,469,627,522"/>
+<area shape="poly" title=" " alt="" coords="682,446,614,471,612,466,680,441"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="450,547,627,599"/>
+<area shape="poly" title=" " alt="" coords="724,452,683,495,632,537,611,549,609,544,629,532,680,491,721,448"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="450,624,627,677"/>
+<area shape="poly" title=" " alt="" coords="738,453,698,533,668,576,632,614,615,626,612,621,629,610,664,572,693,530,733,451"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="467,701,610,754"/>
+<area shape="poly" title=" " alt="" coords="745,454,731,505,709,568,677,633,656,664,632,691,613,706,609,702,629,687,652,660,672,630,704,566,726,504,740,453"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения...." alt="" coords="453,778,624,816"/>
+<area shape="poly" title=" " alt="" coords="749,454,741,520,722,604,707,648,687,691,663,732,632,768,618,779,615,775,628,764,658,729,682,689,702,646,717,602,736,519,744,453"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м..." alt="" coords="211,12,385,51"/>
+<area shape="poly" title=" " alt="" coords="433,34,386,34,386,29,433,29"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="200,90,396,128"/>
+<area shape="poly" title=" " alt="" coords="442,112,396,112,396,106,442,106"/>
+<area shape="rect" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода." alt="" coords="198,167,398,206"/>
+<area shape="poly" title=" " alt="" coords="439,189,398,189,398,184,439,184"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="210,244,386,283"/>
+<area shape="poly" title=" " alt="" coords="432,266,386,266,386,261,432,261"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30" title="Формирует подвал HTML&#45;страницы через вызов внутреннего метода." alt="" coords="222,322,374,360"/>
+<area shape="poly" title=" " alt="" coords="444,344,374,344,374,338,444,338"/>
+<area shape="rect" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2" title="Формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента через вызов внутреннего мето..." alt="" coords="219,399,376,438"/>
+<area shape="poly" title=" " alt="" coords="441,421,377,421,377,416,441,416"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="213,469,383,522"/>
+<area shape="poly" title=" " alt="" coords="435,498,383,498,383,493,435,493"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода." alt="" coords="198,554,398,592"/>
+<area shape="poly" title=" " alt="" coords="434,576,398,576,398,570,434,570"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="197,631,399,670"/>
+<area shape="poly" title=" " alt="" coords="435,653,400,653,400,648,435,648"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a8432fa6f08d4982b9c9d9aaede7de566" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="214,708,382,747"/>
+<area shape="poly" title=" " alt="" coords="451,730,382,730,382,725,451,725"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa120c9e1e0a365baa86516f395843036" title="Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах." alt="" coords="216,778,380,816"/>
+<area shape="poly" title=" " alt="" coords="437,800,381,800,381,794,437,794"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода." alt="" coords="5,778,149,816"/>
+<area shape="poly" title=" " alt="" coords="200,800,149,800,149,794,200,794"/>
 </map>
 </div>
 
@@ -969,7 +1111,7 @@ PhotoRigma::Classes::Work::clean_field() Метод-фасад в родител
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Classes\Work_Helper\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/d5c/Work__Helper_8php_source.html#l00241">Work_Helper.php:241</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a6731465132be58e4a625f9249cd5f7d8" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод).">PhotoRigma\Classes\Work_Helper\_encodename_internal()</a> Защищённый метод, выполняющий транслитерацию. </dd>
 <dd>
-PhotoRigma::Classes::Work::encodename() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас...">PhotoRigma\Classes\Work\encodename()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 <p></em></p>
 
 <p>Замещает <a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#ad9ac814e0001840a4cdbf826d0d6e53e">Work_Helper_Interface</a>.</p>
@@ -977,16 +1119,36 @@ PhotoRigma::Classes::Work::encodename() Метод-фасад в родител�
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00241">241</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00300">_encodename_internal()</a>.</p>
-<div id="dynsection-12" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00803">Work\encodename()</a>.</p>
+<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_cgraph">
 <area shape="rect" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="5,5,101,30"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a6731465132be58e4a625f9249cd5f7d8" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="149,5,300,30"/>
 <area shape="poly" title=" " alt="" coords="101,15,133,15,133,20,101,20"/>
+</map>
+</div>
+<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph" alt=""/></div>
+<map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ad9ac814e0001840a4cdbf826d0d6e53e_icgraph">
+<area shape="rect" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="812,19,907,44"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас..." alt="" coords="620,12,764,51"/>
+<area shape="poly" title=" " alt="" coords="796,34,764,34,764,29,796,29"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="429,12,572,51"/>
+<area shape="poly" title=" " alt="" coords="605,34,573,34,573,29,605,29"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2ca555fe6bbef0b0a691c03111ffe700" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="214,5,381,58"/>
+<area shape="poly" title=" " alt="" coords="413,34,381,34,381,29,413,29"/>
+<area shape="rect" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2" title="Обновляет данные существующего пользователя через вызов внутреннего метода." alt="" coords="5,12,166,51"/>
+<area shape="poly" title=" " alt="" coords="198,34,166,34,166,29,198,29"/>
 </map>
 </div>
 
@@ -1048,23 +1210,37 @@ PhotoRigma::Classes::Work::encodename() Метод-фасад в родител�
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_ac28b2ada9c4f3a71f7a2df9bb1387413"><div class="ttname"><a href="#ac28b2ada9c4f3a71f7a2df9bb1387413">PhotoRigma\Classes\Work_Helper\return_bytes</a></div><div class="ttdeci">static return_bytes(string|int $val)</div><div class="ttdoc">Преобразует размер в байты через вызов внутреннего метода.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/d5c/Work__Helper_8php_source.html#l00444">Work_Helper.php:444</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#aa85b3536adbc623cecafaf30fa666958" title="Преобразование размера в байты (защищённый метод).">PhotoRigma\Classes\Work_Helper\_return_bytes_internal()</a> Защищённый метод, выполняющий преобразование. </dd>
 <dd>
-PhotoRigma::Classes::Work::return_bytes() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\return_bytes()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#ac28b2ada9c4f3a71f7a2df9bb1387413">Work_Helper_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00444">444</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00495">_return_bytes_internal()</a>.</p>
-<div id="dynsection-13" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00587">Work\return_bytes()</a>.</p>
+<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_cgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_cgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_cgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_cgraph">
 <area shape="rect" title="Преобразует размер в байты через вызов внутреннего метода." alt="" coords="5,5,98,30"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa85b3536adbc623cecafaf30fa666958" title="Преобразование размера в байты (защищённый метод)." alt="" coords="146,5,294,30"/>
 <area shape="poly" title=" " alt="" coords="98,15,130,15,130,20,98,20"/>
+</map>
+</div>
+<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_icgraph" alt=""/></div>
+<map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_ac28b2ada9c4f3a71f7a2df9bb1387413_icgraph">
+<area shape="rect" title="Преобразует размер в байты через вызов внутреннего метода." alt="" coords="197,12,289,37"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ac28b2ada9c4f3a71f7a2df9bb1387413" title="Преобразует размер в байты через вызов публичного метода в дочернем классе." alt="" coords="5,5,149,44"/>
+<area shape="poly" title=" " alt="" coords="181,27,149,27,149,22,181,22"/>
 </map>
 </div>
 
@@ -1125,18 +1301,20 @@ PhotoRigma::Classes::Work::return_bytes() Метод-фасад в родите�
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a3163f8e7d71cad9003bf5b3efe644712"><div class="ttname"><a href="#a3163f8e7d71cad9003bf5b3efe644712">PhotoRigma\Classes\Work_Helper\ubb</a></div><div class="ttdeci">static ubb(string $text)</div><div class="ttdoc">Преобразует BBCode в HTML через вызов внутреннего метода.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/d5c/Work__Helper_8php_source.html#l00565">Work_Helper.php:565</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a0fe88f41126cc81f6153894bb8ac22f0" title="Преобразование BBCode в HTML (защищённый метод).">PhotoRigma\Classes\Work_Helper\_ubb_internal()</a> Защищённый метод, выполняющий преобразование BBCode. </dd>
 <dd>
-PhotoRigma::Classes::Work::ubb() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\ubb()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#a3163f8e7d71cad9003bf5b3efe644712">Work_Helper_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00565">565</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00635">_ubb_internal()</a>.</p>
-<div id="dynsection-14" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00849">Work\ubb()</a>.</p>
+<div id="dynsection-17" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_cgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_cgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_cgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_cgraph">
 <area shape="rect" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="5,9,48,33"/>
@@ -1148,6 +1326,18 @@ PhotoRigma::Classes::Work::ubb() Метод-фасад в родительско
 <area shape="poly" title=" " alt="" coords="195,28,254,39,253,44,194,33"/>
 <area shape="poly" title=" " alt="" coords="415,41,467,33,468,38,416,47"/>
 <area shape="poly" title=" " alt="" coords="306,46,299,36,303,26,316,20,338,18,362,21,374,28,372,32,361,26,338,23,318,25,307,30,305,36,311,43"/>
+</map>
+</div>
+<div id="dynsection-18" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_icgraph" alt=""/></div>
+<map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a3163f8e7d71cad9003bf5b3efe644712_icgraph">
+<area shape="rect" title="Преобразует BBCode в HTML через вызов внутреннего метода." alt="" coords="197,12,239,37"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a3163f8e7d71cad9003bf5b3efe644712" title="Преобразует BBCode в HTML через вызов публичного метода в дочернем классе." alt="" coords="5,5,149,44"/>
+<area shape="poly" title=" " alt="" coords="181,27,149,27,149,22,181,22"/>
 </map>
 </div>
 
@@ -1220,23 +1410,37 @@ PhotoRigma::Classes::Work::ubb() Метод-фасад в родительско
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Classes\Work_Helper\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/d5c/Work__Helper_8php_source.html#l00910">Work_Helper.php:910</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a1f0724c64151f06d211ca5d639046f5f" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод).">PhotoRigma\Classes\Work_Helper\_utf8_wordwrap_internal()</a> Защищённый метод, выполняющий разбиение строки. </dd>
 <dd>
-PhotoRigma::Classes::Work::utf8_wordwrap() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем класс...">PhotoRigma\Classes\Work\utf8_wordwrap()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32">Work_Helper_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00910">910</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l00972">_utf8_wordwrap_internal()</a>.</p>
-<div id="dynsection-15" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00904">Work\utf8_wordwrap()</a>.</p>
+<div id="dynsection-19" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-19-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_cgraph">
 <area shape="rect" title="Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода." alt="" coords="5,5,112,30"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a1f0724c64151f06d211ca5d639046f5f" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="160,5,322,30"/>
 <area shape="poly" title=" " alt="" coords="112,15,144,15,144,20,112,20"/>
+</map>
+</div>
+<div id="dynsection-20" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-20-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-20-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_icgraph" alt=""/></div>
+<map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_aa76be87bb05ca60ff16f6d47f5a44c32_icgraph">
+<area shape="rect" title="Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода." alt="" coords="198,12,304,37"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем класс..." alt="" coords="5,5,150,44"/>
+<area shape="poly" title=" " alt="" coords="182,27,150,27,150,22,182,22"/>
 </map>
 </div>
 
@@ -1299,23 +1503,45 @@ PhotoRigma::Classes::Work::utf8_wordwrap() Метод-фасад в родите
 <div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work__Helper_html_a41518918c225073130bc7a73983d72ff"><div class="ttname"><a href="#a41518918c225073130bc7a73983d72ff">PhotoRigma\Classes\Work_Helper\validate_mime_type</a></div><div class="ttdeci">static validate_mime_type(string $real_mime_type)</div><div class="ttdoc">Проверяет MIME-тип файла через доступные библиотеки через вызов внутреннего метода.</div><div class="ttdef"><b>Определения</b> <a href="../../d6/d5c/Work__Helper_8php_source.html#l01040">Work_Helper.php:1040</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME-типа файла через доступные библиотеки (защищённый метод).">PhotoRigma\Classes\Work_Helper\_validate_mime_type_internal()</a> Защищённый метод, выполняющий проверку MIME-типа. </dd>
 <dd>
-PhotoRigma::Classes::Work::validate_mime_type() Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME-тип файла через вызов публичного метода в дочернем классе.">PhotoRigma\Classes\Work\validate_mime_type()</a> Метод-фасад в родительском классе для вызова этой логики. </dd></dl>
 
 <p>Замещает <a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#a41518918c225073130bc7a73983d72ff">Work_Helper_Interface</a>.</p>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html">Work_Helper.php</a> строка <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l01040">1040</a></p>
 
 <p class="reference">Перекрестные ссылки <a class="el" href="../../d6/d5c/Work__Helper_8php_source.html#l01094">_validate_mime_type_internal()</a>.</p>
-<div id="dynsection-16" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-16-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
-<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00945">Work\validate_mime_type()</a>.</p>
+<div id="dynsection-21" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-21-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
+<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div id="dynsection-21-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_cgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_cgraph" alt=""/></div>
 <map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_cgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_cgraph">
 <area shape="rect" title="Проверяет MIME&#45;тип файла через доступные библиотеки через вызов внутреннего метода." alt="" coords="5,12,142,37"/>
 <area shape="rect" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a95d88f48db4a5bac5b064e99d896c82f" title="Проверка MIME&#45;типа файла через доступные библиотеки (защищённый метод)." alt="" coords="190,5,333,44"/>
 <area shape="poly" title=" " alt="" coords="142,22,174,22,174,27,142,27"/>
+</map>
+</div>
+<div id="dynsection-22" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-22-trigger" src="../../closed.png" alt="+"/> Граф вызова функции:</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_icgraph.png" border="0" usemap="#adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_icgraph" alt=""/></div>
+<map name="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_icgraph" id="adb/d20/classPhotoRigma_1_1Classes_1_1Work__Helper_a41518918c225073130bc7a73983d72ff_icgraph">
+<area shape="rect" title="Проверяет MIME&#45;тип файла через доступные библиотеки через вызов внутреннего метода." alt="" coords="703,58,840,83"/>
+<area shape="rect" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff" title="Проверяет MIME&#45;тип файла через вызов публичного метода в дочернем классе." alt="" coords="481,51,655,90"/>
+<area shape="poly" title=" " alt="" coords="688,73,656,73,656,68,688,68"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#ad4b80c2a856976f677402f8e99553442" title="Внутренний метод для универсальной проверки входных данных." alt="" coords="267,5,422,58"/>
+<area shape="poly" title=" " alt="" coords="465,55,422,48,423,42,466,50"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="256,83,433,135"/>
+<area shape="poly" title=" " alt="" coords="466,91,434,96,433,91,465,85"/>
+<area shape="rect" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Универсальная проверка входных данных через вызов внутреннего метода." alt="" coords="15,12,198,51"/>
+<area shape="poly" title=" " alt="" coords="252,34,199,34,199,29,252,29"/>
+<area shape="rect" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="5,90,208,128"/>
+<area shape="poly" title=" " alt="" coords="240,112,208,112,208,106,240,106"/>
 </map>
 </div>
 

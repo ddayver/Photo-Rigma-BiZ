@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.1</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -168,7 +168,7 @@ $(function(){initNavTree('d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с базами данных через PDO. </p>
-<p>Этот интерфейс определяет контракт для работы с базами данных, поддерживающими SQL (MySQL/MariaDB и PostgreSQL). Он предоставляет методы для выполнения основных операций с базой данных:</p><ul>
+<p>Этот интерфейс определяет контракт для работы с базами данных, поддерживающими SQL (MySQL/MariaDB, PostgreSQL и SQLite). Он предоставляет методы для выполнения основных операций с базой данных:</p><ul>
 <li>Выборка данных (<code>SELECT</code>, <code>JOIN</code>).</li>
 <li>Вставка данных (<code>INSERT</code>, <code>REPLACE</code>, <code>INSERT IGNORE</code>).</li>
 <li>Обновление данных (<code>UPDATE</code>).</li>
@@ -178,10 +178,10 @@ $(function(){initNavTree('d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__
 <li>Управление транзакциями (начало, подтверждение, откат). Все методы используют подготовленные выражения для защиты от SQL-инъекций.</li>
 </ul>
 <p>Интерфейс может быть реализован различными классами, включая стандартный класс <code>Database</code> или пользовательские реализации.</p>
-<dl class="section note"><dt>Заметки</dt><dd>Интерфейс поддерживает только MySQL/MariaDB и PostgreSQL.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Интерфейс поддерживает только MySQL/MariaDB, PostgreSQL и SQLite.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Реализация методов интерфейса может отличаться от предыдущих версий. Убедитесь, что вы изучили новую документацию перед использованием. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/da3/Database__Interface_8php_source.html">Database_Interface.php</a> строка <a class="el" href="../../d0/da3/Database__Interface_8php_source.html#l00081">81</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/da3/Database__Interface_8php_source.html">Database_Interface.php</a> строка <a class="el" href="../../d0/da3/Database__Interface_8php_source.html#l00080">80</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="afc4126846a2eb1bc11d7418b8f120ecf" name="afc4126846a2eb1bc11d7418b8f120ecf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc4126846a2eb1bc11d7418b8f120ecf">&#9670;&#160;</a></span>begin_transaction()</h2>
@@ -229,7 +229,7 @@ $(function(){initNavTree('d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__
 <div class="line"><span class="comment">// Начало транзакции без указания контекста</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a>-&gt;begin_transaction();</div>
 <div class="line"><span class="comment">// Лог: [DB] Транзакция начата</span></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a1fa3127fc82f96b1436d871ef02be319"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">PhotoRigma\$db</a></div><div class="ttdeci">$db</div><div class="ttdoc">Создание объекта класса Database для работы с основной БД.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00254">index.php:254</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a1fa3127fc82f96b1436d871ef02be319"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">PhotoRigma\$db</a></div><div class="ttdeci">$db</div><div class="ttdoc">Создание объекта класса Database для работы с основной БД.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00269">index.php:269</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#afc4126846a2eb1bc11d7418b8f120ecf">Database</a>.</p>
 

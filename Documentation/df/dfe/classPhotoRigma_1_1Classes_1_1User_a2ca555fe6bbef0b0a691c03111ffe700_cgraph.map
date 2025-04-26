@@ -1,5 +1,11 @@
 <map id="_update_user_data_internal" name="_update_user_data_internal">
-<area shape="rect" id="Node000001" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,5,186,30"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="234,5,319,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,15,218,15,218,20,186,20"/>
+<area shape="rect" id="Node000001" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="5,19,186,44"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a1b1bd50120832a8df1d83411fc66162c" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="234,19,319,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,29,218,29,218,34,186,34"/>
+<area shape="rect" id="Node000003" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов публичного метода в дочернем клас..." alt="" coords="367,12,510,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="320,29,352,29,352,34,320,34"/>
+<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ad9ac814e0001840a4cdbf826d0d6e53e" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; через вызов внутреннего метода." alt="" coords="558,12,737,51"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="511,29,543,29,543,34,511,34"/>
+<area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a6731465132be58e4a625f9249cd5f7d8" title="Транслитерация строки и замена знаков пунктуации на &quot;_&quot; (защищённый метод)." alt="" coords="785,5,970,58"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="737,29,769,29,769,34,737,34"/>
 </map>

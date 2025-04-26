@@ -5,8 +5,8 @@
  * @brief       Класс для работы с HTML-шаблонами, включая рендеринг и подстановку данных.
  *
  * @author      Dark Dayver
- * @version     0.4.1
- * @date        2025-04-25
+ * @version     0.4.2
+ * @date        2025-04-27
  * @namespace   Photorigma\\Classes
  *
  * @details     Этот файл содержит реализацию класса `Template`, который предоставляет методы для работы с
