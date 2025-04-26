@@ -1423,6 +1423,7 @@ class Template implements Template_Interface
             'CSRF_TOKEN'        => $csrf_token,
             'LEFT_PANEL_WIDHT'  => $this->work->config['left_panel'],
             'RIGHT_PANEL_WIDHT' => $this->work->config['right_panel'],
+            'HTML_LANG'         => $this->work->config['html_lang'],
         ]);
 
         // Обработка короткого меню

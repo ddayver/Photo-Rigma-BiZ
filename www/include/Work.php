@@ -37,8 +37,6 @@
  *
  * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
  *
- * @todo        Реализовать поддержку кэширования языковых переменных с хранением в формате JSON в файлах.
- *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
  *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
@@ -50,6 +48,7 @@
 
 namespace PhotoRigma\Classes;
 
+use DirectoryIterator;
 use Exception;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\NoReturn;
@@ -545,7 +544,9 @@ class Work implements Work_Interface
     public function __isset(string $name): bool
     {
         return isset($this->$name);
-    }    /**
+    }
+
+    /**
      * @brief   Преобразует размер в байты через вызов публичного метода в дочернем классе.
      *
      * @details Этот статический метод является фасадом для вызова публичного метода return_bytes()
@@ -949,174 +950,287 @@ class Work implements Work_Interface
     /**
      * @brief   Устанавливает языковые данные через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _set_lang_internal().
-     *          Он передаёт имя файла языковых данных в защищённый метод, который выполняет проверку существования
-     *          файла, загрузку данных и их обработку. Метод предназначен для использования клиентским кодом как точка
-     *          входа для установки языковых данных.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_set_lang_internal()`.
+     *          Он выполняет загрузку и обработку файлов языковых данных, передавая их в текущий класс и дочерние компоненты.
+     *          Метод предназначен для использования клиентским кодом как точка входа для установки языковых данных.
      *
-     * @param string $lang Имя файла языковых данных:
-     *                     - Должен быть непустой строкой.
-     *                     - Должен соответствовать имени файла в директории языковых данных.
-     *                     - По умолчанию: 'main'.
-     *
-     * @throws InvalidArgumentException Если имя файла некорректно (пустое или не существует).
-     *                                  Пример сообщения: "Некорректное имя языкового файла | Поле не должно быть
-     *                                  пустым". Если массив языковых данных некорректен (не содержит ключ 'lang' или
-     *                                  содержит ошибки). Пример сообщения: "Обнаружены ошибки в массиве языковых
-     *                                  данных | Ошибки:
-     *                                  [список ошибок]".
-     * @throws RuntimeException         Если файл языковых данных недоступен для чтения.
-     *                                  Пример сообщения: "Файл языковых данных недоступен для чтения | Путь: [путь к
-     *                                  файлу]".
-     * @throws JsonException            При ошибках кодирования JSON.
-     * @throws Exception                При ошибках логирования через log_in_file().
+     * @throws InvalidArgumentException Если массив языковых данных некорректен (например, отсутствует ключ `'lang'` или
+     *                                  содержатся ошибки). Пример сообщения:
+     *                                      Обнаружены ошибки в массиве языковых данных | Путь: [путь к файлу]
+     * @throws RuntimeException         Если возникают проблемы с файлами языковых данных (например, файл отсутствует,
+     *                                  недоступен для чтения или не содержит обязательный файл `main.php`). Пример сообщения:
+     *                                      Не найден обязательный файл main.php
+     * @throws JsonException            При ошибках кодирования/декодирования JSON.
+     *                                  Пример сообщения:
+     *                                      Ошибка при кодировании JSON: [подробное описание ошибки]
+     * @throws Exception                При ошибках логирования через `log_in_file()`.
      *
      * @note    Этот метод является точкой входа для установки языковых данных. Все проверки и обработка выполняются в
-     *          защищённом методе _set_lang_internal().
+     *          защищённом методе `_set_lang_internal()`.
      *
-     * @warning Если файл языковых данных отсутствует или содержит ошибки, метод выбрасывает исключение.
+     * @warning Если файлы языковых данных отсутствуют, содержат ошибки или недоступны для чтения, метод выбрасывает исключение.
      *
      * Пример использования:
      * @code
      * // Вызов метода из клиентского кода
-     * $work = new \PhotoRigma\Classes\Work();
-     * $work->set_lang('main');
+     * $work = new \PhotoRigma\Classes\Work($db, $config, $_SESSION, $cache);
+     * $work->set_lang();
      * @endcode
      * @see     PhotoRigma::Classes::Work::_set_lang_internal()
      *          Защищённый метод, который выполняет основную логику установки языковых данных.
      */
-    public function set_lang(string $lang = 'main'): void
+    public function set_lang(): void
     {
-        $this->_set_lang_internal($lang);
+        $this->_set_lang_internal();
     }
 
     /**
-     * @brief   Устанавливает языковые данные из файла и передаёт их в дочерние классы.
+     * @brief   Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах.
      *
      * @details Этот защищённый метод выполняет следующие действия:
-     *          1. Проверяет, что имя файла языковых данных ($lang) не пустое.
-     *             Если параметр пустой, выбрасывается исключение InvalidArgumentException.
-     *          2. Формирует путь к файлу языковых данных на основе текущего языка сессии или конфигурации:
-     *             - Директория языковых данных: $this->config['site_dir'] . '/language/'.
-     *             - Файл: [текущий язык]/[имя файла].php.
-     *          3. Проверяет существование файла с помощью is_file().
-     *             Если файл не найден, выбрасывается исключение InvalidArgumentException.
-     *          4. Проверяет доступность файла для чтения с помощью is_readable().
-     *             Если файл недоступен, выбрасывается исключение RuntimeException.
-     *          5. Загружает данные из файла с помощью include().
-     *             Файл должен возвращать массив с ключом 'lang'. Если массив некорректен, выбрасывается исключение.
-     *          6. Проверяет корректность массива через метод process_lang_array():
-     *             - Если обнаружены ошибки, выбрасывается исключение InvalidArgumentException.
-     *             - Если есть изменения, они логируются через log_in_file().
-     *          7. Обновляет языковые данные в текущем классе ($this->lang) и передаёт их в дочерние классы:
-     *             - Work_Template::$lang.
-     *             - Work_CoreLogic::$lang.
+     *          1. Формирует массив путей к директориям языковых данных на основе конфигурации (`$this->config['language_dirs']`)
+     *             или по умолчанию использует директорию `$this->config['site_dir'] . '/language/'`.
+     *          2. Сканирует каждую директорию с помощью `DirectoryIterator` и формирует список файлов для загрузки:
+     *             - Пропускаются неподходящие файлы (не `.php`, `index.php`).
+     *             - Для каждого файла вычисляется CRC32 контрольная сумма содержимого.
+     *             - Формируется уникальный ключ кеша для каждого файла.
+     *          3. Проверяет наличие обязательного файла `main.php`. Если файл отсутствует, выбрасывается исключение.
+     *          4. Обрабатывает каждый файл:
+     *             - Загружает данные из файла через `include()`. Файл должен возвращать массив с ключом `'lang'`.
+     *             - Если данные некорректны, логируются ошибки или выбрасываются исключения (для `main.php`).
+     *             - Проверяет актуальность данных в кеше через `$this->cache->is_valid()`. Если кеш актуален, данные
+     *               используются из кеша.
+     *             - Если кеш устарел или отсутствует, данные обрабатываются через `process_lang_array()`:
+     *               - Логируются изменения (`changes`) и ошибки (`errors`).
+     *               - При наличии ошибок в `main.php` выбрасывается исключение.
+     *             - Данные сохраняются в кеш через `$this->cache->update_cache()`.
+     *          5. Обновляет языковые данные в текущем классе (`$this->lang`) и передаёт их в дочерние классы:
+     *             - `Work_Template::$lang`.
+     *             - `Work_CoreLogic::$lang`.
      *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Однако он может быть вызван публично через фасад, например, через публичный метод `set_lang`.
      *
-     * @param string $lang Имя файла языковых данных:
-     *                     - Должен быть непустой строкой.
-     *                     - Должен соответствовать имени файла в директории языковых данных.
-     *                     - По умолчанию: 'main'.
+     * @throws RuntimeException         Выбрасывается в следующих случаях:
+     *                                  - Отсутствует хотя бы один подходящий файл языковых данных.
+     *                                    Пример сообщения:
+     *                                        Не найдено ни одного подходящего файла языковых данных
+     *                                  - Отсутствует обязательный файл `main.php`.
+     *                                    Пример сообщения:
+     *                                        Не найден обязательный файл main.php
+     *                                  - Файл языковых данных не возвращает массив с ключом `'lang'`.
+     *                                    Пример сообщения:
+     *                                        Файл языковых данных не возвращает массив с ключом 'lang' | Путь: [путь к файлу]
+     *                                  - Некорректный или отсутствующий `lang_id` в файле `main.php`.
+     *                                    Пример сообщения:
+     *                                        Некорректный или отсутствующий lang_id в файле | Путь: [путь к файлу]
+     *                                  - Не удалось сохранить данные в кеш.
+     *                                    Пример сообщения:
+     *                                        Не удалось сохранить данные в кеш | Ключ: [ключ кеша]
+     * @throws InvalidArgumentException Выбрасывается при обнаружении ошибок в массиве языковых данных в файле `main.php`.
+     *                                  Пример сообщения:
+     *                                        Обнаружены ошибки в массиве языковых данных | Путь: [путь к файлу]
+     * @throws JsonException            Выбрасывается при ошибках кодирования JSON.
+     *                                  Пример сообщения:
+     *                                        Ошибка при кодировании JSON: [подробное описание ошибки]
+     * @throws Exception                Выбрасывается при ошибках логирования через `log_in_file()`.
      *
-     * @throws InvalidArgumentException Если имя файла некорректно (пустое или не существует).
-     *                                  Пример сообщения: "Некорректное имя языкового файла | Поле не должно быть
-     *                                  пустым". Если массив языковых данных некорректен (не содержит ключ 'lang' или
-     *                                  содержит ошибки). Пример сообщения: "Обнаружены ошибки в массиве языковых
-     *                                  данных | Ошибки:
-     *                                  [список ошибок]".
-     * @throws RuntimeException         Если файл языковых данных недоступен для чтения.
-     *                                  Пример сообщения: "Файл языковых данных недоступен для чтения | Путь: [путь к
-     *                                  файлу]".
-     * @throws JsonException            При ошибках кодирования JSON.
-     * @throws Exception                При ошибках логирования через log_in_file().
+     * @note    Файлы языковых данных должны быть доступны для чтения и возвращать массив с ключом `'lang'`.
+     *          Обязательный файл `main.php` должен содержать корректный `lang_id` в виде строки.
      *
-     * @todo    Интегрировать в систему кеширования языковых переменных.
+     * @warning Если файлы языковых данных отсутствуют, содержат ошибки или недоступны для чтения, метод выбрасывает исключение.
      *
-     * @note    Файл языковых данных должен быть доступен для чтения.
-     *          Массив языковых данных должен содержать ключ 'lang'.
-     *
-     * @warning Если файл языковых данных отсутствует или содержит ошибки, метод выбрасывает исключение.
+     * @throws RuntimeException (из Cache_Handler::is_valid) Выбрасывается в следующих случаях:
+     *                           - Клиент хранилища Redis/Memcached не инициализирован или имеет неправильный тип (из подметода `is_valid_storage`).
+     *                             Пример сообщения:
+     *                                 Клиент хранилища не инициализирован или имеет неправильный тип
+     * @throws JsonException (из Cache_Handler::is_valid) Выбрасывается при ошибках декодирования JSON:
+     *                        - Для файлового кеширования: из подметода `is_valid_file`.
+     *                        - Для Redis/Memcached: из подметода `is_valid_storage`.
+     *                        Пример сообщения:
+     *                            Ошибка декодирования JSON: [подробное описание ошибки]
+     * @throws RuntimeException (из Cache_Handler::update_cache) Выбрасывается в следующих случаях:
+     *                           - Для файлового кеширования:
+     *                             - Если директория для кеша не существует или недоступна для записи.
+     *                             - Если файл кеша недоступен для записи.
+     *                               Пример сообщения:
+     *                                   Директория для кеша недоступна для записи | Путь: [путь]
+     *                           - Для Redis/Memcached:
+     *                             - Если клиент хранилища не инициализирован или имеет неправильный тип.
+     *                               Пример сообщения:
+     *                                   Клиент хранилища не инициализирован или имеет неправильный тип
+     * @throws JsonException (из Cache_Handler::update_cache) Выбрасывается при ошибках кодирования JSON.
+     *                        Пример сообщения:
+     *                            Ошибка кодирования JSON: [подробное описание ошибки]
      *
      * Пример использования метода:
      * @code
      * // Вызов метода внутри класса или его наследника
-     * $this->_set_lang_internal('main');
+     * $this->_set_lang_internal();
      * @endcode
      * @see     PhotoRigma::Include::log_in_file()
      *          Внешняя функция для логирования ошибок.
      * @see     PhotoRigma::Classes::Work::process_lang_array()
-     *          Метод для проверки корректности массива языковых данных.
+     *          Метод для проверки и обработки массива языковых данных.
      * @see     PhotoRigma::Classes::Work::$lang
      *          Свойство класса Work, которое изменяется.
      * @see     PhotoRigma::Classes::Work_CoreLogic::$lang
      *          Свойство дочернего класса Work_CoreLogic.
      * @see     PhotoRigma::Classes::Work_Template::$lang
      *          Свойство дочернего класса Work_Template.
+     * @see     PhotoRigma::Interfaces::Cache_Handler_Interface
+     *          Интерфейс для работы с кешем.
+     * @see     PhotoRigma::Classes::Cache_Handler::is_valid()
+     *          Метод для проверки актуальности данных в кеше.
+     * @see     PhotoRigma::Classes::Cache_Handler::update_cache()
+     *          Метод для записи данных в кеш.
+     * @see     PhotoRigma::Classes::Work::set_lang()
+     *          Публичный метод-фасад для вызова `_set_lang_internal`.
      */
-    protected function _set_lang_internal(string $lang = 'main'): void
+    protected function _set_lang_internal(): void
     {
-        if (empty($lang)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Некорректное имя языкового файла | Поле не должно быть пустым"
-            );
+        // 1. Формирование массива путей
+        $lang_files_path = array_map(
+            fn (string $dir): string => rtrim($dir, '/') . '/' . $this->session['language'] . '/',
+            $this->config['language_dirs'] ?? [$this->config['site_dir'] . '/language/']
+        );
+
+        // 2. Сканирование папок и формирование массива файлов для загрузки
+        $files_to_load = [];
+        foreach ($lang_files_path as $dir_index => $dir) {
+            if (!is_dir($dir)) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                    'Папка не найдена | Путь: ' . $dir
+                );
+                continue;
+            }
+
+            foreach (new DirectoryIterator($dir) as $file) {
+                if (!$file->isFile() || str_ends_with($file->getFilename(), 'index.php')) {
+                    continue; // Пропускаем неподходящие файлы
+                }
+
+                if (!str_ends_with($file->getFilename(), '.php')) {
+                    continue; // Пропускаем файлы без расширения .php
+                }
+
+                $file_name = $file->getBasename('.php');
+                $file_crc32 = crc32(file_get_contents($file->getPathname()));
+
+                $files_to_load[] = [
+                    'path' => $file->getPathname(),
+                    'crc32' => $file_crc32,
+                    'cache_key' => "{$this->session['language']}_{$file_name}_$dir_index",
+                    'lang_id' => $file_name === 'main', // Только для main.php
+                    'throw' => $file_name === 'main' && empty($files_to_load), // Только для первого main.php
+                ];
+            }
         }
 
-        // Устанавливаем язык из сессии или конфигурации
-        $this->session['language'] ??= $this->config['language'];
-
-        // Формируем путь к файлу языковых данных
-        $lang_file_path = $this->config['site_dir'] . '/language/' . $this->session['language'] . '/' . $lang . '.php';
-
-        // Проверяем существование файла
-        if (!is_file($lang_file_path)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных не найден | Путь: $lang_file_path"
-            );
-        }
-
-        // Проверяем доступность файла для чтения
-        if (!is_readable($lang_file_path)) {
+        // Проверка: если список файлов пустой, выбрасываем исключение
+        if (empty($files_to_load)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных недоступен для чтения | Путь: $lang_file_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                'Не найдено ни одного подходящего файла языковых данных'
             );
         }
 
-        // Загружаем данные из файла
-        $data = include($lang_file_path);
-        if (!is_array($data) || !isset($data['lang'])) {
+        // Проверка: если нет файла main.php, выбрасываем исключение
+        if (!array_filter($files_to_load, static fn ($file) => $file['throw'])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Файл языковых данных не возвращает массив с ключом 'lang' | Путь: $lang_file_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                'Не найден обязательный файл main.php'
             );
         }
 
-        // Извлекаем данные
-        $lang_data = $data['lang'];
+        // 3. Обработка файлов
+        $new_lang_data = [];
+        foreach ($files_to_load as $file) {
+            // Загрузка данных из файла
+            $data = include($file['path']);
+            if (!is_array($data) || !isset($data['lang'])) {
+                if ($file['throw']) {
+                    throw new RuntimeException(
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                        'Файл языковых данных не возвращает массив с ключом \'lang\' | Путь: ' . $file['path']
+                    );
+                }
 
-        // Проверяем массив на корректность
-        $result = $this->process_lang_array($lang_data);
-        if (!empty($result['errors'])) {
-            throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обнаружены ошибки в массиве языковых данных | Ошибки: " . json_encode(
-                    $result['errors'],
-                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
-                )
-            );
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                    'Некорректные данные в файле | Путь: ' . $file['path']
+                );
+                continue;
+            }
+
+            // Обработка lang_id (если требуется)
+            if ($file['lang_id']) {
+                $lang_id = $data['lang_id'] ?? null;
+                if (!is_string($lang_id)) {
+                    if ($file['throw']) {
+                        throw new RuntimeException(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                            'Некорректный или отсутствующий lang_id в файле | Путь: ' . $file['path']
+                        );
+                    }
+
+                    log_in_file(
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                        'Некорректный или отсутствующий lang_id в файле | Путь: ' . $file['path']
+                    );
+                    continue;
+                }
+                // Обновляем значение html_lang
+                $this->config['html_lang'] = $lang_id;
+            }
+
+            // Проверка кеша
+            $cached_data = $this->cache->is_valid($file['cache_key'], $file['crc32']);
+            if ($cached_data !== false) {
+                // Если кеш актуален, используем данные из кеша
+                $new_lang_data = [...($new_lang_data ?? []), ...$cached_data];
+                continue;
+            }
+
+            // Обработка данных через process_lang_array
+            $result = $this->process_lang_array($data['lang']);
+            if (!empty($result['errors'])) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                    'Обнаружены ошибки в массиве языковых данных | Ошибки: ' .
+                    json_encode($result['errors'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+                );
+                if ($file['throw']) {
+                    throw new InvalidArgumentException(
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                        'Обнаружены ошибки в массиве языковых данных | Путь: ' . $file['path']
+                    );
+                }
+            }
+
+            // Логирование изменений
+            if (!empty($result['changes'])) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                    'Очищенные значения | Значения: ' .
+                    json_encode($result['changes'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+                );
+            }
+
+            // Сохранение данных в кеш
+            if (!$this->cache->update_cache($file['cache_key'], $file['crc32'], $result['result'])) {
+                throw new RuntimeException(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                    'Не удалось сохранить данные в кеш | Ключ: ' . $file['cache_key']
+                );
+            }
+
+            // Наполнение нового массива языковых данных
+            $new_lang_data = [...($new_lang_data ?? []), ...$result['result']];
         }
 
-        // Логируем изменения, если они есть
-        if (!empty($result['changes'])) {
-            log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Очищенные значения | Значения: " . json_encode(
-                    $result['changes'],
-                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
-                )
-            );
-        }
-
-        // Обновляем языковые данные
-        $this->lang = array_merge($this->lang ?? [], $result['result']);
-
-        // Передаём языковые данные в свойство и подклассы
+        // 4. Завершение работы
+        $this->lang = $new_lang_data;
         $this->template->set_lang($this->lang);
         $this->core_logic->set_lang($this->lang);
     }

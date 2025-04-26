@@ -30,6 +30,9 @@ DROP TRIGGER update_rate_moder_after_insert ON public.rate_moder;
 DROP TRIGGER update_rate_moder_after_delete ON public.rate_moder;
 DROP TRIGGER trg_prevent_deletion_groups ON public.groups;
 DROP TRIGGER trg_prevent_deletion_category ON public.category;
+DROP TRIGGER trg_config_update ON public.config;
+DROP TRIGGER trg_config_insert ON public.config;
+DROP TRIGGER trg_config_delete ON public.config;
 DROP INDEX public.query_logs_query_hash_key;
 DROP INDEX public.idx_users_user_rights;
 DROP INDEX public.idx_users_date_last_activ;
@@ -37,6 +40,8 @@ DROP INDEX public.idx_photo_user_upload_group;
 DROP INDEX public.idx_photo_date_upload;
 DROP INDEX public.idx_photo_category_user_upload;
 DROP INDEX public.idx_news_data_last_edit;
+DROP INDEX public.idx_menu_short;
+DROP INDEX public.idx_menu_long;
 DROP INDEX public.idx_config_value;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_login_key;
@@ -49,6 +54,7 @@ ALTER TABLE ONLY public.menu DROP CONSTRAINT menu_pkey;
 ALTER TABLE ONLY public.groups DROP CONSTRAINT group_pkey;
 ALTER TABLE ONLY public.db_version DROP CONSTRAINT db_version_pkey;
 ALTER TABLE ONLY public.config DROP CONSTRAINT config_pkey;
+ALTER TABLE ONLY public.change_timestamp DROP CONSTRAINT change_timestamp_pkey;
 ALTER TABLE ONLY public.category DROP CONSTRAINT category_pkey;
 ALTER TABLE public.users ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.query_logs ALTER COLUMN id DROP DEFAULT;
@@ -73,12 +79,14 @@ DROP TABLE public.menu;
 DROP TABLE public.groups;
 DROP TABLE public.db_version;
 DROP TABLE public.config;
+DROP TABLE public.change_timestamp;
 DROP SEQUENCE public.category_id_seq;
 DROP TABLE public.category;
 DROP FUNCTION public.update_rate_user_after_insert();
 DROP FUNCTION public.update_rate_user_after_delete();
 DROP FUNCTION public.update_rate_moder_after_insert();
 DROP FUNCTION public.update_rate_moder_after_delete();
+DROP FUNCTION public.update_change_timestamp();
 DROP FUNCTION public.prevent_deletion_of_service_groups();
 DROP FUNCTION public.prevent_deletion_of_service_categories();
 --
@@ -121,6 +129,32 @@ $$;
 
 
 ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO photorigma;
+
+--
+-- Name: update_change_timestamp(); Type: FUNCTION; Schema: public; Owner: photorigma
+--
+
+CREATE FUNCTION public.update_change_timestamp() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    INSERT INTO change_timestamp (table_name, last_update)
+    VALUES (TG_TABLE_NAME, CURRENT_TIMESTAMP)
+    ON CONFLICT (table_name) DO UPDATE
+    SET last_update = EXCLUDED.last_update;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_change_timestamp() OWNER TO photorigma;
+
+--
+-- Name: FUNCTION update_change_timestamp(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_change_timestamp() IS 'Обновляет время последнего изменения в таблице change_timestamp';
+
 
 --
 -- Name: update_rate_moder_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma
@@ -287,6 +321,39 @@ ALTER SEQUENCE public.category_id_seq OWNER TO photorigma;
 --
 
 ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
+
+
+--
+-- Name: change_timestamp; Type: TABLE; Schema: public; Owner: photorigma
+--
+
+CREATE TABLE public.change_timestamp (
+    table_name character varying(255) NOT NULL,
+    last_update timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.change_timestamp OWNER TO photorigma;
+
+--
+-- Name: TABLE change_timestamp; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON TABLE public.change_timestamp IS 'Хранение даты последних изменений в таблицах';
+
+
+--
+-- Name: COLUMN change_timestamp.table_name; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.change_timestamp.table_name IS 'Имя таблицы';
+
+
+--
+-- Name: COLUMN change_timestamp.last_update; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.change_timestamp.last_update IS 'Время последнего обновления';
 
 
 --
@@ -1133,6 +1200,13 @@ INSERT INTO public.category VALUES (0, 'user', 'Пользовательский
 
 
 --
+-- Data for Name: change_timestamp; Type: TABLE DATA; Schema: public; Owner: photorigma
+--
+
+INSERT INTO public.change_timestamp VALUES ('config', '2025-04-09 17:02:22.247758');
+
+
+--
 -- Data for Name: config; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
@@ -1165,7 +1239,7 @@ INSERT INTO public.config VALUES ('copyright_url', 'https://rigma.biz/');
 -- Data for Name: db_version; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.db_version VALUES ('0.4.0');
+INSERT INTO public.db_version VALUES ('0.4.1');
 
 
 --
@@ -1285,6 +1359,14 @@ ALTER TABLE ONLY public.category
 
 
 --
+-- Name: change_timestamp change_timestamp_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.change_timestamp
+    ADD CONSTRAINT change_timestamp_pkey PRIMARY KEY (table_name);
+
+
+--
 -- Name: config config_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
 --
 
@@ -1380,6 +1462,20 @@ CREATE INDEX idx_config_value ON public.config USING btree (value);
 
 
 --
+-- Name: idx_menu_long; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_menu_long ON public.menu USING btree (long);
+
+
+--
+-- Name: idx_menu_short; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_menu_short ON public.menu USING btree (short);
+
+
+--
 -- Name: idx_news_data_last_edit; Type: INDEX; Schema: public; Owner: photorigma
 --
 
@@ -1426,6 +1522,27 @@ CREATE INDEX idx_users_user_rights ON public.users USING btree (user_rights);
 --
 
 CREATE UNIQUE INDEX query_logs_query_hash_key ON public.query_logs USING btree (query_hash);
+
+
+--
+-- Name: config trg_config_delete; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER trg_config_delete AFTER DELETE ON public.config FOR EACH ROW EXECUTE FUNCTION public.update_change_timestamp();
+
+
+--
+-- Name: config trg_config_insert; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER trg_config_insert AFTER INSERT ON public.config FOR EACH ROW EXECUTE FUNCTION public.update_change_timestamp();
+
+
+--
+-- Name: config trg_config_update; Type: TRIGGER; Schema: public; Owner: photorigma
+--
+
+CREATE TRIGGER trg_config_update AFTER UPDATE ON public.config FOR EACH ROW EXECUTE FUNCTION public.update_change_timestamp();
 
 
 --

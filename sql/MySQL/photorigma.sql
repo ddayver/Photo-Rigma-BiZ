@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 07 2025 г., 16:06
+-- Время создания: Апр 26 2025 г., 18:04
 -- Версия сервера: 10.11.11-MariaDB
--- Версия PHP: 8.4.6RC1
+-- Версия PHP: 8.4.7RC1
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,7 +29,7 @@ USE `photorigma`;
 --
 -- Структура таблицы `category`
 --
--- Создание: Апр 06 2025 г., 21:31
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `category`;
@@ -70,9 +70,35 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `change_timestamp`
+--
+-- Создание: Апр 09 2025 г., 23:48
+--
+
+DROP TABLE IF EXISTS `change_timestamp`;
+CREATE TABLE IF NOT EXISTS `change_timestamp` (
+  `table_name` varchar(255) NOT NULL COMMENT 'Имя таблицы',
+  `last_update` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Время последнего обновления',
+  PRIMARY KEY (`table_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Хранение даты последних изменений в таблицах';
+
+--
+-- ССЫЛКИ ТАБЛИЦЫ `change_timestamp`:
+--
+
+--
+-- Дамп данных таблицы `change_timestamp`
+--
+
+INSERT INTO `change_timestamp` (`table_name`, `last_update`) VALUES
+('config', '2025-04-09 13:48:37');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `config`
 --
--- Создание: Апр 07 2025 г., 15:30
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `config`;
@@ -116,12 +142,38 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('copyright_text', 'Проекты Rigma.BiZ'),
 ('title_description', 'Фотогалерея Rigma и Co');
 
+--
+-- Триггеры `config`
+--
+DROP TRIGGER IF EXISTS `trg_config_delete`;
+DELIMITER $$
+CREATE TRIGGER `trg_config_delete` AFTER DELETE ON `config` FOR EACH ROW UPDATE change_timestamp
+SET last_update = CURRENT_TIMESTAMP
+WHERE table_name = 'config'
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_config_insert`;
+DELIMITER $$
+CREATE TRIGGER `trg_config_insert` AFTER INSERT ON `config` FOR EACH ROW UPDATE change_timestamp
+SET last_update = CURRENT_TIMESTAMP
+WHERE table_name = 'config'
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_config_update`;
+DELIMITER $$
+CREATE TRIGGER `trg_config_update` AFTER UPDATE ON `config` FOR EACH ROW UPDATE change_timestamp
+SET last_update = CURRENT_TIMESTAMP
+WHERE table_name = 'config'
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `db_version`
 --
--- Создание: Апр 06 2025 г., 21:31
+-- Создание: Апр 09 2025 г., 23:48
+-- Последнее обновление: Апр 26 2025 г., 18:00
 --
 
 DROP TABLE IF EXISTS `db_version`;
@@ -139,14 +191,14 @@ CREATE TABLE IF NOT EXISTS `db_version` (
 --
 
 INSERT INTO `db_version` (`ver`) VALUES
-('0.4.0');
+('0.4.1');
 
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `groups`
 --
--- Создание: Апр 06 2025 г., 21:31
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `groups`;
@@ -191,7 +243,7 @@ DELIMITER ;
 --
 -- Структура таблицы `menu`
 --
--- Создание: Апр 06 2025 г., 21:31
+-- Создание: Апр 10 2025 г., 00:39
 --
 
 DROP TABLE IF EXISTS `menu`;
@@ -204,7 +256,9 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `long` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Использовать пункт в длинном (боковом) меню',
   `user_login` tinyint(1) DEFAULT NULL COMMENT 'Проверка - зарегистрирован ли пользователь',
   `user_access` varchar(250) DEFAULT NULL COMMENT 'Дополнительные права',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_menu_short` (`short`),
+  KEY `idx_menu_long` (`long`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица пунктов меню' ROW_FORMAT=DYNAMIC;
 
 --
@@ -235,7 +289,7 @@ INSERT INTO `menu` (`id`, `action`, `url_action`, `name_action`, `short`, `long`
 --
 -- Структура таблицы `news`
 --
--- Создание: Апр 07 2025 г., 15:33
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `news`;
@@ -262,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `news` (
 --
 -- Структура таблицы `photo`
 --
--- Создание: Апр 07 2025 г., 15:44
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `photo`;
@@ -295,8 +349,8 @@ CREATE TABLE IF NOT EXISTS `photo` (
 --
 -- Структура таблицы `query_logs`
 --
--- Создание: Апр 04 2025 г., 17:55
--- Последнее обновление: Апр 07 2025 г., 15:10
+-- Создание: Апр 09 2025 г., 23:48
+-- Последнее обновление: Апр 26 2025 г., 17:06
 --
 
 DROP TABLE IF EXISTS `query_logs`;
@@ -322,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `query_logs` (
 --
 -- Структура таблицы `rate_moder`
 --
--- Создание: Апр 07 2025 г., 08:03
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `rate_moder`;
@@ -381,7 +435,7 @@ DELIMITER ;
 --
 -- Структура таблицы `rate_user`
 --
--- Создание: Апр 07 2025 г., 08:03
+-- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `rate_user`;
@@ -440,8 +494,8 @@ DELIMITER ;
 --
 -- Структура таблицы `users`
 --
--- Создание: Апр 07 2025 г., 15:42
--- Последнее обновление: Апр 07 2025 г., 15:10
+-- Создание: Апр 09 2025 г., 23:48
+-- Последнее обновление: Апр 26 2025 г., 17:06
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -477,7 +531,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, `language`, `theme`, `date_regist`, `date_last_activ`, `date_last_logout`, `group_id`, `user_rights`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-07 15:10:36', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-26 17:06:17', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
 
 -- --------------------------------------------------------
 
@@ -542,6 +596,10 @@ USE `phpmyadmin`;
 
 --
 -- Метаданные для таблицы category
+--
+
+--
+-- Метаданные для таблицы change_timestamp
 --
 
 --

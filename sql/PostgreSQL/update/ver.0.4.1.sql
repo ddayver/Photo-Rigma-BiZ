@@ -54,3 +54,7 @@ EXECUTE FUNCTION update_change_timestamp();
 
 CREATE INDEX idx_menu_short ON menu (short);
 CREATE INDEX idx_menu_long ON menu (long);
+
+-- 5. Обновление версии СУБД
+UPDATE db_version SET ver = '0.4.1' WHERE db_version.ver = '0.4.0';
+
