@@ -73,16 +73,23 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной строки).
  *          - Форматирование даты с учётом специфики используемой СУБД.
  *          - Управление транзакциями.
+ *          - Временное изменение формата SQL для выполнения запросов в контексте другой СУББД (например, выполнение
+ *            запроса в формате PostgreSQL при подключении к MySQL). Это позволяет использовать один экземпляр класса
+ *            для работы с разными СУБД без необходимости создания дополнительных подключений.
  *          Все ошибки, возникающие при работе с базой данных, обрабатываются через исключения.
  *
- * @property ?PDO        $pdo           Объект PDO для подключения к базе данных.
- * @property string|null $txt_query     Текст последнего SQL-запроса, сформированного методами класса.
- * @property object|null $res_query     Результат выполнения подготовленного выражения (PDOStatement).
- * @property int         $aff_rows      Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE).
- * @property int         $insert_id     ID последней вставленной строки после выполнения INSERT-запроса.
- * @property string      $db_type       Тип базы данных (mysql, pgsql).
- * @property array       $format_cache  Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite).
- * @property array       $query_cache   Кэш для хранения результатов проверки существования запросов.
+ * @property ?PDO        $pdo             Объект PDO для подключения к базе данных.
+ * @property string|null $txt_query       Текст последнего SQL-запроса, сформированного методами класса.
+ * @property object|null $res_query       Результат выполнения подготовленного выражения (PDOStatement).
+ * @property int         $aff_rows        Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE).
+ * @property int         $insert_id       ID последней вставленной строки после выполнения INSERT-запроса.
+ * @property string      $db_type         Тип базы данных (mysql, pgsql, sqlite).
+ * @property array       $format_cache    Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite).
+ * @property array       $query_cache     Кэш для хранения результатов проверки существования запросов.
+ * @property string      $current_format  Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
+ *                                        Используется для временного изменения формата SQL.
+ * @property array       $allowed_formats Список поддерживаемых форматов SQL (например, ['mysql', 'pgsql', 'sqlite']).
+ *                                        Определяет допустимые значения для параметра `$format` в методах класса.
  *
  * Пример создания объекта класса Database:
  * @code
@@ -94,6 +101,26 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *     'password' => 'password',
  * ];
  * $db = new \\PhotoRigma\\Classes\\Database($config);
+ * @endcode
+ *
+ * Пример временного изменения формата SQL:
+ * @code
+ * // Выполнение запроса в формате PostgreSQL
+ * $years_list = $db->with_sql_format('pgsql', function () use ($db) {
+ *     // Форматирование даты для PostgreSQL
+ *     $formatted_date = $db->format_date('data_last_edit', 'YYYY');
+ *     // Выборка данных
+ *     $db->select(
+ *         'DISTINCT ' . $formatted_date . ' AS year',
+ *         TBL_NEWS,
+ *         [
+ *             'order' => 'year ASC',
+ *         ]
+ *     );
+ *     // Получение результата
+ *     return $db->res_arr();
+ * });
+ * print_r($years_list);
  * @endcode
  * @see     Photorigma::Interfaces::Database_Interface Интерфейс, который реализует класс.
  */
@@ -108,6 +135,8 @@ class Database implements Database_Interface
     private string $db_type;     ///< Тип базы данных (mysql, pgsql)
     private array $format_cache = []; ///< Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite)
     private array $query_cache = []; ///< Кэш для хранения результатов проверки существования запросов
+    private string $current_format = 'mysql'; ///< Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
+    private array $allowed_formats = ['mysql', 'pgsql', 'sqlite']; ///< Список поддерживаемых форматов SQL.
 
     /**
      * @brief   Конструктор класса.
@@ -205,14 +234,17 @@ class Database implements Database_Interface
      * @endcode
      * @see     PhotoRigma::Classes::Database::$pdo
      *          Свойство, хранящее объект PDO для подключения к базе данных.
+     * @see     PhotoRigma::Classes::Database::$db_type
+     *          Свойство, хранящее тип базы данных (например, 'mysql' или 'sqlite').
+     * @see     PhotoRigma::Classes::Database::$allowed_formats
+     *          Массив допустимых форматов базы данных (например, 'mysql', 'sqlite', 'pgsql').
      * @see     PhotoRigma::Include::log_in_file()
      *          Функция для логирования ошибок.
      */
     public function __construct(array $db_config)
     {
         // Проверка допустимых значений dbtype
-        $allowed_dbtypes = ['mysql', 'pgsql', 'sqlite'];
-        if (!in_array($db_config['dbtype'], $allowed_dbtypes, true)) {
+        if (!in_array($db_config['dbtype'], $this->allowed_formats, true)) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип базы данных | Значение: {$db_config['dbtype']}"
             );
@@ -1018,72 +1050,276 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Производит финальное преобразование SQL-запроса в зависимости от типа СУБД.
+     * @brief   Выполняет преобразование SQL-запроса в зависимости от текущего формата и типа СУБД.
      *
-     * @details Этот метод выполняет финальное преобразование SQL-запроса для обеспечения совместимости с целевой СУБД:
-     *          - Для MariaDB (MySQL) запрос остается без изменений.
-     *          - Для PostgreSQL заменяет обратные кавычки (`) на двойные кавычки (").
-     *          - Для SQLite удаляет все обратные кавычки (`).
-     *          Экранированные кавычки оставляются без изменений.
-     *          Если тип СУБД не поддерживается, выбрасывается исключение.
-     *          Важно: На данный момент метод преобразует запросы только из формата MySQL. Преобразование из других
-     *          форматов
-     *          (например, PostgreSQL) пока не поддерживается.
+     * @details Этот метод выполняет преобразование SQL-запроса для обеспечения совместимости с целевой СУБД:
+     *          1. Проверяет, совпадает ли текущий формат строки (`$current_format`) с типом базы данных (`$db_type`).
+     *             - Если форматы совпадают, запрос остается без изменений.
+     *          2. Если форматы не совпадают, вызывает соответствующий метод для преобразования:
+     *             - Для MySQL используется метод `convert_from_mysql_to`.
+     *             - Для PostgreSQL используется метод `convert_from_pgsql_to`.
+     *             - Для SQLite используется метод `convert_from_sqlite_to`.
+     *          3. Если текущий формат не поддерживается, выбрасывается исключение.
      *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `execute_query`.
      *
      * @callergraph
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
-     *                                  Пример сообщения:
-     *                                      Не поддерживаемый тип СУБД | Тип: [db_type]
+     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
      *
-     * @warning На данный момент метод преобразует запросы только из формата MySQL. Это означает, что входной запрос
-     *          должен быть написан с использованием обратных кавычек (`), как это принято в MySQL. Поддержка
-     *          преобразования из других форматов (например, PostgreSQL) будет добавлена в будущем.
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                  - Текущий формат строки не поддерживается.
+     *                                    Пример сообщения:
+     *                                        Не поддерживаемый формат строки | Тип: [current_format]
      *
-     * @todo    Добавить возможность преобразовывать запросы из формата PostgreSQL.
+     * @note    Метод использует свойства `$current_format` и `$db_type` для определения необходимости преобразования.
+     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     *
+     * @warning Убедитесь, что свойство `$current_format` содержит допустимое значение.
+     *          Недопустимый формат может привести к исключениям.
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->db_type = 'mysql';
+     * // Исходный запрос в формате MySQL
      * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
-     * $this->convert_query();
-     * echo $this->txt_query; // Результат: SELECT * FROM `users` WHERE id = 1
-     *
+     * $this->current_format = 'mysql';
      * $this->db_type = 'pgsql';
-     * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
+     *
+     * // Преобразование запроса для PostgreSQL
      * $this->convert_query();
      * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
-     *
-     * $this->db_type = 'sqlite';
-     * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
-     * $this->convert_query();
-     * echo $this->txt_query; // Результат: SELECT * FROM users WHERE id = 1
      * @endcode
      * @see     PhotoRigma::Classes::Database::$txt_query
-     *         Свойство, содержащее текст SQL-запроса.
+     *          Свойство, содержащее текст SQL-запроса.
+     * @see     PhotoRigma::Classes::Database::$current_format
+     *          Текущий формат строки запроса.
      * @see     PhotoRigma::Classes::Database::$db_type
-     *         Свойство, указывающее тип используемой СУБД.
+     *          Тип используемой СУБД.
+     * @see     PhotoRigma::Classes::Database::convert_from_mysql_to()
+     *          Метод для преобразования запросов из формата MySQL.
+     * @see     PhotoRigma::Classes::Database::convert_from_pgsql_to()
+     *          Метод для преобразования запросов из формата PostgreSQL.
+     * @see     PhotoRigma::Classes::Database::convert_from_sqlite_to()
+     *          Метод для преобразования запросов из формата SQLite.
      * @see     PhotoRigma::Classes::Database::execute_query()
-     *         Метод, из которого вызывается данный метод.
+     *          Метод, из которого вызывается данный метод.
      */
     private function convert_query(): void
     {
-        // Проверяем целевую СУБД
-        $this->txt_query = match ($this->db_type) {
-            'mysql'  => $this->txt_query, // Для MariaDB остается оригинал
-            'pgsql'  => preg_replace_callback(
+        // Если формат строки совпадает с типом базы данных, ничего не меняем
+        if ($this->current_format === $this->db_type) {
+            return;
+        }
+
+        // Выполняем преобразование в зависимости от текущего формата и типа базы данных
+        match ($this->current_format) {
+            'mysql'  => $this->convert_from_mysql_to($this->db_type),
+            'pgsql'  => $this->convert_from_pgsql_to($this->db_type),
+            'sqlite' => $this->convert_from_sqlite_to($this->db_type),
+            default  => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Не поддерживаемый формат строки | Тип: $this->current_format"
+            ),
+        };
+    }
+
+    /**
+     * @brief   Производит преобразование SQL-запроса из формата MySQL в целевой формат СУБД.
+     *
+     * @details Этот метод выполняет преобразование SQL-запроса из формата MySQL в формат целевой СУБД:
+     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`.
+     *          2. Для PostgreSQL и SQLite заменяет обратные кавычки (`) на двойные кавычки (") или удаляет их.
+     *             - Экранированные кавычки (например, \\` ) остаются без изменений.
+     *          3. Если тип СУБД не поддерживается, выбрасывается исключение.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `convert_query`.
+     *
+     * @callergraph
+     *
+     * @param string $target_db_type Тип целевой СУБД:
+     *                               - Поддерживаемые значения: 'pgsql', 'sqlite'.
+     *                               - Пример: 'pgsql' для PostgreSQL или 'sqlite' для SQLite.
+     *                               Ограничения: входной тип должен быть допустимым значением.
+     *
+     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     *                                  Пример сообщения:
+     *                                      Неподдерживаемый тип базы данных | Тип: [target_db_type]
+     *
+     * @note    Метод использует регулярное выражение для поиска и замены обратных кавычек.
+     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     *
+     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям.
+     *          Недопустимый тип может привести к исключениям.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * // Исходный запрос в формате MySQL
+     * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
+     *
+     * // Преобразование запроса для PostgreSQL
+     * $this->convert_from_mysql_to('pgsql');
+     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     *
+     * // Преобразование запроса для SQLite
+     * $this->convert_from_mysql_to('sqlite');
+     * echo $this->txt_query; // Результат: SELECT * FROM users WHERE id = 1
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$txt_query
+     *          Свойство, содержащее текст SQL-запроса.
+     * @see     PhotoRigma::Classes::Database::convert_query()
+     *          Метод, из которого вызывается данный метод.
+     */
+    private function convert_from_mysql_to(string $target_db_type): void
+    {
+        $this->txt_query = match ($target_db_type) {
+            'pgsql', 'sqlite' => preg_replace_callback(
                 '/(?<!\\\\)`/', // Ищем обратные апострофы, которые не экранированы
                 static fn ($matches) => '"', // Заменяем их на двойные кавычки
                 $this->txt_query
             ),
-            'sqlite' => preg_replace_callback(
-                '/(?<!\\\\)`/', // Ищем обратные апострофы, которые не экранированы
-                static fn ($matches) => '', // Удаляем их
+            default => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Неподдерживаемый тип базы данных | Тип: $target_db_type"
+            ),
+        };
+    }
+
+    /**
+     * @brief   Производит преобразование SQL-запроса из формата PostgreSQL в целевой формат СУБД.
+     *
+     * @details Этот метод выполняет преобразование SQL-запроса из формата PostgreSQL в формат целевой СУБД:
+     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`.
+     *          2. Для MySQL заменяет двойные кавычки (") на обратные апострофы (`).
+     *             - Экранированные кавычки (например, \\") остаются без изменений.
+     *          3. Для SQLite запрос остается без изменений.
+     *          4. Если тип СУБД не поддерживается, выбрасывается исключение.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `convert_query`.
+     *
+     * @callergraph
+     *
+     * @param string $target_db_type Тип целевой СУБД:
+     *                               - Поддерживаемые значения: 'mysql', 'sqlite'.
+     *                               - Пример: 'mysql' для MySQL или 'sqlite' для SQLite.
+     *                               Ограничения: входной тип должен быть допустимым значением.
+     *
+     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     *                                  Пример сообщения:
+     *                                      Неподдерживаемый тип базы данных | Тип: [target_db_type]
+     *
+     * @note    Метод использует регулярное выражение для поиска и замены двойных кавычек.
+     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     *
+     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям.
+     *          Недопустимый тип может привести к исключениям.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * // Исходный запрос в формате PostgreSQL
+     * $this->txt_query = 'SELECT * FROM "users" WHERE id = 1';
+     *
+     * // Преобразование запроса для MySQL
+     * $this->convert_from_pgsql_to('mysql');
+     * echo $this->txt_query; // Результат: SELECT * FROM `users` WHERE id = 1
+     *
+     * // Преобразование запроса для SQLite
+     * $this->convert_from_pgsql_to('sqlite');
+     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$txt_query
+     *          Свойство, содержащее текст SQL-запроса.
+     * @see     PhotoRigma::Classes::Database::convert_query()
+     *          Метод, из которого вызывается данный метод.
+     */
+    private function convert_from_pgsql_to(string $target_db_type): void
+    {
+        $this->txt_query = match ($target_db_type) {
+            'mysql'  => preg_replace_callback(
+                '/(?<!\\\\)"/', // Ищем двойные кавычки, которые не экранированы
+                static fn ($matches) => '`', // Заменяем их на обратные апострофы
                 $this->txt_query
             ),
-            default  => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
+            'sqlite' => $this->txt_query, // Для SQLite ничего не меняем
+            default => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Неподдерживаемый тип базы данных | Тип: $target_db_type"
+            ),
+        };
+    }
+
+    /**
+     * @brief   Производит преобразование SQL-запроса из формата SQLite в целевой формат СУБД.
+     *
+     * @details Этот метод выполняет преобразование SQL-запроса из формата SQLite в формат целевой СУБД:
+     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`.
+     *          2. Для MySQL заменяет идентификаторы в двойных кавычках (") или квадратных скобках ([ ]) на обратные апострофы (`).
+     *             - Пример: "users" или [users] → `users`.
+     *          3. Для PostgreSQL заменяет идентификаторы в квадратных скобках ([ ]) на двойные кавычки (").
+     *             - Пример: [users] → "users".
+     *          4. Если тип СУБД не поддерживается, выбрасывается исключение.
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `convert_query`.
+     *
+     * @callergraph
+     *
+     * @param string $target_db_type Тип целевой СУБД:
+     *                               - Поддерживаемые значения: 'mysql', 'pgsql'.
+     *                               - Пример: 'mysql' для MySQL или 'pgsql' для PostgreSQL.
+     *                               Ограничения: входной тип должен быть допустимым значением.
+     *
+     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     *                                  Пример сообщения:
+     *                                      Неподдерживаемый тип базы данных | Тип: [target_db_type]
+     *
+     * @note    Метод использует регулярные выражения для поиска и замены идентификаторов в запросе.
+     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     *
+     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям.
+     *          Недопустимый тип может привести к исключениям.
+     *
+     * Пример вызова метода внутри класса:
+     * @code
+     * // Исходный запрос в формате SQLite
+     * $this->txt_query = 'SELECT * FROM "users" WHERE id = 1';
+     *
+     * // Преобразование запроса для MySQL
+     * $this->convert_from_sqlite_to('mysql');
+     * echo $this->txt_query; // Результат: SELECT * FROM `users` WHERE id = 1
+     *
+     * // Исходный запрос с квадратными скобками
+     * $this->txt_query = 'SELECT * FROM [users] WHERE id = 1';
+     *
+     * // Преобразование запроса для PostgreSQL
+     * $this->convert_from_sqlite_to('pgsql');
+     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::$txt_query
+     *          Свойство, содержащее текст SQL-запроса.
+     * @see     PhotoRigma::Classes::Database::convert_query()
+     *          Метод, из которого вызывается данный метод.
+     */
+    private function convert_from_sqlite_to(string $target_db_type): void
+    {
+        $this->txt_query = match ($target_db_type) {
+            'mysql'  => preg_replace_callback(
+                '/(?<!\\\\)["\[](.*?)[\]""]/', // Ищем идентификаторы в двойных кавычках или квадратных скобках
+                static fn ($matches) => "`$matches[1]`", // Заменяем их на обратные апострофы
+                $this->txt_query
+            ),
+            'pgsql'  => preg_replace_callback(
+                '/(?<!\\\\)\[(.*?)\]/', // Ищем идентификаторы в квадратных скобках
+                static fn ($matches) => "\"$matches[1]\"", // Заменяем их на двойные кавычки
+                $this->txt_query
+            ),
+            default => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Неподдерживаемый тип базы данных | Тип: $target_db_type"
             ),
         };
     }
@@ -1379,8 +1615,9 @@ class Database implements Database_Interface
      *
      * @param string $column Название столбца с датой:
      *                       - Должен быть непустой строкой в формате имени столбца таблицы в БД.
-     * @param string $format Формат даты (в стиле MySQL):
-     *                       - На текущий момент метод принимает только формат MySQL, даже для PostgreSQL и SQLite.
+     * @param string $format Формат даты:
+     *                       - Может быть указан в любом поддерживаемом формате (например, MySQL, PostgreSQL, SQLite).
+     *                       - Текущий формат определяется через свойство `$current_format`.
      *
      * @return string SQL-выражение для форматирования даты.
      *
@@ -1392,6 +1629,7 @@ class Database implements Database_Interface
      *          защищённом методе _format_date_internal().
      *
      * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
+     *          Неверный формат может привести к ошибкам при формировании SQL-запроса.
      *
      * Пример использования:
      * @code
@@ -1414,11 +1652,12 @@ class Database implements Database_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет тип СУБД через свойство `$db_type`.
-     *          2. Для MariaDB (MySQL) использует функцию `DATE_FORMAT` с переданным форматом `$format`.
+     *          2. Для MariaDB (MySQL) преобразует переданный формат `$format` через метод `convert_to_mysql_format`
+     *             и использует функцию `DATE_FORMAT`.
      *          3. Для PostgreSQL преобразует формат через метод `convert_to_postgres_format` и использует функцию
-     *             `TO_CHAR`. Однако на текущий момент метод принимает `$format` только в формате MySQL.
+     *             `TO_CHAR`. Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
      *          4. Для SQLite преобразует формат через метод `convert_to_sqlite_format` и использует функцию `strftime`.
-     *             Однако на текущий момент метод принимает `$format` только в формате MySQL.
+     *             Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
      *          5. Если тип СУБД не поддерживается, выбрасывает исключение.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `format_date()`.
@@ -1426,33 +1665,54 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @param string $column Название столбца с датой.
-     *                       Должен быть непустой строкой в формате имени столбца таблицы в БД.
-     * @param string $format Формат даты (в стиле MySQL).
-     *                       На текущий момент метод принимает только формат MySQL, даже для PostgreSQL и SQLite.
+     * @param string $column Название столбца с датой:
+     *                       - Должен быть непустой строкой в формате имени столбца таблицы в БД.
+     * @param string $format Формат даты:
+     *                       - Может быть указан в любом поддерживаемом формате (например, MySQL, PostgreSQL, SQLite).
+     *                       - Текущий формат определяется через свойство `$current_format`.
+     *                       - Преобразование выполняется в зависимости от типа СУБД.
      *
      * @return string SQL-выражение для форматирования даты.
      *
      * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
-     *      Пример сообщения:
-     *          Не поддерживаемый тип СУБД | Тип: unknown
+     *                                  Пример сообщения:
+     *                                      Не поддерживаемый тип СУБД | Тип: unknown
      *
-     * @note    Метод использует функции форматирования даты, специфичные для каждой СУБД.
+     * @note    Метод использует функции форматирования даты, специфичные для каждой СУБД. Текущий формат хранится в
+     *          свойстве `$current_format`, а список допустимых форматов — в свойстве `$allowed_formats`.
+     *          Для временного изменения текущего формата используется метод `_with_sql_format_internal`.
+     *
      * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
-     *
-     * @todo    Добавить поддержку нативных форматов даты для PostgreSQL и SQLite.
+     *          Неверный формат может привести к ошибкам при формировании SQL-запроса.
      *
      * Пример вызова метода внутри класса:
      * @code
+     * // Форматирование даты для MySQL
      * $this->_format_date_internal('created_at', '%Y-%m-%d');
-     * // Результат для MySQL: DATE_FORMAT(created_at, '%Y-%m-%d')
+     * // Результат: DATE_FORMAT(created_at, '2023-10-01')
+     *
+     * // Форматирование даты для PostgreSQL
+     * $this->_format_date_internal('created_at', 'YYYY-MM-DD');
+     * // Результат: TO_CHAR(created_at, '2023-10-01')
+     *
+     * // Форматирование даты для SQLite
+     * $this->_format_date_internal('created_at', '%Y-%m-%d');
+     * // Результат: strftime('%Y-%m-%d', created_at)
      * @endcode
      * @see     PhotoRigma::Classes::Database::$db_type
      *          Тип используемой СУБД.
+     * @see     PhotoRigma::Classes::Database::$current_format
+     *          Текущий формат SQL.
+     * @see     PhotoRigma::Classes::Database::$allowed_formats
+     *          Список допустимых форматов SQL.
+     * @see     PhotoRigma::Classes::Database::convert_to_mysql_format()
+     *          Преобразовывает формат даты в стиль MySQL.
      * @see     PhotoRigma::Classes::Database::convert_to_postgres_format()
      *          Преобразовывает формат даты в стиль PostgreSQL.
      * @see     PhotoRigma::Classes::Database::convert_to_sqlite_format()
      *          Преобразовывает формат даты в стиль SQLite.
+     * @see     PhotoRigma::Classes::Database::_with_sql_format_internal()
+     *          Временно изменяет формат SQL для выполнения запросов.
      * @see     PhotoRigma::Classes::Database::format_date()
      *          Публичный метод-редирект для вызова этой логики.
      */
@@ -1460,17 +1720,68 @@ class Database implements Database_Interface
     {
         // Используем match для выбора логики в зависимости от типа СУБД
         return match ($this->db_type) {
-            'mysql'  => "DATE_FORMAT($column, '$format')", // Для MariaDB используем DATE_FORMAT
-            'pgsql'  => "TO_CHAR($column, '" . $this->convert_to_postgres_format(
-                $format
-            ) . "')", // Для PostgreSQL преобразуем формат
+            'mysql' => "DATE_FORMAT($column, '" . $this->convert_to_mysql_format(
+                    $format
+                ) . "')", // Для MySQL преобразуем формат
+            'pgsql' => "TO_CHAR($column, '" . $this->convert_to_postgres_format(
+                    $format
+                ) . "')", // Для PostgreSQL преобразуем формат
             'sqlite' => "strftime('" . $this->convert_to_sqlite_format(
-                $format
-            ) . "', $column)", // Для SQLite используем strftime
-            default  => throw new InvalidArgumentException(
+                    $format
+                ) . "', $column)",   // Для SQLite преобразуем формат
+            default => throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
             ),
         };
+    }
+
+    /**
+     * @param string $format
+     *
+     * @return string
+     */
+    private function convert_to_mysql_format(string $format): string
+    {
+        // Проверяем, нужно ли преобразование
+        if ($this->current_format === 'mysql') {
+            return $format; // Формат уже в MySQL, возвращаем как есть
+        }
+
+        // Проверяем кэш
+        if (!isset($this->format_cache['mysql'][$this->current_format][$format])) {
+            // Таблицы соответствия для преобразования в MySQL
+            $format_map = match ($this->current_format) {
+                'pgsql' => [
+                    'YYYY' => '%Y', // Год (например, 2023)
+                    'MM'   => '%m', // Месяц (например, 01..12)
+                    'DD'   => '%d', // День месяца (например, 01..31)
+                    'HH24' => '%H', // Часы в 24-часовом формате
+                    'MI'   => '%i', // Минуты (00..59)
+                    'SS'   => '%s', // Секунды (00..59)
+                    'Dy'   => '%a', // Сокращенное название дня недели (например, Mon)
+                    'Day'  => '%W', // Полное название дня недели (например, Monday)
+                ],
+                'sqlite' => [
+                    '%Y' => '%Y',   // Год (например, 2023)
+                    '%m' => '%m',   // Месяц (например, 01..12)
+                    '%d' => '%d',   // День месяца (например, 01..31)
+                    '%H' => '%H',   // Часы в 24-часовом формате
+                    '%M' => '%i',   // Минуты (00..59)
+                    '%S' => '%s',   // Секунды (00..59)
+                    '%w' => '%a',   // День недели (0=воскресенье, 1=понедельник, ..., 6=суббота)
+                ],
+                default => throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    "Неизвестный формат | Формат: $this->current_format"
+                ),
+            };
+
+            // Преобразуем формат и сохраняем в кэше
+            $this->format_cache['mysql'][$this->current_format][$format] = strtr($format, $format_map);
+        }
+
+        // Возвращаем преобразованный формат из кэша
+        return $this->format_cache['mysql'][$this->current_format][$format];
     }
 
     /**
@@ -1487,7 +1798,7 @@ class Database implements Database_Interface
      *
      * @callergraph
      *
-     * @param string $mysql_format Формат даты в стиле MariaDB.
+     * @param string $format Формат даты в стиле MariaDB.
      *                             Должен быть строкой, соответствующей формату MariaDB (например, '%Y-%m-%d').
      *                             Пример: '%Y-%m-%d %H:%i:%s'.
      *                             Ограничения: входной формат должен содержать только допустимые символы MariaDB.
@@ -1516,24 +1827,48 @@ class Database implements Database_Interface
      * @see     PhotoRigma::Classes::Database::_format_date_internal()
      *         Защищённый метод, вызывающий этот метод для преобразования формата даты.
      */
-    private function convert_to_postgres_format(string $mysql_format): string
+    private function convert_to_postgres_format(string $format): string
     {
-        // Проверяем, есть ли уже преобразованный формат в кэше
-        if (!isset($this->format_cache['pgsql'][$mysql_format])) {
-            $format_map = [
-                '%Y' => 'YYYY', // Год (например, 2023)
-                '%m' => 'MM',   // Месяц (например, 01..12)
-                '%d' => 'DD',   // День месяца (например, 01..31)
-                '%H' => 'HH24', // Часы в 24-часовом формате
-                '%i' => 'MI',   // Минуты (00..59)
-                '%s' => 'SS',   // Секунды (00..59)
-                '%a' => 'Dy',   // Сокращенное название дня недели (например, Mon)
-                '%W' => 'Day',  // Полное название дня недели (например, Monday)
-            ];
-            // Преобразуем формат MariaDB в формат PostgreSQL и кэшируем результат
-            $this->format_cache['pgsql'][$mysql_format] = strtr($mysql_format, $format_map);
+        // Проверяем, нужно ли преобразование
+        if ($this->current_format === 'pgsql') {
+            return $format; // Формат уже в PostgreSQL, возвращаем как есть
         }
-        return $this->format_cache['pgsql'][$mysql_format];
+
+        // Проверяем кэш
+        if (!isset($this->format_cache['pgsql'][$this->current_format][$format])) {
+            // Таблицы соответствия для преобразования в PostgreSQL
+            $format_map = match ($this->current_format) {
+                'mysql' => [
+                    '%Y' => 'YYYY', // Год (например, 2023)
+                    '%m' => 'MM',   // Месяц (например, 01..12)
+                    '%d' => 'DD',   // День месяца (например, 01..31)
+                    '%H' => 'HH24', // Часы в 24-часовом формате
+                    '%i' => 'MI',   // Минуты (00..59)
+                    '%s' => 'SS',   // Секунды (00..59)
+                    '%a' => 'Dy',   // Сокращенное название дня недели (например, Mon)
+                    '%W' => 'Day',  // Полное название дня недели (например, Monday)
+                ],
+                'sqlite' => [
+                    '%Y' => 'YYYY', // Год (например, 2023)
+                    '%m' => 'MM',   // Месяц (например, 01..12)
+                    '%d' => 'DD',   // День месяца (например, 01..31)
+                    '%H' => 'HH24', // Часы в 24-часовом формате
+                    '%M' => 'MI',   // Минуты (00..59)
+                    '%S' => 'SS',   // Секунды (00..59)
+                    '%w' => '',     // День недели не имеет прямого аналога в PostgreSQL
+                ],
+                default => throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    "Неизвестный формат | Формат: $this->current_format"
+                ),
+            };
+
+            // Преобразуем формат и сохраняем в кэше
+            $this->format_cache['pgsql'][$this->current_format][$format] = strtr($format, $format_map);
+        }
+
+        // Возвращаем преобразованный формат из кэша
+        return $this->format_cache['pgsql'][$this->current_format][$format];
     }
 
     /**
@@ -1550,7 +1885,7 @@ class Database implements Database_Interface
      *
      * @callergraph
      *
-     * @param string $mysql_format Формат даты в стиле MariaDB.
+     * @param string $format Формат даты в стиле MariaDB.
      *                             Должен быть строкой, соответствующей формату MariaDB (например, '%Y-%m-%d').
      *                             Пример: '%Y-%m-%d %H:%i:%s'.
      *                             Ограничения: входной формат должен содержать только допустимые символы MariaDB.
@@ -1579,24 +1914,49 @@ class Database implements Database_Interface
      * @see     PhotoRigma::Classes::Database::_format_date_internal()
      *         Защищённый метод, вызывающий этот метод для преобразования формата даты.
      */
-    private function convert_to_sqlite_format(string $mysql_format): string
+    private function convert_to_sqlite_format(string $format): string
     {
-        // Проверяем, есть ли уже преобразованный формат в кэше
-        if (!isset($this->format_cache['sqlite'][$mysql_format])) {
-            $format_map = [
-                '%Y' => '%Y', // Год (например, 2023)
-                '%m' => '%m', // Месяц (например, 01..12)
-                '%d' => '%d', // День месяца (например, 01..31)
-                '%H' => '%H', // Часы в 24-часовом формате
-                '%i' => '%M', // Минуты (00..59)
-                '%s' => '%S', // Секунды (00..59)
-                '%a' => '%w', // День недели (0=воскресенье, 6=суббота)
-                '%W' => '%W', // Номер недели в году
-            ];
-            // Преобразуем формат MariaDB в формат SQLite и кэшируем результат
-            $this->format_cache['sqlite'][$mysql_format] = strtr($mysql_format, $format_map);
+        // Проверяем, нужно ли преобразование
+        if ($this->current_format === 'sqlite') {
+            return $format; // Формат уже в SQLite, возвращаем как есть
         }
-        return $this->format_cache['sqlite'][$mysql_format];
+
+        // Проверяем кэш
+        if (!isset($this->format_cache['sqlite'][$this->current_format][$format])) {
+            // Таблицы соответствия для преобразования в SQLite
+            $format_map = match ($this->current_format) {
+                'mysql' => [
+                    '%Y' => '%Y',   // Год (например, 2023)
+                    '%m' => '%m',   // Месяц (например, 01..12)
+                    '%d' => '%d',   // День месяца (например, 01..31)
+                    '%H' => '%H',   // Часы в 24-часовом формате
+                    '%i' => '%M',   // Минуты (00..59)
+                    '%s' => '%S',   // Секунды (00..59)
+                    '%a' => '%w',   // День недели (0=воскресенье, 1=понедельник, ..., 6=суббота)
+                    '%W' => '',     // Полное название дня недели не поддерживается в SQLite
+                ],
+                'pgsql' => [
+                    'YYYY' => '%Y', // Год (например, 2023)
+                    'MM'   => '%m', // Месяц (например, 01..12)
+                    'DD'   => '%d', // День месяца (например, 01..31)
+                    'HH24' => '%H', // Часы в 24-часовом формате
+                    'MI'   => '%M', // Минуты (00..59)
+                    'SS'   => '%S', // Секунды (00..59)
+                    'Dy'   => '',   // Сокращенное название дня недели не поддерживается в SQLite
+                    'Day'  => '',   // Полное название дня недели не поддерживается в SQLite
+                ],
+                default => throw new InvalidArgumentException(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    "Неизвестный формат | Формат: $this->current_format"
+                ),
+            };
+
+            // Преобразуем формат и сохраняем в кэше
+            $this->format_cache['sqlite'][$this->current_format][$format] = strtr($format, $format_map);
+        }
+
+        // Возвращаем преобразованный формат из кэша
+        return $this->format_cache['sqlite'][$this->current_format][$format];
     }
 
     /**
@@ -3051,5 +3411,147 @@ class Database implements Database_Interface
 
         // === 6. Выполнение запроса ===
         return $this->execute_query($params);
+    }
+
+    /**
+     * @brief   Временно изменяет формат SQL для выполнения запросов в указанном контексте.
+     *
+     * @details Этот публичный метод является обёрткой для защищённого метода _with_sql_format_internal().
+     *          Он временно изменяет формат SQL для выполнения запросов, передавая управление в коллбэк.
+     *          После завершения коллбэка формат SQL автоматически сбрасывается до значения по умолчанию ('mysql').
+     *          Метод предназначен для использования клиентским кодом как точка входа для временного изменения формата SQL.
+     *
+     * @param string   $format   Формат SQL, который нужно использовать временно:
+     *                           - Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
+     * @param callable $callback Коллбэк, содержащий код, который должен выполняться
+     *                           в контексте указанного формата SQL:
+     *                           - Должен быть callable (например, анонимная функция или замыкание).
+     *
+     * @return mixed Результат выполнения коллбэка.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                  - `$format` не является поддерживаемым значением.
+     *                                    Пример сообщения:
+     *                                        Неподдерживаемый формат SQL | Формат: [format]
+     * @throws Exception Выбрасывается при ошибках выполнения запроса внутри коллбэка.
+     *
+     * @note    Этот метод является точкой входа для временного изменения формата SQL. Все проверки и обработка
+     *          выполняются в защищённом методе _with_sql_format_internal().
+     *
+     * @warning Важные замечания:
+     *          1. Убедитесь, что все методы, вызываемые внутри коллбэка, поддерживают указанный формат SQL.
+     *          2. Не используйте методы других классов, зависящих от объекта `$db`, если они написаны
+     *             с жесткой привязкой к определенному формату SQL (например, MySQL).
+     *             Это может привести к ошибкам.
+     *          3. Для выполнения нескольких запросов в одном формате оберните их в один коллбэк.
+     *
+     * Пример использования:
+     * @code
+     * // Выполнение запроса в формате PostgreSQL
+     * $years_list = $db->with_sql_format('pgsql', function () use ($db) {
+     *     // Форматирование даты для PostgreSQL
+     *     $formatted_date = $db->format_date('data_last_edit', 'YYYY');
+     *     // Выборка данных
+     *     $db->select(
+     *         'DISTINCT ' . $formatted_date . ' AS year',
+     *         TBL_NEWS,
+     *         [
+     *             'order' => 'year ASC',
+     *         ]
+     *     );
+     *     // Получение результата
+     *     return $db->res_arr();
+     * });
+     * print_r($years_list);
+     * @endcode
+     * @see PhotoRigma::Classes::Database::_with_sql_format_internal()
+     *      Защищённый метод, реализующий основную логику временного изменения формата SQL.
+     */
+    public function with_sql_format(string $format, callable $callback): mixed
+    {
+        return $this->_with_sql_format_internal($format, $callback);
+    }
+
+    /**
+     * @brief   Метод временно изменяет формат SQL для выполнения запросов в указанном контексте.
+     *
+     * @details Этот метод выполняет следующие шаги:
+     *          1. Проверяет поддерживаемость указанного формата SQL. Если формат не поддерживается,
+     *             выбрасывается исключение `InvalidArgumentException`.
+     *          2. Сохраняет текущий формат SQL в свойстве `$current_format`.
+     *          3. Устанавливает временный формат SQL, переданный в параметре `$format`.
+     *          4. Выполняет коллбэк, содержащий код, который должен выполняться в новом формате SQL.
+     *          5. Восстанавливает исходный формат SQL после завершения коллбэка (даже если произошла ошибка).
+     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод-редирект `with_sql_format()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param string   $format   Формат SQL, который нужно использовать временно.
+     *                           Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
+     * @param callable $callback Коллбэк, содержащий код, который должен выполняться
+     *                           в контексте указанного формата SQL.
+     *
+     * @return mixed Результат выполнения коллбэка.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если указан неподдерживаемый формат SQL.
+     *                                  Пример сообщения:
+     *                                      Неподдерживаемый формат SQL | Формат: [format]
+     *
+     * @warning Важные замечания:
+     *          1. Убедитесь, что все методы, вызываемые внутри коллбэка, поддерживают указанный формат SQL.
+     *          2. Не используйте методы других классов, зависящих от объекта `$db`, если они написаны
+     *             с жесткой привязкой к определенному формату SQL (например, MySQL).
+     *             Это может привести к ошибкам.
+     *          3. Для выполнения нескольких запросов в одном формате оберните их в один коллбэк.
+     *
+     * Пример использования метода _with_sql_format_internal():
+     * @code
+     * // Выполнение запроса в формате PostgreSQL
+     * $years_list = $this->with_sql_format('pgsql', function () use ($db) {
+     *     // Форматирование даты для PostgreSQL
+     *     $formatted_date = $this->format_date('data_last_edit', 'YYYY');
+     *     // Выборка данных
+     *     $this->select(
+     *         'DISTINCT ' . $formatted_date . ' AS year',
+     *         TBL_NEWS,
+     *         [
+     *             'order' => 'year ASC',
+     *         ]
+     *     );
+     *     // Получение результата
+     *     return $this->res_arr();
+     * });
+     * print_r($years_list);
+     * @endcode
+     * @see PhotoRigma::Classes::Database::$current_format
+     *      Свойство, хранящее текущий формат SQL.
+     * @see PhotoRigma::Classes::Database::with_sql_format()
+     *      Публичный метод-редирект для вызова этой логики.
+     */
+    protected function _with_sql_format_internal(string $format, callable $callback): mixed
+    {
+        // Проверяем поддерживаемые форматы
+        if (!in_array($format, $this->allowed_formats, true)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                "Неподдерживаемый формат SQL | Формат: $format"
+            );
+        }
+
+        // Сохраняем текущий формат
+        $original_format = $this->current_format;
+
+        // Устанавливаем временный формат
+        $this->current_format = $format;
+
+        try {
+            // Выполняем коллбэк и возвращаем его результат
+            return $callback();
+        } finally {
+            // Восстанавливаем исходный формат
+            $this->current_format = $original_format;
+        }
     }
 }
