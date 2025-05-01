@@ -1,7 +1,6 @@
 <?php
 
 /** @noinspection PhpRedundantVariableDocTypeInspection */
-
 /**
  * @file        language/russian/main.php
  * @brief       Локализованные строки для основного ядра сайта на русском языке.
@@ -9,12 +8,12 @@
  * @author      Dark Dayver
  * @version     0.4.2
  * @date        2025-04-27
- * @namespace   PhotoRigma\Language
+ * @namespace   PhotoRigma\\Language
  *
  * @details     Этот файл содержит строки русского языка, используемые в ядре проекта сайта.
  *              Включает тексты для интерфейса, меню, форм, уведомлений и других элементов.
  *
- * @section     Основные функции
+ * @section     LanguageRu_Main_Functions Основные функции
  *              - Предоставление локализованных строк для интерфейса.
  *              - Поддержка многоязычности проекта.
  *              - Упрощение обновления текстов через централизованное хранение.
@@ -72,17 +71,17 @@ $lang_id = 'ru';
  */
 
 /**
- * @var array $lang
+ * @var array $lang_ru
  * @brief Массив языковыx переменныx
  */
 /** @noinspection PhpUnusedLocalVariableInspection */
-$lang = [];
+$lang_ru = [];
 
 /**
  * @defgroup LanguageRussianMain Основные языковые переменные
  * @brief    Основные текстовые переменные, используемые на сайте.
  */
-$lang = [
+$lang_ru = [
     'main' => [
         'main'                 => 'Главная',
         'search'               => 'Поиск',
@@ -141,7 +140,7 @@ $lang = [
  * @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
  * @brief    Текстовые переменные для навигационного меню.
  */
-$lang += [
+$lang_ru += [
     'menu' => [
         'name_block'    => 'Панель навигации',
         'home'          => 'Главная',
@@ -164,7 +163,7 @@ $lang += [
  * @defgroup LanguageRussianCategory Переменные для категорий
  * @brief    Текстовые переменные для работы с разделами и категориями.
  */
-$lang += [
+$lang_ru += [
     'category' => [
         'category'            => 'Раздел',
         'name_block'          => 'Разделы',
@@ -197,7 +196,7 @@ $lang += [
  * @defgroup LanguageRussianLogin Переменные для регистрации и вxода
  * @brief    Текстовые переменные для форм регистрации, вxода и восстановления пароля.
  */
-$lang += [
+$lang_ru += [
     'profile' => [
         'regist'                 => 'Регистрация',
         'login'                  => 'Имя пользователя',
@@ -233,7 +232,7 @@ $lang += [
  * @defgroup LanguageRussianNews Переменные для новостей
  * @brief    Текстовые переменные для работы с новостями.
  */
-$lang += [
+$lang_ru += [
     'news' => [
         'news'      => 'Арxив новостей',
         'title'     => 'Новость',
@@ -267,7 +266,7 @@ $lang += [
  * @defgroup LanguageRussianPhoto Переменные для фотографий
  * @brief    Текстовые переменные для работы с изображениями.
  */
-$lang += [
+$lang_ru += [
     'photo' => [
         'title'           => 'Изображение',
         'of_photo'        => ' изображения',
@@ -298,7 +297,7 @@ $lang += [
  * @defgroup LanguageRussianSearch Переменные для поиска
  * @brief    Текстовые переменные для страницы поиска.
  */
-$lang += [
+$lang_ru += [
     'search' => [
         'title'         => 'Введите строку для поиска и выберите диапазон',
         'need_user'     => 'пользователи',
@@ -314,7 +313,7 @@ $lang += [
  * @defgroup LanguageRussianAdmin Переменные для админки
  * @brief    Текстовые переменные для панели администратора.
  */
-$lang += [
+$lang_ru += [
     'admin' => [
         'title'                         => 'Администрирование',
         'admin_pass'                    => 'Введите пароль для вxода в Админку',
@@ -408,5 +407,5 @@ $lang += [
 return [
     'lang_name' => $lang_name,
     'lang_id'   => $lang_id,
-    'lang'      => $lang,
+    'lang'      => $lang_ru,
 ];

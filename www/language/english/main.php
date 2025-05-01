@@ -1,7 +1,6 @@
 <?php
 
 /** @noinspection PhpRedundantVariableDocTypeInspection */
-
 /**
  * @file        language/english/main.php
  * @brief       Localized strings for the core of the site in English.
@@ -9,12 +8,12 @@
  * @author      Dark Dayver
  * @version     0.4.2
  * @date        2025-04-27
- * @namespace   PhotoRigma\Language
+ * @namespace   PhotoRigma\\Language
  *
  * @details     This file contains English language strings used in the core of the project.
  *              It includes texts for the interface, menus, forms, notifications, and other elements.
  *
- * @section     Main Functions
+ * @section     LanguageEn_Main_Functions Main Functions
  *              - Providing localized strings for the interface.
  *              - Supporting multilingual functionality of the project.
  *              - Simplifying text updates through centralized storage.
@@ -74,17 +73,17 @@ $lang_id = 'en';
  */
 
 /**
- * @var array $lang
+ * @var array $lang_en
  * @brief Array of language variables
  */
 /** @noinspection PhpUnusedLocalVariableInspection */
-$lang = [];
+$lang_en = [];
 
 /**
  * @defgroup LanguageEnglishMain Main Language Variables
  * @brief    Main text variables used on the site.
  */
-$lang = [
+$lang_en = [
     'main' => [
         'main'                 => 'Home',
         'search'               => 'Search',
@@ -143,7 +142,7 @@ $lang = [
  * @defgroup LanguageEnglishMenu Menu Item Variables
  * @brief    Text variables for site menu items.
  */
-$lang += [
+$lang_en += [
     'menu' => [
         'name_block'    => 'Navigation Panel',
         'home'          => 'Home',
@@ -166,7 +165,7 @@ $lang += [
  * @defgroup LanguageEnglishCategory Category Variables
  * @brief    Text variables for category management and browsing.
  */
-$lang += [
+$lang_en += [
     'category' => [
         'category'            => 'Category',
         'name_block'          => 'Categories',
@@ -199,7 +198,7 @@ $lang += [
  * @defgroup LanguageEnglishLogin Login and Registration Variables
  * @brief    Text variables for registration, login, and password recovery.
  */
-$lang += [
+$lang_en += [
     'profile' => [
         'regist'                 => 'Registration',
         'login'                  => 'Username',
@@ -235,7 +234,7 @@ $lang += [
  * @defgroup LanguageEnglishNews News Variables
  * @brief    Text variables for site news.
  */
-$lang += [
+$lang_en += [
     'news' => [
         'news'      => 'News Archive',
         'title'     => 'News',
@@ -269,7 +268,7 @@ $lang += [
  * @defgroup LanguageEnglishPhoto Photo Variables
  * @brief    Text variables for image display, processing, and rating.
  */
-$lang += [
+$lang_en += [
     'photo' => [
         'title'           => 'Image',
         'of_photo'        => ' of the image',
@@ -300,7 +299,7 @@ $lang += [
  * @defgroup LanguageEnglishSearch Search Variables
  * @brief    Text variables for the search page.
  */
-$lang += [
+$lang_en += [
     'search' => [
         'title'         => 'Enter a search string and select a range',
         'need_user'     => 'users',
@@ -316,7 +315,7 @@ $lang += [
  * @defgroup LanguageEnglishAdmin Admin Variables
  * @brief    Text variables for the admin panel.
  */
-$lang += [
+$lang_en += [
     'admin' => [
         'title'                         => 'Administration',
         'admin_pass'                    => 'Enter the password to access the Admin Panel',
@@ -410,5 +409,5 @@ $lang += [
 return [
     'lang_name' => $lang_name,
     'lang_id'   => $lang_id,
-    'lang'      => $lang,
+    'lang'      => $lang_en,
 ];

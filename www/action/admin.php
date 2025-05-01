@@ -1,19 +1,12 @@
 <?php
 
 /** @noinspection PhpUnhandledExceptionInspection */
-
 /** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/admin.php
  * @brief       Администрирование сайта.
  *
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      JsonException При выполнении методов, использующих JSON.
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
- *
- * @section     Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @author      Dark Dayver
+ * @author      Dark Dayver
  * @version     0.4.2
  * @date        2025-04-27
  * @namespace   Photorigma\\Action
@@ -26,25 +19,32 @@
  *              - Защита от несанкционированного доступа к админке (CSRF-токены, проверка прав доступа).
  *              - Логирование ошибок и подозрительных действий.
  *
- * @section     Основные функции
+ * @section     Admin_Related_Files Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
+ *              - Вспомогательные функции:
+ *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ *              - Файлы приложения:
+ *                - @see index.php Этот файл подключает action/admin.php по запросу из `$_GET`.
+ *
+ * @section     Admin_Main_Functions Основные функции
  *              - Управление общими настройками сайта.
  *              - Управление пользователями (редактирование, поиск, изменение прав).
  *              - Управление группами (редактирование, изменение прав).
  *              - Логирование ошибок и подозрительных действий.
  *
- * @section     Обработка ошибок
+ * @section     Admin_Error_Handling Обработка ошибок
  *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
  *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
  *              - `JsonException`: При выполнении методов, использующих JSON.
  *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @see         PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
- *              - Вспомогательные функции:
- *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
- *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/admin.php по запросу из `$_GET`.
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      JsonException При выполнении методов, использующих JSON.
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.

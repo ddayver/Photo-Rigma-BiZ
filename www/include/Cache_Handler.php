@@ -21,7 +21,7 @@
  *              - Обработку ошибок через исключения.
  *              Все операции выполняются в зависимости от выбранного типа кеширования (`$this->type`).
  *
- * @section     Основные функции
+ * @section     CacheHandler_Main_Functions Основные функции
  *              - Проверка актуальности данных в кеше с использованием ключа и контрольного числа.
  *              - Запись данных в кеш с кодированием в формат JSON и Base64.
  *              - Инициализация клиента для Redis/Memcached или пути для файлового кеширования.
@@ -30,7 +30,7 @@
  * @see         PhotoRigma::Interfaces::Cache_Handler_Interface Интерфейс, который реализует класс.
  *
  * @note        Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с системами
- *              кеширования.
+ *              кеширования. Реализованы меры безопасности для предотвращения повреждения данных в кеше.
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
@@ -38,7 +38,7 @@
  *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
  *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
  *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *                части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -472,10 +472,10 @@ class Cache_Handler implements Cache_Handler_Interface
      *          - Если тип кеширования не поддерживается, возвращается `false`.
      *          Метод является публичным и предназначен для использования вне класса.
      *
-     * @param string $key      Ключ кеша. Используется для проверки актуальности данных.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Должно соответствовать сохранённому значению в кеше.
+     * @param string     $key      Ключ кеша. Используется для проверки актуальности данных.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Должно соответствовать сохранённому значению в кеше.
      *
      * @return array|false Массив данных, если кеш актуален, или `false`, если:
      *                     - Тип кеширования не поддерживается.
@@ -513,7 +513,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * @see     PhotoRigma::Classes::Cache_Handler::_is_valid_internal()
      *          Защищённый метод, который реализует логику проверки актуальности данных в кеше.
      */
-    public function is_valid(string $key, int $checksum): array|false
+    public function is_valid(string $key, int|string $checksum): array|false
     {
         return $this->_is_valid_internal($key, $checksum);
     }
@@ -531,10 +531,10 @@ class Cache_Handler implements Cache_Handler_Interface
      * @callergraph
      * @callgraph
      *
-     * @param string $key      Ключ кеша. Используется для проверки актуальности данных.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Должно соответствовать сохранённому значению в кеше.
+     * @param string     $key      Ключ кеша. Используется для проверки актуальности данных.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Должно соответствовать сохранённому значению в кеше.
      *
      * @return array|false Массив данных, если кеш актуален, или `false`, если:
      *                     - Тип кеширования не поддерживается.
@@ -579,7 +579,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * @see     PhotoRigma::Classes::Cache_Handler::is_valid()
      *          Публичный метод, который вызывает `_is_valid_internal` для проверки актуальности данных.
      */
-    protected function _is_valid_internal(string $key, int $checksum): array|false
+    protected function _is_valid_internal(string $key, int|string $checksum): array|false
     {
         return match ($this->type) {
             'file'               => $this->is_valid_file($key, $checksum),
@@ -612,10 +612,10 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @callergraph
      *
-     * @param string $key      Ключ кеша. Используется для формирования имени файла кеша.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Должно соответствовать сохранённому значению в файле кеша.
+     * @param string     $key      Ключ кеша. Используется для формирования имени файла кеша.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Должно соответствовать сохранённому значению в файле кеша.
      *
      * @return array|false Массив данных, если кеш актуален, или `false`, если:
      *                     - Файл кеша не существует или недоступен для чтения.
@@ -650,7 +650,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * }
      * @endcode
      */
-    private function is_valid_file(string $key, int $checksum): array|false
+    private function is_valid_file(string $key, int|string $checksum): array|false
     {
         // 1. Формирование пути к файлу кеша
         $cache_file = $this->client . $key . '.php';
@@ -679,7 +679,7 @@ class Cache_Handler implements Cache_Handler_Interface
         $cached_data = $data_match[1];
 
         // 5. Проверка контрольной суммы
-        if ($stored_checksum !== (string)$checksum || empty($cached_data)) {
+        if ((string)$stored_checksum !== (string)$checksum || empty($cached_data)) {
             return false;
         }
 
@@ -710,10 +710,10 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @callergraph
      *
-     * @param string $key      Ключ кеша. Используется для получения контрольной суммы и данных из хранилища.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Должно соответствовать сохранённому значению в хранилище.
+     * @param string     $key      Ключ кеша. Используется для получения контрольной суммы и данных из хранилища.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Должно соответствовать сохранённому значению в хранилище.
      *
      * @return array|false Массив данных, если кеш актуален, или `false`, если:
      *                     - Клиент хранилища не инициализирован или имеет неправильный тип.
@@ -753,7 +753,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * }
      * @endcode
      */
-    private function is_valid_storage(string $key, int $checksum): array|false
+    private function is_valid_storage(string $key, int|string $checksum): array|false
     {
         // 1. Проверка, что клиент инициализирован и поддерживает метод get()
         if (!($this->client instanceof Redis || $this->client instanceof Memcached)) {
@@ -764,7 +764,7 @@ class Cache_Handler implements Cache_Handler_Interface
 
         // 2. Получение сохранённой контрольной суммы
         $stored_checksum = $this->client->get($key . '_checksum');
-        if ($stored_checksum === false || $stored_checksum !== (string)$checksum) {
+        if ($stored_checksum === false || (string)$stored_checksum !== (string)$checksum) {
             return false;
         }
 
@@ -790,12 +790,12 @@ class Cache_Handler implements Cache_Handler_Interface
      *          - Если тип кеширования не поддерживается, возвращается `false`.
      *          Метод является публичным и предназначен для использования вне класса.
      *
-     * @param string $key      Ключ кеша. Используется для записи данных.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Будет сохранено в кеше.
-     * @param array  $data     Данные для записи. Будут закодированы в формат JSON и Base64.
-     *                         Пример: `['theme' => 'dark', 'language' => 'en']`.
+     * @param string     $key      Ключ кеша. Используется для записи данных.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Будет сохранено в кеше.
+     * @param array      $data     Данные для записи. Будут закодированы в формат JSON и Base64.
+     *                             Пример: `['theme' => 'dark', 'language' => 'en']`.
      *
      * @return bool True, если запись успешна, или `false`, если:
      *              - Тип кеширования не поддерживается.
@@ -835,7 +835,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * @see     PhotoRigma::Classes::Cache_Handler::_update_cache_internal()
      *          Защищённый метод, который реализует логику записи данных в кеш.
      */
-    public function update_cache(string $key, int $checksum, array $data): bool
+    public function update_cache(string $key, int|string $checksum, array $data): bool
     {
         return $this->_update_cache_internal($key, $checksum, $data);
     }
@@ -853,12 +853,12 @@ class Cache_Handler implements Cache_Handler_Interface
      * @callergraph
      * @callgraph
      *
-     * @param string $key      Ключ кеша. Используется для записи данных.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Будет сохранено в кеше.
-     * @param array  $data     Данные для записи. Будут закодированы в формат JSON и Base64.
-     *                         Пример: `['theme' => 'dark', 'language' => 'en']`.
+     * @param string     $key      Ключ кеша. Используется для записи данных.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Будет сохранено в кеше.
+     * @param array      $data     Данные для записи. Будут закодированы в формат JSON и Base64.
+     *                             Пример: `['theme' => 'dark', 'language' => 'en']`.
      *
      * @return bool True, если запись успешна, или `false`, если:
      *              - Тип кеширования не поддерживается.
@@ -913,7 +913,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * @see     PhotoRigma::Classes::Cache_Handler::update_cache()
      *          Публичный метод, который вызывает `_update_cache_internal` для записи данных в кеш.
      */
-    protected function _update_cache_internal(string $key, int $checksum, array $data): bool
+    protected function _update_cache_internal(string $key, int|string $checksum, array $data): bool
     {
         return match ($this->type) {
             'file'               => $this->update_cache_file($key, $checksum, $data),
@@ -947,12 +947,12 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @callergraph
      *
-     * @param string $key      Ключ кеша. Используется для формирования имени файла кеша.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Должно соответствовать сохранённому значению в файле кеша.
-     * @param array  $data     Данные для записи. Будут закодированы в формат JSON и Base64.
-     *                         Пример: `['theme' => 'dark', 'language' => 'en']`.
+     * @param string     $key      Ключ кеша. Используется для формирования имени файла кеша.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Должно соответствовать сохранённому значению в файле кеша.
+     * @param array      $data     Данные для записи. Будут закодированы в формат JSON и Base64.
+     *                             Пример: `['theme' => 'dark', 'language' => 'en']`.
      *
      * @return bool True, если запись успешна, или `false`, если произошла ошибка при записи.
      *
@@ -995,7 +995,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * }
      * @endcode
      */
-    private function update_cache_file(string $key, int $checksum, array $data): bool
+    private function update_cache_file(string $key, int|string $checksum, array $data): bool
     {
         // 1. Формирование пути к файлу кеша
         $cache_file = $this->client . $key . '.php';
@@ -1057,12 +1057,12 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @callergraph
      *
-     * @param string $key      Ключ кеша. Используется для формирования ключей `_checksum` и `_data`.
-     *                         Пример: `'user_settings'`.
-     * @param int    $checksum Контрольное число для проверки актуальности данных.
-     *                         Будет сохранено в хранилище под ключом `$key . '_checksum'`.
-     * @param array  $data     Данные для записи. Будут закодированы в формат JSON и Base64.
-     *                         Пример: `['theme' => 'dark', 'language' => 'en']`.
+     * @param string     $key      Ключ кеша. Используется для формирования ключей `_checksum` и `_data`.
+     *                             Пример: `'user_settings'`.
+     * @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных.
+     *                             Будет сохранено в хранилище под ключом `$key . '_checksum'`.
+     * @param array      $data     Данные для записи. Будут закодированы в формат JSON и Base64.
+     *                             Пример: `['theme' => 'dark', 'language' => 'en']`.
      *
      * @return bool True, если запись успешна, или `false`, если произошла ошибка при записи хотя бы одного ключа.
      *
@@ -1099,7 +1099,7 @@ class Cache_Handler implements Cache_Handler_Interface
      * }
      * @endcode
      */
-    private function update_cache_storage(string $key, int $checksum, array $data): bool
+    private function update_cache_storage(string $key, int|string $checksum, array $data): bool
     {
         // 1. Проверка, что клиент инициализирован и поддерживает метод set()
         if (!($this->client instanceof Redis || $this->client instanceof Memcached)) {

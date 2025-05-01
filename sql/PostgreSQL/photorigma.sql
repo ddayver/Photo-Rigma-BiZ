@@ -35,14 +35,27 @@ DROP TRIGGER trg_config_insert ON public.config;
 DROP TRIGGER trg_config_delete ON public.config;
 DROP INDEX public.query_logs_query_hash_key;
 DROP INDEX public.idx_users_user_rights;
+DROP INDEX public.idx_users_tsv_weighted;
+DROP INDEX public.idx_users_real_name_trgm;
+DROP INDEX public.idx_users_login_trgm;
+DROP INDEX public.idx_users_email_trgm;
 DROP INDEX public.idx_users_date_last_activ;
 DROP INDEX public.idx_photo_user_upload_group;
+DROP INDEX public.idx_photo_tsv_weighted;
+DROP INDEX public.idx_photo_name_trgm;
+DROP INDEX public.idx_photo_description_trgm;
 DROP INDEX public.idx_photo_date_upload;
 DROP INDEX public.idx_photo_category_user_upload;
+DROP INDEX public.idx_news_tsv_weighted;
+DROP INDEX public.idx_news_textpost_trgm;
+DROP INDEX public.idx_news_namepost_trgm;
 DROP INDEX public.idx_news_data_last_edit;
 DROP INDEX public.idx_menu_short;
 DROP INDEX public.idx_menu_long;
 DROP INDEX public.idx_config_value;
+DROP INDEX public.idx_category_tsv_weighted;
+DROP INDEX public.idx_category_name_trgm;
+DROP INDEX public.idx_category_description_trgm;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_login_key;
 ALTER TABLE ONLY public.rate_user DROP CONSTRAINT rate_user_pkey;
@@ -89,6 +102,21 @@ DROP FUNCTION public.update_rate_moder_after_delete();
 DROP FUNCTION public.update_change_timestamp();
 DROP FUNCTION public.prevent_deletion_of_service_groups();
 DROP FUNCTION public.prevent_deletion_of_service_categories();
+DROP EXTENSION pg_trgm;
+--
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
 --
 -- Name: prevent_deletion_of_service_categories(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
@@ -260,7 +288,8 @@ CREATE TABLE public.category (
     id integer NOT NULL,
     folder character varying(50) NOT NULL,
     name character varying(50) NOT NULL,
-    description character varying(250) NOT NULL
+    description character varying(250) NOT NULL,
+    tsv_weighted tsvector GENERATED ALWAYS AS ((((((setweight(to_tsvector('russian'::regconfig, (name)::text), 'A'::"char") || setweight(to_tsvector('russian'::regconfig, (description)::text), 'A'::"char")) || setweight(to_tsvector('english'::regconfig, (name)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (description)::text), 'B'::"char")) || setweight(to_tsvector('simple'::regconfig, (name)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (description)::text), 'D'::"char"))) STORED
 );
 
 
@@ -299,6 +328,13 @@ COMMENT ON COLUMN public.category.name IS 'Название раздела';
 --
 
 COMMENT ON COLUMN public.category.description IS 'Описание раздела';
+
+
+--
+-- Name: COLUMN category.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.category.tsv_weighted IS 'Взвешенный полнотекстовый вектор для данных таблицы category (name, description). Используется для улучшенного поиска.';
 
 
 --
@@ -568,7 +604,8 @@ CREATE TABLE public.news (
     data_last_edit timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     user_post integer NOT NULL,
     name_post character varying(50) NOT NULL,
-    text_post text NOT NULL
+    text_post text NOT NULL,
+    tsv_weighted tsvector GENERATED ALWAYS AS ((((((setweight(to_tsvector('russian'::regconfig, (name_post)::text), 'A'::"char") || setweight(to_tsvector('russian'::regconfig, text_post), 'A'::"char")) || setweight(to_tsvector('english'::regconfig, (name_post)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, text_post), 'B'::"char")) || setweight(to_tsvector('simple'::regconfig, (name_post)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, text_post), 'D'::"char"))) STORED
 );
 
 
@@ -624,6 +661,13 @@ COMMENT ON COLUMN public.news.text_post IS 'Текст новости';
 
 
 --
+-- Name: COLUMN news.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.news.tsv_weighted IS 'Взвешенный полнотекстовый вектор для данных таблицы news (name_post, text_post). Используется для улучшенного поиска.';
+
+
+--
 -- Name: news_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
 --
 
@@ -658,7 +702,8 @@ CREATE TABLE public.photo (
     date_upload timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     user_upload integer NOT NULL,
     rate_user double precision DEFAULT 0 NOT NULL,
-    rate_moder double precision DEFAULT 0 NOT NULL
+    rate_moder double precision DEFAULT 0 NOT NULL,
+    tsv_weighted tsvector GENERATED ALWAYS AS ((((((setweight(to_tsvector('russian'::regconfig, (name)::text), 'A'::"char") || setweight(to_tsvector('russian'::regconfig, (description)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (name)::text), 'C'::"char")) || setweight(to_tsvector('english'::regconfig, (description)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (name)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (description)::text), 'D'::"char"))) STORED
 );
 
 
@@ -732,6 +777,13 @@ COMMENT ON COLUMN public.photo.rate_user IS 'Оценка от пользова�
 --
 
 COMMENT ON COLUMN public.photo.rate_moder IS 'Оценка от модератора';
+
+
+--
+-- Name: COLUMN photo.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.photo.tsv_weighted IS 'Взвешенный полнотекстовый вектор для данных таблицы photo (name, description). Используется для улучшенного поиска.';
 
 
 --
@@ -988,7 +1040,8 @@ CREATE TABLE public.users (
     date_last_logout timestamp without time zone,
     group_id integer DEFAULT 0 NOT NULL,
     user_rights jsonb,
-    theme character varying(32) DEFAULT 'default'::character varying NOT NULL
+    theme character varying(32) DEFAULT 'default'::character varying NOT NULL,
+    tsv_weighted tsvector GENERATED ALWAYS AS (((((((((setweight(to_tsvector('russian'::regconfig, (login)::text), 'A'::"char") || setweight(to_tsvector('russian'::regconfig, (real_name)::text), 'A'::"char")) || setweight(to_tsvector('russian'::regconfig, (email)::text), 'A'::"char")) || setweight(to_tsvector('english'::regconfig, (login)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (real_name)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (email)::text), 'B'::"char")) || setweight(to_tsvector('simple'::regconfig, (login)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (real_name)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (email)::text), 'D'::"char"))) STORED
 );
 
 
@@ -1090,6 +1143,13 @@ COMMENT ON COLUMN public.users.user_rights IS 'Права доступа';
 --
 
 COMMENT ON COLUMN public.users.theme IS 'Тема сайта';
+
+
+--
+-- Name: COLUMN users.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.tsv_weighted IS 'Взвешенный полнотекстовый вектор для пользовательских данных (login, real_name, email). Используется для улучшенного поиска.';
 
 
 --
@@ -1196,7 +1256,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.category VALUES (0, 'user', 'Пользовательский альбом', 'Персональный пользовательский альбом');
+INSERT INTO public.category VALUES (0, 'user', 'Пользовательский альбом', 'Персональный пользовательский альбом', DEFAULT);
 
 
 --
@@ -1305,7 +1365,7 @@ INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', '
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default');
+INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default', DEFAULT);
 
 
 --
@@ -1455,6 +1515,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: idx_category_description_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_category_description_trgm ON public.category USING gin (description public.gin_trgm_ops);
+
+
+--
+-- Name: idx_category_name_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_category_name_trgm ON public.category USING gin (name public.gin_trgm_ops);
+
+
+--
+-- Name: idx_category_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_category_tsv_weighted ON public.category USING gin (tsv_weighted);
+
+
+--
 -- Name: idx_config_value; Type: INDEX; Schema: public; Owner: photorigma
 --
 
@@ -1483,6 +1564,27 @@ CREATE INDEX idx_news_data_last_edit ON public.news USING btree (data_last_edit)
 
 
 --
+-- Name: idx_news_namepost_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_news_namepost_trgm ON public.news USING gin (name_post public.gin_trgm_ops);
+
+
+--
+-- Name: idx_news_textpost_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_news_textpost_trgm ON public.news USING gin (text_post public.gin_trgm_ops);
+
+
+--
+-- Name: idx_news_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_news_tsv_weighted ON public.news USING gin (tsv_weighted);
+
+
+--
 -- Name: idx_photo_category_user_upload; Type: INDEX; Schema: public; Owner: photorigma
 --
 
@@ -1497,6 +1599,27 @@ CREATE INDEX idx_photo_date_upload ON public.photo USING btree (date_upload);
 
 
 --
+-- Name: idx_photo_description_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_photo_description_trgm ON public.photo USING gin (description public.gin_trgm_ops);
+
+
+--
+-- Name: idx_photo_name_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_photo_name_trgm ON public.photo USING gin (name public.gin_trgm_ops);
+
+
+--
+-- Name: idx_photo_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_photo_tsv_weighted ON public.photo USING gin (tsv_weighted);
+
+
+--
 -- Name: idx_photo_user_upload_group; Type: INDEX; Schema: public; Owner: photorigma
 --
 
@@ -1508,6 +1631,41 @@ CREATE INDEX idx_photo_user_upload_group ON public.photo USING btree (user_uploa
 --
 
 CREATE INDEX idx_users_date_last_activ ON public.users USING btree (date_last_activ);
+
+
+--
+-- Name: idx_users_email_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_email_trgm ON public.users USING gin (email public.gin_trgm_ops);
+
+
+--
+-- Name: idx_users_login_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_login_trgm ON public.users USING gin (login public.gin_trgm_ops);
+
+
+--
+-- Name: idx_users_real_name_trgm; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_real_name_trgm ON public.users USING gin (real_name public.gin_trgm_ops);
+
+
+--
+-- Name: idx_users_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_tsv_weighted ON public.users USING gin (tsv_weighted);
+
+
+--
+-- Name: INDEX idx_users_tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON INDEX public.idx_users_tsv_weighted IS 'GIN-индекс для поля tsv_weighted';
 
 
 --

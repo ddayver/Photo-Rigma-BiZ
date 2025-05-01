@@ -1,44 +1,10 @@
 <?php
 
 /** @noinspection PhpUnhandledExceptionInspection */
-
 /** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/search.php
  * @brief       Обработка поисковых запросов на сайте.
- *
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
- *
- * @section     Планы развития (TODO)
- *              1. Добавить поддержку полнотекстового поиска:
- *                 - Для MySQL:
- *                   - Создать FULLTEXT-индексы для полей:
- *                     - TBL_USERS: real_name
- *                     - TBL_CATEGORY: name, description
- *                     - TBL_NEWS: name_post, text_post
- *                     - TBL_PHOTO: name, description
- *                   - Использовать MATCH ... AGAINST для выполнения поиска с ранжированием результатов.
- *                 - Для PostgreSQL:
- *                   - Добавить столбцы tsvector для полей:
- *                     - TBL_USERS: real_name
- *                     - TBL_CATEGORY: name, description
- *                     - TBL_NEWS: name_post, text_post
- *                     - TBL_PHOTO: name, description
- *                   - Создать индексы GIN для tsvector.
- *                   - Настроить триггеры для автоматического обновления tsvector.
- *
- *              2. Обновить PHP-код:
- *                 - Реализовать универсальный метод для выполнения полнотекстового поиска:
- *                   - Для MySQL использовать MATCH ... AGAINST.
- *                   - Для PostgreSQL использовать @@ и to_tsquery.
- *                 - Добавить возможность сортировки результатов по релевантности (relevance).
- *                 - Учесть переключение между MySQL и PostgreSQL через проверку типа СУБД.
- *
- *              3. Оптимизировать производительность:
- *                 - Убедиться, что индексы корректно используются для ускорения поиска.
- *                 - Настроить минимальную длину слов для индексации (например, ft_min_word_len в MySQL).
- *                 - Учесть особенности языков (например, стемминг для русского или английского языка).
  *
  * @author      Dark Dayver
  * @version     0.4.2
@@ -51,27 +17,29 @@
  *              - Отображение результатов поиска в удобном формате.
  *              - Логирование ошибок и подозрительных действий.
  *
- * @section     Основные функции
+ * @section     Search_Main_Functions Основные функции
  *              - Поиск по пользователям (по имени).
  *              - Поиск по категориям (по названию и описанию).
  *              - Поиск по новостям (по заголовку и тексту).
  *              - Поиск по фотографиям (по названию и описанию).
  *              - Логирование ошибок и подозрительных действий.
  *
- * @section     Обработка ошибок
+ * @section     Search_Error_Handling Обработка ошибок
  *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
  *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
  *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @todo        Полнотекстовый поиск для MySQL и PostgreSQL
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
  *
- * @section     Связанные файлы и компоненты
+ * @section     Search_Related_Files Связанные файлы и компоненты
  *              - Классы приложения:
- *                - @see PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
+ *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
  *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::Template Класс для работы шаблонами.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
  *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/profile.php по запросу из `$_GET`.
+ *                - @see index.php Этот файл подключает action/search.php по запросу из `$_GET`.
  *
  * @note        Этот файл является частью системы PhotoRigma.
  *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
@@ -157,7 +125,7 @@ $search_text = '';
 
 // Обработка текста запроса
 if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true])) {
-    $raw_search_text = trim($_POST['search_text']); // Убираем лишние пробелы
+    $search_text = trim($_POST['search_text']); // Убираем лишние пробелы
 
     // Проверяем CSRF-токен
     if (empty($_POST['csrf_token']) || !hash_equals(
@@ -169,16 +137,6 @@ if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true
         );
     }
     $user->unset_property_key('session', 'csrf_token');
-
-    if ($raw_search_text === '*') {
-        $search_text = '%'; // Поиск всех строк
-    } elseif (strlen($raw_search_text) > 2) {
-        $search_text = '%' . $raw_search_text . '%'; // Добавляем символы для частичного поиска
-    } else {
-        // Если текст не соответствует условиям, перенаправляем на главную страницу
-        header('Location: ' . $work->config['site_url']);
-        exit;
-    }
 }
 
 // Настройка шаблона: инициализация флагов для отображения результатов поиска
@@ -198,17 +156,14 @@ if ($search['user']) {
     $template->add_if('NEED_USER', true);
     $template->add_string('L_FIND_USER', $work->lang['search']['find'] . ' ' . $work->lang['search']['need_user']);
 
-    // Выполняем SQL-запрос для поиска пользователей по полю real_name
-    $db->select(
-        '*', // Выбираем все поля
-        TBL_USERS, // Из таблицы пользователей
-        [
-            'where'  => '`real_name` LIKE :search', // Условие: поле real_name содержит $search_text
-            'params' => [':search' => $search_text], // Параметры для prepared statements
-        ]
+    // Используем метод полнотекстового поиска.
+    $find = $db->full_text_search(
+        ['`id`', '`real_name`'],
+        ['`login`', '`real_name`', '`email`'],
+        $search_text,
+        TBL_USERS
     );
 
-    $find = $db->res_arr(); // Получаем результаты запроса
     if ($find) {
         // Если найдены пользователи, добавляем их в шаблон
         $template->add_if('USER_FIND', true);
@@ -236,19 +191,15 @@ if ($search['category']) {
         $work->lang['search']['find'] . ' ' . $work->lang['search']['need_category']
     );
 
-    // Выполняем SQL-запрос для поиска категорий по полям name или description
-    $db->select(
-        '*', // Выбираем все поля
-        TBL_CATEGORY, // Из таблицы категорий
-        [
-            'where'  => '`id` != 0 AND (`name` LIKE :search_name OR `description` LIKE :search_desc)',
-            // Условие: поля name или description содержат $search_text
-            'params' => [':search_name' => $search_text, ':search_desc' => $search_text],
-            // Параметры для prepared statements
-        ]
+    // Используем метод полнотекстового поиска.
+    // TODO надо добавить возможность дополнять WHERE (тут, например, ID != 0)
+    $find = $db->full_text_search(
+        ['`id`', '`name`', '`description`'],
+        ['`name`', '`description`'],
+        $search_text,
+        TBL_CATEGORY
     );
 
-    $find = $db->res_arr(); // Получаем результаты запроса
     if ($find) {
         // Если найдены категории, добавляем их в шаблон
         $template->add_if('CATEGORY_FIND', true);
@@ -277,19 +228,14 @@ if ($search['news']) {
     $template->add_if('NEED_NEWS', true);
     $template->add_string('L_FIND_NEWS', $work->lang['search']['find'] . ' ' . $work->lang['search']['need_news']);
 
-    // Выполняем SQL-запрос для поиска новостей по полям name_post или text_post
-    $db->select(
-        '*', // Выбираем все поля
-        TBL_NEWS, // Из таблицы новостей
-        [
-            'where'  => '`name_post` LIKE :search_name OR `text_post` LIKE :search_text',
-            // Условие: поля name_post или text_post содержат $search_text
-            'params' => [':search_name' => $search_text, ':search_text' => $search_text],
-            // Параметры для prepared statements
-        ]
+    // Используем метод полнотекстового поиска.
+    $find = $db->full_text_search(
+        ['`id`', '`name_post`', '`text_post`'],
+        ['`name_post`', '`text_post`'],
+        $search_text,
+        TBL_NEWS
     );
 
-    $find = $db->res_arr(); // Получаем результаты запроса
     if ($find) {
         // Если найдены новости, добавляем их в шаблон
         $template->add_if('NEWS_FIND', true);
@@ -314,19 +260,14 @@ if ($search['photo']) {
     $template->add_if('NEED_PHOTO', true);
     $template->add_string('L_FIND_PHOTO', $work->lang['search']['find'] . ' ' . $work->lang['search']['need_photo']);
 
-    // Выполняем SQL-запрос для поиска фотографий по полям name или description
-    $db->select(
-        'id', // Выбираем только id фотографий
-        TBL_PHOTO, // Из таблицы фотографий
-        [
-            'where'  => '`name` LIKE :search_name OR `description` LIKE :search_desc',
-            // Условие: поля name или description содержат $search_text
-            'params' => [':search_name' => $search_text, ':search_desc' => $search_text],
-            // Параметры для prepared statements
-        ]
+    // Используем метод полнотекстового поиска.
+    $find = $db->full_text_search(
+        ['`id`'],
+        ['`name`', '`description`'],
+        $search_text,
+        TBL_PHOTO
     );
 
-    $find = $db->res_arr(); // Получаем результаты запроса
     if ($find) {
         // Если найдены фотографии, добавляем их в шаблон
         $template->add_if('PHOTO_FIND', true);
@@ -348,9 +289,9 @@ if ($search['photo']) {
     }
 }
 
-// Экранируем значение $_POST['search_text'] для безопасного вывода
-if (isset($_POST['search_text'])) {
-    $_POST['search_text'] = Work::clean_field($_POST['search_text']);
+// Экранируем значение $search_text для безопасного вывода
+if (!empty($search_text)) {
+    $search_text = Work::clean_field($search_text);
 }
 
 // Генерируем CSRF-токен для защиты от атак типа CSRF
@@ -365,7 +306,7 @@ $template->add_string_ar([
     'L_NEED_CATEGORY' => $work->lang['search']['need_category'], // Текст "Искать категории"
     'L_NEED_NEWS'     => $work->lang['search']['need_news'], // Текст "Искать новости"
     'L_NEED_PHOTO'    => $work->lang['search']['need_photo'], // Текст "Искать фотографии"
-    'D_SEARCH_TEXT'   => $_POST['search_text'] ?? '', // Текущее значение поля поиска
+    'D_SEARCH_TEXT'   => $search_text ?? '', // Текущее значение поля поиска
     'D_NEED_USER'     => isset($check['user']) ? 'checked="checked"' : '', // Флаг "Искать пользователей"
     'D_NEED_CATEGORY' => isset($check['category']) ? 'checked="checked"' : '', // Флаг "Искать категории"
     'D_NEED_NEWS'     => isset($check['news']) ? 'checked="checked"' : '', // Флаг "Искать новости"

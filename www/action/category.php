@@ -1,21 +1,12 @@
 <?php
 
 /** @noinspection PhpUnhandledExceptionInspection */
-
 /** @noinspection PhpUndefinedClassInspection */
 /**
  * @file        action/category.php
  * @brief       Обзор и управление разделами галереи.
  *
- * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
- *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      JsonException При выполнении методов, использующих JSON.
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
- *
- * @section     Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @author      Dark Dayver
+ * @author      Dark Dayver
  * @version     0.4.2
  * @date        2025-04-27
  * @namespace   Photorigma\\Action
@@ -28,25 +19,33 @@
  *              - Добавление новых категорий.
  *              - Проверка прав доступа пользователя на выполнение операций.
  *
- * @section     Основные функции
+ * @section     Category_Main_Functions Основные функции
  *              - Отображение списка категорий и фотографий.
  *              - Редактирование данных категорий.
  *              - Удаление категорий и связанных фотографий.
  *              - Добавление новых категорий.
  *              - Проверка прав доступа пользователя.
  *
- * @section     Обработка ошибок
+ * @section     Category_Error_Handling Обработка ошибок
  *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
  *              - `RuntimeException`: Если возникают ошибки при выполнении операций с базой данных или файловой
- *              системой.
+ *                системой.
  *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
  *              - `JsonException`: При выполнении методов, использующих JSON.
  *              - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @see         PhotoRigma\Classes\Database Класс для работы с базой данных.
- *                - @see PhotoRigma\Classes\Template Класс для работы с шаблонами.
- *                - @see PhotoRigma\Classes\User Класс для работы с пользователями.
- *                - @see PhotoRigma\Classes\Work Класс для выполнения различных операций.
+ * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
+ *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
+ * @throws      Random\RandomException При выполнении методов, использующих random().
+ * @throws      JsonException При выполнении методов, использующих JSON.
+ * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ *
+ * @section     Category_Related_Files Связанные файлы и компоненты
+ *              - Классы приложения:
+ *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
+ *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
+ *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
+ *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
  *              - Файлы приложения:
  *                - @see index.php Этот файл подключает action/category.php по запросу из `$_GET`.
  *

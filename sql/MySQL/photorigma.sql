@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 26 2025 г., 18:04
+-- Время создания: Апр 30 2025 г., 23:46
 -- Версия сервера: 10.11.11-MariaDB
 -- Версия PHP: 8.4.7RC1
 
@@ -29,7 +29,7 @@ USE `photorigma`;
 --
 -- Структура таблицы `category`
 --
--- Создание: Апр 09 2025 г., 23:48
+-- Создание: Апр 30 2025 г., 23:06
 --
 
 DROP TABLE IF EXISTS `category`;
@@ -173,7 +173,6 @@ DELIMITER ;
 -- Структура таблицы `db_version`
 --
 -- Создание: Апр 09 2025 г., 23:48
--- Последнее обновление: Апр 26 2025 г., 18:00
 --
 
 DROP TABLE IF EXISTS `db_version`;
@@ -289,7 +288,7 @@ INSERT INTO `menu` (`id`, `action`, `url_action`, `name_action`, `short`, `long`
 --
 -- Структура таблицы `news`
 --
--- Создание: Апр 09 2025 г., 23:48
+-- Создание: Апр 30 2025 г., 23:07
 --
 
 DROP TABLE IF EXISTS `news`;
@@ -316,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `news` (
 --
 -- Структура таблицы `photo`
 --
--- Создание: Апр 09 2025 г., 23:48
+-- Создание: Апр 30 2025 г., 23:07
 --
 
 DROP TABLE IF EXISTS `photo`;
@@ -350,7 +349,6 @@ CREATE TABLE IF NOT EXISTS `photo` (
 -- Структура таблицы `query_logs`
 --
 -- Создание: Апр 09 2025 г., 23:48
--- Последнее обновление: Апр 26 2025 г., 17:06
 --
 
 DROP TABLE IF EXISTS `query_logs`;
@@ -494,8 +492,8 @@ DELIMITER ;
 --
 -- Структура таблицы `users`
 --
--- Создание: Апр 09 2025 г., 23:48
--- Последнее обновление: Апр 26 2025 г., 17:06
+-- Создание: Апр 30 2025 г., 07:17
+-- Последнее обновление: Апр 30 2025 г., 23:07
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -531,7 +529,33 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, `language`, `theme`, `date_regist`, `date_last_activ`, `date_last_logout`, `group_id`, `user_rights`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-26 17:06:17', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-30 23:07:52', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+
+-- --------------------------------------------------------
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `category`
+--
+ALTER TABLE `category` ADD FULLTEXT KEY `idx_fts_category` (`name`,`description`);
+
+--
+-- Индексы таблицы `news`
+--
+ALTER TABLE `news` ADD FULLTEXT KEY `idx_fts_news` (`name_post`,`text_post`);
+
+--
+-- Индексы таблицы `photo`
+--
+ALTER TABLE `photo` ADD FULLTEXT KEY `idx_fts_photo` (`name`,`description`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users` ADD FULLTEXT KEY `idx_fts_users` (`login`,`real_name`,`email`);
 
 -- --------------------------------------------------------
 
@@ -589,70 +613,6 @@ ALTER TABLE `users`
   ADD CONSTRAINT `users_groups` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
 
 
---
--- Метаданные
---
-USE `phpmyadmin`;
-
---
--- Метаданные для таблицы category
---
-
---
--- Метаданные для таблицы change_timestamp
---
-
---
--- Метаданные для таблицы config
---
-
---
--- Метаданные для таблицы db_version
---
-
---
--- Метаданные для таблицы groups
---
-
---
--- Метаданные для таблицы menu
---
-
---
--- Метаданные для таблицы news
---
-
---
--- Метаданные для таблицы photo
---
-
---
--- Метаданные для таблицы query_logs
---
-
---
--- Метаданные для таблицы random_photo
---
-
---
--- Метаданные для таблицы rate_moder
---
-
---
--- Метаданные для таблицы rate_user
---
-
---
--- Метаданные для таблицы users
---
-
---
--- Метаданные для таблицы users_online
---
-
---
--- Метаданные для базы данных photorigma
---
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 

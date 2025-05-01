@@ -16,10 +16,10 @@
  *              - Управление соединением с базой данных.
  *              - Обработка ошибок через централизованную систему логирования и обработки ошибок.
  *
- * @section     Основные функции
+ * @section     Database_Main_Functions Основные функции
  *              - Безопасное выполнение запросов через подготовленные выражения.
  *              - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной
- *              строки).
+ *                строки).
  *              - Форматирование даты с учётом специфики используемой СУБД.
  *              - Управление транзакциями.
  *
@@ -27,14 +27,17 @@
  * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
  *
  * @note        Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с базами данных.
+ *              Реализованы меры безопасности для предотвращения SQL-инъекций через использование подготовленных
+ *              выражений.
  *
  * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
  * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *              Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *              распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *              делать это при соблюдении следующих условий:
  *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *              части программного обеспечения.
+ *                части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -45,8 +48,10 @@ use JsonException;
 use PDO;
 use PDOException;
 use PDOStatement;
+use PhotoRigma\Interfaces\Cache_Handler_Interface;
 use PhotoRigma\Interfaces\Database_Interface;
 use RuntimeException;
+use Throwable;
 
 use function PhotoRigma\Include\log_in_file;
 
@@ -76,6 +81,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Временное изменение формата SQL для выполнения запросов в контексте другой СУББД (например, выполнение
  *            запроса в формате PostgreSQL при подключении к MySQL). Это позволяет использовать один экземпляр класса
  *            для работы с разными СУБД без необходимости создания дополнительных подключений.
+ *          - Осуществляет долгосрочное кеширование временных кеш-свойств через методы Cache_Handler_Interface.
  *          Все ошибки, возникающие при работе с базой данных, обрабатываются через исключения.
  *
  * @property ?PDO        $pdo             Объект PDO для подключения к базе данных.
@@ -84,22 +90,27 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @property int         $aff_rows        Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE).
  * @property int         $insert_id       ID последней вставленной строки после выполнения INSERT-запроса.
  * @property string      $db_type         Тип базы данных (mysql, pgsql, sqlite).
+ * @property string      $db_name         Имя базы данных
  * @property array       $format_cache    Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite).
  * @property array       $query_cache     Кэш для хранения результатов проверки существования запросов.
+ * @property array       $unescape_cache  Кэш для хранения результатов снятия экранирования идентификаторов.
  * @property string      $current_format  Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
  *                                        Используется для временного изменения формата SQL.
  * @property array       $allowed_formats Список поддерживаемых форматов SQL (например, ['mysql', 'pgsql', 'sqlite']).
  *                                        Определяет допустимые значения для параметра `$format` в методах класса.
+ * @property Cache_Handler_Interface $cache Объект для работы с кешем
  *
  * Пример создания объекта класса Database:
  * @code
- * $config = [
- *     'driver'   => 'mysql',
- *     'host'     => 'localhost',
- *     'dbname'   => 'test_db',
- *     'user'     => 'root',
- *     'password' => 'password',
+ * $db_config = [
+ *     'dbtype' => 'mysql',
+ *     'dbname' => 'test_db',
+ *     'dbuser' => 'root',
+ *     'dbpass' => 'password',
+ *     'dbhost' => 'localhost',
+ *     'dbport' => 3306,
  * ];
+ * $cache = new \PhotoRigma\Classes\Cache_Handler();
  * $db = new \\PhotoRigma\\Classes\\Database($config);
  * @endcode
  *
@@ -127,16 +138,19 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 class Database implements Database_Interface
 {
     // Свойства класса
-    private ?PDO $pdo = null;          ///< Объект PDO для подключения к базе данных
-    private string|null $txt_query = null;    ///< Текст последнего SQL-запроса, сформированного методами класса
-    private object|null $res_query = null;    ///< Результат выполнения подготовленного выражения (PDOStatement)
+    private ?PDO $pdo = null;         ///< Объект PDO для подключения к базе данных
+    private string|null $txt_query = null; ///< Текст последнего SQL-запроса, сформированного методами класса
+    private object|null $res_query = null; ///< Результат выполнения подготовленного выражения (PDOStatement)
     private int $aff_rows = 0;        ///< Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)
     private int $insert_id = 0;       ///< ID последней вставленной строки после выполнения INSERT-запроса
-    private string $db_type;     ///< Тип базы данных (mysql, pgsql)
+    private string $db_type;          ///< Тип базы данных (mysql, pgsql, sqlite)
+    private string $db_name;          ///< Имя базы данных
     private array $format_cache = []; ///< Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite)
-    private array $query_cache = []; ///< Кэш для хранения результатов проверки существования запросов
+    private array $query_cache = [];  ///< Кэш для хранения результатов проверки существования запросов
+    private array $unescape_cache = []; ///< Кэш для хранения результатов снятия экранирования идентификаторов
     private string $current_format = 'mysql'; ///< Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
     private array $allowed_formats = ['mysql', 'pgsql', 'sqlite']; ///< Список поддерживаемых форматов SQL.
+    private Cache_Handler_Interface $cache; ///< Объект для работы с кешем
 
     /**
      * @brief   Конструктор класса.
@@ -155,32 +169,43 @@ class Database implements Database_Interface
      *          удалось).
      *          При возникновении ошибок валидации или подключения выбрасывается исключение.
      *          Важно: Если параметр `dbsock` указан, но файл сокета не существует, записывается предупреждение в лог,
-     *          и выполняется попытка подключения через хост и порт.
+     *                 и выполняется попытка подключения через хост и порт.
+     *
+     *          После инициализации PDO, конструктор проверяет наличие сохранённого кеша:
+     *          - Методом `$this->cache->is_valid('db_cache', 37971181)` определяется актуальность кеша.
+     *          - Если кеш действителен, из него загружаются данные в свойства:
+     *            `$this->format_cache`, `$this->query_cache`, `$this->unescape_cache`.
+     *          Это позволяет избежать повторной обработки SQL-запросов при каждом запуске скрипта.
      *
      * @callgraph
      *
-     * @param array $db_config     Массив с конфигурацией подключения:
-     *                             - string `dbtype`: Тип базы данных (mysql, pgsql, sqlite). Обязательный параметр.
-     *                             Если передан недопустимый тип, выбрасывается исключение `InvalidArgumentException`.
-     *                             - string `dbsock` (опционально): Путь к сокету.
-     *                             Если путь некорректен или файл не существует, записывается предупреждение в лог.
-     *                             Если подключение через сокет не удалось, выполняется попытка подключения через хост
-     *                             и порт.
-     *                             - string `dbname`: Имя базы данных. Обязательный параметр.
-     *                             Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
-     *                             Для SQLite это путь к файлу базы данных.
-     *                             - string `dbuser`: Имя пользователя. Обязательный параметр (кроме SQLite).
-     *                             Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
-     *                             - string `dbpass`: Пароль пользователя. Обязательный параметр (кроме SQLite).
-     *                             - string `dbhost`: Хост базы данных. Обязательный параметр, если не используется
-     *                             сокет. Если хост некорректен, выбрасывается исключение `InvalidArgumentException`.
-     *                             - int `dbport` (опционально): Порт базы данных.
-     *                             Если порт некорректен, выбрасывается исключение `InvalidArgumentException`.
+     * @param array                   $db_config Массив с конфигурацией подключения:
+     *                                           - string `dbtype`: Тип базы данных (mysql, pgsql, sqlite). Обязательный параметр.
+     *                                           Если передан недопустимый тип, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - string `dbsock` (опционально): Путь к сокету.
+     *                                           Если путь некорректен или файл не существует, записывается предупреждение в лог.
+     *                                           Если подключение через сокет не удалось, выполняется попытка подключения через хост
+     *                                           и порт.
+     *                                           - string `dbname`: Имя базы данных. Обязательный параметр.
+     *                                           Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
+     *                                           Для SQLite это путь к файлу базы данных.
+     *                                           - string `dbuser`: Имя пользователя. Обязательный параметр (кроме SQLite).
+     *                                           Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - string `dbpass`: Пароль пользователя. Обязательный параметр (кроме SQLite).
+     *                                           - string `dbhost`: Хост базы данных. Обязательный параметр, если не используется
+     *                                           сокет. Если хост некорректен, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - int `dbport` (опционально): Порт базы данных.
+     *                                           Если порт некорректен, выбрасывается исключение `InvalidArgumentException`.
+     * @param Cache_Handler_Interface $cache     Объект, реализующий интерфейс `Cache_Handler_Interface`.
+     *                                           Используется для временного хранения и загрузки кеша (`db_cache`) между запусками
+     *                                           скрипта. При наличии актуального кеша он загружается в свойства:
+     *                                           - `format_cache`
+     *                                           - `query_cache`
+     *                                           - `unescape_cache`
      *
      * @throws InvalidArgumentException Выбрасывается, если параметры конфигурации неверны:
      *                                  - Недопустимый тип базы данных (`dbtype`).
-     *                                  - Не указано имя базы данных (`dbname`) или пользователь (`dbuser`) (кроме
-     *                                  SQLite).
+     *                                  - Не указано имя базы данных (`dbname`) или пользователь (`dbuser`) (кроме SQLite).
      *                                  - Некорректный хост (`dbhost`) или порт (`dbport`).
      *                                  Пример сообщения:
      *                                      Недопустимый тип базы данных | Значение: [dbtype]
@@ -223,14 +248,18 @@ class Database implements Database_Interface
      *     'dbhost' => 'localhost',
      *     'dbport' => 3306,
      * ];
-     * $db_mysql = new \PhotoRigma\Classes\Database($db_config_mysql);
+     * $cache = new \PhotoRigma\Classes\Cache_Handler();
+     * $db_mysql = new \PhotoRigma\Classes\Database($db_config_mysql, $cache);
+     * @endcode
      *
+     * @code
      * // Пример для SQLite
      * $db_config_sqlite = [
      *     'dbtype' => 'sqlite',
      *     'dbname' => '/path/to/database.sqlite',
      * ];
-     * $db_sqlite = new \PhotoRigma\Classes\Database($db_config_sqlite);
+     * $cache = new \PhotoRigma\Classes\Cache_Handler();
+     * $db_sqlite = new \PhotoRigma\Classes\Database($db_config_sqlite, $cache);
      * @endcode
      * @see     PhotoRigma::Classes::Database::$pdo
      *          Свойство, хранящее объект PDO для подключения к базе данных.
@@ -238,11 +267,37 @@ class Database implements Database_Interface
      *          Свойство, хранящее тип базы данных (например, 'mysql' или 'sqlite').
      * @see     PhotoRigma::Classes::Database::$allowed_formats
      *          Массив допустимых форматов базы данных (например, 'mysql', 'sqlite', 'pgsql').
+     * @see     PhotoRigma::Interfaces::Cache_Handler_Interface
+     *          Интерфейс, реализуемый классом, который отвечает за работу с кешированием.
+     * @see     PhotoRigma::Classes::Database::$format_cache
+     *          Свойство, хранящее кеш преобразования форматов даты.
+     * @see     PhotoRigma::Classes::Database::$query_cache
+     *          Свойство, хранящее кеш уже выполненных запросов.
+     * @see     PhotoRigma::Classes::Database::$unescape_cache
+     *          Свойство, хранящее кеш результатов снятия экранирования идентификаторов.
+     * @see     PhotoRigma::Interfaces::Cache_Handler_Interface::is_valid()
+     *          Метод, проверяющий валидность кеша.
      * @see     PhotoRigma::Include::log_in_file()
      *          Функция для логирования ошибок.
      */
-    public function __construct(array $db_config)
+    public function __construct(array $db_config, Cache_Handler_Interface $cache)
     {
+        $this->cache = $cache;
+
+        // Проверяем наличие "догосрочного" кеша, если он существует - загружаем его.
+        $db_cache = $this->cache->is_valid('db_cache', 37971181);
+        if ($db_cache && is_array($db_cache)) {
+            if (!empty($db_cache['format_cache']) && is_array($db_cache['format_cache'])) {
+                $this->format_cache = $db_cache['format_cache'];
+            }
+            if (!empty($db_cache['query_cache']) && is_array($db_cache['query_cache'])) {
+                $this->query_cache = $db_cache['query_cache'];
+            }
+            if (!empty($db_cache['unescape_cache']) && is_array($db_cache['unescape_cache'])) {
+                $this->unescape_cache = $db_cache['unescape_cache'];
+            }
+        }
+
         // Проверка допустимых значений dbtype
         if (!in_array($db_config['dbtype'], $this->allowed_formats, true)) {
             throw new InvalidArgumentException(
@@ -250,8 +305,10 @@ class Database implements Database_Interface
             );
         }
 
-        // Сохраняем тип используемой базы данных
+        // Сохраняем тип используемой базы данных и её имя
         $this->db_type = $db_config['dbtype'];
+        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->db_name = $db_config['dbname'];
 
         // Определяем charset в зависимости от типа СУБД
         $charset = match ($this->db_type) {
@@ -260,7 +317,7 @@ class Database implements Database_Interface
         };
 
         // Проверка корректности dbname и dbuser (кроме SQLite)
-        if ($this->db_type !== 'sqlite' && (empty($db_config['dbname']) || empty($db_config['dbuser']))) {
+        if ($this->db_type !== 'sqlite' && (empty($this->db_name) || empty($db_config['dbuser']))) {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указано имя базы данных или пользователь | Конфигурация: " . json_encode(
                     $db_config,
@@ -271,7 +328,7 @@ class Database implements Database_Interface
 
         // Обработка SQLite
         if ($this->db_type === 'sqlite') {
-            if (empty($db_config['dbname'])) {
+            if (empty($this->db_name)) {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан путь к файлу базы данных SQLite | Конфигурация: " . json_encode(
                         $db_config,
@@ -281,21 +338,21 @@ class Database implements Database_Interface
             }
 
             // Проверка существования файла
-            if (!is_file($db_config['dbname'])) {
+            if (!is_file($this->db_name)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite не существует | Путь: {$db_config['dbname']}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite не существует | Путь: $this->db_name"
                 );
             }
 
             // Проверка прав доступа
-            if (!is_writable($db_config['dbname'])) {
+            if (!is_writable($this->db_name)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite недоступен для записи | Путь: {$db_config['dbname']}"
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite недоступен для записи | Путь: $this->db_name"
                 );
             }
 
             // Формируем DSN для SQLite
-            $dsn = "sqlite:{$db_config['dbname']}";
+            $dsn = "sqlite:$this->db_name";
 
             try {
                 $this->pdo = new PDO($dsn, null, null, [
@@ -307,7 +364,7 @@ class Database implements Database_Interface
                 return; // Подключение успешно, завершаем выполнение метода
             } catch (PDOException $e) {
                 throw new PDOException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения к SQLite | Путь: {$db_config['dbname']} | Сообщение: " . $e->getMessage(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения к SQLite | Путь: $this->db_name | Сообщение: " . $e->getMessage(
                     )
                 );
             }
@@ -321,7 +378,7 @@ class Database implements Database_Interface
                 );
             } else {
                 try {
-                    $dsn = "{$db_config['dbtype']}:unix_socket={$db_config['dbsock']};dbname={$db_config['dbname']};";
+                    $dsn = "$this->db_type:unix_socket={$db_config['dbsock']};dbname=$this->db_name;";
                     $this->pdo = new PDO($dsn . $charset, $db_config['dbuser'], $db_config['dbpass'], [
                         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -356,7 +413,7 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный хост базы данных | Значение: {$db_config['dbhost']}"
             );
         }
-        $dsn = "{$db_config['dbtype']}:host={$db_config['dbhost']};dbname={$db_config['dbname']};";
+        $dsn = "$this->db_type:host={$db_config['dbhost']};dbname=$this->db_name;";
         if (!empty($db_config['dbport'])) {
             if (!is_numeric($db_config['dbport']) || $db_config['dbport'] < 1 || $db_config['dbport'] > 65535) {
                 throw new InvalidArgumentException(
@@ -378,6 +435,49 @@ class Database implements Database_Interface
                 )
             );
         }
+    }
+
+    /**
+     * @brief       Деструктор класса Database.
+     *
+     * @details     Метод вызывается автоматически при уничтожении объекта.
+     *              Сохраняет содержимое внутренних кешей (`$format_cache`, `$query_cache`, `$unescape_cache`)
+     *              в общий кеш через вызов метода `Cache_Handler_Interface::update_cache()`.
+     *              Сохранение кешей может быть отключено через параметры приложения.
+     *
+     * @callgraph
+     *
+     * @note        Данный метод не требует явного вызова — он исполняется автоматически PHP при уничтожении объекта.
+     *              Убедитесь, что доступ к менеджеру кеширования (`$this->cache`) корректен и инициализирован до
+     *              вызова деструктора.
+     *
+     * @throws JsonException         В случае невозможности сериализации кешей в методе update_cache().
+     *
+     * Пример использования:
+     * @code
+     * $db = new PhotoRigma\Classes\Database();
+     * // ... работа с базой данных ...
+     * unset($db); // деструктор вызывается автоматически, кеш сохраняется
+     * @endcode
+     * @see         PhotoRigma::Interfaces::Cache_Handler_Interface::update_cache()
+     *              Интерфейс, реализуемый Cache_Handler, который сохраняет данные во внешнюю систему кеширования.
+     * @see         PhotoRigma::Classes::Database::$format_cache
+     *              Кэш форматов даты для оптимизации работы с SQL-запросами.
+     * @see         PhotoRigma::Classes::Database::$query_cache
+     *              Кэш выполненных SQL-запросов для предотвращения повторных проверок.
+     * @see         PhotoRigma::Classes::Database::$unescape_cache
+     *              Кэш результатов снятия экранирования идентификаторов.
+     * @see         PhotoRigma::Classes::Database::$cache
+     *              Объект, используемый для кеширования данных через Cache_Handler.
+     * @see         PhotoRigma::Classes::Database::__construct()
+     *              Используется для инициализации объекта базы данных.
+     */
+    public function __destruct()
+    {
+        $db_cache['format_cache'] = $this->format_cache;
+        $db_cache['query_cache'] = $this->query_cache;
+        $db_cache['unescape_cache'] = $this->unescape_cache;
+        $this->cache->update_cache('db_cache', 37971181, $db_cache);
     }
 
     /**
@@ -797,9 +897,6 @@ class Database implements Database_Interface
      *
      * @throws InvalidArgumentException Если параметры имеют недопустимый тип.
      *
-     * @todo    Предусмотреть возможность в WHERE не только для 'AND', но и для других операторов через параметр
-     *          'operator'.
-     *
      * Пример использования метода build_conditions():
      * @code
      * $options = [
@@ -871,7 +968,7 @@ class Database implements Database_Interface
         }
 
         // === 4. Обработка LIMIT ===
-        if (isset($options['limit'])) {
+        if (isset($options['limit']) && $options['limit'] !== false) {
             if (is_numeric($options['limit'])) {
                 $conditions .= ' LIMIT ' . (int)$options['limit'];
             } elseif (is_string($options['limit']) && preg_match('/^\d+\s*,\s*\d+$/', $options['limit'])) {
@@ -879,9 +976,9 @@ class Database implements Database_Interface
                 $conditions .= ' LIMIT ' . $offset . ', ' . $count;
             } else {
                 throw new InvalidArgumentException(
-                    "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
+                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
                         $options['limit']
-                    ) . " ($options[limit])"
+                    ) . " ({$options['limit']})"
                 );
             }
         }
@@ -1721,14 +1818,14 @@ class Database implements Database_Interface
         // Используем match для выбора логики в зависимости от типа СУБД
         return match ($this->db_type) {
             'mysql' => "DATE_FORMAT($column, '" . $this->convert_to_mysql_format(
-                    $format
-                ) . "')", // Для MySQL преобразуем формат
+                $format
+            ) . "')", // Для MySQL преобразуем формат
             'pgsql' => "TO_CHAR($column, '" . $this->convert_to_postgres_format(
-                    $format
-                ) . "')", // Для PostgreSQL преобразуем формат
+                $format
+            ) . "')", // Для PostgreSQL преобразуем формат
             'sqlite' => "strftime('" . $this->convert_to_sqlite_format(
-                    $format
-                ) . "', $column)",   // Для SQLite преобразуем формат
+                $format
+            ) . "', $column)",   // Для SQLite преобразуем формат
             default => throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
             ),
@@ -3553,5 +3650,664 @@ class Database implements Database_Interface
             // Восстанавливаем исходный формат
             $this->current_format = $original_format;
         }
+    }
+
+    /**
+     * Основной метод для выполнения полнотекстового поиска.
+     *
+     * Этот публичный метод служит точкой входа для выполнения полнотекстового поиска.
+     * Он делегирует выполнение внутреннему методу `_full_text_search_internal`.
+     *
+     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string           $search_string     Строка поиска (может быть "*" для поиска всех строк).
+     * @param string           $table             Имя таблицы, в которой выполняется поиск.
+     * @param int|string|false $limit             Ограничение на количество строк в результате.
+     *                                            Может быть целым числом (например, 10), строкой (например, "0,10")
+     *                                            или false (без ограничения).
+     *
+     * @return array|false Результат выполнения поиска (массив данных или false, если результат пустой).
+     *
+     * @throws RuntimeException         Если не удалось получить версию БД из таблицы db_version.
+     * @throws InvalidArgumentException Если переданы недопустимые аргументы или тип СУБД не поддерживается.*
+     * @throws JsonException при работе с методами для кеша
+     * @throws Exception                Если произошла ошибка при выполнении запроса.
+     */
+    public function full_text_search(
+        array $columns_to_return,
+        array $columns_to_search,
+        string $search_string,
+        string $table,
+        int|string|false $limit = false
+    ): array|false {
+        return $this->_full_text_search_internal(
+            $columns_to_return,
+            $columns_to_search,
+            $search_string,
+            $table,
+            $limit
+        );
+    }
+
+    /**
+     * Основной метод для выполнения полнотекстового поиска.
+     *
+     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string           $search_string     Строка поиска (может быть "*" для поиска всех строк).
+     * @param string           $table             Имя таблицы, в которой выполняется поиск.
+     * @param int|string|false $limit             Ограничение на количество строк в результате.
+     *
+     * @return array|false Результат выполнения поиска (массив данных или false, если результат пустой).
+     *
+     * @throws RuntimeException         Если не удалось получить версию БД из таблицы db_version.
+     * @throws InvalidArgumentException Если переданы недопустимые аргументы или тип СУБД не поддерживается.*
+     * @throws JsonException при работе с методами для кеша
+     * @throws Exception                Если произошла ошибка при выполнении запроса.
+     */
+    protected function _full_text_search_internal(
+        array $columns_to_return,
+        array $columns_to_search,
+        string $search_string,
+        string $table,
+        int|string|false $limit = false
+    ): array|false {
+        // 1. Проверка аргументов
+        if (empty($columns_to_return) || empty($columns_to_search) || empty($table)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Недопустимые аргументы | Подробности: columns_to_return, columns_to_search или table пусты"
+            );
+        }
+        if ($search_string === '') {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Пустая строка поиска"
+            );
+        }
+
+        // 2. Если search_string == '*', делаем обычный SELECT через _select_internal
+        if ($search_string === '*') {
+            $this->_select_internal(
+                $columns_to_return,
+                $table,
+                ['limit' => $limit]
+            );
+
+            return $this->_res_arr_internal();
+        }
+
+        // 3. Получение версии базы данных
+        $this->_select_internal('ver', 'db_version', ['limit' => 1]);
+
+        $version_data = $this->_res_row_internal();
+
+        if ($version_data === false || !isset($version_data['ver'])) {
+            throw new RuntimeException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Не удалось получить корректную версию из таблицы db_version"
+            );
+        }
+
+        $db_version = $version_data['ver'];
+
+        // 4. Снятие экранирования
+        $columns_to_return = $this->unescape_identifiers($columns_to_return);
+        $columns_to_search = $this->unescape_identifiers($columns_to_search);
+        $table = $this->unescape_identifiers([$table])[0];
+
+        // 5. Выбор подметода в зависимости от типа СУБД
+        return match ($this->db_type) {
+            'mysql'  => $this->full_text_search_mysql(
+                $columns_to_return,
+                $columns_to_search,
+                $search_string,
+                $table,
+                $limit,
+                $db_version
+            ),
+            'pgsql'  => $this->full_text_search_pgsql(
+                $columns_to_return,
+                $columns_to_search,
+                $search_string,
+                $table,
+                $limit,
+                $db_version
+            ),
+            'sqlite' => $this->full_text_search_sqlite(
+                $columns_to_return,
+                $columns_to_search,
+                $search_string,
+                $table,
+                $limit,
+                $db_version
+            ),
+            default  => throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Неизвестный тип СУБД | Тип: $this->db_type"
+            ),
+        };
+    }
+
+    /**
+     * Метод для выполнения полнотекстового поиска в MySQL.
+     *
+     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string           $search_string     Строка поиска (уже подготовлена, без % или *).
+     * @param string           $table             Имя таблицы, в которой выполняется поиск.
+     * @param int|string|false $limit             Ограничение на количество строк в результате.
+     * @param string           $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     *
+     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     *
+     * @throws JsonException при работе с методами для кеша
+     * @throws Exception Если произошла ошибка при логировании через log_in_file()
+     */
+    private function full_text_search_mysql(
+        array $columns_to_return,
+        array $columns_to_search,
+        string $search_string,
+        string $table,
+        int|string|false $limit,
+        string $db_version
+    ): array|false {
+        // 1. Формируем экранированные имена столбцов и таблицы
+        $columns_to_search_escaped = array_map(static fn ($col) => "`$col`", $columns_to_search);
+        $columns_to_return_escaped = array_map(static fn ($col) => "`$col`", $columns_to_return);
+        $table_escaped = "`$table`";
+
+        // 2. Проверка минимальной длины строки поиска
+        if (strlen($search_string) < MIN_FULLTEXT_SEARCH_LENGTH) {
+            return $this->fallback_to_like_mysql(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 3. Формируем уникальный ключ для кэша
+        $key = 'fts_mysql_' . substr(hash('xxh3', $table . ':' . implode(',', $columns_to_search)), 0, 24);
+
+        // 4. Проверяем кэш: был ли ранее query_error
+        $cached_index = $this->cache->is_valid($key, $db_version);
+
+        if ($cached_index !== false && isset($cached_index['query_error']) && $cached_index['query_error'] === true) {
+            // Запрос ранее упал — делаем fallback_to_like
+            return $this->fallback_to_like_mysql(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 5. Выполняем полнотекстовый поиск
+        try {
+            $this->_select_internal(
+                $columns_to_return_escaped,
+                $table_escaped,
+                [
+                    'where'  => 'MATCH(' . implode(
+                        ', ',
+                        $columns_to_search_escaped
+                    ) . ') AGAINST(:search_string_where IN NATURAL LANGUAGE MODE)',
+                    'order'  => 'MATCH(' . implode(
+                        ', ',
+                        $columns_to_search_escaped
+                    ) . ') AGAINST(:search_string_order) DESC',
+                    'limit'  => $limit,
+                    'params' => [
+                        ':search_string_where' => $search_string,
+                        ':search_string_order' => $search_string,
+                    ],
+                ]
+            );
+        } catch (Throwable $e) {
+            // Ловим ошибку выполнения полнотекстового запроса
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') .
+                ") | Полнотекстовый запрос упал | Таблица: $table_escaped | Сообщение: {$e->getMessage()}"
+            );
+
+            // Обновляем кэш: теперь запрос выдает ошибку
+            $this->cache->update_cache($key, $db_version, ['query_error' => true]);
+
+            // Переходим на LIKE
+            return $this->fallback_to_like_mysql(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 6. Сохраняем в кэш успешный результат: полнотекстовый запрос отработал
+        $this->cache->update_cache($key, $db_version, ['query_error' => false]);
+
+        // 7. Получаем результат и отдаем его
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * Альтернативный поиск через LIKE для MySQL.
+     *
+     * Используется как fallback, когда полнотекстовый поиск недоступен или не дал результатов.
+     * Поддерживает несколько столбцов и уникальные плейсхолдеры для каждого условия LIKE.
+     *
+     * @param array            $columns_to_return_escaped Уже экранированные столбцы (например, `login`, `real_name`)
+     * @param array            $columns_to_search_escaped Уже экранированные столбцы для поиска
+     * @param string           $search_string             Строка поиска (уже подготовлена, но без %)
+     * @param string           $table_escaped             Уже экранированное имя таблицы (например, `users`)
+     * @param int|string|false $limit                     Ограничение на количество строк в результате
+     *
+     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     *
+     * @throws Exception Если произошла ошибка логирования через log_in_file()
+     */
+    private function fallback_to_like_mysql(
+        array $columns_to_return_escaped,
+        array $columns_to_search_escaped,
+        string $search_string,
+        string $table_escaped,
+        int|string|false $limit
+    ): array|false {
+        // 1. Проверяем пустую строку
+        if ($search_string === '') {
+            return false;
+        }
+
+        // 2. Формируем условия WHERE и параметры для PDO
+        $where_conditions = [];
+        $params = [];
+
+        foreach ($columns_to_search_escaped as $i => $column) {
+            $placeholder = ":search_string_$i";
+            $where_conditions[] = "$column LIKE $placeholder";
+            $params[$placeholder] = "%$search_string%";
+        }
+
+        $where_sql = '(' . implode(' OR ', $where_conditions) . ')';
+
+        // 3. Выполняем запрос через _select_internal
+        try {
+            $this->_select_internal(
+                $columns_to_return_escaped,
+                $table_escaped,
+                [
+                    'where'  => $where_sql,
+                    'limit'  => $limit,
+                    'params' => $params,
+                ]
+            );
+        } catch (Throwable $e) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка при выполнении LIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+            );
+            return false;
+        }
+
+        // 4. Возвращаем результат напрямую
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * Метод для выполнения полнотекстового поиска в PostgreSQL.
+     *
+     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск (только для кэша).
+     * @param string           $search_string     Строка поиска (уже подготовлена).
+     * @param string           $table             Имя таблицы, в которой выполняется поиск.
+     * @param int|string|false $limit             Ограничение на количество строк в результате.
+     * @param string           $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     *
+     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     *
+     * @throws JsonException при работе с методами для кеша
+     * @throws Exception Если произошла ошибка при выполнении запроса или логировании через log_in_file()
+     */
+    private function full_text_search_pgsql(
+        array $columns_to_return,
+        array $columns_to_search,
+        string $search_string,
+        string $table,
+        int|string|false $limit,
+        string $db_version
+    ): array|false {
+        // 1. Формируем экранированные имена столбцов и таблицы
+        $columns_to_return_escaped = array_map(static fn ($col) => "\"$col\"", $columns_to_return);
+        $columns_to_search_escaped = array_map(static fn ($col) => "\"$col\"", $columns_to_search);
+        $table_escaped = "\"$table\"";
+
+        // 2. Проверка минимальной длины строки поиска
+        if (strlen($search_string) < MIN_FULLTEXT_SEARCH_LENGTH) {
+            return $this->fallback_to_ilike_pgsql(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 3. Формируем уникальный ключ для кэша
+        $key = 'fts_pgsql_' . substr(hash('xxh3', $table . ':' . implode(',', $columns_to_search)), 0, 24);
+
+        // 4. Проверяем кэш: был ли ранее query_error
+        $cached_index = $this->cache->is_valid($key, $db_version);
+
+        if ($cached_index !== false && isset($cached_index['query_error']) && $cached_index['query_error'] === true) {
+            return $this->fallback_to_ilike_pgsql(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 5. Выполняем полнотекстовый поиск через tsv_weighted
+        try {
+            $this->_select_internal(
+                $columns_to_return_escaped,
+                $table_escaped,
+                [
+                    'where'  => 'tsv_weighted @@ plainto_tsquery(:search_string_where)',
+                    'order'  => 'ts_rank(tsv_weighted, plainto_tsquery(:search_string_order)) DESC',
+                    'limit'  => $limit,
+                    'params' => [
+                        ':search_string_where' => $search_string,
+                        ':search_string_order' => $search_string,
+                    ],
+                ]
+            );
+        } catch (Throwable $e) {
+            // Логируем ошибку
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Полнотекстовый запрос PostgreSQL упал | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+            );
+
+            // Обновляем кэш: теперь запрос выдает ошибку
+            $this->cache->update_cache($key, $db_version, ['query_error' => true]);
+
+            // Переходим на ILIKE
+            return $this->fallback_to_ilike_pgsql(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 6. Сохраняем в кэш успешный результат: запрос отработал
+        $this->cache->update_cache($key, $db_version, ['query_error' => false]);
+
+        // 7. Получаем результат и отдаем его
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * Альтернативный поиск через ILIKE с ранжированием similarity() для PostgreSQL.
+     *
+     * Используется как fallback, когда полнотекстовый поиск недоступен или не дал результатов.
+     * Поддерживает несколько столбцов, уникальные плейсхолдеры и ранжирование по близости.
+     *
+     * @param array            $columns_to_return_escaped Уже экранированные столбцы для SELECT (например, "login",
+     *                                                    "real_name").
+     * @param array            $columns_to_search_escaped Уже экранированные столбцы для поиска.
+     * @param string           $search_string             Строка поиска (уже подготовлена).
+     * @param string           $table_escaped             Уже экранированное имя таблицы (например, "users").
+     * @param int|string|false $limit                     Ограничение на количество строк в результате.
+     *
+     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     *
+     * @throws Exception Если произошла ошибка логирования через log_in_file()
+     */
+    private function fallback_to_ilike_pgsql(
+        array $columns_to_return_escaped,
+        array $columns_to_search_escaped,
+        string $search_string,
+        string $table_escaped,
+        int|string|false $limit
+    ): array|false {
+        // 1. Проверяем пустую строку
+        if ($search_string === '') {
+            return false;
+        }
+
+        // 2. Формируем условия WHERE и ORDER BY
+        $where_conditions = [];
+        $order_ranks = [];
+        $params = [];
+
+        foreach ($columns_to_search_escaped as $i => $column) {
+            $placeholder = ":search_string_$i";
+            $rank_placeholder = ":search_string_rank_$i";
+
+            $where_conditions[] = "$column ILIKE $placeholder";
+            $order_ranks[] = "similarity($column, $rank_placeholder)";
+
+            $params[$placeholder] = "%$search_string%";
+            $params[$rank_placeholder] = $search_string;
+        }
+
+        $where_sql = '(' . implode(' OR ', $where_conditions) . ')';
+        $order_sql = '(' . implode(' + ', $order_ranks) . ') DESC';
+
+        // 3. Выполняем запрос через _select_internal
+        try {
+            $this->_select_internal(
+                $columns_to_return_escaped,
+                $table_escaped,
+                [
+                    'where'  => $where_sql,
+                    'order'  => $order_sql,
+                    'limit'  => $limit,
+                    'params' => $params,
+                ]
+            );
+        } catch (Throwable $e) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка при выполнении ILIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+            );
+            return false;
+        }
+
+        // 4. Возвращаем результат
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * Метод для выполнения полнотекстового поиска в SQLite через FTS5.
+     *
+     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск (только для кэша).
+     * @param string           $search_string     Строка поиска (уже подготовлена).
+     * @param string           $table             Имя таблицы, в которой выполняется поиск.
+     * @param int|string|false $limit             Ограничение на количество строк.
+     * @param string           $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     *
+     * @return array|false Результат выполнения поиска или false.
+     * @throws JsonException при работе с методами для кеша.
+     * @throws Exception Если произошла ошибка при выполнении запроса или логировании через log_in_file().
+     */
+    private function full_text_search_sqlite(
+        array $columns_to_return,
+        array $columns_to_search,
+        string $search_string,
+        string $table,
+        int|string|false $limit,
+        string $db_version
+    ): array|false {
+        // 1. Экранируем имена столбцов и таблицы
+        $columns_to_return_escaped = array_map(static fn ($col) => "\"$col\"", $columns_to_return);
+        $columns_to_search_escaped = array_map(static fn ($col) => "\"$col\"", $columns_to_search);
+        $table_escaped = "\"$table\"";                  // "users"
+        $fts_table_escaped = "\"$table\_fts\"";         // "users_fts"
+
+        // 2. Проверка длины строки
+        if (strlen($search_string) < MIN_FULLTEXT_SEARCH_LENGTH) {
+            return $this->fallback_to_like_sqlite(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 3. Формируем ключ кэша
+        $key = 'fts_sqlite_' . substr(hash('xxh3', $table . ':' . implode(',', $columns_to_search)), 0, 24);
+
+        // 4. Проверяем кэш: был ли query_error
+        $cached_index = $this->cache->is_valid($key, $db_version);
+
+        if ($cached_index !== false && isset($cached_index['query_error']) && $cached_index['query_error'] === true) {
+            return $this->fallback_to_like_sqlite(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 5. Выполняем полнотекстовый поиск
+        try {
+            $this->_select_internal(
+                $columns_to_return_escaped,
+                $fts_table_escaped,
+                [
+                    'where'  => "$fts_table_escaped MATCH :search_string_where",
+                    'order'  => 'rank DESC',
+                    'limit'  => $limit,
+                    'params' => [
+                        ':search_string_where' => $search_string,
+                    ],
+                ]
+            );
+        } catch (Throwable $e) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в FTS5 | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+            );
+
+            $this->cache->update_cache($key, $db_version, ['query_error' => true]);
+
+            return $this->fallback_to_like_sqlite(
+                $columns_to_return_escaped,
+                $columns_to_search_escaped,
+                $search_string,
+                $table_escaped,
+                $limit
+            );
+        }
+
+        // 6. Сохраняем успешное выполнение
+        $this->cache->update_cache($key, $db_version, ['query_error' => false]);
+
+        // 7. Возвращаем результат
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * Альтернативный LIKE-поиск для SQLite.
+     *
+     * @param array            $columns_to_return_escaped Уже экранированные столбцы.
+     * @param array            $columns_to_search_escaped Уже экранированные столбцы для поиска.
+     * @param string           $search_string             Подготовленная строка поиска (без %)
+     * @param string           $table_escaped             Уже экранированное имя таблицы.
+     * @param int|string|false $limit                     Ограничение на вывод.
+     *
+     * @return array|false Результат или false, если данных нет
+     *
+     * @throws Exception Если произошла ошибка при выполнении запроса или логировании через log_in_file()
+     */
+    private function fallback_to_like_sqlite(
+        array $columns_to_return_escaped,
+        array $columns_to_search_escaped,
+        string $search_string,
+        string $table_escaped,
+        int|string|false $limit
+    ): array|false {
+        // 1. Проверяем пустую строку
+        if ($search_string === '') {
+            return false;
+        }
+
+        // 2. Формируем условия поиска
+        $like_conditions = [];
+        $params = [];
+
+        foreach ($columns_to_search_escaped as $i => $column) {
+            $placeholder = ":search_string_$i";
+            $like_conditions[] = "$column LIKE $placeholder";
+            $params[$placeholder] = "%$search_string%";
+        }
+
+        $where_sql = '(' . implode(' OR ', $like_conditions) . ')';
+
+        // 3. Выполняем запрос
+        try {
+            $this->_select_internal(
+                $columns_to_return_escaped,
+                $table_escaped,
+                [
+                    'where'  => $where_sql,
+                    'order'  => '',
+                    'limit'  => $limit,
+                    'params' => $params,
+                ]
+            );
+        } catch (Throwable $e) {
+            log_in_file(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка при выполнении LIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+            );
+            return false;
+        }
+
+        return $this->_res_arr_internal();
+    }
+
+    /**
+     * Снятие экранирования идентификаторов (например, имён таблиц или столбцов).
+     *
+     * Метод удаляет символы экранирования, специфичные для текущего типа СУБД,
+     * чтобы получить "чистые" имена идентификаторов.
+     *
+     * @param array $identifiers Массив идентификаторов (например, столбцов или таблиц).
+     *
+     * @return array Массив идентификаторов без символов экранирования.
+     */
+    private function unescape_identifiers(array $identifiers): array
+    {
+        // Правила удаления символов экранирования для каждого типа СУБД
+        $rules = [
+            'mysql'  => ['`'],          // MySQL: обратные кавычки
+            'pgsql'  => ['"'],          // PostgreSQL: двойные кавычки
+            'sqlite' => ['[', ']', '"'], // SQLite: квадратные скобки и двойные кавычки
+        ];
+
+        $unescaped = [];
+
+        foreach ($identifiers as $identifier) {
+            // Если идентификатор уже обработан, берем его из кэша
+            if (isset($this->unescape_cache[$identifier])) {
+                $unescaped[] = $this->unescape_cache[$identifier];
+                continue;
+            }
+
+            // Получаем символы экранирования для текущего типа СУБД
+            $symbols = $rules[$this->current_format] ?? [];
+
+            // Удаляем символы экранирования, если они определены
+            $result = !empty($symbols) ? str_replace($symbols, '', $identifier) : $identifier;
+
+            // Сохраняем результат в кэше и добавляем в массив
+            $this->unescape_cache[$identifier] = $result;
+            $unescaped[] = $result;
+        }
+
+        return $unescaped; // Возвращаем массив "чистых" идентификаторов
     }
 }
