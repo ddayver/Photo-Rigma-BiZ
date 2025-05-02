@@ -192,12 +192,12 @@ if ($search['category']) {
     );
 
     // Используем метод полнотекстового поиска.
-    // TODO надо добавить возможность дополнять WHERE (тут, например, ID != 0)
     $find = $db->full_text_search(
         ['`id`', '`name`', '`description`'],
         ['`name`', '`description`'],
         $search_text,
-        TBL_CATEGORY
+        TBL_CATEGORY,
+        ['where' => '`id` != 0']
     );
 
     if ($find) {

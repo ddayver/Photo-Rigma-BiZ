@@ -858,57 +858,82 @@ class Database implements Database_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Обрабатывает условие `WHERE`:
+     *             - Игнорируется, если равно false.
      *             - Если `where` является строкой, она используется как есть.
-     *             - Если `where` является массивом, он преобразуется в SQL-условие через `implode(' AND ', ...)`.
+     *             - Если `where` является массивом, он преобразуется в SQL-условие:
+     *               * Простые условия: ['поле' => значение] → "поле = :поле"
+     *               * Сложные условия:
+     *                 - 'OR' => [условия] → "(условие1 OR условие2)"
+     *                 - 'NOT' => [условия] → "NOT (условия)"
      *          2. Обрабатывает группировку `GROUP BY`:
+     *             - Игнорируется, если равно false.
      *             - Если `group` является строкой, добавляется к строке запроса.
      *          3. Обрабатывает сортировку `ORDER BY`:
+     *             - Игнорируется, если равно false.
      *             - Если `order` является строкой, добавляется к строке запроса.
      *          4. Обрабатывает ограничение `LIMIT`:
+     *             - Игнорируется, если равно false.
      *             - Если `limit` является числом, добавляется напрямую.
      *             - Если `limit` является строкой формата "OFFSET, COUNT", она разбирается и добавляется.
      *          5. Возвращает результат:
      *             - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
      *             - Обновлённый массив параметров для подготовленного выражения.
+     *               Используется $options['params'], если задано. Или возвращается пустой массив.
      *
      * @callergraph
      * @callgraph
      *
-     * @param array $options     Опции запроса:
-     *                           - where (string|array): Условие WHERE.
-     *                           Может быть строкой или ассоциативным массивом.
-     *                           Если передан неверный тип, выбрасывается исключение InvalidArgumentException.
-     *                           - group (string): Группировка GROUP BY.
-     *                           Должна быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *                           - order (string): Сортировка ORDER BY.
-     *                           Должна быть строкой. Если передан неверный тип, выбрасывается исключение
-     *                           InvalidArgumentException.
-     *                           - limit (int|string): Ограничение LIMIT.
-     *                           Должно быть числом или строкой формата 'OFFSET, COUNT'.
-     *                           Если передан неверный тип, выбрасывается исключение InvalidArgumentException.
-     *                           - params (array): Параметры для подготовленного выражения (необязательно).
-     *                           Если параметры не соответствуют условиям, выбрасывается исключение
-     *                           InvalidArgumentException.
+     * @param array $options Опции запроса:
+     *                       - where (string|array|false): Условие WHERE.
+     *                         Может быть:
+     *                         - Строкой (используется как есть)
+     *                         - Массивом:
+     *                           * Простые условия: ['поле' => значение]
+     *                           * Сложные условия: ['OR' => [...], 'NOT' => [...]]
+     *                       - group (string|false): Группировка GROUP BY.
+     *                         Должна быть строкой. Игнорируется, если равно false.
+     *                       - order (string|false): Сортировка ORDER BY.
+     *                         Должна быть строкой. Игнорируется, если равно false.
+     *                       - limit (int|string|false): Ограничение LIMIT.
+     *                         Должно быть числом или строкой формата 'OFFSET, COUNT'. Игнорируется, если равно false.
+     *                       - params (array): Параметры для подготовленного выражения (необязательно).
+     *                         Если не указаны — возвращается пустой массив.
      *
      * @return array Массив с двумя элементами:
      *               - string $conditions - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
      *               - array $params - Обновлённый массив параметров для подготовленного выражения.
      *
-     * @throws InvalidArgumentException Если параметры имеют недопустимый тип.
+     * @throws InvalidArgumentException Если параметр 'where' имеет недопустимый тип.
+     *              Пример сообщения: "Неверное значение 'where' | Ожидалась строка или массив, получено: " . gettype
+     *                                ($options['where'])
+     * @throws InvalidArgumentException Если параметр 'group' имеет недопустимый тип.
+     *              Пример сообщения: "Неверное значение 'group' | Ожидалась строка, получено: " . gettype
+     *                                ($options['group'])
+     * @throws InvalidArgumentException Если параметр 'order' имеет недопустимый тип.
+     *              Пример сообщения: "Неверное значение 'order' | Ожидалась строка, получено: " . gettype
+     *                                ($options['order'])
+     * @throws InvalidArgumentException Если параметр 'limit' имеет недопустимый тип.
+     *              Пример сообщения: "Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET,
+     *                                COUNT', получено: " .  gettype($options['limit']) . "({$options['limit']})"
      *
-     * Пример использования метода build_conditions():
+     * Пример использования:
      * @code
+     * // Простые условия
      * $options = [
      *     'where' => ['id' => 1, 'status' => 'active'],
-     *     'group' => 'category_id',
-     *     'order' => 'created_at DESC',
-     *     'limit' => 10,
-     *     'params' => [':id' => 1, ':status' => 'active'],
+     *     'params' => [':id' => 1, ':status' => 'active']
      * ];
+     *
+     * // Сложные условия
+     * $complex_options = [
+     *     'where' => [
+     *         'OR' => ['views > 1000', 'likes > 50'],
+     *         'NOT' => ['deleted' => 1],
+     *         'category_id' => 5
+     *     ]
+     * ];
+     *
      * [$conditions, $params] = $this->build_conditions($options);
-     * echo "Условия: $conditions\n";
-     * print_r($params);
      * @endcode
      * @see     PhotoRigma::Classes::Database::update()
      *          Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
@@ -925,13 +950,34 @@ class Database implements Database_Interface
         $params = $options['params'] ?? [];
 
         // === 1. Обработка WHERE ===
-        if (isset($options['where'])) {
+        if (isset($options['where']) && $options['where'] !== false) {
             if (is_string($options['where'])) {
-                // Если where — строка, добавляем её напрямую
                 $conditions .= ' WHERE ' . $options['where'];
             } elseif (is_array($options['where'])) {
-                // Если where — массив, обрабатываем его
-                $conditions .= ' WHERE ' . implode(' AND ', $options['where']);
+                $where_parts = [];
+
+                foreach ($options['where'] as $key => $value) {
+                    if ($key === 'OR') {
+                        $or_conditions = $this->build_where_group($value, 'OR');
+                        if ($or_conditions) {
+                            $where_parts[] = $or_conditions;
+                        }
+                    } elseif ($key === 'NOT') {
+                        $not_conditions = $this->build_where_group($value, 'NOT');
+                        if ($not_conditions) {
+                            $where_parts[] = $not_conditions;
+                        }
+                    } elseif (is_numeric($key)) {
+                        $where_parts[] = $value;
+                    } else {
+                        $where_parts[] = "$key = :$key";
+                        $params[":$key"] = $value;
+                    }
+                }
+
+                if ($where_parts) {
+                    $conditions .= ' WHERE ' . implode(' AND ', $where_parts);
+                }
             } else {
                 throw new InvalidArgumentException(
                     __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
@@ -942,7 +988,7 @@ class Database implements Database_Interface
         }
 
         // === 2. Обработка GROUP BY ===
-        if (isset($options['group'])) {
+        if (isset($options['group']) && $options['group'] !== false) {
             if (is_string($options['group'])) {
                 $conditions .= ' GROUP BY ' . $options['group'];
             } else {
@@ -955,7 +1001,7 @@ class Database implements Database_Interface
         }
 
         // === 3. Обработка ORDER BY ===
-        if (isset($options['order'])) {
+        if (isset($options['order']) && $options['order'] !== false) {
             if (is_string($options['order'])) {
                 $conditions .= ' ORDER BY ' . $options['order'];
             } else {
@@ -984,6 +1030,77 @@ class Database implements Database_Interface
         }
 
         return [$conditions, $params];
+    }
+
+    /**
+     * @brief   Формирует группу условий для WHERE с указанным оператором.
+     *
+     * @details Этот метод используется для построения сложных SQL-условий:
+     *          - Для оператора OR: объединяет условия через OR
+     *          - Для оператора NOT: добавляет отрицание к группе условий
+     *          Поддерживает два формата условий:
+     *          - Готовые строки условий (используются как есть)
+     *          - Ассоциативные массивы в формате ['поле' => значение]
+     *          Все строковые значения автоматически экранируются.
+     *
+     * @callergraph
+     *
+     * @param array  $conditions Массив условий:
+     *                          - Если ключ числовой: значение используется как готовая строка условия
+     *                          - Если ключ строковый: преобразуется в "ключ = :ключ"
+     * @param string $operator   Оператор (OR/NOT)
+     *
+     * @return string Сформированная строка условий в формате:
+     *               - Для OR: "(условие1 OR условие2)"
+     *               - Для NOT: "NOT (условие1 AND условие2)"
+     *               Возвращает пустую строку, если массив условий пуст.
+     *
+     * @throws InvalidArgumentException Если передан недопустимый оператор (не OR/NOT).
+     *              Пример сообщения: "Неверный оператор | Допустимые значения: OR, NOT, получено: {$operator}"
+     *
+     * Пример использования:
+     * @code
+     * // Простые условия
+     * $or_condition = $this->build_where_group(
+     *     ['views > 1000', 'likes > 50'],
+     *     'OR'
+     * ); // "(views > 1000 OR likes > 50)"
+     *
+     * // Ассоциативный массив
+     * $not_condition = $this->build_where_group(
+     *     ['deleted' => 1, 'hidden' => 1],
+     *     'NOT'
+     * ); // "NOT (deleted = :deleted AND hidden = :hidden)"
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::build_conditions()
+     *          Основной метод, использующий build_where_group() для формирования сложных условий.
+     */
+    private function build_where_group(array $conditions, string $operator): string
+    {
+        if (!in_array($operator, ['OR', 'NOT'], true)) {
+            throw new InvalidArgumentException(
+                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') .
+                ") | Неверный оператор | Допустимые значения: OR, NOT, получено: $operator"
+            );
+        }
+
+        $parts = [];
+
+        foreach ($conditions as $key => $value) {
+            if (is_numeric($key)) {
+                $parts[] = $value;
+            } else {
+                $parts[] = "$key = :$key";
+            }
+        }
+
+        if (empty($parts)) {
+            return '';
+        }
+
+        return $operator === 'NOT'
+            ? 'NOT (' . implode(' AND ', $parts) . ')'
+            : '(' . implode(' OR ', $parts) . ')';
     }
 
     /**
@@ -3658,13 +3775,27 @@ class Database implements Database_Interface
      * Этот публичный метод служит точкой входа для выполнения полнотекстового поиска.
      * Он делегирует выполнение внутреннему методу `_full_text_search_internal`.
      *
-     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string           $search_string     Строка поиска (может быть "*" для поиска всех строк).
-     * @param string           $table             Имя таблицы, в которой выполняется поиск.
-     * @param int|string|false $limit             Ограничение на количество строк в результате.
-     *                                            Может быть целым числом (например, 10), строкой (например, "0,10")
-     *                                            или false (без ограничения).
+     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string     Строка поиска (может быть "*" для поиска всех строк).
+     * @param string $table             Имя таблицы, в которой выполняется поиск.
+     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
+     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
+     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
+     *                                  (например, `:status`).
+     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
+     *                                  (например, "category_id").
+     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
+     *                                  направлением (например, "created_at DESC").
+     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
+     *                                  строкой с диапазоном (например, "0, 10").
+     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
+     *                                  "active"]).
+     *                                  Использование параметров `params` является обязательным для подготовленных
+     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
+     *                                  различными СУБД.
      *
      * @return array|false Результат выполнения поиска (массив данных или false, если результат пустой).
      *
@@ -3678,25 +3809,41 @@ class Database implements Database_Interface
         array $columns_to_search,
         string $search_string,
         string $table,
-        int|string|false $limit = false
+        array $options = []
     ): array|false {
         return $this->_full_text_search_internal(
             $columns_to_return,
             $columns_to_search,
             $search_string,
             $table,
-            $limit
+            $options
         );
     }
 
     /**
      * Основной метод для выполнения полнотекстового поиска.
      *
-     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string           $search_string     Строка поиска (может быть "*" для поиска всех строк).
-     * @param string           $table             Имя таблицы, в которой выполняется поиск.
-     * @param int|string|false $limit             Ограничение на количество строк в результате.
+     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string     Строка поиска (может быть "*" для поиска всех строк).
+     * @param string $table             Имя таблицы, в которой выполняется поиск.
+     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
+     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
+     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
+     *                                  (например, `:status`).
+     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
+     *                                  (например, "category_id").
+     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
+     *                                  направлением (например, "created_at DESC").
+     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
+     *                                  строкой с диапазоном (например, "0, 10").
+     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
+     *                                  "active"]).
+     *                                  Использование параметров `params` является обязательным для подготовленных
+     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
+     *                                  различными СУБД.
      *
      * @return array|false Результат выполнения поиска (массив данных или false, если результат пустой).
      *
@@ -3710,7 +3857,7 @@ class Database implements Database_Interface
         array $columns_to_search,
         string $search_string,
         string $table,
-        int|string|false $limit = false
+        array $options = []
     ): array|false {
         // 1. Проверка аргументов
         if (empty($columns_to_return) || empty($columns_to_search) || empty($table)) {
@@ -3718,7 +3865,7 @@ class Database implements Database_Interface
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Недопустимые аргументы | Подробности: columns_to_return, columns_to_search или table пусты"
             );
         }
-        if ($search_string === '') {
+        if (trim($search_string) === '') {
             throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Пустая строка поиска"
             );
@@ -3726,10 +3873,11 @@ class Database implements Database_Interface
 
         // 2. Если search_string == '*', делаем обычный SELECT через _select_internal
         if ($search_string === '*') {
+            $new_option = $this->fts_check_options($options, []);
             $this->_select_internal(
                 $columns_to_return,
                 $table,
-                ['limit' => $limit]
+                $new_option
             );
 
             return $this->_res_arr_internal();
@@ -3760,24 +3908,24 @@ class Database implements Database_Interface
                 $columns_to_search,
                 $search_string,
                 $table,
-                $limit,
-                $db_version
+                $db_version,
+                $options
             ),
             'pgsql'  => $this->full_text_search_pgsql(
                 $columns_to_return,
                 $columns_to_search,
                 $search_string,
                 $table,
-                $limit,
-                $db_version
+                $db_version,
+                $options
             ),
             'sqlite' => $this->full_text_search_sqlite(
                 $columns_to_return,
                 $columns_to_search,
                 $search_string,
                 $table,
-                $limit,
-                $db_version
+                $db_version,
+                $options
             ),
             default  => throw new InvalidArgumentException(
                 __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Неизвестный тип СУБД | Тип: $this->db_type"
@@ -3788,12 +3936,28 @@ class Database implements Database_Interface
     /**
      * Метод для выполнения полнотекстового поиска в MySQL.
      *
-     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string           $search_string     Строка поиска (уже подготовлена, без % или *).
-     * @param string           $table             Имя таблицы, в которой выполняется поиск.
-     * @param int|string|false $limit             Ограничение на количество строк в результате.
-     * @param string           $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string     Строка поиска (уже подготовлена, без % или *).
+     * @param string $table             Имя таблицы, в которой выполняется поиск.
+     * @param string $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
+     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
+     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
+     *                                  (например, `:status`).
+     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
+     *                                  (например, "category_id").
+     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
+     *                                  направлением (например, "created_at DESC").
+     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
+     *                                  строкой с диапазоном (например, "0, 10").
+     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
+     *                                  "active"]).
+     *                                  Использование параметров `params` является обязательным для подготовленных
+     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
+     *                                  различными СУБД.
      *
      * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
      *
@@ -3805,8 +3969,8 @@ class Database implements Database_Interface
         array $columns_to_search,
         string $search_string,
         string $table,
-        int|string|false $limit,
-        string $db_version
+        string $db_version,
+        array $options
     ): array|false {
         // 1. Формируем экранированные имена столбцов и таблицы
         $columns_to_search_escaped = array_map(static fn ($col) => "`$col`", $columns_to_search);
@@ -3820,7 +3984,7 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
@@ -3837,30 +4001,30 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
-        // 5. Выполняем полнотекстовый поиск
+        // 5. Обработка полнотекстового поиска
         try {
+            // Формируем внутренние FTS-условия
+            $base_options = [
+                'where' => 'MATCH(' . implode(', ', $columns_to_search_escaped) . ') AGAINST(:search_string_where IN NATURAL LANGUAGE MODE)',
+                'order' => 'MATCH(' . implode(', ', $columns_to_search_escaped) . ') AGAINST(:search_string_order) DESC',
+                'params' => [
+                    ':search_string_where'  => $search_string,
+                    ':search_string_order' => $search_string,
+                ],
+            ];
+
+            // Объединяем внешние и внутренние опции
+            $new_options = $this->fts_check_options($options, $base_options);
+
+            // Выполняем SQL-запрос
             $this->_select_internal(
                 $columns_to_return_escaped,
                 $table_escaped,
-                [
-                    'where'  => 'MATCH(' . implode(
-                        ', ',
-                        $columns_to_search_escaped
-                    ) . ') AGAINST(:search_string_where IN NATURAL LANGUAGE MODE)',
-                    'order'  => 'MATCH(' . implode(
-                        ', ',
-                        $columns_to_search_escaped
-                    ) . ') AGAINST(:search_string_order) DESC',
-                    'limit'  => $limit,
-                    'params' => [
-                        ':search_string_where' => $search_string,
-                        ':search_string_order' => $search_string,
-                    ],
-                ]
+                $new_options
             );
         } catch (Throwable $e) {
             // Ловим ошибку выполнения полнотекстового запроса
@@ -3878,7 +4042,7 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
@@ -3895,11 +4059,27 @@ class Database implements Database_Interface
      * Используется как fallback, когда полнотекстовый поиск недоступен или не дал результатов.
      * Поддерживает несколько столбцов и уникальные плейсхолдеры для каждого условия LIKE.
      *
-     * @param array            $columns_to_return_escaped Уже экранированные столбцы (например, `login`, `real_name`)
-     * @param array            $columns_to_search_escaped Уже экранированные столбцы для поиска
-     * @param string           $search_string             Строка поиска (уже подготовлена, но без %)
-     * @param string           $table_escaped             Уже экранированное имя таблицы (например, `users`)
-     * @param int|string|false $limit                     Ограничение на количество строк в результате
+     * @param array  $columns_to_return_escaped Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search_escaped Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string             Строка поиска (может быть "*" для поиска всех строк).
+     * @param string $table_escaped             Имя таблицы, в которой выполняется поиск.
+     * @param array  $options                   Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                          - where (string|array): Условие WHERE. Может быть строкой (например,
+     *                                          "status = :status") или ассоциативным массивом (например, ["id" =>
+     *                                          ":id", "status" => ":status"]). Для защиты от SQL-инъекций
+     *                                          рекомендуется использовать плейсхолдеры (например, `:status`).
+     *                                          - group (string): Группировка GROUP BY. Должна быть строкой с именами
+     *                                          полей (например, "category_id").
+     *                                          - order (string): Сортировка ORDER BY. Должна быть строкой с именами
+     *                                          полей и направлением (например, "created_at DESC").
+     *                                          - limit (int|string): Ограничение LIMIT. Может быть числом (например,
+     *                                          10) или строкой с диапазоном (например, "0, 10").
+     *                                          - params (array): Параметры для подготовленного выражения.
+     *                                          Ассоциативный массив значений, используемых в запросе (например,
+     *                                          [":id" => 1, ":status" => "active"]).
+     *                                          Использование параметров `params` является обязательным для
+     *                                          подготовленных выражений, так как это обеспечивает защиту от
+     *                                          SQL-инъекций и совместимость с различными СУБД.
      *
      * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
      *
@@ -3910,7 +4090,7 @@ class Database implements Database_Interface
         array $columns_to_search_escaped,
         string $search_string,
         string $table_escaped,
-        int|string|false $limit
+        array $options
     ): array|false {
         // 1. Проверяем пустую строку
         if ($search_string === '') {
@@ -3926,19 +4106,19 @@ class Database implements Database_Interface
             $where_conditions[] = "$column LIKE $placeholder";
             $params[$placeholder] = "%$search_string%";
         }
-
         $where_sql = '(' . implode(' OR ', $where_conditions) . ')';
+        $base_options = [
+            'where'  => $where_sql,
+            'params' => $params,
+        ];
+        $new_options = $this->fts_check_options($options, $base_options);
 
         // 3. Выполняем запрос через _select_internal
         try {
             $this->_select_internal(
                 $columns_to_return_escaped,
                 $table_escaped,
-                [
-                    'where'  => $where_sql,
-                    'limit'  => $limit,
-                    'params' => $params,
-                ]
+                $new_options
             );
         } catch (Throwable $e) {
             log_in_file(
@@ -3954,12 +4134,28 @@ class Database implements Database_Interface
     /**
      * Метод для выполнения полнотекстового поиска в PostgreSQL.
      *
-     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск (только для кэша).
-     * @param string           $search_string     Строка поиска (уже подготовлена).
-     * @param string           $table             Имя таблицы, в которой выполняется поиск.
-     * @param int|string|false $limit             Ограничение на количество строк в результате.
-     * @param string           $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string     Строка поиска (уже подготовлена, без % или *).
+     * @param string $table             Имя таблицы, в которой выполняется поиск.
+     * @param string $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
+     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
+     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
+     *                                  (например, `:status`).
+     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
+     *                                  (например, "category_id").
+     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
+     *                                  направлением (например, "created_at DESC").
+     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
+     *                                  строкой с диапазоном (например, "0, 10").
+     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
+     *                                  "active"]).
+     *                                  Использование параметров `params` является обязательным для подготовленных
+     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
+     *                                  различными СУБД.
      *
      * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
      *
@@ -3971,8 +4167,8 @@ class Database implements Database_Interface
         array $columns_to_search,
         string $search_string,
         string $table,
-        int|string|false $limit,
-        string $db_version
+        string $db_version,
+        array $options
     ): array|false {
         // 1. Формируем экранированные имена столбцов и таблицы
         $columns_to_return_escaped = array_map(static fn ($col) => "\"$col\"", $columns_to_return);
@@ -3986,7 +4182,7 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
@@ -4002,24 +4198,30 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
         // 5. Выполняем полнотекстовый поиск через tsv_weighted
         try {
+            // Формируем внутренние FTS-условия
+            $base_options = [
+                'where'  => 'tsv_weighted @@ plainto_tsquery(:search_string_where)',
+                'order'  => 'ts_rank(tsv_weighted, plainto_tsquery(:search_string_order)) DESC',
+                'params' => [
+                    ':search_string_where' => $search_string,
+                    ':search_string_order' => $search_string,
+                ],
+            ];
+
+            // Объединяем внешние и внутренние опции
+            $new_options = $this->fts_check_options($options, $base_options);
+
+            // Выполняем SQL-запрос
             $this->_select_internal(
                 $columns_to_return_escaped,
                 $table_escaped,
-                [
-                    'where'  => 'tsv_weighted @@ plainto_tsquery(:search_string_where)',
-                    'order'  => 'ts_rank(tsv_weighted, plainto_tsquery(:search_string_order)) DESC',
-                    'limit'  => $limit,
-                    'params' => [
-                        ':search_string_where' => $search_string,
-                        ':search_string_order' => $search_string,
-                    ],
-                ]
+                $new_options
             );
         } catch (Throwable $e) {
             // Логируем ошибку
@@ -4036,7 +4238,7 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
@@ -4053,12 +4255,27 @@ class Database implements Database_Interface
      * Используется как fallback, когда полнотекстовый поиск недоступен или не дал результатов.
      * Поддерживает несколько столбцов, уникальные плейсхолдеры и ранжирование по близости.
      *
-     * @param array            $columns_to_return_escaped Уже экранированные столбцы для SELECT (например, "login",
-     *                                                    "real_name").
-     * @param array            $columns_to_search_escaped Уже экранированные столбцы для поиска.
-     * @param string           $search_string             Строка поиска (уже подготовлена).
-     * @param string           $table_escaped             Уже экранированное имя таблицы (например, "users").
-     * @param int|string|false $limit                     Ограничение на количество строк в результате.
+     * @param array  $columns_to_return_escaped Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search_escaped Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string             Строка поиска (может быть "*" для поиска всех строк).
+     * @param string $table_escaped             Имя таблицы, в которой выполняется поиск.
+     * @param array  $options                   Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                          - where (string|array): Условие WHERE. Может быть строкой (например,
+     *                                          "status = :status") или ассоциативным массивом (например, ["id" =>
+     *                                          ":id", "status" => ":status"]). Для защиты от SQL-инъекций
+     *                                          рекомендуется использовать плейсхолдеры (например, `:status`).
+     *                                          - group (string): Группировка GROUP BY. Должна быть строкой с именами
+     *                                          полей (например, "category_id").
+     *                                          - order (string): Сортировка ORDER BY. Должна быть строкой с именами
+     *                                          полей и направлением (например, "created_at DESC").
+     *                                          - limit (int|string): Ограничение LIMIT. Может быть числом (например,
+     *                                          10) или строкой с диапазоном (например, "0, 10").
+     *                                          - params (array): Параметры для подготовленного выражения.
+     *                                          Ассоциативный массив значений, используемых в запросе (например,
+     *                                          [":id" => 1, ":status" => "active"]).
+     *                                          Использование параметров `params` является обязательным для
+     *                                          подготовленных выражений, так как это обеспечивает защиту от
+     *                                          SQL-инъекций и совместимость с различными СУБД.
      *
      * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
      *
@@ -4069,7 +4286,7 @@ class Database implements Database_Interface
         array $columns_to_search_escaped,
         string $search_string,
         string $table_escaped,
-        int|string|false $limit
+        array $options
     ): array|false {
         // 1. Проверяем пустую строку
         if ($search_string === '') {
@@ -4094,18 +4311,19 @@ class Database implements Database_Interface
 
         $where_sql = '(' . implode(' OR ', $where_conditions) . ')';
         $order_sql = '(' . implode(' + ', $order_ranks) . ') DESC';
+        $base_options = [
+            'where'  => $where_sql,
+            'order'  => $order_sql,
+            'params' => $params,
+        ];
+        $new_options = $this->fts_check_options($options, $base_options);
 
         // 3. Выполняем запрос через _select_internal
         try {
             $this->_select_internal(
                 $columns_to_return_escaped,
                 $table_escaped,
-                [
-                    'where'  => $where_sql,
-                    'order'  => $order_sql,
-                    'limit'  => $limit,
-                    'params' => $params,
-                ]
+                $new_options
             );
         } catch (Throwable $e) {
             log_in_file(
@@ -4121,12 +4339,28 @@ class Database implements Database_Interface
     /**
      * Метод для выполнения полнотекстового поиска в SQLite через FTS5.
      *
-     * @param array            $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array            $columns_to_search Массив столбцов, по которым выполняется поиск (только для кэша).
-     * @param string           $search_string     Строка поиска (уже подготовлена).
-     * @param string           $table             Имя таблицы, в которой выполняется поиск.
-     * @param int|string|false $limit             Ограничение на количество строк.
-     * @param string           $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string     Строка поиска (уже подготовлена, без % или *).
+     * @param string $table             Имя таблицы, в которой выполняется поиск.
+     * @param string $db_version        Версия БД, полученная из SELECT ver FROM db_version.
+     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
+     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
+     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
+     *                                  (например, `:status`).
+     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
+     *                                  (например, "category_id").
+     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
+     *                                  направлением (например, "created_at DESC").
+     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
+     *                                  строкой с диапазоном (например, "0, 10").
+     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
+     *                                  "active"]).
+     *                                  Использование параметров `params` является обязательным для подготовленных
+     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
+     *                                  различными СУБД.
      *
      * @return array|false Результат выполнения поиска или false.
      * @throws JsonException при работе с методами для кеша.
@@ -4137,8 +4371,8 @@ class Database implements Database_Interface
         array $columns_to_search,
         string $search_string,
         string $table,
-        int|string|false $limit,
-        string $db_version
+        string $db_version,
+        array $options
     ): array|false {
         // 1. Экранируем имена столбцов и таблицы
         $columns_to_return_escaped = array_map(static fn ($col) => "\"$col\"", $columns_to_return);
@@ -4153,7 +4387,7 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
@@ -4169,23 +4403,29 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
         // 5. Выполняем полнотекстовый поиск
         try {
+            // Формируем внутренние FTS-условия
+            $base_options = [
+                'where'  => "$fts_table_escaped MATCH :search_string_where",
+                'order'  => 'rank DESC',
+                'params' => [
+                    ':search_string_where' => $search_string,
+                ],
+            ];
+
+            // Объединяем внешние и внутренние опции
+            $new_options = $this->fts_check_options($options, $base_options);
+
+            // Выполняем SQL-запрос
             $this->_select_internal(
                 $columns_to_return_escaped,
                 $fts_table_escaped,
-                [
-                    'where'  => "$fts_table_escaped MATCH :search_string_where",
-                    'order'  => 'rank DESC',
-                    'limit'  => $limit,
-                    'params' => [
-                        ':search_string_where' => $search_string,
-                    ],
-                ]
+                $new_options
             );
         } catch (Throwable $e) {
             log_in_file(
@@ -4199,7 +4439,7 @@ class Database implements Database_Interface
                 $columns_to_search_escaped,
                 $search_string,
                 $table_escaped,
-                $limit
+                $options
             );
         }
 
@@ -4213,11 +4453,27 @@ class Database implements Database_Interface
     /**
      * Альтернативный LIKE-поиск для SQLite.
      *
-     * @param array            $columns_to_return_escaped Уже экранированные столбцы.
-     * @param array            $columns_to_search_escaped Уже экранированные столбцы для поиска.
-     * @param string           $search_string             Подготовленная строка поиска (без %)
-     * @param string           $table_escaped             Уже экранированное имя таблицы.
-     * @param int|string|false $limit                     Ограничение на вывод.
+     * @param array  $columns_to_return_escaped Массив столбцов, которые нужно вернуть.
+     * @param array  $columns_to_search_escaped Массив столбцов, по которым выполняется поиск.
+     * @param string $search_string             Строка поиска (может быть "*" для поиска всех строк).
+     * @param string $table_escaped             Имя таблицы, в которой выполняется поиск.
+     * @param array  $options                   Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                                          - where (string|array): Условие WHERE. Может быть строкой (например,
+     *                                          "status = :status") или ассоциативным массивом (например, ["id" =>
+     *                                          ":id", "status" => ":status"]). Для защиты от SQL-инъекций
+     *                                          рекомендуется использовать плейсхолдеры (например, `:status`).
+     *                                          - group (string): Группировка GROUP BY. Должна быть строкой с именами
+     *                                          полей (например, "category_id").
+     *                                          - order (string): Сортировка ORDER BY. Должна быть строкой с именами
+     *                                          полей и направлением (например, "created_at DESC").
+     *                                          - limit (int|string): Ограничение LIMIT. Может быть числом (например,
+     *                                          10) или строкой с диапазоном (например, "0, 10").
+     *                                          - params (array): Параметры для подготовленного выражения.
+     *                                          Ассоциативный массив значений, используемых в запросе (например,
+     *                                          [":id" => 1, ":status" => "active"]).
+     *                                          Использование параметров `params` является обязательным для
+     *                                          подготовленных выражений, так как это обеспечивает защиту от
+     *                                          SQL-инъекций и совместимость с различными СУБД.
      *
      * @return array|false Результат или false, если данных нет
      *
@@ -4228,7 +4484,7 @@ class Database implements Database_Interface
         array $columns_to_search_escaped,
         string $search_string,
         string $table_escaped,
-        int|string|false $limit
+        array $options
     ): array|false {
         // 1. Проверяем пустую строку
         if ($search_string === '') {
@@ -4246,18 +4502,18 @@ class Database implements Database_Interface
         }
 
         $where_sql = '(' . implode(' OR ', $like_conditions) . ')';
+        $base_options = [
+            'where'  => $where_sql,
+            'params' => $params,
+        ];
+        $new_options = $this->fts_check_options($options, $base_options);
 
         // 3. Выполняем запрос
         try {
             $this->_select_internal(
                 $columns_to_return_escaped,
                 $table_escaped,
-                [
-                    'where'  => $where_sql,
-                    'order'  => '',
-                    'limit'  => $limit,
-                    'params' => $params,
-                ]
+                $new_options
             );
         } catch (Throwable $e) {
             log_in_file(
@@ -4270,14 +4526,182 @@ class Database implements Database_Interface
     }
 
     /**
-     * Снятие экранирования идентификаторов (например, имён таблиц или столбцов).
+     * @brief   Формирует финальный массив опций для _select_internal, применяя приоритет к внутренним (базовым)
+     *          условиям.
      *
-     * Метод удаляет символы экранирования, специфичные для текущего типа СУБД,
-     * чтобы получить "чистые" имена идентификаторов.
+     * @details Метод объединяет внешние и внутренние опции, соблюдая приоритет:
+     *          - WHERE: внутреннее условие FTS имеет приоритет над внешним.
+     *            Если $options['where'] задано — оно сначала обрабатывается через build_conditions(),
+     *            затем дополняет базовое значение из $base_options['where'].
+     *          - ORDER BY: внутренний порядок сортировки FTS имеет приоритет.
+     *          - GROUP BY и LIMIT берутся только из внешних данных.
+     *          - params: объединяются оба массива, внутренние параметры приоритетней. При совпадении внешних
+     *            параметров с внутренними - внешние переименовываются с заменой в условиях.
+     *            Все строковые значения в условиях предварительно тримируются.
      *
-     * @param array $identifiers Массив идентификаторов (например, столбцов или таблиц).
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $options      Внешние опции, переданные пользователем или контроллером.
+     *                            Может содержать: where, order, group, limit, params.
+     * @param array $base_options Внутренние опции, сгенерированные полнотекстовым поиском.
+     *                            Может содержать: where, order, params.
+     *
+     * @return array Объединённый массив опций для использования в _select_internal.
+     *               Содержит: where, order, group, limit, params.
+     *
+     * Пример использования:
+     * @code
+     * // Внешние параметры
+     * $options = [
+     *     'where' => ['status' => ':search', 'category_id' => 1],
+     *     'order' => 'name ASC',
+     *     'params' => [':search' => 'cats']
+     * ];
+     *
+     * // Базовые параметры от FTS
+     * $base_options = [
+     *     'where' => ['MATCH(title) AGAINST (:search)'],
+     *     'order' => 'relevance DESC',
+     *     'params' => [':search' => '%test%']
+     * ];
+     *
+     * $final = $this->fts_check_options($options, $base_options);
+     * // Результат:
+     * // $final['where'] = "MATCH(title) AGAINST (:search) AND (status = :search_ext_0 AND category_id = 1)";
+     * // $final['order'] = 'relevance DESC';
+     * // $final['group'], $final['limit'] — не установлены (берутся только из внешних)
+     * // $final['params'] = [':search' => '%test%', ':search_ext_0' => 'active']
+     * @endcode
+     * @see     PhotoRigma::Classes::Database::build_conditions()
+     *          Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).
+     */
+    private function fts_check_options(array $options, array $base_options): array
+    {
+        // 1. Трим всех строковых значений
+        $trim_array = static fn (array $arr) => array_map(
+            static fn ($val) => is_string($val) ? trim($val) : $val,
+            $arr
+        );
+
+        $options = $trim_array($options);
+        $base_options = $trim_array($base_options);
+
+        // 2. Обработка конфликтующих плейсхолдеров
+        if (!empty($options['params']) && !empty($base_options['params'])) {
+            $conflicts = array_intersect_key($options['params'], $base_options['params']);
+
+            if (!empty($conflicts)) {
+                $replace_map = [];
+                $counter = 0;
+
+                foreach ($conflicts as $placeholder => $value) {
+                    $new_placeholder = $placeholder . '_ext_' . $counter++;
+                    $replace_map[$placeholder] = $new_placeholder;
+
+                    // Обновляем параметры
+                    $options['params'][$new_placeholder] = $value;
+                    unset($options['params'][$placeholder]);
+                }
+
+                // Обновляем плейсхолдеры в условиях WHERE
+                if (!empty($options['where']) && is_array($options['where'])) {
+                    array_walk_recursive($options['where'], function (&$item) use ($replace_map) {
+                        if (is_string($item) && isset($replace_map[$item])) {
+                            $item = $replace_map[$item];
+                        }
+                    });
+                }
+            }
+        }
+
+        // 3. Обработка внешнего WHERE через build_conditions
+        if (!empty($options['where'])) {
+            [$additional_where, $additional_params] = $this->build_conditions([
+                'where' => $options['where'],
+                'params' => $options['params'] ?? [],
+            ]);
+
+            $additional_where = preg_replace('/^WHERE\s+/i', '', $additional_where);
+
+            if ($additional_where !== '') {
+                $options['where'] = $additional_where;
+                $options['params'] = array_merge(
+                    $options['params'] ?? [],
+                    $additional_params
+                );
+            } else {
+                unset($options['where']);
+            }
+        }
+
+        // 4. Формируем финальные опции
+        $new_options = [];
+
+        // WHERE: базовое условие FTS > внешнее
+        if (!empty($base_options['where']) && !empty($options['where'])) {
+            $new_options['where'] = $base_options['where'] . " AND (" . $options['where'] . ")";
+        } elseif (!empty($base_options['where'])) {
+            $new_options['where'] = $base_options['where'];
+        } elseif (!empty($options['where'])) {
+            $new_options['where'] = $options['where'];
+        }
+
+        // ORDER BY: ранг FTS > внешний order
+        if (!empty($base_options['order'])) {
+            $new_options['order'] = $base_options['order'];
+        } elseif (!empty($options['order'])) {
+            $new_options['order'] = $options['order'];
+        }
+
+        // GROUP BY: только внешние данные
+        if (isset($options['group']) && $options['group'] !== false) {
+            $new_options['group'] = $options['group'];
+        }
+
+        // LIMIT: только внешние данные
+        if (isset($options['limit']) && $options['limit'] !== false) {
+            $new_options['limit'] = $options['limit'];
+        }
+
+        // PARAMS: объединяем, внутренние имеют приоритет
+        $new_options['params'] = array_merge(
+            $options['params'] ?? [],
+            $base_options['params'] ?? []
+        );
+
+        return $new_options;
+    }
+
+    /**
+     * @brief   Снятие экранирования идентификаторов (например, имён таблиц или столбцов).
+     *
+     * @details Метод удаляет символы экранирования, специфичные для текущего типа СУБД,
+     *          чтобы получить "чистые" имена идентификаторов.
+     *          Используются правила:
+     *          - MySQL: обратные кавычки (`).
+     *          - PostgreSQL: двойные кавычки (").
+     *          - SQLite: квадратные скобки ([, ]) и двойные кавычки (").
+     *          Результат кешируется в $this->unescape_cache.
+     *
+     * @callergraph
+     *
+     * @param array $identifiers  Массив идентификаторов (например, столбцов или таблиц).
+     *                            Ожидается список строк.
      *
      * @return array Массив идентификаторов без символов экранирования.
+     *               Все значения — строки.
+     *
+     * Пример использования:
+     * @code
+     * $quoted = ['`id`', '"name"', '[created_at]', 'user."email"'];
+     * $clean = $this->unescape_identifiers($quoted);
+     * // $clean = ['id', 'name', 'created_at', 'user.email']
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::$unescape_cache
+     *         Кэш для хранения результатов снятия экранирования идентификаторов.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
      */
     private function unescape_identifiers(array $identifiers): array
     {
