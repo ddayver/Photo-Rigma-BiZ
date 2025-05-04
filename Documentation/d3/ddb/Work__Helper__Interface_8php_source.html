@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -112,13 +112,13 @@ $(function(){initNavTree('d3/ddb/Work__Helper__Interface_8php_source.html','../.
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">// Предотвращение прямого вызова файла</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keywordflow">if</span> (!defined(<span class="stringliteral">&#39;IN_GALLERY&#39;</span>) || <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">IN_GALLERY</a> !== <span class="keyword">true</span>) {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    error_log(</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) . <span class="stringliteral">&quot; [ERROR] | &quot;</span> . (filter_input(</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        date(<span class="stringliteral">&#39;H:i:s&#39;</span>) . <span class="stringliteral">&#39; [ERROR] | &#39;</span> . (filter_input(</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            INPUT_SERVER,</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="stringliteral">&#39;REMOTE_ADDR&#39;</span>,</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            FILTER_VALIDATE_IP</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        ) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) . <span class="stringliteral">&quot; | &quot;</span> . __FILE__ . <span class="stringliteral">&quot; | Попытка прямого вызова файла&quot;</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        ) ?: <span class="stringliteral">&#39;UNKNOWN_IP&#39;</span>) . <span class="stringliteral">&#39; | &#39;</span> . __FILE__ . <span class="stringliteral">&#39; | Попытка прямого вызова файла&#39;</span></div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    );</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    die(<span class="stringliteral">&quot;HACK!&quot;</span>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    die(<span class="stringliteral">&#39;HACK!&#39;</span>);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
 <div class="foldopen" id="foldopen00080" data-start="{" data-end="};">
@@ -144,7 +144,7 @@ $(function(){initNavTree('d3/ddb/Work__Helper__Interface_8php_source.html','../.
 <div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface_html_aa76be87bb05ca60ff16f6d47f5a44c32"><div class="ttname"><a href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#aa76be87bb05ca60ff16f6d47f5a44c32">PhotoRigma\Interfaces\Work_Helper_Interface\utf8_wordwrap</a></div><div class="ttdeci">static utf8_wordwrap(string $str, int $width=70, string $break=PHP_EOL)</div><div class="ttdoc">Разбивает строку на несколько строк ограниченной длины.</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface_html_ac28b2ada9c4f3a71f7a2df9bb1387413"><div class="ttname"><a href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#ac28b2ada9c4f3a71f7a2df9bb1387413">PhotoRigma\Interfaces\Work_Helper_Interface\return_bytes</a></div><div class="ttdeci">static return_bytes(string|int $val)</div><div class="ttdoc">Преобразует размер в формате &quot;число[K|M|G]&quot; в количество байт.</div></div>
 <div class="ttc" id="ainterfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface_html_ad9ac814e0001840a4cdbf826d0d6e53e"><div class="ttname"><a href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#ad9ac814e0001840a4cdbf826d0d6e53e">PhotoRigma\Interfaces\Work_Helper_Interface\encodename</a></div><div class="ttdeci">static encodename(string $string)</div><div class="ttdoc">Транслитерирует строку и заменяет знаки пунктуации на &quot;_&quot;.</div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_afc238d5007d9f82f9c59e7d33f7a75c6"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">PhotoRigma\IN_GALLERY</a></div><div class="ttdeci">const IN_GALLERY</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00161">index.php:161</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_afc238d5007d9f82f9c59e7d33f7a75c6"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6">PhotoRigma\IN_GALLERY</a></div><div class="ttdeci">const IN_GALLERY</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00158">index.php:158</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

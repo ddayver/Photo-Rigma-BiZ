@@ -1,0 +1,9 @@
+<map id="convert_query" name="convert_query">
+<area shape="rect" id="Node000001" title="Выполняет преобразование SQL&#45;запроса в зависимости от текущего формата и типа СУБД." alt="" coords="5,55,108,79"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a451fa63eb194310e84956cd073f8c60d" title="Производит преобразование SQL&#45;запроса из формата MySQL в целевой формат СУБД (PostgreSQL или SQLite)." alt="" coords="156,5,312,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,51,172,32,173,37,104,57"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a55a77b7501ba5ff17d2b50037e564c0e" title="Производит преобразование SQL&#45;запроса из формата PostgreSQL в целевой формат СУБД (MySQL или SQLite)." alt="" coords="157,55,310,79"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="108,64,142,64,142,70,108,70"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a149ff4207293c70d607483c59d135b6f" title="Производит преобразование SQL&#45;запроса из формата SQLite в целевой формат СУБД (MySQL или PostgreSQL)." alt="" coords="157,104,310,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="104,77,173,97,172,102,103,83"/>
+</map>

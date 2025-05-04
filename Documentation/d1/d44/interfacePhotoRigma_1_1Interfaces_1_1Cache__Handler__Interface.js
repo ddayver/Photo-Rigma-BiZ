@@ -1,5 +1,5 @@
 var interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface =
 [
-    [ "is_valid", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html#ae2b05c45fdb085ddff20e7add6ddf023", null ],
-    [ "update_cache", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html#aaf8b0936b2a1932a4ae008545d24089a", null ]
+    [ "is_valid", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html#a4eb59a37e4e4450d648cdbd2afac5554", null ],
+    [ "update_cache", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html#ae6fe4fc9a2266dab7e9facd9cd20fd09", null ]
 ];

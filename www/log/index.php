@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection DuplicatedCode */
+/** @noinspection HttpUrlsUsage */
 /**
  * @file        log/index.php
  * @brief       Перенаправление на корневой URL сайта.

@@ -1,9 +1,11 @@
 <map id="format_date" name="format_date">
-<area shape="rect" id="Node000001" title="Форматирует дату в зависимости от типа СУБД через вызов внутреннего метода." alt="" coords="5,40,96,65"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad7c3527d920ebf2dbcbc0c51845835d6" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="144,40,290,65"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,50,128,50,128,55,96,55"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5d0b9a7e8ede6be3469375cdefe284fa" title="Преобразует формат даты из стиля MariaDB в стиль PostgreSQL." alt="" coords="350,5,490,44"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,40,334,34,335,39,291,45"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2a80f19b2f30843409069ff854e3d0d9" title="Преобразует формат даты из стиля MariaDB в стиль SQLite." alt="" coords="338,68,502,93"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="291,60,323,65,322,70,290,65"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="5,61,96,86"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad7c3527d920ebf2dbcbc0c51845835d6" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="144,61,290,86"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,71,128,71,128,76,96,76"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a669971f2108b67a1114a8e0b978fe388" title="Производит преобразование строки формата даты/времени в формат, совместимый с MySQL (DATE_FORMAT)." alt="" coords="338,5,505,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="264,58,358,32,360,37,266,63"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af2c9d62818d2abcda848c5f966a7806a" title="Преобразует формат даты/времени в формат, совместимый с PostgreSQL." alt="" coords="352,54,491,93"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="291,71,336,71,336,76,291,76"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a98dfa8b7ea985e32ab3904f14c3d06f4" title="Преобразует формат даты/времени в формат, совместимый с SQLite (strftime)." alt="" coords="340,117,504,142"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="266,84,360,110,358,115,264,89"/>
 </map>

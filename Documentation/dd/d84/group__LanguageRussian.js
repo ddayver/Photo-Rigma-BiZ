@@ -7,5 +7,6 @@ var group__LanguageRussian =
     [ "Переменные для новостей", "d8/da1/group__LanguageRussianNews.html", null ],
     [ "Переменные для фотографий", "d2/d55/group__LanguageRussianPhoto.html", null ],
     [ "Переменные для поиска", "d6/d51/group__LanguageRussianSearch.html", null ],
-    [ "Переменные для админки", "d4/df1/group__LanguageRussianAdmin.html", null ]
+    [ "Переменные для админки", "d4/df1/group__LanguageRussianAdmin.html", null ],
+    [ "PhotoRigma\\Language\\$lang_ru", "dd/d84/group__LanguageRussian.html#gacfff53413bdb0f1a6a20cd5843950b32", null ]
 ];

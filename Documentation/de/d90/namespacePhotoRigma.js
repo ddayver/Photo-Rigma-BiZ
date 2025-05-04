@@ -21,7 +21,7 @@ var namespacePhotoRigma =
       [ "$types", "de/d8e/namespacePhotoRigma_1_1Action.html#a92d70a97331cc6fc0a79d9da50895be8", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a3659a51b3cd945578c20fe5540395b49", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a6bb4778c70884c9cebefbaf83124997c", null ],
-      [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a04590eca754d146f49f48614e340ea33", null ],
+      [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a08a36709a746384a70c3099051ba6d76", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#aa046e7ae726a9df7c3915f8302580054", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a30c44f72c5982e0bd36b0b911c96b8aa", null ],
       [ "else", "de/d8e/namespacePhotoRigma_1_1Action.html#a3cabce7f12ddaf0ba439742dfebf904c", null ],
@@ -49,6 +49,7 @@ var namespacePhotoRigma =
       [ "LONG_MENU", "db/d02/namespacePhotoRigma_1_1Include.html#a8ffd4ef7a2d3270cb35c24abf9264733", null ],
       [ "MAX_LOG_SIZE", "db/d02/namespacePhotoRigma_1_1Include.html#a53cff4e23bb5f13e5e08ca5e8b58d740", null ],
       [ "MAX_LOGIN_ATTEMPTS", "db/d02/namespacePhotoRigma_1_1Include.html#a0c9fe713d3d1b6f166d8768aaf619275", null ],
+      [ "MIN_FULLTEXT_SEARCH_LENGTH", "db/d02/namespacePhotoRigma_1_1Include.html#ad8b556a1e05cc5e5d4fae7b42ff28093", null ],
       [ "REG_EMAIL", "db/d02/namespacePhotoRigma_1_1Include.html#ae61eeb74d6e738c902452868f3b3ca32", null ],
       [ "REG_LOGIN", "db/d02/namespacePhotoRigma_1_1Include.html#abcaad3156cca5ada2c3a8df418291208", null ],
       [ "REG_NAME", "db/d02/namespacePhotoRigma_1_1Include.html#a328f2af671059a9d73b0cfef6c3a644f", null ],
@@ -72,11 +73,12 @@ var namespacePhotoRigma =
     ] ],
     [ "Interfaces", "dd/db0/namespacePhotoRigma_1_1Interfaces.html", "dd/db0/namespacePhotoRigma_1_1Interfaces" ],
     [ "Language", "dc/d7a/namespacePhotoRigma_1_1Language.html", [
-      [ "$lang", "de/d8e/group__LanguageEnglish.html#ga7714b111b644017933931ec69a154102", null ],
+      [ "$lang_en", "de/d8e/group__LanguageEnglish.html#ga2a5695fb39fb348d8762c5e1e9d0e9d0", null ],
       [ "$lang_id", "de/d8e/group__LanguageEnglish.html#ga0f3f446c2e82829ea9842cd5b22ac1f9", null ],
       [ "$lang_name", "de/d8e/group__LanguageEnglish.html#gaf2c7295c203b165809c85ced7b224e9e", null ],
-      [ "return", "dc/d7a/namespacePhotoRigma_1_1Language.html#a4cb11182c77bbda94f0898478ecd6866", null ],
-      [ "return", "dc/d7a/namespacePhotoRigma_1_1Language.html#a4cb11182c77bbda94f0898478ecd6866", null ]
+      [ "$lang_ru", "dd/d84/group__LanguageRussian.html#gacfff53413bdb0f1a6a20cd5843950b32", null ],
+      [ "return", "dc/d7a/namespacePhotoRigma_1_1Language.html#a7b9481a14d72de6d62de7b0b475c9a32", null ],
+      [ "return", "dc/d7a/namespacePhotoRigma_1_1Language.html#a588773d0c80f54c98cabd83aa3d4e746", null ]
     ] ],
     [ "$action", "de/d90/namespacePhotoRigma.html#aa698a3e72116e8e778be0e95d908ee30", null ],
     [ "$base_path", "de/d90/namespacePhotoRigma.html#a0eb0a189bae04261ab41ac974f8eb757", null ],

@@ -5,8 +5,8 @@
  * @brief       Файл содержит настройки и инициализацию сессий и куков для управления состоянием пользователя.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Include
  *
  * @details     Этот файл содержит настройки и инициализацию сессий и куков, которые используются для управления
@@ -47,13 +47,13 @@ use RuntimeException;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // =============================================================================
@@ -82,13 +82,13 @@ if (!$cookie_domain) {
 // Если HTTP_HOST всё ещё не установлен, выбрасываем исключение
 if (!$cookie_domain) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Не удалось определить HTTP_HOST | Проверьте настройки сервера"
+        __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ') | Не удалось определить HTTP_HOST | Проверьте настройки сервера'
     );
 }
 // Валидация формата домена
 if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $cookie_domain)) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: $cookie_domain"
+        __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: $cookie_domain"
     );
 }
 

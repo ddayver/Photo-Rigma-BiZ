@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -111,12 +111,12 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
-<tr class="memitem:ae2b05c45fdb085ddff20e7add6ddf023" id="r_ae2b05c45fdb085ddff20e7add6ddf023"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2b05c45fdb085ddff20e7add6ddf023">is_valid</a> (string $key, int $checksum)</td></tr>
-<tr class="memdesc:ae2b05c45fdb085ddff20e7add6ddf023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет актуальность данных в кеше.  <br /></td></tr>
-<tr class="separator:ae2b05c45fdb085ddff20e7add6ddf023"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf8b0936b2a1932a4ae008545d24089a" id="r_aaf8b0936b2a1932a4ae008545d24089a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf8b0936b2a1932a4ae008545d24089a">update_cache</a> (string $key, int $checksum, array $data)</td></tr>
-<tr class="memdesc:aaf8b0936b2a1932a4ae008545d24089a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает данные в кеш.  <br /></td></tr>
-<tr class="separator:aaf8b0936b2a1932a4ae008545d24089a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eb59a37e4e4450d648cdbd2afac5554" id="r_a4eb59a37e4e4450d648cdbd2afac5554"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4eb59a37e4e4450d648cdbd2afac5554">is_valid</a> (string $key, int|string $checksum)</td></tr>
+<tr class="memdesc:a4eb59a37e4e4450d648cdbd2afac5554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет актуальность данных в кеше.  <br /></td></tr>
+<tr class="separator:a4eb59a37e4e4450d648cdbd2afac5554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6fe4fc9a2266dab7e9facd9cd20fd09" id="r_ae6fe4fc9a2266dab7e9facd9cd20fd09"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6fe4fc9a2266dab7e9facd9cd20fd09">update_cache</a> (string $key, int|string $checksum, array $data)</td></tr>
+<tr class="memdesc:ae6fe4fc9a2266dab7e9facd9cd20fd09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записывает данные в кеш.  <br /></td></tr>
+<tr class="separator:ae6fe4fc9a2266dab7e9facd9cd20fd09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с системами кеширования. </p>
@@ -130,10 +130,10 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
 <dl class="section note"><dt>Заметки</dt><dd>Интерфейс поддерживает только файловое кеширование, Redis и Memcached.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Реализация методов интерфейса может отличаться от предыдущих версий. Убедитесь, что вы изучили новую документацию перед использованием. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/d67/Cache__Handler__Interface_8php_source.html">Cache_Handler_Interface.php</a> строка <a class="el" href="../../dc/d67/Cache__Handler__Interface_8php_source.html#l00077">77</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/d67/Cache__Handler__Interface_8php_source.html">Cache_Handler_Interface.php</a> строка <a class="el" href="../../dc/d67/Cache__Handler__Interface_8php_source.html#l00078">78</a></p>
 </div><h2 class="groupheader">Методы</h2>
-<a id="ae2b05c45fdb085ddff20e7add6ddf023" name="ae2b05c45fdb085ddff20e7add6ddf023"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2b05c45fdb085ddff20e7add6ddf023">&#9670;&#160;</a></span>is_valid()</h2>
+<a id="a4eb59a37e4e4450d648cdbd2afac5554" name="a4eb59a37e4e4450d648cdbd2afac5554"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eb59a37e4e4450d648cdbd2afac5554">&#9670;&#160;</a></span>is_valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,7 +146,7 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$checksum</em></span>&#160;)</td>
+          <td class="paramtype">int|string</td>          <td class="paramname"><span class="paramname"><em>$checksum</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -164,7 +164,7 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$key</td><td>Ключ кеша. Используется для проверки актуальности данных. Пример: &lsquo;'user_settings&rsquo;`. </td></tr>
-    <tr><td class="paramtype">int</td><td class="paramname">$checksum</td><td>Контрольное число для проверки актуальности данных. Должно соответствовать сохранённому значению в кеше.</td></tr>
+    <tr><td class="paramtype">int&#160;|&#160;string</td><td class="paramname">$checksum</td><td>Контрольное число или хеш-строка для проверки актуальности данных. Должно соответствовать сохранённому значению в кеше.</td></tr>
   </table>
   </dd>
 </dl>
@@ -202,8 +202,8 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
 </div><!-- fragment --> 
 </div>
 </div>
-<a id="aaf8b0936b2a1932a4ae008545d24089a" name="aaf8b0936b2a1932a4ae008545d24089a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf8b0936b2a1932a4ae008545d24089a">&#9670;&#160;</a></span>update_cache()</h2>
+<a id="ae6fe4fc9a2266dab7e9facd9cd20fd09" name="ae6fe4fc9a2266dab7e9facd9cd20fd09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6fe4fc9a2266dab7e9facd9cd20fd09">&#9670;&#160;</a></span>update_cache()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,7 +216,7 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$checksum</em></span>, </td>
+          <td class="paramtype">int|string</td>          <td class="paramname"><span class="paramname"><em>$checksum</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -238,7 +238,7 @@ $(function(){initNavTree('d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Han
 </ol>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$key</td><td>Ключ кеша. Используется для записи данных. Пример: &lsquo;'user_settings&rsquo;<code>. @param int $checksum Контрольное число для проверки актуальности данных. Будет сохранено в кеше. @param array $data Данные для записи. Будут закодированы в формат JSON и Base64. Пример:</code>['theme' =&gt; 'dark', 'language' =&gt; 'en']`.</td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$key</td><td>Ключ кеша. Используется для записи данных. Пример: &lsquo;'user_settings&rsquo;<code>. @param int|string $checksum Контрольное число или хеш-строка для проверки актуальности данных. Будет сохранено в кеше. @param array $data Данные для записи. Будут закодированы в формат JSON и Base64. Пример:</code>['theme' =&gt; 'dark', 'language' =&gt; 'en']`.</td></tr>
   </table>
   </dd>
 </dl>

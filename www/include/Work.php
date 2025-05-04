@@ -6,8 +6,8 @@
  *              Объединяет подклассы для выполнения задач.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит основной класс приложения `Work`, который объединяет подклассы для выполнения
@@ -73,13 +73,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -331,7 +331,7 @@ class Work implements Work_Interface
         // Если время последнего изменения таблицы не найдено, выбрасываем исключение
         if (!$timestamp_result || !isset($timestamp_result['last_update'])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить дату последнего изменения таблицы: $table_name"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить дату последнего изменения таблицы: $table_name"
             );
         }
 
@@ -348,7 +348,7 @@ class Work implements Work_Interface
             // Загружаем все данные из таблицы конфигурации
             if ($result === false) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось загрузить данные из таблицы: " . TBL_CONFIG
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось загрузить данные из таблицы: ' . TBL_CONFIG
                 );
             }
 
@@ -358,7 +358,7 @@ class Work implements Work_Interface
             // Обновляем кеш новыми данными
             if (!$this->cache->update_cache('config_cache', $db_last_update, $config_data)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать данные в кеш: config_cache"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось записать данные в кеш: config_cache'
                 );
             }
         }
@@ -404,7 +404,7 @@ class Work implements Work_Interface
             'config' => $this->config,
             'lang'   => $this->lang,
             default  => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
             ),
         };
     }
@@ -469,7 +469,7 @@ class Work implements Work_Interface
             }
             if (!empty($errors)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обнаружены ошибки в конфигурации | Ошибки: " . json_encode(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . 'Обнаружены ошибки в конфигурации | Ошибки: ' . json_encode(
                         $errors,
                         JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
@@ -491,7 +491,7 @@ class Work implements Work_Interface
             }
             if (!empty($updated_settings)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обновление настроек | Настройки: " . json_encode(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . 'Обновление настроек | Настройки: ' . json_encode(
                         $updated_settings,
                         JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
@@ -499,7 +499,7 @@ class Work implements Work_Interface
             }
             if (!empty($added_settings)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Добавление настроек | Настройки: " . json_encode(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . 'Добавление настроек | Настройки: ' . json_encode(
                         $added_settings,
                         JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
@@ -513,7 +513,7 @@ class Work implements Work_Interface
             $this->core_logic->config = $this->config;
         } else {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Несуществующее свойство | Свойство: $name"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Несуществующее свойство | Свойство: $name"
             );
         }
     }
@@ -1305,7 +1305,7 @@ class Work implements Work_Interface
         foreach ($lang as $name => $keys) {
             // Проверка ключей первого уровня
             if (!is_string($name)) {
-                $result['errors'][] = "Ключ первого уровня должен быть строкой. Получено: " . gettype($name);
+                $result['errors'][] = 'Ключ первого уровня должен быть строкой. Получено: ' . gettype($name);
                 continue;
             }
 

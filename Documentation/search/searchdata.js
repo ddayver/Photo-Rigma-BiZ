@@ -1,13 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "$123456:_abcdefghijklmnoprstuvwабвдезиклмнопрстуфшя✨🎮💻📌📑📜📸🚀🛠",
+  0: "$123456:_abcdefghijklmnprstuvwабвгдезиклмнопрстуфшя✨🎮💻📌📑📜📸🗂🚀🛠",
   1: "cdtuw",
   2: "p",
   3: "acdfimnprstuw",
-  4: "_abcdefgijlmnprstuv",
+  4: "_abcdefgijlmnprstuvw",
   5: "$cdeiklmrstv",
   6: "aceilmnprsvавдикмнопрсфя",
-  7: "bloprtuзс📸"
+  7: "bprзс📸"
 };
 
 var indexSectionNames =

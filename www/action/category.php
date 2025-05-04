@@ -7,8 +7,8 @@
  * @brief       Обзор и управление разделами галереи.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею.
@@ -79,13 +79,13 @@ use RuntimeException;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // Установка файла шаблона
@@ -181,7 +181,7 @@ if ($cat === 'user' || $cat === 0) {
             } else {
                 // Если данные категории не найдены, выбрасываем исключение
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные категории пользователей'
                 );
             }
         } else {
@@ -288,7 +288,7 @@ if ($cat === 'user' || $cat === 0) {
             } else {
                 // Если данные категории не найдены, выбрасываем исключение
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей | ID: $cat_id"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории пользователей | ID: $cat_id"
                 );
             }
         } else {
@@ -316,7 +316,7 @@ if ($cat === 'user' || $cat === 0) {
             $_POST['csrf_token']
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
         }
         $user->unset_property_key('session', 'csrf_token');
@@ -364,12 +364,12 @@ if ($cat === 'user' || $cat === 0) {
             $affected_rows = $db->get_affected_rows();
             if ($affected_rows === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные категории | ID: $cat"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные категории | ID: $cat"
                 );
             }
         } else {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
             );
         }
 
@@ -486,7 +486,7 @@ if ($cat === 'user' || $cat === 0) {
             $affected_rows = $db->get_affected_rows();
             if ($affected_rows === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить категорию из базы данных | ID: $cat"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить категорию из базы данных | ID: $cat"
                 );
             }
 
@@ -592,7 +592,7 @@ if ($cat === 'user' || $cat === 0) {
             } else {
                 // Если данные категории не найдены, выбрасываем исключение
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: $cat"
                 );
             }
         } else {
@@ -720,7 +720,7 @@ if ($cat === 'user' || $cat === 0) {
         $_POST['csrf_token']
     )) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token');
@@ -788,7 +788,7 @@ if ($cat === 'user' || $cat === 0) {
     $new_category_id = $db->get_last_insert_id();
     if ($new_category_id === 0) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: $directory_name"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось добавить категорию в базу данных | Имя директории: $directory_name"
         );
     }
     // Перенаправляем пользователя после успешного добавления

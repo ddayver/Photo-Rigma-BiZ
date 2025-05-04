@@ -5,8 +5,8 @@
  * @brief       Файл содержит класс Work_Helper, который предоставляет вспомогательные методы для работы с данными.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_Helper`, который реализует вспомогательные методы для обработки данных.
@@ -49,13 +49,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -701,7 +701,7 @@ class Work_Helper implements Work_Helper_Interface
     {
         if ($depth > $max_recursion_depth) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Превышена максимальная глубина рекурсии при обработке BBCode"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Превышена максимальная глубина рекурсии при обработке BBCode'
             );
             return $text; // Прерываем обработку
         }
@@ -739,7 +739,7 @@ class Work_Helper implements Work_Helper_Interface
                     $url
                 ) || strlen($url) > 2000) {
                     log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
                     );
                     return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
                 }
@@ -754,7 +754,7 @@ class Work_Helper implements Work_Helper_Interface
                     $url
                 ) || strlen($url) > 2000) {
                     log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL | Получено: '$url'"
                     );
                     return '<a href="#" title="#">A-a-a-a!</a>'; // Безопасное значение
                 }
@@ -853,7 +853,7 @@ class Work_Helper implements Work_Helper_Interface
                 $src = self::_clean_field_internal($matches[1]);
                 if (!filter_var($src, FILTER_VALIDATE_URL)) {
                     log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL изображения | Получено: '$src'"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL изображения | Получено: '$src'"
                     );
                     return ''; // Удаляем некорректные изображения
                 }
@@ -976,7 +976,7 @@ class Work_Helper implements Work_Helper_Interface
         // Проверка граничных условий
         if ($width <= 0 || empty($break)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные параметры | width = $width, break = '$break'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные параметры | width = $width, break = '$break'"
             );
             return $str;
         }
@@ -1137,7 +1137,7 @@ class Work_Helper implements Work_Helper_Interface
                 $is_mime_supported = true;
             } else {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через imagick | Получено: '$real_mime_type'"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через imagick | Получено: '$real_mime_type'"
                 );
             }
         }
@@ -1147,7 +1147,7 @@ class Work_Helper implements Work_Helper_Interface
                 $is_mime_supported = true;
             } else {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через gmagick | Получено: '$real_mime_type'"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через gmagick | Получено: '$real_mime_type'"
                 );
             }
         }
@@ -1157,7 +1157,7 @@ class Work_Helper implements Work_Helper_Interface
                 $is_mime_supported = true;
             } else {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через GD | Получено: '$real_mime_type'"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | MIME-тип не поддерживается через GD | Получено: '$real_mime_type'"
                 );
             }
         }

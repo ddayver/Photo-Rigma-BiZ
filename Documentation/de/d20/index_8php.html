@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -134,7 +134,7 @@ $(function(){initNavTree('de/d20/index_8php.html','../../'); initResizable(true)
 <tr class="memitem:ac2dc76d756ec398393d4b1d23659276c" id="r_ac2dc76d756ec398393d4b1d23659276c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#ac2dc76d756ec398393d4b1d23659276c">$cache</a> = new <a class="el" href="../../d3/d14/classCache__Handler.html">Cache_Handler</a>($config['cache'], $config['site_dir'])</td></tr>
 <tr class="memdesc:ac2dc76d756ec398393d4b1d23659276c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d3/d14/classCache__Handler.html" title="Класс для работы с системами кеширования.">Cache_Handler</a> для работы с системами кеширования.  <br /></td></tr>
 <tr class="separator:ac2dc76d756ec398393d4b1d23659276c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'])</td></tr>
+<tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'], $cache)</td></tr>
 <tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a> для работы с основной БД.  <br /></td></tr>
 <tr class="separator:a1fa3127fc82f96b1436d871ef02be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48" id="r_a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>($db, $config, $_SESSION, $cache)</td></tr>
@@ -161,31 +161,9 @@ $(function(){initNavTree('de/d20/index_8php.html','../../'); initResizable(true)
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Точка входа в приложение <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a>. </p>
-<dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">RuntimeException</td><td>Если конфигурационный файл отсутствует или недоступен для чтения. Пример сообщения: "Конфигурационный файл отсутствует или не является
-             файлом | Путь: config.php". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если обязательные файлы отсутствуют или недоступны для чтения. Пример сообщения: "Проверка обязательных файлов завершилась ошибкой | Ошибки:
-             [список ошибок]". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если файл действия не найден или недоступен для чтения. Пример сообщения: "Файл действий не найден или недоступен для чтения | Путь:
-             [путь к файлу]". </td></tr>
-    <tr><td class="paramname">PDOException</td><td>Если возникла ошибка при работе с базой данных. Пример сообщения: "Ошибка базы данных | [сообщение об ошибке]". </td></tr>
-    <tr><td class="paramname">Exception</td><td>Если возникла непредвиденная ошибка. Пример сообщения: "Общая ошибка |
-             [сообщение об ошибке]".</td></tr>
-  </table>
-  </dd>
-</dl>
-<h1><a class="anchor" id="Связанные"></a>
-файлы и компоненты</h1>
-<ul>
-<li>Конфигурационные файлы:<ul>
-<li><dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.4.2 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-04-27 </dd></dl>
-</li>
-</ul>
-</li>
-</ul>
+<dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.4.3 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-05-05 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a></p>
 </div></div><!-- contents -->

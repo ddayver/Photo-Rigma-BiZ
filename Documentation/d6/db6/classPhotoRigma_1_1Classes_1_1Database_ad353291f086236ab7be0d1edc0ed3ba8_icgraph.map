@@ -1,5 +1,5 @@
 <map id="_truncate_internal" name="_truncate_internal">
 <area shape="rect" id="Node000001" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="122,5,246,30"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Очищает таблицу через вызов внутреннего метода." alt="" coords="5,5,74,30"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Очищает таблицу (TRUNCATE) через вызов внутреннего метода." alt="" coords="5,5,74,30"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,20,74,20,74,15,106,15"/>
 </map>

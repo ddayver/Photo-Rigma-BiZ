@@ -5,8 +5,8 @@
  * @brief       Класс для работы с системами кеширования.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит реализацию класса `Cache_Handler`, который предоставляет методы для работы с
@@ -53,13 +53,13 @@ use RuntimeException;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -77,11 +77,11 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Обработку ошибок через исключения.
  *          Все операции выполняются в зависимости от выбранного типа кеширования (`$this->type`).
  *
- * @property Redis|Memcached|string|null $client     Клиент для Redis/Memcached или путь к директории кеша.
- *                                                   Для файлового кеширования хранит путь к директории.
- *                                                   Для Redis/Memcached хранит экземпляр клиента.
- * @property string                      $type       Тип кеширования (`file`, `redis`, `memcached`).
- *                                                   По умолчанию: `file`.
+ * @property Redis|Memcached|string|null $client Клиент для Redis/Memcached или путь к директории кеша.
+ *                                               Для файлового кеширования хранит путь к директории.
+ *                                               Для Redis/Memcached хранит экземпляр клиента.
+ * @property string                      $type   Тип кеширования (`file`, `redis`, `memcached`).
+ *                                               По умолчанию: `file`.
  *
  * Пример создания объекта класса Cache_Handler:
  * @code
@@ -133,22 +133,22 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @callgraph
      *
-     * @param array  $config     Массив с настройками кеширования:
-     *                           - string `type`: Тип кеширования (`file`, `redis`, `memcached`).
-     *                           Если тип не указан, используется значение по умолчанию: `file`.
-     *                           Если указан неизвестный тип, выбрасывается исключение `InvalidArgumentException`.
-     *                           - string `cache_dir` (опционально): Путь к директории кеша (для файлового кеширования).
-     *                           Обязательный параметр для типа `file`. Если путь некорректен или недоступен,
-     *                           это должно быть обработано в методе `init_cache_file()`.
-     *                           - string `host` (опционально): Хост для Redis/Memcached.
-     *                           Обязательный параметр для типов `redis` и `memcached`.
-     *                           - int `port` (опционально): Порт для Redis/Memcached.
-     *                           Если порт не указан, используются значения по умолчанию:
-     *                           - Redis: 6379
-     *                           - Memcached: 11211
-     * @param string $site_dir   Полный путь к корню папок проекта (необязательный параметр).
-     *                           Используется только для файлового кеширования. Если путь некорректен или недоступен,
-     *                           это должно быть обработано в методе `init_cache_file()`.
+     * @param array  $config   Массив с настройками кеширования:
+     *                         - string `type`: Тип кеширования (`file`, `redis`, `memcached`).
+     *                         Если тип не указан, используется значение по умолчанию: `file`.
+     *                         Если указан неизвестный тип, выбрасывается исключение `InvalidArgumentException`.
+     *                         - string `cache_dir` (опционально): Путь к директории кеша (для файлового кеширования).
+     *                         Обязательный параметр для типа `file`. Если путь некорректен или недоступен,
+     *                         это должно быть обработано в методе `init_cache_file()`.
+     *                         - string `host` (опционально): Хост для Redis/Memcached.
+     *                         Обязательный параметр для типов `redis` и `memcached`.
+     *                         - int `port` (опционально): Порт для Redis/Memcached.
+     *                         Если порт не указан, используются значения по умолчанию:
+     *                         - Redis: 6379
+     *                         - Memcached: 11211
+     * @param string $site_dir Полный путь к корню папок проекта (необязательный параметр).
+     *                         Используется только для файлового кеширования. Если путь некорректен или недоступен,
+     *                         это должно быть обработано в методе `init_cache_file()`.
      *
      * @throws InvalidArgumentException Выбрасывается, если указан неизвестный тип кеширования.
      *                                  Пример сообщения:
@@ -175,12 +175,12 @@ class Cache_Handler implements Cache_Handler_Interface
      * ];
      * $cache = new \PhotoRigma\Classes\Cache_Handler($config);
      * @endcode
-     * @see     PhotoRigma::Classes::Cache_Handler::init_cache_file()
-     *          Метод для инициализации файлового кеширования.
-     * @see     PhotoRigma::Classes::Cache_Handler::init_cache_redis()
-     *          Метод для инициализации кеширования через Redis.
-     * @see     PhotoRigma::Classes::Cache_Handler::init_cache_memcached()
-     *          Метод для инициализации кеширования через Memcached.
+     * @see    PhotoRigma::Classes::Cache_Handler::init_cache_file()
+     *         Метод для инициализации файлового кеширования.
+     * @see    PhotoRigma::Classes::Cache_Handler::init_cache_redis()
+     *         Метод для инициализации кеширования через Redis.
+     * @see    PhotoRigma::Classes::Cache_Handler::init_cache_memcached()
+     *         Метод для инициализации кеширования через Memcached.
      */
     public function __construct(array $config, string $site_dir = '')
     {
@@ -191,7 +191,7 @@ class Cache_Handler implements Cache_Handler_Interface
             'redis'     => $this->init_cache_redis($config),
             'memcached' => $this->init_cache_memcached($config),
             default     => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неизвестный тип кеширования | Тип: $this->type"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неизвестный тип кеширования | Тип: $this->type"
             ),
         };
     }
@@ -204,7 +204,7 @@ class Cache_Handler implements Cache_Handler_Interface
      *          2. Формирует путь к директории кеша на основе переданных настроек.
      *             - Если параметр `cache_dir` не указан, используется значение по умолчанию: `cache`.
      *          3. Проверяет безопасность пути (запрещает использование `../` для предотвращения выхода за пределы
-     *          директории).
+     *             директории).
      *             - Если путь содержит недопустимые символы, выбрасывается исключение `InvalidArgumentException`.
      *          4. Нормализует путь, используя функцию `realpath()`, чтобы получить абсолютный путь.
      *          5. Создаёт директорию кеша, если она не существует.
@@ -214,19 +214,20 @@ class Cache_Handler implements Cache_Handler_Interface
      *          7. Сохраняет нормализованный путь к директории кеша в свойство `$client`.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
-     * @param array  $config     Массив с настройками кеширования:
-     *                           - string `cache_dir` (опционально): Путь к директории кеша относительно корня проекта.
-     *                           Если не указан, используется значение по умолчанию: `cache`.
-     *                           Если путь содержит недопустимые символы (например, `../`), выбрасывается исключение.
-     * @param string $site_dir   Полный путь к корню папок проекта.
-     *                           Если не указан, используется текущая директория (`__DIR__`).
+     * @param array  $config   Массив с настройками кеширования:
+     *                         - string `cache_dir` (опционально): Путь к директории кеша относительно корня проекта.
+     *                         Если не указан, используется значение по умолчанию: `cache`.
+     *                         Если путь содержит недопустимые символы (например, `../`), выбрасывается исключение.
+     * @param string $site_dir Полный путь к корню папок проекта.
+     *                         Если не указан, используется текущая директория (`__DIR__`).
      *
      * @throws InvalidArgumentException Выбрасывается, если путь к директории кеша содержит недопустимые символы.
      *                                  Пример сообщения:
      *                                      Недопустимый путь к директории кеша | Путь: [путь]
-     * @throws RuntimeException Выбрасывается, если:
+     * @throws RuntimeException         Выбрасывается, если:
      *                                  - Не удалось создать директорию кеша.
      *                                    Пример сообщения:
      *                                        Не удалось создать директорию кеша | Путь: [путь]
@@ -252,8 +253,8 @@ class Cache_Handler implements Cache_Handler_Interface
      * $this->init_cache_file($config, $site_dir);
      * @endcode
      *
-     * @see     PhotoRigma::Classes::Cache_Handler::$client
-     *          Свойство, содержащее путь к директории кеша после инициализации.
+     * @see    PhotoRigma::Classes::Cache_Handler::$client
+     *         Свойство, содержащее путь к директории кеша после инициализации.
      */
     private function init_cache_file(array $config, string $site_dir): void
     {
@@ -266,7 +267,7 @@ class Cache_Handler implements Cache_Handler_Interface
         // 3. Проверка безопасности пути (запрещаем использование '../')
         if (preg_match('#\.\.[/\\\\]#', $cache_dir)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый путь к директории кеша | Путь: $cache_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый путь к директории кеша | Путь: $cache_dir"
             );
         }
 
@@ -278,14 +279,14 @@ class Cache_Handler implements Cache_Handler_Interface
             $normalized_cache_dir
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директорию кеша | Путь: $normalized_cache_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директорию кеша | Путь: $normalized_cache_dir"
             );
         }
 
         // 6. Проверка прав записи в директорию
         if (!is_writable($normalized_cache_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория кеша недоступна для записи | Путь: $normalized_cache_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория кеша недоступна для записи | Путь: $normalized_cache_dir"
             );
         }
         $normalized_cache_dir = rtrim($normalized_cache_dir, '/') . '/';
@@ -310,22 +311,23 @@ class Cache_Handler implements Cache_Handler_Interface
      *          5. Сохраняет экземпляр клиента Redis в свойство `$client`.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
-     * @param array $config   Массив с настройками кеширования:
-     *                        - string `host` (опционально): Хост Redis.
+     * @param array $config Массив с настройками кеширования:
+     *                      - string `host` (опционально): Хост Redis.
      *                        Если не указан, используется значение по умолчанию: `127.0.0.1`.
-     *                        - int `port` (опционально): Порт Redis.
+     *                      - int `port` (опционально): Порт Redis.
      *                        Если не указан, используется значение по умолчанию: `6379`.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Redis-расширение недоступно.
-     *                                    Пример сообщения:
-     *                                        Redis-расширение недоступно | Рекомендация: убедитесь, что оно
-     *                                        установлено и включено в PHP
-     *                                  - Не удалось подключиться к Redis.
-     *                                    Пример сообщения:
-     *                                        Не удалось подключиться к Redis | Хост: [хост]:[порт]
+     *                          - Redis-расширение недоступно.
+     *                            Пример сообщения:
+     *                                Redis-расширение недоступно | Рекомендация: убедитесь, что оно установлено и
+     *                                включено в PHP
+     *                          - Не удалось подключиться к Redis.
+     *                            Пример сообщения:
+     *                                Не удалось подключиться к Redis | Хост: [хост]:[порт]
      *
      * @note    Для подключения к Redis используются параметры `host` и `port` из массива `$config`.
      *          Если параметры не указаны, используются значения по умолчанию:
@@ -346,15 +348,15 @@ class Cache_Handler implements Cache_Handler_Interface
      * ];
      * $this->init_cache_redis($config);
      * @endcode
-     * @see     PhotoRigma::Classes::Cache_Handler::$client
-     *          Свойство, содержащее экземпляр клиента Redis после инициализации.
+     * @see    PhotoRigma::Classes::Cache_Handler::$client
+     *         Свойство, содержащее экземпляр клиента Redis после инициализации.
      */
     private function init_cache_redis(array $config): void
     {
         // 1. Проверка наличия Redis-расширения
         if (!extension_loaded('redis')) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Redis-расширение недоступно | Рекомендация: убедитесь, что оно установлено и включено в PHP"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Redis-расширение недоступно | Рекомендация: убедитесь, что оно установлено и включено в PHP'
             );
         }
 
@@ -369,7 +371,7 @@ class Cache_Handler implements Cache_Handler_Interface
         // 4. Подключение к Redis
         if (!$redis->connect($host, (int)$port, $timeout)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось подключиться к Redis | Хост: $host:$port"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось подключиться к Redis | Хост: $host:$port"
             );
         }
 
@@ -393,22 +395,23 @@ class Cache_Handler implements Cache_Handler_Interface
      *          6. Сохраняет экземпляр клиента Memcached в свойство `$client`.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
-     * @param array $config   Массив с настройками кеширования:
-     *                        - string `host` (опционально): Хост Memcached.
+     * @param array $config Массив с настройками кеширования:
+     *                      - string `host` (опционально): Хост Memcached.
      *                        Если не указан, используется значение по умолчанию: `127.0.0.1`.
-     *                        - int `port` (опционально): Порт Memcached.
+     *                      - int `port` (опционально): Порт Memcached.
      *                        Если не указан, используется значение по умолчанию: `11211`.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Memcached-расширение недоступно.
-     *                                    Пример сообщения:
-     *                                        Memcached-расширение недоступно | Рекомендация: убедитесь, что оно
-     *                                        установлено и включено в PHP
-     *                                  - Не удалось подключиться к Memcached.
-     *                                    Пример сообщения:
-     *                                        Не удалось подключиться к Memcached | Хост: [хост]:[порт]
+     *                          - Memcached-расширение недоступно.
+     *                            Пример сообщения:
+     *                                Memcached-расширение недоступно | Рекомендация: убедитесь, что оно установлено
+     *                                и включено в PHP
+     *                          - Не удалось подключиться к Memcached.
+     *                            Пример сообщения:
+     *                                Не удалось подключиться к Memcached | Хост: [хост]:[порт]
      *
      * @note    Для подключения к Memcached используются параметры `host` и `port` из массива `$config`.
      *          Если параметры не указаны, используются значения по умолчанию:
@@ -429,15 +432,15 @@ class Cache_Handler implements Cache_Handler_Interface
      * ];
      * $this->init_cache_memcached($config);
      * @endcode
-     * @see     PhotoRigma::Classes::Cache_Handler::$client
-     *          Свойство, содержащее экземпляр клиента Memcached после инициализации.
+     * @see    PhotoRigma::Classes::Cache_Handler::$client
+     *         Свойство, содержащее экземпляр клиента Memcached после инициализации.
      */
     private function init_cache_memcached(array $config): void
     {
         // 1. Проверка наличия Memcached-расширения
         if (!extension_loaded('memcached')) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Memcached-расширение недоступно | Рекомендация: убедитесь, что оно установлено и включено в PHP"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Memcached-расширение недоступно | Рекомендация: убедитесь, что оно установлено и включено в PHP'
             );
         }
 
@@ -455,7 +458,7 @@ class Cache_Handler implements Cache_Handler_Interface
         $stats = @$memcached->getStats();
         if ($stats === false || empty($stats["$host:$port"])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось подключиться к Memcached | Хост: $host:$port"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось подключиться к Memcached | Хост: $host:$port"
             );
         }
 
@@ -481,9 +484,9 @@ class Cache_Handler implements Cache_Handler_Interface
      *                     - Тип кеширования не поддерживается.
      *                     - Данные в кеше устарели или отсутствуют.
      *
-     * @throws JsonException Выбрасывается при ошибках декодирования JSON:
-     *                        Пример сообщения:
-     *                            Ошибка декодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается при ошибках декодирования JSON:
+     *                           Пример сообщения:
+     *                               Ошибка декодирования JSON: [подробное описание ошибки]
      * @throws RuntimeException Выбрасывается при следующих условиях:
      *                           - Для Redis/Memcached:
      *                             - Если клиент хранилища не инициализирован или имеет неправильный тип.
@@ -509,9 +512,8 @@ class Cache_Handler implements Cache_Handler_Interface
      *     echo "Кеш устарел или отсутствует.";
      * }
      * @endcode
-     *
-     * @see     PhotoRigma::Classes::Cache_Handler::_is_valid_internal()
-     *          Защищённый метод, который реализует логику проверки актуальности данных в кеше.
+     * @see    PhotoRigma::Classes::Cache_Handler::_is_valid_internal()
+     *         Защищённый метод, который реализует логику проверки актуальности данных в кеше.
      */
     public function is_valid(string $key, int|string $checksum): array|false
     {
@@ -540,11 +542,11 @@ class Cache_Handler implements Cache_Handler_Interface
      *                     - Тип кеширования не поддерживается.
      *                     - Данные в кеше устарели или отсутствуют.
      *
-     * @throws JsonException Выбрасывается из подметодов при ошибках декодирования JSON:
-     *                        - Для файлового кеширования: `is_valid_file()`.
-     *                        - Для Redis/Memcached: `is_valid_storage()`.
-     *                        Пример сообщения:
-     *                            Ошибка декодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается из подметодов при ошибках декодирования JSON:
+     *                          - Для файлового кеширования: `is_valid_file()`.
+     *                          - Для Redis/Memcached: `is_valid_storage()`.
+     *                          Пример сообщения:
+     *                               Ошибка декодирования JSON: [подробное описание ошибки]
      * @throws RuntimeException Выбрасывается из метода `is_valid_storage`, если клиент хранилища:
      *                           - Не инициализирован.
      *                           - Имеет неправильный тип.
@@ -572,12 +574,12 @@ class Cache_Handler implements Cache_Handler_Interface
      *     echo "Кеш устарел или отсутствует.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Cache_Handler::is_valid_file()
-     *          Метод для проверки актуальности данных в файловом кеше.
-     * @see     PhotoRigma::Classes::Cache_Handler::is_valid_storage()
-     *          Метод для проверки актуальности данных в хранилище (Redis/Memcached).
-     * @see     PhotoRigma::Classes::Cache_Handler::is_valid()
-     *          Публичный метод, который вызывает `_is_valid_internal` для проверки актуальности данных.
+     * @see    PhotoRigma::Classes::Cache_Handler::is_valid_file()
+     *         Метод для проверки актуальности данных в файловом кеше.
+     * @see    PhotoRigma::Classes::Cache_Handler::is_valid_storage()
+     *         Метод для проверки актуальности данных в хранилище (Redis/Memcached).
+     * @see    PhotoRigma::Classes::Cache_Handler::is_valid()
+     *         Публичный метод, который вызывает `_is_valid_internal` для проверки актуальности данных.
      */
     protected function _is_valid_internal(string $key, int|string $checksum): array|false
     {
@@ -599,7 +601,7 @@ class Cache_Handler implements Cache_Handler_Interface
      *          3. Читает содержимое файла кеша.
      *             - Если чтение не удалось, возвращается `false`.
      *          4. Извлекает значения переменных `$checksum` и данные из содержимого файла с помощью регулярных
-     *          выражений.
+     *             выражений.
      *             - Переменная `$checksum` должна быть в формате: `$checksum = 'значение';`.
      *             - Данные должны быть в формате: `$cached_data = 'base64_encoded_json_data';`.
      *             - Если извлечение значений не удалось, возвращается `false`.
@@ -610,6 +612,7 @@ class Cache_Handler implements Cache_Handler_Interface
      *          7. Возвращает массив данных, если они корректны, или `false`, если проверка не удалась.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
      * @param string     $key      Ключ кеша. Используется для формирования имени файла кеша.
@@ -679,7 +682,7 @@ class Cache_Handler implements Cache_Handler_Interface
         $cached_data = $data_match[1];
 
         // 5. Проверка контрольной суммы
-        if ((string)$stored_checksum !== (string)$checksum || empty($cached_data)) {
+        if ($stored_checksum !== (string)$checksum || empty($cached_data)) {
             return false;
         }
 
@@ -720,9 +723,9 @@ class Cache_Handler implements Cache_Handler_Interface
      *                     - Контрольная сумма отсутствует или не совпадает.
      *                     - Данные в хранилище отсутствуют или некорректны.
      *
-     * @throws JsonException Выбрасывается, если произошла ошибка при декодировании данных из JSON.
-     *                        Пример сообщения:
-     *                            Ошибка декодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается, если произошла ошибка при декодировании данных из JSON.
+     *                           Пример сообщения:
+     *                               Ошибка декодирования JSON: [подробное описание ошибки]
      * @throws RuntimeException Выбрасывается, если клиент хранилища не инициализирован или имеет неправильный тип.
      *                           Пример сообщения:
      *                               Клиент хранилища не инициализирован или имеет неправильный тип
@@ -732,8 +735,8 @@ class Cache_Handler implements Cache_Handler_Interface
      *          - `$key . '_data'`: Закодированные данные в формате Base64.
      *          Пример структуры данных в Redis:
      * @code
-     *          user_settings_checksum => '12345'
-     *          user_settings_data     => 'base64_encoded_json_data'
+     * user_settings_checksum => '12345'
+     * user_settings_data     => 'base64_encoded_json_data'
      * @endcode
      *
      * @warning Убедитесь, что:
@@ -758,7 +761,7 @@ class Cache_Handler implements Cache_Handler_Interface
         // 1. Проверка, что клиент инициализирован и поддерживает метод get()
         if (!($this->client instanceof Redis || $this->client instanceof Memcached)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Клиент хранилища не инициализирован или имеет неправильный тип"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Клиент хранилища не инициализирован или имеет неправильный тип'
             );
         }
 
@@ -801,9 +804,9 @@ class Cache_Handler implements Cache_Handler_Interface
      *              - Тип кеширования не поддерживается.
      *              - Произошла ошибка при записи данных.
      *
-     * @throws JsonException Выбрасывается при ошибках кодирования JSON:
-     *                        Пример сообщения:
-     *                            Ошибка кодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается при ошибках кодирования JSON:
+     *                           Пример сообщения:
+     *                               Ошибка кодирования JSON: [подробное описание ошибки]
      * @throws RuntimeException Выбрасывается при следующих условиях:
      *                           - Для файлового кеширования:
      *                             - Если директория для кеша не существует или недоступна для записи.
@@ -832,8 +835,8 @@ class Cache_Handler implements Cache_Handler_Interface
      *     echo "Ошибка записи данных в кеш.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Cache_Handler::_update_cache_internal()
-     *          Защищённый метод, который реализует логику записи данных в кеш.
+     * @see    PhotoRigma::Classes::Cache_Handler::_update_cache_internal()
+     *         Защищённый метод, который реализует логику записи данных в кеш.
      */
     public function update_cache(string $key, int|string $checksum, array $data): bool
     {
@@ -864,11 +867,11 @@ class Cache_Handler implements Cache_Handler_Interface
      *              - Тип кеширования не поддерживается.
      *              - Произошла ошибка при записи данных.
      *
-     * @throws JsonException Выбрасывается из подметодов при ошибках кодирования JSON:
-     *                        - Для файлового кеширования: `update_cache_file()`.
-     *                        - Для Redis/Memcached: `update_cache_storage()`.
-     *                        Пример сообщения:
-     *                            Ошибка кодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается из подметодов при ошибках кодирования JSON:
+     *                           - Для файлового кеширования: `update_cache_file()`.
+     *                           - Для Redis/Memcached: `update_cache_storage()`.
+     *                           Пример сообщения:
+     *                              Ошибка кодирования JSON: [подробное описание ошибки]
      * @throws RuntimeException Выбрасывается из подметодов при следующих условиях:
      *                           - Для файлового кеширования:
      *                             - Если директория для кеша не существует.
@@ -906,12 +909,12 @@ class Cache_Handler implements Cache_Handler_Interface
      *     echo "Ошибка записи данных в кеш.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Cache_Handler::update_cache_file()
-     *          Метод для записи данных в файловый кеш.
-     * @see     PhotoRigma::Classes::Cache_Handler::update_cache_storage()
-     *          Метод для записи данных в хранилище (Redis/Memcached).
-     * @see     PhotoRigma::Classes::Cache_Handler::update_cache()
-     *          Публичный метод, который вызывает `_update_cache_internal` для записи данных в кеш.
+     * @see    PhotoRigma::Classes::Cache_Handler::update_cache_file()
+     *         Метод для записи данных в файловый кеш.
+     * @see    PhotoRigma::Classes::Cache_Handler::update_cache_storage()
+     *         Метод для записи данных в хранилище (Redis/Memcached).
+     * @see    PhotoRigma::Classes::Cache_Handler::update_cache()
+     *         Публичный метод, который вызывает `_update_cache_internal` для записи данных в кеш.
      */
     protected function _update_cache_internal(string $key, int|string $checksum, array $data): bool
     {
@@ -945,6 +948,7 @@ class Cache_Handler implements Cache_Handler_Interface
      *             - Возвращает `true`, если запись успешна, или `false` в противном случае.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
      * @param string     $key      Ключ кеша. Используется для формирования имени файла кеша.
@@ -966,9 +970,9 @@ class Cache_Handler implements Cache_Handler_Interface
      *                           - Файл кеша недоступен для записи.
      *                             Пример сообщения:
      *                                 Файл кеша недоступен для записи | Путь: [путь]
-     * @throws JsonException Выбрасывается, если произошла ошибка при кодировании данных в JSON.
-     *                        Пример сообщения:
-     *                            Ошибка кодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается, если произошла ошибка при кодировании данных в JSON.
+     *                           Пример сообщения:
+     *                               Ошибка кодирования JSON: [подробное описание ошибки]
      *
      * @note    Файл кеша создаётся в формате PHP с переменными `$checksum` и `$cached_data`:
      * @code
@@ -1004,19 +1008,19 @@ class Cache_Handler implements Cache_Handler_Interface
         $cache_dir = dirname($cache_file);
         if (!is_dir($cache_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для кеша не существует | Путь: $cache_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для кеша не существует | Путь: $cache_dir"
             );
         }
         if (!is_writable($cache_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для кеша недоступна для записи | Путь: $cache_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для кеша недоступна для записи | Путь: $cache_dir"
             );
         }
 
         // 3. Проверка существования файла и возможности его перезаписи
         if (is_file($cache_file) && !is_writable($cache_file)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл кеша недоступен для записи | Путь: $cache_file"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл кеша недоступен для записи | Путь: $cache_file"
             );
         }
 
@@ -1030,7 +1034,7 @@ class Cache_Handler implements Cache_Handler_Interface
 
         // 5. Формирование содержимого файла
         $cache_content = sprintf(
-            "<?php" . PHP_EOL . "\$checksum = '%s';" . PHP_EOL . "\$cached_data = '%s';" . PHP_EOL,
+            '<?php' . PHP_EOL . "\$checksum = '%s';" . PHP_EOL . "\$cached_data = '%s';" . PHP_EOL,
             $checksum,
             $encoded_data
         );
@@ -1044,16 +1048,16 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @details Этот метод выполняет следующие действия:
      *          1. Проверяет, что клиент хранилища инициализирован и является экземпляром класса `Redis` или
-     *          `Memcached`.
+     *             `Memcached`.
      *             - Если клиент не инициализирован или имеет неправильный тип, выбрасывается исключение
-     *             `RuntimeException`.
+     *               `RuntimeException`.
      *          2. Кодирует данные в формат JSON и Base64.
      *             - Если кодирование JSON не удалось, выбрасывается исключение `JsonException`.
      *          3. Записывает контрольную сумму и закодированные данные в хранилище по двум ключам:
      *             - `$key . '_checksum'`: Контрольная сумма.
      *             - `$key . '_data'`: Закодированные данные.
      *          4. Возвращает результат записи: `true`, если оба ключа успешно записаны, или `false`, если хотя бы одна
-     *          запись не удалась. Метод является приватным и предназначен только для использования внутри класса.
+     *             запись не удалась. Метод является приватным и предназначен только для использования внутри класса.
      *
      * @callergraph
      *
@@ -1066,9 +1070,9 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @return bool True, если запись успешна, или `false`, если произошла ошибка при записи хотя бы одного ключа.
      *
-     * @throws JsonException Выбрасывается, если произошла ошибка при кодировании данных в JSON.
-     *                        Пример сообщения:
-     *                            Ошибка кодирования JSON: [подробное описание ошибки]
+     * @throws JsonException    Выбрасывается, если произошла ошибка при кодировании данных в JSON.
+     *                           Пример сообщения:
+     *                               Ошибка кодирования JSON: [подробное описание ошибки]
      * @throws RuntimeException Выбрасывается, если клиент хранилища не инициализирован или имеет неправильный тип.
      *                           Пример сообщения:
      *                               Клиент хранилища не инициализирован или имеет неправильный тип
@@ -1104,7 +1108,7 @@ class Cache_Handler implements Cache_Handler_Interface
         // 1. Проверка, что клиент инициализирован и поддерживает метод set()
         if (!($this->client instanceof Redis || $this->client instanceof Memcached)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Клиент хранилища не инициализирован или имеет неправильный тип"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Клиент хранилища не инициализирован или имеет неправильный тип'
             );
         }
 

@@ -7,8 +7,8 @@
  * @brief       Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление новостями в системе, включая:
@@ -87,13 +87,13 @@ use RuntimeException;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 $template->template_file = 'news.html';
@@ -144,7 +144,7 @@ if ($subact === 'save') {
             $_POST['csrf_token']
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
         }
         $user->unset_property_key('session', 'csrf_token');
@@ -186,7 +186,7 @@ if ($subact === 'save') {
             // Проверяем, что ID новости больше 0
             if ($news === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка добавления новости | Данные: " . json_encode(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка добавления новости | Данные: ' . json_encode(
                         $query_news,
                         JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
@@ -201,7 +201,7 @@ if ($subact === 'save') {
             $_POST['csrf_token']
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
         }
         $user->unset_property_key('session', 'csrf_token');
@@ -250,7 +250,7 @@ if ($subact === 'save') {
             $rows = $db->get_affected_rows(); // Проверяем количество затронутых строк
             if ($rows === 0) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления новости | ID: $news"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления новости | ID: $news"
                 );
             }
         }
@@ -318,7 +318,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         ]);
     } else {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
         );
     }
 } elseif ($subact === 'delete' && $news !== false && ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $news_data['user_post']))) {
@@ -333,7 +333,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
     // Проверка на возможную атаку (хитрый момент)
     if (empty($_SERVER['HTTP_REFERER'])) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная попытка удаления новости | ID: $news"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная попытка удаления новости | ID: $news"
         );
     }
 
@@ -343,7 +343,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
     if ($rows === 0) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена для удаления | ID: $news"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена для удаления | ID: $news"
         );
     }
 
@@ -448,7 +448,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         );
     } else {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Новость не найдена | ID: $news"
         );
     }
 } else {

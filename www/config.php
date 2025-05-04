@@ -5,8 +5,8 @@
  * @brief       Редактируемые настройки сервера.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma
  *
  * @details     Этот файл содержит настройки, необходимые для конфигурации приложения:
@@ -116,13 +116,13 @@ use RuntimeException;
 
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -277,14 +277,14 @@ if (!$http_host) {
 // Если HTTP_HOST всё ещё не установлен, выбрасываем исключение
 if (!$http_host) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось определить HTTP_HOST | Рекомендация: проверьте настройки сервера"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить HTTP_HOST | Рекомендация: проверьте настройки сервера'
     );
 }
 
 // Валидация формата домена
 if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $http_host)) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: $http_host"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: $http_host"
     );
 }
 /**
@@ -305,14 +305,14 @@ if (!$script_name) {
 // Если SCRIPT_NAME всё ещё не установлен, выбрасываем исключение
 if (!$script_name) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось определить SCRIPT_NAME | Рекомендация: проверьте настройки сервера"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить SCRIPT_NAME | Рекомендация: проверьте настройки сервера'
     );
 }
 
 // Валидация формата пути
 if (!preg_match('/^\/[a-zA-Z0-9._\-\/]*$/', $script_name)) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат SCRIPT_NAME | Значение: $script_name"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат SCRIPT_NAME | Значение: $script_name"
     );
 }
 
@@ -349,26 +349,26 @@ $config['site_dir'] = realpath(__DIR__);
 // Если realpath вернул false, выбрасываем исключение
 if ($config['site_dir'] === false) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось определить директорию сайта | Рекомендация: проверьте права доступа или корректность пути"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить директорию сайта | Рекомендация: проверьте права доступа или корректность пути'
     );
 }
 
 // Убедимся, что путь является директорией
 if (!is_dir($config['site_dir'])) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Указанный путь не является директорией | Путь: {$config['site_dir']}"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Указанный путь не является директорией | Путь: {$config['site_dir']}"
     );
 }
 
 // Проверяем доступность директории для чтения и записи
 if (!is_readable($config['site_dir'])) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для чтения | Путь: {$config['site_dir']}"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для чтения | Путь: {$config['site_dir']}"
     );
 }
 if (!is_writable($config['site_dir'])) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: {$config['site_dir']}"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: {$config['site_dir']}"
     );
 }
 
@@ -398,7 +398,7 @@ $required_directories = [
 foreach ($required_directories as $dir) {
     if (!is_dir($dir) || !is_writable($dir)) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория отсутствует или недоступна для записи | Путь: $dir"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория отсутствует или недоступна для записи | Путь: $dir"
         );
     }
 }

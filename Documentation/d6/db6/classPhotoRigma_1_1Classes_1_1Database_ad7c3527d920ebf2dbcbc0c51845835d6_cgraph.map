@@ -1,7 +1,9 @@
 <map id="_format_date_internal" name="_format_date_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="5,40,152,65"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5d0b9a7e8ede6be3469375cdefe284fa" title="Преобразует формат даты из стиля MariaDB в стиль PostgreSQL." alt="" coords="212,5,352,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,40,196,34,197,39,153,45"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a2a80f19b2f30843409069ff854e3d0d9" title="Преобразует формат даты из стиля MariaDB в стиль SQLite." alt="" coords="200,68,364,93"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,60,185,65,184,70,152,65"/>
+<area shape="rect" id="Node000001" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="5,61,152,86"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a669971f2108b67a1114a8e0b978fe388" title="Производит преобразование строки формата даты/времени в формат, совместимый с MySQL (DATE_FORMAT)." alt="" coords="200,5,367,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,58,220,32,221,37,127,63"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af2c9d62818d2abcda848c5f966a7806a" title="Преобразует формат даты/времени в формат, совместимый с PostgreSQL." alt="" coords="214,54,353,93"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,71,198,71,198,76,152,76"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a98dfa8b7ea985e32ab3904f14c3d06f4" title="Преобразует формат даты/времени в формат, совместимый с SQLite (strftime)." alt="" coords="201,117,366,142"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="127,84,221,110,220,115,126,89"/>
 </map>

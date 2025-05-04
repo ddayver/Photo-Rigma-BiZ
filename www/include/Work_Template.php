@@ -5,8 +5,8 @@
  * @brief       Файл содержит класс Work_Template, который отвечает за формирование данных для шаблонов.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_Template`, который реализует интерфейс `Work_Template_Interface`.
@@ -53,13 +53,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -211,7 +211,7 @@ class Work_Template implements Work_Template_Interface
             return $this->config;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -262,7 +262,7 @@ class Work_Template implements Work_Template_Interface
             $this->config = $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
     }
@@ -440,7 +440,7 @@ class Work_Template implements Work_Template_Interface
         // Валидация входных данных.
         if (!in_array($menu, [SHORT_MENU, LONG_MENU], true)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип меню (\$menu)"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип меню (\$menu)"
             );
         }
         // Определение типа меню через match() (поддерживается начиная с PHP 8.0)
@@ -448,7 +448,7 @@ class Work_Template implements Work_Template_Interface
             SHORT_MENU => 'short',
             LONG_MENU  => 'long',
             default    => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип меню (\$menu)"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип меню (\$menu)"
             ),
         };
         // Формирование запроса для получения данных меню (используем параметры для безопасности)
@@ -466,7 +466,7 @@ class Work_Template implements Work_Template_Interface
         $menu_data = $this->db->res_arr();
         if ($menu_data === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные из базы данных"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные из базы данных'
             );
         }
 
@@ -1109,7 +1109,7 @@ class Work_Template implements Work_Template_Interface
         // Проверка, что объект пользователя установлен
         if ($this->user === null) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Объект пользователя не установлен | Решение: используйте set_user() для внедрения зависимости"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Объект пользователя не установлен | Решение: используйте set_user() для внедрения зависимости'
             );
         }
         // Определение пути к аватару
@@ -1127,7 +1127,7 @@ class Work_Template implements Work_Template_Interface
                 $mime_type = new finfo(FILEINFO_MIME_TYPE)->file($full_avatar_path);
                 if (!Work::validate_mime_type($mime_type)) {
                     log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: $full_avatar_path"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: $full_avatar_path"
                     );
                     $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], DEFAULT_AVATAR);
                 }

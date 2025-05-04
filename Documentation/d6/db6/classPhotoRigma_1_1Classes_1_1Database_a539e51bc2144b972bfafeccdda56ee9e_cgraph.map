@@ -1,15 +1,23 @@
 <map id="update" name="update">
-<area shape="rect" id="Node000001" title="Выполняет SQL&#45;запрос на обновление данных в таблице через вызов внутреннего метода." alt="" coords="5,31,66,55"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="114,31,230,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,40,98,40,98,46,66,46"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="278,5,392,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="230,31,262,26,263,32,231,37"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="283,55,387,79"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="231,49,268,55,268,60,230,54"/>
-<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0" title="Производит финальное преобразование SQL&#45;запроса в зависимости от типа СУБД." alt="" coords="440,5,543,30"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="376,51,435,33,437,38,378,57"/>
-<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="449,55,534,79"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="388,64,433,64,433,70,388,70"/>
-<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы." alt="" coords="453,104,530,129"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="378,77,439,97,438,102,376,83"/>
+<area shape="rect" id="Node000001" title="Обновляет данные в таблице через вызов внутреннего метода." alt="" coords="5,56,66,81"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="114,56,230,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,66,98,66,98,71,66,71"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae03e71e82bbc0b864fdbc401fa44bc35" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="278,19,392,43"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="228,53,263,45,264,50,230,58"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#abc7fc3b91f038f52e180afb480397d65" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="283,80,387,105"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="231,74,268,80,268,85,230,79"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a4982b2155c9cd4124696eaf1f21c2d6f" title="Формирует группу условий для WHERE с указанным оператором (OR/NOT)." alt="" coords="440,5,570,30"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="392,24,425,21,425,27,393,29"/>
+<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a7f180c0dff7e1d420391ac1fe27af2f0" title="Выполняет преобразование SQL&#45;запроса в зависимости от текущего формата и типа СУБД." alt="" coords="454,55,556,79"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="387,82,438,74,439,80,388,87"/>
+<area shape="rect" id="Node000010" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a1711ebad37afe1d1a82badd04e44e5ce" title="Логирует результат анализа SQL&#45;запроса с помощью EXPLAIN или EXPLAIN ANALYZE." alt="" coords="462,104,548,129"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="388,97,447,106,447,111,387,102"/>
+<area shape="rect" id="Node000011" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ac69ead780096125c4be76305d1cc97a2" title="Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы в таблицу логов." alt="" coords="467,153,543,178"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="364,103,441,138,457,145,455,150,439,143,362,108"/>
+<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a451fa63eb194310e84956cd073f8c60d" title="Производит преобразование SQL&#45;запроса из формата MySQL в целевой формат СУБД (PostgreSQL или SQLite)." alt="" coords="618,5,774,30"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="555,51,630,32,631,37,556,57"/>
+<area shape="rect" id="Node000008" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a55a77b7501ba5ff17d2b50037e564c0e" title="Производит преобразование SQL&#45;запроса из формата PostgreSQL в целевой формат СУБД (MySQL или SQLite)." alt="" coords="619,55,772,79"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="557,64,603,64,603,70,557,70"/>
+<area shape="rect" id="Node000009" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a149ff4207293c70d607483c59d135b6f" title="Производит преобразование SQL&#45;запроса из формата SQLite в целевой формат СУБД (MySQL или PostgreSQL)." alt="" coords="619,104,772,129"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="556,77,631,97,630,102,555,83"/>
 </map>

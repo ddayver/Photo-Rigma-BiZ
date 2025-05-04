@@ -1,27 +1,8 @@
 var searchData=
 [
-  ['work_0',['Work',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html',1,'PhotoRigma::Classes']]],
-  ['work_2ephp_1',['Work.php',['../d1/dce/Work_8php.html',1,'']]],
-  ['work_5fcorelogic_2',['Work_CoreLogic',['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html',1,'PhotoRigma::Classes']]],
-  ['work_5fcorelogic_2ephp_3',['Work_CoreLogic.php',['../da/d65/Work__CoreLogic_8php.html',1,'']]],
-  ['work_5fcorelogic_5finterface_4',['Work_CoreLogic_Interface',['../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html',1,'PhotoRigma::Interfaces']]],
-  ['work_5fcorelogic_5finterface_2ephp_5',['Work_CoreLogic_Interface.php',['../d4/ddd/Work__CoreLogic__Interface_8php.html',1,'']]],
-  ['work_5fhelper_6',['Work_Helper',['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html',1,'PhotoRigma::Classes']]],
-  ['work_5fhelper_2ephp_7',['Work_Helper.php',['../d6/d5c/Work__Helper_8php.html',1,'']]],
-  ['work_5fhelper_5finterface_8',['Work_Helper_Interface',['../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html',1,'PhotoRigma::Interfaces']]],
-  ['work_5fhelper_5finterface_2ephp_9',['Work_Helper_Interface.php',['../d3/ddb/Work__Helper__Interface_8php.html',1,'']]],
-  ['work_5fimage_10',['Work_Image',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html',1,'PhotoRigma::Classes']]],
-  ['work_5fimage_2ephp_11',['Work_Image.php',['../dd/dbc/Work__Image_8php.html',1,'']]],
-  ['work_5fimage_5finterface_12',['Work_Image_Interface',['../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html',1,'PhotoRigma::Interfaces']]],
-  ['work_5fimage_5finterface_2ephp_13',['Work_Image_Interface.php',['../d1/df9/Work__Image__Interface_8php.html',1,'']]],
-  ['work_5finterface_14',['Work_Interface',['../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html',1,'PhotoRigma::Interfaces']]],
-  ['work_5finterface_2ephp_15',['Work_Interface.php',['../d3/dee/Work__Interface_8php.html',1,'']]],
-  ['work_5fsecurity_16',['Work_Security',['../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html',1,'PhotoRigma::Classes']]],
-  ['work_5fsecurity_2ephp_17',['Work_Security.php',['../d2/df8/Work__Security_8php.html',1,'']]],
-  ['work_5fsecurity_5finterface_18',['Work_Security_Interface',['../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html',1,'PhotoRigma::Interfaces']]],
-  ['work_5fsecurity_5finterface_2ephp_19',['Work_Security_Interface.php',['../d7/d9e/Work__Security__Interface_8php.html',1,'']]],
-  ['work_5ftemplate_20',['Work_Template',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html',1,'PhotoRigma::Classes']]],
-  ['work_5ftemplate_2ephp_21',['Work_Template.php',['../df/dbe/Work__Template_8php.html',1,'']]],
-  ['work_5ftemplate_5finterface_22',['Work_Template_Interface',['../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html',1,'PhotoRigma::Interfaces']]],
-  ['work_5ftemplate_5finterface_2ephp_23',['Work_Template_Interface.php',['../d1/d1d/Work__Template__Interface_8php.html',1,'']]]
+  ['авторство_0',['Авторство',['../index.html#autotoc_md61',1,'']]],
+  ['администрирование_1',['4. Администрирование',['../index.html#autotoc_md48',1,'']]],
+  ['автором_2',['Связь с автором',['../index.html#autotoc_md68',1,'']]],
+  ['администраторов_3a_3',['Для администраторов:',['../index.html#autotoc_md16',1,'']]],
+  ['админки_4',['Переменные для админки',['../d4/df1/group__LanguageRussianAdmin.html',1,'']]]
 ];

@@ -1,5 +1,5 @@
 <map id="_rollback_transaction_internal" name="_rollback_transaction_internal">
 <area shape="rect" id="Node000001" title="Отменяет транзакцию в базе данных." alt="" coords="191,5,335,44"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa54f5f05128d55871aa9303134170376" title="Отменяет транзакцию в базе данных через вызов внутреннего метода." alt="" coords="5,12,143,37"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa54f5f05128d55871aa9303134170376" title="Отменяет транзакцию в базе данных." alt="" coords="5,12,143,37"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,27,143,27,143,22,175,22"/>
 </map>

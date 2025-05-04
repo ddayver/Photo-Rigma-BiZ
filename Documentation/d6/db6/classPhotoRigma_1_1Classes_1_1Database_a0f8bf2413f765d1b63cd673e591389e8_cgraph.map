@@ -1,0 +1,7 @@
+<map id="full_text_search_mysql" name="full_text_search_mysql">
+<area shape="rect" id="Node000001" title="Выполняет полнотекстовый поиск в MySQL с обработкой минимальной длины строки, кешированием ошибок и f..." alt="" coords="5,29,159,54"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="49,31,42,21,46,11,59,5,82,3,107,5,119,12,117,17,105,10,82,8,61,10,49,15,47,20,53,27"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a9827c63862361b83e0d0ff96c89d49bf" title="Выполняет альтернативный поиск по LIKE для MySQL." alt="" coords="207,29,359,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,39,191,39,191,44,159,44"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="250,31,243,21,246,11,260,5,283,3,308,5,320,12,318,17,306,10,283,8,261,10,250,15,248,20,254,27"/>
+</map>

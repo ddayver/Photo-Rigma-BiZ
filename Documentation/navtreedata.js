@@ -26,11 +26,6 @@ var NAVTREE =
 [
   [ "Photo-Rigma-BiZ", "index.html", [
     [ "Photo Rigma BiZ 📸", "index.html", "index" ],
-    [ "Users of these lists", "d2/d0c/md_badword_2USERS.html", [
-      [ "Projects", "d2/d0c/md_badword_2USERS.html#autotoc_md5", null ],
-      [ "Documents", "d2/d0c/md_badword_2USERS.html#autotoc_md6", null ],
-      [ "Organizations", "d2/d0c/md_badword_2USERS.html#autotoc_md7", null ]
-    ] ],
     [ "Список задач", "dd/da0/todo.html", null ],
     [ "Разделы", "topics.html", "topics" ],
     [ "Пространства имен", "namespaces.html", [
@@ -60,10 +55,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a82d7359ac20005ddda09f8a9bb46afbe",
-"da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html#a19ab20c34a49c9684a03c09c62f8af46",
-"de/d8e/group__LanguageEnglish.html",
-"index.html#autotoc_md34"
+"d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af2c9d62818d2abcda848c5f966a7806a",
+"d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138",
+"de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a502e1ec863ea4d7c7fcda54ea1ec355f",
+"functions_func_b.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

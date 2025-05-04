@@ -6,8 +6,8 @@
  * @brief       Файл содержит класс Work_Image, который отвечает за работу с изображениями.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_Image`, который реализует интерфейс `Work_Image_Interface`.
@@ -61,13 +61,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -202,7 +202,7 @@ class Work_Image implements Work_Image_Interface
             return $this->config;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -253,7 +253,7 @@ class Work_Image implements Work_Image_Interface
             $this->config = $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
     }
@@ -405,14 +405,14 @@ class Work_Image implements Work_Image_Interface
         // Проверяем права доступа к родительским директориям
         if (!is_writable(dirname($gallery_path))) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Родительская директория недоступна для записи | Путь: ' . dirname(
                     $gallery_path
                 )
             );
         }
         if (!is_writable(dirname($thumbnail_path))) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Родительская директория недоступна для записи | Путь: " . dirname(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Родительская директория недоступна для записи | Путь: ' . dirname(
                     $thumbnail_path
                 )
             );
@@ -425,7 +425,7 @@ class Work_Image implements Work_Image_Interface
             true
         ) || !is_dir($thumbnail_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: $directory_name"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать директории для категории | Имя: $directory_name"
             );
         }
 
@@ -440,12 +440,12 @@ class Work_Image implements Work_Image_Interface
         // Проверяем существование исходных файлов index.php
         if (!is_file($gallery_index_file)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $gallery_index_file"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $gallery_index_file"
             );
         }
         if (!is_file($thumbnail_index_file)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $thumbnail_index_file"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл index.php не существует | Путь: $thumbnail_index_file"
             );
         }
 
@@ -453,7 +453,7 @@ class Work_Image implements Work_Image_Interface
         $gallery_index_content = file_get_contents($gallery_index_file);
         if ($gallery_index_content === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $gallery_index_file"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $gallery_index_file"
             );
         }
         $gallery_index_content = strtr($gallery_index_content, [
@@ -461,7 +461,7 @@ class Work_Image implements Work_Image_Interface
         ]);
         if (file_put_contents($gallery_path . '/index.php', $gallery_index_content, LOCK_EX) === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $gallery_path/index.php"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $gallery_path/index.php"
             );
         }
 
@@ -469,7 +469,7 @@ class Work_Image implements Work_Image_Interface
         $thumbnail_index_content = file_get_contents($thumbnail_index_file);
         if ($thumbnail_index_content === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $thumbnail_index_file"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось прочитать файл index.php | Путь: $thumbnail_index_file"
             );
         }
         $thumbnail_index_content = strtr($thumbnail_index_content, [
@@ -477,7 +477,7 @@ class Work_Image implements Work_Image_Interface
         ]);
         if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content, LOCK_EX) === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $thumbnail_path/index.php"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось записать файл index.php | Путь: $thumbnail_path/index.php"
             );
         }
 
@@ -602,25 +602,25 @@ class Work_Image implements Work_Image_Interface
             'options' => ['regexp' => '/^[a-zA-Z0-9\/\.\-_]+$/'],
         ])) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Путь: \$full_path = $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Путь: \$full_path = $full_path"
             );
         }
         // Нормализация пути через realpath()
         $normalized_path = realpath($full_path);
         if (!$normalized_path) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
             );
         }
         // Проверка существования файла и прав доступа
         if (!is_file($normalized_path)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не существует или недоступен | Путь: \$full_path = $full_path"
             );
         }
         if (!is_readable($normalized_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: \$full_path = $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: \$full_path = $full_path"
             );
         }
         // Определение реального MIME-типа файла
@@ -649,7 +649,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка поддержки MIME-типа
         if (!array_key_exists($real_mime_type, $mime_to_extension)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип файла | Получено: $real_mime_type"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип файла | Получено: $real_mime_type"
             );
         }
         // Получение правильного расширения
@@ -660,7 +660,7 @@ class Work_Image implements Work_Image_Interface
             // Если расширение отсутствует, добавляем его
             $new_full_path = $normalized_path . '.' . $correct_extension;
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '$correct_extension' к файлу | Путь: $normalized_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Добавлено расширение '$correct_extension' к файлу | Путь: $normalized_path"
             );
             return $new_full_path;
         }
@@ -670,7 +670,7 @@ class Work_Image implements Work_Image_Interface
         // Формирование нового пути с правильным расширением
         $new_full_path = preg_replace('/\.[^.]+$/', '.' . $correct_extension, $normalized_path);
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: $normalized_path, Новый путь: $new_full_path"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исправлено расширение файла | Старый путь: $normalized_path, Новый путь: $new_full_path"
         );
         return $new_full_path;
     }
@@ -780,9 +780,9 @@ class Work_Image implements Work_Image_Interface
         // Проверяем существование и доступность файла
         if (!is_file($full_path) || !is_readable($full_path)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен для чтения | Путь: $full_path"
             );
-            header("HTTP/1.0 404 Not Found");
+            header('HTTP/1.0 404 Not Found');
             exit;
         }
         // Получаем MIME-тип и размеры изображения через finfo
@@ -791,30 +791,30 @@ class Work_Image implements Work_Image_Interface
         finfo_close($finfo);
         if (!$mime_type || !str_starts_with($mime_type, 'image/')) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить MIME-тип изображения | Путь: $full_path"
             );
-            header("HTTP/1.0 500 Internal Server Error");
+            header('HTTP/1.0 500 Internal Server Error');
             exit;
         }
         // Проверяем размер файла
         $file_size = filesize($full_path);
         if ($file_size === false || $file_size > 10 * 1024 * 1024) { // Ограничение: 10 МБ
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: $full_path, Размер: $file_size"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла слишком велик или неизвестен | Путь: $full_path, Размер: $file_size"
             );
-            header("HTTP/1.0 413 Payload Too Large");
+            header('HTTP/1.0 413 Payload Too Large');
             exit;
         }
         // Устанавливаем заголовки для вывода изображения
-        header("Content-Type: " . $mime_type);
+        header('Content-Type: ' . $mime_type);
         header("Content-Disposition: inline; filename=\"" . Work::clean_field($name_file) . "\"");
-        header("Content-Length: " . $file_size);
+        header('Content-Length: ' . $file_size);
 
         // Дополнительные заголовки для безопасности
-        header("X-Content-Type-Options: nosniff");
-        header("X-Frame-Options: DENY");
-        header("X-XSS-Protection: 1; mode=block");
-        header("Referrer-Policy: no-referrer");
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: DENY');
+        header('X-XSS-Protection: 1; mode=block');
+        header('Referrer-Policy: no-referrer');
         header("Content-Security-Policy: default-src 'self'; img-src 'self' data:;");
 
         flush();
@@ -822,9 +822,9 @@ class Work_Image implements Work_Image_Interface
         $fh = fopen($full_path, 'rb');
         if ($fh === false) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось открыть файл для чтения | Путь: $full_path"
             );
-            header("HTTP/1.0 500 Internal Server Error");
+            header('HTTP/1.0 500 Internal Server Error');
             exit;
         }
         fpassthru($fh);
@@ -971,7 +971,7 @@ class Work_Image implements Work_Image_Interface
         $full_path = realpath($full_path);
         if (!$full_path || !$thumbnail_path) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный путь к файлу | \$full_path = $full_path, \$thumbnail_path = $thumbnail_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный путь к файлу | \$full_path = $full_path, \$thumbnail_path = $thumbnail_path"
             );
         }
         // Блок 1: Проверка корректности путей через filter_var
@@ -985,7 +985,7 @@ class Work_Image implements Work_Image_Interface
         }
         if (!empty($path_errors)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат пути | Ошибки: " . implode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Некорректный формат пути | Ошибки: ' . implode(
                     ' ',
                     $path_errors
                 )
@@ -994,31 +994,31 @@ class Work_Image implements Work_Image_Interface
         // Блок 2: Проверка существования и доступности файлов
         if (!file_exists($full_path) || !is_readable($full_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исходное изображение не найдено или недоступно для чтения | Путь: \$full_path = $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Исходное изображение не найдено или недоступно для чтения | Путь: \$full_path = $full_path"
             );
         }
         // Проверка доступности директории для записи
         $thumbnail_dir = dirname($thumbnail_path);
         if (!is_writable($thumbnail_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для сохранения эскиза недоступна для записи | Путь: \$thumbnail_dir = $thumbnail_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для сохранения эскиза недоступна для записи | Путь: \$thumbnail_dir = $thumbnail_dir"
             );
         }
         $full_size = getimagesize($full_path);
         if ($full_size === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: \$full_path = $full_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: \$full_path = $full_path"
             );
         }
         if ($full_size[0] > self::MAX_IMAGE_WIDTH || $full_size[1] > self::MAX_IMAGE_HEIGHT) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размеры исходного изображения слишком велики | Путь: \$full_path = $full_path, ширина = $full_size[0], высота = $full_size[1]"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размеры исходного изображения слишком велики | Путь: \$full_path = $full_path, ширина = $full_size[0], высота = $full_size[1]"
             );
         }
         $thumbnail_exists = file_exists($thumbnail_path);
         if ($thumbnail_exists && !is_writable($thumbnail_path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл эскиза существует, но недоступен для записи | Путь: \$thumbnail_path = $thumbnail_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл эскиза существует, но недоступен для записи | Путь: \$thumbnail_path = $thumbnail_path"
             );
         }
         // Блок 3: Расчет размеров будущего эскиза
@@ -1054,7 +1054,7 @@ class Work_Image implements Work_Image_Interface
             }
         } catch (Exception $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через GraphicsMagick | Аргументы: \$full_path = $full_path, \$thumbnail_path = $thumbnail_path | Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через GraphicsMagick | Аргументы: \$full_path = $full_path, \$thumbnail_path = $thumbnail_path | Сообщение об ошибке: {$e->getMessage()}"
             );
         }
         try {
@@ -1063,7 +1063,7 @@ class Work_Image implements Work_Image_Interface
             }
         } catch (Exception $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через ImageMagick | Аргументы: \$full_path = $full_path, \$thumbnail_path = $thumbnail_path | Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обработке через ImageMagick | Аргументы: \$full_path = $full_path, \$thumbnail_path = $thumbnail_path | Сообщение об ошибке: {$e->getMessage()}"
             );
         }
         // Если ни одна из библиотек не сработала, используем GD
@@ -1138,7 +1138,7 @@ class Work_Image implements Work_Image_Interface
         // Валидация параметра $size
         if (!isset($size[0], $size[1]) || !is_int($size[0]) || !is_int($size[1]) || $size[0] <= 0 || $size[1] <= 0) {
             throw new InvalidArgumentException(
-                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректные размеры изображения | " . "Требуется массив с двумя положительными целыми числами. Получено: width = " . ($size[0] ?? 'undefined') . ", height = " . ($size[1] ?? 'undefined')
+                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректные размеры изображения | " . 'Требуется массив с двумя положительными целыми числами. Получено: width = ' . ($size[0] ?? 'undefined') . ', height = ' . ($size[1] ?? 'undefined')
             );
         }
 
@@ -1149,7 +1149,7 @@ class Work_Image implements Work_Image_Interface
             $this->config['temp_photo_h']
         ) || $this->config['temp_photo_w'] < 0 || $this->config['temp_photo_h'] < 0) {
             throw new RuntimeException(
-                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректная конфигурация temp_photo_w или temp_photo_h | " . "Значения должны быть числами ≥ 0. Получено: temp_photo_w = " . ($this->config['temp_photo_w'] ?? 'undefined') . ", temp_photo_h = " . ($this->config['temp_photo_h'] ?? 'undefined')
+                "[{__FILE__}:{__LINE__} ({__METHOD__ ?: __FUNCTION__ ?: 'global'})] | Некорректная конфигурация temp_photo_w или temp_photo_h | " . 'Значения должны быть числами ≥ 0. Получено: temp_photo_w = ' . ($this->config['temp_photo_w'] ?? 'undefined') . ', temp_photo_h = ' . ($this->config['temp_photo_h'] ?? 'undefined')
             );
         }
 
@@ -1281,7 +1281,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $gmagick_formats)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для GraphicsMagick | Получено: {$original_data['type']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для GraphicsMagick | Получено: {$original_data['type']}"
             );
             return false;
         }
@@ -1293,7 +1293,7 @@ class Work_Image implements Work_Image_Interface
         unset($gmagick_instance);
         if (!in_array($format, $supported_formats, true)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат $format не поддерживается GraphicsMagick"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат $format не поддерживается GraphicsMagick"
             );
             return false;
         }
@@ -1303,7 +1303,7 @@ class Work_Image implements Work_Image_Interface
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GraphicsMagick | Доступная память: " . ini_get(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Изображение слишком велико для обработки через GraphicsMagick | Доступная память: ' . ini_get(
                     'memory_limit'
                 )
             );
@@ -1314,7 +1314,7 @@ class Work_Image implements Work_Image_Interface
             $backup_thumbnail_path = tempnam(dirname($thumbnail_data['path']), 'bak_');
             if (!$backup_thumbnail_path || !rename($thumbnail_data['path'], $backup_thumbnail_path)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать резервную копию старого эскиза через GraphicsMagick"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось создать резервную копию старого эскиза через GraphicsMagick'
                 );
                 return false;
             }
@@ -1348,7 +1348,7 @@ class Work_Image implements Work_Image_Interface
         } catch (Exception $e) {
             // Логирование ошибки с контекстом
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через GraphicsMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через GraphicsMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
             // Восстановление старого эскиза
             if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
@@ -1458,7 +1458,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $imagick_formats)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для ImageMagick | Получено: {$original_data['type']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для ImageMagick | Получено: {$original_data['type']}"
             );
             return false;
         }
@@ -1470,7 +1470,7 @@ class Work_Image implements Work_Image_Interface
         unset($imagick_instance);
         if (!in_array($format, $supported_formats, true)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат $format не поддерживается ImageMagick"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат $format не поддерживается ImageMagick"
             );
             return false;
         }
@@ -1480,7 +1480,7 @@ class Work_Image implements Work_Image_Interface
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через ImageMagick | Доступная память: " . ini_get(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Изображение слишком велико для обработки через ImageMagick | Доступная память: ' . ini_get(
                     'memory_limit'
                 )
             );
@@ -1491,7 +1491,7 @@ class Work_Image implements Work_Image_Interface
             $backup_thumbnail_path = tempnam(dirname($thumbnail_data['path']), 'bak_');
             if (!$backup_thumbnail_path || !rename($thumbnail_data['path'], $backup_thumbnail_path)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать резервную копию старого эскиза через ImageMagick"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось создать резервную копию старого эскиза через ImageMagick'
                 );
                 return false;
             }
@@ -1519,7 +1519,7 @@ class Work_Image implements Work_Image_Interface
         } catch (Exception $e) {
             // Логирование ошибки
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через ImageMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через ImageMagick | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
             // Восстановление старого эскиза
             if ($backup_thumbnail_path && is_file($backup_thumbnail_path)) {
@@ -1627,7 +1627,7 @@ class Work_Image implements Work_Image_Interface
         // Проверка MIME-типа
         if (!array_key_exists($original_data['type'], $gd_mime_to_type)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для GD | Получено: {$original_data['type']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый MIME-тип для GD | Получено: {$original_data['type']}"
             );
             return false;
         }
@@ -1639,7 +1639,7 @@ class Work_Image implements Work_Image_Interface
         ) & IMG_JPG)) && !($image_type === IMAGETYPE_PNG && (imagetypes(
         ) & IMG_PNG)) && !($image_type === IMAGETYPE_WEBP && (imagetypes() & IMG_WEBP))) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$original_data['type']} не поддерживается текущей версией GD"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Формат {$original_data['type']} не поддерживается текущей версией GD"
             );
             return false;
         }
@@ -1649,7 +1649,7 @@ class Work_Image implements Work_Image_Interface
         $estimated_memory = $original_data['width'] * $original_data['height'] * 3;
         if ($estimated_memory > $max_memory_usage) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Изображение слишком велико для обработки через GD | Доступная память: " . ini_get(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Изображение слишком велико для обработки через GD | Доступная память: ' . ini_get(
                     'memory_limit'
                 )
             );
@@ -1660,7 +1660,7 @@ class Work_Image implements Work_Image_Interface
             $backup_thumbnail_path = tempnam(dirname($thumbnail_data['path']), 'bak_');
             if (!$backup_thumbnail_path || !rename($thumbnail_data['path'], $backup_thumbnail_path)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать резервную копию старого эскиза через GD"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось создать резервную копию старого эскиза через GD'
                 );
                 return false;
             }
@@ -1679,19 +1679,19 @@ class Work_Image implements Work_Image_Interface
                     $original_data['path']
                 ) : null,
                 default        => throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый тип изображения для GD | Путь: {$original_data['path']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый тип изображения для GD | Путь: {$original_data['path']}"
                 ),
             };
             if (!$imorig) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать ресурс изображения через GD | Путь: {$original_data['path']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать ресурс изображения через GD | Путь: {$original_data['path']}"
                 );
             }
             // Создание нового изображения для эскиза
             $im = imagecreatetruecolor($thumbnail_data['width'], $thumbnail_data['height']);
             if (!$im) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось создать полноцветное изображение для эскиза через GD"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось создать полноцветное изображение для эскиза через GD'
                 );
             }
             // Настройка прозрачности для PNG и WebP
@@ -1713,7 +1713,7 @@ class Work_Image implements Work_Image_Interface
                 $original_data['height']
             )) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось масштабировать изображение через GD | Путь: {$original_data['path']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось масштабировать изображение через GD | Путь: {$original_data['path']}"
                 );
             }
             // Сохраняем новый эскиз
@@ -1722,15 +1722,15 @@ class Work_Image implements Work_Image_Interface
                 IMAGETYPE_JPEG => 'imagejpeg',
                 IMAGETYPE_PNG  => 'imagepng',
                 IMAGETYPE_WEBP => function_exists('imagewebp') ? 'imagewebp' : throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Функция imagewebp недоступна в текущей версии GD"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Функция imagewebp недоступна в текущей версии GD'
                 ),
                 default        => throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый тип изображения для GD | Путь: {$original_data['path']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неподдерживаемый тип изображения для GD | Путь: {$original_data['path']}"
                 ),
             };
             if (!function_exists($save_function)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Функция $save_function недоступна в текущей версии GD"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Функция $save_function недоступна в текущей версии GD"
                 );
             }
             $save_function($im, $thumbnail_data['path']);
@@ -1746,7 +1746,7 @@ class Work_Image implements Work_Image_Interface
             }
             // Выбрасываем исключение с подробным сообщением
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через GD | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании эскиза через GD | Оригинальный файл: {$original_data['path']}, Эскиз: {$thumbnail_data['path']}, Сообщение об ошибке: {$e->getMessage()}"
             );
         } finally {
             // Освобождение ресурсов
@@ -1977,27 +1977,27 @@ class Work_Image implements Work_Image_Interface
     {
         if (!is_dir($path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория не существует | Путь: $path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория не существует | Путь: $path"
             );
         }
 
         if (!is_writable($path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: $path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория недоступна для записи | Путь: $path"
             );
         }
 
         foreach (glob($path . '/*', GLOB_NOSORT) as $file) {
             if (is_file($file) && !unlink($file)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл | Путь: $file"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл | Путь: $file"
                 );
             }
         }
 
         if (!rmdir($path)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить директорию | Путь: $path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить директорию | Путь: $path"
             );
         }
 
@@ -2106,14 +2106,14 @@ class Work_Image implements Work_Image_Interface
         // Проверяем существование файла
         if (!file_exists($path_image)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден | Путь: '$path_image'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден | Путь: '$path_image'"
             );
         }
         // Получаем размеры изображения
         $size = getimagesize($path_image);
         if ($size === false) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: '$path_image'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить размеры изображения | Путь: '$path_image'"
             );
         }
         // Используем готовый метод для расчёта размеров эскиза

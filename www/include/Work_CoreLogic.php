@@ -5,8 +5,8 @@
  * @brief       Файл содержит класс Work_CoreLogic, который отвечает за выполнение базовой логики приложения.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_CoreLogic`, который реализует интерфейс `Work_CoreLogic_Interface`.
@@ -54,13 +54,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -213,7 +213,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             return $this->config;
         }
         throw new InvalidArgumentException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
         );
     }
 
@@ -263,7 +263,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             $this->config = $value;
         } else {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не может быть установлено | Получено: '$name'"
             );
         }
     }
@@ -843,7 +843,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Валидация входных данных $id_photo
         if ($id_photo < 0) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный идентификатор фотографии | Значение: $id_photo"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный идентификатор фотографии | Значение: $id_photo"
             );
         }
 
@@ -918,7 +918,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $category_data = $this->db->res_row();
         if (!$category_data) {
             throw new PDOException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}"
             );
         }
 
@@ -930,7 +930,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $resolved_path = realpath($image_path);
         if (!$resolved_path || !str_starts_with($resolved_path, $base_dir)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: $image_path"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: $image_path"
             );
             $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
         }
@@ -938,7 +938,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Проверка существования файла
         if (!file_exists($image_path) || !is_readable($image_path)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: $image_path, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: $image_path, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
             );
             $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
         }
@@ -1218,7 +1218,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Проверка входного параметра
         if ($photo_id <= 0) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение параметра \$photo_id | Ожидалось положительное целое число"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение параметра \$photo_id | Ожидалось положительное целое число"
             );
         }
         // Получение данных об изображении и категории через JOIN
@@ -1240,7 +1240,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $temp_data = $this->db->res_row();
         if (!$temp_data) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось найти изображение | Переменная \$photo_id = $photo_id"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось найти изображение | Переменная \$photo_id = $photo_id"
             );
         }
         // Определение путей к файлам
@@ -1251,18 +1251,18 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $aff_rows = $this->db->get_affected_rows();
         if ($aff_rows !== 1) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить запись об изображении | Переменная \$photo_id = $photo_id"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить запись об изображении | Переменная \$photo_id = $photo_id"
             );
         }
         // Удаление файлов
         if (is_file($path_thumbnail) && !unlink($path_thumbnail)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл эскиза | Путь: $path_thumbnail"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл эскиза | Путь: $path_thumbnail"
             );
         }
         if (is_file($path_photo) && !unlink($path_photo)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить файл изображения | Путь: $path_photo"
             );
         }
         return true;
@@ -1369,7 +1369,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $language_dir = $site_dir . '/language/';
         if (!is_dir($language_dir) || !is_readable($language_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков недоступна или не существует | Путь: $language_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков недоступна или не существует | Путь: $language_dir"
             );
         }
 
@@ -1384,7 +1384,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
         if (!$has_subdirs) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков пуста | Путь: $language_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков пуста | Путь: $language_dir"
             );
         }
 
@@ -1398,7 +1398,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             // Проверяем, что директория существует и доступна для чтения
             if (!is_dir($lang_subdir) || !is_readable($lang_subdir)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория языка недоступна для чтения | Директория: $lang_subdir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория языка недоступна для чтения | Директория: $lang_subdir"
                 );
                 continue;
             }
@@ -1407,7 +1407,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             $main_php_path = realpath($lang_subdir . '/main.php');
             if ($main_php_path === false || !is_file($main_php_path) || !is_readable($main_php_path)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл main.php отсутствует или недоступен | Директория: $lang_subdir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл main.php отсутствует или недоступен | Директория: $lang_subdir"
                 );
                 continue;
             }
@@ -1415,7 +1415,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             // Проверяем, что файл находится внутри разрешенной директории
             if (strncmp($main_php_path, $language_dir, strlen($language_dir)) !== 0) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
                 );
                 continue;
             }
@@ -1431,7 +1431,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 ) === ''
             ) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"
                 );
                 continue;
             }
@@ -1449,7 +1449,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         if (empty($list_languages)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни один язык не найден | Путь: $language_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни один язык не найден | Путь: $language_dir"
             );
         }
 
@@ -1555,7 +1555,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Проверяем существование и доступность директории /themes/
         if (!is_dir($themes_dir) || !is_readable($themes_dir)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем недоступна | Путь: $themes_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем недоступна | Путь: $themes_dir"
             );
         }
         // Проверяем, что директория не пуста
@@ -1569,7 +1569,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
         if (!$has_subdirs) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем пуста | Путь: $themes_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем пуста | Путь: $themes_dir"
             );
         }
         // Перебираем поддиректории
@@ -1583,14 +1583,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             // Проверяем, что директория доступна для чтения
             if (!is_readable($theme_dir)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория темы недоступна для чтения | Директория: $theme_dir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория темы недоступна для чтения | Директория: $theme_dir"
                 );
                 continue;
             }
             // Проверяем, что директория находится внутри $themes_dir
             if (strncmp($theme_dir, $themes_dir, strlen($themes_dir)) !== 0) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
                 );
                 continue;
             }
@@ -1600,7 +1600,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Если ни одна тема не найдена, выбрасываем исключение
         if (empty($list_themes)) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни одна тема не найдена | Путь: $themes_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни одна тема не найдена | Путь: $themes_dir"
             );
         }
         return $list_themes;
@@ -1740,19 +1740,19 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         if ($act === 'id') {
             if (!filter_var($news_id_or_limit, FILTER_VALIDATE_INT)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ID новости | Переменная \$news_id_or_limit = $news_id_or_limit"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный ID новости | Переменная \$news_id_or_limit = $news_id_or_limit"
                 );
             }
         } elseif ($act === 'last') {
             if ($news_id_or_limit <= 0 || !filter_var($news_id_or_limit, FILTER_VALIDATE_INT)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное количество новостей | Переменная \$news_id_or_limit = $news_id_or_limit"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное количество новостей | Переменная \$news_id_or_limit = $news_id_or_limit"
                 );
             }
         } else {
             // Обработка некорректного типа запроса
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип запроса | Переменная \$act = '$act'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный тип запроса | Переменная \$act = '$act'"
             );
         }
         // Формирование параметров запроса через match()

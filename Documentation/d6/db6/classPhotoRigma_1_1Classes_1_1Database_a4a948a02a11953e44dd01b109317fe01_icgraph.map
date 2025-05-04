@@ -1,0 +1,7 @@
+<map id="fallback_to_ilike_pgsql" name="fallback_to_ilike_pgsql">
+<area shape="rect" id="Node000001" title="Выполняет альтернативный поиск по ILIKE с ранжированием similarity() для PostgreSQL." alt="" coords="204,29,356,54"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="314,17,303,10,280,8,259,10,248,15,245,20,251,27,247,31,240,21,244,11,257,5,280,3,305,5,317,12"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aed0722bf9257652d1cfd1aeb7daea840" title="Выполняет полнотекстовый поиск в PostgreSQL с обработкой минимальной длины строки,..." alt="" coords="5,29,156,54"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="188,44,156,44,156,39,188,39"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="115,17,104,10,80,8,59,10,48,15,46,20,52,27,48,31,41,21,44,11,58,5,81,3,105,5,118,12"/>
+</map>

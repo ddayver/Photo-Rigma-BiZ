@@ -8,8 +8,8 @@
  *              путей.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Файл используется для вывода фото из галереи по идентификатору, переданному через параметр
@@ -84,13 +84,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // Проверка параметра 'foto'
@@ -136,7 +136,7 @@ if (empty($photo_data['full_path'])) {
     $real_path = realpath($photo_data['full_path']);
     if ($real_path === false || !is_file($real_path) || !is_readable($real_path)) {
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен или не существует | Путь: {$photo_data['full_path']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен или не существует | Путь: {$photo_data['full_path']}"
         );
         $photo_data = $work->no_photo();
     } else {
@@ -144,7 +144,7 @@ if (empty($photo_data['full_path'])) {
         $allowed_directory = realpath($work->config['site_dir'] . $work->config['gallery_folder']);
         if ($allowed_directory === false || !str_starts_with($real_path, $allowed_directory)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к запрещенному файлу | Путь: {$photo_data['full_path']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к запрещенному файлу | Путь: {$photo_data['full_path']}"
             );
             $photo_data = $work->no_photo();
         } else {
@@ -154,7 +154,7 @@ if (empty($photo_data['full_path'])) {
             finfo_close($finfo);
             if (!Work::validate_mime_type($real_mime_type)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип файла | MIME: $real_mime_type"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип файла | MIME: $real_mime_type"
                 );
                 $photo_data = $work->no_photo();
             }
@@ -164,14 +164,14 @@ if (empty($photo_data['full_path'])) {
 // Проверяем, что $photo_data['full_path'] теперь существует и валиден
 if (empty($photo_data['full_path'])) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось определить путь к фото"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить путь к фото'
     );
 }
 // Дополнительная проверка через realpath
 $final_real_path = realpath($photo_data['full_path']);
 if ($final_real_path === false || !is_file($final_real_path) || !is_readable($final_real_path)) {
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен или не существует | Путь: {$photo_data['full_path']}"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен или не существует | Путь: {$photo_data['full_path']}"
     );
 }
 // Обработка миниатюры
@@ -185,7 +185,7 @@ if ($work->check_input('_GET', 'thumbnail', [
         $work->image_attach($photo_data['thumbnail_path'], $photo_data['file']);
     } else {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при создании миниатюры | Путь: {$photo_data['full_path']}"
         );
     }
 } else {

@@ -7,8 +7,8 @@
  * @brief       Работа с фотографиями: вывод, редактирование, загрузка и обработка изображений, оценок.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление фотографиями в системе, включая:
@@ -84,13 +84,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // Проверка прав доступа пользователя и входных данных
@@ -200,7 +200,7 @@ if ($photo_id !== 0) {
 
     if (!$photo_data) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные фотографии | ID: $photo_id"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные фотографии | ID: $photo_id"
         );
     }
 
@@ -212,14 +212,14 @@ if ($photo_id !== 0) {
                 'isset' => true,
                 'empty' => true,
             ]
-    ) && $_GET['subact'] === "rate") {
+    ) && $_GET['subact'] === 'rate') {
         // Проверяем CSRF-токен
         if (empty($_POST['csrf_token']) || !hash_equals(
             $user->session['csrf_token'],
             $_POST['csrf_token']
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
         }
         $user->unset_property_key('session', 'csrf_token');
@@ -289,7 +289,7 @@ if ($photo_id !== 0) {
             $_POST['csrf_token']
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
             );
         }
         $user->unset_property_key('session', 'csrf_token');
@@ -339,7 +339,7 @@ if ($photo_id !== 0) {
             $temp_category_data = $db->res_row();
             if (!$temp_category_data) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: {$_POST['name_category']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: {$_POST['name_category']}"
                 );
             }
         }
@@ -358,20 +358,20 @@ if ($photo_id !== 0) {
             $temp_new_category_data = $db->res_row();
             if (!$temp_new_category_data) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные новой категории | ID: {$_POST['name_category']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные новой категории | ID: {$_POST['name_category']}"
                 );
             }
 
             // Формируем пути для перемещения файлов
             $old_photo_path = sprintf(
-                "%s%s/%s/%s",
+                '%s%s/%s/%s',
                 $work->config['site_dir'],
                 $work->config['gallery_folder'],
                 $photo_data['folder'],
                 $photo_data['file']
             );
             $old_thumbnail_path = sprintf(
-                "%s%s/%s/%s",
+                '%s%s/%s/%s',
                 $work->config['site_dir'],
                 $work->config['thumbnail_folder'],
                 $photo_data['folder'],
@@ -388,14 +388,14 @@ if ($photo_id !== 0) {
 
             // Формируем новые пути с учетом возможного изменения имени файла
             $new_photo_path = sprintf(
-                "%s%s/%s/%s",
+                '%s%s/%s/%s',
                 $work->config['site_dir'],
                 $work->config['gallery_folder'],
                 $temp_new_category_data['folder'],
                 $photo['file']
             );
             $new_thumbnail_path = sprintf(
-                "%s%s/%s/%s",
+                '%s%s/%s/%s',
                 $work->config['site_dir'],
                 $work->config['thumbnail_folder'],
                 $temp_new_category_data['folder'],
@@ -405,7 +405,7 @@ if ($photo_id !== 0) {
             // Проверяем существование старого файла и права доступа
             if (!is_file($old_photo_path) || !is_writable($old_photo_path)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Старый файл недоступен или нет прав на запись | Path: $old_photo_path"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Старый файл недоступен или нет прав на запись | Path: $old_photo_path"
                 );
             }
 
@@ -413,14 +413,14 @@ if ($photo_id !== 0) {
             $new_photo_dir = dirname($new_photo_path);
             if (!is_writable($new_photo_dir)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав на запись в папку нового файла | Directory: $new_photo_dir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав на запись в папку нового файла | Directory: $new_photo_dir"
                 );
             }
 
             // Проверяем существование старой миниатюры и права доступа
             if (!is_file($old_thumbnail_path) || !is_writable($old_thumbnail_path)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Старая миниатюра недоступна или нет прав на запись | Path: $old_thumbnail_path"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Старая миниатюра недоступна или нет прав на запись | Path: $old_thumbnail_path"
                 );
             }
 
@@ -428,7 +428,7 @@ if ($photo_id !== 0) {
             $new_thumbnail_dir = dirname($new_thumbnail_path);
             if (!is_writable($new_thumbnail_dir)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав на запись в папку новой миниатюры | Directory: $new_thumbnail_dir"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав на запись в папку новой миниатюры | Directory: $new_thumbnail_dir"
                 );
             }
 
@@ -470,7 +470,7 @@ if ($photo_id !== 0) {
             ]
         );
 
-        header(sprintf("Location: %s?action=photo&id=%d", $work->config['site_url'], $photo_id));
+        header(sprintf('Location: %s?action=photo&id=%d', $work->config['site_url'], $photo_id));
         exit;
     }
 
@@ -482,13 +482,13 @@ if ($photo_id !== 0) {
                 'isset' => true,
                 'empty' => true,
             ]
-    ) && $_GET['subact'] === "edit") {
+    ) && $_GET['subact'] === 'edit') {
         $template->add_case('PHOTO_BLOCK', 'EDIT_PHOTO');
 
         // Получаем данные о пользователе из JOIN (уже есть в $photo_data)
         $photo['user'] = Work::clean_field($photo_data['real_name']) ?? $work->lang['main']['no_user_add'];
         $photo['path'] = sprintf(
-            "%s%s/%s/%s",
+            '%s%s/%s/%s',
             $work->config['site_dir'],
             $work->config['thumbnail_folder'],
             $photo_data['folder'],
@@ -502,7 +502,7 @@ if ($photo_id !== 0) {
         $category_list = $db->res_arr();
         if (!$category_list) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить список категорий"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить список категорий'
             );
         }
 
@@ -554,7 +554,7 @@ if ($photo_id !== 0) {
                 'isset' => true,
                 'empty' => true,
             ]
-    ) && $_GET['subact'] === "delete") {
+    ) && $_GET['subact'] === 'delete') {
         if ($photo_data['category'] === 0) {
             // Запрос для категории 0
             $db->select(
@@ -572,7 +572,7 @@ if ($photo_id !== 0) {
             $result = $db->res_row();
             if ($result === false) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные о количестве фотографий"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные о количестве фотографий'
                 );
             }
 
@@ -604,7 +604,7 @@ if ($photo_id !== 0) {
             $result = $db->res_row();
             if ($result === false) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные о количестве фотографий"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные о количестве фотографий'
                 );
             }
 
@@ -795,7 +795,7 @@ if ($photo_id !== 0) {
             'isset' => true,
             'empty' => true,
         ]
-) && $_GET['subact'] === "upload" && $user->user['id'] !== 0 && $user->user['pic_upload']) {
+) && $_GET['subact'] === 'upload' && $user->user['id'] !== 0 && $user->user['pic_upload']) {
     // Добавляем блок PHOTO_BLOCK в шаблон
     $template->add_case('PHOTO_BLOCK', 'UPLOAD_PHOTO');
 
@@ -812,7 +812,7 @@ if ($photo_id !== 0) {
     $category_data = $db->res_arr();
     if (!$category_data) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить список категорий"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить список категорий'
         );
     }
 
@@ -851,14 +851,14 @@ if ($photo_id !== 0) {
             'isset' => true,
             'empty' => true,
         ]
-) && $_GET['subact'] === "uploaded") {
+) && $_GET['subact'] === 'uploaded') {
     // Проверяем CSRF-токен
     if (empty($_POST['csrf_token']) || !hash_equals(
         $user->session['csrf_token'],
         $_POST['csrf_token']
     )) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token');
@@ -1076,7 +1076,7 @@ if ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
             'isset' => true,
             'empty' => true,
         ]
-) && $_GET['subact'] === "uploaded") {
+) && $_GET['subact'] === 'uploaded') {
     $redirect_url = $redirect_url ?? $work->config['site_url'];
     header('Location: ' . $redirect_url);
     exit;

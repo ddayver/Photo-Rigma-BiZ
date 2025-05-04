@@ -5,8 +5,8 @@
  * @brief       Файл содержит класс Work_Security, который отвечает за безопасность приложения.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит класс `Work_Security`, который реализует интерфейс `Work_Security_Interface`.
@@ -50,13 +50,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -455,35 +455,35 @@ class Work_Security implements Work_Security_Interface
             $is_valid_regexp = preg_match($regexp, '') !== false;
             if (!$is_valid_regexp) {
                 $errorMessage = match (preg_last_error()) {
-                    PREG_INTERNAL_ERROR        => "Внутренняя ошибка регулярного выражения.",
-                    PREG_BACKTRACK_LIMIT_ERROR => "Превышен лимит обратного отслеживания.",
-                    PREG_RECURSION_LIMIT_ERROR => "Превышен лимит рекурсии.",
-                    PREG_BAD_UTF8_ERROR        => "Некорректная UTF-8 строка.",
-                    PREG_BAD_UTF8_OFFSET_ERROR => "Некорректный смещение UTF-8.",
-                    default                    => "Неизвестная ошибка регулярного выражения.",
+                    PREG_INTERNAL_ERROR        => 'Внутренняя ошибка регулярного выражения.',
+                    PREG_BACKTRACK_LIMIT_ERROR => 'Превышен лимит обратного отслеживания.',
+                    PREG_RECURSION_LIMIT_ERROR => 'Превышен лимит рекурсии.',
+                    PREG_BAD_UTF8_ERROR        => 'Некорректная UTF-8 строка.',
+                    PREG_BAD_UTF8_OFFSET_ERROR => 'Некорректный смещение UTF-8.',
+                    default                    => 'Неизвестная ошибка регулярного выражения.',
                 };
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в регулярном выражении | Регулярное выражение: $regexp, Причина: $errorMessage"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в регулярном выражении | Регулярное выражение: $regexp, Причина: $errorMessage"
                 );
                 return false;
             }
             if (!preg_match($regexp, $field)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля не соответствует регулярному выражению | Поле: '$field', Регулярное выражение: $regexp"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля не соответствует регулярному выражению | Поле: '$field', Регулярное выражение: $regexp"
                 );
                 return false;
             }
         }
         if ($not_zero && $field === '0') {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля равно 0, но флаг not_zero установлен | Поле: '$field'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля равно 0, но флаг not_zero установлен | Поле: '$field'"
             );
             return false;
         }
         foreach ($this->compiled_rules as $rule) {
             if (preg_match($rule, $field)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля содержит запрещённый паттерн | Поле: '$field', Паттерн: $rule"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Значение поля содержит запрещённый паттерн | Поле: '$field', Паттерн: $rule"
                 );
                 return false;
             }
@@ -628,7 +628,7 @@ class Work_Security implements Work_Security_Interface
         $allowed_sources = ['_GET', '_POST', '_SESSION', '_COOKIE', '_FILES'];
         if (!in_array($source_name, $allowed_sources, true)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый источник данных для check_input | Получено: $source_name"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый источник данных для check_input | Получено: $source_name"
             );
             return false;
         }
@@ -642,7 +642,7 @@ class Work_Security implements Work_Security_Interface
         };
         if (!is_array($source)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Источник данных не является массивом | Источник: $source_name"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Источник данных не является массивом | Источник: $source_name"
             );
             return false;
         }
@@ -659,14 +659,14 @@ class Work_Security implements Work_Security_Interface
             $file = $source[$field];
             if ($file['error'] !== UPLOAD_ERR_OK) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка загрузки файла для поля | Поле: $field"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка загрузки файла для поля | Поле: $field"
                 );
                 return false;
             }
             $max_size = $options['max_size'] ?? 0;
             if ($max_size > 0 && $file['size'] > $max_size) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла превышает максимально допустимый размер | Поле: $field, Размер: {$file['size']}, Максимальный размер: $max_size"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Размер файла превышает максимально допустимый размер | Поле: $field, Размер: {$file['size']}, Максимальный размер: $max_size"
                 );
                 return false;
             }
@@ -675,7 +675,7 @@ class Work_Security implements Work_Security_Interface
             finfo_close($finfo);
             if (!Work::validate_mime_type($real_mime_type)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип для загруженного файла | Поле: $field, MIME-тип: $real_mime_type"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип для загруженного файла | Поле: $field, MIME-тип: $real_mime_type"
                 );
             }
             return true;
@@ -789,13 +789,13 @@ class Work_Security implements Work_Security_Interface
     {
         if (empty($email)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пустой email-адрес передан для фильтрации"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Пустой email-адрес передан для фильтрации'
             );
             return '';
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный email-адрес | Получено: $email"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный email-адрес | Получено: $email"
             );
             return '';
         }
@@ -1004,7 +1004,7 @@ class Work_Security implements Work_Security_Interface
         foreach ($this->compiled_rules as $rule) {
             if (preg_match($rule, $request_uri)) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома: найден запрещённый паттерн | Паттерн: $rule, Запрос: $request_uri"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка взлома: найден запрещённый паттерн | Паттерн: $rule, Запрос: $request_uri"
                 );
                 return false;
             }

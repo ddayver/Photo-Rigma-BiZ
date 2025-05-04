@@ -8,8 +8,8 @@
  * @brief       Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление профилями пользователей, включая:
@@ -90,13 +90,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // Устанавливаем файл шаблона
@@ -150,7 +150,7 @@ if ($subact === 'saveprofile') {
         $_POST['csrf_token']
     )) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token');
@@ -165,7 +165,7 @@ if ($subact === 'saveprofile') {
         $user_data = $db->res_row();
         if (!$user_data) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID: $user_id"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID: $user_id"
             );
         }
 
@@ -189,7 +189,7 @@ if ($subact === 'saveprofile') {
     }
 
     throw new RuntimeException(
-        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отказано в праве редактирования пользователя | Редактируемый ID: $user_id, Текущий ID: {$user->session['login_id']}"
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отказано в праве редактирования пользователя | Редактируемый ID: $user_id, Текущий ID: {$user->session['login_id']}"
     );
 }
 
@@ -215,7 +215,7 @@ if ($subact === 'logout') {
     $rows = $db->get_affected_rows();
     if ($rows === 0) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные пользователя при выходе | ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось обновить данные пользователя при выходе | ID: {$user->session['login_id']}"
         );
     }
 
@@ -328,7 +328,7 @@ if ($subact === 'regist') {
         $_POST['csrf_token']
     )) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token');
@@ -364,7 +364,7 @@ if ($subact === 'regist') {
     // Проверяем CSRF-токен
     if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
@@ -435,7 +435,7 @@ if ($subact === 'regist') {
         $group_data = $db->res_row();
         if (!$group_data) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует группа для пользователя | Группа {$user_data['group']} для пользователя $uid. Вызов от пользователя с ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует группа для пользователя | Группа {$user_data['group']} для пользователя $uid. Вызов от пользователя с ID: {$user->session['login_id']}"
             );
             $user_data['group_id'] = 0; // Устанавливаем группу по умолчанию (гости)
             $db->select(
@@ -449,7 +449,7 @@ if ($subact === 'regist') {
             $group_data = $db->res_row();
             if (!$group_data) {
                 throw new LogicException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}"
                 );
             }
         }
@@ -544,7 +544,7 @@ if ($subact === 'regist') {
         $group_data = $db->res_row();
         if (!$group_data) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует группа для пользователя | Группа {$user_data['group']} для пользователя $uid. Вызов от пользователя с ID: {$user->session['login_id']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует группа для пользователя | Группа {$user_data['group']} для пользователя $uid. Вызов от пользователя с ID: {$user->session['login_id']}"
             );
             $user_data['group_id'] = 0; // Устанавливаем группу по умолчанию (гости)
             $db->select(
@@ -558,7 +558,7 @@ if ($subact === 'regist') {
             $group_data = $db->res_row();
             if (!$group_data) {
                 throw new LogicException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные гостевой группы | Вызов от пользователя с ID: {$user->session['login_id']}"
                 );
             }
         }

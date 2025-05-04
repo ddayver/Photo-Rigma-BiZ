@@ -6,8 +6,8 @@
  *              хранение текущих настроек пользователя.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma\\Classes
  *
  * @details     Этот файл содержит реализацию класса `User` и интерфейса `User_Interface`, которые предоставляют методы
@@ -61,13 +61,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
@@ -201,6 +201,7 @@ class User implements User_Interface
      * @throws JsonException    Выбрасывается, если произошла ошибка при декодировании JSON.
      *                                  Пример сообщения:
      *                                        Ошибка при обработке JSON | Поле: user_rights
+     * @throws Exception        Выбрасывается при выполнении запросов к СУБД.
      *
      * @note    Метод сохраняет имена полей прав пользователей и групп в свойство `$user_right_fields`:
      *          - Права пользователя сохраняются в `$user_right_fields['user']`.
@@ -230,7 +231,7 @@ class User implements User_Interface
         // === Загрузка прав первого пользователя ===
         if (!$this->db->select('`user_rights`', TBL_USERS, ['limit' => 1])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить права первого пользователя"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | Не удалось получить права первого пользователя'
             );
         }
 
@@ -248,7 +249,7 @@ class User implements User_Interface
         // === Загрузка прав первой группы ===
         if (!$this->db->select('`user_rights`', TBL_GROUP, ['limit' => 1])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить права первой группы"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | Не удалось получить права первой группы'
             );
         }
 
@@ -375,7 +376,7 @@ class User implements User_Interface
         $rights = json_decode($user_rights, true, 512, JSON_THROW_ON_ERROR);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат JSON | Поле user_rights содержит невалидные данные"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Некорректный формат JSON | Поле user_rights содержит невалидные данные'
             );
         }
 
@@ -464,6 +465,7 @@ class User implements User_Interface
      * @throws JsonException    Выбрасывается, если произошла ошибка при декодировании JSON.
      *                                  Пример сообщения:
      *                                        Ошибка при обработке JSON | Поле: user_rights
+     * @throws Exception        Выбрасывается при выполнении запросов к СУБД.
      *
      * @note    Для указания таблицы базы данных используется константа `TBL_GROUP`. Например: '`groups`'.
      *          Поле `user_rights` должно содержать валидный JSON. После обработки права объединяются с данными группы.
@@ -491,7 +493,7 @@ class User implements User_Interface
             ['where' => '`id` = :group_id', 'params' => ['group_id' => 0]]
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные группы гостя"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | Не удалось получить данные группы гостя'
             );
         }
 
@@ -499,7 +501,7 @@ class User implements User_Interface
         $guest_group = $this->db->res_row();
         if (!$guest_group || !is_array($guest_group)) {
             throw new UnexpectedValueException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректные данные группы гостя | Проверьте формат данных в таблице " . TBL_GROUP
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Некорректные данные группы гостя | Проверьте формат данных в таблице ' . TBL_GROUP
             );
         }
 
@@ -558,6 +560,7 @@ class User implements User_Interface
      * @throws JsonException    Выбрасывается, если произошла ошибка при работе с JSON.
      *                                  Пример сообщения:
      *                                        Ошибка при обработке JSON | Поле: user_rights
+     * @throws Exception        Выбрасывается при выполнении запросов к СУБД.
      *
      * @note    Для указания таблиц базы данных используются константы:
      *          - `TBL_USERS`: Таблица пользователей с их правами. Например: '`users`'.
@@ -589,7 +592,7 @@ class User implements User_Interface
         // Загружаем данные пользователя
         if (!$this->db->select('*', TBL_USERS, ['where' => '`id` = :user_id', 'params' => ['user_id' => $user_id]])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные пользователя с ID: $user_id"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные пользователя с ID: $user_id"
             );
         }
 
@@ -619,7 +622,7 @@ class User implements User_Interface
             ['where' => '`id` = :group_id', 'params' => ['group_id' => $this->user['group_id']]]
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные группы пользователя с ID: {$this->user['group']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные группы пользователя с ID: {$this->user['group']}"
             );
         }
 
@@ -651,7 +654,7 @@ class User implements User_Interface
             ['where' => '`id` = :user_id', 'params' => [':user_id' => $user_id]]
         )) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось обновить дату последней активности пользователя с ID: $user_id"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось обновить дату последней активности пользователя с ID: $user_id"
             );
         }
     }
@@ -812,7 +815,7 @@ class User implements User_Interface
 
             default:
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Недопустимое свойство | Свойство: $name"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Недопустимое свойство | Свойство: $name"
                 );
         }
     }
@@ -967,7 +970,7 @@ class User implements User_Interface
             'session'           => $this->session,
             'user_right_fields' => $this->user_right_fields,
             default             => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Свойство не существует | Получено: '$name'"
             ),
         };
     }
@@ -1027,7 +1030,7 @@ class User implements User_Interface
         // Разрешаем изменять только свойство 'session'
         if ($name !== 'session') {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Несуществующее свойство | Свойство: $name"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Несуществующее свойство | Свойство: $name"
             );
         }
 
@@ -1045,7 +1048,7 @@ class User implements User_Interface
 
         if (!empty($updated_keys)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Обновление свойства '$name' | Изменённые ключи: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Обновление свойства '$name' | Изменённые ключи: " . json_encode(
                     $updated_keys,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -1053,7 +1056,7 @@ class User implements User_Interface
         }
         if (!empty($added_keys)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Добавление в свойство '$name' | Новые ключи: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Добавление в свойство '$name' | Новые ключи: " . json_encode(
                     $added_keys,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -1133,7 +1136,7 @@ class User implements User_Interface
     public function add_new_group(array $group_data): int
     {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Добавление новой группы"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Метод не реализован | Добавление новой группы'
         );
     }
 
@@ -1389,7 +1392,7 @@ class User implements User_Interface
 
         if (!$group_data) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы по умолчанию"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные группы по умолчанию'
             );
         }
 
@@ -1530,7 +1533,7 @@ class User implements User_Interface
 
             default:
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Недопустимое свойство | Свойство: $name"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Недопустимое свойство | Свойство: $name"
                 );
         }
     }
@@ -1648,7 +1651,7 @@ class User implements User_Interface
     public function delete_group(int $group_id): bool
     {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление группы с ID: $group_id"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление группы с ID: $group_id"
         );
     }
 
@@ -1688,7 +1691,7 @@ class User implements User_Interface
     public function delete_user(int $user_id): bool
     {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление пользователя с ID: $user_id"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление пользователя с ID: $user_id"
         );
     }
 
@@ -2020,7 +2023,7 @@ class User implements User_Interface
         // Проверяем наличие ошибок при кодировании
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка кодирования JSON | " . json_last_error_msg(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка кодирования JSON | ' . json_last_error_msg(
                 )
             );
         }
@@ -2227,12 +2230,12 @@ class User implements User_Interface
             if ($rows > 0) {
                 // Пароль успешно обновлён
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
                 );
             } else {
                 // Ошибка при обновлении пароля
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
                 );
             }
         }
@@ -2419,7 +2422,7 @@ class User implements User_Interface
         $user_data = $this->db->res_row();
         if (!$user_data) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь не найден | ID: $user_id"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь не найден | ID: $user_id"
             );
         }
         $new_user_data = [];
@@ -2619,14 +2622,14 @@ class User implements User_Interface
             // Проверяем права доступа к директории
             if (!is_writable($this->work->config['site_dir'] . $this->work->config['avatar_folder'])) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория для аватаров недоступна для записи."
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Директория для аватаров недоступна для записи.'
                 );
             }
 
             // Перемещение загруженного файла
             if (!move_uploaded_file($files_data['file_avatar']['tmp_name'], $path_avatar)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось переместить загруженный файл: {$files_data['file_avatar']['tmp_name']} -> $path_avatar"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось переместить загруженный файл: {$files_data['file_avatar']['tmp_name']} -> $path_avatar"
                 );
             }
 
@@ -2831,8 +2834,8 @@ class User implements User_Interface
                 foreach ($group_data as $key => $value) {
                     if ($key === 'id') {
                         // Обновляем ID группы пользователя
-                        $query["`group_id`"] = ":group_id";
-                        $params[":group_id"] = $value;
+                        $query['`group_id`'] = ':group_id';
+                        $params[':group_id'] = $value;
                         $new_user_data['group_id'] = $value;
                     } else {
                         // Формируем массив для обновления данных пользователя в БД
@@ -2858,13 +2861,13 @@ class User implements User_Interface
                     $new_user_data = array_merge($new_user_data, $processed_rights);
                 } else {
                     throw new RuntimeException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: $user_id"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при обновлении данных пользователя | ID пользователя: $user_id"
                     );
                 }
             } else {
                 // Группа с указанным ID не найдена
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы | ID группы: {$post_data['group']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы | ID группы: {$post_data['group']}"
                 );
             }
         } else {

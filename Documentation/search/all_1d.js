@@ -1,7 +1,28 @@
 var searchData=
 [
-  ['validate_5fmime_5ftype_0',['validate_mime_type',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a41518918c225073130bc7a73983d72ff',1,'PhotoRigma\Classes\Work\validate_mime_type()'],['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a41518918c225073130bc7a73983d72ff',1,'PhotoRigma\Classes\Work_Helper\validate_mime_type()'],['../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html#a41518918c225073130bc7a73983d72ff',1,'PhotoRigma\Interfaces\Work_Helper_Interface\validate_mime_type()'],['../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a41518918c225073130bc7a73983d72ff',1,'PhotoRigma\Interfaces\Work_Interface\validate_mime_type()']]],
-  ['variables_1',['Variables',['../df/db9/group__LanguageEnglishAdmin.html',1,'Admin Variables'],['../d9/ded/group__LanguageEnglishCategory.html',1,'Category Variables'],['../de/d8e/group__LanguageEnglish.html',1,'English Language Variables'],['../d0/d17/group__LanguageEnglishLogin.html',1,'Login and Registration Variables'],['../d4/d2d/group__LanguageEnglishMain.html',1,'Main Language Variables'],['../d3/db1/group__LanguageEnglishMenu.html',1,'Menu Item Variables'],['../df/dc9/group__LanguageEnglishNews.html',1,'News Variables'],['../d7/d94/group__LanguageEnglishPhoto.html',1,'Photo Variables'],['../da/d95/group__LanguageEnglishSearch.html',1,'Search Variables']]],
-  ['view_5frandom_5fphoto_2',['VIEW_RANDOM_PHOTO',['../db/d02/namespacePhotoRigma_1_1Include.html#ab5250fb6270e7f419c4f6b4c225ab78b',1,'PhotoRigma::Include']]],
-  ['view_5fusers_5fonline_3',['VIEW_USERS_ONLINE',['../db/d02/namespacePhotoRigma_1_1Include.html#ade923b91d229c67d7b053979351c0376',1,'PhotoRigma::Include']]]
+  ['with_5fsql_5fformat_0',['with_sql_format',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5bebc90a5002faea5a85470b3bad406e',1,'PhotoRigma\Classes\Database\with_sql_format()'],['../d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html#a5bebc90a5002faea5a85470b3bad406e',1,'PhotoRigma\Interfaces\Database_Interface\with_sql_format()']]],
+  ['work_1',['Work',['../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html',1,'PhotoRigma::Classes']]],
+  ['work_2ephp_2',['Work.php',['../d1/dce/Work_8php.html',1,'']]],
+  ['work_5fcorelogic_3',['Work_CoreLogic',['../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html',1,'PhotoRigma::Classes']]],
+  ['work_5fcorelogic_2ephp_4',['Work_CoreLogic.php',['../da/d65/Work__CoreLogic_8php.html',1,'']]],
+  ['work_5fcorelogic_5finterface_5',['Work_CoreLogic_Interface',['../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html',1,'PhotoRigma::Interfaces']]],
+  ['work_5fcorelogic_5finterface_2ephp_6',['Work_CoreLogic_Interface.php',['../d4/ddd/Work__CoreLogic__Interface_8php.html',1,'']]],
+  ['work_5fhelper_7',['Work_Helper',['../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html',1,'PhotoRigma::Classes']]],
+  ['work_5fhelper_2ephp_8',['Work_Helper.php',['../d6/d5c/Work__Helper_8php.html',1,'']]],
+  ['work_5fhelper_5finterface_9',['Work_Helper_Interface',['../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html',1,'PhotoRigma::Interfaces']]],
+  ['work_5fhelper_5finterface_2ephp_10',['Work_Helper_Interface.php',['../d3/ddb/Work__Helper__Interface_8php.html',1,'']]],
+  ['work_5fimage_11',['Work_Image',['../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html',1,'PhotoRigma::Classes']]],
+  ['work_5fimage_2ephp_12',['Work_Image.php',['../dd/dbc/Work__Image_8php.html',1,'']]],
+  ['work_5fimage_5finterface_13',['Work_Image_Interface',['../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html',1,'PhotoRigma::Interfaces']]],
+  ['work_5fimage_5finterface_2ephp_14',['Work_Image_Interface.php',['../d1/df9/Work__Image__Interface_8php.html',1,'']]],
+  ['work_5finterface_15',['Work_Interface',['../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html',1,'PhotoRigma::Interfaces']]],
+  ['work_5finterface_2ephp_16',['Work_Interface.php',['../d3/dee/Work__Interface_8php.html',1,'']]],
+  ['work_5fsecurity_17',['Work_Security',['../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html',1,'PhotoRigma::Classes']]],
+  ['work_5fsecurity_2ephp_18',['Work_Security.php',['../d2/df8/Work__Security_8php.html',1,'']]],
+  ['work_5fsecurity_5finterface_19',['Work_Security_Interface',['../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html',1,'PhotoRigma::Interfaces']]],
+  ['work_5fsecurity_5finterface_2ephp_20',['Work_Security_Interface.php',['../d7/d9e/Work__Security__Interface_8php.html',1,'']]],
+  ['work_5ftemplate_21',['Work_Template',['../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html',1,'PhotoRigma::Classes']]],
+  ['work_5ftemplate_2ephp_22',['Work_Template.php',['../df/dbe/Work__Template_8php.html',1,'']]],
+  ['work_5ftemplate_5finterface_23',['Work_Template_Interface',['../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html',1,'PhotoRigma::Interfaces']]],
+  ['work_5ftemplate_5finterface_2ephp_24',['Work_Template_Interface.php',['../d1/d1d/Work__Template__Interface_8php.html',1,'']]]
 ];

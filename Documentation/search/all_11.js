@@ -7,6 +7,6 @@ var searchData=
   ['initialize_5fuser_4',['initialize_user',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4ed2627b2e687e62000e77ada58d072f',1,'PhotoRigma::Classes::User']]],
   ['insert_5',['insert',['../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110',1,'PhotoRigma\Classes\Database\insert()'],['../d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html#a6e5af1f386c0c7968aa10ea928c7a110',1,'PhotoRigma\Interfaces\Database_Interface\insert()']]],
   ['install_2ephp_6',['install.php',['../d8/daf/install_8php.html',1,'']]],
-  ['is_5fvalid_7',['is_valid',['../d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html#ae2b05c45fdb085ddff20e7add6ddf023',1,'PhotoRigma::Interfaces::Cache_Handler_Interface']]],
+  ['is_5fvalid_7',['is_valid',['../d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html#a4eb59a37e4e4450d648cdbd2afac5554',1,'PhotoRigma::Interfaces::Cache_Handler_Interface']]],
   ['item_20variables_8',['Menu Item Variables',['../d3/db1/group__LanguageEnglishMenu.html',1,'']]]
 ];

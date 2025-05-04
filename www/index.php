@@ -5,8 +5,8 @@
  * @brief       Точка входа в приложение PhotoRigma.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   PhotoRigma
  *
  * @details     Этот файл является точкой входа в приложение и выполняет следующие задачи:
@@ -175,12 +175,12 @@ try {
      */
     if (!is_file('config.php')) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Конфигурационный файл отсутствует или не является файлом | Путь: config.php"
+            __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ') | Конфигурационный файл отсутствует или не является файлом | Путь: config.php'
         );
     }
     if (!is_readable('config.php')) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Конфигурационный файл существует, но недоступен для чтения | Путь: config.php"
+            __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ') | Конфигурационный файл существует, но недоступен для чтения | Путь: config.php'
         );
     }
     require_once 'config.php'; // Подключаем файл редактируемых пользователем настроек
@@ -232,7 +232,7 @@ try {
     if (!empty($errors)) {
         $error_details = implode(PHP_EOL, $errors); // Подробности ошибок
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Проверка обязательных файлов завершилась ошибкой | Ошибки:" . PHP_EOL . $error_details
+            __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ') | Проверка обязательных файлов завершилась ошибкой | Ошибки:' . PHP_EOL . $error_details
         );
     }
 
@@ -369,7 +369,7 @@ try {
         // Проверяем существование файла перед подключением
         if (!is_file($action_file) || !is_readable($action_file)) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: $action_file"
+                __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: $action_file"
             );
             $action_file = $work->config['site_dir'] . 'action/main.php'; // Подключаем файл по умолчанию
             $action = 'main';
@@ -383,7 +383,7 @@ try {
         include_once $action_file;
     } else {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__FUNCTION__ ?: 'global') . ") | Файл действий не найден или недоступен для чтения | Путь: $action_file"
+            __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ") | Файл действий не найден или недоступен для чтения | Путь: $action_file"
         );
     }
 
@@ -397,34 +397,34 @@ try {
     header('Content-Type: text/html; charset=UTF-8');
     echo $template->content;
 } catch (PDOException $e) {
-    $type = "Ошибка базы данных";
+    $type = 'Ошибка базы данных';
 } catch (UnexpectedValueException $e) {
-    $type = "Неожиданное значение";
+    $type = 'Неожиданное значение';
 } catch (OutOfBoundsException $e) {
-    $type = "Индекс или ключ вне границ";
+    $type = 'Индекс или ключ вне границ';
 } catch (RangeException $e) {
-    $type = "Значение вне допустимого диапазона";
+    $type = 'Значение вне допустимого диапазона';
 } catch (RuntimeException $e) {
-    $type = "Ошибка времени выполнения";
+    $type = 'Ошибка времени выполнения';
 } catch (InvalidArgumentException $e) {
-    $type = "Неверный аргумент";
+    $type = 'Неверный аргумент';
 } catch (BadMethodCallException $e) {
-    $type = "Вызов несуществующего метода";
+    $type = 'Вызов несуществующего метода';
 } catch (BadFunctionCallException $e) {
-    $type = "Вызов несуществующей функции";
+    $type = 'Вызов несуществующей функции';
 } catch (DomainException $e) {
-    $type = "Значение вне допустимой области";
+    $type = 'Значение вне допустимой области';
 } catch (LengthException $e) {
-    $type = "Ошибка длины значения";
+    $type = 'Ошибка длины значения';
 } catch (LogicException $e) {
-    $type = "Логическая ошибка";
+    $type = 'Логическая ошибка';
 } catch (Exception $e) {
-    $type = "Общая ошибка";
+    $type = 'Общая ошибка';
 } finally {
     if (isset($e) && ($e instanceof Throwable)) {
         // Формируем трассировку один раз
         $remote_ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-        $message = date('H:i:s') . " [ERROR] | " . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage(
+        $message = date('H:i:s') . ' [ERROR] | ' . ($remote_ip ?: 'UNKNOWN_IP') . ' | ' . $type . ': ' . $e->getMessage(
         );
 
         if (function_exists('\PhotoRigma\Include\log_in_file')) {
@@ -468,7 +468,7 @@ try {
                         );
                         /** @noinspection PhpUnhandledExceptionInspection */
                         $trace_info[] = sprintf(
-                            "Шаг %d:" . PHP_EOL . "  Файл: %s" . PHP_EOL . "  Строка: %s" . PHP_EOL . "  Функция: %s" . PHP_EOL . "  Аргументы: %s",
+                            'Шаг %d:' . PHP_EOL . '  Файл: %s' . PHP_EOL . '  Строка: %s' . PHP_EOL . '  Функция: %s' . PHP_EOL . '  Аргументы: %s',
                             $step_number,
                             $trace['file'] ?? 'неизвестный файл',
                             $trace['line'] ?? 'неизвестная строка',

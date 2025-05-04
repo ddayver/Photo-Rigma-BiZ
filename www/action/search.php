@@ -7,8 +7,8 @@
  * @brief       Обработка поисковых запросов на сайте.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за обработку поисковых запросов на сайте. Основные функции включают:
@@ -71,13 +71,13 @@ use RuntimeException;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // Устанавливаем заголовок страницы и подключаем шаблон для отображения результатов поиска
@@ -133,7 +133,7 @@ if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true
         $_POST['csrf_token']
     )) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token');
@@ -210,7 +210,7 @@ if ($search['category']) {
                 'D_CATEGORY_FIND_DESC' => Work::clean_field($val['description']),
                 // Описание категории
                 'U_CATEGORY_FIND'      => sprintf(
-                    "%s?action=category&amp;cat=%d",
+                    '%s?action=category&amp;cat=%d',
                     $work->config['site_url'],
                     $val['id']
                 ),
@@ -245,7 +245,7 @@ if ($search['news']) {
                 // Заголовок новости
                 'D_NEWS_FIND_DESC' => mb_substr(Work::clean_field($val['text_post']), 0, 100, 'UTF-8') . '...',
                 // Краткое описание новости (первые 100 символов)
-                'U_NEWS_FIND'      => sprintf("%s?action=news&amp;news=%d", $work->config['site_url'], $val['id']),
+                'U_NEWS_FIND'      => sprintf('%s?action=news&amp;news=%d', $work->config['site_url'], $val['id']),
                 // Ссылка на новость
             ], 'SEARCH_NEWS[' . $key . ']');
         }
@@ -306,10 +306,10 @@ $template->add_string_ar([
     'L_NEED_CATEGORY' => $work->lang['search']['need_category'], // Текст "Искать категории"
     'L_NEED_NEWS'     => $work->lang['search']['need_news'], // Текст "Искать новости"
     'L_NEED_PHOTO'    => $work->lang['search']['need_photo'], // Текст "Искать фотографии"
-    'D_SEARCH_TEXT'   => $search_text ?? '', // Текущее значение поля поиска
+    'D_SEARCH_TEXT'   => $search_text, // Текущее значение поля поиска
     'D_NEED_USER'     => isset($check['user']) ? 'checked="checked"' : '', // Флаг "Искать пользователей"
     'D_NEED_CATEGORY' => isset($check['category']) ? 'checked="checked"' : '', // Флаг "Искать категории"
     'D_NEED_NEWS'     => isset($check['news']) ? 'checked="checked"' : '', // Флаг "Искать новости"
     'D_NEED_PHOTO'    => isset($check['photo']) ? 'checked="checked"' : '', // Флаг "Искать фотографии"
-    'U_SEARCH'        => sprintf("%s?action=search", $work->config['site_url']), // URL для отправки формы
+    'U_SEARCH'        => sprintf('%s?action=search', $work->config['site_url']), // URL для отправки формы
 ]);

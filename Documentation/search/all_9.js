@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['a_20добавление_20нового_20обработчика_0',['a) Добавление нового обработчика',['../index.html#autotoc_md58',1,'']]],
-  ['a_20создайте_20базу_20данных_20и_20пользователя_1',['a) Создайте базу данных и пользователя',['../index.html#autotoc_md37',1,'']]],
-  ['action_20tt_2',['&lt;tt&gt;action&lt;/tt&gt;',['../de/d90/namespacePhotoRigma.html#Параметр',1,'']]],
+  ['a_20добавление_20нового_20обработчика_0',['a) Добавление нового обработчика',['../index.html#autotoc_md51',1,'']]],
+  ['a_20создайте_20базу_20данных_20и_20пользователя_1',['a) Создайте базу данных и пользователя',['../index.html#autotoc_md30',1,'']]],
+  ['action_20tt_2',['Параметр &lt;tt&gt;action&lt;/tt&gt;',['../de/d90/namespacePhotoRigma.html#Index_Action_Param',1,'']]],
   ['add_5fcase_3',['add_case',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a47bd6b3290e92943a380a494a29c981e',1,'PhotoRigma\Classes\Template\add_case()'],['../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a47bd6b3290e92943a380a494a29c981e',1,'PhotoRigma\Interfaces\Template_Interface\add_case()']]],
   ['add_5fcase_5far_4',['add_case_ar',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a9acabbaa532d9e3d00e768499020060d',1,'PhotoRigma\Classes\Template\add_case_ar()'],['../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a9acabbaa532d9e3d00e768499020060d',1,'PhotoRigma\Interfaces\Template_Interface\add_case_ar()']]],
   ['add_5fif_5',['add_if',['../de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1c5d5f804563b88462ee58e079ce528d',1,'PhotoRigma\Classes\Template\add_if()'],['../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a1c5d5f804563b88462ee58e079ce528d',1,'PhotoRigma\Interfaces\Template_Interface\add_if()']]],

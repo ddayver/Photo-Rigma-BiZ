@@ -7,8 +7,8 @@
  * @brief       Администрирование сайта.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Action
  *
  * @details     Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции
@@ -78,13 +78,13 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 // Устанавливаем шаблон для административной панели
@@ -130,7 +130,7 @@ if ((!$work->check_input(
     if ($user->session['login_attempts'] >= MAX_LOGIN_ATTEMPTS) {
         // Логируем блокировку
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь заблокирован из-за превышения попыток входа | ID пользователя: {$user->user['id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь заблокирован из-за превышения попыток входа | ID пользователя: {$user->user['id']}"
         );
 
         // Выводим сообщение об ошибке и завершаем выполнение
@@ -140,7 +140,7 @@ if ((!$work->check_input(
     // Проверяем CSRF-токен
     if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
         throw new RuntimeException(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
         );
     }
     $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
@@ -155,7 +155,7 @@ if ((!$work->check_input(
 
         // Логируем успешный вход
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Администратор успешно вошел в систему | ID пользователя: {$user->user['id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Администратор успешно вошел в систему | ID пользователя: {$user->user['id']}"
         );
     } else {
         // Увеличиваем счетчик неудачных попыток
@@ -164,7 +164,7 @@ if ((!$work->check_input(
 
         // Логируем неудачную попытку входа
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неудачная попытка входа в административную панель | ID пользователя: {$user->user['id']}"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неудачная попытка входа в административную панель | ID пользователя: {$user->user['id']}"
         );
 
         // Перенаправляем пользователя на главную страницу
@@ -185,7 +185,7 @@ if (!empty($user->user['admin']) && $work->check_input(
             // Проверяем CSRF-токен
             if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
                 );
             }
             $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
@@ -460,7 +460,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         $_POST['csrf_token']
                     )) {
                         throw new RuntimeException(
-                            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
                         );
                     }
                     $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
@@ -522,12 +522,12 @@ if (!empty($user->user['admin']) && $work->check_input(
                     ]);
                 } else {
                     throw new RuntimeException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные группы"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные группы'
                     );
                 }
             } else {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID пользователя: {$_GET['uid']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные пользователя | ID пользователя: {$_GET['uid']}"
                 );
             }
         } else {
@@ -540,14 +540,14 @@ if (!empty($user->user['admin']) && $work->check_input(
                 // Проверяем CSRF-токен
                 if (!isset($_POST['csrf_token']) || !hash_equals($user->session['csrf_token'], $_POST['csrf_token'])) {
                     throw new RuntimeException(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
                     );
                 }
                 $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
 
-                $search_query = $_POST['search_user'] === '*' ? '%' : "%" . Work::clean_field(
+                $search_query = $_POST['search_user'] === '*' ? '%' : '%' . Work::clean_field(
                     $_POST['search_user']
-                ) . "%";
+                ) . '%';
 
                 // Выполняем запрос к БД
                 $db->select('*', TBL_USERS, [
@@ -565,7 +565,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         $template->add_string_ar([
                             'D_FIND_USER' => $value['real_name'],
                             'U_FIND_USER' => sprintf(
-                                "%s?action=admin&amp;subact=admin_user&amp;uid=%s",
+                                '%s?action=admin&amp;subact=admin_user&amp;uid=%s',
                                 $work->config['site_url'],
                                 $value['id']
                             ),
@@ -626,7 +626,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $_POST['csrf_token']
             )) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
                 );
             }
 
@@ -655,7 +655,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $_POST['csrf_token']
             )) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
                 );
             }
 
@@ -735,15 +735,15 @@ if (!empty($user->user['admin']) && $work->check_input(
         // Подготовка данных для выбора подразделов администрирования
         $select_subact = [
             [
-                'url' => sprintf("%s?action=admin&amp;subact=settings", $work->config['site_url']),
+                'url' => sprintf('%s?action=admin&amp;subact=settings', $work->config['site_url']),
                 'txt' => $work->lang['admin']['settings'],
             ],
             [
-                'url' => sprintf("%s?action=admin&amp;subact=admin_user", $work->config['site_url']),
+                'url' => sprintf('%s?action=admin&amp;subact=admin_user', $work->config['site_url']),
                 'txt' => $work->lang['admin']['admin_user'],
             ],
             [
-                'url' => sprintf("%s?action=admin&amp;subact=admin_group", $work->config['site_url']),
+                'url' => sprintf('%s?action=admin&amp;subact=admin_group', $work->config['site_url']),
                 'txt' => $work->lang['admin']['admin_group'],
             ],
         ];

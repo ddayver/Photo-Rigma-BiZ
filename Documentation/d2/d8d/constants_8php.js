@@ -11,6 +11,7 @@ var constants_8php =
     [ "PhotoRigma\\Include\\LONG_MENU", "db/d02/namespacePhotoRigma_1_1Include.html#a8ffd4ef7a2d3270cb35c24abf9264733", null ],
     [ "PhotoRigma\\Include\\MAX_LOG_SIZE", "db/d02/namespacePhotoRigma_1_1Include.html#a53cff4e23bb5f13e5e08ca5e8b58d740", null ],
     [ "PhotoRigma\\Include\\MAX_LOGIN_ATTEMPTS", "db/d02/namespacePhotoRigma_1_1Include.html#a0c9fe713d3d1b6f166d8768aaf619275", null ],
+    [ "PhotoRigma\\Include\\MIN_FULLTEXT_SEARCH_LENGTH", "db/d02/namespacePhotoRigma_1_1Include.html#ad8b556a1e05cc5e5d4fae7b42ff28093", null ],
     [ "PhotoRigma\\Include\\REG_EMAIL", "db/d02/namespacePhotoRigma_1_1Include.html#ae61eeb74d6e738c902452868f3b3ca32", null ],
     [ "PhotoRigma\\Include\\REG_LOGIN", "db/d02/namespacePhotoRigma_1_1Include.html#abcaad3156cca5ada2c3a8df418291208", null ],
     [ "PhotoRigma\\Include\\REG_NAME", "db/d02/namespacePhotoRigma_1_1Include.html#a328f2af671059a9d73b0cfef6c3a644f", null ],

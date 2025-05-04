@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -132,67 +132,9 @@ $(function(){initNavTree('dd/d71/search_8php.html','../../'); initResizable(true
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Обработка поисковых запросов на сайте. </p>
 <p>@noinspection PhpUnhandledExceptionInspection @noinspection PhpUndefinedClassInspection</p>
-<dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">Random</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>RandomException При выполнении методов, использующих random(). </p><dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">Exception</td><td>При выполнении прочих методов классов, функций или операций.</td></tr>
-  </table>
-  </dd>
-</dl>
-<h1><a class="anchor" id="Планы"></a>
-развития (TODO)</h1>
-<ol type="1">
-<li>Добавить поддержку полнотекстового поиска:<ul>
-<li>Для MySQL:<ul>
-<li>Создать FULLTEXT-индексы для полей:<ul>
-<li>TBL_USERS: real_name</li>
-<li>TBL_CATEGORY: name, description</li>
-<li>TBL_NEWS: name_post, text_post</li>
-<li>TBL_PHOTO: name, description</li>
-</ul>
-</li>
-<li>Использовать MATCH ... AGAINST для выполнения поиска с ранжированием результатов.</li>
-</ul>
-</li>
-<li>Для PostgreSQL:<ul>
-<li>Добавить столбцы tsvector для полей:<ul>
-<li>TBL_USERS: real_name</li>
-<li>TBL_CATEGORY: name, description</li>
-<li>TBL_NEWS: name_post, text_post</li>
-<li>TBL_PHOTO: name, description</li>
-</ul>
-</li>
-<li>Создать индексы GIN для tsvector.</li>
-<li>Настроить триггеры для автоматического обновления tsvector.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Обновить PHP-код:<ul>
-<li>Реализовать универсальный метод для выполнения полнотекстового поиска:<ul>
-<li>Для MySQL использовать MATCH ... AGAINST.</li>
-<li>Для PostgreSQL использовать @ и to_tsquery.</li>
-</ul>
-</li>
-<li>Добавить возможность сортировки результатов по релевантности (relevance).</li>
-<li>Учесть переключение между MySQL и PostgreSQL через проверку типа СУБД.</li>
-</ul>
-</li>
-<li>Оптимизировать производительность:<ul>
-<li>Убедиться, что индексы корректно используются для ускорения поиска.</li>
-<li>Настроить минимальную длину слов для индексации (например, ft_min_word_len в MySQL).</li>
-<li>Учесть особенности языков (например, стемминг для русского или английского языка).</li>
-</ul>
-</li>
-</ol>
 <dl class="section author"><dt>Автор</dt><dd>Dark Dayver </dd></dl>
-<dl class="section version"><dt>Версия</dt><dd>0.4.2 </dd></dl>
-<dl class="section date"><dt>Дата</dt><dd>2025-04-27 </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>0.4.3 </dd></dl>
+<dl class="section date"><dt>Дата</dt><dd>2025-05-05 </dd></dl>
 
 <p class="definition">См. определение в файле <a class="el" href="../../dd/d71/search_8php_source.html">search.php</a></p>
 </div></div><!-- contents -->

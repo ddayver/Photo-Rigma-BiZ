@@ -5,26 +5,38 @@
  * @brief       Класс для работы с базами данных через PDO.
  *
  * @author      Dark Dayver
- * @version     0.4.2
- * @date        2025-04-27
+ * @version     0.4.3
+ * @date        2025-05-05
  * @namespace   Photorigma\\Classes
  *
- * @details     Этот файл содержит реализацию класса `Database`, который предоставляет методы для работы с различными
- *              базами данных:
- *              - Выполнение SQL-запросов (SELECT, JOIN, INSERT, UPDATE, DELETE, TRUNCATE).
- *              - Обработка результатов запросов, включая вывод данных.
- *              - Управление соединением с базой данных.
+ * @details     Этот файл содержит реализацию класса `Database`, который предоставляет полный набор методов для работы
+ *              с различными реляционными базами данных. Класс `Database` обеспечивает:
+ *              - Выполнение стандартных операций с данными (SELECT, JOIN, INSERT, UPDATE, DELETE, TRUNCATE).
+ *              - **Гибкое формирование условий запросов**, включая поддержку сложных условий `WHERE` с использованием
+ *                операторов `OR` и `NOT` через массивный синтаксис.
+ *              - Реализацию **полнотекстового поиска (Full-Text Search - FTS)**, специфичного для каждой поддерживаемой
+ *                СУБД (MySQL, PostgreSQL, SQLite), включая механизмы fallback на `LIKE`/`ILIKE` и кеширование ошибок индексов.
+ *              - Обработка результатов запросов, включая получение данных в различных форматах и метаданных.
+ *              - Управление соединением с базой данных и транзакциями.
  *              - Обработка ошибок через централизованную систему логирования и обработки ошибок.
+ *              - Временное изменение формата SQL-синтаксиса для совместимости запросов между разными СУБД.
+ *              - Интеграция с обработчиком кеша для долгосрочного хранения оптимизационных данных.
  *
  * @section     Database_Main_Functions Основные функции
- *              - Безопасное выполнение запросов через подготовленные выражения.
+ *              - Безопасное и гибкое выполнение запросов через подготовленные выражения, с поддержкой сложных условий
+ *                WHERE (OR, NOT).
+ *              - Реализация полнотекстового поиска (FTS) с fallback'ом на LIKE/ILIKE.
  *              - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной
  *                строки).
  *              - Форматирование даты с учётом специфики используемой СУБД.
  *              - Управление транзакциями.
  *
- * @see         PhotoRigma::Interfaces::Database_Interface Интерфейс, который реализует класс.
- * @see         PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
+ * @see         PhotoRigma::Interfaces::Database_Interface
+ *              Интерфейс, который реализует класс.
+ * @see         PhotoRigma::Interfaces::Cache_Handler_Interface
+ *              Интерфейс обработчика кеша, используемый классом.
+ * @see         PhotoRigma::Include::log_in_file()
+ *              Функция для логирования ошибок.
  *
  * @note        Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с базами данных.
  *              Реализованы меры безопасности для предотвращения SQL-инъекций через использование подготовленных
@@ -58,31 +70,42 @@ use function PhotoRigma\Include\log_in_file;
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
-        date('H:i:s') . " [ERROR] | " . (filter_input(
+        date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
             'REMOTE_ADDR',
             FILTER_VALIDATE_IP
-        ) ?: 'UNKNOWN_IP') . " | " . __FILE__ . " | Попытка прямого вызова файла"
+        ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ' | Попытка прямого вызова файла'
     );
-    die("HACK!");
+    die('HACK!');
 }
 
 /**
  * @class   Database
  * @brief   Класс для работы с базами данных через PDO.
  *
- * @details Этот класс предоставляет функционал для выполнения операций с базами данных, таких как SELECT, INSERT,
- *          UPDATE, DELETE, TRUNCATE и JOIN. Поддерживаемые СУБД: MySQL (MariaDB), PostgreSQL и SQLite. Класс
- *          обеспечивает:
- *          - Безопасное выполнение запросов через подготовленные выражения.
- *          - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной строки).
- *          - Форматирование даты с учётом специфики используемой СУБД.
- *          - Управление транзакциями.
- *          - Временное изменение формата SQL для выполнения запросов в контексте другой СУББД (например, выполнение
- *            запроса в формате PostgreSQL при подключении к MySQL). Это позволяет использовать один экземпляр класса
- *            для работы с разными СУБД без необходимости создания дополнительных подключений.
- *          - Осуществляет долгосрочное кеширование временных кеш-свойств через методы Cache_Handler_Interface.
- *          Все ошибки, возникающие при работе с базой данных, обрабатываются через исключения.
+ * @details Этот класс предоставляет полный спектр функционала для эффективной и безопасной работы
+ *          с реляционными базами данных, поддерживая следующие СУБД: MySQL (включая MariaDB),
+ *          PostgreSQL и SQLite. Основные возможности класса включают:
+ *          - Безопасное и гибкое выполнение стандартных операций с данными (SELECT, INSERT, UPDATE, DELETE, TRUNCATE, JOIN)
+ *            с использованием подготовленных выражений и структурированных опций запроса. Поддерживается
+ *            построение сложных условий WHERE с использованием операторов `OR` и `NOT` через удобный массивный синтаксис.
+ *          - Реализацию **полнотекстового поиска (Full-Text Search - FTS)**, специфичного для каждой поддерживаемой СУБД
+ *            (MySQL/MariaDB FTS, PostgreSQL FTS/`tsvector`/`tsquery`, SQLite FTS5). Включает обработку
+ *            минимальной длины строки поиска, кеширование ошибок FTS-индексов и автоматический
+ *            переход (fallback) на альтернативные методы поиска (`LIKE`, `ILIKE` с `similarity()` для PostgreSQL)
+ *            в случае недоступности или ошибок FTS.
+ *          - Получение метаданных выполненных запросов (например, количество затронутых строк (`$aff_rows`) или ID последней вставленной записи (`$insert_id`)).
+ *          - Форматирование дат и времени в SQL-запросах с автоматическим преобразованием форматов
+ *            (`DATE_FORMAT` для MySQL, `TO_CHAR` для PostgreSQL, `strftime` для SQLite)
+ *            на основе текущей или временно установленной СУБД.
+ *          - Управление транзакциями (начало, фиксация, откат).
+ *          - Временное изменение формата SQL-синтаксиса (например, экранирования идентификаторов,
+ *            форматов даты) для выполнения запросов в контексте другой СУБД (`with_sql_format()`),
+ *            что позволяет использовать один экземпляр для взаимодействия с разными типами БД без переподключения.
+ *          - Долгосрочное кеширование внутренних оптимизационных данных (кешей форматов, запросов,
+ *            снятия экранирования) через интегрированный объект, реализующий `Cache_Handler_Interface`.
+ *            Все ошибки, возникающие на уровне работы с базой данных или при обработке запросов,
+ *            обрабатываются через исключения (`PDOException`, `InvalidArgumentException`, `Exception` и др.).
  *
  * @property ?PDO        $pdo             Объект PDO для подключения к базе данных.
  * @property string|null $txt_query       Текст последнего SQL-запроса, сформированного методами класса.
@@ -90,7 +113,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @property int         $aff_rows        Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE).
  * @property int         $insert_id       ID последней вставленной строки после выполнения INSERT-запроса.
  * @property string      $db_type         Тип базы данных (mysql, pgsql, sqlite).
- * @property string      $db_name         Имя базы данных
+ * @property string      $db_name         Имя базы данных.
  * @property array       $format_cache    Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite).
  * @property array       $query_cache     Кэш для хранения результатов проверки существования запросов.
  * @property array       $unescape_cache  Кэш для хранения результатов снятия экранирования идентификаторов.
@@ -98,10 +121,14 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *                                        Используется для временного изменения формата SQL.
  * @property array       $allowed_formats Список поддерживаемых форматов SQL (например, ['mysql', 'pgsql', 'sqlite']).
  *                                        Определяет допустимые значения для параметра `$format` в методах класса.
- * @property Cache_Handler_Interface $cache Объект для работы с кешем
+ * @property Cache_Handler_Interface $cache Объект для работы с кешем.
  *
  * Пример создания объекта класса Database:
  * @code
+ * use PhotoRigma\Classes\Database;
+ * use PhotoRigma\Classes\Cache_Handler; // Если используется Cache_Handler по умолчанию
+ * use PhotoRigma\Interfaces\Cache_Handler_Interface; // Если используется другой Cache_Handler
+ *
  * $db_config = [
  *     'dbtype' => 'mysql',
  *     'dbname' => 'test_db',
@@ -109,44 +136,78 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *     'dbpass' => 'password',
  *     'dbhost' => 'localhost',
  *     'dbport' => 3306,
+ *     // Другие опции подключения...
  * ];
- * $cache = new \PhotoRigma\Classes\Cache_Handler();
- * $db = new \\PhotoRigma\\Classes\\Database($config);
+ *
+ * // Пример с Cache_Handler по умолчанию
+ * $cache_handler = new Cache_Handler();
+ *
+ * // Или с объектом, реализующим Cache_Handler_Interface
+ * // class CustomCache implements Cache_Handler_Interface { ... }
+ * // $cache_handler = new CustomCache();
+ *
+ * try {
+ *     $db = new Database($db_config, $cache_handler);
+ *     // ... работа с базой данных ...
+ * } catch (\PDOException $e) {
+ *     // Обработка ошибки подключения
+ *     echo "Ошибка подключения к БД: " . $e->getMessage();
+ * } catch (\InvalidArgumentException $e) {
+ *     // Обработка ошибки конфигурации
+ *     echo "Ошибка конфигурации БД: " . $e->getMessage();
+ * } catch (\Exception $e) {
+ *     // Другие ошибки
+ *     echo "Произошла ошибка: " . $e->getMessage();
+ * }
  * @endcode
  *
  * Пример временного изменения формата SQL:
  * @code
- * // Выполнение запроса в формате PostgreSQL
- * $years_list = $db->with_sql_format('pgsql', function () use ($db) {
- *     // Форматирование даты для PostgreSQL
- *     $formatted_date = $db->format_date('data_last_edit', 'YYYY');
- *     // Выборка данных
+ * // Предположим, $db - это инициализированный объект Database, подключенный к MySQL
+ *
+ * // Выполнение запроса, который использует синтаксис формата даты PostgreSQL
+ * $years_list = $db->with_sql_format('pgsql', function (Database $db) {
+ *     // Внутри этой анонимной функции current_format временно установлен в 'pgsql'
+ *
+ *     // Форматирование даты для PostgreSQL: TO_CHAR(data_last_edit, 'YYYY')
+ *     $formatted_date_expr = $db->format_date('data_last_edit', 'YYYY');
+ *
+ *     // Выборка уникальных лет из таблицы TBL_NEWS
+ *     // Запрос будет преобразован из формата PostgreSQL в формат MySQL перед выполнением
  *     $db->select(
- *         'DISTINCT ' . $formatted_date . ' AS year',
- *         TBL_NEWS,
+ *         'DISTINCT ' . $formatted_date_expr . ' AS year',
+ *         TBL_NEWS, // Предполагается, что TBL_NEWS определена
  *         [
  *             'order' => 'year ASC',
  *         ]
  *     );
+ *
  *     // Получение результата
  *     return $db->res_arr();
  * });
+ *
+ * echo "Список годов (получен через формат PostgreSQL на MySQL):";
  * print_r($years_list);
+ *
+ * // После выхода из анонимной функции current_format восстанавливается до исходного ('mysql')
  * @endcode
- * @see     Photorigma::Interfaces::Database_Interface Интерфейс, который реализует класс.
+ * @see    PhotoRigma::Interfaces::Database_Interface
+ *         Интерфейс, который реализует класс.
+ * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
+ *         Интерфейс обработчика кеша, используемый классом.
  */
 class Database implements Database_Interface
 {
     // Свойства класса
-    private ?PDO $pdo = null;         ///< Объект PDO для подключения к базе данных
+    private ?PDO $pdo = null;           ///< Объект PDO для подключения к базе данных
     private string|null $txt_query = null; ///< Текст последнего SQL-запроса, сформированного методами класса
     private object|null $res_query = null; ///< Результат выполнения подготовленного выражения (PDOStatement)
-    private int $aff_rows = 0;        ///< Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)
-    private int $insert_id = 0;       ///< ID последней вставленной строки после выполнения INSERT-запроса
-    private string $db_type;          ///< Тип базы данных (mysql, pgsql, sqlite)
-    private string $db_name;          ///< Имя базы данных
-    private array $format_cache = []; ///< Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite)
-    private array $query_cache = [];  ///< Кэш для хранения результатов проверки существования запросов
+    private int $aff_rows = 0;          ///< Количество строк, затронутых последним запросом (INSERT, UPDATE, DELETE)
+    private int $insert_id = 0;         ///< ID последней вставленной строки после выполнения INSERT-запроса
+    private string $db_type;            ///< Тип базы данных (mysql, pgsql, sqlite)
+    private string $db_name;            ///< Имя базы данных
+    private array $format_cache = [];   ///< Кэш для преобразования форматов даты (MariaDB -> PostgreSQL/SQLite)
+    private array $query_cache = [];    ///< Кэш для хранения результатов проверки существования запросов
     private array $unescape_cache = []; ///< Кэш для хранения результатов снятия экранирования идентификаторов
     private string $current_format = 'mysql'; ///< Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
     private array $allowed_formats = ['mysql', 'pgsql', 'sqlite']; ///< Список поддерживаемых форматов SQL.
@@ -156,86 +217,88 @@ class Database implements Database_Interface
      * @brief   Конструктор класса.
      *
      * @details Этот метод вызывается автоматически при создании нового объекта класса.
-     *          Используется для установки соединения с базой данных на основе переданных параметров.
-     *          Подключение выполняется в следующем порядке:
-     *          1. Для SQLite:
-     *             - Проверяется путь к файлу базы данных (`dbname`).
-     *             - Если файл не существует или недоступен для записи, выбрасываются соответствующие исключения.
-     *             - Формируется DSN для SQLite.
-     *          2. Для MySQL/PostgreSQL через сокет (если указан параметр `dbsock`):
-     *             - Если путь к сокету некорректен или файл не существует, записывается предупреждение в лог.
-     *             - Если подключение через сокет не удалось, выполняется попытка подключения через хост и порт.
-     *          3. Для MySQL/PostgreSQL через хост и порт (если подключение через сокет не используется или не
-     *          удалось).
-     *          При возникновении ошибок валидации или подключения выбрасывается исключение.
-     *          Важно: Если параметр `dbsock` указан, но файл сокета не существует, записывается предупреждение в лог,
-     *                 и выполняется попытка подключения через хост и порт.
+     *          Используется для установки соединения с базой данных на основе переданных параметров `$db_config`
+     *          и инициализации механизма кеширования с использованием объекта `$cache`.
      *
-     *          После инициализации PDO, конструктор проверяет наличие сохранённого кеша:
-     *          - Методом `$this->cache->is_valid('db_cache', 37971181)` определяется актуальность кеша.
-     *          - Если кеш действителен, из него загружаются данные в свойства:
-     *            `$this->format_cache`, `$this->query_cache`, `$this->unescape_cache`.
-     *          Это позволяет избежать повторной обработки SQL-запросов при каждом запуске скрипта.
+     *          Подключение к базе данных выполняется в следующем порядке:
+     *          1. Попытка подключения к SQLite, если `dbtype` установлен в 'sqlite'. Включает проверку
+     *             существования и доступности файла базы данных для записи.
+     *
+     *          2. Для MySQL/PostgreSQL:
+     *             - Первая попытка подключения через сокет, если указан параметр `dbsock`. Если путь
+     *               к сокету некорректен или файл не существует, записывается предупреждение в лог, и
+     *               выполняется попытка подключения через хост и порт.
+     *             - Вторая попытка подключения через хост и порт, если подключение через сокет не
+     *               используется или не удалось, или если `dbsock` не был указан.
+     *
+     *          При возникновении ошибок валидации параметров конфигурации или ошибок подключения на уровне PDO
+     *          выбрасывается соответствующее исключение.
+     *
+     *          После инициализации PDO, конструктор проверяет наличие сохранённого кеша (`db_cache`)
+     *          через переданный объект `$cache`. Если кеш действителен (пользовательская логика валидации кеша)
+     *          и имеет корректную структуру, из него загружаются данные в внутренние свойства класса: `$this->format_cache`,
+     *          `$this->query_cache`, `$this->unescape_cache`. Это позволяет избежать повторной
+     *          обработки некоторых данных (например, преобразование форматов SQL) при каждом запуске скрипта.
      *
      * @callgraph
      *
-     * @param array                   $db_config Массив с конфигурацией подключения:
-     *                                           - string `dbtype`: Тип базы данных (mysql, pgsql, sqlite). Обязательный параметр.
-     *                                           Если передан недопустимый тип, выбрасывается исключение `InvalidArgumentException`.
-     *                                           - string `dbsock` (опционально): Путь к сокету.
-     *                                           Если путь некорректен или файл не существует, записывается предупреждение в лог.
-     *                                           Если подключение через сокет не удалось, выполняется попытка подключения через хост
-     *                                           и порт.
-     *                                           - string `dbname`: Имя базы данных. Обязательный параметр.
-     *                                           Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
-     *                                           Для SQLite это путь к файлу базы данных.
-     *                                           - string `dbuser`: Имя пользователя. Обязательный параметр (кроме SQLite).
-     *                                           Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
-     *                                           - string `dbpass`: Пароль пользователя. Обязательный параметр (кроме SQLite).
-     *                                           - string `dbhost`: Хост базы данных. Обязательный параметр, если не используется
-     *                                           сокет. Если хост некорректен, выбрасывается исключение `InvalidArgumentException`.
-     *                                           - int `dbport` (опционально): Порт базы данных.
-     *                                           Если порт некорректен, выбрасывается исключение `InvalidArgumentException`.
-     * @param Cache_Handler_Interface $cache     Объект, реализующий интерфейс `Cache_Handler_Interface`.
+     * @param array                   $db_config Массив с конфигурацией подключения к базе данных. Обязательный параметр.
+     *                                           Поддерживаемые ключи:
+     *                                           - string `dbtype`: Тип базы данных ('mysql', 'pgsql', 'sqlite'). Обязательный параметр.
+     *                                             Если передан недопустимый тип, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - string `dbsock` (опционально): Путь к файлу сокета для подключения (для MySQL/PostgreSQL).
+     *                                             При некорректном пути или отсутствии файла записывается лог и выполняется попытка подключения через хост/порт.
+     *                                           - string `dbname`: Имя базы данных. Обязательный параметр. Для SQLite это полный путь к файлу базы данных.
+     *                                             Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - string `dbuser` (опционально для SQLite): Имя пользователя базы данных. Обязательный параметр для
+     *                                             MySQL/PostgreSQL. Если имя не указано, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - string `dbpass` (опционально для SQLite): Пароль пользователя базы данных. Обязательный параметр для
+     *                                             MySQL/PostgreSQL.
+     *                                           - string `dbhost` (опционально, если используется сокет): Хост базы данных. Обязателен, если подключение
+     *                                             через сокет не используется или не удалось. Если хост некорректен, выбрасывается исключение `InvalidArgumentException`.
+     *                                           - int `dbport` (опционально): Порт базы данных. Если порт некорректен, выбрасывается исключение `InvalidArgumentException`.
+     * @param Cache_Handler_Interface $cache     Объект, реализующий интерфейс `Cache_Handler_Interface`. Обязательный параметр.
      *                                           Используется для временного хранения и загрузки кеша (`db_cache`) между запусками
      *                                           скрипта. При наличии актуального кеша он загружается в свойства:
-     *                                           - `format_cache`
-     *                                           - `query_cache`
-     *                                           - `unescape_cache`
+     *                                           - `$this->format_cache`
+     *                                           - `$this->query_cache`
+     *                                           - `$this->unescape_cache`
      *
-     * @throws InvalidArgumentException Выбрасывается, если параметры конфигурации неверны:
+     * @throws InvalidArgumentException Выбрасывается, если параметры конфигурации `$db_config` неверны или отсутствуют обязательные поля:
      *                                  - Недопустимый тип базы данных (`dbtype`).
      *                                  - Не указано имя базы данных (`dbname`) или пользователь (`dbuser`) (кроме SQLite).
      *                                  - Некорректный хост (`dbhost`) или порт (`dbport`).
+     *                                  - Не указан путь к файлу базы данных для SQLite (`dbname`).
      *                                  Пример сообщения:
-     *                                      Недопустимый тип базы данных | Значение: [dbtype]
+     *                                  Недопустимый тип базы данных | Значение: [dbtype]
      *                                  Пример сообщения:
-     *                                      Не указан хост базы данных | Конфигурация: [json_encode($db_config)]
-     * @throws RuntimeException         Выбрасывается в следующих случаях:
-     *                                  - Для SQLite: файл базы данных не существует.
+     *                                  Не указан хост базы данных | Конфигурация: [json_encode($db_config)]
+     * @throws RuntimeException         Выбрасывается при ошибках, связанных с файловой системой для SQLite:
+     *                                  - Файл базы данных не существует по указанному пути (`dbname`).
      *                                    Пример сообщения:
-     *                                        Файл базы данных SQLite не существует | Путь: [dbname]
-     *                                  - Для SQLite: файл базы данных недоступен для записи.
+     *                                    Файл базы данных SQLite не существует | Путь: [dbname]
+     *                                  - Файл базы данных недоступен для записи по указанному пути (`dbname`).
      *                                    Пример сообщения:
-     *                                        Файл базы данных SQLite недоступен для записи | Путь: [dbname]
-     * @throws PDOException             Выбрасывается, если произошла ошибка при подключении к базе данных:
+     *                                    Файл базы данных SQLite недоступен для записи | Путь: [dbname]
+     * @throws PDOException             Выбрасывается, если произошла ошибка при установлении соединения с базой данных через PDO:
      *                                  - Ошибка подключения через сокет.
      *                                  - Ошибка подключения через хост и порт.
      *                                  - Ошибка подключения к SQLite.
      *                                  Пример сообщения:
-     *                                      Ошибка подключения через хост и порт | Хост: [dbhost], Порт: [dbport]
+     *                                  Ошибка подключения через хост и порт | Хост: [dbhost], Порт: [dbport]
      *                                  Пример сообщения:
-     *                                      Ошибка подключения к SQLite | Путь: [dbname] | Сообщение: [текст_ошибки]
-     * @throws JsonException            Выбрасывается, если возникает ошибка при кодировании конфигурации в JSON.
+     *                                  Ошибка подключения к SQLite | Путь: [dbname] | Сообщение: [текст_ошибки]
+     * @throws JsonException            Выбрасывается, если возникает ошибка при кодировании конфигурации в JSON для сообщений исключений (например, для логирования или сообщений об ошибках).
      *                                  Пример сообщения:
-     *                                      Ошибка кодирования конфигурации в JSON
-     * @throws Exception                Выбрасывается, если возникает ошибка при логировании событий через
-     *                                  `log_in_file()`. Пример сообщения: Ошибка записи в лог | Сообщение:
-     *                                  [текст_сообщения]
+     *                                  Ошибка кодирования конфигурации в JSON
+     * @throws Exception                Выбрасывается, если возникает общая ошибка или ошибка при логировании событий через функцию `log_in_file()`.
+     *                                  Пример сообщения:
+     *                                  Ошибка записи в лог | Сообщение: [текст_сообщения]
      *
-     * @warning Если параметр `dbsock` указан, но файл сокета не существует, выполняется попытка подключения через хост
-     *          и порт. Убедитесь, что параметр `dbsock` содержит корректный путь.
-     *          Для SQLite убедитесь, что файл базы данных существует и доступен для записи.
+     * @warning Если параметр `dbsock` указан для MySQL/PostgreSQL, но файл сокета не существует или некорректен,
+     *          выполняется попытка подключения через хост и порт. Проверьте путь `dbsock`.
+     *          Для SQLite убедитесь, что файл базы данных существует и доступен для записи по указанному пути (`dbname`).
+     *          Некорректные параметры конфигурации приведут к выбросу исключения.
      *
      * Пример использования конструктора:
      * @code
@@ -249,7 +312,14 @@ class Database implements Database_Interface
      *     'dbport' => 3306,
      * ];
      * $cache = new \PhotoRigma\Classes\Cache_Handler();
-     * $db_mysql = new \PhotoRigma\Classes\Database($db_config_mysql, $cache);
+     *
+     * try {
+     *     $db_mysql = new \PhotoRigma\Classes\Database($db_config_mysql, $cache);
+     *     // Объект $db_mysql успешно создан
+     * } catch (\Exception $e) {
+     *     // Обработка ошибок подключения или валидации конфигурации
+     *     echo "Ошибка при создании объекта Database: " . $e->getMessage();
+     * }
      * @endcode
      *
      * @code
@@ -258,13 +328,20 @@ class Database implements Database_Interface
      *     'dbtype' => 'sqlite',
      *     'dbname' => '/path/to/database.sqlite',
      * ];
-     * $cache = new \PhotoRigma\Classes\Cache_Handler();
-     * $db_sqlite = new \PhotoRigma\Classes\Database($db_config_sqlite, $cache);
+     * $cache = new \PhotoRigma\Classes\Cache_Handler(); // Предполагается существование Cache_Handler
+     *
+     * try {
+     *     $db_sqlite = new \PhotoRigma\Classes\Database($db_config_sqlite, $cache);
+     *     // Объект $db_sqlite успешно создан
+     * } catch (\Exception $e) {
+     *     // Обработка ошибок подключения или валидации конфигурации
+     *     echo "Ошибка при создании объекта Database: " . $e->getMessage();
+     * }
      * @endcode
      * @see     PhotoRigma::Classes::Database::$pdo
      *          Свойство, хранящее объект PDO для подключения к базе данных.
      * @see     PhotoRigma::Classes::Database::$db_type
-     *          Свойство, хранящее тип базы данных (например, 'mysql' или 'sqlite').
+     *          Свойство, хранящее тип используемой базы данных (например, 'mysql' или 'sqlite').
      * @see     PhotoRigma::Classes::Database::$allowed_formats
      *          Массив допустимых форматов базы данных (например, 'mysql', 'sqlite', 'pgsql').
      * @see     PhotoRigma::Interfaces::Cache_Handler_Interface
@@ -276,9 +353,9 @@ class Database implements Database_Interface
      * @see     PhotoRigma::Classes::Database::$unescape_cache
      *          Свойство, хранящее кеш результатов снятия экранирования идентификаторов.
      * @see     PhotoRigma::Interfaces::Cache_Handler_Interface::is_valid()
-     *          Метод, проверяющий валидность кеша.
+     *          Метод интерфейса кеширования, используемый для проверки валидности кеша.
      * @see     PhotoRigma::Include::log_in_file()
-     *          Функция для логирования ошибок.
+     *          Функция для логирования ошибок и предупреждений.
      */
     public function __construct(array $db_config, Cache_Handler_Interface $cache)
     {
@@ -301,7 +378,7 @@ class Database implements Database_Interface
         // Проверка допустимых значений dbtype
         if (!in_array($db_config['dbtype'], $this->allowed_formats, true)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип базы данных | Значение: {$db_config['dbtype']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип базы данных | Значение: {$db_config['dbtype']}"
             );
         }
 
@@ -319,7 +396,7 @@ class Database implements Database_Interface
         // Проверка корректности dbname и dbuser (кроме SQLite)
         if ($this->db_type !== 'sqlite' && (empty($this->db_name) || empty($db_config['dbuser']))) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указано имя базы данных или пользователь | Конфигурация: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не указано имя базы данных или пользователь | Конфигурация: ' . json_encode(
                     $db_config,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -330,7 +407,7 @@ class Database implements Database_Interface
         if ($this->db_type === 'sqlite') {
             if (empty($this->db_name)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан путь к файлу базы данных SQLite | Конфигурация: " . json_encode(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не указан путь к файлу базы данных SQLite | Конфигурация: ' . json_encode(
                         $db_config,
                         JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                     )
@@ -340,14 +417,14 @@ class Database implements Database_Interface
             // Проверка существования файла
             if (!is_file($this->db_name)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite не существует | Путь: $this->db_name"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite не существует | Путь: $this->db_name"
                 );
             }
 
             // Проверка прав доступа
             if (!is_writable($this->db_name)) {
                 throw new RuntimeException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite недоступен для записи | Путь: $this->db_name"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite недоступен для записи | Путь: $this->db_name"
                 );
             }
 
@@ -364,7 +441,7 @@ class Database implements Database_Interface
                 return; // Подключение успешно, завершаем выполнение метода
             } catch (PDOException $e) {
                 throw new PDOException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения к SQLite | Путь: $this->db_name | Сообщение: " . $e->getMessage(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения к SQLite | Путь: $this->db_name | Сообщение: " . $e->getMessage(
                     )
                 );
             }
@@ -374,7 +451,7 @@ class Database implements Database_Interface
         if (!empty($db_config['dbsock'])) {
             if (!is_string($db_config['dbsock']) || !file_exists($db_config['dbsock'])) {
                 log_in_file(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный или несуществующий путь к сокету | Путь: {$db_config['dbsock']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный или несуществующий путь к сокету | Путь: {$db_config['dbsock']}"
                 );
             } else {
                 try {
@@ -388,7 +465,7 @@ class Database implements Database_Interface
                     return; // Подключение успешно, завершаем выполнение метода
                 } catch (PDOException $e) {
                     log_in_file(
-                        __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через сокет | Сокет: {$db_config['dbsock']} | Сообщение: " . $e->getMessage(
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через сокет | Сокет: {$db_config['dbsock']} | Сообщение: " . $e->getMessage(
                         )
                     );
                     // Переходим к следующему варианту подключения
@@ -399,7 +476,7 @@ class Database implements Database_Interface
         // Проверка dbhost и dbport (вторая попытка подключения через хост и порт)
         if (empty($db_config['dbhost'])) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не указан хост базы данных | Конфигурация: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не указан хост базы данных | Конфигурация: ' . json_encode(
                     $db_config,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -410,14 +487,14 @@ class Database implements Database_Interface
             $db_config['dbhost']
         ) && strtolower($db_config['dbhost']) !== 'localhost') {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный хост базы данных | Значение: {$db_config['dbhost']}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный хост базы данных | Значение: {$db_config['dbhost']}"
             );
         }
         $dsn = "$this->db_type:host={$db_config['dbhost']};dbname=$this->db_name;";
         if (!empty($db_config['dbport'])) {
             if (!is_numeric($db_config['dbport']) || $db_config['dbport'] < 1 || $db_config['dbport'] > 65535) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный порт базы данных | Значение: {$db_config['dbport']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный порт базы данных | Значение: {$db_config['dbport']}"
                 );
             }
             $dsn .= ";port={$db_config['dbport']}";
@@ -431,46 +508,56 @@ class Database implements Database_Interface
             ]);
         } catch (PDOException $e) {
             throw new PDOException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через хост и порт | Хост: {$db_config['dbhost']}, Порт: {$db_config['dbport']} | Сообщение: " . $e->getMessage(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка подключения через хост и порт | Хост: {$db_config['dbhost']}, Порт: {$db_config['dbport']} | Сообщение: " . $e->getMessage(
                 )
             );
         }
     }
 
     /**
-     * @brief       Деструктор класса Database.
+     * @brief   Деструктор класса Database.
      *
-     * @details     Метод вызывается автоматически при уничтожении объекта.
-     *              Сохраняет содержимое внутренних кешей (`$format_cache`, `$query_cache`, `$unescape_cache`)
-     *              в общий кеш через вызов метода `Cache_Handler_Interface::update_cache()`.
-     *              Сохранение кешей может быть отключено через параметры приложения.
+     * @details Метод вызывается автоматически интерпретатором PHP при уничтожении объекта.
+     *          Основная задача — сохранение содержимого внутренних кешей класса
+     *          (`$this->format_cache`, `$this->query_cache`, `$this->unescape_cache`).
+     *
+     *          Сохранение выполняется через вызов метода `update_cache()` переданного в конструкторе
+     *          объекта, реализующего интерфейс `Cache_Handler_Interface`.
+     *
+     *          Возможность сохранения кешей может быть отключена на уровне приложения через соответствующие
+     *          параметры конфигурации, которые обрабатываются менеджером кеширования.
      *
      * @callgraph
      *
-     * @note        Данный метод не требует явного вызова — он исполняется автоматически PHP при уничтожении объекта.
-     *              Убедитесь, что доступ к менеджеру кеширования (`$this->cache`) корректен и инициализирован до
-     *              вызова деструктора.
+     * @note Данный метод не требует явного вызова. PHP автоматически исполняет его при освобождении объекта из памяти.
+     *       Убедитесь, что доступ к менеджеру кеширования (`$this->cache`) корректен и объект кеширования был
+     *       успешно инициализирован в конструкторе.
      *
-     * @throws JsonException         В случае невозможности сериализации кешей в методе update_cache().
+     * @throws JsonException Выбрасывается методом `Cache_Handler_Interface::update_cache()`
+     *                       в случае невозможности сериализации данных кешей перед сохранением.
      *
      * Пример использования:
      * @code
-     * $db = new PhotoRigma\Classes\Database();
-     * // ... работа с базой данных ...
-     * unset($db); // деструктор вызывается автоматически, кеш сохраняется
+     * $db = new \PhotoRigma\Classes\Database($config, $cacheHandler);
+     * // ... работа с базой данных, которая наполняет кеши ...
+     *
+     * // Объект $db больше не нужен. Деструктор будет вызван автоматически.
+     * unset($db);
+     *
+     * // Кеши будут сохранены, если это не отключено в настройках приложения.
      * @endcode
-     * @see         PhotoRigma::Interfaces::Cache_Handler_Interface::update_cache()
-     *              Интерфейс, реализуемый Cache_Handler, который сохраняет данные во внешнюю систему кеширования.
-     * @see         PhotoRigma::Classes::Database::$format_cache
-     *              Кэш форматов даты для оптимизации работы с SQL-запросами.
-     * @see         PhotoRigma::Classes::Database::$query_cache
-     *              Кэш выполненных SQL-запросов для предотвращения повторных проверок.
-     * @see         PhotoRigma::Classes::Database::$unescape_cache
-     *              Кэш результатов снятия экранирования идентификаторов.
-     * @see         PhotoRigma::Classes::Database::$cache
-     *              Объект, используемый для кеширования данных через Cache_Handler.
-     * @see         PhotoRigma::Classes::Database::__construct()
-     *              Используется для инициализации объекта базы данных.
+     * @see    PhotoRigma::Interfaces::Cache_Handler_Interface::update_cache()
+     *         Метод интерфейса кеширования, ответственный за сохранение данных во внешнюю систему кеширования.
+     * @see    PhotoRigma::Classes::Database::$format_cache
+     *         Внутреннее свойство, хранящее кеш преобразования форматов даты.
+     * @see    PhotoRigma::Classes::Database::$query_cache
+     *         Внутреннее свойство, хранящее кеш уже обработанных (например, экранированных) частей запросов.
+     * @see    PhotoRigma::Classes::Database::$unescape_cache
+     *         Внутреннее свойство, хранящее кеш результатов снятия экранирования идентификаторов.
+     * @see    PhotoRigma::Classes::Database::$cache
+     *         Свойство, хранящее объект, реализующий `Cache_Handler_Interface`.
+     * @see    PhotoRigma::Classes::Database::__construct()
+     *         Конструктор класса, используемый для инициализации объекта и кеширования.
      */
     public function __destruct()
     {
@@ -481,34 +568,43 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Начинает транзакцию в базе данных через вызов внутреннего метода.
+     * @brief   Начинает транзакцию в базе данных.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _begin_transaction_internal().
-     *          Он передаёт контекст транзакции в защищённый метод, который выполняет начало транзакции через объект PDO
-     *          и записывает лог с указанием контекста. Метод предназначен для использования клиентским кодом как точка
-     *          входа для начала транзакций.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_begin_transaction_internal()`.
+     *          Он передаёт контекст транзакции во внутренний метод, который выполняет начало транзакции на уровне
+     *          PDO и записывает соответствующий лог.
+     *          Метод предназначен для использования клиентским кодом как точка входа для явного управления
+     *          транзакциями.
      *
-     * @param string $context Контекст транзакции (необязательный параметр):
-     *                        - Используется для описания цели или места начала транзакции.
-     *                        - По умолчанию: пустая строка.
+     * @callgraph
      *
-     * @throws Exception Выбрасывается, если произошла ошибка при начале транзакции.
-     *                   Пример сообщения: "Ошибка при начале транзакции | Контекст: [значение]".
+     * @param string $context Контекст транзакции (необязательный параметр).
+     *                        Используется для описания цели или места начала транзакции.
+     *                        По умолчанию: пустая строка (`''`).
      *
-     * @note    Этот метод является точкой входа для начала транзакций. Все проверки и обработка выполняются в
-     *          защищённом методе _begin_transaction_internal().
+     * @return void Метод ничего не возвращает.
      *
+     * @throws Exception Выбрасывается, если произошла ошибка при начале транзакции на уровне PDO (выбрасывается из
+     *                   внутренней логики).
+     *                   Пример сообщения:
+     *                   Ошибка при начале транзакции | Контекст: [значение контекста] | Сообщение PDO: [текст ошибки
+     *                   PDO]
+     *
+     * @note    Этот метод является точкой входа для начала транзакций.
+     *          Основная логика и логирование выполняются в защищённом методе `_begin_transaction_internal()`.
      * @warning Убедитесь, что соединение с базой данных установлено перед вызовом метода.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример начала транзакции из клиентского кода
      * $db = new \PhotoRigma\Classes\Database();
+     *
      * $db->begin_transaction('Сохранение данных пользователя');
-     * // Лог: [DB] Транзакция начата | Контекст: Сохранение данных пользователя
+     * // ... операции с БД ...
+     * // $db->commit(); или $db->roll_back();
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_begin_transaction_internal()
-     *          Защищённый метод, который выполняет основную логику начала транзакции.
+     * @see    PhotoRigma::Classes::Database::_begin_transaction_internal()
+     *         Защищённый метод, выполняющий основную логику начала транзакции.
      */
     public function begin_transaction(string $context = ''): void
     {
@@ -518,10 +614,12 @@ class Database implements Database_Interface
     /**
      * @brief   Начинает транзакцию в базе данных и записывает лог с указанием контекста.
      *
-     * @details Этот метод выполняет следующие действия:
-     *          1. Начинает транзакцию в базе данных через объект PDO ($this->pdo).
-     *          2. Записывает лог с указанием контекста начала транзакции.
-     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     * @details Этот защищённый метод выполняет следующие действия:
+     *          1. Начинает транзакцию в базе данных через объект PDO (`$this->pdo`).
+     *          2. Записывает лог с указанием контекста начала транзакции с использованием функции
+     *             `log_in_file()`.
+     *
+     *          Этот метод предназначен для использования внутри класса или его наследников.
      *          Основная логика метода вызывается через публичный метод-редирект `begin_transaction()`.
      *
      * @callergraph
@@ -529,66 +627,78 @@ class Database implements Database_Interface
      *
      * @param string $context Контекст транзакции (необязательный параметр).
      *                        Используется для описания цели или места начала транзакции.
-     *                        По умолчанию: пустая строка.
+     *                        По умолчанию: пустая строка (`''`).
      *
      * @return void Метод ничего не возвращает.
      *
-     * @throws Exception Выбрасывается, если произошла ошибка при начале транзакции.
-     *      Пример сообщения:
-     *          Ошибка при начале транзакции | Контекст: [значение]
+     * @throws Exception Выбрасывается, если произошла ошибка при начале транзакции на уровне PDO.
+     *                   Пример сообщения:
+     *                   Ошибка при начале транзакции | Контекст: [значение контекста] | Сообщение PDO: [текст ошибки
+     *                   PDO]
      *
-     * @note    Метод использует логирование для записи информации о начале транзакции.
-     * @warning Убедитесь, что соединение с базой данных установлено перед вызовом метода.
+     * @note    Метод использует функцию логирования `log_in_file()` для записи информации о начале транзакции.
+     * @warning Убедитесь, что соединение с базой данных установлено (`$this->pdo` является валидным объектом PDO)
+     *          перед вызовом метода. Неправильное состояние соединения может привести к ошибке.
      *
      * Пример вызова метода внутри класса:
      * @code
+     * // Пример начала транзакции с контекстом
      * $this->_begin_transaction_internal('Сохранение данных пользователя');
-     * // Лог: [DB] Транзакция начата | Контекст: Сохранение данных пользователя
+     * // Ожидаемый лог (в файле): [DB] Транзакция начата | Контекст: Сохранение данных пользователя
      * @endcode
-     * @see     PhotoRigma::Classes::Database::begin_transaction()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::$pdo
-     *          Объект PDO для подключения к базе данных.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Логирует сообщения в файл.
+     * @see    PhotoRigma::Classes::Database::begin_transaction()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$pdo
+     *         Объект PDO для подключения к базе данных.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Логирует сообщения в файл.
      */
     protected function _begin_transaction_internal(string $context = ''): void
     {
         $this->pdo->beginTransaction();
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | [DB] Транзакция начата | Контекст: $context"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | [DB] Транзакция начата | Контекст: $context"
         );
     }
 
     /**
-     * @brief   Подтверждает транзакцию в базе данных через вызов внутреннего метода.
+     * @brief   Подтверждает транзакцию в базе данных.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _commit_transaction_internal().
-     *          Он передаёт контекст транзакции в защищённый метод, который выполняет подтверждение транзакции через
-     *          объект PDO и записывает лог с указанием контекста. Метод предназначен для использования клиентским
-     *          кодом как точка входа для подтверждения транзакций.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_commit_transaction_internal()`.
+     *          Он передаёт контекст транзакции во внутренний метод, который выполняет подтверждение транзакции на
+     *          уровне PDO и записывает соответствующий лог.
+     *          Метод предназначен для использования клиентским кодом как точка входа для явного управления
+     *          транзакциями.
      *
-     * @param string $context Контекст транзакции (необязательный параметр):
-     *                        - Используется для описания цели или места подтверждения транзакции.
-     *                        - По умолчанию: пустая строка.
+     * @callgraph
      *
-     * @throws Exception Выбрасывается, если произошла ошибка при подтверждении транзакции.
-     *                   Пример сообщения: "Ошибка при подтверждении транзакции | Контекст: [значение]".
+     * @param string $context Контекст транзакции (необязательный параметр).
+     *                        Используется для описания цели или места подтверждения транзакции.
+     *                        По умолчанию: пустая строка (`''`).
      *
-     * @note    Этот метод является точкой входа для подтверждения транзакций. Все проверки и обработка выполняются в
-     *          защищённом методе _commit_transaction_internal().
+     * @return void Метод ничего не возвращает.
      *
-     * @warning Убедитесь, что транзакция была начата перед вызовом этого метода.
+     * @throws Exception Выбрасывается, если произошла ошибка при подтверждении транзакции на уровне PDO
+     *                   (выбрасывается из внутренней логики).
+     *                   Пример сообщения:
+     *                   Ошибка при подтверждении транзакции | Контекст: [значение контекста] | Сообщение PDO: [текст
+     *                   ошибки PDO]
+     *
+     * @note    Этот метод является точкой входа для подтверждения транзакций.
+     *          Основная логика и логирование выполняются в защищённом методе `_commit_transaction_internal()`.
+     * @warning Убедитесь, что транзакция была начата перед вызовом метода.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример подтверждения транзакции из клиентского кода
      * $db = new \PhotoRigma\Classes\Database();
-     * $db->commit_transaction('Сохранение данных пользователя');
-     * // Лог: [DB] Транзакция подтверждена | Контекст: Сохранение данных пользователя
+     *
+     * $db->begin_transaction('Пакетное обновление');
+     * // ... операции с БД ...
+     * $db->commit_transaction('Пакетное обновление завершено');
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_commit_transaction_internal()
-     *          Защищённый метод, который выполняет основную логику подтверждения транзакции.
+     * @see    PhotoRigma::Classes::Database::_commit_transaction_internal()
+     *         Защищённый метод, выполняющий основную логику подтверждения транзакции.
      */
     public function commit_transaction(string $context = ''): void
     {
@@ -598,10 +708,12 @@ class Database implements Database_Interface
     /**
      * @brief   Подтверждает транзакцию в базе данных и записывает лог с указанием контекста.
      *
-     * @details Этот метод выполняет следующие действия:
-     *          1. Подтверждает транзакцию в базе данных через объект PDO ($this->pdo).
-     *          2. Записывает лог с указанием контекста подтверждения транзакции.
-     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     * @details Этот защищённый метод выполняет следующие действия:
+     *          1. Подтверждает транзакцию в базе данных через объект PDO (`$this->pdo`).
+     *          2. Записывает лог с указанием контекста подтверждения транзакции с использованием функции
+     *             `log_in_file()`.
+     *
+     *          Этот метод предназначен для использования внутри класса или его наследников.
      *          Основная логика метода вызывается через публичный метод-редирект `commit_transaction()`.
      *
      * @callergraph
@@ -609,108 +721,125 @@ class Database implements Database_Interface
      *
      * @param string $context Контекст транзакции (необязательный параметр).
      *                        Используется для описания цели или места подтверждения транзакции.
-     *                        По умолчанию: пустая строка.
+     *                        По умолчанию: пустая строка (`''`).
      *
      * @return void Метод ничего не возвращает.
      *
-     * @throws Exception Выбрасывается, если произошла ошибка при подтверждении транзакции.
-     *      Пример сообщения:
-     *          Ошибка при подтверждении транзакции | Контекст: [значение]
+     * @throws Exception Выбрасывается, если произошла ошибка при подтверждении транзакции на уровне PDO.
+     *                   Пример сообщения:
+     *                   Ошибка при подтверждении транзакции | Контекст: [значение контекста] | Сообщение PDO: [текст
+     *                   ошибки PDO]
      *
-     * @note    Метод использует логирование для записи информации о подтверждении транзакции.
-     * @warning Убедитесь, что транзакция была начата перед вызовом этого метода.
+     * @note    Метод использует функцию логирования `log_in_file()` для записи информации о подтверждении транзакции.
+     * @warning Убедитесь, что транзакция была начата (`$this->pdo->inTransaction()` возвращает `true`) перед вызовом
+     *          этого метода. Попытка подтвердить несуществующую транзакцию приведёт к ошибке.
      *
      * Пример вызова метода внутри класса:
      * @code
+     * // Пример подтверждения транзакции с контекстом
      * $this->_commit_transaction_internal('Сохранение данных пользователя');
-     * // Лог: [DB] Транзакция подтверждена | Контекст: Сохранение данных пользователя
+     * // Ожидаемый лог (в файле): [DB] Транзакция подтверждена | Контекст: Сохранение данных пользователя
      * @endcode
-     * @see     PhotoRigma::Classes::Database::commit_transaction()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::$pdo
-     *          Объект PDO для подключения к базе данных.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Логирует сообщения в файл.
+     * @see    PhotoRigma::Classes::Database::commit_transaction()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$pdo
+     *         Объект PDO для подключения к базе данных.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Логирует сообщения в файл.
      */
     protected function _commit_transaction_internal(string $context = ''): void
     {
         $this->pdo->commit();
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | [DB] Транзакция подтверждена | Контекст: $context"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | [DB] Транзакция подтверждена | Контекст: $context"
         );
     }
 
     /**
      * @brief   Удаляет данные из таблицы через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _delete_internal().
-     *          Он передаёт имя таблицы и опции в защищённый метод, который выполняет формирование и выполнение
-     *          SQL-запроса на удаление данных. Безопасность обеспечивается обязательным указанием условия `where`.
-     *          Запрос без условия
-     *          `where` не будет выполнен. Метод предназначен для использования клиентским кодом как точка входа для
+     * @details Этот публичный метод является обёрткой для защищённого метода `_delete_internal()`.
+     *          Он передаёт имя таблицы и опции запроса во внутренний метод, который выполняет формирование и
+     *          выполнение SQL-запроса на удаление. Безопасность обеспечивается обязательным указанием условия
+     *          `where` в опциях и использованием подготовленных выражений с параметрами.
+     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операций
      *          удаления данных.
      *
-     * @param string $from_tbl        Имя таблицы, из которой необходимо удалить данные:
-     *                                - Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                                символов.
-     * @param array  $options         Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                1")
-     *                                или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                                Обязательный параметр для безопасности. Без условия WHERE запрос не будет
-     *                                выполнен.
-     *                                - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                направлением (например, "created_at DESC"). Может использоваться только вместе с
-     *                                `limit`. Если указан только один из этих ключей, оба игнорируются.
-     *                                - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                строкой с диапазоном (например, "0, 10"). Может использоваться только вместе с
-     *                                `order`. Если указан только один из этих ключей, оба игнорируются.
-     *                                - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *                                Использование параметров `params` является обязательным для подготовленных
-     *                                выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                различными СУБД.
-     *                                - group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и
-     *                                удаляется с записью в лог.
+     * @callgraph
      *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     * @param array  $options  Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                         - where (string|array|false): Условие WHERE.
+     *                           * string - используется как есть.
+     *                           * array - преобразуется в SQL. Поддерживает простые условия
+     *                             (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                             `'NOT' => [...]`).
+     *                           * false - игнорируется.
+     *                           Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
+     *                         - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                           Не поддерживается в запросах DELETE и удаляется с записью в лог.
+     *                         - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                           Может использоваться только вместе с `limit`. Если указан только один из них, оба
+     *                           игнорируются с записью в лог.
+     *                         - limit (int|string|false): Ограничение LIMIT.
+     *                           * int - прямое значение.
+     *                           * string - формат "OFFSET,COUNT".
+     *                           * false - игнорируется.
+     *                           Может использоваться только вместе с `order`. Если указан только один из них, оба
+     *                           игнорируются с записью в лог.
+     *                         - params (array): Ассоциативный массив параметров
+     *                           ([":имя" => значение]).
+     *                           Обязателен для использования с условиями `where` и другими частями запроса,
+     *                           требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                           Может быть пустым массивом, если параметры не требуются.
+     *
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой). В случае ошибки
+     *              выбрасывается исключение.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$from_tbl` не является строкой.
-     *                                  - `$options` не является массивом.
-     *                                  - Отсутствует обязательное условие `where` в массиве `$options`.
-     *                                  Пример сообщения:
-     *                                      Запрос DELETE без условия WHERE запрещён | Причина: Соображения
-     *                                      безопасности
-     * @throws JsonException           Выбрасывается при ошибках кодирования JSON (например, при записи в лог).
-     *                                  Пример сообщения:
-     *                                      Ошибка при кодировании JSON | Переданные опции: {"group":"users"}
-     * @throws Exception               Выбрасывается при ошибках выполнения запроса или записи в лог.
-     *                                  Пример сообщения:
-     *                                      Ошибка выполнения запроса | SQL: DELETE FROM users WHERE id = :id AND
-     *                                      status = :status
+     *                                - `$from_tbl` не является строкой.
+     *                                - `$options` не является массивом.
+     *                                - Отсутствует обязательное условие `where` в массиве `$options`.
+     *                                Пример сообщения:
+     *                                Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности
+     * @throws JsonException          Выбрасывается при ошибках кодирования JSON (например, при записи в лог).
+     *                                Пример сообщения:
+     *                                Ошибка при кодировании JSON | Переданные опции: {"group":"users"}
+     * @throws Exception              Выбрасывается при ошибках выполнения запроса или записи в лог.
+     *                                Пример сообщения:
+     *                                Ошибка выполнения запроса | SQL: DELETE FROM users WHERE id = :id AND status = :status
      *
-     * @note    Этот метод является точкой входа для удаления данных. Все проверки и обработка выполняются в
-     *          защищённом методе _delete_internal().
+     * @note    Этот метод является точкой входа для выполнения операций удаления данных.
+     *          Все проверки (включая обязательное `where`) и основная логика выполняются в защищённом методе
+     *          `_delete_internal()`.
      *
-     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
-     *          привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия `where`.
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения
+     *          могут привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия `where`.
      *          Запрос без условия `where` не будет выполнен. Ключи `group`, `order` и `limit` проверяются на
-     *          корректность. Недопустимые ключи удаляются с записью в лог.
+     *          корректность во внутренней логике.
      *          Использование параметров `params` для подготовленных выражений является обязательным для защиты от
-     *          SQL-инъекций и обеспечения совместимости с различными СУБД. Игнорирование этого правила может привести
-     *          к уязвимостям безопасности и неправильной работе с базой данных.
+     *          SQL-инъекций и обеспечения совместимости с различными СУБД.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример безопасного использования публичного метода
      * $db = new \PhotoRigma\Classes\Database();
+     *
      * $db->delete('users', [
-     *     'where' => ['id' => 1],
+     *     'where' => 'id = :id AND status = :status',
+     *     'params' => [':id' => 1, ':status' => 'active'],
+     * ]);
+     *
+     * // Использование с ассоциативным массивом в `where`
+     * $db->delete('users', [
+     *     'where' => ['id' => 1, 'status' => 'active'],
      * ]);
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_delete_internal()
-     *          Защищённый метод, который выполняет основную логику формирования и выполнения SQL-запроса.
+     * @see    PhotoRigma::Classes::Database::_delete_internal()
+     *         Защищённый метод, выполняющий основную логику удаления данных.
      */
     public function delete(string $from_tbl, array $options = []): bool
     {
@@ -733,6 +862,7 @@ class Database implements Database_Interface
      *          5. Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод `build_conditions`.
      *          6. Выполняет сформированный запрос через метод `execute_query`, передавая параметры `params` для
      *             подготовленного выражения.
+     *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
      *          обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
@@ -741,44 +871,51 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @param string $from_tbl        Имя таблицы, из которой необходимо удалить данные.
-     *                                Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                                символов.
-     * @param array  $options         Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                1")
-     *                                или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                                Обязательный параметр для безопасности. Без условия WHERE запрос не будет
-     *                                выполнен.
-     *                                - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                направлением (например, "created_at DESC"). Может использоваться только вместе с
-     *                                `limit`. Если указан только один из этих ключей, оба игнорируются.
-     *                                - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                строкой с диапазоном (например, "0, 10"). Может использоваться только вместе с
-     *                                `order`. Если указан только один из этих ключей, оба игнорируются.
-     *                                - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                значений, используемых в запросе (например, [":id" => 1, ":status" => "active"]).
-     *                                Использование параметров `params` является обязательным для подготовленных
-     *                                выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                различными СУБД.
-     *                                - group (string): Группировка GROUP BY. Не поддерживается в запросах DELETE и
-     *                                удаляется с записью в лог.
+     * @param string $from_tbl Имя таблицы, из которой необходимо удалить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     * @param array  $options  Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                         - where (string|array|false): Условие WHERE.
+     *                           * string - используется как есть.
+     *                           * array - преобразуется в SQL. Поддерживает простые условия
+     *                             (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                             `'NOT' => [...]`).
+     *                           * false - игнорируется.
+     *                           Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
+     *                         - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                           Не поддерживается в запросах DELETE и удаляется с записью в лог.
+     *                         - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                           Может использоваться только вместе с `limit`. Если указан только один из них, оба
+     *                           игнорируются с записью в лог.
+     *                         - limit (int|string|false): Ограничение LIMIT.
+     *                           * int - прямое значение.
+     *                           * string - формат "OFFSET,COUNT".
+     *                           * false - игнорируется.
+     *                           Может использоваться только вместе с `order`. Если указан только один из них, оба
+     *                           игнорируются с записью в лог.
+     *                         - params (array): Ассоциативный массив параметров
+     *                           ([":имя" => значение]).
+     *                           Обязателен для использования с условиями `where` и другими частями запроса,
+     *                          требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                           Может быть пустым массивом, если параметры не требуются.
      *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *              В случае ошибки выбрасывается исключение.
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой). В случае ошибки
+     *              выбрасывается исключение.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$from_tbl` не является строкой.
-     *                                  - `$options` не является массивом.
-     *                                  - Отсутствует обязательное условие `where` в массиве `$options`.
-     *      Пример сообщения:
-     *          Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности
-     * @throws JsonException Выбрасывается при ошибках кодирования JSON (например, при записи в лог).
-     *      Пример сообщения:
-     *          Ошибка при кодировании JSON | Переданные опции: {"group":"users"}
-     * @throws Exception Выбрасывается при ошибках выполнения запроса или записи в лог.
-     *      Пример сообщения:
-     *          Ошибка выполнения запроса | SQL: DELETE FROM users WHERE id = :id AND status = :status
+     *                                - `$from_tbl` не является строкой.
+     *                                - `$options` не является массивом.
+     *                                - Отсутствует обязательное условие `where` в массиве `$options`.
+     *                                Пример сообщения:
+     *                                Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности
+     * @throws JsonException          Выбрасывается при ошибках кодирования JSON (например, при записи в лог).
+     *                                Пример сообщения:
+     *                                Ошибка при кодировании JSON | Переданные опции: {"group":"users"}
+     * @throws Exception              Выбрасывается при ошибках выполнения запроса или записи в лог.
+     *                                Пример сообщения:
+     *                                Ошибка выполнения запроса | SQL: DELETE FROM users WHERE id = :id AND status
+     *                                = :status
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
      *          привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия `where`.
@@ -801,30 +938,30 @@ class Database implements Database_Interface
      *     'where' => ['id' => 1, 'status' => 'active'],
      * ]);
      * @endcode
-     * @see     PhotoRigma::Classes::Database::delete()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Выполняет SQL-запрос.
-     * @see     PhotoRigma::Classes::Database::build_conditions()
-     *          Формирует условия WHERE, ORDER BY и LIMIT для запроса.
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Логирует ошибки.
+     * @see    PhotoRigma::Classes::Database::delete()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Выполняет SQL-запрос.
+     * @see    PhotoRigma::Classes::Database::build_conditions()
+     *         Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, в которое помещается текст SQL-запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Логирует ошибки.
      */
     protected function _delete_internal(string $from_tbl, array $options = []): bool
     {
         // === 1. Валидация аргументов ===
         if (empty($options['where'])) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Запрос DELETE без условия WHERE запрещён | Причина: Соображения безопасности'
             );
         }
 
         // === 2. Проверка и удаление недопустимых ключей ===
         if (isset($options['group'])) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в DELETE | Переданные опции: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Был использован GROUP BY в DELETE | Переданные опции: ' . json_encode(
                     $options,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -834,7 +971,7 @@ class Database implements Database_Interface
 
         if ((isset($options['order']) && !isset($options['limit'])) || (!isset($options['order']) && isset($options['limit']))) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ORDER BY или LIMIT используются некорректно в DELETE | Переданные опции: ' . json_encode(
                     $options,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -856,93 +993,111 @@ class Database implements Database_Interface
     /**
      * @brief   Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Обрабатывает условие `WHERE`:
-     *             - Игнорируется, если равно false.
-     *             - Если `where` является строкой, она используется как есть.
-     *             - Если `where` является массивом, он преобразуется в SQL-условие:
-     *               * Простые условия: ['поле' => значение] → "поле = :поле"
-     *               * Сложные условия:
-     *                 - 'OR' => [условия] → "(условие1 OR условие2)"
-     *                 - 'NOT' => [условия] → "NOT (условия)"
-     *          2. Обрабатывает группировку `GROUP BY`:
-     *             - Игнорируется, если равно false.
-     *             - Если `group` является строкой, добавляется к строке запроса.
-     *          3. Обрабатывает сортировку `ORDER BY`:
-     *             - Игнорируется, если равно false.
-     *             - Если `order` является строкой, добавляется к строке запроса.
-     *          4. Обрабатывает ограничение `LIMIT`:
-     *             - Игнорируется, если равно false.
-     *             - Если `limit` является числом, добавляется напрямую.
-     *             - Если `limit` является строкой формата "OFFSET, COUNT", она разбирается и добавляется.
-     *          5. Возвращает результат:
-     *             - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
-     *             - Обновлённый массив параметров для подготовленного выражения.
-     *               Используется $options['params'], если задано. Или возвращается пустой массив.
+     * @details Этот приватный метод обрабатывает опции запроса из массива `$options` и формирует
+     *          соответствующие SQL-фрагменты для добавления к основному запросу (такому как SELECT, UPDATE, DELETE).
      *
+     *          Метод выполняет следующие шаги:
+     *          1. Обрабатывает условие `WHERE` из `$options['where']`:
+     *             - Игнорируется, если значение равно `false`.
+     *             - Если значение является строкой, она используется как есть.
+     *             - Если значение является массивом, он преобразуется в SQL-условие. Поддерживаются
+     *               простые условия (`['поле' => значение]`), которые автоматически преобразуются с использованием
+     *               плейсхолдеров (`"поле = :поле"`) и добавляются к возвращаемому массиву параметров.
+     *               Также поддерживаются логические операторы `'OR'` и `'NOT'` с массивами условий внутри.
+     *          2. Обрабатывает группировку `GROUP BY` из `$options['group']`:
+     *             - Игнорируется, если значение равно `false`.
+     *             - Если значение является строкой, добавляется к строке условий.
+     *          3. Обрабатывает сортировку `ORDER BY` из `$options['order']`:
+     *             - Игнорируется, если значение равно `false`.
+     *             - Если значение является строкой, добавляется к строке условий.
+     *          4. Обрабатывает ограничение `LIMIT` из `$options['limit']`:
+     *             - Игнорируется, если значение равно `false`.
+     *             - Если значение является числом, добавляется напрямую.
+     *             - Если значение является строкой формата "OFFSET, COUNT", она разбирается и добавляется.
+     *          5. Возвращает сформированную строку дополнений и обновлённый массив параметров.
+     *             Массив параметров для возврата инициализируется значениями из `$options['params']` (если они были
+     *             предоставлены) и дополняется параметрами, автоматически созданными для простых условий WHERE.
+     *
+     * @internal
      * @callergraph
      * @callgraph
      *
-     * @param array $options Опции запроса:
+     * @param array $options Опции запроса. Поддерживаемые ключи:
      *                       - where (string|array|false): Условие WHERE.
      *                         Может быть:
      *                         - Строкой (используется как есть)
      *                         - Массивом:
-     *                           * Простые условия: ['поле' => значение]
-     *                           * Сложные условия: ['OR' => [...], 'NOT' => [...]]
+     *                           * Простые условия: `['поле' => значение]` (автоматически создаются плейсхолдеры и
+     *                             добавляются в возвращаемый массив параметров)
+     *                           * Сложные условия: `['OR' => [условия], 'NOT' => [условия]]`
+     *                         - `false`: Игнорируется.
      *                       - group (string|false): Группировка GROUP BY.
-     *                         Должна быть строкой. Игнорируется, если равно false.
+     *                         Должна быть строкой. Игнорируется, если равно `false`.
      *                       - order (string|false): Сортировка ORDER BY.
-     *                         Должна быть строкой. Игнорируется, если равно false.
+     *                         Должна быть строкой. Игнорируется, если равно `false`.
      *                       - limit (int|string|false): Ограничение LIMIT.
-     *                         Должно быть числом или строкой формата 'OFFSET, COUNT'. Игнорируется, если равно false.
-     *                       - params (array): Параметры для подготовленного выражения (необязательно).
-     *                         Если не указаны — возвращается пустой массив.
+     *                         Должно быть целым числом или строкой формата `'OFFSET, COUNT'`. Игнорируется, если
+     *                         равно `false`.
+     *                       - params (array): Исходный ассоциативный массив параметров для подготовленного выражения
+     *                         ([":имя" => значение]). Необязательный параметр. Эти параметры используются как основа
+     *                         для возвращаемого массива параметров.
      *
      * @return array Массив с двумя элементами:
-     *               - string $conditions - Строка дополнений (например, WHERE, GROUP BY, ORDER BY, LIMIT).
-     *               - array $params - Обновлённый массив параметров для подготовленного выражения.
+     *               - string $conditions: Строка дополнений SQL (например, ` WHERE ... GROUP BY ... ORDER BY ...
+     *                 LIMIT ...`).
+     *               - array $params: Обновлённый ассоциативный массив параметров для подготовленного выражения.
+     *                 Включает параметры из `$options['params']` и параметры, сгенерированные для простых условий
+     *                 WHERE.
      *
-     * @throws InvalidArgumentException Если параметр 'where' имеет недопустимый тип.
-     *              Пример сообщения: "Неверное значение 'where' | Ожидалась строка или массив, получено: " . gettype
-     *                                ($options['where'])
-     * @throws InvalidArgumentException Если параметр 'group' имеет недопустимый тип.
-     *              Пример сообщения: "Неверное значение 'group' | Ожидалась строка, получено: " . gettype
-     *                                ($options['group'])
-     * @throws InvalidArgumentException Если параметр 'order' имеет недопустимый тип.
-     *              Пример сообщения: "Неверное значение 'order' | Ожидалась строка, получено: " . gettype
-     *                                ($options['order'])
-     * @throws InvalidArgumentException Если параметр 'limit' имеет недопустимый тип.
-     *              Пример сообщения: "Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET,
-     *                                COUNT', получено: " .  gettype($options['limit']) . "({$options['limit']})"
+     * @throws InvalidArgumentException Выбрасывается, если значение одной из опций (`where`, `group`, `order`, `limit`)
+     *                                  имеет недопустимый тип, который не может быть обработан методом.
+     *                                  Например:
+     *                                  - Неверное условие 'where' | Ожидалась строка или массив, получено: [тип]
+     *                                  - Неверное значение 'group' | Ожидалась строка, получено: [тип]
+     *                                  - Неверное значение 'order' | Ожидалась строка, получено: [тип]
+     *                                  - Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET,
+     *                                    COUNT', получено: [тип/значение]
      *
      * Пример использования:
      * @code
-     * // Простые условия
+     * // Пример с простыми условиями WHERE и LIMIT
      * $options = [
      *     'where' => ['id' => 1, 'status' => 'active'],
-     *     'params' => [':id' => 1, ':status' => 'active']
-     * ];
-     *
-     * // Сложные условия
-     * $complex_options = [
-     *     'where' => [
-     *         'OR' => ['views > 1000', 'likes > 50'],
-     *         'NOT' => ['deleted' => 1],
-     *         'category_id' => 5
-     *     ]
+     *     'limit' => 10,
+     *     // Входящий массив params может быть пустым или содержать другие параметры
+     *     'params' => [':other_param' => 'value'],
      * ];
      *
      * [$conditions, $params] = $this->build_conditions($options);
+     * // $conditions будет примерно " WHERE id = :id AND status = :status LIMIT 10" (в зависимости от порядка)
+     * // $params будет примерно [':other_param' => 'value', ':id' => 1, ':status' => 'active']
+     *
+     * // Пример со сложными условиями WHERE и ORDER BY
+     * $complex_options = [
+     *     'where' => [
+     *         'OR' => ['views > :min_views', 'likes > :min_likes'],
+     *         'NOT' => ['deleted' => 1], // 'deleted' => 1 автоматически преобразуется в 'deleted = :deleted'
+     *         'category_id' => 5 // автоматически преобразуется в 'category_id = :category_id'
+     *     ],
+     *     'order' => 'created_at DESC',
+     *     'params' => [':min_views' => 1000, ':min_likes' => 50], // Входящие параметры для OR
+     * ];
+     *
+     * [$complex_conditions, $complex_params] = $this->build_conditions($complex_options);
+     * // $complex_conditions будет примерно " WHERE (views > :min_views OR likes > :min_likes) AND NOT (deleted = :deleted) AND category_id = :category_id ORDER BY created_at DESC"
+     * // $complex_params будет примерно [':min_views' => 1000, ':min_likes' => 50, ':deleted' => 1, ':category_id' => 5]
      * @endcode
-     * @see     PhotoRigma::Classes::Database::update()
-     *          Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
-     * @see     PhotoRigma::Classes::Database::select()
-     *          Метод, который вызывает build_conditions() для формирования SELECT-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *          Метод, который вызывает build_conditions() для формирования JOIN-запроса.
-     * @see     PhotoRigma::Classes::Database::delete()
-     *          Метод, который вызывает build_conditions() для формирования DELETE-запроса.
+     *
+     * @see    PhotoRigma::Classes::Database::update()
+     *         Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
+     * @see    PhotoRigma::Classes::Database::select()
+     *         Метод, который вызывает build_conditions() для формирования SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::join()
+     *         Метод, который вызывает build_conditions() для формирования JOIN-запроса.
+     * @see    PhotoRigma::Classes::Database::delete()
+     *         Метод, который вызывает build_conditions() для формирования DELETE-запроса.
+     * @see    PhotoRigma::Classes::Database::build_where_group()
+     *         Приватный метод, используемый для рекурсивной обработки групп условий (OR, NOT) внутри WHERE.
      */
     private function build_conditions(array $options): array
     {
@@ -980,7 +1135,7 @@ class Database implements Database_Interface
                 }
             } else {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное условие 'where' | Ожидалась строка или массив, получено: " . gettype(
                         $options['where']
                     )
                 );
@@ -993,7 +1148,7 @@ class Database implements Database_Interface
                 $conditions .= ' GROUP BY ' . $options['group'];
             } else {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'group' | Ожидалась строка, получено: " . gettype(
                         $options['group']
                     )
                 );
@@ -1006,7 +1161,7 @@ class Database implements Database_Interface
                 $conditions .= ' ORDER BY ' . $options['order'];
             } else {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'order' | Ожидалась строка, получено: " . gettype(
                         $options['order']
                     )
                 );
@@ -1022,7 +1177,7 @@ class Database implements Database_Interface
                 $conditions .= ' LIMIT ' . $offset . ', ' . $count;
             } else {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверное значение 'limit' | Ожидалось число или строка формата 'OFFSET, COUNT', получено: " . gettype(
                         $options['limit']
                     ) . " ({$options['limit']})"
                 );
@@ -1033,53 +1188,64 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Формирует группу условий для WHERE с указанным оператором.
+     * @brief   Формирует группу условий для WHERE с указанным оператором (OR/NOT).
      *
-     * @details Этот метод используется для построения сложных SQL-условий:
-     *          - Для оператора OR: объединяет условия через OR
-     *          - Для оператора NOT: добавляет отрицание к группе условий
-     *          Поддерживает два формата условий:
-     *          - Готовые строки условий (используются как есть)
-     *          - Ассоциативные массивы в формате ['поле' => значение]
-     *          Все строковые значения автоматически экранируются.
+     * @details Этот приватный метод используется для построения сложных SQL-условий внутри части WHERE.
      *
+     *          Метод выполняет следующие задачи:
+     *          - Для оператора OR: объединяет условия из массива `$conditions` через `OR`.
+     *          - Для оператора NOT: объединяет условия из массива `$conditions` через `AND` и добавляет отрицание
+     *            `NOT` к группе.
+     *
+     *          Поддерживает два формата условий в массиве `$conditions`:
+     *          - Готовые строки условий (если ключ числовой) — используются как есть.
+     *          - Ассоциативные массивы в формате `['поле' => значение]` (если ключ строковый) — преобразуются в
+     *            синтаксис для подготовленного выражения: `"поле = :поле"`. (Подстановка и экранирование значений
+     *            происходят на этапе выполнения запроса в методе `execute_query()`).
+     *
+     * @internal
      * @callergraph
      *
-     * @param array  $conditions Массив условий:
-     *                          - Если ключ числовой: значение используется как готовая строка условия
-     *                          - Если ключ строковый: преобразуется в "ключ = :ключ"
-     * @param string $operator   Оператор (OR/NOT)
+     * @param array  $conditions Массив условий для группы.
+     *                           - Если ключ числовой: значение используется как готовая строка условия (например,
+     *                             `"views > 1000"`).
+     *                           - Если ключ строковый: `['поле' => значение]` — значение используется для генерации
+     *                             синтаксиса плейсхолдера (например, `"deleted = :deleted"`).
+     * @param string $operator   Логический оператор для объединения условий в группе ('OR' или 'NOT').
      *
-     * @return string Сформированная строка условий в формате:
-     *               - Для OR: "(условие1 OR условие2)"
-     *               - Для NOT: "NOT (условие1 AND условие2)"
-     *               Возвращает пустую строку, если массив условий пуст.
+     * @return string Сформированная строка условий для группы WHERE.
+     *                - Для OR: `"(условие1 OR условие2)"`
+     *                - Для NOT: `"NOT (условие1 AND условие2)"`
+     *                Возвращает пустую строку (`''`), если массив условий пуст.
      *
-     * @throws InvalidArgumentException Если передан недопустимый оператор (не OR/NOT).
-     *              Пример сообщения: "Неверный оператор | Допустимые значения: OR, NOT, получено: {$operator}"
+     * @throws InvalidArgumentException Если передан недопустимый оператор (не 'OR' или 'NOT').
+     *                                  Пример сообщения:
+     *                                  "Неверный оператор | Допустимые значения: OR, NOT, получено: [operator]"
      *
      * Пример использования:
      * @code
-     * // Простые условия
+     * // Пример с готовыми строками условий и оператором OR
      * $or_condition = $this->build_where_group(
      *     ['views > 1000', 'likes > 50'],
      *     'OR'
-     * ); // "(views > 1000 OR likes > 50)"
+     * ); // Результат: "(views > 1000 OR likes > 50)"
      *
-     * // Ассоциативный массив
+     * // Пример с ассоциативным массивом условий и оператором NOT
+     * // Обратите внимание: значения (1, 1) не используются этим методом напрямую,
+     * // но необходимы для создания плейсхолдеров :deleted и :hidden.
      * $not_condition = $this->build_where_group(
      *     ['deleted' => 1, 'hidden' => 1],
      *     'NOT'
-     * ); // "NOT (deleted = :deleted AND hidden = :hidden)"
+     * ); // Результат: "NOT (deleted = :deleted AND hidden = :hidden)"
      * @endcode
-     * @see     PhotoRigma::Classes::Database::build_conditions()
-     *          Основной метод, использующий build_where_group() для формирования сложных условий.
+     * @see    PhotoRigma::Classes::Database::build_conditions()
+     *         Приватный метод, который вызывает build_where_group() для формирования сложных условий в WHERE.
      */
     private function build_where_group(array $conditions, string $operator): string
     {
         if (!in_array($operator, ['OR', 'NOT'], true)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') .
                 ") | Неверный оператор | Допустимые значения: OR, NOT, получено: $operator"
             );
         }
@@ -1106,112 +1272,128 @@ class Database implements Database_Interface
     /**
      * @brief   Выполняет SQL-запрос с использованием подготовленных выражений.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет состояние запроса и типы аргументов:
-     *             - Убедитесь, что `$res_query` является экземпляром `PDOStatement`.
-     *             - Проверяется, что `$txt_query` является строкой.
-     *             - Проверяется, что `$params` является массивом.
-     *          2. Очищает внутренние свойства для вывода результата запроса:
-     *             - Обнуляет `$res_query`, `$aff_rows`, `$insert_id`.
-     *          3. Преобразует запрос в нужный формат СУБД с помощью метода `convert_query()`.
-     *          4. Выполняет EXPLAIN ANALYZE (если включено):
-     *             - Использует метод `log_explain()` для анализа запроса.
-     *          5. Подготавливает и выполняет SQL-запрос с использованием PDO:
-     *             - Использует `$pdo->prepare()` для подготовки запроса.
-     *             - Выполняет запрос с переданными параметрами.
-     *             - Получает количество затронутых строк (`$aff_rows`) и ID последней вставленной записи
-     *               (`$insert_id`).
-     *          6. Логирует медленные запросы:
-     *             - Измеряет время выполнения запроса.
-     *             - Если время выполнения превышает пороговое значение (200 мс), логирует запрос с помощью
-     *               `log_query()`.
-     *             - Логирует запросы с пустыми плейсхолдерами.
-     *          7. Очищает строку запроса после выполнения.
-     *          8. Возвращает результат выполнения запроса:
-     *             - Возвращает `true`, если запрос успешно выполнен.
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     * @details Этот приватный метод выполняет следующие шаги:
+     *          1. Проверяет состояние внутренних свойств (`$this->res_query`, `$this->txt_query`) и типы переданных
+     *             аргументов (`$params`).
+     *          2. Очищает внутренние свойства для вывода результата предыдущего запроса (`$this->res_query`,
+     *             `$this->aff_rows`, `$this->insert_id`).
+     *          3. Преобразует текст запроса (`$this->txt_query`) в формат, специфичный для текущей СУБД, с помощью
+     *             метода `convert_query()`.
+     *          4. Если константа `SQL_ANALYZE` установлена в `true`, выполняет анализ запроса (например, `EXPLAIN
+     *             ANALYZE`) с помощью метода `log_explain()`.
+     *          5. Подготавливает и выполняет SQL-запрос с использованием объекта PDO (`$this->pdo`) и переданных
+     *             параметров `$params`. Получает количество затронутых строк (`$this->aff_rows`) и, если запрос
+     *             является INSERT, ID последней вставленной записи (`$this->insert_id`).
+     *          6. Измеряет время выполнения запроса и, если константа `SQL_LOG` установлена в `true`:
+     *             - Логирует запрос как "медленный" с помощью `log_query()`, если время выполнения превышает 200 мс.
+     *             - Логирует запрос как "без плейсхолдеров" с помощью `log_query()`, если массив `$params` пустой.
+     *          7. Очищает текст запроса (`$this->txt_query = null`) после его выполнения.
+     *          8. Возвращает `true`, указывая на успешное выполнение запроса (даже если затронуто 0 строк или SELECT
+     *             не вернул результатов).
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`. Он
+     *          является ключевым методом для выполнения всех SQL-операций, и его вызывают другие методы класса
+     *          (например, `select()`, `insert()`, `update()`, `delete()`, `truncate()`, `join()`).
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
      * @param array $params Ассоциативный массив параметров для подготовленного выражения (необязательно).
-     *                      Пример: [':id' => 1].
-     *                      Ограничения: параметры должны соответствовать плейсхолдерам в запросе.
+     *                      Пример: `[':id' => 1, ':name' => 'John Doe']`.
+     *                      Ключи массива должны соответствовать именам плейсхолдеров в тексте запроса
+     *                      (`$this->txt_query`).
+     *                      По умолчанию: пустой массив (`[]`), если параметры не требуются.
      *
-     * @return bool Возвращает `true`, если запрос успешно выполнен.
+     * @return bool Возвращает `true`, если подготовка и выполнение запроса прошли успешно.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$res_query` не является экземпляром `PDOStatement`.
-     *                                  - `$txt_query` не является строкой.
-     *                                  - `$params` не является массивом.
+     *                                  - Внутреннее свойство `$this->res_query` имеет некорректное состояние перед
+     *                                    выполнением запроса.
+     *                                    Пример сообщения:
+     *                                    Некорректное состояние результата запроса | Текущее значение: [тип]
+     *                                  - Внутреннее свойство `$this->txt_query` не является строкой.
+     *                                    Пример сообщения:
+     *                                    Неверный тип SQL-запроса | Ожидалась строка, получено: [тип]
+     *                                  - Переданный аргумент `$params` не является массивом.
+     *                                    Пример сообщения:
+     *                                    Неверный тип параметров запроса | Ожидался массив, получено: [тип]
+     * @throws PDOException             Выбрасывается, если возникает ошибка на уровне PDO в процессе подготовки или
+     *                                  выполнения запроса.
      *                                  Пример сообщения:
-     *                                      Некорректное состояние результата запроса | Текущее значение: [тип]
-     * @throws PDOException Выбрасывается, если возникает ошибка при выполнении запроса.
+     *                                  Ошибка при выполнении SQL-запроса | Запрос: [текст запроса или сообщение PDO]
+     *                                  | Код ошибки PDO: [код ошибки]
+     * @throws Exception                Выбрасывается, если возникает ошибка при вызове метода `log_explain()` или
+     *                                  `log_query()`.
      *                                  Пример сообщения:
-     *                                      Ошибка при выполнении SQL-запроса | Запрос: [текст запроса]
-     * @throws Exception Выбрасывается, если возникают ошибки при вызове метода `log_explain()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка при выполнении EXPLAIN ANALYZE | Запрос: [текст запроса]
+     *                                  Ошибка при выполнении EXPLAIN ANALYZE | Запрос: [текст запроса] | Сообщение:
+     *                                  [текст ошибки]
      *
      * @note    Метод зависит от корректной конфигурации базы данных и использует следующие константы для настройки
      *          поведения:
-     *          - `SQL_LOG`: Включает или отключает логирование запросов:
-     *                       - Логируются медленные запросы (время выполнения превышает пороговое значение, 200 мс).
-     *                       - Логируются запросы без плейсхолдеров.
-     *          - `SQL_ANALYZE`: Включает или отключает анализ запросов с помощью команды EXPLAIN/EXPLAIN ANALYZE.
-     *                           Анализ выполняется перед выполнением запроса для сбора статистики производительности.
+     *          - `SQL_LOG`: Управляет логированием медленных запросов (время выполнения > 200 мс) и запросов без
+     *            плейсхолдеров.
+     *          - `SQL_ANALYZE`: Управляет выполнением `EXPLAIN ANALYZE` перед запросами для диагностики
+     *            производительности.
      *          Эти константы позволяют настраивать поведение метода в зависимости от требований к отладке и
      *          мониторингу.
+     * @warning Убедитесь, что перед вызовом этого метода:
+     *          - Свойство `$this->txt_query` содержит валидную SQL-строку для подготовленного выражения.
+     *          - Массив `$params` содержит значения, соответствующие всем плейсхолдерам в `$this->txt_query`.
+     *          - Соединение с базой данных установлено (`$this->pdo` является валидным объектом PDO).
+     *          Невалидные входные данные или некорректное состояние могут привести к выбросу исключений.
      *
-     * @warning Убедитесь, что входные данные корректны. Невалидные данные могут привести к исключениям.
-     *
-     * Пример использования метода execute_query():
+     * Пример использования метода execute_query() (вызывается из других методов класса):
      * @code
-     * // Выполнение SELECT-запроса
-     * $this->txt_query = "SELECT * FROM users WHERE id = :id";
-     * $params = [':id' => 1];
+     * // Пример вызова execute_query из метода select()
+     * // Assume $this->txt_query is set to "SELECT * FROM users WHERE id = :id"
+     * // Assume $params is set to [':id' => 1]
      * $success = $this->execute_query($params);
      * if ($success) {
-     *     echo "Запрос выполнен успешно!";
+     *     // Запрос выполнен, результат доступен через $this->res_query
+     *     // Количество затронутых строк (для SELECT может быть 0, но метод все равно вернет true)
+     *     $affected = $this->aff_rows;
+     *     // ID последней вставки (будет 0 для SELECT)
+     *     $lastId = $this->insert_id;
      * } else {
-     *     echo "Ошибка выполнения запроса.";
+     *     // Обработка ошибки (обычно происходит через исключение)
+     *     echo "Ошибка выполнения запроса execute_query";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$pdo
+     * @see    PhotoRigma::Classes::Database::$pdo
      *         Объект PDO, используемый для выполнения запроса.
-     * @see     PhotoRigma::Classes::Database::$res_query
-     *         Результат подготовленного выражения.
-     * @see     PhotoRigma::Classes::Database::$aff_rows
-     *         Количество затронутых строк после выполнения запроса.
-     * @see     PhotoRigma::Classes::Database::$insert_id
-     *         ID последней вставленной записи.
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *         Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::delete()
-     *         Метод, который вызывает execute_query() для выполнения DELETE-запроса.
-     * @see     PhotoRigma::Classes::Database::truncate()
-     *         Метод, который вызывает execute_query() для выполнения TRUNCATE-запроса.
-     * @see     PhotoRigma::Classes::Database::update()
-     *         Метод, который вызывает execute_query() для выполнения UPDATE-запроса.
-     * @see     PhotoRigma::Classes::Database::insert()
-     *         Метод, который вызывает execute_query() для выполнения INSERT-запроса.
-     * @see     PhotoRigma::Classes::Database::select()
-     *         Метод, который вызывает execute_query() для выполнения SELECT-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *         Метод, который вызывает execute_query() для выполнения JOIN-запроса.
-     * @see     PhotoRigma::Classes::Database::convert_query()
-     *         Метод для преобразования запроса в нужный формат СУБД.
-     * @see     PhotoRigma::Classes::Database::log_explain()
-     *         Метод для выполнения EXPLAIN ANALYZE.
-     * @see     PhotoRigma::Classes::Database::log_query()
-     *         Метод для логирования медленных запросов и запросов без плейсхолдеров.
+     * @see    PhotoRigma::Classes::Database::$res_query
+     *         Свойство, хранящее результат выполненного запроса (объект PDOStatement для SELECT/JOIN).
+     * @see    PhotoRigma::Classes::Database::$aff_rows
+     *         Свойство, хранящее количество строк, затронутых последним запросом.
+     * @see    PhotoRigma::Classes::Database::$insert_id
+     *         Свойство, хранящее ID последней вставленной записи (для INSERT).
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, хранящее текст SQL-запроса для выполнения.
+     * @see    PhotoRigma::Classes::Database::delete()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     * @see    PhotoRigma::Classes::Database::truncate()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     * @see    PhotoRigma::Classes::Database::update()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     * @see    PhotoRigma::Classes::Database::insert()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     * @see    PhotoRigma::Classes::Database::select()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     * @see    PhotoRigma::Classes::Database::join()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     * @see    PhotoRigma::Classes::Database::convert_query()
+     *         Приватный метод для преобразования запроса в нужный формат СУБД перед выполнением.
+     * @see    PhotoRigma::Classes::Database::log_explain()
+     *         Приватный метод для выполнения EXPLAIN ANALYZE.
+     * @see    PhotoRigma::Classes::Database::log_query()
+     *         Приватный метод для логирования запросов.
      */
     private function execute_query(array $params = []): bool
     {
         // Валидация состояния запроса и аргументов
         if (isset($this->res_query) && !($this->res_query instanceof PDOStatement)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное состояние результата запроса | Текущее значение: " . gettype(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Некорректное состояние результата запроса | Текущее значение: ' . gettype(
                     $this->res_query
                 )
             );
@@ -1223,7 +1405,7 @@ class Database implements Database_Interface
         // Валидация аргументов
         if (!is_string($this->txt_query)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный тип SQL-запроса | Ожидалась строка, получено: " . gettype(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Неверный тип SQL-запроса | Ожидалась строка, получено: ' . gettype(
                     $this->txt_query
                 )
             );
@@ -1266,57 +1448,68 @@ class Database implements Database_Interface
     /**
      * @brief   Выполняет преобразование SQL-запроса в зависимости от текущего формата и типа СУБД.
      *
-     * @details Этот метод выполняет преобразование SQL-запроса для обеспечения совместимости с целевой СУБД:
-     *          1. Проверяет, совпадает ли текущий формат строки (`$current_format`) с типом базы данных (`$db_type`).
-     *             - Если форматы совпадают, запрос остается без изменений.
-     *          2. Если форматы не совпадают, вызывает соответствующий метод для преобразования:
-     *             - Для MySQL используется метод `convert_from_mysql_to`.
-     *             - Для PostgreSQL используется метод `convert_from_pgsql_to`.
-     *             - Для SQLite используется метод `convert_from_sqlite_to`.
-     *          3. Если текущий формат не поддерживается, выбрасывается исключение.
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `execute_query`.
+     * @details Этот приватный метод выполняет преобразование текста SQL-запроса, хранящегося в свойстве
+     *          `$this->txt_query`, для обеспечения совместимости с целевой базой данных.
      *
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет, совпадает ли текущий формат строки запроса (`$this->current_format`) с типом базы
+     *             данных (`$this->db_type`).
+     *             Если форматы совпадают, преобразование не требуется, и метод завершает работу.
+     *          2. Если форматы не совпадают, вызывает соответствующий приватный метод для выполнения преобразования
+     *             из текущего формата (`$this->current_format`) в формат целевой СУБД (`$this->db_type`).
+     *             Вызываемые методы (`convert_from_mysql_to()`, `convert_from_pgsql_to()`, `convert_from_sqlite_to()`)
+     *             модифицируют свойство `$this->txt_query` с преобразованным текстом запроса.
+     *          3. Если текущий формат строки (`$this->current_format`) не поддерживается для преобразования,
+     *             выбрасывается исключение InvalidArgumentException.
+     *
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Основной вызывающий метод — `execute_query()`.
+     *
+     * @internal
      * @callergraph
      *
-     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     * @return void Метод ничего не возвращает напрямую. Результат преобразования сохраняется в свойстве `$this->txt_query`.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Текущий формат строки не поддерживается.
-     *                                    Пример сообщения:
-     *                                        Не поддерживаемый формат строки | Тип: [current_format]
+     * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
+     *                                  поддерживается для преобразования.
+     *                                  Пример сообщения:
+     *                                  Не поддерживаемый формат строки | Тип: [current_format]
      *
-     * @note    Метод использует свойства `$current_format` и `$db_type` для определения необходимости преобразования.
-     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     * @note    Метод зависит от свойств `$this->current_format` и `$this->db_type` для определения необходимости и
+     *          типа преобразования.
+     *          Преобразованный текст запроса всегда сохраняется обратно в свойство `$this->txt_query`.
      *
-     * @warning Убедитесь, что свойство `$current_format` содержит допустимое значение.
-     *          Недопустимый формат может привести к исключениям.
+     * @warning Убедитесь, что свойство `$this->current_format` содержит одно из допустимых значений форматов
+     *          ('mysql', 'pgsql', 'sqlite') перед вызовом этого метода.
+     *          Недопустимый формат может привести к выбросу исключения. Убедитесь также, что `$this->txt_query`
+     *          содержит исходный текст запроса, который требуется преобразовать.
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из execute_query()):
      * @code
-     * // Исходный запрос в формате MySQL
-     * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
-     * $this->current_format = 'mysql';
-     * $this->db_type = 'pgsql';
+     * // Предположим:
+     * // $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
+     * // $this->current_format = 'mysql';
+     * // $this->db_type = 'pgsql';
      *
-     * // Преобразование запроса для PostgreSQL
-     * $this->convert_query();
-     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * $this->convert_query(); // Выполнит $this->convert_from_mysql_to('pgsql')
+     *
+     * // Теперь $this->txt_query содержит преобразованный запрос для PostgreSQL:
+     * // echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, содержащее текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::$current_format
-     *          Текущий формат строки запроса.
-     * @see     PhotoRigma::Classes::Database::$db_type
-     *          Тип используемой СУБД.
-     * @see     PhotoRigma::Classes::Database::convert_from_mysql_to()
-     *          Метод для преобразования запросов из формата MySQL.
-     * @see     PhotoRigma::Classes::Database::convert_from_pgsql_to()
-     *          Метод для преобразования запросов из формата PostgreSQL.
-     * @see     PhotoRigma::Classes::Database::convert_from_sqlite_to()
-     *          Метод для преобразования запросов из формата SQLite.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Метод, из которого вызывается данный метод.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Свойство, определяющее исходный формат строки запроса.
+     * @see    PhotoRigma::Classes::Database::$db_type
+     *         Свойство, определяющее целевой тип используемой СУБД.
+     * @see    PhotoRigma::Classes::Database::convert_from_mysql_to()
+     *         Приватный метод для преобразования запросов из формата MySQL в другие.
+     * @see    PhotoRigma::Classes::Database::convert_from_pgsql_to()
+     *         Приватный метод для преобразования запросов из формата PostgreSQL в другие.
+     * @see    PhotoRigma::Classes::Database::convert_from_sqlite_to()
+     *         Приватный метод для преобразования запросов из формата SQLite в другие.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_query(): void
     {
@@ -1331,59 +1524,72 @@ class Database implements Database_Interface
             'pgsql'  => $this->convert_from_pgsql_to($this->db_type),
             'sqlite' => $this->convert_from_sqlite_to($this->db_type),
             default  => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                 "Не поддерживаемый формат строки | Тип: $this->current_format"
             ),
         };
     }
 
     /**
-     * @brief   Производит преобразование SQL-запроса из формата MySQL в целевой формат СУБД.
+     * @brief   Производит преобразование SQL-запроса из формата MySQL в целевой формат СУБД (PostgreSQL или SQLite).
      *
-     * @details Этот метод выполняет преобразование SQL-запроса из формата MySQL в формат целевой СУБД:
-     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`.
-     *          2. Для PostgreSQL и SQLite заменяет обратные кавычки (`) на двойные кавычки (") или удаляет их.
-     *             - Экранированные кавычки (например, \\` ) остаются без изменений.
-     *          3. Если тип СУБД не поддерживается, выбрасывается исключение.
+     * @details Этот приватный метод выполняет преобразование текста SQL-запроса, хранящегося в свойстве
+     *          `$this->txt_query`, из формата MySQL в формат целевой СУБД.
+     *
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`. Метод поддерживает преобразование
+     *             только в форматы PostgreSQL ('pgsql') и SQLite ('sqlite').
+     *          2. Для поддерживаемых целевых СУБД (PostgreSQL и SQLite) находит все необратимые обратные кавычки (`)
+     *             в строке запроса и заменяет их на двойные кавычки ("). Экранированные кавычки (например, \` )
+     *             остаются без изменений. Преобразованный запрос сохраняется обратно в свойство `$this->txt_query`.
+     *          3. Если тип целевой СУБД (`$target_db_type`) не поддерживается методом для преобразования из MySQL,
+     *             выбрасывается исключение InvalidArgumentException.
+     *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `convert_query`.
+     *          Вызывается из метода `convert_query()`.
      *
+     * @internal
      * @callergraph
      *
-     * @param string $target_db_type Тип целевой СУБД:
-     *                               - Поддерживаемые значения: 'pgsql', 'sqlite'.
-     *                               - Пример: 'pgsql' для PostgreSQL или 'sqlite' для SQLite.
-     *                               Ограничения: входной тип должен быть допустимым значением.
+     * @param string $target_db_type Тип целевой СУБД, в которую нужно преобразовать запрос.
+     *                               Поддерживаемые значения: 'pgsql', 'sqlite'.
+     *                               Ограничения: входной тип должен быть допустимым значением из списка.
      *
-     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     * @return void Метод ничего не возвращает напрямую. Результат преобразования сохраняется в свойстве
+     *              `$this->txt_query`.
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     * @throws InvalidArgumentException Выбрасывается, если тип целевой СУБД (`$target_db_type`) не поддерживается
+     *                                  методом `convert_from_mysql_to`.
      *                                  Пример сообщения:
-     *                                      Неподдерживаемый тип базы данных | Тип: [target_db_type]
+     *                                  Неподдерживаемый тип базы данных | Тип: [target_db_type]
      *
-     * @note    Метод использует регулярное выражение для поиска и замены обратных кавычек.
-     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     * @note    Метод использует регулярное выражение для поиска и замены необратимых обратных кавычек на двойные
+     *          кавычки. Преобразованный запрос сохраняется в свойстве `$this->txt_query`.
      *
-     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям.
-     *          Недопустимый тип может привести к исключениям.
+     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям ('pgsql' или
+     *          'sqlite'). Недопустимый тип может привести к выбросу исключения. Метод предполагает, что
+     *          `$this->txt_query` содержит SQL-запрос, использующий синтаксис идентификаторов MySQL (обратные кавычки).
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из convert_query()):
      * @code
-     * // Исходный запрос в формате MySQL
-     * $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
+     * // Предположим:
+     * // $this->txt_query = "SELECT `id`, `name` FROM `users` WHERE `status` = 1 AND `description` LIKE 'Test\\`s'";
+     * // $this->db_type установлен в 'pgsql' или 'sqlite'
      *
-     * // Преобразование запроса для PostgreSQL
-     * $this->convert_from_mysql_to('pgsql');
-     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * // Преобразование запроса из MySQL
+     * $this->convert_from_mysql_to($this->db_type);
      *
-     * // Преобразование запроса для SQLite
-     * $this->convert_from_mysql_to('sqlite');
-     * echo $this->txt_query; // Результат: SELECT * FROM users WHERE id = 1
+     * // Если $this->db_type был 'pgsql':
+     * // echo $this->txt_query; // Результат: SELECT "id", "name" FROM "users" WHERE "status" = 1 AND "description" LIKE 'Test\\`s'
+     *
+     * // Если $this->db_type был 'sqlite':
+     * // echo $this->txt_query; // Результат: SELECT "id", "name" FROM "users" WHERE "status" = 1 AND "description" LIKE 'Test\\`s'
+     * // (для SQLite двойные кавычки также являются допустимым способом экранирования идентификаторов)
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, содержащее текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::convert_query()
-     *          Метод, из которого вызывается данный метод.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом.
+     * @see    PhotoRigma::Classes::Database::convert_query()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_from_mysql_to(string $target_db_type): void
     {
@@ -1394,60 +1600,76 @@ class Database implements Database_Interface
                 $this->txt_query
             ),
             default => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                 "Неподдерживаемый тип базы данных | Тип: $target_db_type"
             ),
         };
     }
 
     /**
-     * @brief   Производит преобразование SQL-запроса из формата PostgreSQL в целевой формат СУБД.
+     * @brief   Производит преобразование SQL-запроса из формата PostgreSQL в целевой формат СУБД (MySQL или SQLite).
      *
-     * @details Этот метод выполняет преобразование SQL-запроса из формата PostgreSQL в формат целевой СУБД:
-     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`.
-     *          2. Для MySQL заменяет двойные кавычки (") на обратные апострофы (`).
-     *             - Экранированные кавычки (например, \\") остаются без изменений.
-     *          3. Для SQLite запрос остается без изменений.
-     *          4. Если тип СУБД не поддерживается, выбрасывается исключение.
+     * @details Этот приватный метод выполняет преобразование текста SQL-запроса, хранящегося в свойстве
+     *          `$this->txt_query`, из формата PostgreSQL в формат целевой СУБД.
+     *
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`. Метод поддерживает преобразование
+     *             только в форматы MySQL ('mysql') и SQLite ('sqlite').
+     *          2. Для целевой СУБД MySQL находит все необратимые двойные кавычки (") в строке запроса и заменяет
+     *             их на обратные апострофы (`). Экранированные кавычки (например, \") остаются без изменений.
+     *             Преобразованный запрос сохраняется обратно в свойство `$this->txt_query`.
+     *          3. Для целевой СУБД SQLite запрос остается без изменений, свойство `$this->txt_query` не модифицируется.
+     *          4. Если тип целевой СУБД (`$target_db_type`) не поддерживается методом для преобразования из PostgreSQL,
+     *             выбрасывается исключение InvalidArgumentException.
+     *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `convert_query`.
+     *          Вызывается из метода `convert_query()`.
      *
+     * @internal
      * @callergraph
      *
-     * @param string $target_db_type Тип целевой СУБД:
-     *                               - Поддерживаемые значения: 'mysql', 'sqlite'.
-     *                               - Пример: 'mysql' для MySQL или 'sqlite' для SQLite.
-     *                               Ограничения: входной тип должен быть допустимым значением.
+     * @param string $target_db_type Тип целевой СУБД, в которую нужно преобразовать запрос.
+     *                               Поддерживаемые значения: 'mysql', 'sqlite'.
+     *                               Ограничения: входной тип должен быть допустимым значением из списка.
      *
-     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     * @return void Метод ничего не возвращает напрямую. Результат преобразования сохраняется в свойстве
+     *              `$this->txt_query` (если было преобразование).
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     * @throws InvalidArgumentException Выбрасывается, если тип целевой СУБД (`$target_db_type`) не поддерживается
+     *                                  методом `convert_from_pgsql_to`.
      *                                  Пример сообщения:
-     *                                      Неподдерживаемый тип базы данных | Тип: [target_db_type]
+     *                                  Неподдерживаемый тип базы данных | Тип: [target_db_type]
      *
-     * @note    Метод использует регулярное выражение для поиска и замены двойных кавычек.
-     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     * @note    Метод использует регулярное выражение для поиска и замены необратимых двойных кавычек на обратные
+     *          апострофы при преобразовании в MySQL. Преобразованный запрос (или исходный, если целевая СУБД -
+     *          SQLite) сохраняется в свойстве `$this->txt_query`.
      *
-     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям.
-     *          Недопустимый тип может привести к исключениям.
+     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям ('mysql' или
+     *          'sqlite'). Недопустимый тип может привести к выбросу исключения. Метод предполагает, что
+     *          `$this->txt_query` содержит SQL-запрос, использующий синтаксис идентификаторов PostgreSQL (двойные
+     *          кавычки).
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из convert_query()):
      * @code
-     * // Исходный запрос в формате PostgreSQL
-     * $this->txt_query = 'SELECT * FROM "users" WHERE id = 1';
+     * // Предположим:
+     * // $this->txt_query = 'SELECT "id", "name" FROM "users" WHERE "status" = 1 AND "description" LIKE \'Test\\"s\'';
+     * // $this->current_format = 'pgsql';
+     * // $this->db_type установлен в 'mysql' или 'sqlite'
      *
-     * // Преобразование запроса для MySQL
-     * $this->convert_from_pgsql_to('mysql');
-     * echo $this->txt_query; // Результат: SELECT * FROM `users` WHERE id = 1
+     * // Преобразование запроса из PostgreSQL
+     * $this->convert_from_pgsql_to($this->db_type);
      *
-     * // Преобразование запроса для SQLite
-     * $this->convert_from_pgsql_to('sqlite');
-     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * // Если $this->db_type был 'mysql':
+     * // echo $this->txt_query; // Результат: SELECT `id`, `name` FROM `users` WHERE `status` = 1 AND `description` LIKE 'Test\\"s'
+     *
+     * // Если $this->db_type был 'sqlite':
+     * // echo $this->txt_query; // Результат: SELECT "id", "name" FROM "users" WHERE "status" = 1 AND "description" LIKE 'Test\\"s'
+     * // (запрос остается без изменений)
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, содержащее текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::convert_query()
-     *          Метод, из которого вызывается данный метод.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом (или остается без изменений).
+     * @see    PhotoRigma::Classes::Database::convert_query()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_from_pgsql_to(string $target_db_type): void
     {
@@ -1459,64 +1681,81 @@ class Database implements Database_Interface
             ),
             'sqlite' => $this->txt_query, // Для SQLite ничего не меняем
             default => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                 "Неподдерживаемый тип базы данных | Тип: $target_db_type"
             ),
         };
     }
 
     /**
-     * @brief   Производит преобразование SQL-запроса из формата SQLite в целевой формат СУБД.
+     * @brief   Производит преобразование SQL-запроса из формата SQLite в целевой формат СУБД (MySQL или PostgreSQL).
      *
-     * @details Этот метод выполняет преобразование SQL-запроса из формата SQLite в формат целевой СУБД:
-     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`.
-     *          2. Для MySQL заменяет идентификаторы в двойных кавычках (") или квадратных скобках ([ ]) на обратные апострофы (`).
-     *             - Пример: "users" или [users] → `users`.
-     *          3. Для PostgreSQL заменяет идентификаторы в квадратных скобках ([ ]) на двойные кавычки (").
-     *             - Пример: [users] → "users".
-     *          4. Если тип СУБД не поддерживается, выбрасывается исключение.
+     * @details Этот приватный метод выполняет преобразование текста SQL-запроса, хранящегося в свойстве
+     *          `$this->txt_query`, из формата SQLite в формат целевой СУБД. SQLite поддерживает экранирование
+     *          идентификаторов с помощью двойных кавычек (") или квадратных скобок ([ ]).
+     *
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет тип целевой СУБД через параметр `$target_db_type`. Метод поддерживает преобразование
+     *             только в форматы MySQL ('mysql') и PostgreSQL ('pgsql').
+     *          2. Для целевой СУБД MySQL находит идентификаторы, экранированные двойными кавычками (") или
+     *             квадратными скобками ([ ]), и заменяет их на обратные апострофы (`).
+     *          3. Для целевой СУБД PostgreSQL находит идентификаторы, экранированные квадратными скобками ([ ]),
+     *             и заменяет их на двойные кавычки ("). Идентификаторы в двойных кавычках (") остаются без изменений,
+     *             так как они допустимы в PostgreSQL.
+     *          4. Если тип целевой СУБД (`$target_db_type`) не поддерживается методом для преобразования из SQLite,
+     *             выбрасывается исключение InvalidArgumentException. Преобразованный запрос сохраняется обратно в
+     *             свойство `$this->txt_query`.
+     *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `convert_query`.
+     *          Вызывается из метода `convert_query()`.
      *
+     * @internal
      * @callergraph
      *
-     * @param string $target_db_type Тип целевой СУБД:
-     *                               - Поддерживаемые значения: 'mysql', 'pgsql'.
-     *                               - Пример: 'mysql' для MySQL или 'pgsql' для PostgreSQL.
-     *                               Ограничения: входной тип должен быть допустимым значением.
+     * @param string $target_db_type Тип целевой СУБД, в которую нужно преобразовать запрос.
+     *                               Поддерживаемые значения: 'mysql', 'pgsql'.
+     *                               Ограничения: входной тип должен быть допустимым значением из списка.
      *
-     * @return void Метод ничего не возвращает. Результат преобразования сохраняется в свойстве `$txt_query`.
+     * @return void Метод ничего не возвращает напрямую. Результат преобразования сохраняется в свойстве
+     *              `$this->txt_query`.
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     * @throws InvalidArgumentException Выбрасывается, если тип целевой СУБД (`$target_db_type`) не поддерживается
+     *                                  методом `convert_from_sqlite_to`.
      *                                  Пример сообщения:
-     *                                      Неподдерживаемый тип базы данных | Тип: [target_db_type]
+     *                                  Неподдерживаемый тип базы данных | Тип: [target_db_type]
      *
-     * @note    Метод использует регулярные выражения для поиска и замены идентификаторов в запросе.
-     *          Преобразованный запрос сохраняется в свойстве `$txt_query`.
+     * @note    Метод использует регулярные выражения для поиска идентификаторов в двойных кавычках или квадратных
+     *          скобках и их замены. Преобразованный запрос сохраняется в свойстве `$this->txt_query`.
      *
-     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям.
-     *          Недопустимый тип может привести к исключениям.
+     * @warning Убедитесь, что входной тип `$target_db_type` соответствует поддерживаемым значениям ('mysql' или
+     *          'pgsql'). Недопустимый тип может привести к выбросу исключения. Метод предполагает, что
+     *          `$this->txt_query` содержит SQL-запрос, использующий синтаксис идентификаторов SQLite (двойные
+     *          кавычки или квадратные скобки).
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из convert_query()):
      * @code
-     * // Исходный запрос в формате SQLite
-     * $this->txt_query = 'SELECT * FROM "users" WHERE id = 1';
+     * // Предположим:
+     * // $this->txt_query = 'SELECT "id", [name] FROM [users] WHERE id = 1';
+     * // $this->current_format = 'sqlite';
+     * // $this->db_type установлен в 'mysql' или 'pgsql'
      *
-     * // Преобразование запроса для MySQL
+     * // Преобразование запроса из SQLite в MySQL
      * $this->convert_from_sqlite_to('mysql');
-     * echo $this->txt_query; // Результат: SELECT * FROM `users` WHERE id = 1
+     * // echo $this->txt_query; // Результат: SELECT `id`, `name` FROM `users` WHERE id = 1
      *
-     * // Исходный запрос с квадратными скобками
-     * $this->txt_query = 'SELECT * FROM [users] WHERE id = 1';
+     * // Предположим:
+     * // $this->txt_query = 'SELECT "id", [name] FROM [users] WHERE id = 1';
+     * // $this->current_format = 'sqlite';
+     * // $this->db_type установлен в 'pgsql'
      *
-     * // Преобразование запроса для PostgreSQL
+     * // Преобразование запроса из SQLite в PostgreSQL
      * $this->convert_from_sqlite_to('pgsql');
-     * echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
+     * // echo $this->txt_query; // Результат: SELECT "id", "name" FROM "users" WHERE id = 1
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, содержащее текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::convert_query()
-     *          Метод, из которого вызывается данный метод.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом.
+     * @see    PhotoRigma::Classes::Database::convert_query()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_from_sqlite_to(string $target_db_type): void
     {
@@ -1532,7 +1771,7 @@ class Database implements Database_Interface
                 $this->txt_query
             ),
             default => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                 "Неподдерживаемый тип базы данных | Тип: $target_db_type"
             ),
         };
@@ -1541,59 +1780,85 @@ class Database implements Database_Interface
     /**
      * @brief   Логирует результат анализа SQL-запроса с помощью EXPLAIN или EXPLAIN ANALYZE.
      *
-     * @details Этот метод выполняет анализ SQL-запроса с помощью команды EXPLAIN или EXPLAIN ANALYZE.
-     *          Алгоритм работы:
-     *          1. Определяет тип EXPLAIN в зависимости от СУБД:
-     *             - Для SQLite всегда используется только EXPLAIN.
-     *             - Для MySQL/MariaDB проверяется версия СУБД:
-     *               - Если версия >= 5.7 и это не MariaDB, используется EXPLAIN ANALYZE.
-     *               - В противном случае используется только EXPLAIN.
-     *             - Для PostgreSQL:
-     *               - Для запросов INSERT, UPDATE, DELETE, TRUNCATE используется только EXPLAIN.
-     *               - Для SELECT-запросов используется EXPLAIN ANALYZE.
-     *          2. Выполняет EXPLAIN (или EXPLAIN ANALYZE) с использованием PDO.
-     *          3. Логирует результат анализа вместе с текстом запроса и параметрами:
-     *             - Результат форматируется для удобства чтения.
-     *          4. В случае ошибки при выполнении EXPLAIN также логируется сообщение об ошибке.
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     * @details Этот приватный метод выполняет анализ текущего SQL-запроса, хранящегося в свойстве `$this->txt_query`,
+     *          с помощью команды `EXPLAIN` или `EXPLAIN ANALYZE`, и логирует полученный результат.
      *
+     *          Алгоритм работы:
+     *          1. Определяет тип команды анализа (`EXPLAIN` или `EXPLAIN ANALYZE`) в зависимости от типа текущей
+     *             СУБД (`$this->db_type`), версии СУБД (для MySQL/MariaDB) и типа запроса (WRITE или SELECT для
+     *             PostgreSQL/MySQL).
+     *             - Для SQLite всегда используется только `EXPLAIN`.
+     *             - Для MySQL/MariaDB: `EXPLAIN ANALYZE` используется только для SELECT-запросов на MySQL >= 5.7
+     *               (не MariaDB). В остальных случаях - `EXPLAIN`.
+     *             - Для PostgreSQL: `EXPLAIN ANALYZE` используется для SELECT-запросов, `EXPLAIN` - для WRITE-запросов.
+     *          2. Выполняет команду анализа (`EXPLAIN ...` или `EXPLAIN ANALYZE ...`) с использованием объекта PDO
+     *             (`$this->pdo`) и переданных параметров `$params`.
+     *          3. Извлекает строки результата анализа и форматирует их для удобства чтения (ключ: значение).
+     *          4. Логирует результат анализа, исходный текст запроса (`$this->txt_query`) и переданные параметры
+     *             `$params` с использованием функции `log_in_file()`.
+     *          5. В случае ошибки при определении версии СУБД или выполнении команды анализа, также логируется
+     *             сообщение об ошибке.
+     *
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `execute_query()`, если включена константа `SQL_ANALYZE`.
+     *
+     * @internal
      * @callergraph
      * @callgraph
      *
-     * @param array $params Параметры для подготовленного запроса.
-     *                      Должен быть ассоциативным массивом, где ключи соответствуют плейсхолдерам в запросе.
-     *                      Если параметры отсутствуют, можно передать пустой массив.
-     *                      Пример: ['id' => 1].
+     * @param array $params Ассоциативный массив параметров для подготовленного запроса (такой же, как передается в
+     *                      `execute_query()`).
+     *                      Пример: `[':id' => 1, ':name' => 'John Doe']`.
+     *                      Ключи массива должны соответствовать именам плейсхолдеров в `$this->txt_query`.
+     *                      Если параметры отсутствуют, можно передать пустой массив (`[]`).
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     * @return void Метод ничего не возвращает. Результат анализа логируется.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если тип текущей СУБД (`$this->db_type`) не поддерживается
+     *                                  методом `log_explain` для определения типа команды анализа.
      *                                  Пример сообщения:
-     *                                      Не поддерживаемый тип СУБД | Тип: [db_type]
-     * @throws Exception Выбрасывается, если произошла ошибка при выполнении EXPLAIN (например, синтаксическая ошибка в
-     *                   запросе). Пример сообщения: Ошибка при выполнении EXPLAIN | Запрос: [текст_запроса]
+     *                                  Не поддерживаемый тип СУБД | Тип: [db_type]
+     * @throws Exception                Выбрасывается, если произошла ошибка при получении версии СУБД (для
+     *                                  MySQL/MariaDB) или при выполнении команды EXPLAIN/EXPLAIN ANALYZE (например,
+     *                                  синтаксическая ошибка в запросе на уровне PDO).
+     *                                  В случае выброса исключения, оно перехватывается внутри метода и логируется.
      *
-     * @note    Метод использует PDO для выполнения EXPLAIN и логирует результаты через `log_in_file`.
-     *          Результат анализа форматируется для удобства чтения (ключ: значение).
-     *          При возникновении ошибки логируются текст запроса, параметры и сообщение об ошибке.
+     * @note    Метод использует объект PDO (`$this->pdo`) для выполнения команд анализа и функцию `log_in_file()`
+     *          для записи результатов и ошибок. Результат анализа форматируется для удобства чтения.
+     *          При возникновении ошибки логируются текст запроса, параметры и сообщение об ошибке из пойманного
+     *          исключения.
+     *          Поведение метода зависит от константы `SQL_ANALYZE`.
      *
-     * @warning Убедитесь, что текст запроса (`$this->txt_query`) корректен перед вызовом метода.
-     *          Некорректные запросы могут привести к исключениям.
+     * @warning Убедитесь, что свойство `$this->txt_query` содержит синтаксически корректный SQL-запрос перед вызовом
+     *          метода, чтобы избежать ошибок при выполнении команды анализа.
+     *          Метод предполагает, что соединение с базой данных `$this->pdo` установлено.
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из execute_query()):
      * @code
-     * $this->txt_query = "SELECT * FROM users WHERE id = :id";
-     * $this->log_explain([':id' => 1]);
-     * // Лог: Отчет по анализу с помощью EXPLAIN ANALYZE:
-     * // Запрос: SELECT * FROM users WHERE id = :id
-     * // Параметры: {"id":1}
-     * // EXPLAIN ANALYZE Результат:
-     * // ...
+     * // Предположим:
+     * // $this->txt_query = "SELECT * FROM users WHERE id = :id";
+     * // $this->db_type = 'mysql'; // или 'pgsql'
+     * // $params = [':id' => 1];
+     * // SQL_ANALYZE = true
+     *
+     * $this->log_explain($params);
+     *
+     * // В файл лога будет записан отчет по анализу, содержащий:
+     * // - Использованную команду анализа (EXPLAIN или EXPLAIN ANALYZE)
+     * // - Текст запроса
+     * // - Параметры запроса (в формате JSON)
+     * // - Результат анализа (строки, отформатированные ключ: значение)
      * @endcode
-     * @see     PhotoRigma::Include::log_in_file()
+     * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений в файл.
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *         Свойство, содержащее текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::$pdo
-     *         Объект PDO для подключения к базе данных.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, содержащее текст SQL-запроса для анализа.
+     * @see    PhotoRigma::Classes::Database::$pdo
+     *         Объект PDO, используемый для выполнения команды анализа.
+     * @see    PhotoRigma::Classes::Database::$db_type
+     *         Свойство, определяющее тип используемой СУБД.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Приватный метод, из которого вызывается данный метод (при SQL_ANALYZE=true).
      */
     private function log_explain(array $params): void
     {
@@ -1614,7 +1879,7 @@ class Database implements Database_Interface
             } elseif ($this->db_type === 'mysql') {
                 // Для MySQL или MariaDB проверяем версию и тип СУБД
                 try {
-                    $stmt = $this->pdo->query("SELECT VERSION()");
+                    $stmt = $this->pdo->query('SELECT VERSION()');
                     $version = $stmt->fetchColumn();
 
                     // Проверяем, является ли СУБД MariaDB
@@ -1642,7 +1907,7 @@ class Database implements Database_Interface
                     : 'EXPLAIN ANALYZE'; // С ANALYZE для SELECT
             } else {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
                 );
             }
 
@@ -1664,89 +1929,108 @@ class Database implements Database_Interface
 
             // Логируем результат
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отчет по анализу с помощью $explain: | " . "Запрос: " . $this->txt_query . PHP_EOL . "Параметры: " . (!empty($params) ? json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отчет по анализу с помощью $explain: | " . 'Запрос: ' . $this->txt_query . PHP_EOL . 'Параметры: ' . (!empty($params) ? json_encode(
                     $params,
                     JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
-                ) : "отсутствуют") . PHP_EOL . "$explain Результат:" . PHP_EOL . $explain_result
+                ) : 'отсутствуют') . PHP_EOL . "$explain Результат:" . PHP_EOL . $explain_result
             );
         } catch (Exception $e) {
             // Логируем ошибку
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при выполнении $explain: | " . "Запрос: " . $this->txt_query . PHP_EOL . "Параметры: " . (!empty($params) ? json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при выполнении $explain: | " . 'Запрос: ' . $this->txt_query . PHP_EOL . 'Параметры: ' . (!empty($params) ? json_encode(
                     $params,
                     JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
-                ) : "отсутствуют") . PHP_EOL . "Сообщение об ошибке: {$e->getMessage()}"
+                ) : 'отсутствуют') . PHP_EOL . "Сообщение об ошибке: {$e->getMessage()}"
             );
         }
     }
 
     /**
-     * @brief   Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы.
+     * @brief   Логирует медленные запросы, запросы без использования плейсхолдеров и другие запросы в таблицу логов.
      *
-     * @details Этот метод выполняет логирование SQL-запросов в таблицу логов (`TBL_LOG_QUERY`). Алгоритм работы:
-     *          1. Проверяет, что запрос существует, является строкой и не является запросом к таблице логов.
-     *          2. Нормализует время выполнения запроса (минимальное значение 0).
-     *          3. Обрезает запрос до допустимой длины (например, 65,530 символов для TEXT в MySQL).
-     *          4. Хэширует запрос для проверки на дублирование.
-     *          5. Проверяет значение `$reason` через `match`:
-     *             - Допустимые значения: 'slow' (медленный запрос), 'no_placeholders' (без плейсхолдеров), 'other'
-     *             (другое).
-     *             - Если значение некорректно, используется 'other'.
-     *          6. Проверяет наличие запроса в кэше (`$query_cache`) для оптимизации:
-     *             - Если запроса нет в кэше, проверяет его наличие в базе данных.
-     *          7. Логирует или обновляет запись в таблице логов:
-     *             - Если запрос уже существует, обновляет счетчик использования, время последнего использования и
-     *               максимальное время выполнения.
-     *             - Если запрос не существует, сохраняет его в таблицу логов.
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     * @details Этот приватный метод выполняет логирование информации о SQL-запросах в специализированную таблицу
+     *          логов (`TBL_LOG_QUERY`).
+     *          Алгоритм работы:
+     *          1. Выполняет начальные проверки: убеждается, что `$this->txt_query` является непустой строкой и не
+     *             содержит имени таблицы логов, чтобы избежать рекурсивного логирования.
+     *          2. Нормализует переданное время выполнения `$execution_time_ms`, гарантируя, что оно является
+     *             неотрицательным числом.
+     *          3. Обрезает текст запроса `$this->txt_query` до максимальной длины (`$max_query_length`, по умолчанию
+     *             65530 символов), чтобы соответствовать размеру поля в базе данных (например, TEXT в MySQL),
+     *             добавляя суффикс "..." при обрезке.
+     *          4. Вычисляет MD5-хэш от полного текста запроса (`$this->txt_query`) для последующей идентификации
+     *             дубликатов.
+     *          5. Валидирует переданную причину логирования `$reason`, используя `match` для ограничения допустимых
+     *             значений ('slow', 'no_placeholders', 'other'). Если значение некорректно, используется 'other'.
+     *          6. Проверяет наличие хэша запроса в кэше `$this->query_cache` для оптимизации. Если хэш не найден в
+     *             кэше, выполняется запрос к таблице логов `TBL_LOG_QUERY` для проверки существования записи с таким
+     *             хэшем, и результат сохраняется в кэше.
+     *          7. На основе результата проверки в кэше логирует или обновляет запись в таблице логов:
+     *             - Если запись с таким хэшем уже существует (найдена в кэше/БД), обновляет поля `usage_count`
+     *               (увеличивает на 1), `last_used_at` (устанавливает текущее время) и `execution_time` (обновляет
+     *               только если переданное `$execution_time_ms` больше сохраненного).
+     *             - Если запись не существует, вставляет новую строку с хэшем, обрезанным текстом запроса, причиной
+     *               и временем выполнения.
      *
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Вызывается из метода `execute_query()` при выполнении определенных условий логирования (`SQL_LOG`).
+     *
+     * @internal
      * @callergraph
      *
-     * @param string     $reason            Причина логирования запроса.
-     *                                      Допустимые значения:
-     *                                      - 'slow': Медленный запрос (время выполнения превышает пороговое значение).
-     *                                      - 'no_placeholders': Запрос без использования плейсхолдеров.
-     *                                      - 'other': Другие запросы.
-     *                                      По умолчанию: 'other'.
-     *                                      Пример: 'slow'.
-     * @param float|null $execution_time_ms Время выполнения запроса в миллисекундах.
-     *                                      Должно быть положительным числом или `null`.
-     *                                      Используется только для новых запросов или обновления максимального времени
-     *                                      выполнения.
+     * @param string $reason                Причина логирования запроса. Допустимые значения: 'slow', 'no_placeholders',
+     *                                      'other'. Некорректные значения преобразуются в 'other'. По умолчанию:
+     *                                      'other'. Пример: 'slow'.
+     * @param float|null $execution_time_ms Время выполнения запроса в миллисекундах. Должно быть положительным
+     *                                      числом или `null`. Используется для записи или обновления максимального
+     *                                      времени выполнения в логах. По умолчанию: `null`.
      *                                      Пример: 1200.5.
      *
-     * @throws PDOException Выбрасывается, если произошла ошибка при работе с базой данных (например, проблемы с
-     *                       подключением или выполнением запроса).
-     *                                  Пример сообщения:
-     *                                      Ошибка при выполнении SQL-запроса | Таблица: [TBL_LOG_QUERY]
+     * @return void Метод ничего не возвращает.
      *
-     * @note    Метод использует кэширование (`$query_cache`) для оптимизации проверки существования запросов.
-     *          Запросы хэшируются с помощью `md5()` для предотвращения дублирования записей в таблице логов.
-     *          Слишком длинные запросы обрезаются до 65,530 символов (максимальная длина для типа TEXT в MySQL).
-     *          Для настройки поведения метода используются следующие константы:
-     *          - `TBL_LOG_QUERY`: Имя таблицы для логирования запросов. Например: 'log_queries'.
+     * @throws PDOException Выбрасывается, если произошла ошибка при работе с базой данных в процессе выполнения
+     *                      запросов INSERT или UPDATE к таблице логов `TBL_LOG_QUERY` (например, проблемы с
+     *                      подключением или выполнением запроса).
+     *                      Пример сообщения:
+     *                      Ошибка при работе с таблицей логов запросов | Таблица: [TBL_LOG_QUERY] | Сообщение PDO:
+     *                      [текст ошибки]
      *
-     * @warning Убедитесь, что `$txt_query` содержит корректный SQL-запрос перед вызовом метода.
-     *          Также учтите, что слишком длинные запросы будут обрезаны до 65,530 символов.
+     * @note    Метод активно использует кэширование (`$this->query_cache`) для оптимизации проверки существования
+     *          запросов в базе данных. Запросы хэшируются с помощью `md5()` для идентификации уникальных запросов и
+     *          предотвращения дублирования записей. Длинные запросы обрезаются для соответствия ограничению поля в
+     *          базе данных.
+     *          Поведение метода и целевая таблица определяются константой `TBL_LOG_QUERY`.
      *
-     * Пример вызова метода log_query():
+     * @warning Убедитесь, что константа `TBL_LOG_QUERY` определена и указывает на существующую таблицу с подходящей
+     *          структурой. Также учтите, что слишком длинные запросы будут обрезаны до `$max_query_length` символов
+     *          перед сохранением.
+     *
+     * Пример вызова метода log_query() внутри класса (например, из execute_query()):
      * @code
-     * // Логирование медленного запроса
-     * $this->txt_query = "SELECT * FROM users WHERE id = 1";
-     * $this->log_query('slow', 1200.5);
+     * // Предположим:
+     * // $this->txt_query содержит текст выполненного запроса
+     * // $execution_time_ms содержит время выполнения в мс
+     * // SQL_LOG = true
+     * // TBL_LOG_QUERY определена
      *
-     * // Логирование запроса без плейсхолдеров
-     * $this->txt_query = "SELECT * FROM users WHERE id = 1";
-     * $this->log_query('no_placeholders');
+     * // Логирование медленного запроса (если $execution_time_ms > 200)
+     * if ($execution_time_ms > 200) {
+     *     $this->log_query('slow', $execution_time_ms);
+     * }
+     *
+     * // Логирование запроса без плейсхолдеров (если $params был пуст)
+     * // else if (empty($params)) { // ... применимо, если не был медленным
+     * //     $this->log_query('no_placeholders', $execution_time_ms); // Время выполнения все равно полезно
+     * // }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *         Текущий SQL-запрос.
-     * @see     PhotoRigma::Classes::Database::$pdo
-     *         Объект PDO для подключения к базе данных.
-     * @see     PhotoRigma::Classes::Database::$query_cache
-     *         Кэш для хранения результатов проверки существования запросов.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *         Метод, из которого вызывается данный метод.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, содержащее текст SQL-запроса, который логируется.
+     * @see    PhotoRigma::Classes::Database::$pdo
+     *         Объект PDO, используемый для выполнения запросов к таблице логов.
+     * @see    PhotoRigma::Classes::Database::$query_cache
+     *         Внутреннее свойство, используемое для кэширования результатов проверки существования запросов.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function log_query(string $reason = 'other', ?float $execution_time_ms = null): void
     {
@@ -1780,7 +2064,7 @@ class Database implements Database_Interface
         if (!isset($this->query_cache[$hash])) {
             // Если запроса нет в кэше, проверяем его наличие в базе данных
             $stmt = $this->pdo->prepare(
-                "SELECT id, usage_count, execution_time FROM " . TBL_LOG_QUERY . " WHERE query_hash = :hash"
+                'SELECT id, usage_count, execution_time FROM ' . TBL_LOG_QUERY . ' WHERE query_hash = :hash'
             );
             $stmt->execute([':hash' => $hash]);
             $this->query_cache[$hash] = $stmt->fetch(PDO::FETCH_ASSOC); // Сохраняем результат в кэше
@@ -1795,9 +2079,9 @@ class Database implements Database_Interface
             );
 
             $stmt = $this->pdo->prepare(
-                "UPDATE " . TBL_LOG_QUERY . "
+                'UPDATE ' . TBL_LOG_QUERY . '
             SET usage_count = :usage_count, last_used_at = CURRENT_TIMESTAMP, execution_time = :execution_time
-            WHERE id = :id"
+            WHERE id = :id'
             );
             $stmt->execute([
                 ':usage_count'    => $new_usage_count,
@@ -1807,8 +2091,8 @@ class Database implements Database_Interface
         } else {
             // Если запрос не существует, сохраняем его в таблицу логов
             $stmt = $this->pdo->prepare(
-                "INSERT INTO " . TBL_LOG_QUERY . " (query_hash, query_text, reason, execution_time)
-            VALUES (:hash, :text, :reason, :execution_time)"
+                'INSERT INTO ' . TBL_LOG_QUERY . ' (query_hash, query_text, reason, execution_time)
+            VALUES (:hash, :text, :reason, :execution_time)'
             );
             $stmt->execute([
                 ':hash'           => $hash,
@@ -1820,41 +2104,47 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Форматирует дату в зависимости от типа СУБД через вызов внутреннего метода.
+     * @brief   Формирует SQL-выражение для форматирования даты с учетом специфики используемой СУБД.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _format_date_internal().
-     *          Он передаёт название столбца и формат даты в защищённый метод, который выполняет формирование
-     *          SQL-выражения для форматирования даты с учётом специфики используемой СУБД. Метод предназначен для
-     *          использования клиентским кодом как точка входа для форматирования дат.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_format_date_internal()`.
+     *          Он принимает название столбца с датой и формат даты, а затем вызывает внутренний метод для
+     *          формирования соответствующего SQL-выражения, учитывая специфику используемой СУБД.
+     *          Метод предназначен для использования клиентским кодом для получения SQL-выражений для форматирования
+     *          дат в запросах.
      *
      * @param string $column Название столбца с датой:
      *                       - Должен быть непустой строкой в формате имени столбца таблицы в БД.
      * @param string $format Формат даты:
      *                       - Может быть указан в любом поддерживаемом формате (например, MySQL, PostgreSQL, SQLite).
-     *                       - Текущий формат определяется через свойство `$current_format`.
+     *                       - Преобразование выполняется во внутренней логике в зависимости от типа СУБД.
      *
      * @return string SQL-выражение для форматирования даты.
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается (выбрасывается из внутренней
+     *                                  логики).
      *                                  Пример сообщения:
-     *                                      Не поддерживаемый тип СУБД | Тип: unknown
+     *                                  Не поддерживаемый тип СУБД | Тип: unknown
      *
-     * @note    Этот метод является точкой входа для форматирования дат. Все проверки и обработка выполняются в
-     *          защищённом методе _format_date_internal().
-     *
-     * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
+     * @note    Этот метод является точкой входа для получения SQL-выражений для форматирования даты.
+     *          Преобразование формата даты и выбор специфичной для СУБД функции выполняются в защищённом методе
+     *          `_format_date_internal()`.
+     * @warning Убедитесь, что `$column` (непустая строка) и `$format` содержат корректные значения перед вызовом метода.
      *          Неверный формат может привести к ошибкам при формировании SQL-запроса.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример использования публичного метода для форматирования даты
      * $db = new \PhotoRigma\Classes\Database();
-     * $result = $db->format_date('created_at', '%Y-%m-%d');
-     * echo $result;
-     * // Результат для MySQL: DATE_FORMAT(created_at, '%Y-%m-%d')
+     *
+     * $formattedDateSql = $db->format_date('created_at', '%Y-%m-%d');
+     * // $formattedDateSql будет содержать SQL-выражение, специфичное для текущей СУБД,
+     * // например: DATE_FORMAT(created_at, '%Y-%m-%d') для MySQL
+     *
+     * // Пример использования в SELECT запросе
+     * // $results = $db->select([$db->format_date('timestamp', 'YYYY-MM-DD') . ' as formatted_date'], 'logs', [...]);
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_format_date_internal()
-     *          Защищённый метод, который выполняет основную логику форматирования даты.
+     * @see    PhotoRigma::Classes::Database::_format_date_internal()
+     *         Защищённый метод, выполняющий основную логику формирования SQL-выражения.
      */
     public function format_date(string $column, string $format): string
     {
@@ -1864,15 +2154,16 @@ class Database implements Database_Interface
     /**
      * @brief   Формирует SQL-выражение для форматирования даты с учетом специфики используемой СУБД.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет тип СУБД через свойство `$db_type`.
-     *          2. Для MariaDB (MySQL) преобразует переданный формат `$format` через метод `convert_to_mysql_format`
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Проверяет тип СУБД через свойство `$this->db_type`.
+     *          2. Для MariaDB (MySQL) преобразует переданный формат `$format` через метод `convert_to_mysql_format()`
      *             и использует функцию `DATE_FORMAT`.
-     *          3. Для PostgreSQL преобразует формат через метод `convert_to_postgres_format` и использует функцию
+     *          3. Для PostgreSQL преобразует формат через метод `convert_to_postgres_format()` и использует функцию
      *             `TO_CHAR`. Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
-     *          4. Для SQLite преобразует формат через метод `convert_to_sqlite_format` и использует функцию `strftime`.
-     *             Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
-     *          5. Если тип СУБД не поддерживается, выбрасывает исключение.
+     *          4. Для SQLite преобразует формат через метод `convert_to_sqlite_format()` и использует функцию
+     *             `strftime`. Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
+     *          5. Если тип СУБД не поддерживается, выбрасывает исключение InvalidArgumentException.
+     *
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `format_date()`.
      *
@@ -1883,20 +2174,20 @@ class Database implements Database_Interface
      *                       - Должен быть непустой строкой в формате имени столбца таблицы в БД.
      * @param string $format Формат даты:
      *                       - Может быть указан в любом поддерживаемом формате (например, MySQL, PostgreSQL, SQLite).
-     *                       - Текущий формат определяется через свойство `$current_format`.
+     *                       - Текущий формат определяется через свойство `$this->current_format`.
      *                       - Преобразование выполняется в зависимости от типа СУБД.
      *
      * @return string SQL-выражение для форматирования даты.
      *
-     * @throws InvalidArgumentException Выбрасывается, если тип СУБД не поддерживается.
+     * @throws InvalidArgumentException Выбрасывается, если тип СУБД (`$this->db_type`) не поддерживается.
      *                                  Пример сообщения:
-     *                                      Не поддерживаемый тип СУБД | Тип: unknown
+     *                                  Не поддерживаемый тип СУБД | Тип: unknown
      *
      * @note    Метод использует функции форматирования даты, специфичные для каждой СУБД. Текущий формат хранится в
-     *          свойстве `$current_format`, а список допустимых форматов — в свойстве `$allowed_formats`.
-     *          Для временного изменения текущего формата используется метод `_with_sql_format_internal`.
+     *          свойстве `$this->current_format`, а список допустимых форматов — в свойстве `$this->allowed_formats`.
+     *          Для временного изменения текущего формата используется метод `_with_sql_format_internal()`.
      *
-     * @warning Убедитесь, что `$column` и `$format` содержат корректные значения перед вызовом метода.
+     * @warning Убедитесь, что `$column` (непустая строка) и `$format` содержат корректные значения перед вызовом метода.
      *          Неверный формат может привести к ошибкам при формировании SQL-запроса.
      *
      * Пример вызова метода внутри класса:
@@ -1913,22 +2204,22 @@ class Database implements Database_Interface
      * $this->_format_date_internal('created_at', '%Y-%m-%d');
      * // Результат: strftime('%Y-%m-%d', created_at)
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$db_type
-     *          Тип используемой СУБД.
-     * @see     PhotoRigma::Classes::Database::$current_format
-     *          Текущий формат SQL.
-     * @see     PhotoRigma::Classes::Database::$allowed_formats
-     *          Список допустимых форматов SQL.
-     * @see     PhotoRigma::Classes::Database::convert_to_mysql_format()
-     *          Преобразовывает формат даты в стиль MySQL.
-     * @see     PhotoRigma::Classes::Database::convert_to_postgres_format()
-     *          Преобразовывает формат даты в стиль PostgreSQL.
-     * @see     PhotoRigma::Classes::Database::convert_to_sqlite_format()
-     *          Преобразовывает формат даты в стиль SQLite.
-     * @see     PhotoRigma::Classes::Database::_with_sql_format_internal()
-     *          Временно изменяет формат SQL для выполнения запросов.
-     * @see     PhotoRigma::Classes::Database::format_date()
-     *          Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$db_type
+     *         Тип используемой СУБД.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Текущий формат SQL.
+     * @see    PhotoRigma::Classes::Database::$allowed_formats
+     *         Список допустимых форматов SQL.
+     * @see    PhotoRigma::Classes::Database::convert_to_mysql_format()
+     *         Преобразовывает формат даты в стиль MySQL.
+     * @see    PhotoRigma::Classes::Database::convert_to_postgres_format()
+     *         Преобразовывает формат даты в стиль PostgreSQL.
+     * @see    PhotoRigma::Classes::Database::convert_to_sqlite_format()
+     *         Преобразовывает формат даты в стиль SQLite.
+     * @see    PhotoRigma::Classes::Database::_with_sql_format_internal()
+     *         Временно изменяет формат SQL для выполнения запросов.
+     * @see    PhotoRigma::Classes::Database::format_date()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _format_date_internal(string $column, string $format): string
     {
@@ -1944,15 +2235,80 @@ class Database implements Database_Interface
                 $format
             ) . "', $column)",   // Для SQLite преобразуем формат
             default => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не поддерживаемый тип СУБД | Тип: $this->db_type"
             ),
         };
     }
 
     /**
-     * @param string $format
+     * @brief   Производит преобразование строки формата даты/времени в формат, совместимый с MySQL (`DATE_FORMAT`).
      *
-     * @return string
+     * @details Этот приватный метод преобразует строку формата даты или времени из формата, соответствующего
+     *          текущему формату строки (`$this->current_format`), в формат, совместимый с функцией MySQL
+     *          `DATE_FORMAT()`.
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет, совпадает ли текущий формат строки (`$this->current_format`) с 'mysql'.
+     *             Если форматы совпадают, входная строка `$format` уже считается MySQL-совместимой и возвращается
+     *             без изменений.
+     *          2. Проверяет, существует ли уже преобразованная строка формата в кэше `$this->format_cache` для
+     *             текущего исходного формата (`$this->current_format`) и входной строки `$format`.
+     *             Если найдено в кэше, преобразованное значение возвращается немедленно.
+     *          3. Если формат не 'mysql' и не найден в кэше, определяет карту соответствия символов формата
+     *             для преобразования из `$this->current_format` в MySQL.
+     *             Поддерживаемые исходные форматы: 'pgsql' и 'sqlite'.
+     *          4. Если текущий формат (`$this->current_format`) не является поддерживаемым исходным форматом для
+     *             преобразования в MySQL, выбрасывается исключение InvalidArgumentException.
+     *          5. Использует карту соответствия для преобразования входной строки `$format` с помощью `strtr()`.
+     *          6. Сохраняет результат преобразования в кэше `$this->format_cache` для будущего использования.
+     *          7. Возвращает преобразованную строку формата, совместимую с MySQL `DATE_FORMAT()`.
+     *
+     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `_format_date_internal()` при работе с СУБД MySQL.
+     *
+     * @internal
+     * @callergraph
+     *
+     * @param string $format Строка формата даты/времени в стиле текущего формата строки (`$this->current_format`).
+     *                       Пример: 'YYYY-MM-DD' для формата PostgreSQL или '%Y-%m-%d' для формата SQLite/MySQL.
+     *
+     * @return string Строка формата даты/времени, преобразованная в стиль, совместимый с функцией MySQL
+     *                `DATE_FORMAT ()`. Пример: '%Y-%m-%d'.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
+     *                                  поддерживается методом `convert_to_mysql_format` в качестве исходного формата
+     *                                  для преобразования в MySQL.
+     *                                  Пример сообщения:
+     *                                  Неизвестный формат | Формат: [current_format]
+     *
+     * @note    Метод использует кэширование (`$this->format_cache`) для хранения результатов преобразования форматов
+     *          и избежания повторных вычислений. Используется строковая замена (`strtr()`) на основе
+     *          предопределенных карт соответствия.
+     *          Поведение метода зависит от свойства `$this->current_format`.
+     *
+     * @warning Убедитесь, что свойство `$this->current_format` содержит одно из допустимых значений ('mysql',
+     *          'pgsql', 'sqlite') перед вызовом этого метода.
+     *          Убедитесь, что входная строка `$format` соответствует синтаксису формата, ожидаемому для
+     *          `$this->current_format`. Неподдерживаемый исходный формат приведет к исключению.
+     *
+     * Пример вызова метода внутри класса (например, из _format_date_internal()):
+     * @code
+     * // Предположим:
+     * // $this->current_format = 'pgsql';
+     * // $this->db_type = 'mysql';
+     * // $pgsql_format = 'YYYY-MM-DD HH24:MI:SS';
+     *
+     * $mysql_format = $this->convert_to_mysql_format($pgsql_format);
+     * // $mysql_format будет равен '%Y-%m-%d %H:%i:%s' (взято из кэша или преобразовано)
+     *
+     * // Затем этот формат может быть использован с функцией MySQL DATE_FORMAT:
+     * // DATE_FORMAT(column, '%Y-%m-%d %H:%i:%s')
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::$format_cache
+     *         Внутреннее свойство, используемое для кэширования преобразований форматов.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Свойство, определяющее исходный формат строки для преобразования.
+     * @see    PhotoRigma::Classes::Database::_format_date_internal()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_to_mysql_format(string $format): string
     {
@@ -1985,7 +2341,7 @@ class Database implements Database_Interface
                     '%w' => '%a',   // День недели (0=воскресенье, 1=понедельник, ..., 6=суббота)
                 ],
                 default => throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                     "Неизвестный формат | Формат: $this->current_format"
                 ),
             };
@@ -1999,47 +2355,76 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Преобразует формат даты из стиля MariaDB в стиль PostgreSQL.
+     * @brief   Преобразует формат даты/времени в формат, совместимый с PostgreSQL.
      *
-     * @details Этот метод преобразует формат даты из стиля MariaDB в стиль PostgreSQL. Алгоритм работы:
-     *          1. Проверяет, есть ли уже преобразованный формат в кэше (`$format_cache`).
-     *             - Если формат найден в кэше, он возвращается без дополнительных преобразований.
-     *          2. Если формат отсутствует в кэше, создает карту соответствия между форматами MariaDB и PostgreSQL:
-     *             - Карта соответствия включает ключи (например, '%Y' -> 'YYYY', '%m' -> 'MM').
-     *          3. Преобразует формат с использованием функции `strtr` и сохраняет результат в кэше.
-     *          4. Возвращает преобразованный формат из кэша.
+     * @details Этот приватный метод преобразует строку формата даты или времени из формата, соответствующего
+     *          текущему формату строки (`$this->current_format`), в формат, совместимый с функциями PostgreSQL
+     *          (например, `TO_CHAR`).
+     *
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет, совпадает ли текущий формат строки (`$this->current_format`) с 'pgsql'.
+     *             Если форматы совпадают, входная строка `$format` уже считается PostgreSQL-совместимой и
+     *             возвращается без изменений.
+     *          2. Проверяет, существует ли уже преобразованная строка формата в кэше `$this->format_cache` для
+     *             текущего исходного формата (`$this->current_format`) и входной строки `$format`.
+     *             Если найдено в кэше, преобразованное значение возвращается немедленно.
+     *          3. Если формат не 'pgsql' и не найден в кэше, определяет карту соответствия символов формата
+     *             для преобразования из `$this->current_format` (который может быть 'mysql' или 'sqlite') в PostgreSQL.
+     *          4. Если текущий формат (`$this->current_format`) не является поддерживаемым исходным форматом для
+     *             преобразования в PostgreSQL, выбрасывается исключение InvalidArgumentException.
+     *          5. Использует карту соответствия для преобразования входной строки `$format` с помощью `strtr()`.
+     *          6. Сохраняет результат преобразования в кэше `$this->format_cache` для будущего использования.
+     *          7. Возвращает преобразованную строку формата, совместимую с функциями PostgreSQL.
+     *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `_format_date_internal()` при работе с СУБД PostgreSQL.
      *
+     * @internal
      * @callergraph
      *
-     * @param string $format Формат даты в стиле MariaDB.
-     *                             Должен быть строкой, соответствующей формату MariaDB (например, '%Y-%m-%d').
-     *                             Пример: '%Y-%m-%d %H:%i:%s'.
-     *                             Ограничения: входной формат должен содержать только допустимые символы MariaDB.
+     * @param string $format Строка формата даты/времени в стиле текущего формата строки (`$this->current_format`).
+     *                       Пример: '%Y-%m-%d' для формата MySQL/SQLite или 'YYYY-MM-DD' для формата PostgreSQL (в
+     *                       случае, если current_format уже pgsql).
      *
-     * @return string Формат даты в стиле PostgreSQL.
-     *                Например, 'YYYY-MM-DD HH24:MI:SS'.
+     * @return string Строка формата даты/времени, преобразованная в стиль, совместимый с функциями PostgreSQL
+     *                (например, TO_CHAR).
+     *                Пример: 'YYYY-MM-DD HH24:MI:SS'.
      *
-     * @throws InvalidArgumentException Выбрасывается, если входной формат `$mysql_format` содержит недопустимые символы
-     *                                  или не соответствует спецификации MariaDB.
+     * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
+     *                                  поддерживается методом `convert_to_postgres_format` в качестве исходного
+     *                                  формата для преобразования в PostgreSQL (т.е., не 'mysql' и не 'sqlite').
      *                                  Пример сообщения:
-     *                                      Недопустимый формат даты | Значение: [$mysql_format]
+     *                                  Неизвестный формат | Формат: [current_format]
      *
-     * @note    Метод использует кэширование для оптимизации повторных преобразований.
-     *          Преобразованные форматы хранятся в свойстве `$format_cache`.
+     * @note    Метод использует кэширование (`$this->format_cache`) для хранения результатов преобразования форматов
+     *          и избежания повторных вычислений. Используется строковая замена (`strtr()`) на основе
+     *          предопределенных карт соответствия.
+     *          Поведение метода зависит от свойства `$this->current_format`.
      *
-     * @warning Убедитесь, что входной формат `$mysql_format` соответствует спецификации MariaDB.
-     *          Недопустимые символы или форматы могут привести к исключениям.
+     * @warning Убедитесь, что свойство `$this->current_format` содержит одно из допустимых значений ('mysql',
+     *          'pgsql', 'sqlite') перед вызовом этого метода.
+     *          Убедитесь, что входная строка `$format` соответствует синтаксису формата, ожидаемому для
+     *          `$this->current_format`. Неподдерживаемый исходный формат приведет к исключению.
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из _format_date_internal()):
      * @code
-     * $converted_format = $this->convert_to_postgres_format('%Y-%m-%d');
-     * echo $converted_format; // Результат: YYYY-MM-DD
+     * // Предположим:
+     * // $this->current_format = 'mysql';
+     * // $this->db_type = 'pgsql';
+     * // $mysql_format = '%Y-%m-%d %H:%i:%s';
+     *
+     * $postgres_format = $this->convert_to_postgres_format($mysql_format);
+     * // $postgres_format будет равен 'YYYY-MM-DD HH24:MI:SS' (взято из кэша или преобразовано)
+     *
+     * // Затем этот формат может быть использован с функцией PostgreSQL TO_CHAR:
+     * // TO_CHAR(column, 'YYYY-MM-DD HH24:MI:SS')
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$format_cache
-     *         Свойство класса для кеширования преобразованных форматов.
-     * @see     PhotoRigma::Classes::Database::_format_date_internal()
-     *         Защищённый метод, вызывающий этот метод для преобразования формата даты.
+     * @see    PhotoRigma::Classes::Database::$format_cache
+     *         Внутреннее свойство, используемое для кэширования преобразований форматов.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Свойство, определяющее исходный формат строки для преобразования.
+     * @see    PhotoRigma::Classes::Database::_format_date_internal()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_to_postgres_format(string $format): string
     {
@@ -2072,7 +2457,7 @@ class Database implements Database_Interface
                     '%w' => '',     // День недели не имеет прямого аналога в PostgreSQL
                 ],
                 default => throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                     "Неизвестный формат | Формат: $this->current_format"
                 ),
             };
@@ -2086,47 +2471,79 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Преобразует формат даты из стиля MariaDB в стиль SQLite.
+     * @brief   Преобразует формат даты/времени в формат, совместимый с SQLite (`strftime`).
      *
-     * @details Этот метод преобразует формат даты из стиля MariaDB в стиль SQLite. Алгоритм работы:
-     *          1. Проверяет, есть ли уже преобразованный формат в кэше (`$format_cache`).
-     *             - Если формат найден в кэше, он возвращается без дополнительных преобразований.
-     *          2. Если формат отсутствует в кэше, создает карту соответствия между форматами MariaDB и SQLite:
-     *             - Карта соответствия включает ключи (например, '%Y' -> '%Y', '%i' -> '%M').
-     *          3. Преобразует формат с использованием функции `strtr` и сохраняет результат в кэше.
-     *          4. Возвращает преобразованный формат из кэша.
+     * @details Этот приватный метод преобразует строку формата даты или времени из формата, соответствующего
+     *          текущему формату строки (`$this->current_format`), в формат, совместимый с функцией SQLite `strftime()`.
+     *
+     *          Метод выполняет следующие шаги:
+     *          1. Проверяет, совпадает ли текущий формат строки (`$this->current_format`) с 'sqlite'.
+     *             Если форматы совпадают, входная строка `$format` уже считается SQLite-совместимой и возвращается
+     *             без изменений.
+     *          2. Проверяет, существует ли уже преобразованная строка формата в кэше `$this->format_cache` для
+     *             текущего исходного формата (`$this->current_format`) и входной строки `$format`.
+     *             Если найдено в кэше, преобразованное значение возвращается немедленно.
+     *          3. Если формат не 'sqlite' и не найден в кэше, определяет карту соответствия символов формата
+     *             для преобразования из `$this->current_format` (который может быть 'mysql' или 'pgsql') в SQLite.
+     *          4. Если текущий формат (`$this->current_format`) не является поддерживаемым исходным форматом для
+     *             преобразования в SQLite, выбрасывается исключение InvalidArgumentException.
+     *          5. Использует карту соответствия для преобразования входной строки `$format` с помощью `strtr()`.
+     *          6. Сохраняет результат преобразования в кэше `$this->format_cache` для будущего использования.
+     *          7. Возвращает преобразованную строку формата, совместимую с функцией SQLite `strftime()`.
+     *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
+     *          Вызывается из метода `_format_date_internal()` при работе с СУБД SQLite.
      *
+     * @internal
      * @callergraph
      *
-     * @param string $format Формат даты в стиле MariaDB.
-     *                             Должен быть строкой, соответствующей формату MariaDB (например, '%Y-%m-%d').
-     *                             Пример: '%Y-%m-%d %H:%i:%s'.
-     *                             Ограничения: входной формат должен содержать только допустимые символы MariaDB.
+     * @param string $format Строка формата даты/времени в стиле текущего формата строки (`$this->current_format`).
+     *                       Пример: '%Y-%m-%d' для формата MySQL/SQLite или 'YYYY-MM-DD HH24:MI:SS' для формата
+     *                       PostgreSQL.
      *
-     * @return string Формат даты в стиле SQLite.
-     *                Например, '%Y-%m-%d %H:%M:%S'.
+     * @return string Строка формата даты/времени, преобразованная в стиль, совместимый с функцией SQLite `strftime()`.
+     *                Пример: '%Y-%m-%d %H:%M:%S'.
      *
-     * @throws InvalidArgumentException Выбрасывается, если входной формат `$mysql_format` содержит недопустимые символы
-     *                                  или не соответствует спецификации MariaDB.
+     * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
+     *                                  поддерживается методом `convert_to_sqlite_format` в качестве исходного
+     *                                  формата для преобразования в SQLite (т.е., не 'mysql' и не 'pgsql').
      *                                  Пример сообщения:
-     *                                      Недопустимый формат даты | Значение: [$mysql_format]
+     *                                  Неизвестный формат | Формат: [current_format]
      *
-     * @note    Метод использует кэширование для оптимизации повторных преобразований.
-     *          Преобразованные форматы хранятся в свойстве `$format_cache`.
+     * @note    Метод использует кэширование (`$this->format_cache`) для хранения результатов преобразования форматов
+     *          и избежания повторных вычислений. Используется строковая замена (`strtr()`) на основе
+     *          предопределенных карт соответствия.
+     *          Поведение метода зависит от свойства `$this->current_format`.
      *
-     * @warning Убедитесь, что входной формат `$mysql_format` соответствует спецификации MariaDB.
-     *          Недопустимые символы или форматы могут привести к исключениям.
+     * @warning Убедитесь, что свойство `$this->current_format` содержит одно из допустимых значений ('mysql',
+     *          'pgsql', 'sqlite') перед вызовом этого метода.
+     *          Убедитесь, что входная строка `$format` соответствует синтаксису формата, ожидаемому для
+     *          `$this->current_format`. Неподдерживаемый исходный формат приведет к исключению.
      *
-     * Пример вызова метода внутри класса:
+     * Пример вызова метода внутри класса (например, из _format_date_internal()):
      * @code
-     * $converted_format = $this->convert_to_sqlite_format('%Y-%m-%d');
-     * echo $converted_format; // Результат: %Y-%m-%d
+     * // Предположим:
+     * // $this->current_format = 'mysql';
+     * // $this->db_type = 'sqlite';
+     * // $mysql_format = '%Y-%m-%d %H:%i:%s';
+     *
+     * $sqlite_format = $this->convert_to_sqlite_format($mysql_format);
+     * // $sqlite_format будет равен '%Y-%m-%d %H:%M:%S' (взято из кэша или преобразовано)
+     *
+     * // Предположим:
+     * // $this->current_format = 'pgsql';
+     * // $this->db_type = 'sqlite';
+     * // $pgsql_format = 'YYYY-MM-DD HH24:MI:SS';
+     *
+     * $sqlite_format_from_pgsql = $this->convert_to_sqlite_format($pgsql_format);
+     * // $sqlite_format_from_pgsql будет равен '%Y-%m-%d %H:%M:%S' (взято из кэша или преобразовано)
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$format_cache
-     *         Свойство класса для кеширования преобразованных форматов.
-     * @see     PhotoRigma::Classes::Database::_format_date_internal()
-     *         Защищённый метод, вызывающий этот метод для преобразования формата даты.
+     * @see    PhotoRigma::Classes::Database::$format_cache
+     *         Внутреннее свойство, используемое для кэширования преобразований форматов.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Свойство, определяющее исходный формат строки для преобразования.
+     * @see    PhotoRigma::Classes::Database::_format_date_internal()
+     *         Приватный метод, из которого вызывается данный метод.
      */
     private function convert_to_sqlite_format(string $format): string
     {
@@ -2160,7 +2577,7 @@ class Database implements Database_Interface
                     'Day'  => '',   // Полное название дня недели не поддерживается в SQLite
                 ],
                 default => throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                     "Неизвестный формат | Формат: $this->current_format"
                 ),
             };
@@ -2174,41 +2591,41 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Возвращает количество строк, затронутых последним SQL-запросом, через вызов внутреннего метода.
+     * @brief   Возвращает количество строк, затронутых последним SQL-запросом.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _get_affected_rows_internal().
-     *          Он возвращает количество строк, затронутых последним SQL-запросом, после проверки состояния свойства
-     *          `$aff_rows`. Метод предназначен для использования клиентским кодом как точка входа для получения
-     *          количества затронутых строк.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_get_affected_rows_internal()`.
+     *          Он вызывает внутренний метод для получения значения количества строк, затронутых последним
+     *          выполненным запросом INSERT, UPDATE, DELETE или REPLACE, после соответствующих проверок.
+     *          Метод предназначен для использования клиентским кодом как точка входа для получения информации о
+     *          результатах модифицирующих запросов.
      *
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$aff_rows` не установлено.
-     *                                    Пример сообщения:
-     *                                        Количество затронутых строк не установлено | Причина: Свойство aff_rows
-     *                                        не определено
-     *                                  - Значение свойства `$aff_rows` не является целым числом.
-     *                                    Пример сообщения:
-     *                                        Некорректное значение свойства aff_rows | Ожидалось целое число,
-     *                                        получено: [значение]
+     * @throws InvalidArgumentException Выбрасывается, если количество затронутых строк не установлено
+     *                                  или имеет некорректное значение (выбрасывается из внутренней логики).
+     *                                  Пример сообщения:
+     *                                  Количество затронутых строк не установлено | Причина: Свойство aff_rows
+     *                                  не определено
      *
-     * @note    Этот метод является точкой входа для получения количества затронутых строк. Все проверки и обработка
-     *          выполняются в защищённом методе _get_affected_rows_internal().
-     *
-     * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$aff_rows` как целое число.
+     * @note    Этот метод является точкой входа для получения количества затронутых строк.
+     *          Значение количества строк устанавливается методами выполнения запросов (например,
+     *          `insert()`, `update()`, `delete()`). Внутренняя логика получения значения
+     *          и проверки его корректности выполняется в защищённом методе `_get_affected_rows_internal()`.
+     * @warning Убедитесь, что перед вызовом этого метода был выполнен модифицирующий запрос
+     *          (INSERT, UPDATE, DELETE или REPLACE), чтобы количество затронутых строк было установлено.
      *
      * Пример использования:
      * @code
-     * // Выполняем запрос на удаление данных
-     * $db->delete('users', ['where' => 'status = 0']);
+     * // Предполагается, что перед этим был выполнен INSERT, UPDATE, DELETE или REPLACE запрос
+     * $db = new \PhotoRigma\Classes\Database();
+     * // ... например: $db->update('users', ['status' => 1], ['where' => 'id = 5']);
      *
      * // Получаем количество затронутых строк
-     * echo "Affected rows: " . $db->get_affected_rows();
+     * $affectedRows = $db->get_affected_rows();
+     * echo "Affected rows: " . $affectedRows;
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_get_affected_rows_internal()
-     *          Защищённый метод, который выполняет основную логику получения количества затронутых строк.
+     * @see    PhotoRigma::Classes::Database::_get_affected_rows_internal()
+     *         Защищённый метод, выполняющий основную логику получения количества затронутых строк.
      */
     public function get_affected_rows(): int
     {
@@ -2219,16 +2636,17 @@ class Database implements Database_Interface
      * @brief   Возвращает количество строк, затронутых последним SQL-запросом, после проверки состояния свойства
      *          `$aff_rows`.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет, что свойство `$aff_rows` установлено. Если это не так, выбрасывается исключение.
-     *          2. Проверяет, что значение свойства `$aff_rows` является целым числом. Если это не так, выбрасывается
-     *             исключение.
-     *          3. Возвращает значение свойства `$aff_rows`, которое представляет собой количество строк, затронутых
-     *             последним SQL-запросом.
-     *          Метод только читает значение свойства `$aff_rows` и не выполняет дополнительной логики для его
-     *          обновления. Значение `$aff_rows` должно быть установлено внешними методами, такими как `execute_query`,
-     *          `delete`,
-     *          `update` или `insert`.
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Проверяет, что свойство `$this->aff_rows` установлено. Если это не так, выбрасывается исключение
+     *             InvalidArgumentException.
+     *          2. Проверяет, что значение свойства `$this->aff_rows` является целым числом. Если это не так,
+     *             выбрасывается исключение InvalidArgumentException.
+     *          3. Возвращает значение свойства `$this->aff_rows`, которое представляет собой количество строк,
+     *             затронутых последним SQL-запросом (операциями INSERT, UPDATE, DELETE, REPLACE).
+     *
+     *          Метод только читает значение свойства `$this->aff_rows` и не выполняет дополнительной логики для его
+     *          обновления. Значение `$this->aff_rows` должно быть установлено внешними методами, такими как
+     *          `execute_query()`, `delete()`, `update()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `get_affected_rows()`.
      *
@@ -2238,46 +2656,49 @@ class Database implements Database_Interface
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$aff_rows` не установлено.
+     *                                  - Свойство `$this->aff_rows` не установлено (т.е. не было выполнено запроса,
+     *                                    обновляющего его).
      *                                    Пример сообщения:
-     *                                        Количество затронутых строк не установлено | Причина: Свойство aff_rows
-     *                                        не определено
-     *                                  - Значение свойства `$aff_rows` не является целым числом.
+     *                                    Количество затронутых строк не установлено | Причина: Свойство aff_rows
+     *                                    не определено
+     *                                  - Значение свойства `$this->aff_rows` не является целым числом (указывает на
+     *                                    некорректное состояние).
      *                                    Пример сообщения:
-     *                                        Некорректное значение свойства aff_rows | Ожидалось целое число,
-     *                                        получено: [значение]
+     *                                    Некорректное значение свойства aff_rows | Ожидалось целое число,
+     *                                    получено: [значение]
      *
-     * @warning Метод чувствителен к состоянию свойства `$aff_rows`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$aff_rows` как целое число.
+     * @warning Метод чувствителен к состоянию свойства `$this->aff_rows`. Убедитесь, что перед вызовом метода был
+     *          выполнен запрос (например, INSERT, UPDATE, DELETE), который корректно установил значение
+     *          `$this->aff_rows` как целое число.
      *
      * Пример использования метода _get_affected_rows_internal():
      * @code
-     * // Выполняем запрос на удаление данных
-     * $this->delete('users', ['where' => 'status = 0']);
+     * // Предполагается, что перед этим был выполнен INSERT, UPDATE, DELETE или REPLACE запрос
+     * // ... например: $this->update('users', ['status' => 1], ['where' => 'id = 5']);
      *
      * // Получаем количество затронутых строк
-     * echo "Affected rows: " . $this->_get_affected_rows_internal();
-     * // Примечание: Метод delete обновляет значение свойства $aff_rows.
+     * $affectedRows = $this->_get_affected_rows_internal();
+     * echo "Affected rows: " . $affectedRows;
      * @endcode
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Метод, который обновляет значение `$aff_rows` после выполнения запроса.
-     * @see     PhotoRigma::Classes::Database::delete()
-     *          Метод, который может изменять значение `$aff_rows`.
-     * @see     PhotoRigma::Classes::Database::update()
-     *          Метод, который может изменять значение `$aff_rows`.
-     * @see     PhotoRigma::Classes::Database::insert()
-     *          Метод, который может изменять значение `$aff_rows`.
-     * @see     PhotoRigma::Classes::Database::get_affected_rows()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::$aff_rows
-     *          Свойство, хранящее количество затронутых строк.
+     * @see    PhotoRigma::Classes::Database::$aff_rows
+     *         Свойство, хранящее количество строк, затронутых последним запросом.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Метод нижнего уровня, который обновляет значение `$aff_rows` после выполнения запроса.
+     * @see    PhotoRigma::Classes::Database::delete()
+     *         Метод, который вызывает `execute_query` и, таким образом, может изменять значение `$aff_rows`.
+     * @see    PhotoRigma::Classes::Database::update()
+     *         Метод, который вызывает `execute_query` и, таким образом, может изменять значение `$aff_rows`.
+     * @see    PhotoRigma::Classes::Database::insert()
+     *         Метод, который вызывает `execute_query` и, таким образом, может изменять значение `$aff_rows`.
+     * @see    PhotoRigma::Classes::Database::get_affected_rows()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _get_affected_rows_internal(): int
     {
         // === 1. Валидация состояния ===
         if (!isset($this->aff_rows)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Количество затронутых строк не установлено | Причина: Свойство aff_rows не определено"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Количество затронутых строк не установлено | Причина: Свойство aff_rows не определено'
             );
         }
         // === 2. Возврат значения ===
@@ -2285,41 +2706,41 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Возвращает ID последней вставленной строки через вызов внутреннего метода.
+     * @brief   Возвращает ID последней вставленной строки.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _get_last_insert_id_internal().
-     *          Он возвращает ID последней вставленной строки после проверки состояния свойства `$insert_id`.
-     *          Метод предназначен для использования клиентским кодом как точка входа для получения ID последней
-     *          вставленной строки.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_get_last_insert_id_internal()`.
+     *          Он вызывает внутренний метод для получения значения ID последней вставленной строки
+     *          после соответствующих проверок.
+     *          Метод предназначен для использования клиентским кодом как точка входа для
+     *          получения информации о результатах операций вставки данных.
      *
      * @return int ID последней вставленной строки.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$insert_id` не установлено.
-     *                                    Пример сообщения:
-     *                                        ID последней вставленной строки не установлен | Причина: Свойство
-     *                                        insert_id не определено
-     *                                  - Значение свойства `$insert_id` не является целым числом.
-     *                                    Пример сообщения:
-     *                                        Некорректное значение свойства insert_id | Ожидалось целое число,
-     *                                        получено: [значение]
+     * @throws InvalidArgumentException Выбрасывается, если ID последней вставленной строки не установлено
+     *                                  или имеет некорректное значение (выбрасывается из внутренней логики).
+     *                                  Пример сообщения:
+     *                                  ID последней вставленной строки не установлен | Причина: Свойство
+     *                                  insert_id не определено
      *
-     * @note    Этот метод является точкой входа для получения ID последней вставленной строки. Все проверки и
-     *          обработка выполняются в защищённом методе _get_last_insert_id_internal().
-     *
-     * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$insert_id` как целое число.
+     * @note    Этот метод является точкой входа для получения ID последней вставленной строки.
+     *          Значение ID устанавливается методами выполнения INSERT запросов (например, `insert()`).
+     *          Внутренняя логика получения значения и проверки его корректности выполняется в
+     *          защищённом методе `_get_last_insert_id_internal()`.
+     * @warning Убедитесь, что перед вызовом этого метода был выполнен запрос на вставку данных
+     *          (INSERT), чтобы ID последней вставленной строки было установлено.
      *
      * Пример использования:
      * @code
-     * // Выполняем запрос на вставку данных
-     * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * // Предполагается, что перед этим был выполнен INSERT запрос
+     * $db = new \PhotoRigma\Classes\Database();
+     * // ... например: $db->insert(['name' => 'New User'], 'users');
      *
      * // Получаем ID последней вставленной строки
-     * echo "Last insert ID: " . $db->get_last_insert_id();
+     * $lastInsertId = $db->get_last_insert_id();
+     * echo "Last insert ID: " . $lastInsertId;
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_get_last_insert_id_internal()
-     *          Защищённый метод, который выполняет основную логику получения ID последней вставленной строки.
+     * @see    PhotoRigma::Classes::Database::_get_last_insert_id_internal()
+     *         Защищённый метод, выполняющий основную логику получения ID последней вставленной строки.
      */
     public function get_last_insert_id(): int
     {
@@ -2329,15 +2750,19 @@ class Database implements Database_Interface
     /**
      * @brief   Возвращает ID последней вставленной строки после проверки состояния свойства `$insert_id`.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет, что свойство `$insert_id` установлено. Если это не так, выбрасывается исключение.
-     *          2. Проверяет, что значение свойства `$insert_id` является целым числом. Если это не так, выбрасывается
-     *             исключение.
-     *          3. Возвращает значение свойства `$insert_id`, которое представляет собой ID последней вставленной
-     *          строки. Метод только читает значение свойства `$insert_id` и не выполняет дополнительной логики для его
-     *          обновления. Значение `$insert_id` должно быть установлено внешними методами, такими как `execute_query`
-     *          или `insert`. Этот метод является защищенным и предназначен для использования внутри класса или его
-     *          наследников. Основная логика вызывается через публичный метод-редирект `get_last_insert_id()`.
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Проверяет, что свойство `$this->insert_id` установлено. Если это не так, выбрасывается исключение
+     *             InvalidArgumentException.
+     *          2. Проверяет, что значение свойства `$this->insert_id` является целым числом. Если это не так,
+     *             выбрасывается исключение InvalidArgumentException.
+     *          3. Возвращает значение свойства `$this->insert_id`, которое представляет собой ID последней вставленной
+     *             строки.
+     *
+     *          Метод только читает значение свойства `$this->insert_id` и не выполняет дополнительной логики для его
+     *          обновления. Значение `$this->insert_id` должно быть установлено внешними методами, такими как
+     *          `execute_query()` или `insert()`.
+     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод-редирект `get_last_insert_id()`.
      *
      * @callergraph
      * @callgraph
@@ -2345,42 +2770,46 @@ class Database implements Database_Interface
      * @return int ID последней вставленной строки.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$insert_id` не установлено.
+     *                                  - Свойство `$this->insert_id` не установлено (т.е. не было выполнено запроса,
+     *                                    устанавливающего его).
      *                                    Пример сообщения:
-     *                                        ID последней вставленной строки не установлен | Причина: Свойство
-     *                                        insert_id не определено
-     *                                  - Значение свойства `$insert_id` не является целым числом.
+     *                                    ID последней вставленной строки не установлен | Причина: Свойство
+     *                                    insert_id не определено
+     *                                  - Значение свойства `$this->insert_id` не является целым числом (указывает на
+     *                                    некорректное состояние).
      *                                    Пример сообщения:
-     *                                        Некорректное значение свойства insert_id | Ожидалось целое число,
-     *                                        получено: [значение]
+     *                                    Некорректное значение свойства insert_id | Ожидалось целое число,
+     *                                    получено: [значение]
      *
-     * @warning Метод чувствителен к состоянию свойства `$insert_id`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$insert_id` как целое число.
+     * @warning Метод чувствителен к состоянию свойства `$this->insert_id`. Убедитесь, что перед вызовом метода был
+     *          выполнен запрос (например, INSERT), который корректно установил значение `$this->insert_id` как целое
+     *          число.
      *
      * Пример использования метода _get_last_insert_id_internal():
      * @code
-     * // Выполняем запрос на вставку данных
-     * $this->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * // Предполагается, что перед этим был выполнен INSERT запрос, например:
+     * // $this->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
      *
      * // Получаем ID последней вставленной строки
-     * echo "Last insert ID: " . $this->_get_last_insert_id_internal();
+     * $lastInsertId = $this->_get_last_insert_id_internal();
+     * echo "Last insert ID: " . $lastInsertId;
      * // Примечание: Метод insert обновляет значение свойства $insert_id.
      * @endcode
-     * @see     PhotoRigma::Classes::Database::insert()
-     *          Метод, который устанавливает значение `$insert_id`.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Метод, который обновляет значение `$insert_id` после выполнения запроса.
-     * @see     PhotoRigma::Classes::Database::get_last_insert_id()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::$insert_id
-     *          Свойство, хранящее ID последней вставленной строки.
+     * @see    PhotoRigma::Classes::Database::$insert_id
+     *         Свойство, хранящее ID последней вставленной строки.
+     * @see    PhotoRigma::Classes::Database::insert()
+     *         Метод, который может устанавливать значение `$insert_id`.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Метод нижнего уровня, который может обновлять значение `$insert_id` после выполнения запроса.
+     * @see    PhotoRigma::Classes::Database::get_last_insert_id()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _get_last_insert_id_internal(): int
     {
         // === 1. Валидация состояния ===
         if (!isset($this->insert_id)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | ID последней вставленной строки не установлен | Причина: Свойство insert_id не определено"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ID последней вставленной строки не установлен | Причина: Свойство insert_id не определено'
             );
         }
         // === 2. Возврат значения ===
@@ -2390,63 +2819,82 @@ class Database implements Database_Interface
     /**
      * @brief   Вставляет данные в таблицу через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _insert_internal().
-     *          Он передаёт массив данных, имя таблицы, тип запроса и опции в защищённый метод, который выполняет
-     *          формирование и выполнение SQL-запроса INSERT. Безопасность обеспечивается использованием подготовленных
-     *          выражений с параметрами. Метод предназначен для использования клиентским кодом как точка входа для
-     *          вставки данных.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_insert_internal()`.
+     *          Он передаёт массив данных для вставки, имя таблицы, тип запроса и опции во внутренний метод, который
+     *          выполняет формирование и выполнение SQL-запроса на вставку.
+     *          Метод поддерживает различные типы вставок (`IGNORE`, `REPLACE`, `INTO`).
+     *          Безопасность обеспечивается использованием подготовленных выражений с параметрами.
+     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операций вставки
+     *          данных.
      *
-     * @param array  $insert    Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                          Если передан пустой массив, выбрасывается исключение.
-     * @param string $to_tbl    Имя таблицы, в которую необходимо вставить данные:
-     *                          - Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                          символов.
-     * @param string $type      Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые
-     *                          значения:
-     *                          - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
-     *                          - 'replace': Формирует запрос типа "REPLACE INTO".
-     *                          - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
-     *                          - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     *                          Если указан недопустимый тип, выбрасывается исключение.
-     * @param array  $options   Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                          - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     * @param array  $insert  Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение' или
+     *                        'имя_поля' => ':плейсхолдер'.
+     *                        Если передан пустой массив, выбрасывается исключение.
+     * @param string $to_tbl  Имя таблицы, в которую необходимо вставить данные.
+     *                        Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                        символов.
+     * @param string $type    Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые
+     *                        значения:
+     *                        - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
+     *                        - 'replace': Формирует запрос типа "REPLACE INTO".
+     *                        - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
+     *                        - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
+     *                        Если указан недопустимый тип, выбрасывается исключение InvalidArgumentException.
+     * @param array  $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив
      *                          значений, используемых в запросе (например, [":name" => "John Doe", ":email" =>
      *                          "john@example.com"]).
+     *                          Обязателен для использования с данными для вставки, требующими
+     *                          подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                          Может быть пустым массивом, если параметры не требуются.
+     *                        - where (string|array|false): Условие WHERE. Игнорируется в этом методе.
+     *                        - group (string|false): Группировка GROUP BY. Игнорируется в этом методе.
+     *                        - order (string|false): Сортировка ORDER BY. Игнорируется в этом методе.
+     *                        - limit (int|string|false): Ограничение LIMIT. Игнорируется в этом методе.
      *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой). В случае ошибки
+     *              выбрасывается исключение.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$insert` не является массивом или является пустым массивом.
-     *                                    Пример сообщения:
-     *                                        Данные для вставки не могут быть пустыми | Причина: Пустой массив данных
-     *                                  - `$to_tbl` не является строкой.
-     *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
-     *                                  - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
-     *                                    Пример сообщения:
-     *                                        Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace',
-     *                                        'into'. Получено: '$type'
-     *                                  - `$options` не является массивом.
-     *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                          - `$insert` не является массивом или является пустым массивом.
+     *                            Пример сообщения:
+     *                            Данные для вставки не могут быть пустыми | Причина: Пустой массив данных
+     *                          - `$to_tbl` не является строкой.
+     *                            Пример сообщения:
+     *                            Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                          - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
+     *                            Пример сообщения:
+     *                            Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace',
+     *                            'into'. Получено: '$type'
+     *                          - `$options` не является массивом.
+     *                            Пример сообщения:
+     *                            Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     * @throws Exception        Выбрасывается при ошибках выполнения запроса.
      *
-     * @note    Этот метод является точкой входа для вставки данных. Все проверки и обработка выполняются в
-     *          защищённом методе _insert_internal().
+     * @note    Этот метод является точкой входа для выполнения операций вставки данных.
+     *          Все проверки и основная логика выполняются в защищённом методе `_insert_internal()`.
+     *          Ключи массива `$options` (`where`, `group`, `order`, `limit`) игнорируются в этом методе.
      *
-     * @warning Метод чувствителен к корректности входных данных. Убедитесь, что массив `$insert` не пустой и содержит
-     *          корректные данные. Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace',
-     *          'into'. Использование параметров `params` для подготовленных выражений является обязательным для защиты
-     *          от SQL-инъекций и обеспечения совместимости с различными СУБД.
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
+     *          привести к выбросу исключения. Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
+     *          Параметр `$type` должен быть одним из допустимых значений: '', 'ignore', 'replace', 'into'.
+     *          Использование параметров `params` для подготовленных выражений является обязательным для защиты от
+     *          SQL-инъекций и обеспечения совместимости с различными СУБД.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример безопасного использования публичного метода INSERT
      * $db = new \PhotoRigma\Classes\Database();
-     * $db->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     *
+     * $db->insert(
+     *     ['name' => ':name', 'email' => ':email'],
+     *     'users',
+     *     '', // или 'ignore', 'replace', 'into'
+     *     ['params' => [':name' => 'John Doe', ':email' => 'john@example.com']]
+     * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_insert_internal()
-     *          Защищённый метод, который выполняет основную логику формирования и выполнения SQL-запроса INSERT.
+     * @see    PhotoRigma::Classes::Database::_insert_internal()
+     *         Защищённый метод, выполняющий основную логику вставки данных.
      */
     public function insert(array $insert, string $to_tbl, string $type = '', array $options = []): bool
     {
@@ -2457,9 +2905,8 @@ class Database implements Database_Interface
      * @brief   Формирует SQL-запрос на вставку данных в таблицу, проверяет входные данные, обрабатывает различные типы
      *          запросов, сохраняет текст запроса в свойстве `$txt_query` и выполняет его.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет типы входных данных: `$insert` (ассоциативный массив), `$to_tbl` (строка), `$type`
-     *          (строка),
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Валидация входных данных: `$insert` (ассоциативный массив), `$to_tbl` (строка), `$type` (строка),
      *             `$options` (массив).
      *          2. Проверяет, что массив `$insert` не пустой. Если массив пустой, выбрасывается исключение.
      *          3. Нормализует параметр `$type`, приводя его к нижнему регистру, и проверяет на допустимые значения:
@@ -2469,10 +2916,10 @@ class Database implements Database_Interface
      *             - `'replace'`: Формирует запрос типа "REPLACE INTO".
      *             - `'into'` или пустая строка (`''`): Формирует запрос типа "INSERT INTO" (по умолчанию).
      *          5. Формирует базовый SQL-запрос INSERT с использованием преобразованных данных и сохраняет его в
-     *          свойстве
-     *             `$txt_query`.
-     *          6. Выполняет сформированный запрос через метод `execute_query`, передавая параметры `params` для
-     *             подготовленного выражения.
+     *              свойстве `$txt_query`.
+     *          6. Выполняет сформированный запрос через метод `execute_query`, передавая параметры `params` из
+     *             `$options` для подготовленного выражения.
+     *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
      *          обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
@@ -2481,43 +2928,49 @@ class Database implements Database_Interface
      * @callergraph
      * @callgraph
      *
-     * @param array  $insert    Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение'.
-     *                          Если передан пустой массив, выбрасывается исключение.
-     * @param string $to_tbl    Имя таблицы, в которую необходимо вставить данные.
-     *                          Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                          символов.
-     * @param string $type      Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые
-     *                          значения:
-     *                          - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
-     *                          - 'replace': Формирует запрос типа "REPLACE INTO".
-     *                          - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
-     *                          - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
-     *                          Если указан недопустимый тип, выбрасывается исключение.
-     * @param array  $options   Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                          - params (array): Параметры для подготовленного выражения. Ассоциативный массив
+     * @param array  $insert  Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение' или
+     *                        'имя_поля' => ':плейсхолдер'.
+     *                        Если передан пустой массив, выбрасывается исключение.
+     * @param string $to_tbl  Имя таблицы, в которую необходимо вставить данные.
+     *                        Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                        символов.
+     * @param string $type    Тип запроса (необязательно). Определяет тип SQL-запроса на вставку. Допустимые
+     *                        значения:
+     *                        - 'ignore': Формирует запрос типа "INSERT IGNORE INTO".
+     *                        - 'replace': Формирует запрос типа "REPLACE INTO".
+     *                        - 'into': Формирует запрос типа "INSERT INTO" (явное указание).
+     *                        - '' (пустая строка): Формирует запрос типа "INSERT INTO" (по умолчанию).
+     *                        Если указан недопустимый тип, выбрасывается исключение InvalidArgumentException.
+     * @param array  $options Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив
      *                          значений, используемых в запросе (например, [":name" => "John Doe", ":email" =>
      *                          "john@example.com"]).
-     *                          Использование параметров `params` является обязательным для подготовленных выражений,
-     *                          так как это обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД.
+     *                          Обязателен для использования с данными для вставки, требующими
+     *                          подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                          Может быть пустым массивом, если параметры не требуются.
+     *                        - where (string|array|false): Условие WHERE. Игнорируется в этом методе.
+     *                        - group (string|false): Группировка GROUP BY. Игнорируется в этом методе.
+     *                        - order (string|false): Сортировка ORDER BY. Игнорируется в этом методе.
+     *                        - limit (int|string|false): Ограничение LIMIT. Игнорируется в этом методе.
      *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
-     *              В случае ошибки выбрасывается исключение.
+     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой). В случае ошибки
+     *              выбрасывается исключение.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$insert` не является массивом или является пустым массивом.
-     *                                    Пример сообщения:
-     *                                        Данные для вставки не могут быть пустыми | Причина: Пустой массив данных
-     *                                  - `$to_tbl` не является строкой.
-     *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
-     *                                  - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
-     *                                    Пример сообщения:
-     *                                        Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace',
-     *                                        'into'. Получено: '$type'
-     *                                  - `$options` не является массивом.
-     *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                          - `$insert` не является массивом или является пустым массивом.
+     *                            Пример сообщения:
+     *                            Данные для вставки не могут быть пустыми | Причина: Пустой массив данных
+     *                          - `$to_tbl` не является строкой.
+     *                            Пример сообщения:
+     *                            Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                          - `$type` содержит недопустимое значение (не '', 'ignore', 'replace', 'into').
+     *                            Пример сообщения:
+     *                            Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace',
+     *                            'into'. Получено: '$type'
+     *                          - `$options` не является массивом.
+     *                            Пример сообщения:
+     *                            Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     * @throws Exception        Выбрасывается при ошибках выполнения запроса.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
      *          привести к выбросу исключения. Убедитесь, что массив `$insert` не пустой и содержит корректные данные.
@@ -2525,6 +2978,7 @@ class Database implements Database_Interface
      *          Использование параметров `params` для подготовленных выражений является обязательным для защиты от
      *          SQL-инъекций и обеспечения совместимости с различными СУБД. Игнорирование этого правила может привести
      *          к уязвимостям безопасности и неправильной работе с базой данных.
+     *          Другие ключи массива `$options` (`where`, `group`, `order`, `limit`) игнорируются в этом методе.
      *
      * Пример использования метода _insert_internal():
      * @code
@@ -2536,19 +2990,19 @@ class Database implements Database_Interface
      *     ['params' => [':name' => 'John Doe', ':email' => 'john@example.com']]
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::insert()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Выполняет SQL-запрос.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, в которое помещается текст SQL-запроса.
+     * @see    PhotoRigma::Classes::Database::insert()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Выполняет SQL-запрос.
      */
     protected function _insert_internal(array $insert, string $to_tbl, string $type = '', array $options = []): bool
     {
         // === 1. Валидация аргументов ===
         if (empty($insert)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Данные для вставки не могут быть пустыми | Причина: Пустой массив данных"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Данные для вставки не могут быть пустыми | Причина: Пустой массив данных'
             );
         }
         // Нормализация $type (приведение к нижнему регистру)
@@ -2556,7 +3010,7 @@ class Database implements Database_Interface
         // Проверка допустимых значений для $type
         if (!in_array($type, ['', 'ignore', 'replace', 'into'], true)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace', 'into'. Получено: '$type'"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый тип вставки | Разрешённые значения: '', 'ignore', 'replace', 'into'. Получено: '$type'"
             );
         }
 
@@ -2583,71 +3037,85 @@ class Database implements Database_Interface
     /**
      * @brief   Выполняет SQL-запрос с использованием JOIN через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _join_internal().
-     *          Он передаёт список полей, основную таблицу, массив JOIN-операций и опции в защищённый метод, который
-     *          выполняет формирование и выполнение SQL-запроса с использованием JOIN. Безопасность обеспечивается
-     *          использованием подготовленных выражений с параметрами. Метод предназначен для использования клиентским
-     *          кодом как точка входа для выполнения запросов с JOIN.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_join_internal()`.
+     *          Он передаёт список полей, основную таблицу, массив JOIN-операций и опции во внутренний метод, который
+     *          выполняет формирование и выполнение SQL-запроса с использованием JOIN.
+     *          Безопасность обеспечивается использованием подготовленных выражений с параметрами.
+     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения запросов с JOIN.
      *
-     * @param string|array $select         Список полей для выборки:
-     *                                     - Может быть строкой (имя одного поля) или массивом (список полей).
-     *                                     - Если передан массив, он преобразуется в строку с разделителем `,`.
-     *                                     Пример: "id", ["id", "name"].
-     * @param string       $from_tbl       Имя основной таблицы, из которой начинается выборка:
-     *                                     - Должно быть строкой, содержащей только допустимые имена таблиц без
-     *                                     специальных символов.
-     *                                     - Ограничения: строка должна быть непустой.
-     * @param array        $join           Массив описаний JOIN-операций:
-     *                                     - Каждый элемент массива должен содержать ключи:
-     *                                     - table (string): Имя таблицы для JOIN.
-     *                                     - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). По
-     *                                     умолчанию: INNER.
-     *                                     - on (string): Условие для JOIN.
-     *                                     - Ограничения: массив не может быть пустым.
-     *                                     Пример: [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id =
-     *                                     orders.user_id']].
-     * @param array        $options        Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                     - where (string|array): Условие WHERE.
-     *                                     - group (string): Группировка GROUP BY.
-     *                                     - order (string): Сортировка ORDER BY.
-     *                                     - limit (int|string): Ограничение LIMIT.
-     *                                     - params (array): Параметры для подготовленного выражения.
-     *                                     Использование параметров `params` является обязательным для защиты от
-     *                                     SQL-инъекций.
+     * @param string|array $select   Список полей для выборки. Может быть строкой (имя одного поля) или массивом
+     *                                (список полей). Если передан массив, он преобразуется в строку с разделителем
+     *                                `,`. Пример: "id", ["id", "name"]. Ограничения: массив не может быть пустым.
+     * @param string       $from_tbl Имя основной таблицы, из которой начинается выборка.
+     *                                Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                                символов. Ограничения: строка должна быть непустой.
+     * @param array        $join     Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие
+     *                                ключи:
+     *                                - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только
+     *                                  допустимые имена таблиц.
+     *                                - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не
+     *                                  указан, используется INNER по умолчанию.
+     *                                - on (string): Условие для JOIN. Должно быть строкой с допустимым условием
+     *                                  сравнения полей. Если условие отсутствует, выбрасывается исключение.
+     *                                Пример:
+     *                                [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
+     *                                Ограничения: массив не может быть пустым.
+     * @param array        $options  Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                                - where (string|array|false): Условие WHERE.
+     *                                  * string - используется как есть.
+     *                                  * array - преобразуется в SQL. Поддерживает простые условия
+     *                                    (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                                    `'NOT' => [...]`).
+     *                                  * false - игнорируется.
+     *                                - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                                  Должна быть строкой.
+     *                                - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                                  Должна быть строкой.
+     *                                - limit (int|string|false): Ограничение LIMIT.
+     *                                  * int - прямое значение.
+     *                                  * string - формат "OFFSET,COUNT".
+     *                                  * false - игнорируется.
+     *                                - params (array): Ассоциативный массив параметров
+     *                                  ([":имя" => значение]).
+     *                                  Обязателен для использования с условиями `where` и другими частями запроса,
+     *                                  требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                                  Может быть пустым массивом, если параметры не требуются.
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
      * @throws InvalidArgumentException Выбрасывается, если:
      *                                  - `$from_tbl` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                                    Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
      *                                  - `$join` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра join | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра join | Ожидался массив, получено: [тип]
      *                                  - `$select` не является строкой или массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра select | Ожидалась строка или массив,
-     *                                        получено: [тип]
+     *                                    Недопустимый тип параметра select | Ожидалась строка или массив,
+     *                                    получено: [тип]
      *                                  - Отсутствует имя таблицы (`table`) или условие (`on`) в описании JOIN.
      *                                    Пример сообщения:
-     *                                        Отсутствует имя таблицы или условие для JOIN | Проверьте структуру
-     *                                        массива $join
+     *                                    Отсутствует имя таблицы или условие для JOIN | Проверьте структуру
+     *                                    массива $join
      *                                  - `$options` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                                    Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     * @throws Exception               Выбрасывается при ошибках выполнения запроса.
      *
-     * @note    Этот метод является точкой входа для выполнения запросов с JOIN. Все проверки и обработка выполняются в
-     *          защищённом методе _join_internal().
+     * @note    Этот метод является точкой входа для выполнения запросов с JOIN.
+     *          Все проверки и основная логика выполняются в защищённом методе `_join_internal()`.
      *
-     * @warning Метод чувствителен к корректности входных данных. Убедитесь, что массив `$join` не пустой и содержит
-     *          корректные данные. Использование параметров `params` для подготовленных выражений является обязательным
-     *          для защиты от SQL-инъекций и обеспечения совместимости с различными СУБД.
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
+     *          привести к выбросу исключения. Убедитесь, что массив `$join` не пустой и содержит корректные данные.
+     *          Использование параметров `params` для подготовленных выражений является обязательным для защиты от
+     *          SQL-инъекций и обеспечения совместимости с различными СУБД.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример безопасного использования публичного метода JOIN
      * $db = new \PhotoRigma\Classes\Database();
+     *
      * $db->join(
      *     ['users.id', 'users.name', 'orders.order_date'],
      *     'users',
@@ -2660,8 +3128,8 @@ class Database implements Database_Interface
      *     ]
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_join_internal()
-     *          Защищённый метод, который выполняет основную логику формирования и выполнения SQL-запроса с JOIN.
+     * @see    PhotoRigma::Classes::Database::_join_internal()
+     *         Защищённый метод, выполняющий основную логику формирования и выполнения SQL-запроса с JOIN.
      */
     public function join(string|array $select, string $from_tbl, array $join, array $options = []): bool
     {
@@ -2687,67 +3155,75 @@ class Database implements Database_Interface
      *          6. Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          7. Сохраняет сформированный запрос в свойстве `$txt_query`.
      *          8. Выполняет запрос через метод `execute_query`, передавая параметры `params` для подготовленного
-     *             выражения. Использование параметров `params` является обязательным для подготовленных выражений, так
-     *             как это обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД. Этот метод является
-     *             защищенным и предназначен для использования внутри класса или его наследников. Основная логика
-     *             вызывается через публичный метод-редирект `join()`.
+     *             выражения.
+     *
+     *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
+     *          обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД. Этот метод является
+     *          защищенным и предназначен для использования внутри класса или его наследников. Основная логика
+     *          вызывается через публичный метод-редирект `join()`.
      *
      * @callergraph
      * @callgraph
      *
-     * @param string|array $select     Список полей для выборки. Может быть строкой (имя одного поля) или массивом
-     *                                 (список полей). Если передан массив, он преобразуется в строку с разделителем
-     *                                 `,`. Пример: "id", ["id", "name"]. Ограничения: массив не может быть пустым.
-     * @param string       $from_tbl   Имя основной таблицы, из которой начинается выборка.
-     *                                 Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                                 символов. Ограничения: строка должна быть непустой.
-     * @param array        $join       Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие
-     *                                 ключи:
-     *                                 - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только
-     *                                 допустимые имена таблиц.
-     *                                 - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не
-     *                                 указан, используется INNER по умолчанию.
-     *                                 - on (string): Условие для JOIN. Должно быть строкой с допустимым условием
-     *                                 сравнения полей. Если условие отсутствует, выбрасывается исключение. Пример:
-     *                                 [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
-     *                                 Ограничения: массив не может быть пустым.
-     * @param array        $options    Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                 - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                 1") или ассоциативным массивом (например, ["id" => 1, "status" => "active"]).
-     *                                 - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                 (например, "category_id").
-     *                                 - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                 направлением (например, "created_at DESC").
-     *                                 - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                 строкой с диапазоном (например, "0, 10").
-     *                                 - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                 значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                 "active"]).
-     *                                 Использование параметров `params` является обязательным для подготовленных
-     *                                 выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                 различными СУБД.
+     * @param string|array $select   Список полей для выборки. Может быть строкой (имя одного поля) или массивом
+     *                                (список полей). Если передан массив, он преобразуется в строку с разделителем
+     *                                `,`. Пример: "id", ["id", "name"]. Ограничения: массив не может быть пустым.
+     * @param string       $from_tbl Имя основной таблицы, из которой начинается выборка.
+     *                                Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                                символов. Ограничения: строка должна быть непустой.
+     * @param array        $join     Массив описаний JOIN-операций. Каждый элемент массива должен содержать следующие
+     *                                ключи:
+     *                                - table (string): Имя таблицы для JOIN. Должно быть строкой, содержащей только
+     *                                  допустимые имена таблиц.
+     *                                - type (string, optional): Тип JOIN (например, INNER, LEFT, RIGHT). Если тип не
+     *                                  указан, используется INNER по умолчанию.
+     *                                - on (string): Условие для JOIN. Должно быть строкой с допустимым условием
+     *                                  сравнения полей. Если условие отсутствует, выбрасывается исключение.
+     *                                Пример:
+     *                                [['type' => 'INNER', 'table' => 'orders', 'on' => 'users.id = orders.user_id']].
+     *                                Ограничения: массив не может быть пустым.
+     * @param array        $options  Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                                - where (string|array|false): Условие WHERE.
+     *                                  * string - используется как есть.
+     *                                  * array - преобразуется в SQL. Поддерживает простые условия
+     *                                    (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                                    `'NOT' => [...]`).
+     *                                  * false - игнорируется.
+     *                                - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                                  Должна быть строкой.
+     *                                - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                                  Должна быть строкой.
+     *                                - limit (int|string|false): Ограничение LIMIT.
+     *                                  * int - прямое значение.
+     *                                  * string - формат "OFFSET,COUNT".
+     *                                  * false - игнорируется.
+     *                                - params (array): Ассоциативный массив параметров
+     *                                  ([":имя" => значение]).
+     *                                  Обязателен для использования с условиями `where` и другими частями запроса,
+     *                                  требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                                  Может быть пустым массивом, если параметры не требуются.
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
      * @throws InvalidArgumentException Выбрасывается, если:
      *                                  - `$from_tbl` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                                    Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
      *                                  - `$join` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра join | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра join | Ожидался массив, получено: [тип]
      *                                  - `$select` не является строкой или массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра select | Ожидалась строка или массив,
-     *                                        получено: [тип]
+     *                                    Недопустимый тип параметра select | Ожидалась строка или массив,
+     *                                    получено: [тип]
      *                                  - Отсутствует имя таблицы (`table`) или условие (`on`) в описании JOIN.
      *                                    Пример сообщения:
-     *                                        Отсутствует имя таблицы или условие для JOIN | Проверьте структуру
-     *                                        массива $join
+     *                                    Отсутствует имя таблицы или условие для JOIN | Проверьте структуру
+     *                                    массива $join
      *                                  - `$options` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                                    Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     * @throws Exception               Выбрасывается при ошибках выполнения запроса.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
      *          привести к выбросу исключения. Убедитесь, что массив `$join` не пустой и содержит корректные данные.
@@ -2770,14 +3246,14 @@ class Database implements Database_Interface
      *     ]
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Выполняет SQL-запрос.
-     * @see     PhotoRigma::Classes::Database::build_conditions()
-     *          Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, в которое помещается текст SQL-запроса.
+     * @see    PhotoRigma::Classes::Database::join()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Выполняет SQL-запрос.
+     * @see    PhotoRigma::Classes::Database::build_conditions()
+     *         Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
      */
     protected function _join_internal(string|array $select, string $from_tbl, array $join, array $options = []): bool
     {
@@ -2792,12 +3268,12 @@ class Database implements Database_Interface
         foreach ($join as $j) {
             if (empty($j['table'])) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует имя таблицы в описании JOIN | Проверьте структуру массива \$join"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует имя таблицы в описании JOIN | Проверьте структуру массива \$join"
                 );
             }
             if (empty($j['on'])) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует условие 'on' для таблицы '{$j['table']}' в описании JOIN | Проверьте структуру массива \$join"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Отсутствует условие 'on' для таблицы '{$j['table']}' в описании JOIN | Проверьте структуру массива \$join"
                 );
             }
             $table = $j['table'];
@@ -2818,38 +3294,40 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Извлекает все строки результата запроса через вызов внутреннего метода.
+     * @brief   Извлекает все строки результата из подготовленного выражения.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _res_arr_internal().
-     *          Он извлекает все строки результата из подготовленного выражения, хранящегося в свойстве `$res_query`, и
-     *          возвращает их как массив. Безопасность обеспечивается проверкой типа свойства `$res_query`. Метод
-     *          предназначен для использования клиентским кодом как точка входа для получения результатов запроса.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_res_arr_internal()`.
+     *          Он вызывает внутренний метод для извлечения всех строк результата последнего выполненного
+     *          запроса из свойства `$res_query` в виде массива ассоциативных массивов, после соответствующих проверок.
+     *          Метод предназначен для использования клиентским кодом как точка входа для
+     *          получения всех результатов запроса SELECT.
      *
-     * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они
-     *                     доступны. Если результатов нет, возвращает `false`.
+     * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если
+     *                     они доступны. Если результатов нет (запрос не вернул строк), возвращает `false`.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$res_query` не установлено.
-     *                                    Пример сообщения:
-     *                                        Результат запроса недоступен | Причина: Свойство $res_query не
-     *                                        установлено
-     *                                  - Свойство `$res_query` не является объектом типа `PDOStatement`.
-     *                                    Пример сообщения:
-     *                                        Недопустимый тип результата запроса | Ожидался объект PDOStatement,
-     *                                        получено: [тип]
+     * @throws InvalidArgumentException Выбрасывается, если результат запроса недоступен или имеет некорректный тип
+     *                                  (выбрасывается из внутренней логики).
+     *                                  Пример сообщения:
+     *                                  Результат запроса недоступен | Причина: Свойство $res_query не
+     *                                  установлено
      *
-     * @note    Этот метод является точкой входа для извлечения результатов запроса. Все проверки и обработка
-     *          выполняются в защищённом методе _res_arr_internal().
-     *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$res_query` как объект `PDOStatement`.
+     * @note    Этот метод является точкой входа для получения всех строк результата запроса.
+     *          Результат запроса (объект PDOStatement в свойстве `$res_query`) устанавливается методом выполнения
+     *          запроса (например, `execute_query()`). Внутренняя логика получения данных и проверки их корректности
+     *          выполняется в защищённом методе `_res_arr_internal()`.
+     * @warning Убедитесь, что перед вызовом этого метода был успешно выполнен запрос (например, SELECT), который
+     *          установил доступный для чтения результат (`$res_query`).
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * // Предполагается, что перед этим был выполнен SELECT запрос
+     * $db = new \PhotoRigma\Classes\Database();
+     * // ... например: $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     *
+     * // Получаем все строки результата в виде массива
      * $results = $db->res_arr();
-     * if ($results) {
+     *
+     * if ($results !== false) {
      *     foreach ($results as $row) {
      *         echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      *     }
@@ -2857,8 +3335,8 @@ class Database implements Database_Interface
      *     echo "No results found.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_res_arr_internal()
-     *          Защищённый метод, который выполняет основную логику извлечения результатов запроса.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Защищённый метод, выполняющий основную логику извлечения всех строк результата.
      */
     public function res_arr(): array|false
     {
@@ -2869,14 +3347,17 @@ class Database implements Database_Interface
      * @brief   Извлекает все строки результата из подготовленного выражения, хранящегося в свойстве `$res_query`, и
      *          возвращает их как массив.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет, что свойство `$res_query` установлено и является объектом типа `PDOStatement`. Если это
-     *          не
-     *             так, выбрасывается исключение.
-     *          2. Использует метод `fetchAll(PDO::FETCH_ASSOC)` для извлечения всех строк результата в виде массива
-     *             ассоциативных массивов.
-     *          3. Если результатов нет (метод `fetchAll` возвращает пустой массив), явно возвращается `false`.
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Проверяет, что свойство `$this->res_query` установлено и является объектом типа `PDOStatement`.
+     *             Если это не так, выбрасывается исключение InvalidArgumentException.
+     *          2. Использует метод `fetchAll(PDO::FETCH_ASSOC)` для извлечения всех строк результата из
+     *             `$this->res_query` в виде массива ассоциативных массивов.
+     *          3. Если результатов нет (метод `fetchAll()` возвращает пустой массив), явно возвращается `false`.
      *          4. В противном случае возвращается массив, содержащий все строки результата.
+     *
+     *          Метод только читает значение свойства `$this->res_query` и не выполняет дополнительной логики для его
+     *          обновления. Значение `$this->res_query` должно быть установлено внешними методами, такими как
+     *          `execute_query()`, `delete()`, `update()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `res_arr()`.
      *
@@ -2884,27 +3365,33 @@ class Database implements Database_Interface
      * @callgraph
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они
-     *                     доступны. Если результатов нет, возвращает `false`.
+     *                     доступны. Если результатов нет (запрос не вернул строк), возвращает `false`.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$res_query` не установлено.
+     *                                  - Свойство `$this->res_query` не установлено (т.е. не был выполнен запрос,
+     *                                    устанавливающий его).
      *                                    Пример сообщения:
-     *                                        Результат запроса недоступен | Причина: Свойство $res_query не
-     *                                        установлено
-     *                                  - Свойство `$res_query` не является объектом типа `PDOStatement`.
+     *                                    Результат запроса недоступен | Причина: Свойство $res_query не
+     *                                    установлено
+     *                                  - Свойство `$this->res_query` не является объектом типа `PDOStatement`
+     *                                    (указывает на некорректное состояние).
      *                                    Пример сообщения:
-     *                                        Недопустимый тип результата запроса | Ожидался объект PDOStatement,
-     *                                        получено: [тип]
+     *                                    Недопустимый тип результата запроса | Ожидался объект PDOStatement,
+     *                                    получено: [тип]
      *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$res_query` как объект `PDOStatement`.
+     * @warning Метод чувствителен к состоянию свойства `$this->res_query`. Убедитесь, что перед вызовом метода был
+     *          выполнен запрос (например, SELECT), который корректно установил значение `$this->res_query` как
+     *          объект `PDOStatement`.
      *
      * Пример использования метода _res_arr_internal():
      * @code
-     * // Предполагается, что запрос уже выполнен и `$res_query` установлен
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * // Предполагается, что перед этим был выполнен SELECT запрос, например:
+     * // $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     *
+     * // Получаем все строки результата в виде массива
      * $results = $this->_res_arr_internal();
-     * if ($results) {
+     *
+     * if ($results !== false) {
      *     foreach ($results as $row) {
      *         echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      *     }
@@ -2912,24 +3399,24 @@ class Database implements Database_Interface
      *     echo "No results found.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$res_query
-     *          Свойство, хранящее результат подготовленного выражения.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Метод, который устанавливает значение `$res_query`.
-     * @see     PhotoRigma::Classes::Database::select()
-     *          Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *          Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с
-     *          использованием JOIN.
-     * @see     PhotoRigma::Classes::Database::res_arr()
-     *          Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$res_query
+     *         Свойство, хранящее результат подготовленного выражения (объект PDOStatement).
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Метод нижнего уровня, который устанавливает значение `$res_query` после выполнения запроса.
+     * @see    PhotoRigma::Classes::Database::select()
+     *         Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::join()
+     *         Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с
+     *         использованием JOIN.
+     * @see    PhotoRigma::Classes::Database::res_arr()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _res_arr_internal(): array|false
     {
         // === 1. Валидация состояния запроса ===
         if (!isset($this->res_query) || !($this->res_query instanceof PDOStatement)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement'
             );
         }
 
@@ -2942,42 +3429,43 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Извлекает одну строку результата запроса через вызов внутреннего метода.
+     * @brief   Извлекает одну строку результата из подготовленного выражения.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _res_row_internal().
-     *          Он извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве `$res_query`.
-     *          Безопасность обеспечивается проверкой типа свойства `$res_query`. Метод предназначен для использования
-     *          клиентским кодом как точка входа для получения результатов запроса построчно.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_res_row_internal()`.
+     *          Он вызывает внутренний метод для извлечения одной строки результата последнего выполненного запроса
+     *          из свойства `$res_query` в виде ассоциативного массива, после соответствующих проверок.
+     *          При последовательных вызовах метода извлекается следующая строка результата.
+     *          Метод предназначен для использования клиентским кодом для получения результатов запроса по одной строке.
      *
-     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они
-     *                     доступны. Если результатов нет, возвращает `false`.
+     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если она
+     *                     доступна. При последовательных вызовах переходит к следующей строке.
+     *                     Если результатов больше нет (все строки были извлечены), возвращает `false`.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$res_query` не установлено.
-     *                                    Пример сообщения:
-     *                                        Результат запроса недоступен | Причина: Свойство $res_query не
-     *                                        установлено
-     *                                  - Свойство `$res_query` не является объектом типа `PDOStatement`.
-     *                                    Пример сообщения:
-     *                                        Недопустимый тип результата запроса | Ожидался объект PDOStatement,
-     *                                        получено: [тип]
+     * @throws InvalidArgumentException Выбрасывается, если результат запроса недоступен или имеет некорректный тип
+     *                                  (выбрасывается из внутренней логики).
+     *                                  Пример сообщения:
+     *                                  Результат запроса недоступен | Причина: Свойство $res_query не установлено
      *
-     * @note    Этот метод является точкой входа для извлечения одной строки результата. Все проверки и обработка
-     *          выполняются в защищённом методе _res_row_internal().
-     *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$res_query` как объект `PDOStatement`.
+     * @note    Этот метод является точкой входа для получения строк результата запроса по одной.
+     *          Результат запроса (объект PDOStatement в свойстве `$res_query`) устанавливается методом выполнения
+     *          запроса (например, `execute_query()`). Внутренняя логика получения данных и проверки их корректности
+     *          выполняется в защищённом методе `_res_row_internal()`.
+     * @warning Убедитесь, что перед вызовом этого метода был успешно выполнен запрос (например, SELECT), который
+     *          установил доступный для чтения результат (`$res_query`).
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * // Предполагается, что перед этим был выполнен SELECT запрос
+     * $db = new \PhotoRigma\Classes\Database();
+     * // ... например: $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     *
+     * // Извлекаем строки по одной
      * while ($row = $db->res_row()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_res_row_internal()
-     *          Защищённый метод, который выполняет основную логику извлечения одной строки результата.
+     * @see    PhotoRigma::Classes::Database::_res_row_internal()
+     *         Защищённый метод, выполняющий основную логику извлечения одной строки результата.
      */
     public function res_row(): array|false
     {
@@ -2987,62 +3475,72 @@ class Database implements Database_Interface
     /**
      * @brief   Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве `$res_query`.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет, что свойство `$res_query` установлено и является объектом типа `PDOStatement`. Если это
-     *          не
-     *             так, выбрасывается исключение.
-     *          2. Использует метод `fetch(PDO::FETCH_ASSOC)` для извлечения одной строки результата в виде
-     *          ассоциативного массива.
-     *          3. Если результатов нет (метод `fetch` возвращает `false`), явно возвращается `false`.
-     *          4. В противном случае возвращается ассоциативный массив, содержащий данные строки.
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Проверяет, что свойство `$this->res_query` установлено и является объектом типа `PDOStatement`.
+     *             Если это не так, выбрасывается исключение InvalidArgumentException.
+     *          2. Использует метод `fetch(PDO::FETCH_ASSOC)` для извлечения одной строки результата из
+     *             `$this->res_query` в виде ассоциативного массива.
+     *          3. Если результатов больше нет (метод `fetch()` возвращает `false`), явно возвращается `false`.
+     *          4. В противном случае возвращается ассоциативный массив, содержащий данные одной строки.
+     *
+     *          Метод только читает значение свойства `$this->res_query` и не выполняет дополнительной логики для его
+     *          обновления. Значение `$this->res_query` должно быть установлено внешними методами, такими как
+     *          `execute_query()`, `delete()`, `update()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `res_row()`.
      *
      * @callergraph
      * @callgraph
      *
-     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если они
-     *                     доступны. Если результатов нет, возвращает `false`.
+     * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если она
+     *                     доступна. При последовательных вызовах переходит к следующей строке.
+     *                     Если результатов больше нет (все строки были извлечены), возвращает `false`.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - Свойство `$res_query` не установлено.
+     *                                  - Свойство `$this->res_query` не установлено (т.е. не был выполнен запрос,
+     *                                    устанавливающий его).
      *                                    Пример сообщения:
-     *                                        Результат запроса недоступен | Причина: Свойство $res_query не
-     *                                        установлено
-     *                                  - Свойство `$res_query` не является объектом типа `PDOStatement`.
+     *                                    Результат запроса недоступен | Причина: Свойство $res_query не
+     *                                    установлено
+     *                                  - Свойство `$this->res_query` не является объектом типа `PDOStatement`
+     *                                    (указывает на некорректное состояние).
      *                                    Пример сообщения:
-     *                                        Недопустимый тип результата запроса | Ожидался объект PDOStatement,
-     *                                        получено: [тип]
+     *                                    Недопустимый тип результата запроса | Ожидался объект PDOStatement,
+     *                                    получено: [тип]
      *
-     * @warning Метод чувствителен к состоянию свойства `$res_query`. Убедитесь, что перед вызовом метода был выполнен
-     *          запрос, который установил значение `$res_query` как объект `PDOStatement`.
+     * @warning Метод чувствителен к состоянию свойства `$this->res_query`. Убедитесь, что перед вызовом метода был
+     *          выполнен запрос (например, SELECT), который корректно установил значение `$this->res_query` как
+     *          объект `PDOStatement`. Последовательные вызовы извлекают следующую строку; для начала извлечения
+     *          сначала нужно выполнить запрос.
      *
      * Пример использования метода _res_row_internal():
      * @code
-     * // Предполагается, что запрос уже выполнен и `$res_query` установлен
-     * $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     * // Предполагается, что перед этим был выполнен SELECT запрос, например:
+     * // $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
+     *
+     * // Извлекаем строки по одной
      * while ($row = $this->_res_row_internal()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$res_query
-     *          Свойство, хранящее результат подготовленного выражения.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Метод, который устанавливает значение `$res_query`.
-     * @see     PhotoRigma::Classes::Database::select()
-     *          Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
-     * @see     PhotoRigma::Classes::Database::join()
-     *          Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса с
-     *          использованием JOIN.
-     * @see     PhotoRigma::Classes::Database::res_row()
-     *          Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$res_query
+     *         Свойство, хранящее результат подготовленного выражения (объект PDOStatement).
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Метод нижнего уровня, который устанавливает значение `$res_query` после выполнения запроса.
+     * @see    PhotoRigma::Classes::Database::select()
+     *         Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::join()
+     *         Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса с
+     *         использованием JOIN.
+     * @see    PhotoRigma::Classes::Database::res_row()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _res_row_internal(): array|false
     {
         // === 1. Валидация состояния запроса ===
         if (!isset($this->res_query) || !($this->res_query instanceof PDOStatement)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Результат запроса недоступен или имеет неверный тип | Причина: Отсутствует или некорректен объект PDOStatement'
             );
         }
 
@@ -3051,33 +3549,44 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Отменяет транзакцию в базе данных через вызов внутреннего метода.
+     * @brief   Отменяет транзакцию в базе данных.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _rollback_transaction_internal().
-     *          Он отменяет транзакцию в базе данных через объект PDO и записывает лог с указанием контекста. Метод
-     *          предназначен для использования клиентским кодом как точка входа для отмены транзакций.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_roll_back_transaction_internal()`.
+     *          Он передаёт контекст транзакции во внутренний метод, который выполняет отмену транзакции
+     *          на уровне PDO и записывает соответствующий лог.
+     *          Метод предназначен для использования клиентским кодом как точка входа для
+     *          явного управления транзакциями.
      *
-     * @param string $context Контекст транзакции (необязательный параметр):
-     *                        - Используется для описания цели или места отмены транзакции.
-     *                        - По умолчанию: пустая строка.
+     * @param string $context Контекст транзакции (необязательный параметр).
+     *                        Используется для описания цели или места отмены транзакции.
+     *                        По умолчанию: пустая строка (`''`).
      *
-     * @throws Exception Выбрасывается, если произошла ошибка при отмене транзакции (см.
-     *                   `_rollback_transaction_internal()`).
+     * @return void Метод ничего не возвращает.
      *
-     * @note    Этот метод является точкой входа для отмены транзакций. Все проверки и обработка выполняются в
-     *          защищённом методе _rollback_transaction_internal().
+     * @throws Exception Выбрасывается, если произошла ошибка при отмене транзакции на уровне PDO или при логировании
+     *                   (выбрасывается из внутренней логики).
+     *                   Пример сообщения:
+     *                   Ошибка при отмене транзакции | Контекст: [значение контекста]
      *
-     * @warning Убедитесь, что транзакция была начата перед вызовом этого метода.
+     * @note    Этот метод является точкой входа для отмены транзакций.
+     *          Основная логика и логирование выполняются в защищённом методе `_roll_back_transaction_internal()`.
+     * @warning Убедитесь, что транзакция была начата перед вызовом метода.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример отмены транзакции из клиентского кода
      * $db = new \PhotoRigma\Classes\Database();
-     * $db->rollback_transaction('Отмена сохранения данных пользователя');
-     * // Лог: [DB] Транзакция отменена | Контекст: Отмена сохранения данных пользователя
+     *
+     * $db->begin_transaction('Операция с данными');
+     * // ... операции с БД, которые могут вызвать ошибку ...
+     * try {
+     *     // ...
+     * } catch (\Exception $e) {
+     *     $db->rollback_transaction('Операция с данными - Ошибка');
+     * }
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_rollback_transaction_internal()
-     *          Защищённый метод, реализующий основную логику отмены транзакции.
+     * @see    PhotoRigma::Classes::Database::_roll_back_transaction_internal()
+     *         Защищённый метод, выполняющий основную логику отмены транзакции.
      */
     public function rollback_transaction(string $context = ''): void
     {
@@ -3087,10 +3596,11 @@ class Database implements Database_Interface
     /**
      * @brief   Отменяет транзакцию в базе данных.
      *
-     * @details Этот метод выполняет следующие шаги:
+     * @details Этот защищённый метод выполняет следующие шаги:
      *          1. Отменяет транзакцию в базе данных через объект PDO с использованием метода `rollBack()`.
      *          2. Логирует информацию об отмене транзакции с указанием контекста через функцию `log_in_file()`.
-     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
+     *
+     *          Этот метод предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `rollback_transaction()`.
      *
      * @callergraph
@@ -3098,102 +3608,123 @@ class Database implements Database_Interface
      *
      * @param string $context Контекст транзакции (необязательный параметр).
      *                        Используется для описания цели или места отмены транзакции.
-     *                        По умолчанию: пустая строка.
+     *                        По умолчанию: пустая строка (`''`).
      *
-     * @throws Exception Выбрасывается, если произошла ошибка при отмене транзакции или логировании.
+     * @return void Метод ничего не возвращает.
      *
-     * @note    Метод использует логирование для записи информации об отмене транзакции.
-     * @warning Убедитесь, что транзакция была начата перед вызовом этого метода.
+     * @throws Exception Выбрасывается, если произошла ошибка при отмене транзакции на уровне PDO или при логировании.
+     *                   Пример сообщения:
+     *                   Ошибка при отмене транзакции | Контекст: [значение контекста] | Сообщение PDO: [текст
+     *                   ошибки PDO]
+     *
+     * @note    Метод использует функцию логирования `log_in_file()` для записи информации об отмене транзакции.
+     * @warning Убедитесь, что транзакция была начата (`$this->pdo->inTransaction()` возвращает `true`)
+     *          перед вызовом этого метода. Попытка отменить несуществующую транзакцию приведёт к ошибке на уровне PDO.
      *
      * Пример использования метода _rollback_transaction_internal():
      * @code
-     * // Отмена транзакции с указанием контекста
+     * // Пример отмены транзакции с указанием контекста
      * $this->_rollback_transaction_internal('Отмена сохранения данных пользователя');
-     * // Лог: [DB] Транзакция отменена | Контекст: Отмена сохранения данных пользователя
+     * // Ожидаемый лог (в файле): [DB] Транзакция отменена | Контекст: Отмена сохранения данных пользователя
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$pdo
-     *          Объект PDO для подключения к базе данных.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Логирует сообщения в файл.
-     * @see     PhotoRigma::Classes::Database::rollback_transaction()
-     *          Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$pdo
+     *         Объект PDO для подключения к базе данных.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Логирует сообщения в файл.
+     * @see    PhotoRigma::Classes::Database::rollback_transaction()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _rollback_transaction_internal(string $context = ''): void
     {
         $this->pdo->rollBack();
         log_in_file(
-            __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | [DB] Транзакция отменена | Контекст: $context"
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | [DB] Транзакция отменена | Контекст: $context"
         );
     }
 
     /**
-     * @brief   Выполняет SQL-запрос на выборку данных из таблицы через вызов внутреннего метода.
+     * @brief   Выполняет SQL-запрос на выборку данных из таблицы.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _select_internal().
-     *          Он формирует SQL-запрос на выборку данных из таблицы, основываясь на полученных аргументах, сохраняет
-     *          его в свойстве `$txt_query` и выполняет. Безопасность обеспечивается использованием подготовленных
-     *          выражений с параметрами. Метод предназначен для использования клиентским кодом как точка входа для
-     *          выполнения SELECT-запросов.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_select_internal()`.
+     *          Он передаёт список полей для выборки, имя таблицы и опции запроса во внутренний метод, который
+     *          выполняет формирование и выполнение SQL-запроса на выборку.
+     *          Безопасность обеспечивается использованием подготовленных выражений с параметрами.
+     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения запросов на
+     *          выборку данных.
      *
-     * @param string|array $select     Список полей для выборки:
-     *                                 - Может быть строкой (имя одного поля) или массивом (список полей).
-     *                                 - Если передан массив, он преобразуется в строку с разделителем `,`.
-     *                                 Пример: "id", ["id", "name"].
-     *                                 Ограничения: массив не может содержать элементы, которые не являются строками.
-     * @param string       $from_tbl   Имя таблицы, из которой выбираются данные:
-     *                                 - Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                                 символов.
-     *                                 - Ограничения: строка должна быть непустой.
-     * @param array        $options    Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                 - where (string|array): Условие WHERE. Может быть строкой или ассоциативным
-     *                                 массивом. Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                 (например, `:status`).
-     *                                 - group (string): Группировка GROUP BY.
-     *                                 - order (string): Сортировка ORDER BY.
-     *                                 - limit (int|string): Ограничение LIMIT.
-     *                                 - params (array): Параметры для подготовленного выражения.
-     *                                 Использование параметров `params` является обязательным для защиты от
-     *                                 SQL-инъекций.
+     * @param string|array $select   Список полей для выборки. Может быть строкой (имя одного поля) или массивом
+     *                               (список полей). Если передан массив, он преобразуется в строку с разделителем
+     *                               `,`. Пример: "id", ["id", "name"]. Ограничения: массив не может содержать
+     *                               элементы, которые не являются строками.
+     * @param string       $from_tbl Имя таблицы, из которой выбираются данные.
+     *                               Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                               символов. Ограничения: строка должна быть непустой.
+     * @param array        $options  Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                               - where (string|array|false): Условие WHERE.
+     *                                 * string - используется как есть.
+     *                                 * array - преобразуется в SQL. Поддерживает простые условия
+     *                                   (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                                   `'NOT' => [...]`).
+     *                                 * false - игнорируется.
+     *                               - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                                 Должна быть строкой.
+     *                               - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                                 Должна быть строкой.
+     *                               - limit (int|string|false): Ограничение LIMIT.
+     *                                 * int - прямое значение.
+     *                                 * string - формат "OFFSET,COUNT".
+     *                                 * false - игнорируется.
+     *                               - params (array): Ассоциативный массив параметров
+     *                                 ([":имя" => значение]).
+     *                                 Обязателен для использования с условиями `where` и другими частями запроса,
+     *                                 требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                                 Может быть пустым массивом, если параметры не требуются.
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
      * @throws InvalidArgumentException Выбрасывается, если:
      *                                  - `$from_tbl` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                                    Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
      *                                  - `$options` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра options | Ожидался массив, получено: [тип]
      *                                  - `$select` не является строкой или массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра select | Ожидалась строка или массив,
-     *                                        получено: [тип]
+     *                                    Недопустимый тип параметра select | Ожидалась строка или массив,
+     *                                    получено: [тип]
      *                                  - Элемент в списке `$select` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимый элемент в выборке | Ожидалась строка, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                                    Недопустимый элемент в выборке | Ожидалась строка, получено: [тип]
+     * @throws Exception               Выбрасывается при ошибках выполнения запроса.
      *
-     * @note    Этот метод является точкой входа для выполнения SELECT-запросов. Все проверки и обработка выполняются в
-     *          защищённом методе _select_internal().
+     * @note    Этот метод является точкой входа для выполнения запросов на выборку данных.
+     *          Все проверки и основная логика выполняются в защищённом методе `_select_internal()`.
      *
-     * @warning Метод чувствителен к корректности входных данных. Убедитесь, что массив `$select` содержит только
-     *          строки. Использование параметров `params` для подготовленных выражений является обязательным для защиты
-     *          от SQL-инъекций и обеспечения совместимости с различными СУБД.
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
+     *          привести к выбросу исключения. Убедитесь, что массив `$select` содержит только строки.
+     *          Использование параметров `params` для подготовленных выражений является обязательным для защиты от
+     *          SQL-инъекций и обеспечения совместимости с различными СУБД.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример безопасного использования публичного метода SELECT
      * $db = new \PhotoRigma\Classes\Database();
-     * $db->select(['id', 'name'], 'users', [
-     *     'where' => 'status = :status',
-     *     'group' => 'category_id',
-     *     'order' => 'created_at DESC',
-     *     'limit' => 10,
-     *     'params' => [':status' => 'active']
-     * ]);
+     *
+     * $db->select(
+     *     ['id', 'name'],
+     *     'users',
+     *     [
+     *         'where' => 'status = :status',
+     *         'group' => 'category_id',
+     *         'order' => 'created_at DESC',
+     *         'limit' => 10,
+     *         'params' => [':status' => 'active']
+     *     ]
+     * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_select_internal()
-     *          Защищённый метод, реализующий основную логику формирования и выполнения SQL-запроса SELECT.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Защищённый метод, выполняющий основную логику формирования и выполнения SQL-запроса на выборку.
      */
     public function select(string|array $select, string $from_tbl, array $options = []): bool
     {
@@ -3206,7 +3737,7 @@ class Database implements Database_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет типы входных данных: `$select` (строка или массив), `$from_tbl` (строка), `$options`
-     *          (массив).
+     *             (массив).
      *          2. Обрабатывает список полей для выборки (`$select`):
      *             - Если `$select` является строкой, она разбивается по запятым и преобразуется в массив.
      *             - Каждое имя поля проверяется на корректность и преобразуется в строку с разделителем `,`.
@@ -3214,56 +3745,61 @@ class Database implements Database_Interface
      *          4. Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          5. Сохраняет сформированный запрос в свойстве `$txt_query`.
      *          6. Выполняет запрос через метод `execute_query`, передавая параметры `params` для подготовленного
-     *          выражения. Использование параметров `params` является обязательным для подготовленных выражений, так
-     *          как это обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД. Этот метод является
+     *             выражения.
+     *
+     *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
+     *          обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД. Этот метод является
      *          защищенным и предназначен для использования внутри класса или его наследников. Основная логика
      *          вызывается через публичный метод-редирект `select()`.
      *
      * @callergraph
      * @callgraph
      *
-     * @param string|array $select     Список полей для выборки. Может быть строкой (имя одного поля) или массивом
-     *                                 (список полей). Если передан массив, он преобразуется в строку с разделителем
-     *                                 `,`. Пример: "id", ["id", "name"]. Ограничения: массив не может содержать
-     *                                 элементы, которые не являются строками.
-     * @param string       $from_tbl   Имя таблицы, из которой выбираются данные.
-     *                                 Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                                 символов. Ограничения: строка должна быть непустой.
-     * @param array        $options    Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                 - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                 :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
-     *                                 ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                 (например, `:status`).
-     *                                 - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                 (например, "category_id").
-     *                                 - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                 направлением (например, "created_at DESC").
-     *                                 - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                 строкой с диапазоном (например, "0, 10").
-     *                                 - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                 значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                 "active"]).
-     *                                 Использование параметров `params` является обязательным для подготовленных
-     *                                 выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                 различными СУБД.
+     * @param string|array $select   Список полей для выборки. Может быть строкой (имя одного поля) или массивом
+     *                               (список полей). Если передан массив, он преобразуется в строку с разделителем
+     *                               `,`. Пример: "id", ["id", "name"]. Ограничения: массив не может содержать
+     *                               элементы, которые не являются строками.
+     * @param string       $from_tbl Имя таблицы, из которой выбираются данные.
+     *                               Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                               символов. Ограничения: строка должна быть непустой.
+     * @param array        $options  Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                               - where (string|array|false): Условие WHERE.
+     *                                 * string - используется как есть.
+     *                                 * array - преобразуется в SQL. Поддерживает простые условия
+     *                                   (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                                   `'NOT' => [...]`).
+     *                                 * false - игнорируется.
+     *                               - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                                 Должна быть строкой.
+     *                               - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                                 Должна быть строкой.
+     *                               - limit (int|string|false): Ограничение LIMIT.
+     *                                 * int - прямое значение.
+     *                                 * string - формат "OFFSET,COUNT".
+     *                                 * false - игнорируется.
+     *                               - params (array): Ассоциативный массив параметров
+     *                                 ([":имя" => значение]).
+     *                                 Обязателен для использования с условиями `where` и другими частями запроса,
+     *                                 требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                                 Может быть пустым массивом, если параметры не требуются.
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
      * @throws InvalidArgumentException Выбрасывается, если:
      *                                  - `$from_tbl` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                                    Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
      *                                  - `$options` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра options | Ожидался массив, получено: [тип]
      *                                  - `$select` не является строкой или массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра select | Ожидалась строка или массив,
-     *                                        получено: [тип]
+     *                                    Недопустимый тип параметра select | Ожидалась строка или массив,
+     *                                    получено: [тип]
      *                                  - Элемент в списке `$select` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимый элемент в выборке | Ожидалась строка, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                                    Недопустимый элемент в выборке | Ожидалась строка, получено: [тип]
+     * @throws Exception               Выбрасывается при ошибках выполнения запроса.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
      *          привести к выбросу исключения. Убедитесь, что массив `$select` содержит только строки.
@@ -3286,14 +3822,14 @@ class Database implements Database_Interface
      *     ]
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::select()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Выполняет SQL-запрос.
-     * @see     PhotoRigma::Classes::Database::build_conditions()
-     *          Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, в которое помещается текст SQL-запроса.
+     * @see    PhotoRigma::Classes::Database::select()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Выполняет SQL-запрос.
+     * @see    PhotoRigma::Classes::Database::build_conditions()
+     *         Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
      */
     protected function _select_internal(string|array $select, string $from_tbl, array $options = []): bool
     {
@@ -3307,7 +3843,7 @@ class Database implements Database_Interface
         foreach ($select as $field) {
             if (!is_string($field)) {
                 throw new InvalidArgumentException(
-                    __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый элемент в выборке | Ожидалась строка, получено: " . gettype(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Недопустимый элемент в выборке | Ожидалась строка, получено: ' . gettype(
                         $field
                     )
                 );
@@ -3328,41 +3864,44 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Очищает таблицу через вызов внутреннего метода.
+     * @brief   Очищает таблицу (TRUNCATE) через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _truncate_internal().
-     *          Он формирует SQL-запрос TRUNCATE TABLE для очистки таблицы, сохраняет его в свойстве `$txt_query` и
-     *          выполняет. Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без возможности восстановления.
-     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операции TRUNCATE.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_truncate_internal()`.
+     *          Он передаёт имя таблицы во внутренний метод, который формирует и выполняет SQL-запрос `TRUNCATE TABLE`.
+     *          Запрос TRUNCATE является быстрым способом удаления всех строк из таблицы, но его невозможно отменить
+     *          через транзакции.
+     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операции очистки
+     *          таблицы.
      *
-     * @param string $from_tbl Имя таблицы, которую необходимо очистить:
-     *                         - Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                         символов.
-     *                         - Ограничения: строка должна быть непустой.
+     * @param string $from_tbl Имя таблицы, которую необходимо очистить.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
+     *                         Ограничения: строка должна быть непустой.
      *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     * @return bool Возвращает `true`, если запрос успешно выполнен (даже если результат пустой или не возвращает строк).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$from_tbl` не является строкой.
-     *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     * @throws InvalidArgumentException Выбрасывается, если имя таблицы недопустимо (выбрасывается из внутренней логики).
+     *                                  Пример сообщения:
+     *                                  Недопустимое имя таблицы | Ожидалась непустая строка, получено: [тип/значение]
+     * @throws Exception                Выбрасывается при ошибках выполнения запроса.
      *
-     * @note    Этот метод является точкой входа для выполнения TRUNCATE. Все проверки и обработка выполняются в
-     *          защищённом методе _truncate_internal().
-     *
-     * @warning Метод чувствителен к корректности входных данных. Запрос TRUNCATE полностью очищает таблицу, удаляя все
-     *          строки без возможности восстановления. Этот метод следует использовать с осторожностью, так как он не
-     *          поддерживает откат операции через транзакции.
+     * @note    Этот метод является точкой входа для очистки таблицы.
+     *          Основная логика выполняется в защищённом методе `_truncate_internal()`.
+     *          Помните, что TRUNCATE - это необратимая операция, которая не участвует в транзакциях.
+     * @warning Метод чувствителен к корректности входных данных. Убедитесь, что `$from_tbl` содержит корректное имя
+     *          таблицы.
+     *          Используйте этот метод с крайней осторожностью, так как данные будут удалены без возможности
+     *          восстановления через ROLLBACK.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
+     * // Пример очистки таблицы из клиентского кода
      * $db = new \PhotoRigma\Classes\Database();
-     * $db->truncate('users');
+     *
+     * $db->truncate('temp_data');
+     * // Таблица 'temp_data' теперь пуста
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_truncate_internal()
-     *          Защищённый метод, реализующий основную логику формирования и выполнения SQL-запроса TRUNCATE.
+     * @see    PhotoRigma::Classes::Database::_truncate_internal()
+     *         Защищённый метод, выполняющий основную логику очистки таблицы.
      */
     public function truncate(string $from_tbl): bool
     {
@@ -3372,12 +3911,13 @@ class Database implements Database_Interface
     /**
      * @brief   Формирует SQL-запрос на очистку таблицы (TRUNCATE), размещает его в свойстве `$txt_query` и выполняет.
      *
-     * @details Этот метод выполняет следующие шаги:
+     * @details Этот защищённый метод выполняет следующие шаги:
      *          1. Проверяет тип входных данных: `$from_tbl` должен быть строкой. Если передан неверный тип,
-     *          выбрасывается исключение.
-     *          2. Формирует базовый SQL-запрос TRUNCATE TABLE для очистки таблицы.
-     *          3. Сохраняет сформированный запрос в свойстве `$txt_query`.
-     *          4. Выполняет запрос через метод `execute_query`.
+     *             выбрасывается исключение InvalidArgumentException.
+     *          2. Формирует базовый SQL-запрос `TRUNCATE TABLE` для очистки таблицы с использованием `$from_tbl`.
+     *          3. Сохраняет сформированный запрос в свойстве `$this->txt_query`.
+     *          4. Выполняет запрос через метод `execute_query()`.
+     *
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `truncate()`.
      *
@@ -3388,13 +3928,12 @@ class Database implements Database_Interface
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
      *                         Ограничения: строка должна быть непустой.
      *
-     * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
+     * @return bool Возвращает `true`, если запрос успешно выполнен (даже если результат пустой или не возвращает строк).
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$from_tbl` не является строкой.
-     *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     * @throws InvalidArgumentException Выбрасывается, если `$from_tbl` не является непустой строкой.
+     *                                  Пример сообщения:
+     *                                  Недопустимое имя таблицы | Ожидалась непустая строка, получено: [тип/значение]
+     * @throws Exception                Выбрасывается при ошибках выполнения запроса.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
      *          привести к выбросу исключения. Запрос TRUNCATE полностью очищает таблицу, удаляя все строки без
@@ -3406,12 +3945,12 @@ class Database implements Database_Interface
      * // Очистка таблицы 'users'
      * $this->_truncate_internal('users');
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::truncate()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Выполняет SQL-запрос.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, в которое помещается текст SQL-запроса.
+     * @see    PhotoRigma::Classes::Database::truncate()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Выполняет SQL-запрос.
      */
     protected function _truncate_internal(string $from_tbl): bool
     {
@@ -3422,64 +3961,81 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Выполняет SQL-запрос на обновление данных в таблице через вызов внутреннего метода.
+     * @brief   Обновляет данные в таблице через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _update_internal().
-     *          Он формирует SQL-запрос UPDATE с использованием переданных данных, сохраняет его в свойстве
-     *          `$txt_query` и выполняет. Безопасность обеспечивается обязательным указанием условия `where`. Запрос
-     *          без условия `where` не будет выполнен. Метод предназначен для использования клиентским кодом как точка
-     *          входа для выполнения операции UPDATE.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_update_internal()`.
+     *          Он передаёт массив данных для обновления, имя таблицы и опции запроса во внутренний метод, который
+     *          выполняет формирование и выполнение SQL-запроса на обновление.
+     *          Безопасность обеспечивается обязательным указанием условия `where` в опциях и использованием
+     *          подготовленных выражений с параметрами.
+     *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операций
+     *          обновления данных.
      *
-     * @param array  $update     Ассоциативный массив данных для обновления:
-     *                           - Формат: 'имя_поля' => 'значение'.
-     *                           - Пример: ["name" => ":name", "status" => ":status"].
-     *                           Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры (например,
-     *                           `:name`).
-     * @param string $from_tbl   Имя таблицы, в которой необходимо обновить данные:
-     *                           - Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                           символов.
-     *                           - Ограничения: строка должна быть непустой.
-     * @param array  $options    Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                           - where (string|array): Условие WHERE. Может быть строкой или ассоциативным массивом.
+     * @param array  $update   Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
+     *                         Пример: ["name" => ":name", "status" => ":status"].
+     *                         Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры (например,
+     *                         `:name`).
+     * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                         символов. Ограничения: строка должна быть непустой.
+     * @param array  $options  Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                         - where (string|array|false): Условие WHERE.
+     *                           * string - используется как есть.
+     *                           * array - преобразуется в SQL. Поддерживает простые условия
+     *                             (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                             `'NOT' => [...]`).
+     *                           * false - игнорируется.
      *                           Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
-     *                           - order (string): Сортировка ORDER BY.
-     *                           - limit (int|string): Ограничение LIMIT.
-     *                           - params (array): Параметры для подготовленного выражения.
-     *                           Использование параметров `params` является обязательным для защиты от SQL-инъекций.
-     *                           - group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и
-     *                           удаляется
-     *                           с записью в лог.
+     *                         - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                           Не поддерживается в запросах UPDATE и удаляется с записью в лог.
+     *                         - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                         - limit (int|string|false): Ограничение LIMIT.
+     *                           * int - прямое значение.
+     *                           * string - формат "OFFSET,COUNT".
+     *                           * false - игнорируется.
+     *                         - params (array): Ассоциативный массив параметров
+     *                           ([":имя" => значение]).
+     *                           Обязателен для использования с данными для обновления или условиями `where`,
+     *                           требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                           Может быть пустым массивом, если параметры не требуются.
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
      * @throws InvalidArgumentException Выбрасывается, если:
      *                                  - `$update` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра update | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра update | Ожидался массив, получено: [тип]
      *                                  - `$from_tbl` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                                    Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
      *                                  - `$options` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра options | Ожидался массив, получено: [тип]
      *                                  - Отсутствует обязательное условие `where` в массиве `$options`.
      *                                    Пример сообщения:
-     *                                        Запрос UPDATE без условия WHERE запрещён | Причина: Соображения
-     *                                        безопасности
-     * @throws Exception Выбрасывается при ошибках выполнения запроса.
+     *                                    Запрос UPDATE без условия WHERE запрещён | Причина: Соображения
+     *                                    безопасности
+     * @throws JsonException            Выбрасывается при ошибках записи лога.
+     * @throws Exception                Выбрасывается при ошибках выполнения запроса.
      *
-     * @note    Этот метод является точкой входа для выполнения UPDATE. Все проверки и обработка выполняются в
-     *          защищённом методе _update_internal().
+     * @note    Этот метод является точкой входа для выполнения операций обновления данных.
+     *          Все проверки (включая обязательное `where`) и основная логика выполняются в защищённом методе
+     *          `_update_internal()`. Ключ `group` игнорируется в этом методе.
      *
-     * @warning Метод чувствителен к корректности входных данных. Безопасность обеспечивается обязательным указанием
-     *          условия `where`. Запрос без условия `where` не будет выполнен. Ключ `group` не поддерживается в
-     *          запросах UPDATE и удаляется с записью в лог. Использование параметров `params` для подготовленных
-     *          выражений является обязательным для защиты от SQL-инъекций.
+     * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
+     *          привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия `where`.
+     *          Запрос без условия `where` не будет выполнен. Ключ `group` не поддерживается в запросах UPDATE и
+     *          удаляется с записью в лог во внутренней логике.
+     *          Использование параметров `params` для подготовленных выражений является обязательным для защиты от
+     *          SQL-инъекций и обеспечения совместимости с различными СУБД.
      *
      * Пример использования:
      * @code
-     * // Вызов метода из клиентского кода
-     * $db = new \PhotoRigma\Classes\Database();
+     * // Пример безопасного использования публичного метода UPDATE
+     * $db = new \PhotoRigma\Classes\Database(); // Добавил отсутствующий обратный слеш в неймспейсе
+     *
      * $db->update(
      *     ['name' => ':name', 'status' => ':status'],
      *     'users',
@@ -3489,8 +4045,8 @@ class Database implements Database_Interface
      *     ]
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::_update_internal()
-     *          Защищённый метод, реализующий основную логику формирования и выполнения SQL-запроса UPDATE.
+     * @see    PhotoRigma::Classes::Database::_update_internal()
+     *         Защищённый метод, выполняющий основную логику обновления данных.
      */
     public function update(array $update, string $from_tbl, array $options = []): bool
     {
@@ -3501,66 +4057,74 @@ class Database implements Database_Interface
      * @brief   Формирует SQL-запрос на обновление данных в таблице, основываясь на полученных аргументах, размещает
      *          его в свойстве `$txt_query` и выполняет.
      *
-     * @details Этот метод выполняет следующие шаги:
+     * @details Этот защищённый метод выполняет следующие шаги:
      *          1. Проверяет типы входных данных: `$update` (ассоциативный массив), `$from_tbl` (строка), `$options`
-     *          (массив).
+     *             (массив).
      *          2. Проверяет наличие обязательного условия `where` в массиве `$options`. Если условие отсутствует,
      *             выбрасывается исключение для предотвращения случайного обновления всех данных.
      *          3. Удаляет недопустимый ключ `group` из массива `$options` с записью в лог, так как GROUP BY не
-     *          поддерживается в запросах UPDATE.
+     *             поддерживается в запросах UPDATE.
      *          4. Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.
      *          5. Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          6. Сохраняет сформированный запрос в свойстве `$txt_query`.
      *          7. Выполняет запрос через метод `execute_query`, передавая параметры `params` для подготовленного
-     *          выражения. Использование параметров `params` является обязательным для подготовленных выражений, так
-     *          как это обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД. Этот метод является
+     *             выражения.
+     *
+     *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
+     *          обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД. Этот метод является
      *          защищенным и предназначен для использования внутри класса или его наследников. Основная логика
      *          вызывается через публичный метод-редирект `update()`.
      *
      * @callergraph
      * @callgraph
      *
-     * @param array  $update     Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
-     *                           Пример: ["name" => ":name", "status" => ":status"].
-     *                           Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры (например,
-     *                           `:name`).
-     * @param string $from_tbl   Имя таблицы, в которой необходимо обновить данные.
-     *                           Должно быть строкой, содержащей только допустимые имена таблиц без специальных
-     *                           символов. Ограничения: строка должна быть непустой.
-     * @param array  $options    Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                           - where (string|array): Условие WHERE. Может быть строкой (например, "id = :id") или
-     *                           ассоциативным массивом (например, ["id" => ":id", "status" => ":status"]).
+     * @param array  $update   Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
+     *                         Пример: ["name" => ":name", "status" => ":status"].
+     *                         Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры (например, `:name`).
+     * @param string $from_tbl Имя таблицы, в которой необходимо обновить данные.
+     *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных
+     *                         символов. Ограничения: строка должна быть непустой.
+     * @param array  $options  Массив опций для формирования запроса. Поддерживаемые ключи:
+     *                         - where (string|array|false): Условие WHERE.
+     *                           * string - используется как есть.
+     *                           * array - преобразуется в SQL. Поддерживает простые условия
+     *                             (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                             `'NOT' => [...]`).
+     *                           * false - игнорируется.
      *                           Обязательный параметр для безопасности. Без условия WHERE запрос не будет выполнен.
-     *                           - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                           направлением (например, "created_at DESC").
-     *                           - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или строкой
-     *                           с диапазоном (например, "0, 10").
-     *                           - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                           значений, используемых в запросе (например, [":id" => 1, ":name" => "John Doe"]).
-     *                           Использование параметров `params` является обязательным для подготовленных выражений,
-     *                           так как это обеспечивает защиту от SQL-инъекций и совместимость с различными СУБД.
-     *                           - group (string): Группировка GROUP BY. Не поддерживается в запросах UPDATE и
-     *                           удаляется
-     *                           с записью в лог.
+     *                         - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                           Не поддерживается в запросах UPDATE и удаляется с записью в лог.
+     *                         - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                           Должна быть строкой.
+     *                         - limit (int|string|false): Ограничение LIMIT.
+     *                           * int - прямое значение.
+     *                           * string - формат "OFFSET,COUNT".
+     *                           * false - игнорируется.
+     *                         - params (array): Ассоциативный массив параметров
+     *                           ([":имя" => значение]).
+     *                           Обязателен для использования с данными для обновления или условиями `where`,
+     *                           требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                           Может быть пустым массивом, если параметры не требуются.
      *
      * @return bool Возвращает true, если запрос успешно выполнен (даже если результат пустой).
      *
      * @throws InvalidArgumentException Выбрасывается, если:
      *                                  - `$update` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра update | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра update | Ожидался массив, получено: [тип]
      *                                  - `$from_tbl` не является строкой.
      *                                    Пример сообщения:
-     *                                        Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
+     *                                    Недопустимое имя таблицы | Ожидалась строка, получено: [тип]
      *                                  - `$options` не является массивом.
      *                                    Пример сообщения:
-     *                                        Недопустимый тип параметра options | Ожидался массив, получено: [тип]
+     *                                    Недопустимый тип параметра options | Ожидался массив, получено: [тип]
      *                                  - Отсутствует обязательное условие `where` в массиве `$options`.
      *                                    Пример сообщения:
-     *                                        Запрос UPDATE без условия WHERE запрещён | Причина: Соображения
-     *                                        безопасности
-     * @throws JsonException Выбрасывается при ошибках записи лога.
-     * @throws Exception     Выбрасывается при ошибках выполнения запроса.
+     *                                    Запрос UPDATE без условия WHERE запрещён | Причина: Соображения
+     *                                    безопасности
+     * @throws JsonException            Выбрасывается при ошибках записи лога.
+     * @throws Exception                Выбрасывается при ошибках выполнения запроса.
      *
      * @warning Метод чувствителен к корректности входных данных. Неверные типы данных или некорректные значения могут
      *          привести к выбросу исключения. Безопасность обеспечивается обязательным указанием условия `where`.
@@ -3581,28 +4145,28 @@ class Database implements Database_Interface
      *     ]
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Database::$txt_query
-     *          Свойство, в которое помещается текст SQL-запроса.
-     * @see     PhotoRigma::Classes::Database::update()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Database::execute_query()
-     *          Выполняет SQL-запрос.
-     * @see     PhotoRigma::Classes::Database::build_conditions()
-     *          Формирует условия WHERE, ORDER BY и LIMIT для запроса.
+     * @see    PhotoRigma::Classes::Database::$txt_query
+     *         Свойство, в которое помещается текст SQL-запроса.
+     * @see    PhotoRigma::Classes::Database::update()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::execute_query()
+     *         Выполняет SQL-запрос.
+     * @see    PhotoRigma::Classes::Database::build_conditions()
+     *         Формирует условия WHERE, ORDER BY и LIMIT для запроса.
      */
     protected function _update_internal(array $update, string $from_tbl, array $options = []): bool
     {
         // === 1. Валидация аргументов ===
         if (empty($options['where'])) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Запрос UPDATE без условия WHERE запрещён | Причина: Соображения безопасности"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Запрос UPDATE без условия WHERE запрещён | Причина: Соображения безопасности'
             );
         }
 
         // === 2. Удаление недопустимого ключа `group` ===
         if (isset($options['group'])) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Был использован GROUP BY в UPDATE | Переданные опции: " . json_encode(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Был использован GROUP BY в UPDATE | Переданные опции: ' . json_encode(
                     $options,
                     JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
                 )
@@ -3628,44 +4192,54 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Временно изменяет формат SQL для выполнения запросов в указанном контексте.
+     * @brief   Временно изменяет формат SQL для выполнения запросов.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _with_sql_format_internal().
-     *          Он временно изменяет формат SQL для выполнения запросов, передавая управление в коллбэк.
-     *          После завершения коллбэка формат SQL автоматически сбрасывается до значения по умолчанию ('mysql').
-     *          Метод предназначен для использования клиентским кодом как точка входа для временного изменения формата SQL.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_with_sql_format_internal()`.
+     *          Он принимает желаемый временный формат SQL и коллбэк, а затем выполняет внутренний метод.
+     *          Внутренний метод устанавливает временный формат SQL перед выполнением коллбэка и гарантирует
+     *          восстановление исходного формата после его завершения, даже в случае исключения.
+     *          Метод предназначен для использования клиентским кодом для выполнения набора операций
+     *          с базой данных, которые требуют специфического формата SQL, отличного от текущего.
      *
-     * @param string   $format   Формат SQL, который нужно использовать временно:
-     *                           - Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
+     * @param string   $format   Формат SQL, который нужно использовать временно.
+     *                           Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
      * @param callable $callback Коллбэк, содержащий код, который должен выполняться
-     *                           в контексте указанного формата SQL:
-     *                           - Должен быть callable (например, анонимная функция или замыкание).
+     *                           в контексте указанного формата SQL. Коллбэк может принимать ссылку на текущий
+     *                           объект базы данных как аргумент (например, `function (\PhotoRigma\Classes\Database
+     *                           $db) { ... }`).
      *
-     * @return mixed Результат выполнения коллбэка.
+     * @return mixed Результат выполнения коллбэка `$callback`.
      *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$format` не является поддерживаемым значением.
-     *                                    Пример сообщения:
-     *                                        Неподдерживаемый формат SQL | Формат: [format]
-     * @throws Exception Выбрасывается при ошибках выполнения запроса внутри коллбэка.
+     * @throws InvalidArgumentException Выбрасывается, если указан неподдерживаемый формат SQL (выбрасывается из
+     *                                  внутренней логики).
+     *                                  Пример сообщения:
+     *                                  Неподдерживаемый формат SQL | Формат: [format]
+     * @throws Exception                Любые исключения, выброшенные внутри переданного коллбэка, будут автоматически
+     *                                  распространены (не перехватываются этим методом).
      *
-     * @note    Этот метод является точкой входа для временного изменения формата SQL. Все проверки и обработка
-     *          выполняются в защищённом методе _with_sql_format_internal().
-     *
+     * @note    Этот метод является точкой входа для временного изменения формата SQL.
+     *          Основная логика смены и восстановления формата выполняется в защищённом методе
+     *          `_with_sql_format_internal()`. Убедитесь, что код внутри коллбэка не содержит собственных блоков
+     *          `try/catch` для исключений, которые должны быть обработаны на более высоком уровне.
      * @warning Важные замечания:
-     *          1. Убедитесь, что все методы, вызываемые внутри коллбэка, поддерживают указанный формат SQL.
-     *          2. Не используйте методы других классов, зависящих от объекта `$db`, если они написаны
-     *             с жесткой привязкой к определенному формату SQL (например, MySQL).
-     *             Это может привести к ошибкам.
-     *          3. Для выполнения нескольких запросов в одном формате оберните их в один коллбэк.
+     *          1. Убедитесь, что все методы текущего класса `$db->...()`, вызываемые внутри коллбэка, корректно
+     *             работают с указанным временным форматом SQL.
+     *          2. **Особая осторожность:** Не используйте внутри коллбэка методы **других** классов,
+     *             которые напрямую зависят от объекта `$db` и при этом написаны с жесткой привязкой к
+     *             определенному формату SQL (например, парсят SQL-строки, не учитывая временное изменение формата
+     *             в объекте `$db`). Это может привести к непредсказуемому поведению или ошибкам.
+     *          3. Исключения, выброшенные внутри коллбэка, **не перехватываются** этим методом; они
+     *             будут распространяться (пробрасываться) дальше.
      *
      * Пример использования:
      * @code
-     * // Выполнение запроса в формате PostgreSQL
-     * $years_list = $db->with_sql_format('pgsql', function () use ($db) {
-     *     // Форматирование даты для PostgreSQL
+     * // Пример выполнения запросов в формате PostgreSQL
+     * $db = new \PhotoRigma\Classes\Database();
+     * // Предполагается, что TBL_NEWS определена как константа
+     *
+     * $years_list = $db->with_sql_format('pgsql', function (\PhotoRigma\Classes\Database $db) {
+     *     // Внутри этого коллбэка $db->current_format установлен в 'pgsql'
      *     $formatted_date = $db->format_date('data_last_edit', 'YYYY');
-     *     // Выборка данных
      *     $db->select(
      *         'DISTINCT ' . $formatted_date . ' AS year',
      *         TBL_NEWS,
@@ -3673,13 +4247,14 @@ class Database implements Database_Interface
      *             'order' => 'year ASC',
      *         ]
      *     );
-     *     // Получение результата
      *     return $db->res_arr();
      * });
      * print_r($years_list);
+     *
+     * // После завершения коллбэка, исходный формат SQL восстанавливается автоматически.
      * @endcode
-     * @see PhotoRigma::Classes::Database::_with_sql_format_internal()
-     *      Защищённый метод, реализующий основную логику временного изменения формата SQL.
+     * @see    PhotoRigma::Classes::Database::_with_sql_format_internal()
+     *         Защищённый метод, выполняющий основную логику временной смены формата SQL.
      */
     public function with_sql_format(string $format, callable $callback): mixed
     {
@@ -3689,13 +4264,17 @@ class Database implements Database_Interface
     /**
      * @brief   Метод временно изменяет формат SQL для выполнения запросов в указанном контексте.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет поддерживаемость указанного формата SQL. Если формат не поддерживается,
+     * @details Этот защищённый метод выполняет следующие шаги:
+     *          1. Проверяет поддерживаемость указанного формата SQL `$format`. Если формат не поддерживается,
      *             выбрасывается исключение `InvalidArgumentException`.
-     *          2. Сохраняет текущий формат SQL в свойстве `$current_format`.
-     *          3. Устанавливает временный формат SQL, переданный в параметре `$format`.
-     *          4. Выполняет коллбэк, содержащий код, который должен выполняться в новом формате SQL.
-     *          5. Восстанавливает исходный формат SQL после завершения коллбэка (даже если произошла ошибка).
+     *          2. Сохраняет текущий формат SQL из свойства `$this->current_format` во временную переменную.
+     *          3. Устанавливает временный формат SQL в свойство `$this->current_format`, используя значение из
+     *             `$format`.
+     *          4. Выполняет переданный коллбэк `$callback`. Код внутри коллбэка будет использовать новый временный
+     *             формат SQL.
+     *          5. Восстанавливает исходный формат SQL в свойстве `$this->current_format` после завершения коллбэка
+     *             (даже если внутри коллбэка произошла ошибка благодаря использованию `finally`).
+     *
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `with_sql_format()`.
      *
@@ -3705,31 +4284,36 @@ class Database implements Database_Interface
      * @param string   $format   Формат SQL, который нужно использовать временно.
      *                           Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
      * @param callable $callback Коллбэк, содержащий код, который должен выполняться
-     *                           в контексте указанного формата SQL.
+     *                           в контексте указанного формата SQL. Коллбэк может принимать ссылку на текущий
+     *                           объект базы данных как аргумент (например, `function (\PhotoRigma\Classes\Database
+     *                           $db) { ... }`).
      *
-     * @return mixed Результат выполнения коллбэка.
+     * @return mixed Результат выполнения коллбэка `$callback`.
      *
      * @throws InvalidArgumentException Выбрасывается, если указан неподдерживаемый формат SQL.
      *                                  Пример сообщения:
-     *                                      Неподдерживаемый формат SQL | Формат: [format]
+     *                                  Неподдерживаемый формат SQL | Формат: [format]
      *
      * @warning Важные замечания:
-     *          1. Убедитесь, что все методы, вызываемые внутри коллбэка, поддерживают указанный формат SQL.
-     *          2. Не используйте методы других классов, зависящих от объекта `$db`, если они написаны
-     *             с жесткой привязкой к определенному формату SQL (например, MySQL).
-     *             Это может привести к ошибкам.
-     *          3. Для выполнения нескольких запросов в одном формате оберните их в один коллбэк.
+     *          1. Убедитесь, что все методы текущего класса `$this->...()`, вызываемые внутри коллбэка,
+     *             корректно работают с указанным временным форматом SQL.
+     *          2. **Особая осторожность:** Не используйте внутри коллбэка методы **других** классов,
+     *             которые напрямую зависят от объекта `$db` и при этом написаны с жесткой привязкой к
+     *             определенному формату SQL (например, парсят SQL-строки, не учитывая временное изменение формата
+     *             в объекте `$db`). Это может привести к непредсказуемому поведению или ошибкам.
+     *          3. Для выполнения группы запросов в одном и том же временном формате оберните их в один коллбэк.
      *
      * Пример использования метода _with_sql_format_internal():
      * @code
      * // Выполнение запроса в формате PostgreSQL
-     * $years_list = $this->with_sql_format('pgsql', function () use ($db) {
-     *     // Форматирование даты для PostgreSQL
+     * // Предполагается, что TBL_NEWS определена как константа
+     * $years_list = $this->_with_sql_format_internal('pgsql', function () { // Можно использовать `use ($this)` или передать $this в коллбэк
+     *     // Форматирование даты для PostgreSQL с учетом временного формата
      *     $formatted_date = $this->format_date('data_last_edit', 'YYYY');
      *     // Выборка данных
      *     $this->select(
      *         'DISTINCT ' . $formatted_date . ' AS year',
-     *         TBL_NEWS,
+     *         TBL_NEWS, // Используем константу TBL_NEWS
      *         [
      *             'order' => 'year ASC',
      *         ]
@@ -3739,17 +4323,17 @@ class Database implements Database_Interface
      * });
      * print_r($years_list);
      * @endcode
-     * @see PhotoRigma::Classes::Database::$current_format
-     *      Свойство, хранящее текущий формат SQL.
-     * @see PhotoRigma::Classes::Database::with_sql_format()
-     *      Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Свойство, хранящее текущий формат SQL.
+     * @see    PhotoRigma::Classes::Database::with_sql_format()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _with_sql_format_internal(string $format, callable $callback): mixed
     {
         // Проверяем поддерживаемые форматы
         if (!in_array($format, $this->allowed_formats, true)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                 "Неподдерживаемый формат SQL | Формат: $format"
             );
         }
@@ -3770,39 +4354,75 @@ class Database implements Database_Interface
     }
 
     /**
-     * Основной метод для выполнения полнотекстового поиска.
+     * @brief   Выполняет полнотекстовый поиск в указанной таблице.
      *
-     * Этот публичный метод служит точкой входа для выполнения полнотекстового поиска.
-     * Он делегирует выполнение внутреннему методу `_full_text_search_internal`.
+     * @details Этот публичный метод является точкой входа для выполнения полнотекстового поиска.
+     *          Он вызывает внутреннюю логику поиска, реализованную в защищённом методе
+     *          `_full_text_search_internal()`, передавая ему все необходимые параметры и опции.
+     *          Безопасность запроса обеспечивается использованием подготовленных выражений.
      *
-     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string     Строка поиска (может быть "*" для поиска всех строк).
-     * @param string $table             Имя таблицы, в которой выполняется поиск.
-     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
-     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                  (например, `:status`).
-     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                  (например, "category_id").
-     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                  направлением (например, "created_at DESC").
-     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                  строкой с диапазоном (например, "0, 10").
-     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                  "active"]).
-     *                                  Использование параметров `params` является обязательным для подготовленных
-     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                  различными СУБД.
+     * @param array  $columns_to_return Массив строк с именами столбцов, данные из которых нужно вернуть.
+     * @param array  $columns_to_search Массив строк с именами столбцов, по которым выполняется поиск.
+     * @param string $search_string     Строка для полнотекстового поиска.
+     *                                  - Может содержать `*` для выбора всех записей.
+     * @param string $table             Строка с именем таблицы, в которой выполняется поиск.
+     * @param array  $options           Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array|false): Условие WHERE.
+     *                                    * string - используется как есть.
+     *                                    * array - преобразуется в SQL.
+     *                                    * false - игнорируется.
+     *                                  - group (string|false): GROUP BY. Игнорируется, если false.
+     *                                  - order (string|false): ORDER BY. Игнорируется, если false.
+     *                                  - limit (int|string|false): LIMIT.
+     *                                    * int - прямое значение.
+     *                                    * string - формат "OFFSET,COUNT".
+     *                                    * false - игнорируется.
+     *                                  - params (array): Ассоциативный массив параметров
+     *                                    ([":имя" => значение]).
+     *                                    Использование параметров `params` обязательно
+     *                                    для защиты от SQL-инъекций.
      *
      * @return array|false Результат выполнения поиска (массив данных или false, если результат пустой).
      *
-     * @throws RuntimeException         Если не удалось получить версию БД из таблицы db_version.
-     * @throws InvalidArgumentException Если переданы недопустимые аргументы или тип СУБД не поддерживается.*
-     * @throws JsonException при работе с методами для кеша
-     * @throws Exception                Если произошла ошибка при выполнении запроса.
+     * @throws RuntimeException         Если не удалось получить версию БД из таблицы db_version (выбрасывается из
+     *                                  внутренней логики).
+     * @throws InvalidArgumentException Если переданы недопустимые аргументы или тип СУБД не поддерживается
+     *                                  (выбрасывается из внутренней логики).
+     * @throws JsonException            При ошибках, связанных с кодированием/декодированием JSON.
+     * @throws Exception                Если произошла ошибка при выполнении запроса на более низких уровнях.
+     *
+     * @note    Этот метод является точкой входа для выполнения запросов с полнотекстовым поиском.
+     *          Все проверки и обработка выполняются в защищённом методе `_full_text_search_internal()`.
+     *
+     * @warning Метод чувствителен к корректности входных данных.
+     *          Убедитесь, что массивы столбцов и имя таблицы не пусты, а строка поиска не пустая (если не `*`).
+     *          Использование параметров `params` в `$options` обязательно для значений, подставляемых в запросы.
+     *
+     * Пример использования:
+     * @code
+     * // Пример вызова публичного метода
+     * $db = new \PhotoRigma\Classes\Database();
+     *
+     * $results = $db->full_text_search(
+     *     ['id', 'title'],
+     *     ['title', 'content'],
+     *     'test',
+     *     'articles',
+     *     [
+     *         'where' => ['is_active' => true],
+     *         'limit' => 5,
+     *         'params' => [':is_active' => true]
+     *     ]
+     * );
+     *
+     * if ($results !== false) {
+     *     print_r($results);
+     * } else {
+     *     echo "Ничего не найдено.";
+     * }
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::_full_text_search_internal()
+     *         Защищённый метод, выполняющий основную логику полнотекстового поиска.
      */
     public function full_text_search(
         array $columns_to_return,
@@ -3821,36 +4441,133 @@ class Database implements Database_Interface
     }
 
     /**
-     * Основной метод для выполнения полнотекстового поиска.
+     * @brief   Выполняет полнотекстовый поиск в указанной таблице по заданным столбцам.
      *
-     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string     Строка поиска (может быть "*" для поиска всех строк).
-     * @param string $table             Имя таблицы, в которой выполняется поиск.
-     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
-     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                  (например, `:status`).
-     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                  (например, "category_id").
-     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                  направлением (например, "created_at DESC").
-     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                  строкой с диапазоном (например, "0, 10").
-     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                  "active"]).
-     *                                  Использование параметров `params` является обязательным для подготовленных
-     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                  различными СУБД.
+     * @details Этот защищённый метод является основной логикой для выполнения полнотекстового поиска
+     *          и предназначен для использования внутри класса или его наследников.
+     *          Он выполняет следующие шаги:
+     *          1. Валидация входных аргументов (`$columns_to_return`, `$columns_to_search`, `$table`,
+     *             `$search_string`). Проверяется их заполненность и тип.
+     *          2. Обработка специального символа `*` в `$search_string`: если строка поиска равна `*`,
+     *             выполняется обычный запрос на выборку всех записей из таблицы с помощью внутреннего метода
+     *             `_select_internal()`, применяя при этом фильтрацию опций через `fts_check_options()`,
+     *             и возвращается результат через `_res_arr_internal()`.
+     *          3. Получение текущей версии базы данных из таблицы `db_version` с использованием
+     *             `_select_internal()` и `_res_row_internal()`. Это необходимо для выбора корректного
+     *             метода полнотекстового поиска в зависимости от версии СУБД.
+     *          4. Снятие экранирования идентификаторов (имен столбцов и таблицы) с использованием
+     *             метода `unescape_identifiers()` для обеспечения корректности SQL-запроса.
+     *          5. Выбор и вызов специфического метода полнотекстового поиска в зависимости от типа
+     *             используемой СУБД (`$this->db_type`). Используется конструкция `match`.
+     *          6. Передача всех необходимых параметров в выбранный специфический метод поиска.
      *
-     * @return array|false Результат выполнения поиска (массив данных или false, если результат пустой).
+     *          Метод зависит от наличия и доступности таблицы `db_version` и внутренних методов для работы с БД и
+     *          кешем.
      *
-     * @throws RuntimeException         Если не удалось получить версию БД из таблицы db_version.
-     * @throws InvalidArgumentException Если переданы недопустимые аргументы или тип СУБД не поддерживается.*
-     * @throws JsonException при работе с методами для кеша
-     * @throws Exception                Если произошла ошибка при выполнении запроса.
+     * @callergraph
+     * @callgraph
+     *
+     * @param array  $columns_to_return Массив строк с именами столбцов, данные из которых необходимо включить в
+     *                                  результат запроса.
+     *                                  Ограничения: массив не может быть пустым.
+     * @param array  $columns_to_search Массив строк с именами столбцов, по которым должен выполняться полнотекстовый
+     *                                  поиск.
+     *                                  Ограничения: массив не может быть пустым.
+     * @param string $search_string     Строка для полнотекстового поиска.
+     *                                  - Может содержать `*` для выбора всех записей из таблицы (аналогично
+     *                                    обычному SELECT).
+     *                                  Ограничения: строка не может быть пустой (если не `*`).
+     * @param string $table             Строка с именем таблицы, в которой выполняется полнотекстовый поиск.
+     *                                  Ограничения: строка не может быть пустой и должна содержать допустимое имя
+     *                                  таблицы.
+     * @param array  $options           Массив дополнительных опций для формирования запроса. Поддерживаемые ключи:
+     *                                  - where (string|array|false): Условие WHERE.
+     *                                    * string - используется как есть.
+     *                                    * array - преобразуется в SQL. Поддерживает простые условия
+     *                                      (`['поле' => значение]`) и логические операторы (`'OR' => [...]`,
+     *                                      `'NOT' => [...]`).
+     *                                    * false - игнорируется.
+     *                                  - group (string|false): Группировка GROUP BY. Игнорируется, если false.
+     *                                    Должна быть строкой.
+     *                                  - order (string|false): Сортировка ORDER BY. Игнорируется, если false.
+     *                                    Должна быть строкой.
+     *                                  - limit (int|string|false): Ограничение LIMIT.
+     *                                    * int - прямое значение.
+     *                                    * string - формат "OFFSET,COUNT".
+     *                                    * false - игнорируется.
+     *                                  - params (array): Ассоциативный массив параметров
+     *                                    ([":имя" => значение]).
+     *                                    Обязателен для использования с условиями `where` и другими частями запроса,
+     *                                    требующими подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
+     *                                    Может быть пустым массивом, если параметры не требуются.
+     *
+     * @return array|false Возвращает результат выполнения запроса в виде ассоциативного массива строк или false,
+     *                     если результат пустой или произошла ошибка.
+     *
+     * @throws InvalidArgumentException Выбрасывается, если:
+     *                                  - Один из обязательных аргументов (`$columns_to_return`, `$columns_to_search`,
+     *                                    `$table`) пуст.
+     *                                    Пример сообщения: "Недопустимые аргументы | Подробности: ..."
+     *                                  - `$search_string` является пустой строкой (кроме символа `*`).
+     *                                    Пример сообщения: "Пустая строка поиска"
+     *                                  - Тип используемой СУБД (`$this->db_type`) не поддерживается для полнотекстового
+     *                                    поиска.
+     *                                    Пример сообщения: "Неизвестный тип СУБД | Тип: mysql"
+     * @throws RuntimeException         Выбрасывается, если не удалось получить корректную версию из таблицы `db_version`.
+     *                                  Пример сообщения: "Не удалось получить корректную версию из таблицы db_version"
+     * @throws JsonException            Выбрасывается при ошибках, связанных с кодированием/декодированием JSON,
+     *                                  например, при логировании конфигурации в сообщении об ошибке.
+     * @throws Exception                Выбрасывается при возникновении общих ошибок выполнения запроса на более
+     *                                  низких уровнях.
+     *
+     * @warning Убедитесь, что массивы `$columns_to_return` и `$columns_to_search` не пусты.
+     *          Проверьте, что `$table` содержит корректное и непустое имя таблицы.
+     *          Строка поиска `$search_string` не может быть пустой (за исключением `*`).
+     *          Использование параметров `params` в `$options` обязательно для значений, подставляемых в запросы
+     *          (например, в условии `where`), для предотвращения SQL-инъекций.
+     *          Метод зависит от наличия таблицы `db_version` и корректного типа СУБД.
+     *
+     * Пример использования метода _full_text_search_internal():
+     * @code
+     * // Пример выполнения полнотекстового поиска
+     * $results = $this->_full_text_search_internal(
+     *     ['id', 'title', 'content'],
+     *     ['title', 'content'],
+     *     'искомая фраза',
+     *     'articles',
+     *     [
+     *         'where' => ['status' => 'published'],
+     *         'limit' => 10,
+     *         'params' => [':status' => 'published']
+     *     ]
+     * );
+     *
+     * if ($results !== false) {
+     *     print_r($results);
+     * } else {
+     *     echo "Поиск не дал результатов или произошла ошибка.";
+     * }
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Используется для выборки всех записей при `$search_string = '*'` и для получения версии БД.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Используется для получения результата в виде массива при `$search_string = '*'`.
+     * @see    PhotoRigma::Classes::Database::_res_row_internal()
+     *         Используется для получения одной строки результата (версии БД).
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Используется для фильтрации опций при `$search_string = '*'`.
+     * @see    PhotoRigma::Classes::Database::unescape_identifiers()
+     *         Используется для снятия экранирования имен столбцов и таблицы.
+     * @see    PhotoRigma::Classes::Database::full_text_search_mysql()
+     *         Специфический метод для полнотекстового поиска в MySQL.
+     * @see    PhotoRigma::Classes::Database::full_text_search_pgsql()
+     *         Специфический метод для полнотекстового поиска в PostgreSQL.
+     * @see    PhotoRigma::Classes::Database::full_text_search_sqlite()
+     *         Специфический метод для полнотекстового поиска в SQLite.
+     * @see    PhotoRigma::Classes::Database::$db_type
+     *         Свойство, хранящее тип текущей СУБД.
+     * @see    PhotoRigma::Classes::Database::full_text_search()
+     *         Публичный метод-обертка, использующий этот внутренний метод.
      */
     protected function _full_text_search_internal(
         array $columns_to_return,
@@ -3862,12 +4579,12 @@ class Database implements Database_Interface
         // 1. Проверка аргументов
         if (empty($columns_to_return) || empty($columns_to_search) || empty($table)) {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Недопустимые аргументы | Подробности: columns_to_return, columns_to_search или table пусты"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: 'global') . ') | ' . 'Недопустимые аргументы | Подробности: columns_to_return, columns_to_search или table пусты'
             );
         }
         if (trim($search_string) === '') {
             throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Пустая строка поиска"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: 'global') . ') | ' . 'Пустая строка поиска'
             );
         }
 
@@ -3890,7 +4607,7 @@ class Database implements Database_Interface
 
         if ($version_data === false || !isset($version_data['ver'])) {
             throw new RuntimeException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Не удалось получить корректную версию из таблицы db_version"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: 'global') . ') | ' . 'Не удалось получить корректную версию из таблицы db_version'
             );
         }
 
@@ -3928,41 +4645,174 @@ class Database implements Database_Interface
                 $options
             ),
             default  => throw new InvalidArgumentException(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: 'global') . ") | " . "Неизвестный тип СУБД | Тип: $this->db_type"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: 'global') . ') | ' . "Неизвестный тип СУБД | Тип: $this->db_type"
             ),
         };
     }
 
     /**
-     * Метод для выполнения полнотекстового поиска в MySQL.
+     * @brief   Выполняет полнотекстовый поиск в MySQL с обработкой минимальной длины строки, кешированием ошибок и
+     *          fallback на LIKE.
      *
-     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string     Строка поиска (уже подготовлена, без % или *).
-     * @param string $table             Имя таблицы, в которой выполняется поиск.
-     * @param string $db_version        Версия БД, полученная из SELECT ver FROM db_version.
-     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
-     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                  (например, `:status`).
-     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                  (например, "category_id").
-     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                  направлением (например, "created_at DESC").
-     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                  строкой с диапазоном (например, "0, 10").
-     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                  "active"]).
-     *                                  Использование параметров `params` является обязательным для подготовленных
-     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                  различными СУБД.
+     * @details Этот приватный метод реализует логику полнотекстового поиска (Full-Text Search - FTS) для базы данных
+     *          MySQL. Он обрабатывает минимальную длину строки поиска, использует кеширование для быстрого определения
+     *          предыдущих ошибок выполнения FTS-запросов (например, из-за отсутствия FTS-индекса) и включает
+     *          механизм автоматического перехода (fallback) на поиск с использованием оператора `LIKE` в случае
+     *          необходимости.
+     *          Метод выполняет следующие действия:
+     *          1. Экранирует имена столбцов для возврата (`$columns_to_return`), столбцов для поиска
+     *             (`$columns_to_search`) и имя таблицы (`$table`) с использованием обратных кавычек (`` ` ``) для
+     *             соответствия синтаксису MySQL.
+     *          2. Проверяет, что длина строки поиска `$search_string` превышает минимально допустимое значение,
+     *             определенное константой `MIN_FULLTEXT_SEARCH_LENGTH`. Если длина недостаточна, метод сразу же
+     *             вызывает приватный метод `fallback_to_like_mysql()` для выполнения поиска с использованием `LIKE`
+     *             и возвращает его результат.
+     *          3. Формирует уникальный ключ кеша на основе имени таблицы и столбцов для поиска для идентификации
+     *             FTS-индекса в кеше.
+     *          4. Проверяет кеш (`$this->cache`) на наличие записи, связанной с этим FTS-индексом, используя
+     *             `$db_version` как параметр валидности кеша. Если в кеше найдена запись с флагом `query_error = true`,
+     *             это означает, что предыдущая попытка выполнить FTS-запрос для этого индекса завершилась ошибкой.
+     *             В этом случае метод также вызывает `fallback_to_like_mysql()` и возвращает его результат.
+     *          5. Предпринимает попытку выполнить полнотекстовый поиск в блоке `try...catch`:
+     *             - Формирует базовые опции FTS (`$base_options`), включающие условие `WHERE MATCH(...) AGAINST(...)
+     *               IN NATURAL LANGUAGE MODE` и сортировку `ORDER BY MATCH(...) AGAINST(...) DESC`, используя
+     *               переданную строку поиска `$search_string` как параметр.
+     *             - Объединяет переданные внешние опции запроса (`$options`) с базовыми FTS-опциями
+     *               (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *               конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
+     *             - Вызывает приватный метод `_select_internal()` с экранированными столбцами, экранированным именем
+     *               таблицы и объединенными опциями для выполнения SQL-запроса.
+     *          6. В случае успешного выполнения FTS-запроса (блок `try` без исключений):
+     *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = false` для данного FTS-индекса,
+     *               указывая на успешность последнего запроса.
+     *             - Получает результат запроса в виде массива с помощью приватного метода `_res_arr_internal()` и
+     *               возвращает его.
+     *          7. В случае возникновения исключения (`Throwable`) во время выполнения FTS-запроса (блок `catch`):
+     *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая сообщение об ошибке.
+     *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = true` для данного FTS-индекса,
+     *               чтобы избежать повторных ошибок в будущем.
+     *             - Вызывает приватный метод `fallback_to_like_mysql()` для выполнения поиска с использованием
+     *               `LIKE` и возвращает его результат.
      *
-     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Он вызывается из публичных или защищенных методов поиска, когда определен тип базы данных MySQL.
      *
-     * @throws JsonException при работе с методами для кеша
-     * @throws Exception Если произошла ошибка при логировании через log_in_file()
+     * @internal
+     * @callergraph
+     * @callgraph
+     *
+     * @param array  $columns_to_return Массив строк с именами столбцов, которые нужно вернуть в результате поиска.
+     * @param array  $columns_to_search Массив строк с именами столбцов, по которым выполняется полнотекстовый поиск.
+     * @param string $search_string     Строка поиска, введенная пользователем (должна быть без спецсимволов LIKE, но
+     *                                  может содержать операторы FTS, если включен соответствующий режим).
+     *                                  Проверяется на минимальную длину.
+     * @param string $table             Строка с именем таблицы, в которой выполняется поиск.
+     * @param string $db_version        Строка, представляющая версию структуры базы данных (например, из специальной
+     *                                  таблицы), используется для валидации кеша.
+     * @param array $options            Массив дополнительных опций для формирования запроса. Используется для
+     *                                  добавления условий WHERE, GROUP BY, ORDER BY, LIMIT и параметров к FTS-запросу.
+     *                                  Поддерживаемые ключи:
+     *                                  - where (string|array|false): Дополнительное условие WHERE.
+     *                                  - group (string|false): Группировка GROUP BY.
+     *                                  - order (string|false): Дополнительная сортировка ORDER BY (имеет более
+     *                                    низкий приоритет, чем сортировка FTS).
+     *                                  - limit (int|string|false): Ограничение LIMIT.
+     *                                  - params (array): Ассоциативный массив дополнительных параметров для
+     *                                    подготовленного выражения.
+     *
+     * @return array|false Результат выполнения поиска в виде массива ассоциативных массивов (строк) при успехе и
+     *                     наличии результатов, пустой массив при успехе, но отсутствии результатов, или `false` в
+     *                     случае критической ошибки (хотя большинство ошибок обрабатывается через исключения или
+     *                     fallback).
+     *
+     * @throws JsonException            Может быть выброшено методами кеширования (`$this->cache->is_valid`,
+     *                                  `$this->cache->update_cache`) при ошибках сериализации/десериализации данных
+     *                                  кеша.
+     * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
+     *                                  невозможности записи в файл.
+     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
+     *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
+     *                                  FTS перехватываются и приводят к fallback).
+     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     *                                  ошибок внутри FTS перехватываются и приводят к fallback).
+     *
+     * @note    Метод использует константу `MIN_FULLTEXT_SEARCH_LENGTH` для проверки минимальной длины строки поиска.
+     *          Активно используется кеширование (`$this->cache`, `$this->format_cache` неявно через
+     *          `_select_internal`) для оптимизации и запоминания FTS-индексов, вызывающих ошибки.
+     *          При возникновении ошибок выполнения FTS-запроса (например, отсутствие FTS-индекса), метод
+     *          автоматически переключается на более медленный поиск с помощью оператора `LIKE`, вызывая
+     *          `fallback_to_like_mysql()`.
+     *
+     * @warning Убедитесь, что в таблице, указанной в `$table`, существуют столбцы из `$columns_to_search`,
+     *          и по ним создан действующий полнотекстовый индекс (`FULLTEXT`). Отсутствие индекса приведет к ошибке
+     *          выполнения FTS-запроса и переключению на `LIKE`.
+     *          Поиск с `LIKE` может быть значительно медленнее полнотекстового поиска на больших объемах данных.
+     *
+     * Пример использования (вызывается внутри класса):
+     * @code
+     * // Предположим, MIN_FULLTEXT_SEARCH_LENGTH = 4
+     * // $this->current_format = 'mysql';
+     * // $this->db_type = 'mysql';
+     *
+     * $columns_to_return = ['id', 'title', 'content'];
+     * $columns_to_search = ['title', 'content'];
+     * $search_string = 'database optimization'; // Длина >= 4
+     * $table = 'articles';
+     * $db_version = '1.0'; // Пример версии структуры БД
+     * $options = [
+     *     'where' => ['is_published' => 1],
+     *     'limit' => 10,
+     *     'params' => [':is_published' => 1],
+     * ];
+     *
+     * // Вызов метода
+     * $results = $this->full_text_search_mysql(
+     *     $columns_to_return,
+     *     $columns_to_search,
+     *     $search_string,
+     *     $table,
+     *     $db_version,
+     *     $options
+     * );
+     *
+     * if ($results !== false) {
+     *     // Обработка результатов поиска
+     *     print_r($results);
+     * } else {
+     *     // Обработка критической ошибки (редко, т.к. есть fallback)
+     *     echo "Произошла критическая ошибка поиска.";
+     * }
+     *
+     * // Если strlen($search_string) < 4, будет вызван fallback_to_like_mysql
+     * // Если FTS запрос упадет (нет индекса), будет вызван fallback_to_like_mysql, ошибка будет залогирована и закэширована.
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::fallback_to_like_mysql()
+     *         Приватный метод, реализующий поиск по LIKE в качестве fallback.
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Приватный метод, объединяющий и обрабатывающий опции запроса для FTS.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Приватный метод для выполнения SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Приватный метод для получения всех строк результата запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования сообщений.
+     * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
+     *         Интерфейс, используемый для работы с кешированием.
+     * @see    PhotoRigma::Classes::Database::$cache
+     *         Свойство, хранящее объект, реализующий `Cache_Handler_Interface`.
+     * @see    PhotoRigma::Classes::Database::$format_cache
+     *         Внутреннее свойство, используемое для кэширования форматов (используется косвенно через _select_internal).
+     * @see    PhotoRigma::Classes::Database::$unescape_cache
+     *         Внутреннее свойство, используемое для кэширования снятия экранирования (используется косвенно через _select_internal).
+     * @see    PhotoRigma::Classes::Database::$current_format
+     *         Свойство, хранящее текущий формат SQL.
+     * @see    PhotoRigma::Classes::Database::$db_type
+     *         Свойство, хранящее тип текущей СУБД.
+     * @see    MIN_FULLTEXT_SEARCH_LENGTH
+     *         Константа, определяющая минимальную длину строки для полнотекстового поиска.
      */
     private function full_text_search_mysql(
         array $columns_to_return,
@@ -4029,7 +4879,7 @@ class Database implements Database_Interface
         } catch (Throwable $e) {
             // Ловим ошибку выполнения полнотекстового запроса
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') .
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') .
                 ") | Полнотекстовый запрос упал | Таблица: $table_escaped | Сообщение: {$e->getMessage()}"
             );
 
@@ -4054,36 +4904,126 @@ class Database implements Database_Interface
     }
 
     /**
-     * Альтернативный поиск через LIKE для MySQL.
+     * @brief   Выполняет альтернативный поиск по LIKE для MySQL.
      *
-     * Используется как fallback, когда полнотекстовый поиск недоступен или не дал результатов.
-     * Поддерживает несколько столбцов и уникальные плейсхолдеры для каждого условия LIKE.
+     * @details Этот приватный метод реализует поиск данных в MySQL, используя оператор `LIKE` по нескольким столбцам.
+     *          Он используется как резервный механизм (fallback), когда основной полнотекстовый поиск (FTS)
+     *          недоступен, отключен, или не дал результатов (например, из-за минимальной длины строки поиска
+     *          или отсутствия FTS-индекса).
+     *          Метод выполняет следующие действия:
+     *          1. Проверяет, является ли строка поиска `$search_string` пустой. Если да, возвращает `false` без
+     *             выполнения запроса.
+     *          2. Формирует условия `WHERE` для оператора `LIKE` по каждому столбцу из массива
+     *             `$columns_to_search_escaped`. Каждое условие имеет вид `"имя_столбца" LIKE :плейсхолдер`. Для
+     *             строки поиска автоматически добавляются символы `%` в начале и конце (для поиска подстроки).
+     *             Каждое условие использует уникальный именованный плейсхолдер (например, `:search_string_0`,
+     *             `:search_string_1`) для безопасной привязки параметров.
+     *          3. Объединяет сформированные условия `LIKE` оператором `OR` для создания общей строки условия `WHERE`.
+     *          4. Формирует базовые опции (`$base_options`) для поиска по `LIKE`, включающие сформированное условие
+     *             `WHERE` и массив параметров для плейсхолдеров `LIKE`.
+     *          5. Объединяет переданные внешние опции запроса (`$options`) с базовыми опциями `LIKE` (`$base_options`)
+     *             с помощью приватного метода `fts_check_options()`. Этот метод разрешает конфликты плейсхолдеров
+     *             и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
+     *          6. Предпринимает попытку выполнить SQL-запрос SELECT с использованием экранированных столбцов для
+     *             возврата, экранированного имени таблицы и объединенных опций (`$new_options`) в блоке
+     *             `try...catch`, вызывая приватный метод `_select_internal()`.
+     *          7. В случае возникновения исключения (`Throwable`) во время выполнения LIKE-запроса (блок `catch`):
+     *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
+     *               сообщение об ошибке.
+     *             - Возвращает `false`, сигнализируя об ошибке выполнения поиска.
+     *          8. В случае успешного выполнения запроса (блок `try` без исключений) получает результат запроса
+     *             в виде массива с помощью приватного метода `_res_arr_internal()` и возвращает его.
      *
-     * @param array  $columns_to_return_escaped Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search_escaped Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string             Строка поиска (может быть "*" для поиска всех строк).
-     * @param string $table_escaped             Имя таблицы, в которой выполняется поиск.
-     * @param array  $options                   Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                          - where (string|array): Условие WHERE. Может быть строкой (например,
-     *                                          "status = :status") или ассоциативным массивом (например, ["id" =>
-     *                                          ":id", "status" => ":status"]). Для защиты от SQL-инъекций
-     *                                          рекомендуется использовать плейсхолдеры (например, `:status`).
-     *                                          - group (string): Группировка GROUP BY. Должна быть строкой с именами
-     *                                          полей (например, "category_id").
-     *                                          - order (string): Сортировка ORDER BY. Должна быть строкой с именами
-     *                                          полей и направлением (например, "created_at DESC").
-     *                                          - limit (int|string): Ограничение LIMIT. Может быть числом (например,
-     *                                          10) или строкой с диапазоном (например, "0, 10").
-     *                                          - params (array): Параметры для подготовленного выражения.
-     *                                          Ассоциативный массив значений, используемых в запросе (например,
-     *                                          [":id" => 1, ":status" => "active"]).
-     *                                          Использование параметров `params` является обязательным для
-     *                                          подготовленных выражений, так как это обеспечивает защиту от
-     *                                          SQL-инъекций и совместимость с различными СУБД.
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Он вызывается из приватного метода `full_text_search_mysql()`.
      *
-     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     * @internal
+     * @callergraph
      *
-     * @throws Exception Если произошла ошибка логирования через log_in_file()
+     * @param array $columns_to_return_escaped  Массив строк с именами столбцов, которые нужно вернуть. Имена
+     *                                          столбцов должны быть уже экранированы для MySQL (например, `` `id` ``).
+     * @param array $columns_to_search_escaped  Массив строк с именами столбцов, по которым выполняется поиск по LIKE.
+     *                                          Имена столбцов должны быть уже экранированы для MySQL.
+     * @param string $search_string             Строка поиска, введенная пользователем. Для поиска по LIKE
+     *                                          автоматически будут добавлены символы `%`. Пустая строка приводит к
+     *                                          возврату `false`.
+     * @param string $table_escaped             Строка с именем таблицы, в которой выполняется поиск. Имя таблицы
+     *                                          должно быть уже экранировано для MySQL (например, `` `users` ``).
+     * @param array $options                    Массив дополнительных опций для формирования запроса. Используется
+     *                                          для добавления условий WHERE, GROUP BY, ORDER BY, LIMIT и параметров
+     *                                          к LIKE-запросу.
+     *                                          Поддерживаемые ключи:
+     *                                          - where (string|array|false): Дополнительное условие WHERE
+     *                                            (объединяется с условиями LIKE оператором AND).
+     *                                          - group (string|false): Группировка GROUP BY.
+     *                                          - order (string|false): Сортировка ORDER BY.
+     *                                          - limit (int|string|false): Ограничение LIMIT.
+     *                                          - params (array): Ассоциативный массив дополнительных параметров для
+     *                                            подготовленного выражения.
+     *
+     * @return array|false Результат выполнения поиска в виде массива ассоциативных массивов (строк) при успехе и
+     *                     наличии результатов, пустой массив при успехе, но отсутствии результатов, или `false` в
+     *                     случае пустой строки поиска или ошибки выполнения запроса.
+     *
+     * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
+     *                                  невозможности записи в файл.
+     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
+     *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
+     *                                  LIKE перехватываются и приводят к возврату false).
+     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     *                                  ошибок внутри LIKE перехватываются и приводят к возврату false).
+     *
+     * @note    Метод используется как резервный вариант поиска, когда полнотекстовый поиск (FTS) не может быть выполнен.
+     *          Для каждого столбца поиска создается отдельное условие `LIKE` с уникальным плейсхолдером.
+     *          Использует приватный метод `fts_check_options()` для объединения условий `LIKE` с любыми
+     *          дополнительными опциями, предоставленными пользователем.
+     *
+     * @warning Убедитесь, что входные параметры `$columns_to_return_escaped`, `$columns_to_search_escaped` и
+     *          `$table_escaped` уже экранированы для MySQL.
+     *          Поиск с `LIKE` может быть неэффективен на больших объемах данных и может вызвать высокую нагрузку на
+     *          базу данных.
+     *
+     * Пример использования (вызывается из full_text_search_mysql()):
+     * @code
+     * // Предположим:
+     * // $columns_to_return_escaped = ['`id`', '`title`'];
+     * // $columns_to_search_escaped = ['`title`', '`content`'];
+     * // $search_string = 'search term';
+     * // $table_escaped = '`articles`';
+     * // $options = ['limit' => 5];
+     *
+     * // Вызов fallback метода
+     * $results_like = $this->fallback_to_like_mysql(
+     *     $columns_to_return_escaped,
+     *     $columns_to_search_escaped,
+     *     $search_string,
+     *     $table_escaped,
+     *     $options
+     * );
+     *
+     * if ($results_like !== false) {
+     *     // Обработка результатов поиска по LIKE
+     *     print_r($results_like);
+     * } else {
+     *     // Обработка ошибки выполнения LIKE-поиска
+     *     echo "Произошла ошибка при выполнении LIKE-поиска.";
+     * }
+     *
+     * // Если $search_string был '', вернет false сразу.
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::full_text_search_mysql()
+     *         Приватный метод, который вызывает этот метод в случае необходимости fallback.
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Приватный метод, используемый для объединения опций.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Приватный метод для выполнения SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Приватный метод для получения всех строк результата запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования сообщений.
      */
     private function fallback_to_like_mysql(
         array $columns_to_return_escaped,
@@ -4122,7 +5062,7 @@ class Database implements Database_Interface
             );
         } catch (Throwable $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка при выполнении LIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Ошибка при выполнении LIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
             );
             return false;
         }
@@ -4132,35 +5072,166 @@ class Database implements Database_Interface
     }
 
     /**
-     * Метод для выполнения полнотекстового поиска в PostgreSQL.
+     * @brief   Выполняет полнотекстовый поиск в PostgreSQL с обработкой минимальной длины строки, кешированием
+     *          ошибок и fallback на ILIKE.
      *
-     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string     Строка поиска (уже подготовлена, без % или *).
-     * @param string $table             Имя таблицы, в которой выполняется поиск.
-     * @param string $db_version        Версия БД, полученная из SELECT ver FROM db_version.
-     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
-     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                  (например, `:status`).
-     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                  (например, "category_id").
-     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                  направлением (например, "created_at DESC").
-     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                  строкой с диапазоном (например, "0, 10").
-     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                  "active"]).
-     *                                  Использование параметров `params` является обязательным для подготовленных
-     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                  различными СУБД.
+     * @details Этот приватный метод реализует логику полнотекстового поиска (Full-Text Search - FTS) для базы данных
+     *          PostgreSQL. Он обрабатывает минимальную длину строки поиска, использует кеширование для быстрого
+     *          определения предыдущих ошибок выполнения FTS-запросов и включает механизм автоматического перехода
+     *          (fallback) на поиск с использованием оператора `ILIKE` (регистронезависимый LIKE) в случае
+     *          необходимости.
+     *          Метод выполняет следующие действия:
+     *          1. Экранирует имена столбцов для возврата (`$columns_to_return`), столбцов для поиска
+     *             (`$columns_to_search`) и имя таблицы (`$table`) с использованием двойных кавычек (`"`) для
+     *             соответствия синтаксису PostgreSQL.
+     *          2. Проверяет, что длина строки поиска `$search_string` превышает минимально допустимое значение,
+     *             определенное константой `MIN_FULLTEXT_SEARCH_LENGTH`. Если длина недостаточна, метод сразу же
+     *             вызывает приватный метод `fallback_to_ilike_pgsql()` для выполнения поиска с использованием
+     *             `ILIKE` и возвращает его результат.
+     *          3. Формирует уникальный ключ кеша на основе имени таблицы и столбцов для поиска для идентификации
+     *             FTS-индекса в кеше.
+     *          4. Проверяет кеш (`$this->cache`) на наличие записи, связанной с этим FTS-индексом, используя
+     *             `$db_version` как параметр валидности кеша. Если в кеше найдена запись с флагом `query_error = true`,
+     *             это означает, что предыдущая попытка выполнить FTS-запрос для этого индекса завершилась ошибкой.
+     *             В этом случае метод также вызывает `fallback_to_ilike_pgsql()` и возвращает его результат.
+     *          5. Предпринимает попытку выполнить полнотекстовый поиск в блоке `try...catch`:
+     *             - Формирует базовые опции FTS (`$base_options`), включающие условие `WHERE tsv_weighted @@
+     *               plainto_tsquery(:search_string_where)` и сортировку `ORDER BY ts_rank(tsv_weighted,
+     *               plainto_tsquery(:search_string_order)) DESC`, используя переданную строку поиска
+     *               `$search_string` как параметр. Предполагается наличие столбца `tsv_weighted` типа `TSVECTOR` в
+     *               таблице, содержащего лексемы для поиска.
+     *             - Объединяет переданные внешние опции запроса (`$options`) с базовыми FTS-опциями
+     *               (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *               конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
+     *             - Вызывает приватный метод `_select_internal()` с экранированными столбцами, экранированным именем
+     *               таблицы и объединенными опциями для выполнения SQL-запроса.
+     *          6. В случае успешного выполнения FTS-запроса (блок `try` без исключений):
+     *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = false` для данного FTS-индекса,
+     *               указывая на успешность последнего запроса.
+     *             - Получает результат запроса в виде массива с помощью приватного метода `_res_arr_internal()` и
+     *               возвращает его.
+     *          7. В случае возникновения исключения (`Throwable`) во время выполнения FTS-запроса (блок `catch`):
+     *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
+     *               сообщение об ошибке.
+     *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = true` для данного FTS-индекса,
+     *               чтобы избежать повторных ошибок в будущем.
+     *             - Вызывает приватный метод `fallback_to_ilike_pgsql()` для выполнения поиска с использованием
+     *               `ILIKE` и возвращает его результат.
      *
-     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Он вызывается из публичных или защищенных методов поиска, когда определен тип базы данных PostgreSQL.
      *
-     * @throws JsonException при работе с методами для кеша
-     * @throws Exception Если произошла ошибка при выполнении запроса или логировании через log_in_file()
+     * @internal
+     * @callergraph
+     * @callgraph
+     *
+     * @param array  $columns_to_return Массив строк с именами столбцов, которые нужно вернуть в результате поиска.
+     * @param array  $columns_to_search Массив строк с именами столбцов, по которым выполняется полнотекстовый поиск.
+     * @param string $search_string     Строка поиска, введенная пользователем (должна быть без спецсимволов LIKE, но
+     *                                  может содержать операторы FTS, если включен соответствующий режим).
+     *                                  Проверяется на минимальную длину.
+     * @param string $table             Строка с именем таблицы, в которой выполняется поиск.
+     * @param string $db_version        Строка, представляющая версию структуры базы данных (например, из специальной
+     *                                  таблицы), используется для валидации кеша.
+     * @param array $options            Массив дополнительных опций для формирования запроса. Используется для
+     *                                  добавления условий WHERE, GROUP BY, ORDER BY, LIMIT и параметров к FTS-запросу.
+     *                                  Поддерживаемые ключи:
+     *                                  - where (string|array|false): Дополнительное условие WHERE.
+     *                                  - group (string|false): Группировка GROUP BY.
+     *                                  - order (string|false): Дополнительная сортировка ORDER BY (имеет более
+     *                                    низкий приоритет, чем сортировка FTS).
+     *                                  - limit (int|string|false): Ограничение LIMIT.
+     *                                  - params (array): Ассоциативный массив дополнительных параметров для
+     *                                    подготовленного выражения.
+     *
+     * @return array|false Результат выполнения поиска в виде массива ассоциативных массивов (строк) при успехе и
+     *                     наличии результатов, пустой массив при успехе, но отсутствии результатов, или `false` в
+     *                     случае пустой строки поиска, критической ошибки или если предыдущий FTS-запрос для этого
+     *                     индекса завершился ошибкой (приводит к fallback, который может вернуть false).
+     *
+     * @throws JsonException            Может быть выброшено методами кеширования (`$this->cache->is_valid`,
+     *                                  `$this->cache->update_cache`) при ошибках сериализации/десериализации данных
+     *                                  кеша.
+     * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
+     *                                  невозможности записи в файл.
+     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
+     *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
+     *                                  FTS перехватываются и приводят к fallback).
+     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     *                                  ошибок внутри FTS перехватываются и приводят к fallback).
+     *
+     * @note    Метод использует константу `MIN_FULLTEXT_SEARCH_LENGTH` для проверки минимальной длины строки поиска.
+     *          Активно используется кеширование (`$this->cache`) для оптимизации и запоминания FTS-индексов,
+     *          вызывающих ошибки.
+     *          При возникновении ошибок выполнения FTS-запроса (например, из-за проблем с FTS конфигурацией или
+     *          отсутствия колонки tsv_weighted), метод автоматически переключается на поиск с помощью оператора
+     *          `ILIKE`, вызывая `fallback_to_ilike_pgsql()`.
+     *          Для работы FTS в PostgreSQL требуется колонка типа TSVECTOR (например, `tsv_weighted`) и
+     *          соответствующая конфигурация.
+     *
+     * @warning Убедитесь, что в таблице, указанной в `$table`, существуют столбцы из `$columns_to_search`,
+     *          а также колонка типа TSVECTOR (например, `tsv_weighted`), содержащая лексемы для поиска. Убедитесь,
+     *          что настроена соответствующая FTS-конфигурация (словари, парсеры). Отсутствие необходимых компонентов
+     *          или некорректная конфигурация приведет к ошибке выполнения FTS-запроса и переключению на `ILIKE`.
+     *          Поиск с `ILIKE` может быть значительно медленнее полнотекстового поиска на больших объемах данных.
+     *
+     * Пример использования (вызывается внутри класса):
+     * @code
+     * // Предположим, MIN_FULLTEXT_SEARCH_LENGTH = 4
+     * // $this->current_format = 'pgsql';
+     * // $this->db_type = 'pgsql';
+     *
+     * $columns_to_return = ['id', 'title', 'content'];
+     * $columns_to_search = ['title', 'content']; // Используются для формирования запроса, но поиск идет по tsv_weighted
+     * $search_string = 'database optimization'; // Длина >= 4
+     * $table = 'articles'; // Предполагается, что в таблице 'articles' есть колонка tsv_weighted
+     * $db_version = '1.0'; // Пример версии структуры БД
+     * $options = [
+     *     'where' => ['is_published' => 1],
+     *     'limit' => 10,
+     *     'params' => [':is_published' => 1],
+     * ];
+     *
+     * // Вызов метода
+     * $results = $this->full_text_search_pgsql(
+     *     $columns_to_return,
+     *     $columns_to_search, // Столбцы для поиска используются plainto_tsquery
+     *     $search_string,
+     *     $table,
+     *     $db_version,
+     *     $options
+     * );
+     *
+     * if ($results !== false) {
+     *     // Обработка результатов поиска
+     *     print_r($results);
+     * } else {
+     *     // Обработка ошибки (произошел fallback на ILIKE, и он тоже вернул false при ошибке)
+     *     echo "Произошла ошибка поиска (включая fallback).";
+     * }
+     *
+     * // Если strlen($search_string) < 4, будет вызван fallback_to_ilike_pgsql
+     * // Если FTS запрос упадет (например, нет колонки tsv_weighted), будет вызван fallback_to_ilike_pgsql, ошибка будет залогирована и закэширована.
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::fallback_to_ilike_pgsql()
+     *         Приватный метод, реализующий поиск по ILIKE в качестве fallback.
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Приватный метод, объединяющий и обрабатывающий опции запроса для FTS.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Приватный метод для выполнения SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Приватный метод для получения всех строк результата запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования сообщений.
+     * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
+     *         Интерфейс, используемый для работы с кешированием.
+     * @see    PhotoRigma::Classes::Database::$cache
+     *         Свойство, хранящее объект, реализующий `Cache_Handler_Interface`.
+     * @see    MIN_FULLTEXT_SEARCH_LENGTH
+     *         Константа, определяющая минимальную длину строки для полнотекстового поиска.
      */
     private function full_text_search_pgsql(
         array $columns_to_return,
@@ -4226,7 +5297,7 @@ class Database implements Database_Interface
         } catch (Throwable $e) {
             // Логируем ошибку
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Полнотекстовый запрос PostgreSQL упал | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Полнотекстовый запрос PostgreSQL упал | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
             );
 
             // Обновляем кэш: теперь запрос выдает ошибку
@@ -4250,36 +5321,143 @@ class Database implements Database_Interface
     }
 
     /**
-     * Альтернативный поиск через ILIKE с ранжированием similarity() для PostgreSQL.
+     * @brief   Выполняет альтернативный поиск по ILIKE с ранжированием similarity() для PostgreSQL.
      *
-     * Используется как fallback, когда полнотекстовый поиск недоступен или не дал результатов.
-     * Поддерживает несколько столбцов, уникальные плейсхолдеры и ранжирование по близости.
+     * @details Этот приватный метод реализует поиск данных в PostgreSQL, используя оператор `ILIKE`
+     *          (регистронезависимый LIKE) по нескольким столбцам с возможностью ранжирования результатов по близости
+     *          с использованием функции `similarity()`. Он используется как резервный механизм (fallback), когда
+     *          основной полнотекстовый поиск (FTS) недоступен, отключен, или не дал результатов.
+     *          Метод выполняет следующие действия:
+     *          1. Проверяет, является ли строка поиска `$search_string` пустой. Если да, возвращает `false` без
+     *             выполнения запроса.
+     *          2. Формирует условия `WHERE` для оператора `ILIKE` по каждому столбцу из массива
+     *             `$columns_to_search_escaped`. Каждое условие имеет вид `"имя_столбца" ILIKE :плейсхолдер`. Для
+     *              строки поиска автоматически добавляются символы `%` в начале и конце (для поиска подстроки).
+     *              Каждое условие использует уникальный именованный плейсхолдер (например, `:search_string_0`,
+     *              `:search_string_1`) для безопасной привязки параметров.
+     *          3. Формирует выражения для ранжирования по близости с использованием функции `similarity()` для
+     *             каждого столбца из массива `$columns_to_search_escaped`. Каждое выражение имеет вид `similarity
+     *             ("имя_столбца", :плейсхолдер_ранга)`, где `:плейсхолдер_ранга` - уникальный именованный
+     *             плейсхолдер для исходной строки поиска.
+     *          4. Объединяет сформированные условия `ILIKE` оператором `OR` для создания общей строки условия `WHERE`.
+     *          5. Объединяет сформированные выражения `similarity()` оператором `+` для создания общей строки
+     *             сортировки `ORDER BY` по суммарному рангу (по убыванию).
+     *          6. Формирует базовые опции (`$base_options`) для поиска по `ILIKE` с ранжированием, включающие
+     *             сформированные строки `WHERE` и `ORDER BY`, а также массив параметров, содержащий плейсхолдеры как
+     *             для `ILIKE`, так и для `similarity()`.
+     *          7. Объединяет переданные внешние опции запроса (`$options`) с базовыми опциями (`$base_options`)
+     *             с помощью приватного метода `fts_check_options()`. Этот метод разрешает конфликты плейсхолдеров
+     *             и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS (сортировка по рангу из
+     *             $base_options имеет приоритет).
+     *          8. Предпринимает попытку выполнить SQL-запрос SELECT с использованием экранированных столбцов для
+     *             возврата, экранированного имени таблицы и объединенных опций (`$new_options`) в блоке
+     *             `try...catch`, вызывая приватный метод `_select_internal()`.
+     *          9. В случае возникновения исключения (`Throwable`) во время выполнения LIKE-запроса (блок `catch`):
+     *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
+     *               сообщение об ошибке.
+     *             - Возвращает `false`, сигнализируя об ошибке выполнения поиска.
+     *          10. В случае успешного выполнения запроса (блок `try` без исключений) получает результат запроса
+     *              в виде массива с помощью приватного метода `_res_arr_internal()` и возвращает его.
      *
-     * @param array  $columns_to_return_escaped Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search_escaped Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string             Строка поиска (может быть "*" для поиска всех строк).
-     * @param string $table_escaped             Имя таблицы, в которой выполняется поиск.
-     * @param array  $options                   Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                          - where (string|array): Условие WHERE. Может быть строкой (например,
-     *                                          "status = :status") или ассоциативным массивом (например, ["id" =>
-     *                                          ":id", "status" => ":status"]). Для защиты от SQL-инъекций
-     *                                          рекомендуется использовать плейсхолдеры (например, `:status`).
-     *                                          - group (string): Группировка GROUP BY. Должна быть строкой с именами
-     *                                          полей (например, "category_id").
-     *                                          - order (string): Сортировка ORDER BY. Должна быть строкой с именами
-     *                                          полей и направлением (например, "created_at DESC").
-     *                                          - limit (int|string): Ограничение LIMIT. Может быть числом (например,
-     *                                          10) или строкой с диапазоном (например, "0, 10").
-     *                                          - params (array): Параметры для подготовленного выражения.
-     *                                          Ассоциативный массив значений, используемых в запросе (например,
-     *                                          [":id" => 1, ":status" => "active"]).
-     *                                          Использование параметров `params` является обязательным для
-     *                                          подготовленных выражений, так как это обеспечивает защиту от
-     *                                          SQL-инъекций и совместимость с различными СУБД.
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Он вызывается из приватного метода `full_text_search_pgsql()`.
      *
-     * @return array|false Результат выполнения поиска (массив данных или false при ошибке/пустом результате)
+     * @internal
+     * @callergraph
      *
-     * @throws Exception Если произошла ошибка логирования через log_in_file()
+     * @param array $columns_to_return_escaped Массив строк с именами столбцов, которые нужно вернуть. Имена
+     *                                         столбцов должны быть уже экранированы для PostgreSQL (например, `"id"`).
+     * @param array $columns_to_search_escaped Массив строк с именами столбцов, по которым выполняется поиск по
+     *                                         ILIKE. Имена столбцов должны быть уже экранированы для PostgreSQL.
+     * @param string $search_string            Строка поиска, введенная пользователем. Для поиска по ILIKE
+     *                                         автоматически будут добавлены символы `%`. Пустая строка приводит к
+     *                                         возврату `false`. Используется как есть для ранжирования `similarity()`.
+     * @param string $table_escaped            Строка с именем таблицы, в которой выполняется поиск. Имя таблицы
+     *                                         должно быть уже экранировано для PostgreSQL (например, `"users"`).
+     * @param array $options                   Массив дополнительных опций для формирования запроса. Используется
+     *                                         для добавления условий WHERE, GROUP BY, ORDER BY, LIMIT и параметров
+     *                                         к LIKE-запросу.
+     *                                         Поддерживаемые ключи:
+     *                                         - where (string|array|false): Дополнительное условие WHERE
+     *                                           (объединяется с условиями ILIKE оператором AND).
+     *                                         - group (string|false): Группировка GROUP BY.
+     *                                         - order (string|false): Дополнительная сортировка ORDER BY (имеет
+     *                                           более низкий приоритет, чем сортировка по рангу similarity()).
+     *                                         - limit (int|string|false): Ограничение LIMIT.
+     *                                         - params (array): Ассоциативный массив дополнительных параметров для
+     *                                           подготовленного выражения.
+     *
+     * @return array|false Результат выполнения поиска в виде массива ассоциативных массивов (строк) при успехе и
+     *                     наличии результатов, пустой массив при успехе, но отсутствии результатов, или `false` в
+     *                     случае пустой строки поиска или ошибки выполнения запроса.
+     *
+     * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
+     *                                  невозможности записи в файл.
+     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
+     *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
+     *                                  перехватываются и приводят к возврату false).
+     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     *                                  ошибок внутри перехватываются и приводят к возврату false).
+     *
+     * @note    Метод используется как резервный вариант поиска для PostgreSQL, когда полнотекстовый поиск (FTS) не
+     *          может быть выполнен. Для каждого столбца поиска создается отдельное условие `ILIKE` и отдельное
+     *          выражение `similarity()` с уникальными плейсхолдерами. Условия `ILIKE` объединяются оператором `OR`,
+     *          а ранги `similarity()` суммируются для сортировки по убыванию.
+     *          Использует приватный метод `fts_check_options()` для объединения этих условий и сортировки с любыми
+     *          дополнительными опциями, предоставленными пользователем.
+     *          Для работы функции `similarity()` требуется установить и включить расширение `pg_trgm` в базе данных
+     *          PostgreSQL.
+     *
+     * @warning Убедитесь, что входные параметры `$columns_to_return_escaped`, `$columns_to_search_escaped` и
+     *          `$table_escaped` уже экранированы для PostgreSQL.
+     *          Убедитесь, что расширение `pg_trgm` установлено и доступно в базе данных PostgreSQL для корректной
+     *          работы `similarity()`.
+     *          Поиск с `ILIKE` и ранжирование `similarity()` могут быть неэффективны на больших объемах данных по
+     *          сравнению с FTS.
+     *
+     * Пример использования (вызывается из full_text_search_pgsql()):
+     * @code
+     * // Предположим:
+     * // $columns_to_return_escaped = ['"id"', '"title"'];
+     * // $columns_to_search_escaped = ['"title"', '"content"'];
+     * // $search_string = 'search term';
+     * // $table_escaped = '"articles"';
+     * // $options = ['limit' => 5];
+     *
+     * // Вызов fallback метода
+     * $results_ilike = $this->fallback_to_ilike_pgsql(
+     *     $columns_to_return_escaped,
+     *     $columns_to_search_escaped,
+     *     $search_string,
+     *     $table_escaped,
+     *     $options
+     * );
+     *
+     * if ($results_ilike !== false) {
+     *     // Обработка результатов поиска по ILIKE с ранжированием
+     *     print_r($results_ilike);
+     * } else {
+     *     // Обработка ошибки выполнения ILIKE-поиска
+     *     echo "Произошла ошибка при выполнении ILIKE-поиска.";
+     * }
+     *
+     * // Если $search_string был '', вернет false сразу.
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::full_text_search_pgsql()
+     *         Приватный метод, который вызывает этот метод в случае необходимости fallback.
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Приватный метод, используемый для объединения опций.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Приватный метод для выполнения SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Приватный метод для получения всех строк результата запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования сообщений.
+     * @see    https://www.postgresql.org/docs/current/pgtrgm.html
+     *         Документация по расширению pg_trgm и функции similarity().
      */
     private function fallback_to_ilike_pgsql(
         array $columns_to_return_escaped,
@@ -4327,7 +5505,7 @@ class Database implements Database_Interface
             );
         } catch (Throwable $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка при выполнении ILIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Ошибка при выполнении ILIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
             );
             return false;
         }
@@ -4337,34 +5515,165 @@ class Database implements Database_Interface
     }
 
     /**
-     * Метод для выполнения полнотекстового поиска в SQLite через FTS5.
+     * @brief   Выполняет полнотекстовый поиск в SQLite через FTS5.
      *
-     * @param array  $columns_to_return Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string     Строка поиска (уже подготовлена, без % или *).
-     * @param string $table             Имя таблицы, в которой выполняется поиск.
-     * @param string $db_version        Версия БД, полученная из SELECT ver FROM db_version.
-     * @param array  $options           Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                  - where (string|array): Условие WHERE. Может быть строкой (например, "status =
-     *                                  :status") или ассоциативным массивом (например, ["id" => ":id", "status" =>
-     *                                  ":status"]). Для защиты от SQL-инъекций рекомендуется использовать плейсхолдеры
-     *                                  (например, `:status`).
-     *                                  - group (string): Группировка GROUP BY. Должна быть строкой с именами полей
-     *                                  (например, "category_id").
-     *                                  - order (string): Сортировка ORDER BY. Должна быть строкой с именами полей и
-     *                                  направлением (например, "created_at DESC").
-     *                                  - limit (int|string): Ограничение LIMIT. Может быть числом (например, 10) или
-     *                                  строкой с диапазоном (например, "0, 10").
-     *                                  - params (array): Параметры для подготовленного выражения. Ассоциативный массив
-     *                                  значений, используемых в запросе (например, [":id" => 1, ":status" =>
-     *                                  "active"]).
-     *                                  Использование параметров `params` является обязательным для подготовленных
-     *                                  выражений, так как это обеспечивает защиту от SQL-инъекций и совместимость с
-     *                                  различными СУБД.
+     * @details Этот приватный метод реализует логику полнотекстового поиска (Full-Text Search - FTS) для базы данных
+     *          SQLite, используя возможности модуля FTS5. Он обрабатывает минимальную длину строки поиска,
+     *          использует кеширование для быстрого определения предыдущих ошибок выполнения FTS5-запросов и включает
+     *          механизм автоматического перехода (fallback) на поиск с использованием оператора `LIKE` в случае
+     *          необходимости.
+     *          Метод выполняет следующие действия:
+     *          1. Экранирует имена столбцов для возврата (`$columns_to_return`), столбцов для поиска
+     *             (`$columns_to_search`) и имя основной таблицы (`$table`) с использованием двойных кавычек (`"`)
+     *             для соответствия синтаксису SQLite. Также формирует экранированное имя связанной виртуальной FTS5
+     *             таблицы, добавляя суффикс `_fts` к имени основной таблицы.
+     *          2. Проверяет, что длина строки поиска `$search_string` превышает минимально допустимое значение,
+     *             определенное константой `MIN_FULLTEXT_SEARCH_LENGTH`. Если длина недостаточна, метод сразу же
+     *             вызывает приватный метод `fallback_to_like_sqlite()` для выполнения поиска с использованием `LIKE`
+     *             и возвращает его результат.
+     *          3. Формирует уникальный ключ кеша на основе имени основной таблицы и столбцов для поиска для
+     *             идентификации соответствующего FTS5-индекса в кеше.
+     *          4. Проверяет кеш (`$this->cache`) на наличие записи, связанной с этим FTS5-индексом, используя
+     *             `$db_version` как параметр валидности кеша. Если в кеше найдена запись с флагом `query_error =
+     *             true`, это означает, что предыдущая попытка выполнить FTS5-запрос для этого индекса завершилась
+     *             ошибкой. В этом случае метод также вызывает `fallback_to_like_sqlite()` и возвращает его результат.
+     *          5. Предпринимает попытку выполнить полнотекстовый поиск FTS5 в блоке `try...catch`:
+     *             - Формирует базовые опции FTS (`$base_options`), включающие условие `WHERE "имя_fts_таблицы" MATCH
+     *               :search_string_where` и сортировку `ORDER BY rank DESC`, используя переданную строку поиска
+     *               `$search_string` как параметр.
+     *             - Объединяет переданные внешние опции запроса (`$options`) с базовыми FTS-опциями
+     *               (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *               конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
+     *             - Вызывает приватный метод `_select_internal()` с экранированными столбцами для возврата,
+     *               **экранированным именем FTS5 таблицы** (`$fts_table_escaped`) и объединенными опциями
+     *               (`$new_options`) для выполнения SQL-запроса к виртуальной FTS5 таблице.
+     *          6. В случае успешного выполнения FTS5-запроса (блок `try` без исключений):
+     *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = false` для данного FTS5-индекса,
+     *               указывая на успешность последнего запроса.
+     *             - Получает результат запроса в виде массива с помощью приватного метода `_res_arr_internal()` и
+     *               возвращает его.
+     *          7. В случае возникновения исключения (`Throwable`) во время выполнения FTS5-запроса (блок `catch`):
+     *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
+     *               сообщение об ошибке.
+     *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = true` для данного FTS5-индекса,
+     *               чтобы избежать повторных ошибок в будущем.
+     *             - Вызывает приватный метод `fallback_to_like_sqlite()` для выполнения поиска с использованием
+     *               `LIKE` и возвращает его результат.
      *
-     * @return array|false Результат выполнения поиска или false.
-     * @throws JsonException при работе с методами для кеша.
-     * @throws Exception Если произошла ошибка при выполнении запроса или логировании через log_in_file().
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Он вызывается из публичных или защищенных методов поиска, когда определен тип базы данных SQLite.
+     *
+     * @internal
+     * @callergraph
+     * @callgraph
+     *
+     * @param array  $columns_to_return Массив строк с именами столбцов, которые нужно вернуть в результате поиска.
+     * @param array $columns_to_search  Массив строк с именами столбцов, по которым выполняется полнотекстовый поиск
+     *                                  (используются для формирования имени FTS5 таблицы и кеш-ключа).
+     * @param string $search_string     Строка поиска, введенная пользователем. Используется как есть для оператора
+     *                                  FTS5 `MATCH`. Проверяется на минимальную длину.
+     * @param string $table             Строка с именем основной таблицы, для которой существует связанная FTS5
+     *                                  виртуальная таблица.
+     * @param string $db_version        Строка, представляющая версию структуры базы данных (например, из специальной
+     *                                  таблицы), используется для валидации кеша.
+     * @param array $options            Массив дополнительных опций для формирования запроса. Используется для
+     *                                  добавления условий WHERE, GROUP BY, ORDER BY, LIMIT и параметров к FTS5-запросу.
+     *                                  Поддерживаемые ключи:
+     *                                  - where (string|array|false): Дополнительное условие WHERE (объединяется с
+     *                                    FTS5 MATCH оператором AND).
+     *                                  - group (string|false): Группировка GROUP BY.
+     *                                  - order (string|false): Дополнительная сортировка ORDER BY (имеет более
+     *                                    низкий приоритет, чем FTS5 `rank DESC`).
+     *                                  - limit (int|string|false): Ограничение LIMIT.
+     *                                  - params (array): Ассоциативный массив дополнительных параметров для
+     *                                    подготовленного выражения.
+     *
+     * @return array|false Результат выполнения поиска в виде массива ассоциативных массивов (строк) при успехе и
+     *                     наличии результатов, пустой массив при успехе, но отсутствии результатов, или `false` в
+     *                     случае пустой строки поиска, критической ошибки или если предыдущий FTS5-запрос для этого
+     *                     индекса завершился ошибкой (приводит к fallback, который может вернуть false).
+     *
+     * @throws JsonException            Может быть выброшено методами кеширования (`$this->cache->is_valid`,
+     *                                  `$this->cache->update_cache`) при ошибках сериализации/десериализации данных кеша.
+     * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
+     *                                  невозможности записи в файл.
+     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
+     *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
+     *                                  FTS5 перехватываются и приводят к fallback).
+     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     *                                  ошибок внутри FTS5 перехватываются и приводят к fallback).
+     *
+     * @note    Метод использует константу `MIN_FULLTEXT_SEARCH_LENGTH` для проверки минимальной длины строки поиска.
+     *          Активно используется кеширование (`$this->cache`) для оптимизации и запоминания FTS5-индексов,
+     *          вызывающих ошибки. При возникновении ошибок выполнения FTS5-запроса (например, из-за отсутствия
+     *          виртуальной таблицы или некорректного синтаксиса FTS5), метод автоматически переключается на поиск с
+     *          использованием оператора `LIKE`, вызывая `fallback_to_like_sqlite()`.
+     *          Для работы требуется создание виртуальной таблицы FTS5 с именем `имя_основной_таблицы_fts` и
+     *          соответствующей структурой, содержащей столбцы для поиска.
+     *
+     * @warning Убедитесь, что для таблицы, указанной в `$table`, существует виртуальная таблица FTS5 с именем
+     *          `{$table}_fts` и что она содержит столбцы, достаточные для поиска.
+     *          Поиск с `LIKE` может быть значительно медленнее полнотекстового поиска FTS5 на больших объемах данных.
+     *
+     * Пример использования (вызывается внутри класса):
+     * @code
+     * // Предположим, MIN_FULLTEXT_SEARCH_LENGTH = 4
+     * // $this->current_format = 'sqlite';
+     * // $this->db_type = 'sqlite';
+     *
+     * $columns_to_return = ['id', 'title', 'content'];
+     * $columns_to_search = ['title', 'content']; // Используются для формирования имени FTS таблицы и кеш-ключа
+     * $search_string = 'database optimization'; // Длина >= 4
+     * $table = 'articles'; // Предполагается, что существует FTS5 таблица 'articles_fts'
+     * $db_version = '1.0'; // Пример версии структуры БД
+     * $options = [
+     *     'where' => ['is_published' => 1],
+     *     'limit' => 10,
+     *     'params' => [':is_published' => 1],
+     * ];
+     *
+     * // Вызов метода
+     * $results = $this->full_text_search_sqlite(
+     *     $columns_to_return,
+     *     $columns_to_search, // Столбцы для поиска используются для MATCH
+     *     $search_string,
+     *     $table,
+     *     $db_version,
+     *     $options
+     * );
+     *
+     * if ($results !== false) {
+     *     // Обработка результатов поиска
+     *     print_r($results);
+     * } else {
+     *     // Обработка ошибки (произошел fallback на LIKE, и он тоже вернул false при ошибке)
+     *     echo "Произошла ошибка поиска (включая fallback).";
+     * }
+     *
+     * // Если strlen($search_string) < 4, будет вызван fallback_to_like_sqlite
+     * // Если FTS5 запрос упадет (например, нет таблицы articles_fts), будет вызван fallback_to_like_sqlite, ошибка будет залогирована и закэширована.
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::fallback_to_like_sqlite()
+     *         Приватный метод, реализующий поиск по LIKE в качестве fallback.
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Приватный метод, объединяющий и обрабатывающий опции запроса для FTS.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Приватный метод для выполнения SELECT-запроса к FTS5 таблице.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Приватный метод для получения всех строк результата запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования сообщений.
+     * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
+     *         Интерфейс, используемый для работы с кешированием.
+     * @see    PhotoRigma::Classes::Database::$cache
+     *         Свойство, хранящее объект, реализующий `Cache_Handler_Interface`.
+     * @see    MIN_FULLTEXT_SEARCH_LENGTH
+     *         Константа, определяющая минимальную длину строки для полнотекстового поиска.
+     * @see    https://www.sqlite.org/fts5.html
+     *         Документация по модулю SQLite FTS5.
      */
     private function full_text_search_sqlite(
         array $columns_to_return,
@@ -4429,7 +5738,7 @@ class Database implements Database_Interface
             );
         } catch (Throwable $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в FTS5 | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка в FTS5 | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
             );
 
             $this->cache->update_cache($key, $db_version, ['query_error' => true]);
@@ -4451,33 +5760,127 @@ class Database implements Database_Interface
     }
 
     /**
-     * Альтернативный LIKE-поиск для SQLite.
+     * @brief   Выполняет альтернативный LIKE-поиск для SQLite.
      *
-     * @param array  $columns_to_return_escaped Массив столбцов, которые нужно вернуть.
-     * @param array  $columns_to_search_escaped Массив столбцов, по которым выполняется поиск.
-     * @param string $search_string             Строка поиска (может быть "*" для поиска всех строк).
-     * @param string $table_escaped             Имя таблицы, в которой выполняется поиск.
-     * @param array  $options                   Массив опций для формирования запроса. Поддерживаемые ключи:
-     *                                          - where (string|array): Условие WHERE. Может быть строкой (например,
-     *                                          "status = :status") или ассоциативным массивом (например, ["id" =>
-     *                                          ":id", "status" => ":status"]). Для защиты от SQL-инъекций
-     *                                          рекомендуется использовать плейсхолдеры (например, `:status`).
-     *                                          - group (string): Группировка GROUP BY. Должна быть строкой с именами
-     *                                          полей (например, "category_id").
-     *                                          - order (string): Сортировка ORDER BY. Должна быть строкой с именами
-     *                                          полей и направлением (например, "created_at DESC").
-     *                                          - limit (int|string): Ограничение LIMIT. Может быть числом (например,
-     *                                          10) или строкой с диапазоном (например, "0, 10").
-     *                                          - params (array): Параметры для подготовленного выражения.
-     *                                          Ассоциативный массив значений, используемых в запросе (например,
-     *                                          [":id" => 1, ":status" => "active"]).
-     *                                          Использование параметров `params` является обязательным для
-     *                                          подготовленных выражений, так как это обеспечивает защиту от
-     *                                          SQL-инъекций и совместимость с различными СУБД.
+     * @details Этот приватный метод реализует поиск данных в SQLite, используя оператор `LIKE` по нескольким столбцам.
+     *          Он используется как резервный механизм (fallback), когда основной полнотекстовый поиск (FTS5)
+     *          недоступен, отключен, или не дал результатов (например, из-за минимальной длины строки поиска
+     *          или отсутствия виртуальной FTS5 таблицы).
+     *          Метод выполняет следующие действия:
+     *          1. Проверяет, является ли строка поиска `$search_string` пустой. Если да, возвращает `false` без
+     *             выполнения запроса.
+     *          2. Формирует условия `WHERE` для оператора `LIKE` по каждому столбцу из массива
+     *             `$columns_to_search_escaped`. Каждое условие имеет вид `"имя_столбца" LIKE :плейсхолдер`. Для
+     *             строки поиска автоматически добавляются символы `%` в начале и конце (для поиска подстроки).
+     *             Каждое условие использует уникальный именованный плейсхолдер (например, `:search_string_0`,
+     *             `:search_string_1`) для безопасной привязки параметров.
+     *          3. Объединяет сформированные условия `LIKE` оператором `OR` для создания общей строки условия `WHERE`.
+     *          4. Формирует базовые опции (`$base_options`) для поиска по `LIKE`, включающие сформированное условие
+     *             `WHERE` и массив параметров для плейсхолдеров `LIKE`.
+     *          5. Объединяет переданные внешние опции запроса (`$options`) с базовыми опциями `LIKE`
+     *             (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *             конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
+     *          6. Предпринимает попытку выполнить SQL-запрос SELECT с использованием экранированных столбцов для
+     *             возврата, экранированного имени таблицы и объединенных опций (`$new_options`) в блоке `try...catch`,
+     *             вызывая приватный метод `_select_internal()`.
+     *          7. В случае возникновения исключения (`Throwable`) во время выполнения LIKE-запроса (блок `catch`):
+     *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
+     *               сообщение об ошибке.
+     *             - Возвращает `false`, сигнализируя об ошибке выполнения поиска.
+     *          8. В случае успешного выполнения запроса (блок `try` без исключений) получает результат запроса в
+     *             виде массива с помощью приватного метода `_res_arr_internal()` и возвращает его.
      *
-     * @return array|false Результат или false, если данных нет
+     *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
+     *          Он вызывается из приватного метода `full_text_search_sqlite()`.
      *
-     * @throws Exception Если произошла ошибка при выполнении запроса или логировании через log_in_file()
+     * @internal
+     * @callergraph
+     *
+     * @param array $columns_to_return_escaped  Массив строк с именами столбцов, которые нужно вернуть. Имена
+     *                                          столбцов должны быть уже экранированы для SQLite (например, `"id"`
+     *                                          или `[id]`).
+     * @param array $columns_to_search_escaped  Массив строк с именами столбцов, по которым выполняется поиск по LIKE.
+     *                                          Имена столбцов должны быть уже экранированы для SQLite.
+     * @param string $search_string             Строка поиска, введенная пользователем. Для поиска по LIKE
+     *                                          автоматически будут добавлены символы `%`. Пустая строка приводит к
+     *                                          возврату `false`.
+     * @param string $table_escaped             Строка с именем таблицы, в которой выполняется поиск. Имя таблицы
+     *                                          должно быть уже экранировано для SQLite (например, `"users"` или
+     *                                          `[users]`).
+     * @param array $options                    Массив дополнительных опций для формирования запроса. Используется
+     *                                          для добавления условий WHERE, GROUP BY, ORDER BY, LIMIT и параметров
+     *                                          к LIKE-запросу.
+     *                                          Поддерживаемые ключи:
+     *                                          - where (string|array|false): Дополнительное условие WHERE
+     *                                            (объединяется с условиями LIKE оператором AND).
+     *                                          - group (string|false): Группировка GROUP BY.
+     *                                          - order (string|false): Сортировка ORDER BY.
+     *                                          - limit (int|string|false): Ограничение LIMIT.
+     *                                          - params (array): Ассоциативный массив дополнительных параметров для
+     *                                            подготовленного выражения.
+     *
+     * @return array|false Результат выполнения поиска в виде массива ассоциативных массивов (строк) при успехе и
+     *                     наличии результатов, пустой массив при успехе, но отсутствии результатов, или `false` в
+     *                     случае пустой строки поиска или ошибки выполнения запроса.
+     *
+     * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
+     *                                  невозможности записи в файл.
+     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
+     *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
+     *                                  LIKE перехватываются и приводят к возврату false).
+     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
+     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     *                                  ошибок внутри LIKE перехватываются и приводят к возврату false).
+     *
+     * @note    Метод используется как резервный вариант поиска для SQLite, когда полнотекстовый поиск (FTS5) не
+     *          может быть выполнен. Для каждого столбца поиска создается отдельное условие `LIKE` с уникальным
+     *          плейсхолдером. Использует приватный метод `fts_check_options()` для объединения условий `LIKE` с
+     *          любыми дополнительными опциями, предоставленными пользователем.
+     *
+     * @warning Убедитесь, что входные параметры `$columns_to_return_escaped`, `$columns_to_search_escaped` и
+     *          `$table_escaped` уже экранированы для SQLite.
+     *          Поиск с `LIKE` может быть неэффективен на больших объемах данных по сравнению с FTS5.
+     *
+     * Пример использования (вызывается из full_text_search_sqlite()):
+     * @code
+     * // Предположим:
+     * // $columns_to_return_escaped = ['"id"', '"title"'];
+     * // $columns_to_search_escaped = ['"title"', '"content"'];
+     * // $search_string = 'search term';
+     * // $table_escaped = '"articles"';
+     * // $options = ['limit' => 5];
+     *
+     * // Вызов fallback метода
+     * $results_like = $this->fallback_to_like_sqlite(
+     *     $columns_to_return_escaped,
+     *     $columns_to_search_escaped,
+     *     $search_string,
+     *     $table_escaped,
+     *     $options
+     * );
+     *
+     * if ($results_like !== false) {
+     *     // Обработка результатов поиска по LIKE
+     *     print_r($results_like);
+     * } else {
+     *     // Обработка ошибки выполнения LIKE-поиска
+     *     echo "Произошла ошибка при выполнении LIKE-поиска.";
+     * }
+     *
+     * // Если $search_string был '', вернет false сразу.
+     * @endcode
+     * @see    PhotoRigma::Classes::Database::full_text_search_sqlite()
+     *         Приватный метод, который вызывает этот метод в случае необходимости fallback.
+     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     *         Приватный метод, используемый для объединения опций.
+     * @see    PhotoRigma::Classes::Database::_select_internal()
+     *         Приватный метод для выполнения SELECT-запроса.
+     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     *         Приватный метод для получения всех строк результата запроса.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования сообщений.
      */
     private function fallback_to_like_sqlite(
         array $columns_to_return_escaped,
@@ -4517,7 +5920,7 @@ class Database implements Database_Interface
             );
         } catch (Throwable $e) {
             log_in_file(
-                __FILE__ . ":" . __LINE__ . " (" . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | " . "Ошибка при выполнении LIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' . "Ошибка при выполнении LIKE-поиска | Таблица: $table_escaped, Сообщение: {$e->getMessage()}"
             );
             return false;
         }
@@ -4526,55 +5929,109 @@ class Database implements Database_Interface
     }
 
     /**
-     * @brief   Формирует финальный массив опций для _select_internal, применяя приоритет к внутренним (базовым)
-     *          условиям.
+     * @brief   Формирует финальный массив опций для запроса с учетом базовых FTS-опций и внешних условий/дополнений.
      *
-     * @details Метод объединяет внешние и внутренние опции, соблюдая приоритет:
-     *          - WHERE: внутреннее условие FTS имеет приоритет над внешним.
-     *            Если $options['where'] задано — оно сначала обрабатывается через build_conditions(),
-     *            затем дополняет базовое значение из $base_options['where'].
-     *          - ORDER BY: внутренний порядок сортировки FTS имеет приоритет.
-     *          - GROUP BY и LIMIT берутся только из внешних данных.
-     *          - params: объединяются оба массива, внутренние параметры приоритетней. При совпадении внешних
-     *            параметров с внутренними - внешние переименовываются с заменой в условиях.
-     *            Все строковые значения в условиях предварительно тримируются.
+     * @details Этот приватный метод объединяет массив внешних опций (`$options`) с базовыми опциями
+     *          полнотекстового поиска (FTS) (`$base_options`), обрабатывая конфликты плейсхолдеров и применяя
+     *          правила приоритета для формирования результирующего набора опций запроса.
+     *          Метод выполняет следующие действия:
+     *          1. Выполняет тримминг всех строковых значений во внешних (`$options`) и базовых (`$base_options`)
+     *             массивах опций.
+     *          2. Обрабатывает конфликты именованных плейсхолдеров между `$options['params']` и
+     *             `$base_options['params']`. При обнаружении совпадающих ключей плейсхолдеров, плейсхолдеры во
+     *             внешних опциях (`$options`) переименовываются путем добавления суффикса `_ext_[n]` (где `[n]` -
+     *             инкрементирующийся счетчик). Соответствующие ключи в массиве `$options['params']` обновляются, и
+     *             старые ключи удаляются.
+     *          3. Обновляет использование переименованных плейсхолдеров в условиях `WHERE` внешних опций
+     *             (`$options['where']`), если `where` является массивом.
+     *          4. Обрабатывает внешнее условие `WHERE` из `$options['where']`, вызывая приватный метод
+     *             `build_conditions()` для его преобразования в SQL-строку и получения соответствующих параметров.
+     *             Начальный `WHERE` из строки условий, возвращенной `build_conditions()`, удаляется. Если после
+     *             обработки внешнее условие непустое, оно сохраняется для последующего объединения.
+     *          5. Формирует финальный массив опций (`$new_options`) на основе объединенных данных с учетом следующих
+     *             правил приоритета:
+     *             - **WHERE:** Если присутствуют и базовое FTS-условие (`$base_options['where']`) и обработанное
+     *               внешнее условие (`$options['where']`), они объединяются с помощью `AND` (базовое условие идет
+     *               первым). Если присутствует только одно из них, используется это условие.
+     *             - **ORDER BY:** Если присутствует сортировка в базовых FTS-опциях (`$base_options['order']`), она
+     *               имеет приоритет и используется. В противном случае, если присутствует сортировка во внешних
+     *               опциях (`$options['order']`), используется она.
+     *             - **GROUP BY:** Используется только значение из внешних опций (`$options['group']`), если оно
+     *               задано и не равно `false`.
+     *             - **LIMIT:** Используется только значение из внешних опций (`$options['limit']`), если оно задано
+     *               и не равно `false`.
+     *             - **params:** Параметры из `$options['params']` (уже с переименованными плейсхолдерами) и
+     *               `$base_options['params']` объединяются с помощью `array_merge()`. Параметры из
+     *               `$base_options['params']` имеют приоритет при совпадении ключей (что не должно происходить после
+     *               обработки конфликтов, но `array_merge` работает так).
+     *          6. Возвращает финальный массив объединенных опций `$new_options`.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
-     * @param array $options      Внешние опции, переданные пользователем или контроллером.
-     *                            Может содержать: where, order, group, limit, params.
-     * @param array $base_options Внутренние опции, сгенерированные полнотекстовым поиском.
-     *                            Может содержать: where, order, params.
+     * @param array $options      Массив внешних опций запроса, предоставленных пользователем. Поддерживаемые ключи:
+     *                            - where (string|array|false): Условие WHERE.
+     *                              Может быть:
+     *                              - Строкой (используется как есть)
+     *                              - Массивом:
+     *                                * Простые условия: `['поле' => значение]` (обрабатывается `build_conditions`,
+     *                                                   генерируются плейсхолдеры)
+     *                                * Сложные условия: `['OR' => [условия], 'NOT' => [условия]]` (обрабатывается
+     *                                                   `build_conditions`)
+     *                              - `false`: Игнорируется.
+     *                            - group (string|false): Группировка GROUP BY. Должна быть строкой. Игнорируется,
+     *                              если равно `false`.
+     *                            - order (string|false): Сортировка ORDER BY. Должна быть строкой. Игнорируется,
+     *                              если равно `false`.
+     *                            - limit (int|string|false): Ограничение LIMIT. Должно быть целым числом или строкой
+     *                              формата `'OFFSET, COUNT'`. Игнорируется, если равно `false`.
+     *                            - params (array): Исходный ассоциативный массив параметров для подготовленного
+     *                              выражения ([":имя" => значение]).
+     * @param array $base_options Массив базовых опций FTS (Full-Text Search), сгенерированных внутренней логикой FTS.
+     *                            Поддерживаемые ключи:
+     *                            - where (string): Строковое условие WHERE для полнотекстового поиска (например,
+     *                              `MATCH(...) AGAINST (...)`).
+     *                            - order (string): Строка сортировки по релевантности FTS.
+     *                            - params (array): Ассоциативный массив параметров для FTS-условий.
      *
-     * @return array Объединённый массив опций для использования в _select_internal.
-     *               Содержит: where, order, group, limit, params.
+     * @return array Результирующий массив опций для запроса, содержащий объединенные и обработанные условия и
+     *               параметры. Ключи могут включать:
+     *               - where (string|null): Объединенные условия WHERE, или `null` если условия отсутствуют.
+     *               - order (string|null): Итоговая строка сортировки, или `null` если сортировка не задана.
+     *               - group (string|null): Строка GROUP BY из внешних опций, или `null` если не задана.
+     *               - limit (int|string|null): Значение LIMIT из внешних опций, или `null` если не задано.
+     *               - params (array): Объединенный ассоциативный массив параметров, включая параметры FTS и
+     *                 параметры внешних условий (с разрешенными конфликтами именования).
      *
-     * Пример использования:
+     * @throws InvalidArgumentException Может быть выброшено методом `build_conditions()` при обработке
+     *                                  `$options['where']`, если его формат недопустим.
+     *
+     * Пример объединения опций с конфликтующими плейсхолдерами:
+     * @example
      * @code
-     * // Внешние параметры
      * $options = [
-     *     'where' => ['status' => ':search', 'category_id' => 1],
-     *     'order' => 'name ASC',
-     *     'params' => [':search' => 'cats']
+     *     'where' => ['status' => ':search'], // Внешнее условие с плейсхолдером ':search'
+     *     'params' => [':search' => 'active'] // Значение внешнего плейсхолдера
      * ];
-     *
-     * // Базовые параметры от FTS
      * $base_options = [
-     *     'where' => ['MATCH(title) AGAINST (:search)'],
-     *     'order' => 'relevance DESC',
-     *     'params' => [':search' => '%test%']
+     *     'where' => 'MATCH(title) AGAINST (:search)', // Базовое FTS условие с плейсхолдером ':search'
+     *     'order' => 'rank DESC',
+     *     'params' => [':search' => 'term'] // Значение базового FTS плейсхолдера
      * ];
      *
-     * $final = $this->fts_check_options($options, $base_options);
-     * // Результат:
-     * // $final['where'] = "MATCH(title) AGAINST (:search) AND (status = :search_ext_0 AND category_id = 1)";
-     * // $final['order'] = 'relevance DESC';
-     * // $final['group'], $final['limit'] — не установлены (берутся только из внешних)
-     * // $final['params'] = [':search' => '%test%', ':search_ext_0' => 'active']
+     * $final_options = $this->fts_check_options($options, $base_options);
+     * // Результат $final_options:
+     * // [
+     * //    'where' => "MATCH(title) AGAINST (:search) AND (status = :search_ext_0)", // Объединенное WHERE, плейсхолдер во внешнем условии переименован
+     * //    'order' => "rank DESC", // Сортировка FTS имеет приоритет
+     * //    'group' => null, // Не было в $options
+     * //    'limit' => null, // Не было в $options
+     * //    'params' => [':search' => 'term', ':search_ext_0' => 'active'] // Объединенные параметры, где :search имеет значение из $base_options
+     * // ]
      * @endcode
-     * @see     PhotoRigma::Classes::Database::build_conditions()
-     *          Формирует строку дополнений для SQL-запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT).
+     * @see    PhotoRigma::Classes::Database::build_conditions()
+     *         Приватный метод, используемый для обработки внешней части условия WHERE.
      */
     private function fts_check_options(array $options, array $base_options): array
     {
@@ -4606,7 +6063,7 @@ class Database implements Database_Interface
 
                 // Обновляем плейсхолдеры в условиях WHERE
                 if (!empty($options['where']) && is_array($options['where'])) {
-                    array_walk_recursive($options['where'], function (&$item) use ($replace_map) {
+                    array_walk_recursive($options['where'], static function (&$item) use ($replace_map) {
                         if (is_string($item) && isset($replace_map[$item])) {
                             $item = $replace_map[$item];
                         }
@@ -4640,7 +6097,7 @@ class Database implements Database_Interface
 
         // WHERE: базовое условие FTS > внешнее
         if (!empty($base_options['where']) && !empty($options['where'])) {
-            $new_options['where'] = $base_options['where'] . " AND (" . $options['where'] . ")";
+            $new_options['where'] = $base_options['where'] . ' AND (' . $options['where'] . ')';
         } elseif (!empty($base_options['where'])) {
             $new_options['where'] = $base_options['where'];
         } elseif (!empty($options['where'])) {
@@ -4676,62 +6133,100 @@ class Database implements Database_Interface
     /**
      * @brief   Снятие экранирования идентификаторов (например, имён таблиц или столбцов).
      *
-     * @details Метод удаляет символы экранирования, специфичные для текущего типа СУБД,
-     *          чтобы получить "чистые" имена идентификаторов.
-     *          Используются правила:
-     *          - MySQL: обратные кавычки (`).
-     *          - PostgreSQL: двойные кавычки (").
-     *          - SQLite: квадратные скобки ([, ]) и двойные кавычки (").
-     *          Результат кешируется в $this->unescape_cache.
+     * @details Этот приватный метод обрабатывает массив идентификаторов, удаляя из них символы экранирования,
+     *          специфичные для текущей СУБД, определенной свойством `$this->current_format`. Результат
+     *          "чистых" идентификаторов сохраняется в кэше для оптимизации.
+     *          Метод выполняет следующие шаги:
+     *          1. Инициализирует пустой массив для хранения результатов и определяет правила снятия экранирования
+     *             на основе свойства `$this->current_format`.
+     *          2. Перебирает каждый идентификатор в массиве `$identifiers`, проверяя, является ли он строкой.
+     *             Если обнаружен не строковый элемент, выбрасывается исключение InvalidArgumentException.
+     *          3. Для каждого идентификатора проверяет наличие результата снятия экранирования в кэше
+     *             `$this->unescape_cache`.
+     *          4. Если идентификатор не найден в кэше, применяет соответствующие правила снятия экранирования
+     *             (`strtr`) для удаления специфических символов (обратные кавычки для MySQL, двойные кавычки для
+     *             PostgreSQL, квадратные скобки и двойные кавычки для SQLite). Результат сохраняется в кэше.
+     *          5. Добавляет "чистый" идентификатор (из кэша или только что вычисленный) в массив результатов.
+     *          6. После обработки всех идентификаторов возвращает массив "чистых" идентификаторов.
      *
+     *          Поддерживаемые правила снятия экранирования в зависимости от `$this->current_format`:
+     *          - 'mysql': удаляются обратные кавычки (`).
+     *          - 'pgsql': удаляются двойные кавычки (").
+     *          - 'sqlite': удаляются квадратные скобки ([]) и двойные кавычки (").
+     *
+     * @internal
      * @callergraph
      *
-     * @param array $identifiers  Массив идентификаторов (например, столбцов или таблиц).
-     *                            Ожидается список строк.
+     * @param array $identifiers Массив экранированных идентификаторов для обработки.
+     *                           Элементы массива должны быть строками. Могут содержать квалифицированные имена
+     *                           (например, "schema.table").
      *
-     * @return array Массив идентификаторов без символов экранирования.
-     *               Все значения — строки.
+     * @return array Массив "чистых" идентификаторов.
+     *               Все экранирующие символы, специфичные для `$this->current_format`, удалены.
+     *               Сохраняется исходная структура квалифицированных имен (например, разделитель '.').
+     *
+     * @throws InvalidArgumentException Выбрасывается, если какой-либо элемент в массиве `$identifiers` не является
+     *                                  строкой.
+     *                                  Пример сообщения:
+     *                                  Идентификатор должен быть строкой, получен: [тип]
+     *
+     * @note    Метод использует текущую конфигурацию СУБД, заданную в свойстве `$this->current_format`, для
+     *          определения правил снятия экранирования.
+     *          Результаты снятия экранирования кешируются в свойстве `$this->unescape_cache` для оптимизации
+     *          повторных операций с теми же идентификаторами.
+     *
+     * @warning Убедитесь, что свойство `$this->current_format` установлено в одно из поддерживаемых значений
+     *          ('mysql', 'pgsql', 'sqlite') перед вызовом метода.
      *
      * Пример использования:
      * @code
-     * $quoted = ['`id`', '"name"', '[created_at]', 'user."email"'];
+     * // Предположим:
+     * // $this->current_format = 'sqlite';
+     * $quoted = ['"id"', '[name]', 'user."email"', '`field`']; // Идентификаторы с разным экранированием
+     *
      * $clean = $this->unescape_identifiers($quoted);
-     * // $clean = ['id', 'name', 'created_at', 'user.email']
+     * // Если current_format был 'sqlite':
+     * // $clean = ['id', 'name', 'user.email', '`field`'] // Обратные кавычки останутся, т.к. не правило SQLite
+     *
+     * // Предположим:
+     * // $this->current_format = 'mysql';
+     * $quoted_mysql = ['`id`', '"name"', '[created_at]', 'user.`email`'];
+     *
+     * $clean_mysql = $this->unescape_identifiers($quoted_mysql);
+     * // Если current_format был 'mysql':
+     * // $clean_mysql = ['id', '"name"', '[created_at]', 'user.email'] // Двойные кавычки и скобки останутся
      * @endcode
      * @see    PhotoRigma::Classes::Database::$unescape_cache
-     *         Кэш для хранения результатов снятия экранирования идентификаторов.
+     *         Внутреннее свойство, используемое для кэширования результатов снятия экранирования идентификаторов.
      * @see    PhotoRigma::Classes::Database::$current_format
-     *         Хранит текущий формат SQL (например, 'mysql', 'pgsql', 'sqlite').
+     *         Свойство, хранящее текущий формат SQL, определяющий правила снятия экранирования.
      */
     private function unescape_identifiers(array $identifiers): array
     {
-        // Правила удаления символов экранирования для каждого типа СУБД
-        $rules = [
-            'mysql'  => ['`'],          // MySQL: обратные кавычки
-            'pgsql'  => ['"'],          // PostgreSQL: двойные кавычки
-            'sqlite' => ['[', ']', '"'], // SQLite: квадратные скобки и двойные кавычки
+        static $rules = [
+            'mysql'  => ['`' => ''],
+            'pgsql'  => ['"' => ''],
+            'sqlite' => ['[' => '', ']' => '', '"' => '']
         ];
 
         $unescaped = [];
+        $current_rules = $rules[$this->current_format] ?? [];
 
         foreach ($identifiers as $identifier) {
-            // Если идентификатор уже обработан, берем его из кэша
-            if (isset($this->unescape_cache[$identifier])) {
-                $unescaped[] = $this->unescape_cache[$identifier];
-                continue;
+            if (!is_string($identifier)) {
+                throw new InvalidArgumentException(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                    'Идентификатор должен быть строкой, получен: ' . gettype($identifier)
+                );
             }
 
-            // Получаем символы экранирования для текущего типа СУБД
-            $symbols = $rules[$this->current_format] ?? [];
+            if (!isset($this->unescape_cache[$identifier])) {
+                $this->unescape_cache[$identifier] = strtr($identifier, $current_rules);
+            }
 
-            // Удаляем символы экранирования, если они определены
-            $result = !empty($symbols) ? str_replace($symbols, '', $identifier) : $identifier;
-
-            // Сохраняем результат в кэше и добавляем в массив
-            $this->unescape_cache[$identifier] = $result;
-            $unescaped[] = $result;
+            $unescaped[] = $this->unescape_cache[$identifier];
         }
 
-        return $unescaped; // Возвращаем массив "чистых" идентификаторов
+        return $unescaped;
     }
 }

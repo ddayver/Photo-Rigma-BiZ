@@ -1,5 +1,5 @@
 <map id="get_affected_rows" name="get_affected_rows">
-<area shape="rect" id="Node000001" title="Возвращает количество строк, затронутых последним SQL&#45;запросом, через вызов внутреннего метода." alt="" coords="5,12,133,37"/>
+<area shape="rect" id="Node000001" title="Возвращает количество строк, затронутых последним SQL&#45;запросом." alt="" coords="5,12,133,37"/>
 <area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a834ca0d1c7c60bc9bfae123070b45fbd" title="Возвращает количество строк, затронутых последним SQL&#45;запросом, после проверки состояния свойства $af..." alt="" coords="181,5,315,44"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,22,165,22,165,27,133,27"/>
 </map>

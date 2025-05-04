@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.2</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -173,7 +173,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:ac2dc76d756ec398393d4b1d23659276c" id="r_ac2dc76d756ec398393d4b1d23659276c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac2dc76d756ec398393d4b1d23659276c">$cache</a> = new <a class="el" href="../../d3/d14/classCache__Handler.html">Cache_Handler</a>($config['cache'], $config['site_dir'])</td></tr>
 <tr class="memdesc:ac2dc76d756ec398393d4b1d23659276c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d3/d14/classCache__Handler.html" title="Класс для работы с системами кеширования.">Cache_Handler</a> для работы с системами кеширования.  <br /></td></tr>
 <tr class="separator:ac2dc76d756ec398393d4b1d23659276c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'])</td></tr>
+<tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'], $cache)</td></tr>
 <tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a> для работы с основной БД.  <br /></td></tr>
 <tr class="separator:a1fa3127fc82f96b1436d871ef02be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2429001fb0fa404b4fe0ab42a91a9a48" id="r_a2429001fb0fa404b4fe0ab42a91a9a48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a> = new <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">Work</a>($db, $config, $_SESSION, $cache)</td></tr>
@@ -205,16 +205,16 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Файл используется для централизованного управления конфигурацией приложения.</li>
 </ul>
 <p>Важно: Этот файл должен быть защищён от прямого доступа через веб-сервер.</p>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
+<h1><a class="anchor" id="Config_Main_Functions"></a>
+Основные функции</h1>
 <ul>
 <li>Настройка подключения к базе данных.</li>
 <li>Определение путей к директориям проекта.</li>
 <li>Автоматическое определение протокола (HTTP/HTTPS) и URL сайта.</li>
 <li>Проверка доступности и корректности путей к директориям.</li>
 </ul>
-<h1><a class="anchor" id="Настройки"></a>
-подключения к базы данных</h1>
+<h1><a class="anchor" id="Config_Database_Settings"></a>
+Настройки подключения к базе данных</h1>
 <p>Массив &lsquo;$config['db&rsquo;]<code>содержит параметры подключения к базе данных:</p><ul>
 <li>**dbtype**: Тип базы данных (по умолчанию:</li>
 </ul>
@@ -238,16 +238,16 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 </ul>
 <p></code>photorigma`). Для SQLite это путь к файлу базы данных.</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d2/d89/Database_8php.html" title="Класс для работы с базами данных через PDO.">include/Database.php</a> Файл, где используется массив &lsquo;<a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a>['db&rsquo;]` для подключения к БД.</dd></dl>
-<h1><a class="anchor" id="Настройки"></a>
-подключения к базы данных</h1>
+<h1><a class="anchor" id="Config_Folder_Settings"></a>
+Настройки папок проекта</h1>
 <ul>
 <li><b>gallery_folder</b>: Имя папки для хранения фотографий (указывается относительно корня проекта). Пример: &lsquo;'gallery&rsquo;<code>.</code></li>
 <li><code>**thumbnail_folder**: Имя папки для хранения эскизов фотографий (указывается относительно корня проекта). Пример:</code>'thumbnail'<code>.</code></li>
 <li><code>**avatar_folder**: Имя папки для хранения аватаров пользователей (указывается относительно корня проекта). Пример:</code>'avatar'`.</li>
 </ul>
 <dl class="section note"><dt>Заметки</dt><dd>Убедитесь, что указанные папки существуют и доступны для записи. Несоблюдение этого условия может привести к ошибкам при работе с файлами.</dd></dl>
-<h1><a class="anchor" id="Настройки"></a>
-подключения к базы данных</h1>
+<h1><a class="anchor" id="Config_Local_Network"></a>
+Настройки использования проекта в локальной или внешней сети</h1>
 <p>Константа <code>LOCALHOST_SERVER</code> указывает, является ли сервер локальным:</p><ul>
 <li>Если значение <code>true</code>, загрузка JS и CSS ограничивается локальными ресурсами (без интернета).</li>
 <li>Если значение <code>false</code>, используются внешние ресурсы (например, CDN).</li>
@@ -262,8 +262,8 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Инициализацию системы кеширования на основе переданных параметров.</li>
 <li>Обработку ошибок через исключения. Все операции выполняются в зависимости от выбранного типа кеширования (<code>$this-&gt;type</code>).</li>
 </ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
+<h1><a class="anchor" id="CacheHandler_Main_Functions"></a>
+Основные функции</h1>
 <ul>
 <li>Проверка актуальности данных в кеше с использованием ключа и контрольного числа.</li>
 <li>Запись данных в кеш с кодированием в формат JSON и Base64.</li>
@@ -271,7 +271,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Обработка ошибок через исключения (<code>JsonException</code>, <code>RuntimeException</code>).</li>
 </ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html" title="Интерфейс для работы с системами кеширования.">PhotoRigma\Interfaces\Cache_Handler_Interface</a> Интерфейс, который реализует класс.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и обеспечивает взаимодействие приложения с системами кеширования.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и обеспечивает взаимодействие приложения с системами кеширования. Реализованы меры безопасности для предотвращения повреждения данных в кеше.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -284,14 +284,546 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Проверка актуальности данных в кеше.</li>
 <li>Запись данных в кеш. Все методы должны быть реализованы в классах, поддерживающих этот интерфейс.</li>
 </ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
+<h1><a class="anchor" id="CacheHandlerInterface_Main_Functions"></a>
+Основные функции</h1>
 <ul>
 <li>Проверка актуальности данных в кеше с использованием ключа и контрольного числа.</li>
 <li>Запись данных в кеш с кодированием в формат JSON и Base64.</li>
 </ul>
-<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и обеспечивает взаимодействие приложения с системами кеширования.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и обеспечивает взаимодействие приложения с системами кеширования. Реализация интерфейса гарантирует унифицированный подход к работе с различными системами кеширования.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Реализация методов интерфейса может отличаться от предыдущих версий. Убедитесь, что вы изучили новую документацию перед использованием.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html">Include</a></p>
+<p>Этот файл содержит константы, которые используются в различных частях приложения:</p><ul>
+<li>Пути к директориям (например, для хранения логов).</li>
+<li>Имена таблиц базы данных и представлений для упрощения работы с SQL-запросами.</li>
+<li>Регулярные выражения для валидации входных данных (логин, отображаемое имя, e-mail).</li>
+<li>Константы для настройки архивации логов.</li>
+<li>Системные константы для управления состоянием (например, флаги активности).</li>
+<li>Ключи для глобального массива $_SESSION. Все константы централизованы в этом файле для удобства поддержки и изменения.</li>
+</ul>
+<h1><a class="anchor" id="Constants_Main_Groups"></a>
+Основные группы констант</h1>
+<ul>
+<li><b>Пути и системные настройки</b>:<ul>
+<li><code>LOG_DIR</code>: Путь к директории для хранения логов.</li>
+<li><code>PHP_EOL</code>: Символ конца строки (зависит от операционной системы).</li>
+</ul>
+</li>
+<li><b>Таблицы базы данных</b>:<ul>
+<li><code>TBL_CONFIG</code>, <code>TBL_MENU</code>, <code>TBL_NEWS</code>, <code>TBL_CATEGORY</code>, <code>TBL_PHOTO</code>, <code>TBL_RATE_USER</code>, <code>TBL_RATE_MODER</code>, <code>TBL_USERS</code>, <code>TBL_GROUP</code>, <code>TBL_LOG_QUERY</code>.</li>
+<li>Представления: <code>VIEW_RANDOM_PHOTO</code>, <code>VIEW_USERS_ONLINE</code>.</li>
+</ul>
+</li>
+<li><b>Настройки пользователей</b>:<ul>
+<li><code>DEFAULT_GROUP</code>: Группа по умолчанию для новых пользователей.</li>
+<li><code>MAX_LOGIN_ATTEMPTS</code>: Максимальное количество попыток входа в админку.</li>
+<li><code>LOCKOUT_TIME</code>: Время блокировки после превышения попыток входа.</li>
+<li><code>DEFAULT_AVATAR</code>: Значение аватара по умолчанию.</li>
+</ul>
+</li>
+<li><b>Меню</b>:<ul>
+<li><code>SHORT_MENU</code>, <code>LONG_MENU</code>: Типы меню для формирования из базы данных.</li>
+</ul>
+</li>
+<li><b>Логирование и архивация</b>:<ul>
+<li><code>COMPRESSION_LEVEL</code>: Уровень сжатия для архивации логов.</li>
+<li><code>LOG_LIFETIME_DAYS</code>: Срок хранения логов.</li>
+<li><code>MAX_LOG_SIZE</code>: Максимальный размер лога (10 MB).</li>
+</ul>
+</li>
+<li><b>Сессии и безопасность</b>:<ul>
+<li><code>KEY_SESSION</code>: Ключ для использования в глобальном массиве $_SESSION.</li>
+</ul>
+</li>
+<li><b>Регулярные выражения</b>:<ul>
+<li><code>REG_LOGIN</code>: Для проверки логина.</li>
+<li><code>REG_NAME</code>: Для проверки отображаемого имени.</li>
+<li><code>REG_EMAIL</code>: Для проверки e-mail.</li>
+</ul>
+</li>
+<li><b>Флаги состояния</b>:<ul>
+<li><code>CHECKED_VALUE</code>, <code>TRUE_VALUE</code>: Для обозначения активного состояния или выбранных значений.</li>
+</ul>
+</li>
+<li><b>Настройки SQL</b>:<ul>
+<li><code>MIN_FULLTEXT_SEARCH_LENGTH</code>: Минимальная длина для полнотекстового поиска.</li>
+<li><code>SQL_LOG</code>: Включить логирование запросов без плейсхолдеров и медленных запросов.</li>
+<li><code>SQL_ANALYZE</code>: Включить анализ запросов с помощью EXPLAIN/EXPLAIN ANALYZE.</li>
+</ul>
+</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и предоставляет базовые инструменты для работы приложения. Константы используются для централизованного управления ключевыми параметрами системы.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html">Include</a></p>
+<p>Этот файл содержит глобальные функции для работы с логами:</p><ul>
+<li>Архивация старых логов (функция <code>archive_old_logs</code>).</li>
+<li>Логирование ошибок (функция <code>log_in_file</code>). Функции обеспечивают безопасное управление логами, включая архивацию старых файлов и запись новых данных. Реализованы меры безопасности, такие как проверка доступа к файлам и директориям, ограничение размера логов и использование блокировок при записи.</li>
+</ul>
+<h1><a class="anchor" id="Functions_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li><b>Архивация старых логов</b>:<ul>
+<li>Сжимает логи старше недели в формате <code>.gz</code> и удаляет исходные файлы.</li>
+<li>Использует константы <code>COMPRESSION_LEVEL</code> и <code>LOG_LIFETIME_DAYS</code>.</li>
+<li>Требует расширение zlib для работы.</li>
+</ul>
+</li>
+<li><b>Логирование ошибок</b>:<ul>
+<li>Записывает сообщения об ошибках в лог-файл.</li>
+<li>Поддерживает ограничение размера файла лога (<code>MAX_LOG_SIZE</code>) и архивацию при превышении.</li>
+<li>Может завершить выполнение скрипта при критических ошибках (устаревший параметр <code>$die</code>).</li>
+<li>Использует блокировки для безопасной записи через потоки (flock).</li>
+</ul>
+</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#ad8cade6816c5b77d8ec62a310355e0b8" title="Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.">PhotoRigma\Include\archive_old_logs</a> Функция для архивации старых логов. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и предоставляет инструменты для управления логами. Реализованы меры безопасности для предотвращения несанкционированного доступа и повреждения данных.</dd></dl>
+<h1><a class="anchor" id="Functions_Error_Handling"></a>
+Обработка ошибок</h1>
+<p>При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:</p><ul>
+<li><code>RuntimeException</code>: Если не удалось создать директорию для логов или она недоступна для записи.</li>
+<li><code>RuntimeException</code>: Если не удалось записать данные в лог-файл.</li>
+<li><code>Exception</code>: Любые непредвиденные ошибки.</li>
+</ul>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось создать директорию для логов или она недоступна для записи. Пример сообщения: "Директория недоступна для записи | Путь: " . LOG_DIR. </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось записать данные в лог-файл. Пример сообщения: "Не удалось записать данные в файл | Путь: {$log_file}". </td></tr>
+    <tr><td class="paramname">Exception</td><td>Любые непредвиденные ошибки.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html">Include</a></p>
+<p>Этот файл содержит настройки и инициализацию сессий и куков, которые используются для управления состоянием пользователя в приложении:</p><ul>
+<li>Безопасная проверка значения HTTP_HOST для предотвращения атак через заголовки.</li>
+<li>Настройка параметров куков для сессий (время жизни, путь, домен, флаги secure и httponly).</li>
+<li>Инициализация сессии после настройки параметров куков.</li>
+</ul>
+<h1><a class="anchor" id="SessionInit_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Проверка и валидация HTTP_HOST для безопасного использования в куках.</li>
+<li>Настройка параметров куков с использованием текущих параметров из session_get_cookie_params().</li>
+<li>Инициализация сессии с применением настроенных параметров куков.</li>
+</ul>
+<h1><a class="anchor" id="SessionInit_Error_Handling"></a>
+Обработка ошибок</h1>
+<p>При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:</p><ul>
+<li><code>RuntimeException</code>: Если не удалось определить HTTP_HOST или его формат некорректен.</li>
+</ul>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось определить HTTP_HOST или его формат некорректен. Пример сообщения: "Некорректный формат HTTP_HOST | Значение: {$cookie_domain}".</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в управлении состоянием пользователя. Реализованы меры безопасности для предотвращения несанкционированного доступа через куки и сессии, такие как использование флагов secure и httponly.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит реализацию класса <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, который предоставляет методы для работы с HTML-шаблонами:</p><ul>
+<li>Обработка шаблонов с реализацией алгоритмов IF/ELSE, ARRAY, SWITCH/CASE.</li>
+<li>Формирование заголовка и подвала HTML-страницы.</li>
+<li>Поддержка читаемых URL через параметр <code>$mod_rewrite</code>.</li>
+<li>Все ошибки, возникающие при работе с шаблонами, обрабатываются через исключения.</li>
+</ul>
+<h1><a class="anchor" id="Template_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Добавление строковых данных, условий и блоков выбора для замены в шаблоне.</li>
+<li>Формирование заголовка и подвала HTML-страницы.</li>
+<li>Создание и обработка шаблона с подстановкой данных.</li>
+<li>Поддержка читаемых URL через параметр <code>$mod_rewrite</code>.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с шаблонами. </dd>
+<dd>
+<a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html" title="Интерфейс для работы с шаблонами.">PhotoRigma\Classes\Template_Interface</a> Интерфейс для работы с шаблонами.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализованы меры безопасности для предотвращения внедрения вредоносного кода через шаблоны.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Template_Interface</code>, который определяет методы для работы с HTML-шаблонами:</p><ul>
+<li>Добавление строковых данных, условий и блоков выбора для замены в шаблоне.</li>
+<li>Формирование заголовка и подвала HTML-страницы.</li>
+<li>Поддержка читаемых URL через параметр <code>$mod_rewrite</code>. Все ошибки, возникающие при работе с шаблонами, обрабатываются через исключения.</li>
+</ul>
+<h1><a class="anchor" id="TemplateInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Установка объекта, реализующего интерфейс <code>Work_Interface</code>, через сеттер (<code>set_work</code>).</li>
+<li>Добавление условий вывода фрагментов шаблона (<code>add_if</code>, <code>add_if_ar</code>).</li>
+<li>Добавление выбора блоков для вывода фрагментов шаблона (<code>add_case</code>, <code>add_case_ar</code>).</li>
+<li>Добавление строковых данных для замены в шаблоне (<code>add_string</code>, <code>add_string_ar</code>).</li>
+<li>Создание и обработка шаблона, включая чтение файла, парсинг и замену плейсхолдеров (<code>create_template</code>).</li>
+<li>Формирование заголовка HTML-страницы с меню, метаданными и блоками контента (<code>page_header</code>).</li>
+<li>Формирование подвала HTML-страницы с выводом копирайта, статистики, информации о пользователе и случайной фотографии (<code>page_footer</code>).</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализация интерфейса гарантирует единообразие работы с шаблонами в системе.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит реализацию класса <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a></code> и интерфейса <code>User_Interface</code>, которые предоставляют методы для работы с пользователями:</p><ul>
+<li>Управление данными текущего пользователя (добавление, обновление, удаление).</li>
+<li>Работа с группами пользователей (добавление, обновление, удаление).</li>
+<li>Генерация CSRF-токенов для защиты форм.</li>
+<li>Обработка прав доступа пользователей и групп.</li>
+<li>Проверка данных для входа в систему. Все ошибки, возникающие при работе с пользователями, обрабатываются через исключения.</li>
+</ul>
+<h1><a class="anchor" id="User_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Управление данными текущего пользователя.</li>
+<li>Работа с группами пользователей.</li>
+<li>Генерация CSRF-токенов для защиты форм.</li>
+<li>Обработка прав доступа пользователей и групп.</li>
+<li>Проверка данных для входа в систему.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для работы с пользователями. </dd>
+<dd>
+<a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами.">PhotoRigma\Interfaces\User_Interface</a> Интерфейс для работы с пользователями.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и модификации данных.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000001">Необходимо сделать</a></b></dt><dd>Закончить реализацию и документирование класса.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>User_Interface</code>, который определяет методы для работы с пользователями:</p><ul>
+<li>Управление данными текущего пользователя (добавление, обновление, удаление).</li>
+<li>Работа с группами пользователей (добавление, обновление, удаление).</li>
+<li>Генерация CSRF-токенов для защиты форм.</li>
+<li>Обработка прав доступа пользователей и групп.</li>
+<li>Проверка данных для входа в систему. Все ошибки, возникающие при работе с пользователями, обрабатываются через исключения.</li>
+</ul>
+<h1><a class="anchor" id="UserInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Установка объекта, реализующего интерфейс <code>Work_Interface</code> (<code>set_work</code>).</li>
+<li>Управление свойствами пользователя и сессии (<code>set_property_key</code>, <code>unset_property_key</code>).</li>
+<li>Генерация CSRF-токена для защиты от межсайтовой подделки запросов (<code>csrf_token</code>).</li>
+<li>Преобразование прав пользователя в строку JSON и обратно (<code>encode_user_rights</code>, <code>process_user_rights</code>).</li>
+<li>Добавление нового пользователя в базу данных (<code>add_new_user</code>).</li>
+<li>Обновление данных пользователя, включая пароль, email, имя и аватар (<code>update_user_data</code>).</li>
+<li>Обновление прав пользователя или группы через Админку (<code>update_user_rights</code>).</li>
+<li>Удаление пользователя из системы (<code>delete_user</code>).</li>
+<li>Добавление новой группы в систему (<code>add_new_group</code>).</li>
+<li>Обновление данных группы (<code>update_group_data</code>).</li>
+<li>Удаление группы из системы (<code>delete_group</code>).</li>
+<li>Проверка данных пользователя для входа в систему (<code>login_user</code>).</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализация интерфейса гарантирует единообразие работы с пользователями и их данными.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000006">Необходимо сделать</a></b></dt><dd>Закончить реализацию и документирование интерфейса.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит основной класс приложения <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a></code>, который объединяет подклассы для выполнения различных задач. Класс предоставляет:</p><ul>
+<li>Хранилище для данных о конфигурации и языковых переменных проекта.</li>
+<li>Механизмы для работы с безопасностью, включая проверку входных данных и защиту от спам-ботов.</li>
+<li>Механизмы для работы с изображениями через интерфейс <code>Work_Image_Interface</code>.</li>
+<li>Интеграцию с интерфейсом <code>Cache_Handler_Interface</code> для кеширования данных.</li>
+<li>Кеширование используется для хранения настроек и языковых переменных.</li>
+<li>Класс <code>Work_Helper</code> предоставляет методы для очистки строк, преобразования размеров и проверки MIME-типов.</li>
+<li>Интеграцию с интерфейсами для работы с базой данных, обработкой данных.</li>
+<li>Механизмы для управления директориями, пользовательской статистикой и другими компонентами системы.</li>
+</ul>
+<h1><a class="anchor" id="Work_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Хранилище для данных о конфигурации и языковых переменных проекта.</li>
+<li>Механизмы для работы с безопасностью (проверка входных данных, защита от спам-ботов).</li>
+<li>Работа с изображениями (загрузка, обработка, изменение размеров).</li>
+<li>Формирование данных для шаблонов (меню, статистика, блок пользователя).</li>
+<li>Реализация основной логики приложения (работа с категориями, новостями, рейтингами).</li>
+<li>Вспомогательные методы (очистка строк, преобразование размеров, проверка MIME-типов).</li>
+<li>Кеширование данных через <code>Cache_Handler_Interface</code> для повышения производительности.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью.">PhotoRigma\Interfaces\Work_Security_Interface</a> Интерфейс для работы с безопасностью приложения. </dd>
+<dd>
+<a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями.">PhotoRigma\Interfaces\Work_Image_Interface</a> Интерфейс, определяющий методы для работы с изображениями. </dd>
+<dd>
+<a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html" title="Интерфейс для формирования данных для шаблонов.">PhotoRigma\Interfaces\Work_Template_Interface</a> Интерфейс для работы с шаблонами. </dd>
+<dd>
+<a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов.">PhotoRigma\Interfaces\Work_Helper_Interface</a> Интерфейс для вспомогательных функций, таких как очистка строк и проверка MIME-типов. </dd>
+<dd>
+<a class="el" href="../../d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html" title="Интерфейс для работы с системами кеширования.">PhotoRigma\Interfaces\Cache_Handler_Interface</a> Интерфейс для работы с кешированием данных. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и повреждения данных. Кеширование используется для хранения настроек и языковых переменных, что повышает производительность приложения.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит класс <code>Work_CoreLogic</code>, который реализует интерфейс <code>Work_CoreLogic_Interface</code>. Класс предоставляет методы для выполнения ключевых операций приложения, таких как:</p><ul>
+<li>Работа с категориями и альбомами (метод <code>category</code>).</li>
+<li>Управление изображениями (методы <code>del_photo</code>, <code>create_photo</code>).</li>
+<li>Получение данных о новостях, языках и темах (методы <code>news</code>, <code>get_languages</code>, <code>get_themes</code>). Все методы зависят от конфигурации приложения и данных, полученных из базы данных.</li>
+</ul>
+<h1><a class="anchor" id="WorkCoreLogic_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Формирование информационных строк для категорий и пользовательских альбомов.</li>
+<li>Удаление изображений и связанных данных.</li>
+<li>Получение данных о новостях, языках и темах.</li>
+<li>Генерация блоков вывода изображений для различных типов запросов.</li>
+<li>Обработка оценок и расчёт средней оценки.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.">PhotoRigma\Interfaces\Work_CoreLogic_Interface</a> Интерфейс, который реализует данный класс.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в выполнении базовой логики приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Work_CoreLogic_Interface</code>, который определяет методы для выполнения ключевых операций приложения:</p><ul>
+<li>Установка языковых данных и объекта пользователя через сеттеры (<code>set_lang</code>, <code>set_user</code>).</li>
+<li>Формирование информационных строк для категорий и пользовательских альбомов (<code>category</code>).</li>
+<li>Удаление изображений и связанных данных (<code>del_photo</code>).</li>
+<li>Получение данных о новостях, языках и темах (<code>news</code>, <code>get_languages</code>, <code>get_themes</code>).</li>
+<li>Генерация блоков вывода изображений для различных типов запросов (<code>create_photo</code>).</li>
+<li>Добавление оценок и расчёт средней оценки фотографии (<code>process_rating</code>). Все методы зависят от конфигурации приложения и данных, полученных из базы данных.</li>
+</ul>
+<h1><a class="anchor" id="WorkCoreLogicInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Установка языковых данных и объекта пользователя.</li>
+<li>Работа с категориями и альбомами.</li>
+<li>Управление изображениями (удаление, создание блоков вывода).</li>
+<li>Получение данных о новостях, языках и темах.</li>
+<li>Обработка оценок и расчёт средней оценки.</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в выполнении базовой логики приложения. Реализация интерфейса гарантирует единообразие работы с основными компонентами системы.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит класс <code>Work_Helper</code>, который реализует вспомогательные методы для обработки данных. Класс предоставляет методы для очистки строк от HTML-тегов, преобразования размеров в байты, транслитерации строк, преобразования BBCode в HTML, разбиения строк на ограниченные по длине части и проверки MIME-типов. Все методы класса являются статическими.</p>
+<h1><a class="anchor" id="WorkHelper_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Очистка строк от HTML-тегов и специальных символов.</li>
+<li>Преобразование размеров в байты.</li>
+<li>Транслитерация строк и замена знаков пунктуации.</li>
+<li>Преобразование BBCode в HTML.</li>
+<li>Разбиение строк на несколько строк ограниченной длины.</li>
+<li>Проверка MIME-типов файлов через доступные библиотеки.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы для работы с данными. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в обработке данных. Класс поддерживает работу с различными форматами данных, включая строки, числа, изображения и MIME-типы. Реализованы меры безопасности для предотвращения внедрения вредоносного кода.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Work_Helper_Interface</code>, который определяет контракт для класса, предоставляющего вспомогательные методы для обработки данных:</p><ul>
+<li>Очистка строк от HTML-тегов и специальных символов.</li>
+<li>Преобразование размеров в байты.</li>
+<li>Транслитерация строк и замена знаков пунктуации.</li>
+<li>Преобразование BBCode в HTML.</li>
+<li>Разбиение строк на несколько строк ограниченной длины.</li>
+<li>Проверка MIME-типов файлов через доступные библиотеки. Все методы интерфейса реализуются как статические.</li>
+</ul>
+<h1><a class="anchor" id="WorkHelperInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Очистка строк от HTML-тегов и специальных символов.</li>
+<li>Преобразование размеров в байты.</li>
+<li>Транслитерация строк и замена знаков пунктуации.</li>
+<li>Преобразование BBCode в HTML.</li>
+<li>Разбиение строк на несколько строк ограниченной длины.</li>
+<li>Проверка MIME-типов файлов через доступные библиотеки.</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в обработке данных. Интерфейс поддерживает работу с различными форматами данных, включая строки, числа, изображения и MIME-типы. Реализованы меры безопасности для предотвращения внедрения вредоносного кода.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит класс <code>Work_Image</code>, который реализует интерфейс <code>Work_Image_Interface</code>. Класс предоставляет методы для работы с изображениями, включая изменение размеров, вывод через HTTP, обработку отсутствующих изображений, корректировку расширения файла в соответствии с его MIME-типом и логирование ошибок. Публичные методы класса являются редиректами на защищённые методы с суффиксом <code>_internal</code>, что обеспечивает более гибкую архитектуру (паттерн "фасад").</p>
+<h1><a class="anchor" id="WorkImage_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Создание директорий для категорий и копирование файлов <code><a class="el" href="../../de/d20/index_8php.html" title="Точка входа в приложение PhotoRigma.">index.php</a></code>.</li>
+<li>Корректировка расширения файла в соответствии с его MIME-типом.</li>
+<li>Вывод изображений через HTTP с защитой от MIME-sniffing и кликджекинга.</li>
+<li>Изменение размеров изображений (создание эскизов).</li>
+<li>Удаление директорий и их содержимого.</li>
+<li>Вычисление размеров для вывода эскиза изображения.</li>
+<li>Возвращение данных для отсутствующего изображения.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями.">PhotoRigma\Interfaces\Work_Image_Interface</a> Интерфейс для работы с изображениями. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы для работы с изображениями. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в обработке изображений. Класс поддерживает работу с библиотеками GraphicsMagick, ImageMagick и GD для изменения размеров изображений. Реализованы меры безопасности для предотвращения уязвимостей, таких как MIME-sniffing и кликджекинг.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Work_Image_Interface</code>, который определяет контракт для классов, реализующих методы для выполнения операций с изображениями:</p><ul>
+<li>Вычисление размеров эскизов.</li>
+<li>Изменение размеров изображений.</li>
+<li>Обработка отсутствующих изображений.</li>
+<li>Вывод изображений через HTTP.</li>
+<li>Корректировка расширения файла в соответствии с его MIME-типом.</li>
+<li>Удаление директории и её содержимого.</li>
+<li>Создание директорий для категории и копирование файлов <code><a class="el" href="../../de/d20/index_8php.html" title="Точка входа в приложение PhotoRigma.">index.php</a></code>.</li>
+</ul>
+<h1><a class="anchor" id="WorkImageInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Вычисление размеров эскизов.</li>
+<li>Изменение размеров изображений.</li>
+<li>Обработка отсутствующих изображений.</li>
+<li>Вывод изображений через HTTP.</li>
+<li>Корректировка расширения файла в соответствии с его MIME-типом.</li>
+<li>Удаление директории и её содержимого.</li>
+<li>Создание директорий для категории и копирование файлов <code><a class="el" href="../../de/d20/index_8php.html" title="Точка входа в приложение PhotoRigma.">index.php</a></code>.</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в обработке изображений. Интерфейс поддерживает работу с библиотеками GraphicsMagick, ImageMagick и GD для изменения размеров изображений. Реализованы меры безопасности для предотвращения уязвимостей, таких как MIME-sniffing и кликджекинг.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Work_Interface</code>, который определяет методы для управления языковыми данными, объектом пользователя и обеспечивает доступ к функционалу дочерних компонентов через фасады:</p><ul>
+<li>Установка языковых данных из директорий (<code>set_lang</code>). Метод сканирует указанные директории, загружает файлы языковых данных и передаёт их в дочерние компоненты.</li>
+<li>Установка объекта пользователя через сеттер (<code>set_user</code>).</li>
+<li>Делегирование вызовов методов дочерним компонентам:<ul>
+<li><code>Work_Helper_Interface</code>: Вспомогательные методы (например, очистка строк, преобразование размеров).</li>
+<li><code>Work_CoreLogic_Interface</code>: Базовая логика приложения (например, работа с категориями, новостями).</li>
+<li><code>Work_Image_Interface</code>: Работа с изображениями (например, изменение размеров, вывод эскизов).</li>
+<li><code>Work_Template_Interface</code>: Формирование данных для шаблонов (например, меню, статистика).</li>
+<li><code>Work_Security_Interface</code>: Безопасность приложения (например, проверка входных данных, CAPTCHA). Реализация этого интерфейса гарантирует единообразие работы с основными компонентами приложения.</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="WorkInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Управление языковыми данными через метод <code>set_lang</code>.</li>
+<li>Управление объектом пользователя через метод <code>set_user</code>.</li>
+<li>Делегирование вызовов методов дочерним компонентам (например, <code>Work_Helper_Interface</code>, <code>Work_CoreLogic_Interface</code>, <code>Work_Image_Interface</code> и др.).</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами.">PhotoRigma\Interfaces\User_Interface</a> Интерфейс для работы с пользователями. </dd>
+<dd>
+<a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов.">PhotoRigma\Interfaces\Work_Helper_Interface</a> Интерфейс для вспомогательных методов. </dd>
+<dd>
+<a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.">PhotoRigma\Interfaces\Work_CoreLogic_Interface</a> Интерфейс для базовой логики приложения. </dd>
+<dd>
+<a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями.">PhotoRigma\Interfaces\Work_Image_Interface</a> Интерфейс для работы с изображениями. </dd>
+<dd>
+<a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html" title="Интерфейс для формирования данных для шаблонов.">PhotoRigma\Interfaces\Work_Template_Interface</a> Интерфейс для формирования данных шаблонов. </dd>
+<dd>
+<a class="el" href="../../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью.">PhotoRigma\Interfaces\Work_Security_Interface</a> Интерфейс для работы с безопасностью.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Интерфейс предоставляет контракт для реализации основной логики взаимодействия между компонентами.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит класс <code>Work_Security</code>, который реализует интерфейс <code>Work_Security_Interface</code>. Класс предоставляет методы для:</p><ul>
+<li>Проверки входных данных на наличие вредоносного кода.</li>
+<li>Защиты от спам-ботов с использованием CAPTCHA.</li>
+<li>Фильтрации email-адресов для затруднения автоматического парсинга ботами.</li>
+<li>Универсальной проверки данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).</li>
+</ul>
+<h1><a class="anchor" id="WorkSecurity_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Проверка входных данных на соответствие регулярным выражениям.</li>
+<li>Защита email-адресов от парсинга ботами.</li>
+<li>Генерация математических CAPTCHA-вопросов для защиты от спам-ботов.</li>
+<li>Проверка URL на наличие вредоносного кода.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью.">PhotoRigma\Interfaces\Work_Security_Interface</a> Интерфейс для работы с безопасностью приложения. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы безопасности. </dd>
+<dd>
+<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция для логирования ошибок.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в обеспечении безопасности приложения. Реализованы меры для предотвращения атак, таких как XSS, SQL-инъекции и спам-боты.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Work_Security_Interface</code>, который определяет методы для обеспечения безопасности приложения. Классы, реализующие этот интерфейс, предоставляют функционал для защиты от распространённых угроз, таких как SQL-инъекции, XSS-атаки, спам-боты и другие:</p><ul>
+<li>Проверка URL на наличие вредоносного кода.</li>
+<li>Проверка входных данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).</li>
+<li>Проверка содержимого полей на соответствие регулярным выражениям или другим условиям.</li>
+<li>Генерация математических CAPTCHA-вопросов для защиты от спам-ботов.</li>
+<li>Фильтрация email-адресов для защиты от парсинга ботами.</li>
+</ul>
+<h1><a class="anchor" id="WorkSecurityInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Проверка URL на наличие вредоносного кода.</li>
+<li>Проверка входных данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES).</li>
+<li>Проверка содержимого полей на соответствие регулярным выражениям или другим условиям.</li>
+<li>Генерация математических CAPTCHA-вопросов для защиты от спам-ботов.</li>
+<li>Фильтрация email-адресов для защиты от парсинга ботами.</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в обеспечении безопасности приложения. Реализованы меры для предотвращения атак, таких как XSS, SQL-инъекции и спам-боты. Все методы данного интерфейса рекомендуется вызывать через класс <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a></code>.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../d6/dc3/namespacePhotoRigma_1_1Classes.html">Classes</a></p>
+<p>Этот файл содержит класс <code>Work_Template</code>, который реализует интерфейс <code>Work_Template_Interface</code>. Класс предоставляет методы для генерации данных, необходимых для отображения различных блоков на странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Все данные формируются на основе запросов к базе данных и конфигурации. Реализация методов зависит от глобальных переменных, таких как $_SESSION, для проверки статуса авторизации.</p>
+<h1><a class="anchor" id="WorkTemplate_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Формирование данных для меню.</li>
+<li>Генерация списка лучших пользователей.</li>
+<li>Генерация статистических данных.</li>
+<li>Формирование блока пользователя.</li>
+</ul>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html" title="Интерфейс для формирования данных для шаблонов.">PhotoRigma\Interfaces\Work_Template_Interface</a> Интерфейс, который реализует данный класс. </dd>
+<dd>
+<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Класс, через который вызываются методы для работы с шаблонами.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в формировании данных для шаблонов. Реализованы меры безопасности для предотвращения несанкционированного доступа к данным через глобальные переменные.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+</dd></dl>
+<p>\<a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></p>
+<p>Этот файл содержит интерфейс <code>Work_Template_Interface</code>, который определяет методы для формирования данных, необходимых для отображения различных блоков на странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Все данные формируются на основе запросов к базе данных и конфигурации. Реализация методов зависит от глобальных переменных, таких как $_SESSION, для проверки статуса авторизации.</p>
+<h1><a class="anchor" id="WorkTemplateInterface_Main_Functions"></a>
+Основные функции</h1>
+<ul>
+<li>Формирование массива данных для меню.</li>
+<li>Создание блока пользователя.</li>
+<li>Генерация статистических данных.</li>
+<li>Формирование списка лучших пользователей.</li>
+<li>Установка языковых данных и объекта пользователя.</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в формировании данных для шаблонов. Все методы данного интерфейса рекомендуется вызывать через класс <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a></code>. Реализованы меры безопасности для предотвращения несанкционированного доступа к данным через глобальные переменные.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -304,8 +836,8 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Выводит шаблонные элементы страницы (шапку, подвал и содержимое).</li>
 <li>Реализует централизованную систему обработки ошибок и их логирования на уровне ядра приложения.</li>
 </ul>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
+<h1><a class="anchor" id="Index_Main_Functions"></a>
+Основные функции</h1>
 <ul>
 <li>Подключение конфигурации и обязательных файлов.</li>
 <li>Инициализация основных классов (<code><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a></code>, <code><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">Work</a></code>, <code><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a></code>, <code><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a></code>).</li>
@@ -313,8 +845,8 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Генерация HTML-контента страницы.</li>
 <li>Логирование ошибок и обработка исключений.</li>
 </ul>
-<h1><a class="anchor" id="Параметр"></a>
-<code>action</code></h1>
+<h1><a class="anchor" id="Index_Action_Param"></a>
+Параметр <code>action</code></h1>
 <p>Параметр <code>action</code> определяет действие, которое должно быть выполнено приложением. Поддерживаемые значения:</p><ul>
 <li><code>admin</code>: Администрирование сайта.</li>
 <li><code>attach</code>: Реализует безопасный вывод фото из галереи по идентификатору с проверкой прав доступа и ограничением путей.</li>
@@ -325,13 +857,27 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li><code>profile</code>: Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.</li>
 <li><code>search</code>: Обработка поисковых запросов на сайте.</li>
 </ul>
-<h1><a class="anchor" id="Обработка"></a>
-ошибок</h1>
+<h1><a class="anchor" id="Index_Error_Handling"></a>
+Обработка ошибок</h1>
 <p>При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:</p><ul>
 <li><code>RuntimeException</code>: Если конфигурационный файл или обязательные файлы отсутствуют.</li>
 <li><code>PDOException</code>: Если возникла ошибка при работе с базой данных.</li>
 <li><code>Exception</code>: Если возникла непредвиденная ошибка.</li>
 </ul>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">RuntimeException</td><td>Если конфигурационный файл отсутствует или недоступен для чтения. Пример сообщения: "Конфигурационный файл отсутствует или не является
+             файлом | Путь: config.php". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если обязательные файлы отсутствуют или недоступны для чтения. Пример сообщения: "Проверка обязательных файлов завершилась ошибкой | Ошибки:
+             [список ошибок]". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если файл действия не найден или недоступен для чтения. Пример сообщения: "Файл действий не найден или недоступен для чтения | Путь:
+             [путь к файлу]". </td></tr>
+    <tr><td class="paramname">PDOException</td><td>Если возникла ошибка при работе с базой данных. Пример сообщения: "Ошибка базы данных | [сообщение об ошибке]". </td></tr>
+    <tr><td class="paramname">Exception</td><td>Если возникла непредвиденная ошибка. Пример сообщения: "Общая ошибка |
+             [сообщение об ошибке]".</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a> Файл конфигурации, содержащий параметры приложения.<ul>
 <li></li>
 </ul>
@@ -458,8 +1004,6 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <dd>
 <a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в запуске и работе приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
-<h1><a class="anchor" id="Примеры"></a>
-использования</h1>
 <p>Примеры вызова файла через URL с использованием параметра <code>action</code>: </p><div class="fragment"><div class="line">http:<span class="comment">//example.com/index.php?action=admin</span></div>
 <div class="line">http:<span class="comment">//example.com/index.php?action=attach&amp;id=123</span></div>
 <div class="line">http:<span class="comment">//example.com/index.php?action=category</span></div>
@@ -469,10 +1013,10 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
 </dd></dl>
-<p>\Language</p>
+<p>\<a class="el" href="../../dc/d7a/namespacePhotoRigma_1_1Language.html">Language</a></p>
 <p>This file contains English language strings used in the core of the project. It includes texts for the interface, menus, forms, notifications, and other elements.</p>
-<h1><a class="anchor" id="Main"></a>
-Functions</h1>
+<h1><a class="anchor" id="LanguageEn_Main_Functions"></a>
+Main Functions</h1>
 <ul>
 <li>Providing localized strings for the interface.</li>
 <li>Supporting multilingual functionality of the project.</li>
@@ -484,10 +1028,10 @@ Functions</h1>
 <li>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</li>
 </ul>
 </dd></dl>
-<p>\Language</p>
+<p>\<a class="el" href="../../dc/d7a/namespacePhotoRigma_1_1Language.html">Language</a></p>
 <p>Этот файл содержит строки русского языка, используемые в ядре проекта сайта. Включает тексты для интерфейса, меню, форм, уведомлений и других элементов.</p>
-<h1><a class="anchor" id="Основные"></a>
-функции</h1>
+<h1><a class="anchor" id="LanguageRu_Main_Functions"></a>
+Основные функции</h1>
 <ul>
 <li>Предоставление локализованных строк для интерфейса.</li>
 <li>Поддержка многоязычности проекта.</li>
@@ -515,9 +1059,9 @@ Functions</h1>
 <p>Действие, которое необходимо выполнить. </p>
 <p>Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'. Пример вызова действия 'profile': $_GET['action'] = 'profile'; @noinspection PhpRedundantVariableDocTypeInspection </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00350">350</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00347">347</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00436">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01389">Template\_page_header_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01876">Work\create_menu()</a>, <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00359">Work_Template\create_menu()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Interface\create_menu()</a>, <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01304">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00438">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01883">Work\create_menu()</a>, <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00361">Work_Template\create_menu()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Interface\create_menu()</a>, <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01305">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
@@ -562,7 +1106,7 @@ Functions</h1>
 </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00260">260</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00257">257</a></p>
 
 </div>
 </div>
@@ -815,9 +1359,9 @@ Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00394">394</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00391">391</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02539">Template\_page_footer_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01389">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l02457">Template\page_footer()</a>, <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a34feab7e9589b201ec7fbb6b3507bd30">Template_Interface\page_footer()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01304">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02540">Template\_page_footer_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l02458">Template\page_footer()</a>, <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a34feab7e9589b201ec7fbb6b3507bd30">Template_Interface\page_footer()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01305">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
@@ -828,7 +1372,7 @@ Functions</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$db = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'])</td>
+          <td class="memname">$db = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'], $cache)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -840,9 +1384,9 @@ Functions</h1>
 <dd>
 <a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a> Массив конфигурации, используемый для подключения к БД. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00269">269</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00266">266</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00220">Work\__construct()</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l00314">Work\load_cached_config()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00227">Work\__construct()</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l00321">Work\load_cached_config()</a>.</p>
 
 </div>
 </div>
@@ -858,7 +1402,7 @@ Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00155">155</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00152">152</a></p>
 
 </div>
 </div>
@@ -874,9 +1418,9 @@ Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00223">223</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00220">220</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00450">Work\__set()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00457">Work\__set()</a>.</p>
 
 </div>
 </div>
@@ -966,7 +1510,7 @@ Functions</h1>
 <p>Список обязательных файлов для подключения. </p>
 <p>Содержит пути к файлам, которые необходимы для работы приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00196">196</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00193">193</a></p>
 
 </div>
 </div>
@@ -1007,9 +1551,9 @@ Functions</h1>
 <div class="line">        <a class="code hl_variable" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>],</div>
 <div class="line">        <a class="code hl_variable" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a></div>
 <div class="line">    )</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Template_html"><div class="ttname"><a href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html">PhotoRigma\Classes\Template</a></div><div class="ttdoc">Класс для работы с шаблонами.</div><div class="ttdef"><b>Определения</b> <a href="../../df/d4d/Template_8php_source.html#l00098">Template.php:99</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00287">index.php:287</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_aba5fcdd0bc47aeaa710f5ff7cf567777"><div class="ttname"><a href="#aba5fcdd0bc47aeaa710f5ff7cf567777">PhotoRigma\$themes_config</a></div><div class="ttdeci">$themes_config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00306">index.php:306</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Template_html"><div class="ttname"><a href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html">PhotoRigma\Classes\Template</a></div><div class="ttdoc">Класс для работы с шаблонами.</div><div class="ttdef"><b>Определения</b> <a href="../../df/d4d/Template_8php_source.html#l00099">Template.php:100</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00284">index.php:284</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_aba5fcdd0bc47aeaa710f5ff7cf567777"><div class="ttname"><a href="#aba5fcdd0bc47aeaa710f5ff7cf567777">PhotoRigma\$themes_config</a></div><div class="ttdeci">$themes_config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00303">index.php:303</a></div></div>
 </div><!-- fragment -->
 <p>Создание объекта класса <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a>. </p>
 <p>Используется для генерации HTML-контента страниц. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с HTML-шаблонами. </dd>
@@ -1028,7 +1572,7 @@ Functions</h1>
 <dd>
 <a class="el" href="#ada57e7bb7c152edad18fe2f166188691" title="Добавление текста к заголовку страницы. @noinspection PhpRedundantVariableDocTypeInspection.">$title</a> Переменная, используемая для добавления текста к заголовку страницы. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00320">320</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00317">317</a></p>
 
 </div>
 </div>
@@ -1044,7 +1588,7 @@ Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00306">306</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00303">303</a></p>
 
 </div>
 </div>
@@ -1062,9 +1606,9 @@ Functions</h1>
 
 <p>Добавление текста к заголовку страницы. @noinspection PhpRedundantVariableDocTypeInspection. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00340">340</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00337">337</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01389">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01304">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01305">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
@@ -1085,9 +1629,9 @@ Functions</h1>
 <dd>
 <a class="el" href="../../db/da2/User_8php.html" title="Класс для управления пользователями, включая регистрацию, аутентификацию, управление профилем и хране...">include/User.php</a> Файл, содержащий реализацию класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a>. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00303">303</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00300">300</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02539">Template\_page_footer_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01417">Work\set_user()</a>, <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic_Interface\set_user()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Interface\set_user()</a> и <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Template_Interface\set_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02540">Template\_page_footer_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01424">Work\set_user()</a>, <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic_Interface\set_user()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Interface\set_user()</a> и <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Template_Interface\set_user()</a>.</p>
 
 </div>
 </div>
@@ -1121,7 +1665,7 @@ Functions</h1>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода через вызов внутреннего метода.">PhotoRigma\Classes\Work\url_check()</a> Метод для проверки URL на наличие вредоносного кода. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00287">287</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00284">284</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a0bb4e25a2291e3792c181a821de0c88c">Template_Interface\set_work()</a> и <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html#a0bb4e25a2291e3792c181a821de0c88c">User_Interface\set_work()</a>.</p>
 
@@ -1139,9 +1683,9 @@ Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00168">168</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00165">165</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00239">PhotoRigma\Include\log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">PhotoRigma\Include\log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1709,7 @@ Functions</h1>
 <li>Если файл не существует или недоступен, используется файл по умолчанию ('main.php'). @noinspection NotOptimalIfConditionsInspection </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00380">380</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00377">377</a></p>
 
 </div>
 </div>
@@ -1181,7 +1725,7 @@ Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00161">161</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00158">158</a></p>
 
 </div>
 </div>
@@ -1199,7 +1743,7 @@ Functions</h1>
 
 <p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00223">223</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01389">Template\_page_header_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>.</p>
 
 </div>
 </div>
@@ -1218,17 +1762,17 @@ Functions</h1>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">if</span> (!is_file(<span class="stringliteral">&#39;config.php&#39;</span>)) {</div>
 <div class="line">        <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(</div>
-<div class="line">            __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Конфигурационный файл отсутствует или не является файлом | Путь: config.php&quot;</span></div>
+<div class="line">            __FILE__ . <span class="charliteral">&#39;:&#39;</span> . __LINE__ . <span class="stringliteral">&#39; (&#39;</span> . (__FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&#39;) | Конфигурационный файл отсутствует или не является файлом | Путь: config.php&#39;</span></div>
 <div class="line">        );</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (!is_readable(<span class="stringliteral">&#39;config.php&#39;</span>)) {</div>
 <div class="line">        <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(</div>
-<div class="line">            __FILE__ . <span class="stringliteral">&quot;:&quot;</span> . __LINE__ . <span class="stringliteral">&quot; (&quot;</span> . (__FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&quot;) | Конфигурационный файл существует, но недоступен для чтения | Путь: config.php&quot;</span></div>
+<div class="line">            __FILE__ . <span class="charliteral">&#39;:&#39;</span> . __LINE__ . <span class="stringliteral">&#39; (&#39;</span> . (__FUNCTION__ ?: <span class="stringliteral">&#39;global&#39;</span>) . <span class="stringliteral">&#39;) | Конфигурационный файл существует, но недоступен для чтения | Путь: config.php&#39;</span></div>
 <div class="line">        );</div>
 <div class="line">    }</div>
 <div class="line">    require_once <span class="stringliteral">&#39;config.php&#39;</span></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00170">170</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00167">167</a></p>
 
 </div>
 </div>
