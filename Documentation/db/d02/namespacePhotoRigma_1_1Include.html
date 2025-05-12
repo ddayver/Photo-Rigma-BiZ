@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -144,6 +144,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memitem:a2a3024d0b4853a913d3baa522a035f91" id="r_a2a3024d0b4853a913d3baa522a035f91"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a3024d0b4853a913d3baa522a035f91">TBL_USERS</a> '`users`'</td></tr>
 <tr class="memdesc:a2a3024d0b4853a913d3baa522a035f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица пользователей с их правами  <br /></td></tr>
 <tr class="separator:a2a3024d0b4853a913d3baa522a035f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad1d1b677974963ddbc725c6acacb4d0" id="r_aad1d1b677974963ddbc725c6acacb4d0"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad1d1b677974963ddbc725c6acacb4d0">TBL_USERS_BANS</a> '`user_bans`'</td></tr>
+<tr class="memdesc:aad1d1b677974963ddbc725c6acacb4d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица пользователей с их банами  <br /></td></tr>
+<tr class="separator:aad1d1b677974963ddbc725c6acacb4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d321afcd9daf1261fb27494a9dd07cf" id="r_a9d321afcd9daf1261fb27494a9dd07cf"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d321afcd9daf1261fb27494a9dd07cf">TBL_GROUP</a> '`groups`'</td></tr>
 <tr class="memdesc:a9d321afcd9daf1261fb27494a9dd07cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Таблица групп пользователей с их правами  <br /></td></tr>
 <tr class="separator:a9d321afcd9daf1261fb27494a9dd07cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -159,9 +162,24 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memitem:ade923b91d229c67d7b053979351c0376" id="r_ade923b91d229c67d7b053979351c0376"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade923b91d229c67d7b053979351c0376">VIEW_USERS_ONLINE</a> '`users_online`'</td></tr>
 <tr class="memdesc:ade923b91d229c67d7b053979351c0376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Представление со списком онлайн пользователей  <br /></td></tr>
 <tr class="separator:ade923b91d229c67d7b053979351c0376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2790a51795c400a411236e4651f1b3f1" id="r_a2790a51795c400a411236e4651f1b3f1"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2790a51795c400a411236e4651f1b3f1">DEFAULT_GROUP</a> 1</td></tr>
+<tr class="memitem:ad20c4c21934cdb8091d1e5b2c37e8fed" id="r_ad20c4c21934cdb8091d1e5b2c37e8fed"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad20c4c21934cdb8091d1e5b2c37e8fed">GROUP_GUEST</a> 0</td></tr>
+<tr class="memdesc:ad20c4c21934cdb8091d1e5b2c37e8fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Группа гостей  <br /></td></tr>
+<tr class="separator:ad20c4c21934cdb8091d1e5b2c37e8fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef55f8011fb1e237978093d01b94f797" id="r_aef55f8011fb1e237978093d01b94f797"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef55f8011fb1e237978093d01b94f797">GROUP_USER</a> 1</td></tr>
+<tr class="memdesc:aef55f8011fb1e237978093d01b94f797"><td class="mdescLeft">&#160;</td><td class="mdescRight">Группа пользователей  <br /></td></tr>
+<tr class="separator:aef55f8011fb1e237978093d01b94f797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb9205f67473b466ec66e078a63c750e" id="r_acb9205f67473b466ec66e078a63c750e"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb9205f67473b466ec66e078a63c750e">GROUP_MODER</a> 2</td></tr>
+<tr class="memdesc:acb9205f67473b466ec66e078a63c750e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Группа модераторов  <br /></td></tr>
+<tr class="separator:acb9205f67473b466ec66e078a63c750e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92f60481e16d505654eda6c3bcb68037" id="r_a92f60481e16d505654eda6c3bcb68037"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92f60481e16d505654eda6c3bcb68037">GROUP_ADMIN</a> 3</td></tr>
+<tr class="memdesc:a92f60481e16d505654eda6c3bcb68037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Группа админов  <br /></td></tr>
+<tr class="separator:a92f60481e16d505654eda6c3bcb68037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2790a51795c400a411236e4651f1b3f1" id="r_a2790a51795c400a411236e4651f1b3f1"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2790a51795c400a411236e4651f1b3f1">DEFAULT_GROUP</a> <a class="el" href="#aef55f8011fb1e237978093d01b94f797">GROUP_USER</a></td></tr>
 <tr class="memdesc:a2790a51795c400a411236e4651f1b3f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Группа по-умолчанию для новых пользователей  <br /></td></tr>
 <tr class="separator:a2790a51795c400a411236e4651f1b3f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c618296ff740fa2a03ee2bd52fa07de" id="r_a9c618296ff740fa2a03ee2bd52fa07de"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c618296ff740fa2a03ee2bd52fa07de">PROTECTED_GROUPS</a> [<a class="el" href="#ad20c4c21934cdb8091d1e5b2c37e8fed">GROUP_GUEST</a>, <a class="el" href="#aef55f8011fb1e237978093d01b94f797">GROUP_USER</a>, <a class="el" href="#acb9205f67473b466ec66e078a63c750e">GROUP_MODER</a>, <a class="el" href="#a92f60481e16d505654eda6c3bcb68037">GROUP_ADMIN</a>]</td></tr>
+<tr class="memdesc:a9c618296ff740fa2a03ee2bd52fa07de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Список групп с запретом на удаление  <br /></td></tr>
+<tr class="separator:a9c618296ff740fa2a03ee2bd52fa07de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c9fe713d3d1b6f166d8768aaf619275" id="r_a0c9fe713d3d1b6f166d8768aaf619275"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c9fe713d3d1b6f166d8768aaf619275">MAX_LOGIN_ATTEMPTS</a> 5</td></tr>
 <tr class="memdesc:a0c9fe713d3d1b6f166d8768aaf619275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Максимальное количество попыток входа в админку  <br /></td></tr>
 <tr class="separator:a0c9fe713d3d1b6f166d8768aaf619275"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,6 +189,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memitem:a834e1bd7ce0d2d35485d68dff3f8c594" id="r_a834e1bd7ce0d2d35485d68dff3f8c594"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a834e1bd7ce0d2d35485d68dff3f8c594">DEFAULT_AVATAR</a> 'no_avatar.jpg'</td></tr>
 <tr class="memdesc:a834e1bd7ce0d2d35485d68dff3f8c594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Константа для значения аватара по умолчанию  <br /></td></tr>
 <tr class="separator:a834e1bd7ce0d2d35485d68dff3f8c594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66bf7fdf834a6d305836f42a1628e98e" id="r_a66bf7fdf834a6d305836f42a1628e98e"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66bf7fdf834a6d305836f42a1628e98e">SOFT_DELETE_RETENTION_INTERVAL</a> '3 months'</td></tr>
+<tr class="memdesc:a66bf7fdf834a6d305836f42a1628e98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Интервал от мягкого до окончательного удаления в формате strtotime()  <br /></td></tr>
+<tr class="separator:a66bf7fdf834a6d305836f42a1628e98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f896d0f20a7f03948c450a352031bea" id="r_a8f896d0f20a7f03948c450a352031bea"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f896d0f20a7f03948c450a352031bea">SHORT_MENU</a> 0</td></tr>
 <tr class="memdesc:a8f896d0f20a7f03948c450a352031bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Краткое меню (для формирования меню из базы данных)  <br /></td></tr>
 <tr class="separator:a8f896d0f20a7f03948c450a352031bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,9 +234,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <tr class="memitem:abec6ae06ad5526172520fb1ccb7c6806" id="r_abec6ae06ad5526172520fb1ccb7c6806"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abec6ae06ad5526172520fb1ccb7c6806">$cookie_domain</a> = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
 <tr class="memdesc:abec6ae06ad5526172520fb1ccb7c6806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Безопасная проверка HTTP_HOST.  <br /></td></tr>
 <tr class="separator:abec6ae06ad5526172520fb1ccb7c6806"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab408c4099149d8137d6693a245d2c34e" id="r_ab408c4099149d8137d6693a245d2c34e"><td class="memItemLeft" align="right" valign="top">if(! $cookie_domain) if(! $cookie_domain) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab408c4099149d8137d6693a245d2c34e">$cur_cookie</a> = session_get_cookie_params()</td></tr>
-<tr class="memdesc:ab408c4099149d8137d6693a245d2c34e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Настройка параметров куков для сессий.  <br /></td></tr>
-<tr class="separator:ab408c4099149d8137d6693a245d2c34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb3a64b7b0e49a25ff2343ebfd175e1" id="r_aedb3a64b7b0e49a25ff2343ebfd175e1"><td class="memItemLeft" align="right" valign="top">if(! $cookie_domain) if(PHP_SAPI==='cli' &amp;&amp;! $cookie_domain) if(! $cookie_domain) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedb3a64b7b0e49a25ff2343ebfd175e1">$cur_cookie</a> = session_get_cookie_params()</td></tr>
+<tr class="memdesc:aedb3a64b7b0e49a25ff2343ebfd175e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Настройка параметров куков для сессий.  <br /></td></tr>
+<tr class="separator:aedb3a64b7b0e49a25ff2343ebfd175e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Функции</h2>
 <a id="ad8cade6816c5b77d8ec62a310355e0b8" name="ad8cade6816c5b77d8ec62a310355e0b8"></a>
@@ -234,8 +255,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 </div><div class="memdoc">
 
 <p>Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы. </p>
-<p>Сжимает логи старше недели в формате .gz и удаляет исходные файлы. Требует расширение zlib для работы. Если возникают проблемы (например, отсутствие расширения zlib или доступа к файлам), ошибки логируются через стандартную PHP-функцию error_log, но выполнение скрипта не прерывается.</p>
-<p>Последовательность действий:</p><ul>
+<p>Сжимает логи старше недели в формате .gz и удаляет исходные файлы. Требует расширение zlib для работы. Если возникают проблемы (например, отсутствие расширения zlib или доступа к файлам), ошибки логируются через стандартную PHP-функцию error_log, но выполнение скрипта не прерывается. Последовательность действий:</p><ul>
 <li>Проверка наличия расширения zlib.</li>
 <li>Проверка доступности директории логов.</li>
 <li>Поиск файлов логов с расширением .txt.</li>
@@ -243,19 +263,19 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <li>Обработка каждого файла: проверка даты, сжатие, удаление исходного файла.</li>
 <li>Логирование ошибок через error_log при возникновении проблем.</li>
 </ul>
+<dl class="section return"><dt>Возвращает</dt><dd>void Функция ничего не возвращает.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Используются константы:<ul>
 <li>COMPRESSION_LEVEL: Уровень сжатия (максимальный, значение 9).</li>
 <li>LOG_LIFETIME_DAYS: Срок хранения логов ('-7 days'). Требуется расширение zlib для работы функции.</li>
 </ul>
 </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Функция может пропустить файлы при возникновении ошибок (например, если файл недоступен для чтения или записи).</dd></dl>
-<dl class="section return"><dt>Возвращает</dt><dd>void Функция ничего не возвращает.</dd></dl>
 <p>"Тихая" архивация старых логов: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#ad8cade6816c5b77d8ec62a310355e0b8">archive_old_logs</a>();</div>
-<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_ad8cade6816c5b77d8ec62a310355e0b8"><div class="ttname"><a href="#ad8cade6816c5b77d8ec62a310355e0b8">PhotoRigma\Include\archive_old_logs</a></div><div class="ttdeci">if(!defined( &#39;IN_GALLERY&#39;)||IN_GALLERY !==true) archive_old_logs()</div><div class="ttdoc">Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d62/functions_8php_source.html#l00109">functions.php:109</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_ad8cade6816c5b77d8ec62a310355e0b8"><div class="ttname"><a href="#ad8cade6816c5b77d8ec62a310355e0b8">PhotoRigma\Include\archive_old_logs</a></div><div class="ttdeci">if(!defined( &#39;IN_GALLERY&#39;)||IN_GALLERY !==true) archive_old_logs()</div><div class="ttdoc">Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d62/functions_8php_source.html#l00110">functions.php:110</a></div></div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d62/functions_8php_source.html">functions.php</a> строка <a class="el" href="../../d2/d62/functions_8php_source.html#l00109">109</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d62/functions_8php_source.html">functions.php</a> строка <a class="el" href="../../d2/d62/functions_8php_source.html#l00110">110</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d8d/constants_8php_source.html#l00114">COMPRESSION_LEVEL</a>, <a class="el" href="../../d2/d8d/constants_8php_source.html#l00085">LOG_DIR</a> и <a class="el" href="../../d2/d8d/constants_8php_source.html#l00115">LOG_LIFETIME_DAYS</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d8d/constants_8php_source.html#l00129">COMPRESSION_LEVEL</a>, <a class="el" href="../../d2/d8d/constants_8php_source.html#l00091">LOG_DIR</a> и <a class="el" href="../../d2/d8d/constants_8php_source.html#l00130">LOG_LIFETIME_DAYS</a>.</p>
 
 </div>
 </div>
@@ -308,14 +328,14 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Функция может завершить выполнение скрипта, если установлен флаг $die и константа DIE_IF_ERROR.</dd></dl>
 <p>Логирование ошибки без завершения скрипта: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(<span class="stringliteral">&quot;Ошибка при обработке данных.&quot;</span>);</div>
-<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdoc">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d62/functions_8php_source.html#l00245">functions.php:245</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_1_1Include_html_a2d74c46a21e4ce612a98eee60981aef0"><div class="ttname"><a href="#a2d74c46a21e4ce612a98eee60981aef0">PhotoRigma\Include\log_in_file</a></div><div class="ttdeci">log_in_file(string $txt, bool $die=false)</div><div class="ttdoc">Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.</div><div class="ttdef"><b>Определения</b> <a href="../../d2/d62/functions_8php_source.html#l00246">functions.php:246</a></div></div>
 </div><!-- fragment --><p> Логирование критической ошибки с завершением скрипта (deprecated!): </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a2d74c46a21e4ce612a98eee60981aef0">log_in_file</a>(<span class="stringliteral">&quot;Критическая ошибка!&quot;</span>, <span class="keyword">true</span>);</div>
 </div><!-- fragment --> 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d62/functions_8php_source.html">functions.php</a> строка <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">245</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d62/functions_8php_source.html">functions.php</a> строка <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">246</a></p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d8d/constants_8php_source.html#l00114">COMPRESSION_LEVEL</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00165">PhotoRigma\DEBUG_GALLERY</a>, <a class="el" href="../../d2/d8d/constants_8php_source.html#l00085">LOG_DIR</a>, <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">log_in_file()</a> и <a class="el" href="../../d2/d8d/constants_8php_source.html#l00116">MAX_LOG_SIZE</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../d2/d8d/constants_8php_source.html#l00129">COMPRESSION_LEVEL</a>, <a class="el" href="../../de/d20/index_8php_source.html#l00190">PhotoRigma\DEBUG_GALLERY</a>, <a class="el" href="../../d2/d8d/constants_8php_source.html#l00091">LOG_DIR</a>, <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">log_in_file()</a> и <a class="el" href="../../d2/d8d/constants_8php_source.html#l00131">MAX_LOG_SIZE</a>.</p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">log_in_file()</a>.</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Граф вызовов:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -366,14 +386,14 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 </div>
 </div>
-<a id="ab408c4099149d8137d6693a245d2c34e" name="ab408c4099149d8137d6693a245d2c34e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab408c4099149d8137d6693a245d2c34e">&#9670;&#160;</a></span>$cur_cookie</h2>
+<a id="aedb3a64b7b0e49a25ff2343ebfd175e1" name="aedb3a64b7b0e49a25ff2343ebfd175e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedb3a64b7b0e49a25ff2343ebfd175e1">&#9670;&#160;</a></span>$cur_cookie</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if(! $cookie_domain) if(! $cookie_domain) if (!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain)) $cur_cookie = session_get_cookie_params()</td>
+          <td class="memname">if(! $cookie_domain) if(PHP_SAPI==='cli' &amp;&amp;! $cookie_domain) if(! $cookie_domain) if (!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $cookie_domain)) $cur_cookie = session_get_cookie_params()</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -389,7 +409,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <li>httponly: Флаг, указывающий, что куки доступны только через HTTP(S), но не через JavaScript. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d5/d4c/session__init_8php_source.html">session_init.php</a> строка <a class="el" href="../../d5/d4c/session__init_8php_source.html#l00109">109</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d5/d4c/session__init_8php_source.html">session_init.php</a> строка <a class="el" href="../../d5/d4c/session__init_8php_source.html#l00114">114</a></p>
 
 </div>
 </div>
@@ -407,7 +427,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Значение для отметки выбранных типов поиска </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00166">166</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00181">181</a></p>
 
 </div>
 </div>
@@ -425,9 +445,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Уровень сжатия (максимальный) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00114">114</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00129">129</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00109">archive_old_logs()</a> и <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00110">archive_old_logs()</a> и <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -445,7 +465,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Константа для значения аватара по умолчанию </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00110">110</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00123">123</a></p>
 
 </div>
 </div>
@@ -456,14 +476,86 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const DEFAULT_GROUP 1</td>
+          <td class="memname">const DEFAULT_GROUP <a class="el" href="#aef55f8011fb1e237978093d01b94f797">GROUP_USER</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Группа по-умолчанию для новых пользователей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00106">106</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00117">117</a></p>
+
+</div>
+</div>
+<a id="a92f60481e16d505654eda6c3bcb68037" name="a92f60481e16d505654eda6c3bcb68037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92f60481e16d505654eda6c3bcb68037">&#9670;&#160;</a></span>GROUP_ADMIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GROUP_ADMIN 3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Группа админов </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00116">116</a></p>
+
+</div>
+</div>
+<a id="ad20c4c21934cdb8091d1e5b2c37e8fed" name="ad20c4c21934cdb8091d1e5b2c37e8fed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad20c4c21934cdb8091d1e5b2c37e8fed">&#9670;&#160;</a></span>GROUP_GUEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GROUP_GUEST 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Группа гостей </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00113">113</a></p>
+
+</div>
+</div>
+<a id="acb9205f67473b466ec66e078a63c750e" name="acb9205f67473b466ec66e078a63c750e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb9205f67473b466ec66e078a63c750e">&#9670;&#160;</a></span>GROUP_MODER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GROUP_MODER 2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Группа модераторов </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00115">115</a></p>
+
+</div>
+</div>
+<a id="aef55f8011fb1e237978093d01b94f797" name="aef55f8011fb1e237978093d01b94f797"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef55f8011fb1e237978093d01b94f797">&#9670;&#160;</a></span>GROUP_USER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const GROUP_USER 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Группа пользователей </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00114">114</a></p>
 
 </div>
 </div>
@@ -481,7 +573,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Ключ для использования в глобальном массиве $_SESSION. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00119">119</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00134">134</a></p>
 
 </div>
 </div>
@@ -499,7 +591,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Время блокировки после превышения попыток входа в админку (в секундах, например, 5 минут) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00109">109</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00122">122</a></p>
 
 </div>
 </div>
@@ -520,9 +612,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Путь к директории для хранения логов </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00085">85</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00091">91</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00109">archive_old_logs()</a> и <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00110">archive_old_logs()</a> и <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -540,9 +632,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Срок хранения логов </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00115">115</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00130">130</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00109">archive_old_logs()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00110">archive_old_logs()</a>.</p>
 
 </div>
 </div>
@@ -560,7 +652,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Полное меню (для формирования меню из базы данных) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00112">112</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00127">127</a></p>
 
 </div>
 </div>
@@ -578,9 +670,9 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>10 MB - максимальный размер лога (предварительно вычисленное значение: 10 * 1024 * 1024 = 10485760) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00117">117</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00132">132</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -598,7 +690,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Максимальное количество попыток входа в админку </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00107">107</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00120">120</a></p>
 
 </div>
 </div>
@@ -616,7 +708,25 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Минимальная длина для полнотекстового поиска </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00120">120</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00135">135</a></p>
+
+</div>
+</div>
+<a id="a9c618296ff740fa2a03ee2bd52fa07de" name="a9c618296ff740fa2a03ee2bd52fa07de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c618296ff740fa2a03ee2bd52fa07de">&#9670;&#160;</a></span>PROTECTED_GROUPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const PROTECTED_GROUPS [<a class="el" href="#ad20c4c21934cdb8091d1e5b2c37e8fed">GROUP_GUEST</a>, <a class="el" href="#aef55f8011fb1e237978093d01b94f797">GROUP_USER</a>, <a class="el" href="#acb9205f67473b466ec66e078a63c750e">GROUP_MODER</a>, <a class="el" href="#a92f60481e16d505654eda6c3bcb68037">GROUP_ADMIN</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Список групп с запретом на удаление </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00119">119</a></p>
 
 </div>
 </div>
@@ -632,7 +742,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00163">163</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00178">178</a></p>
 
 </div>
 </div>
@@ -648,7 +758,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00136">136</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00151">151</a></p>
 
 </div>
 </div>
@@ -664,7 +774,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00149">149</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00164">164</a></p>
 
 </div>
 </div>
@@ -682,7 +792,25 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Краткое меню (для формирования меню из базы данных) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00111">111</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00126">126</a></p>
+
+</div>
+</div>
+<a id="a66bf7fdf834a6d305836f42a1628e98e" name="a66bf7fdf834a6d305836f42a1628e98e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66bf7fdf834a6d305836f42a1628e98e">&#9670;&#160;</a></span>SOFT_DELETE_RETENTION_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const SOFT_DELETE_RETENTION_INTERVAL '3 months'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Интервал от мягкого до окончательного удаления в формате strtotime() </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00125">125</a></p>
 
 </div>
 </div>
@@ -700,7 +828,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Включить анализ запросов с помощью EXPLAIN/EXPLAIN ANALYZE. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00122">122</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00137">137</a></p>
 
 </div>
 </div>
@@ -718,7 +846,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Включить логирование запросов без плейсхолдеров и медленных запросов </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00121">121</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00136">136</a></p>
 
 </div>
 </div>
@@ -736,7 +864,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица со списком категорий на сервере </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00095">95</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00101">101</a></p>
 
 </div>
 </div>
@@ -754,7 +882,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица для хранения времени изменения записей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00103">103</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00110">110</a></p>
 
 </div>
 </div>
@@ -776,7 +904,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <p>Что использовать как конец строки (для Win-серверов). </p>
 <p>Таблица с настройками сервера </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00092">92</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00098">98</a></p>
 
 </div>
 </div>
@@ -794,7 +922,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица групп пользователей с их правами </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00100">100</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00107">107</a></p>
 
 </div>
 </div>
@@ -812,7 +940,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица для логирования медленных запросов, запросов без плейсхолдеров (имя не экранируется для совместимости с различными базами) </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00102">102</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00109">109</a></p>
 
 </div>
 </div>
@@ -830,7 +958,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с пунктами меню </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00093">93</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00099">99</a></p>
 
 </div>
 </div>
@@ -848,7 +976,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с новостями </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00094">94</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00100">100</a></p>
 
 </div>
 </div>
@@ -866,7 +994,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица со списком фотографий на сервере </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00096">96</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00102">102</a></p>
 
 </div>
 </div>
@@ -884,7 +1012,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с оценками фотографий от модераторов </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00098">98</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00104">104</a></p>
 
 </div>
 </div>
@@ -902,7 +1030,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица с оценками фотографий от пользователей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00097">97</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00103">103</a></p>
 
 </div>
 </div>
@@ -920,7 +1048,25 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Таблица пользователей с их правами </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00099">99</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00105">105</a></p>
+
+</div>
+</div>
+<a id="aad1d1b677974963ddbc725c6acacb4d0" name="aad1d1b677974963ddbc725c6acacb4d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad1d1b677974963ddbc725c6acacb4d0">&#9670;&#160;</a></span>TBL_USERS_BANS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const TBL_USERS_BANS '`user_bans`'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Таблица пользователей с их банами </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00106">106</a></p>
 
 </div>
 </div>
@@ -938,7 +1084,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Флаг для обозначения активного состояния </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00167">167</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00182">182</a></p>
 
 </div>
 </div>
@@ -956,7 +1102,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Представление с одним случайным фото </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00104">104</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00111">111</a></p>
 
 </div>
 </div>
@@ -974,7 +1120,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 
 <p>Представление со списком онлайн пользователей </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00105">105</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d2/d8d/constants_8php_source.html">constants.php</a> строка <a class="el" href="../../d2/d8d/constants_8php_source.html#l00112">112</a></p>
 
 </div>
 </div>
@@ -984,7 +1130,7 @@ $(function(){initNavTree('db/d02/namespacePhotoRigma_1_1Include.html','../../');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html">Include</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

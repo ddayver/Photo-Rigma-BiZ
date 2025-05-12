@@ -7,7 +7,7 @@
 						</div>
 					</div>
 					<div class="ui attached segment regist field_big" style="border-radius: 0 0 15px 15px; border-color: #414b57;">
-						<div align="center">
+						<div class="center aligned">
 							<form action="{U_REGISTER}" method="post" name="regist">
 								<div class="ui grid regist_data" style="margin: 0;">
 									<div class="row middle aligned tiny-space">
@@ -183,11 +183,25 @@
 											<div class="small ui black inverted basic tag label">{D_GROUP} <i class="users icon"></i></div>
 										</div>
 									</div>
+<!-- IF_SOFT_DELETE_BEGIN -->
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_DELETED_AT}:</div>
+										<div class="nine wide column">
+											<div class="small ui black inverted basic tag label">{D_DELETED_AT} <i class="trash alternate outline icon"></i></div>
+										</div>
+									</div>
+									<div class="row middle aligned tiny-space">
+										<div class="seven wide column">{L_RESTORE_EXPIRY}:</div>
+										<div class="nine wide column">
+											<div class="small ui black inverted basic tag label">{D_RESTORE_EXPIRY} <i class="clock outline icon"></i></div>
+										</div>
+									</div>
+<!-- IF_SOFT_DELETE_END -->
 									<div class="row middle aligned tiny-space">
 										<div class="seven wide column">{L_EDIT_PASSWORD}<b>*</b>:</div>
 										<div class="nine wide column">
 											<div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small">
-												<input class="small ui bordered input" name="edit_password" type="password" maxlength="50" placeholder="{L_EDIT_PASSWORD}...">
+												<input class="small ui{D_DISABLE_FIELD} bordered input" name="edit_password" type="password" maxlength="50" placeholder="{L_EDIT_PASSWORD}..."{D_DISABLE_FIELD}>
 												<i class="unlock icon"></i>
 											</div>
 										</div>
@@ -196,7 +210,7 @@
 										<div class="seven wide column">{L_RE_PASSWORD}<b>*</b>:</div>
 										<div class="nine wide column">
 											<div class="small ui icon input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="right center" data-variation="black small">
-												<input class="small ui bordered input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}...">
+												<input class="small ui{D_DISABLE_FIELD} bordered input" type="password" name="re_password" maxlength="50" placeholder="{L_RE_PASSWORD}..."{D_DISABLE_FIELD}>
 												<i class="unlock alternate icon"></i>
 											</div>
 										</div>
@@ -205,7 +219,7 @@
 										<div class="seven wide column">{L_EMAIL}:</div>
 										<div class="nine wide column">
 											<div class="small ui icon input custom-input">
-												<input class="small ui bordered input custom-input" name="email" type="text" maxlength="50" value="{D_EMAIL}">
+												<input class="small ui{D_DISABLE_FIELD} bordered input custom-input" name="email" type="text" maxlength="50" value="{D_EMAIL}"{D_DISABLE_FIELD}>
 												<i class="envelope outline icon"></i>
 											</div>
 										</div>
@@ -214,7 +228,7 @@
 										<div class="seven wide column">{L_REAL_NAME}:</div>
 										<div class="nine wide column">
 											<div class="small ui icon input custom-input">
-												<input class="small ui bordered input" name="real_name" type="text" maxlength="50" value="{D_REAL_NAME}">
+												<input class="small ui{D_DISABLE_FIELD} bordered input" name="real_name" type="text" maxlength="50" value="{D_REAL_NAME}"{D_DISABLE_FIELD}>
 												<i class="id card icon"></i>
 											</div>
 										</div>
@@ -222,14 +236,14 @@
 									<div class="row">
 										<div class="seven wide column">{L_AVATAR}<b>*</b>:</div>
 										<div class="nine wide column">
-											<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0">
+											<img class="ui{D_DISABLE_FIELD} small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}">
 										</div>
 									</div>
 									<div class="row middle aligned tiny-space">
 										<div class="sixteen wide column">
 											<input type="hidden" name="MAX_FILE_SIZE" value="{D_MAX_FILE_SIZE}">
 											<div class="small ui file input custom-input" data-tooltip="{L_HELP_EDIT}" data-position="top center" data-variation="black small">
-												<input class="small ui black inverted file input" name="file_avatar" value="" type="file">
+												<input class="small ui{D_DISABLE_FIELD} black inverted file input" name="file_avatar" value="" type="file"{D_DISABLE_FIELD}>
 											</div>
 										</div>
 									</div>
@@ -237,7 +251,7 @@
 										<div class="seven wide column">{L_DELETE_AVATAR}:</div>
 										<div class="nine wide column">
 											<div class="small ui toggle checkbox">
-												<input name="delete_avatar" type="checkbox" value="true">
+												<input name="delete_avatar" type="checkbox" value="true"{D_DISABLE_FIELD}>
 											</div>
 										</div>
 									</div>
@@ -249,7 +263,7 @@
 									<div class="row middle aligned tiny-space">
 										<div class="seven wide column">{L_CHANGE_LANG}:</div>
 										<div class="nine wide column">
-											<div class="ui inverted small dropdown selection">
+											<div class="ui inverted small dropdown{D_DISABLE_FIELD} selection">
 												<input type="hidden" name="language" value="{D_SELECTED_LANG}">
 												<i class="dropdown icon"></i>
 												<div class="default text">{L_SELECTED_LANG}</div>
@@ -264,8 +278,8 @@
 									<div class="row middle aligned tiny-space">
 										<div class="seven wide column">{L_CHANGE_THEME}:</div>
 										<div class="nine wide column">
-											<div class="ui inverted small dropdown selection">
-												<input type="hidden" name="language" value="{D_SELECTED_THEME}">
+											<div class="ui inverted small dropdown{D_DISABLE_FIELD} selection">
+												<input type="hidden" name="theme" value="{D_SELECTED_THEME}">
 												<i class="dropdown icon"></i>
 												<div class="default text">{L_SELECTED_THEME}</div>
 												<div class="menu">
@@ -287,7 +301,7 @@
 										<div class="seven wide column">{L_PASSWORD}:</div>
 										<div class="nine wide column">
 											<div class="small ui icon input custom-input">
-												<input class="small ui bordered input" name="password" type="password" maxlength="50" placeholder="{L_PASSWORD}...">
+												<input class="small ui{D_DISABLE_FIELD} bordered input" name="password" type="password" maxlength="50" placeholder="{L_PASSWORD}..."{D_DISABLE_FIELD}>
 												<i class="key icon"></i>
 											</div>
 										</div>
@@ -295,13 +309,45 @@
 <!-- IF_NEED_PASSWORD_END -->
 									<div class="row middle aligned tiny-space">
 										<div class="sixteen wide column" style="text-align: center;">
-											<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_PROFILE}">
-												<i class="upload icon"></i> {L_SAVE_PROFILE}
-											</button>
+											<div style="text-align: center; width: 95%;">
+												<div class="tiny ui center aligned buttons">
+													<button class="small ui{D_DISABLE_FIELD} inverted circular secondary basic button" name="submit" type="submit" title="{L_SAVE_PROFILE}">
+														<i class="upload icon"></i> {L_SAVE_PROFILE}
+													</button>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</form>
+<!-- IF_CAN_DELETE_BEGIN -->
+							<div class="ui grid regist_data no-space" style="margin: 0;">
+								<div class="row middle aligned tiny-space">
+									<div class="sixteen wide column" style="text-align: center;">
+										<div style="text-align: center; width: 95%;">
+											<div class="tiny ui center aligned buttons">
+												<button class="small ui inverted circular red basic icon button delete-button" data-target="#delete-modal">
+													<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
+												</button>
+											</div>
+										</div>
+										<div id="delete-modal" class="ui basic modal" data-url="{U_DELETE_BLOCK}">
+											<div class="header">{L_DELETE_BLOCK}</div>
+											<div class="content">
+												<p>{L_CONFIRM_DELETE_BLOCK}</p>
+												<form id="delete-profile-form" method="post" action="{U_DELETE_BLOCK}">
+													<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+												</form>
+											</div>
+											<div class="actions">
+												<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+												<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+<!-- IF_CAN_DELETE_END -->
 						</div>
 					</div>
 				</div>
@@ -345,7 +391,7 @@
 										{L_AVATAR}:
 									</div>
 									<div class="nine wide column" style="text-align: left; padding-left: 10px;">
-										<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" border="0">
+										<img class="ui small rounded image" src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}">
 									</div>
 								</div>
 							</div>

@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -145,16 +145,16 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="separator:a33bafce57e837bd695b691dc6001e96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaecf358b21a899308ae271e98e50573e" id="r_aaecf358b21a899308ae271e98e50573e"><td class="memItemLeft" align="right" valign="top">if(!empty( $_SERVER[ 'HTTPS']) &amp;&amp;( $_SERVER[ 'HTTPS']==='1'||strtolower( $_SERVER[ 'HTTPS'])==='on')) elseif(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &amp;&amp;in_array(strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']), ['https', 'h2'])) elseif(!empty( $_SERVER[ 'SERVER_PORT']) &amp;&amp;$_SERVER[ 'SERVER_PORT']===443) elseif(!empty($_SERVER['REQUEST_SCHEME']) &amp;&amp;strtolower($_SERVER['REQUEST_SCHEME'])==='https')&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaecf358b21a899308ae271e98e50573e">$http_host</a> = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
 <tr class="separator:aaecf358b21a899308ae271e98e50573e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a271f5d9c110c98ece73bec3151bf1a90" id="r_a271f5d9c110c98ece73bec3151bf1a90"><td class="memItemLeft" align="right" valign="top">if(! $http_host) if(! $http_host) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $http_host))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a271f5d9c110c98ece73bec3151bf1a90">$script_name</a> = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
-<tr class="separator:a271f5d9c110c98ece73bec3151bf1a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0eb0a189bae04261ab41ac974f8eb757" id="r_a0eb0a189bae04261ab41ac974f8eb757"><td class="memItemLeft" align="right" valign="top">if(! $script_name) if(! $script_name) if(!preg_match('/^\/&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0eb0a189bae04261ab41ac974f8eb757">$base_path</a> [a-zA-Z0-9._\-\/] *$/', $script_name)) = dirname($script_name)</td></tr>
-<tr class="separator:a0eb0a189bae04261ab41ac974f8eb757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e6777a91e42113e2c41cb412a76d1ae" id="r_a8e6777a91e42113e2c41cb412a76d1ae"><td class="memItemLeft" align="right" valign="top">if(! $http_host) if(PHP_SAPI==='cli' &amp;&amp;! $http_host) if(! $http_host) if(!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $http_host))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e6777a91e42113e2c41cb412a76d1ae">$script_name</a> = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td></tr>
+<tr class="separator:a8e6777a91e42113e2c41cb412a76d1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb9d94580da802c1ac00e977396dcf91" id="r_afb9d94580da802c1ac00e977396dcf91"><td class="memItemLeft" align="right" valign="top">if(! $script_name) if(! $script_name) if(PHP_SAPI !=='cli' &amp;&amp;!preg_match('/^\/&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb9d94580da802c1ac00e977396dcf91">$base_path</a> [a-zA-Z0-9._\-\/] *$/', $script_name)) = dirname($script_name)</td></tr>
+<tr class="separator:afb9d94580da802c1ac00e977396dcf91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78c432ed71c36e4285d478f21642200a" id="r_a78c432ed71c36e4285d478f21642200a"><td class="memItemLeft" align="right" valign="top">if( $base_path==='.') if(!str_ends_with($base_path, '/'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78c432ed71c36e4285d478f21642200a">$config</a> ['site_url'] = $http_host . $base_path</td></tr>
 <tr class="separator:a78c432ed71c36e4285d478f21642200a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8f0eaf2324e66fe919da857ccbe33e7" id="r_ad8f0eaf2324e66fe919da857ccbe33e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8f0eaf2324e66fe919da857ccbe33e7">$config</a> ['site_dir'] = realpath(__DIR__)</td></tr>
 <tr class="separator:ad8f0eaf2324e66fe919da857ccbe33e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a412006ba52011f7d77e5b9f2889a184c" id="r_a412006ba52011f7d77e5b9f2889a184c"><td class="memItemLeft" align="right" valign="top">if($config['site_dir']===false) if(!is_dir( $config[ 'site_dir'])) if(!is_readable($config['site_dir'])) if(!is_writable( $config[ 'site_dir'])) if(!str_ends_with($config['site_dir'], '/'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a412006ba52011f7d77e5b9f2889a184c">$config</a> ['inc_dir'] = $config['site_dir'] . 'include/'</td></tr>
-<tr class="separator:a412006ba52011f7d77e5b9f2889a184c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d581ba968618d3748b55a5579837cb" id="r_a70d581ba968618d3748b55a5579837cb"><td class="memItemLeft" align="right" valign="top">if($config['site_dir']===false) if(!is_dir( $config[ 'site_dir'])) if(!is_readable($config['site_dir'])) if(PHP_SAPI !=='cli' &amp;&amp;!is_writable( $config&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70d581ba968618d3748b55a5579837cb">$config</a> [ 'site_dir'])) if(!str_ends_with($config['site_dir'], '/'))['inc_dir'] = $config['site_dir'] . 'include/'</td></tr>
+<tr class="separator:a70d581ba968618d3748b55a5579837cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2d0bc152db0769c22005f821caf29e8" id="r_ab2d0bc152db0769c22005f821caf29e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2d0bc152db0769c22005f821caf29e8">$required_directories</a></td></tr>
 <tr class="separator:ab2d0bc152db0769c22005f821caf29e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee271b7ce67fbe00b9976e6c347cbfbf" id="r_aee271b7ce67fbe00b9976e6c347cbfbf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee271b7ce67fbe00b9976e6c347cbfbf">$encoding</a> = mb_regex_encoding('UTF-8')</td></tr>
@@ -171,7 +171,6 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:ab24faf4aa647cdcee494fc48524ad4ff" id="r_ab24faf4aa647cdcee494fc48524ad4ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab24faf4aa647cdcee494fc48524ad4ff">$errors</a> = []</td></tr>
 <tr class="separator:ab24faf4aa647cdcee494fc48524ad4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2dc76d756ec398393d4b1d23659276c" id="r_ac2dc76d756ec398393d4b1d23659276c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac2dc76d756ec398393d4b1d23659276c">$cache</a> = new <a class="el" href="../../d3/d14/classCache__Handler.html">Cache_Handler</a>($config['cache'], $config['site_dir'])</td></tr>
-<tr class="memdesc:ac2dc76d756ec398393d4b1d23659276c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d3/d14/classCache__Handler.html" title="Класс для работы с системами кеширования.">Cache_Handler</a> для работы с системами кеширования.  <br /></td></tr>
 <tr class="separator:ac2dc76d756ec398393d4b1d23659276c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fa3127fc82f96b1436d871ef02be319" id="r_a1fa3127fc82f96b1436d871ef02be319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa3127fc82f96b1436d871ef02be319">$db</a> = new <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html">Database</a>($config['db'], $cache)</td></tr>
 <tr class="memdesc:a1fa3127fc82f96b1436d871ef02be319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">Database</a> для работы с основной БД.  <br /></td></tr>
@@ -182,7 +181,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:a598ca4e71b15a1313ec95f0df1027ca5" id="r_a598ca4e71b15a1313ec95f0df1027ca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>($db, $_SESSION)</td></tr>
 <tr class="memdesc:a598ca4e71b15a1313ec95f0df1027ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a>.  <br /></td></tr>
 <tr class="separator:a598ca4e71b15a1313ec95f0df1027ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba5fcdd0bc47aeaa710f5ff7cf567777" id="r_aba5fcdd0bc47aeaa710f5ff7cf567777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a> = $user-&gt;session['theme'] ?? $work-&gt;config['themes']</td></tr>
+<tr class="memitem:aba5fcdd0bc47aeaa710f5ff7cf567777" id="r_aba5fcdd0bc47aeaa710f5ff7cf567777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a> = $user-&gt;session['theme'] ?? $work-&gt;config['theme']</td></tr>
 <tr class="separator:aba5fcdd0bc47aeaa710f5ff7cf567777"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3e9534005fd516d941f6a5569896e01" id="r_aa3e9534005fd516d941f6a5569896e01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3e9534005fd516d941f6a5569896e01">$template</a></td></tr>
 <tr class="memdesc:aa3e9534005fd516d941f6a5569896e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание объекта класса <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a>.  <br /></td></tr>
@@ -193,13 +192,51 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <tr class="memitem:aa698a3e72116e8e778be0e95d908ee30" id="r_aa698a3e72116e8e778be0e95d908ee30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa698a3e72116e8e778be0e95d908ee30">$action</a> = 'main'</td></tr>
 <tr class="memdesc:aa698a3e72116e8e778be0e95d908ee30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Действие, которое необходимо выполнить.  <br /></td></tr>
 <tr class="separator:aa698a3e72116e8e778be0e95d908ee30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa355238e5cfbf4556dccf2f8a2b68926" id="r_aa355238e5cfbf4556dccf2f8a2b68926"><td class="memItemLeft" align="right" valign="top">if($work-&gt;check_input('_GET', 'action', ['isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp;$_GET['action'] !=='index' &amp;&amp;$work-&gt;url_check())&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa355238e5cfbf4556dccf2f8a2b68926">else</a></td></tr>
+<tr class="memitem:aa355238e5cfbf4556dccf2f8a2b68926" id="r_aa355238e5cfbf4556dccf2f8a2b68926"><td class="memItemLeft" align="right" valign="top">if(PHP_SAPI==='cli') if($work-&gt;check_input('_GET', 'action', ['isset'=&gt; true, 'empty'=&gt; true]) &amp;&amp;$_GET['action'] !=='index' &amp;&amp;$work-&gt;url_check())&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa355238e5cfbf4556dccf2f8a2b68926">else</a></td></tr>
 <tr class="separator:aa355238e5cfbf4556dccf2f8a2b68926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1860c2e884f5466ff46754807f8a79b7" id="r_a1860c2e884f5466ff46754807f8a79b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1860c2e884f5466ff46754807f8a79b7">$csrf_token</a> = $user-&gt;csrf_token()</td></tr>
 <tr class="separator:a1860c2e884f5466ff46754807f8a79b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><p>Этот файл содержит настройки, необходимые для конфигурации приложения:</p><ul>
+<div class="textblock"><p>\<a class="el" href="../../de/d8e/namespacePhotoRigma_1_1Action.html">Action</a></p>
+<p>Этот файл предназначен для выполнения фоновых задач через cron. Он запускает системные процессы, которые должны выполняться вне контекста веб-запроса. Основные функции:</p><ul>
+<li>Вызов методов окончательного удаления пользователей.</li>
+<li>Архивация старых логов.</li>
+<li>Обработка других фоновых задач (в будущем).</li>
+<li>Логирование действий и ошибок.</li>
+</ul>
+<h1><a class="anchor" id="Cron_Main_Functions"></a>
+Основные задачи</h1>
+<ul>
+<li>Запуск окончательного удаления пользователей через метод <code>$user-&gt;cron_user_delete()</code>.</li>
+<li>Архивироввание старых логов через функцию <code>archive_old_logs()</code>.</li>
+<li>Возможность подключения других фоновых задач.</li>
+</ul>
+<h1><a class="anchor" id="Cron_Error_Handling"></a>
+Обработка ошибок</h1>
+<p>При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:</p><ul>
+<li><code>Exception</code>: При выполнении прочих методов классов, функций или операций.</li>
+</ul>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>При выполнении прочих методов классов, функций или операций.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h1><a class="anchor" id="Cron_Related_Files"></a>
+Связанные файлы и классы</h1>
+<ul>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af20ed50055d313a9cc9e78e7aace9d5d" title="Публичный метод для запуска фоновой задачи окончательного удаления пользователей.">PhotoRigma\Classes\User\cron_user_delete()</a> Метод, выполняющий основную логику удаления пользователей.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Work::log_in_file() Для записи событий в логи.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#ad8cade6816c5b77d8ec62a310355e0b8" title="Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.">PhotoRigma\Include\archive_old_logs</a> Функция для архивации старых логов.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Этот файл должен запускаться только через CLI (cron), никогда не через веб-интерфейс. Использование exit() после вызова задачи гарантирует завершение скрипта.</dd></dl>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:</dd></dl>
+</li>
+<li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
+</ul>
+<p>Этот файл содержит настройки, необходимые для конфигурации приложения:</p><ul>
 <li>Указываются внешние (URL) и внутренние (на диске) пути к корню и подпапкам проекта.</li>
 <li>Указываются параметры подключения к базе данных (например, хост, имя пользователя, пароль, имя базы данных).</li>
 <li>Файл используется для централизованного управления конфигурацией приложения.</li>
@@ -314,15 +351,21 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 </ul>
 </li>
 <li><b>Таблицы базы данных</b>:<ul>
-<li><code>TBL_CONFIG</code>, <code>TBL_MENU</code>, <code>TBL_NEWS</code>, <code>TBL_CATEGORY</code>, <code>TBL_PHOTO</code>, <code>TBL_RATE_USER</code>, <code>TBL_RATE_MODER</code>, <code>TBL_USERS</code>, <code>TBL_GROUP</code>, <code>TBL_LOG_QUERY</code>.</li>
+<li><code>TBL_CONFIG</code>, <code>TBL_MENU</code>, <code>TBL_NEWS</code>, <code>TBL_CATEGORY</code>, <code>TBL_PHOTO</code>, <code>TBL_RATE_USER</code>, <code>TBL_RATE_MODER</code>, <code>TBL_USERS</code>, <code>TBL_USERS_BANS</code>, <code>TBL_GROUP</code>, <code>TBL_LOG_QUERY</code>.</li>
 <li>Представления: <code>VIEW_RANDOM_PHOTO</code>, <code>VIEW_USERS_ONLINE</code>.</li>
 </ul>
 </li>
 <li><b>Настройки пользователей</b>:<ul>
+<li><code>GROUP_GUEST</code>: Группа гостей</li>
+<li><code>GROUP_USER</code>: Группа пользователей</li>
+<li><code>GROUP_MODER</code>: Группа модераторов</li>
+<li><code>GROUP_ADMIN</code>: Группа админов</li>
 <li><code>DEFAULT_GROUP</code>: Группа по умолчанию для новых пользователей.</li>
+<li><code>PROTECTED_GROUPS</code>: Список групп с запретом на удаление.</li>
 <li><code>MAX_LOGIN_ATTEMPTS</code>: Максимальное количество попыток входа в админку.</li>
 <li><code>LOCKOUT_TIME</code>: Время блокировки после превышения попыток входа.</li>
 <li><code>DEFAULT_AVATAR</code>: Значение аватара по умолчанию.</li>
+<li><code>SOFT_DELETE_RETENTION_INTERVAL</code>: Интервал от мягкого до окончательного удаления.</li>
 </ul>
 </li>
 <li><b>Меню</b>:<ul>
@@ -468,9 +511,9 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 Основные функции</h1>
 <ul>
 <li>Установка объекта, реализующего интерфейс <code>Work_Interface</code>, через сеттер (<code>set_work</code>).</li>
-<li>Добавление условий вывода фрагментов шаблона (<code>add_if</code>, <code>add_if_ar</code>).</li>
-<li>Добавление выбора блоков для вывода фрагментов шаблона (<code>add_case</code>, <code>add_case_ar</code>).</li>
-<li>Добавление строковых данных для замены в шаблоне (<code>add_string</code>, <code>add_string_ar</code>).</li>
+<li>Добавление условий вывода фрагментов шаблона (<code>add_if</code>, <code>add_if_array</code>).</li>
+<li>Добавление выбора блоков для вывода фрагментов шаблона (<code>add_case</code>, <code>add_case_array</code>).</li>
+<li>Добавление строковых данных для замены в шаблоне (<code>add_string</code>, <code>add_string_array</code>).</li>
 <li>Создание и обработка шаблона, включая чтение файла, парсинг и замену плейсхолдеров (<code>create_template</code>).</li>
 <li>Формирование заголовка HTML-страницы с меню, метаданными и блоками контента (<code>page_header</code>).</li>
 <li>Формирование подвала HTML-страницы с выводом копирайта, статистики, информации о пользователе и случайной фотографии (<code>page_footer</code>).</li>
@@ -501,7 +544,6 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <dd>
 <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами.">PhotoRigma\Interfaces\User_Interface</a> Интерфейс для работы с пользователями.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и модификации данных.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000001">Необходимо сделать</a></b></dt><dd>Закончить реализацию и документирование класса.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -531,7 +573,6 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Проверка данных пользователя для входа в систему (<code>login_user</code>).</li>
 </ul>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в организации работы приложения. Реализация интерфейса гарантирует единообразие работы с пользователями и их данными.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="../../dd/da0/todo.html#_todo000006">Необходимо сделать</a></b></dt><dd>Закончить реализацию и документирование интерфейса.</dd></dl>
 <dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
@@ -835,6 +876,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Обрабатывает действия пользователя через параметр <code>action</code>. Значение, получаемое из запроса в URL, указывает на действие, которое должно выполнить приложение.</li>
 <li>Выводит шаблонные элементы страницы (шапку, подвал и содержимое).</li>
 <li>Реализует централизованную систему обработки ошибок и их логирования на уровне ядра приложения.</li>
+<li>При запуске из консоли выполняет cron-задачи.</li>
 </ul>
 <h1><a class="anchor" id="Index_Main_Functions"></a>
 Основные функции</h1>
@@ -844,6 +886,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li>Обработка действий пользователя через параметр <code>action</code>.</li>
 <li>Генерация HTML-контента страницы.</li>
 <li>Логирование ошибок и обработка исключений.</li>
+<li>При запуске из консоли выполнение cron-задач.</li>
 </ul>
 <h1><a class="anchor" id="Index_Action_Param"></a>
 Параметр <code>action</code></h1>
@@ -856,6 +899,7 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 <li><code>photo</code>: Работа с фотографиями: вывод, редактирование, загрузка и обработка изображений, оценок.</li>
 <li><code>profile</code>: Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.</li>
 <li><code>search</code>: Обработка поисковых запросов на сайте.</li>
+<li><code>cron</code>: Выполнение фоновых задач через cron (только из консоли).</li>
 </ul>
 <h1><a class="anchor" id="Index_Error_Handling"></a>
 Обработка ошибок</h1>
@@ -866,150 +910,87 @@ $(function(){initNavTree('de/d90/namespacePhotoRigma.html','../../'); initResiza
 </ul>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RuntimeException</td><td>Если конфигурационный файл отсутствует или недоступен для чтения. Пример сообщения: "Конфигурационный файл отсутствует или не является
-             файлом | Путь: config.php". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если обязательные файлы отсутствуют или недоступны для чтения. Пример сообщения: "Проверка обязательных файлов завершилась ошибкой | Ошибки:
-             [список ошибок]". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если файл действия не найден или недоступен для чтения. Пример сообщения: "Файл действий не найден или недоступен для чтения | Путь:
-             [путь к файлу]". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если конфигурационный файл отсутствует или недоступен для чтения. Пример сообщения: "Конфигурационный файл отсутствует или не является файлом | Путь: config.php". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если обязательные файлы отсутствуют или недоступны для чтения. Пример сообщения: "Проверка обязательных файлов завершилась ошибкой | Ошибки: [список ошибок]". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если файл действия не найден или недоступен для чтения. Пример сообщения: "Файл действий не найден или недоступен для чтения | Путь: [путь к файлу]". </td></tr>
     <tr><td class="paramname">PDOException</td><td>Если возникла ошибка при работе с базой данных. Пример сообщения: "Ошибка базы данных | [сообщение об ошибке]". </td></tr>
-    <tr><td class="paramname">Exception</td><td>Если возникла непредвиденная ошибка. Пример сообщения: "Общая ошибка |
-             [сообщение об ошибке]".</td></tr>
+    <tr><td class="paramname">Exception</td><td>Если возникла непредвиденная ошибка. Пример сообщения: "Общая ошибка | [сообщение об ошибке]".</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a> Файл конфигурации, содержащий параметры приложения.<ul>
-<li></li>
+<h1><a class="anchor" id="Index_Related_Files"></a>
+Связанные файлы и компоненты</h1>
+<ul>
+<li>Подключаемые файлы:<ul>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d0/d45/config_8php.html" title="Редактируемые настройки сервера.">config.php</a> Файл конфигурации, содержащий параметры приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d2/d8d/constants_8php.html" title="Файл содержит константы, используемые в приложении.">include/constants.php</a> Файл с глобальными константами приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d5/d4c/session__init_8php.html" title="Файл содержит настройки и инициализацию сессий и куков для управления состоянием пользователя.">include/session_init.php</a> Файл для инициализации сессии.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d2/d62/functions_8php.html" title="Файл содержит глобальные функции для работы с логами.">include/functions.php</a> Файл с глобальными функциями приложения.</dd></dl>
+</li>
 </ul>
-</dd>
-<dd>
-<a class="el" href="../../d2/d8d/constants_8php.html" title="Файл содержит константы, используемые в приложении.">include/constants.php</a> Файл с глобальными константами приложения.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d5/d4c/session__init_8php.html" title="Файл содержит настройки и инициализацию сессий и куков для управления состоянием пользователя.">include/session_init.php</a> Файл для инициализации сессии.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d2/d62/functions_8php.html" title="Файл содержит глобальные функции для работы с логами.">include/functions.php</a> Файл с глобальными функциями приложения.<ul>
+</li>
 <li>Классы приложения:<ul>
-<li></li>
-</ul>
+<li><dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Cache_Handler Класс для работы с системами кеширования.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">PhotoRigma\Classes\Database</a> Класс для работы с базами данных через PDO.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html" title="Класс для выполнения вспомогательных задач.">PhotoRigma\Classes\Work_Helper</a> Класс для выполнения вспомогательных задач.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс для выполнения базовой логики приложения.">PhotoRigma\Classes\Work_CoreLogic</a> Класс для выполнения базовой логики приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html" title="Класс для работы с изображениями.">PhotoRigma\Classes\Work_Image</a> Класс для работы с изображениями.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html" title="Класс для формирования данных для шаблонов.">PhotoRigma\Classes\Work_Template</a> Класс для формирования данных для шаблонов.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html" title="Класс для обеспечения безопасности приложения.">PhotoRigma\Classes\Work_Security</a> Класс для обеспечения безопасности приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Основной класс приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с шаблонами.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для работы с пользователями и хранения данных о текущем пользователе.</dd></dl>
 </li>
 </ul>
-</dd>
-<dd>
-<a class="el" href="../../d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO.">PhotoRigma\Classes\Database</a> Класс для работы с базами данных через PDO.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html" title="Класс для выполнения вспомогательных задач.">PhotoRigma\Classes\Work_Helper</a> Класс для выполнения вспомогательных задач.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс для выполнения базовой логики приложения.">PhotoRigma\Classes\Work_CoreLogic</a> Класс для выполнения базовой логики приложения.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html" title="Класс для работы с изображениями.">PhotoRigma\Classes\Work_Image</a> Класс для работы с изображениями.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html" title="Класс для формирования данных для шаблонов.">PhotoRigma\Classes\Work_Template</a> Класс для формирования данных для шаблонов.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d9/d4a/classPhotoRigma_1_1Classes_1_1Work__Security.html" title="Класс для обеспечения безопасности приложения.">PhotoRigma\Classes\Work_Security</a> Класс для обеспечения безопасности приложения.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html" title="Основной класс приложения.">PhotoRigma\Classes\Work</a> Основной класс приложения.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с шаблонами.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">PhotoRigma\Classes\User</a> Класс для работы с пользователями и хранения данных о текущем пользователе.<ul>
+</li>
 <li>Интерфейсы:<ul>
-<li></li>
-</ul>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html" title="Интерфейс для работы с системами кеширования.">PhotoRigma\Interfaces\Cache_Handler_Interface</a> Интерфейс для работы с системами кеширования.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html" title="Интерфейс для работы с базами данных через PDO.">PhotoRigma\Interfaces\Database_Interface</a> Интерфейс для работы с базами данных через PDO.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов.">PhotoRigma\Interfaces\Work_Helper_Interface</a> Интерфейс для вспомогательных методов.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.">PhotoRigma\Interfaces\Work_CoreLogic_Interface</a> Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями.">PhotoRigma\Interfaces\Work_Image_Interface</a> Интерфейс для работы с изображениями.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html" title="Интерфейс для формирования данных для шаблонов.">PhotoRigma\Interfaces\Work_Template_Interface</a> Интерфейс для формирования данных для шаблонов.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью.">PhotoRigma\Interfaces\Work_Security_Interface</a> Интерфейс для работы с безопасностью.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html" title="Интерфейс для центральной точки приложения.">PhotoRigma\Interfaces\Work_Interface</a> Интерфейс для центральной точки приложения.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html" title="Интерфейс для работы с шаблонами.">PhotoRigma\Interfaces\Template_Interface</a> Интерфейс для работы с шаблонами.</dd></dl>
+</li>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами.">PhotoRigma\Interfaces\User_Interface</a> Интерфейс для работы с пользователями и группами.</dd></dl>
 </li>
 </ul>
-</dd>
-<dd>
-<a class="el" href="../../d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html" title="Интерфейс для работы с базами данных через PDO.">PhotoRigma\Interfaces\Database_Interface</a> Интерфейс для работы с базами данных через PDO.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html" title="Интерфейс для вспомогательных методов.">PhotoRigma\Interfaces\Work_Helper_Interface</a> Интерфейс для вспомогательных методов.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.">PhotoRigma\Interfaces\Work_CoreLogic_Interface</a> Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d1/de5/interfacePhotoRigma_1_1Interfaces_1_1Work__Image__Interface.html" title="Интерфейс для работы с изображениями.">PhotoRigma\Interfaces\Work_Image_Interface</a> Интерфейс для работы с изображениями.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html" title="Интерфейс для формирования данных для шаблонов.">PhotoRigma\Interfaces\Work_Template_Interface</a> Интерфейс для формирования данных для шаблонов.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html" title="Интерфейс для работы с безопасностью.">PhotoRigma\Interfaces\Work_Security_Interface</a> Интерфейс для работы с безопасностью.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html" title="Интерфейс для центральной точки приложения.">PhotoRigma\Interfaces\Work_Interface</a> Интерфейс для центральной точки приложения.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html" title="Интерфейс для работы с шаблонами.">PhotoRigma\Interfaces\Template_Interface</a> Интерфейс для работы с шаблонами.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами.">PhotoRigma\Interfaces\User_Interface</a> Интерфейс для работы с пользователями и группами.<ul>
+</li>
 <li>Вспомогательные функции:<ul>
-<li></li>
-</ul>
-</li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#ad8cade6816c5b77d8ec62a310355e0b8" title="Архивирует старые логи, сжимая их в формат .gz и удаляя исходные файлы.">PhotoRigma\Include\archive_old_logs</a> Функция для архивации старых логов.<ul>
-<li></li>
-</ul>
-</dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
+<li><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file</a> Функция для логирования ошибок.</dd></dl>
 <dl class="section note"><dt>Заметки</dt><dd>Этот файл является частью системы <a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a> и играет ключевую роль в запуске и работе приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.</dd></dl>
-<p>Примеры вызова файла через URL с использованием параметра <code>action</code>: </p><div class="fragment"><div class="line">http:<span class="comment">//example.com/index.php?action=admin</span></div>
+Примеры вызова файла через URL с использованием параметра <code>action</code>: <div class="fragment"><div class="line">http:<span class="comment">//example.com/index.php?action=admin</span></div>
 <div class="line">http:<span class="comment">//example.com/index.php?action=attach&amp;id=123</span></div>
 <div class="line">http:<span class="comment">//example.com/index.php?action=category</span></div>
 <div class="line">http:<span class="comment">//example.com/index.php?action=main</span></div>
 <div class="line">http:<span class="comment">//example.com/index.php?action=profile&amp;uid=9</span></div>
-</div><!-- fragment --><dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
+</div><!-- fragment --></li>
+</ul>
+</li>
+</ul>
+<dl class="section copyright"><dt>Авторство</dt><dd>Copyright (c) 2008-2025 Dark Dayver. Все права защищены. @license MIT License (<a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>) Разрешается использовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:<ul>
 <li>Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые части программного обеспечения.</li>
 </ul>
 </dd></dl>
@@ -1059,27 +1040,27 @@ Main Functions</h1>
 <p>Действие, которое необходимо выполнить. </p>
 <p>Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'. Пример вызова действия 'profile': $_GET['action'] = 'profile'; @noinspection PhpRedundantVariableDocTypeInspection </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00347">347</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00369">369</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00438">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01883">Work\create_menu()</a>, <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00361">Work_Template\create_menu()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Interface\create_menu()</a>, <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01305">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00435">Work_Template\_create_menu_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01402">Template\_page_header_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l02012">Work\create_menu()</a>, <a class="el" href="../../df/dbe/Work__Template_8php_source.html#l00358">Work_Template\create_menu()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Interface\create_menu()</a>, <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#af970fc714c16e27d2d60d698522a8504">Work_Template_Interface\create_menu()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01313">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
-<a id="a0eb0a189bae04261ab41ac974f8eb757" name="a0eb0a189bae04261ab41ac974f8eb757"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0eb0a189bae04261ab41ac974f8eb757">&#9670;&#160;</a></span>$base_path</h2>
+<a id="afb9d94580da802c1ac00e977396dcf91" name="afb9d94580da802c1ac00e977396dcf91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb9d94580da802c1ac00e977396dcf91">&#9670;&#160;</a></span>$base_path</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if(! $script_name) if(! $script_name) if (!preg_match('/^\/ $base_path[a-zA-Z0-9._\-\/] *$/', $script_name)) = dirname($script_name)</td>
+          <td class="memname">if(! $script_name) if(! $script_name) if (PHP_SAPI !=='cli' &amp;&amp;!preg_match('/^\/ $base_path[a-zA-Z0-9._\-\/] *$/', $script_name)) = dirname($script_name)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Генерация полного URL сайта.</p>
 <p>Формируется на основе протокола, HTTP_HOST и SCRIPT_NAME. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00324">324</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00331">331</a></p>
 
 </div>
 </div>
@@ -1095,18 +1076,7 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Создание объекта класса <a class="el" href="../../d3/d14/classCache__Handler.html" title="Класс для работы с системами кеширования.">Cache_Handler</a> для работы с системами кеширования. </p>
-<p>Инициализируется через конструктор с параметрами из массива $config['cache'].</p><ul>
-<li>Для файлового кеширования (<code>file</code>) требуется указать путь к директории кеша.</li>
-<li>Для Redis/Memcached требуется указать хост и порт. Дополнительно может быть передан путь к корневой директории проекта ($config['site_dir']) для файлового кеширования. <dl class="section see"><dt>См. также</dt><dd>PhotoRigma::Classes::Cache_Handler Класс для работы с системами кеширования. </dd>
-<dd>
-<a class="el" href="../../db/d06/Cache__Handler_8php.html" title="Класс для работы с системами кеширования.">include/Cache_Handler.php</a> Файл, содержащий реализацию класса <a class="el" href="../../d3/d14/classCache__Handler.html" title="Класс для работы с системами кеширования.">Cache_Handler</a>. </dd>
-<dd>
-<a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a> Массив конфигурации, используемый для настройки системы кеширования. </dd></dl>
-</li>
-</ul>
-
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00257">257</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00279">279</a></p>
 
 </div>
 </div>
@@ -1125,12 +1095,30 @@ Main Functions</h1>
 <p>Массив с настройками сервера. </p>
 <p>Содержит как редактируемые пользователем параметры (например, параметры БД), так и автоматически генерируемые параметры (например, URL сайта). После инициализации массив $config передаётся в свойство <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a>. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ab76f8f2ac851632a23ef69df2bd99dad" title="Массив, хранящий конфигурацию приложения.">PhotoRigma\Classes\Work\$config</a> @noinspection PhpRedundantVariableDocTypeInspection </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00137">137</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00138">138</a></p>
+
+</div>
+</div>
+<a id="a70d581ba968618d3748b55a5579837cb" name="a70d581ba968618d3748b55a5579837cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d581ba968618d3748b55a5579837cb">&#9670;&#160;</a></span>$config <span class="overload">[2/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if( $config[ 'site_dir']===false) if(!is_dir($config['site_dir'])) if(!is_readable( $config[ 'site_dir'])) if(PHP_SAPI !=='cli' &amp;&amp;!is_writable($config $config['site_dir'])) if (!str_ends_with( $config[ 'site_dir'], '/'))[ 'inc_dir'] = $config['site_dir'] . 'include/'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Определение inc_dir.</p>
+<p>Указывает путь к директории include/, содержащей вспомогательные классы и функции. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00392">392</a></p>
 
 </div>
 </div>
 <a id="a72b7cbcb598885a80db0fe086fe3cc93" name="a72b7cbcb598885a80db0fe086fe3cc93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72b7cbcb598885a80db0fe086fe3cc93">&#9670;&#160;</a></span>$config <span class="overload">[2/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a72b7cbcb598885a80db0fe086fe3cc93">&#9670;&#160;</a></span>$config <span class="overload">[3/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1143,12 +1131,12 @@ Main Functions</h1>
 
 <p>Имя папки для хранения аватаров пользователей (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00183">183</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00184">184</a></p>
 
 </div>
 </div>
 <a id="ad05be8b9c3365b29eada46249994ee67" name="ad05be8b9c3365b29eada46249994ee67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad05be8b9c3365b29eada46249994ee67">&#9670;&#160;</a></span>$config <span class="overload">[3/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad05be8b9c3365b29eada46249994ee67">&#9670;&#160;</a></span>$config <span class="overload">[4/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1185,12 +1173,12 @@ Main Functions</h1>
 </ul>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../db/d06/Cache__Handler_8php.html" title="Класс для работы с системами кеширования.">include/Cache_Handler.php</a> Файл, где используется этот массив для работы с кешем. @noinspection PhpArrayWriteIsNotUsedInspection </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00205">205</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00206">206</a></p>
 
 </div>
 </div>
 <a id="a956c492a034bf7c9773eeb0db6723ecc" name="a956c492a034bf7c9773eeb0db6723ecc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a956c492a034bf7c9773eeb0db6723ecc">&#9670;&#160;</a></span>$config <span class="overload">[4/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a956c492a034bf7c9773eeb0db6723ecc">&#9670;&#160;</a></span>$config <span class="overload">[5/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1229,12 +1217,12 @@ Main Functions</h1>
 </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00161">161</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00162">162</a></p>
 
 </div>
 </div>
 <a id="a9cbc6c8282a2d9cb05934c3fed640018" name="a9cbc6c8282a2d9cb05934c3fed640018"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cbc6c8282a2d9cb05934c3fed640018">&#9670;&#160;</a></span>$config <span class="overload">[5/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cbc6c8282a2d9cb05934c3fed640018">&#9670;&#160;</a></span>$config <span class="overload">[6/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1247,25 +1235,7 @@ Main Functions</h1>
 
 <p>Имя папки для хранения фотографий (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00181">181</a></p>
-
-</div>
-</div>
-<a id="a412006ba52011f7d77e5b9f2889a184c" name="a412006ba52011f7d77e5b9f2889a184c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a412006ba52011f7d77e5b9f2889a184c">&#9670;&#160;</a></span>$config <span class="overload">[6/10]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">if( $config[ 'site_dir']===false) if(!is_dir($config['site_dir'])) if(!is_readable( $config[ 'site_dir'])) if(!is_writable($config['site_dir'])) if (!str_ends_with( $config[ 'site_dir'], '/')) $config[ 'inc_dir'] = $config['site_dir'] . 'include/'</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Определение inc_dir.</p>
-<p>Указывает путь к директории include/, содержащей вспомогательные классы и функции. </p>
-
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00385">385</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00182">182</a></p>
 
 </div>
 </div>
@@ -1286,7 +1256,7 @@ Main Functions</h1>
 <li>Доступна ли директория для чтения и записи. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00347">347</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00354">354</a></p>
 
 </div>
 </div>
@@ -1309,7 +1279,7 @@ Main Functions</h1>
 <li>Переменная $_SERVER['REQUEST_SCHEME']. Если ни один из способов не дал результата, используется HTTP. @noinspection HttpUrlsUsage </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00243">243</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00244">244</a></p>
 
 </div>
 </div>
@@ -1325,7 +1295,7 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00337">337</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00344">344</a></p>
 
 </div>
 </div>
@@ -1343,7 +1313,7 @@ Main Functions</h1>
 
 <p>Имя папки для хранения эскизов фотографий (указывается относительно корня проекта). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00182">182</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00183">183</a></p>
 
 </div>
 </div>
@@ -1359,9 +1329,9 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00391">391</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00416">416</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02540">Template\_page_footer_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l02458">Template\page_footer()</a>, <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a34feab7e9589b201ec7fbb6b3507bd30">Template_Interface\page_footer()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01305">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02561">Template\_page_footer_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01402">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l02479">Template\page_footer()</a>, <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a34feab7e9589b201ec7fbb6b3507bd30">Template_Interface\page_footer()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01313">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
@@ -1384,9 +1354,9 @@ Main Functions</h1>
 <dd>
 <a class="el" href="#a49c7011be9c979d9174c52a8b83e5d8e" title="Массив с настройками сервера.">$config</a> Массив конфигурации, используемый для подключения к БД. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00266">266</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00288">288</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00227">Work\__construct()</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l00321">Work\load_cached_config()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00241">Work\__construct()</a> и <a class="el" href="../../d1/dce/Work_8php_source.html#l00348">Work\_load_cached_config()</a>.</p>
 
 </div>
 </div>
@@ -1402,7 +1372,7 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00152">152</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00177">177</a></p>
 
 </div>
 </div>
@@ -1418,9 +1388,9 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00220">220</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00245">245</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00457">Work\__set()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d1/dce/Work_8php_source.html#l00534">Work\__set()</a>.</p>
 
 </div>
 </div>
@@ -1441,7 +1411,7 @@ Main Functions</h1>
 <li>$_SERVER['SERVER_NAME'] (резервный источник). Выполняется валидация формата домена для предотвращения атак через заголовки. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00270">270</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00272">272</a></p>
 
 </div>
 </div>
@@ -1462,11 +1432,11 @@ Main Functions</h1>
 <div class="line">    <a class="code hl_variable" href="#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>[<span class="stringliteral">&#39;site_dir&#39;</span>] . <a class="code hl_variable" href="#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>[<span class="stringliteral">&#39;avatar_folder&#39;</span>] . <span class="charliteral">&#39;/&#39;</span>,</div>
 <div class="line">    <a class="code hl_variable" href="#a49c7011be9c979d9174c52a8b83e5d8e">$config</a>[<span class="stringliteral">&#39;inc_dir&#39;</span>],</div>
 <div class="line">]</div>
-<div class="ttc" id="anamespacePhotoRigma_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="#a49c7011be9c979d9174c52a8b83e5d8e">PhotoRigma\$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Массив с настройками сервера.</div><div class="ttdef"><b>Определения</b> <a href="../../d0/d45/config_8php_source.html#l00137">config.php:137</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a49c7011be9c979d9174c52a8b83e5d8e"><div class="ttname"><a href="#a49c7011be9c979d9174c52a8b83e5d8e">PhotoRigma\$config</a></div><div class="ttdeci">$config</div><div class="ttdoc">Массив с настройками сервера.</div><div class="ttdef"><b>Определения</b> <a href="../../d0/d45/config_8php_source.html#l00138">config.php:138</a></div></div>
 </div><!-- fragment --><p>Проверка существования и доступности директорий.</p>
 <p>Проверяются директории, указанные в настройках ($gallery_folder, $thumbnail_folder, $avatar_folder). </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00392">392</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00399">399</a></p>
 
 </div>
 </div>
@@ -1510,18 +1480,18 @@ Main Functions</h1>
 <p>Список обязательных файлов для подключения. </p>
 <p>Содержит пути к файлам, которые необходимы для работы приложения. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00193">193</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00218">218</a></p>
 
 </div>
 </div>
-<a id="a271f5d9c110c98ece73bec3151bf1a90" name="a271f5d9c110c98ece73bec3151bf1a90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a271f5d9c110c98ece73bec3151bf1a90">&#9670;&#160;</a></span>$script_name</h2>
+<a id="a8e6777a91e42113e2c41cb412a76d1ae" name="a8e6777a91e42113e2c41cb412a76d1ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e6777a91e42113e2c41cb412a76d1ae">&#9670;&#160;</a></span>$script_name</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if(! $http_host) if(! $http_host) if (!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $http_host)) $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td>
+          <td class="memname">if(! $http_host) if(PHP_SAPI==='cli' &amp;&amp;! $http_host) if(! $http_host) if (!preg_match('/^([a-z\d](- *[a-z\d]) *)(\.([a-z\d](- *[a-z\d]) *)) *$/i', $http_host)) $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1531,7 +1501,7 @@ Main Functions</h1>
 <li>$_SERVER['PHP_SELF'] (резервный источник). Выполняется валидация формата пути для предотвращения атак через заголовки. </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00298">298</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00305">305</a></p>
 
 </div>
 </div>
@@ -1551,9 +1521,9 @@ Main Functions</h1>
 <div class="line">        <a class="code hl_variable" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>],</div>
 <div class="line">        <a class="code hl_variable" href="#aba5fcdd0bc47aeaa710f5ff7cf567777">$themes_config</a></div>
 <div class="line">    )</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Template_html"><div class="ttname"><a href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html">PhotoRigma\Classes\Template</a></div><div class="ttdoc">Класс для работы с шаблонами.</div><div class="ttdef"><b>Определения</b> <a href="../../df/d4d/Template_8php_source.html#l00099">Template.php:100</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00284">index.php:284</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_aba5fcdd0bc47aeaa710f5ff7cf567777"><div class="ttname"><a href="#aba5fcdd0bc47aeaa710f5ff7cf567777">PhotoRigma\$themes_config</a></div><div class="ttdeci">$themes_config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00303">index.php:303</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Template_html"><div class="ttname"><a href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html">PhotoRigma\Classes\Template</a></div><div class="ttdoc">Класс для работы с шаблонами.</div><div class="ttdef"><b>Определения</b> <a href="../../df/d4d/Template_8php_source.html#l00104">Template.php:105</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00306">index.php:306</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_aba5fcdd0bc47aeaa710f5ff7cf567777"><div class="ttname"><a href="#aba5fcdd0bc47aeaa710f5ff7cf567777">PhotoRigma\$themes_config</a></div><div class="ttdeci">$themes_config</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00325">index.php:325</a></div></div>
 </div><!-- fragment -->
 <p>Создание объекта класса <a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">Template</a>. </p>
 <p>Используется для генерации HTML-контента страниц. </p><dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами.">PhotoRigma\Classes\Template</a> Класс для работы с HTML-шаблонами. </dd>
@@ -1572,7 +1542,7 @@ Main Functions</h1>
 <dd>
 <a class="el" href="#ada57e7bb7c152edad18fe2f166188691" title="Добавление текста к заголовку страницы. @noinspection PhpRedundantVariableDocTypeInspection.">$title</a> Переменная, используемая для добавления текста к заголовку страницы. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00317">317</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00339">339</a></p>
 
 </div>
 </div>
@@ -1583,12 +1553,12 @@ Main Functions</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$themes_config = $user-&gt;session['theme'] ?? $work-&gt;config['themes']</td>
+          <td class="memname">$themes_config = $user-&gt;session['theme'] ?? $work-&gt;config['theme']</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00303">303</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00325">325</a></p>
 
 </div>
 </div>
@@ -1606,9 +1576,9 @@ Main Functions</h1>
 
 <p>Добавление текста к заголовку страницы. @noinspection PhpRedundantVariableDocTypeInspection. </p>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00337">337</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00359">359</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01305">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01402">Template\_page_header_internal()</a>, <a class="el" href="../../df/d4d/Template_8php_source.html#l01313">Template\page_header()</a> и <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a341d1f1abf0c06ad67bc2b47134718e2">Template_Interface\page_header()</a>.</p>
 
 </div>
 </div>
@@ -1629,9 +1599,9 @@ Main Functions</h1>
 <dd>
 <a class="el" href="../../db/da2/User_8php.html" title="Класс для управления пользователями, включая регистрацию, аутентификацию, управление профилем и хране...">include/User.php</a> Файл, содержащий реализацию класса <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе.">User</a>. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00300">300</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00322">322</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02540">Template\_page_footer_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01424">Work\set_user()</a>, <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic_Interface\set_user()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Interface\set_user()</a> и <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Template_Interface\set_user()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l02561">Template\_page_footer_internal()</a>, <a class="el" href="../../d1/dce/Work_8php_source.html#l01533">Work\set_user()</a>, <a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic_Interface\set_user()</a>, <a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Interface\set_user()</a> и <a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html#a75c62c77591a021c5555660ce20e84b3">Work_Template_Interface\set_user()</a>.</p>
 
 </div>
 </div>
@@ -1665,7 +1635,7 @@ Main Functions</h1>
 <dd>
 <a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a1e1a4ab6b213ada0d89c77a24d8ffe32" title="Проверяет URL на наличие вредоносного кода через вызов внутреннего метода.">PhotoRigma\Classes\Work\url_check()</a> Метод для проверки URL на наличие вредоносного кода. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00284">284</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00306">306</a></p>
 
 <p class="reference">Используется в <a class="el" href="../../da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html#a0bb4e25a2291e3792c181a821de0c88c">Template_Interface\set_work()</a> и <a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html#a0bb4e25a2291e3792c181a821de0c88c">User_Interface\set_work()</a>.</p>
 
@@ -1683,9 +1653,9 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00165">165</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00190">190</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00245">PhotoRigma\Include\log_in_file()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../d2/d62/functions_8php_source.html#l00246">PhotoRigma\Include\log_in_file()</a>.</p>
 
 </div>
 </div>
@@ -1702,14 +1672,14 @@ Main Functions</h1>
 </div><div class="memdoc">
 <b>Инициализатор</b><div class="fragment"><div class="line">{</div>
 <div class="line">        </div>
-<div class="line">        $action_file = <a class="code hl_variable" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&#39;action/main.php&#39;</span></div>
+<div class="line">        $action_file = <a class="code hl_variable" href="#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>-&gt;config[<span class="stringliteral">&#39;site_dir&#39;</span>] . <span class="stringliteral">&quot;action/$action.php&quot;</span></div>
 </div><!-- fragment --><p>Обработка действия, указанного в параметре 'action'.</p><ul>
 <li>Проверяется существование и безопасность параметра 'action'.</li>
 <li>Формируется путь к файлу действия.</li>
 <li>Если файл не существует или недоступен, используется файл по умолчанию ('main.php'). @noinspection NotOptimalIfConditionsInspection </li>
 </ul>
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00377">377</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00402">402</a></p>
 
 </div>
 </div>
@@ -1725,7 +1695,7 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00158">158</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00183">183</a></p>
 
 </div>
 </div>
@@ -1741,9 +1711,9 @@ Main Functions</h1>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00223">223</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../d0/d45/config_8php_source.html">config.php</a> строка <a class="el" href="../../d0/d45/config_8php_source.html#l00224">224</a></p>
 
-<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01390">Template\_page_header_internal()</a>.</p>
+<p class="reference">Используется в <a class="el" href="../../df/d4d/Template_8php_source.html#l01402">Template\_page_header_internal()</a>.</p>
 
 </div>
 </div>
@@ -1772,7 +1742,7 @@ Main Functions</h1>
 <div class="line">    }</div>
 <div class="line">    require_once <span class="stringliteral">&#39;config.php&#39;</span></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00167">167</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../de/d20/index_8php_source.html">index.php</a> строка <a class="el" href="../../de/d20/index_8php_source.html#l00192">192</a></p>
 
 </div>
 </div>
@@ -1782,7 +1752,7 @@ Main Functions</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

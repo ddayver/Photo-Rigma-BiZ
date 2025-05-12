@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -150,9 +150,15 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 <tr class="memitem:a54dd5e694d07ac47b91bf9a7cc58d9d2" id="r_a54dd5e694d07ac47b91bf9a7cc58d9d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54dd5e694d07ac47b91bf9a7cc58d9d2">update_user_rights</a> (int $user_id, array $user_data, array $post_data)</td></tr>
 <tr class="memdesc:a54dd5e694d07ac47b91bf9a7cc58d9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет права пользователя или группу через Админку.  <br /></td></tr>
 <tr class="separator:a54dd5e694d07ac47b91bf9a7cc58d9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ab959808354af438bd760ef89d09eb" id="r_ab2ab959808354af438bd760ef89d09eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2ab959808354af438bd760ef89d09eb">delete_user</a> (int $user_id)</td></tr>
-<tr class="memdesc:ab2ab959808354af438bd760ef89d09eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет пользователя через Админку.  <br /></td></tr>
-<tr class="separator:ab2ab959808354af438bd760ef89d09eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c4aecffb50ad3f568cc504c6aea0c3" id="r_ab2c4aecffb50ad3f568cc504c6aea0c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2c4aecffb50ad3f568cc504c6aea0c3">delete_user</a> (int $user_id, bool $permanent=false)</td></tr>
+<tr class="memdesc:ab2c4aecffb50ad3f568cc504c6aea0c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Публичный метод для мягкого или окончательного удаления пользователя.  <br /></td></tr>
+<tr class="separator:ab2c4aecffb50ad3f568cc504c6aea0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5495df50f19c5657eccf4d313bbc98c" id="r_ae5495df50f19c5657eccf4d313bbc98c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5495df50f19c5657eccf4d313bbc98c">hard_delete_user</a> (int $user_id, bool $force=false)</td></tr>
+<tr class="memdesc:ae5495df50f19c5657eccf4d313bbc98c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Публичный метод для окончательного обезличивания и удаления пользователя.  <br /></td></tr>
+<tr class="separator:ae5495df50f19c5657eccf4d313bbc98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20ed50055d313a9cc9e78e7aace9d5d" id="r_af20ed50055d313a9cc9e78e7aace9d5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af20ed50055d313a9cc9e78e7aace9d5d">cron_user_delete</a> ()</td></tr>
+<tr class="memdesc:af20ed50055d313a9cc9e78e7aace9d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Публичный метод для запуска фоновой задачи окончательного удаления пользователей.  <br /></td></tr>
+<tr class="separator:af20ed50055d313a9cc9e78e7aace9d5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb35e2058e1fa1189a515873e76e62dd" id="r_acb35e2058e1fa1189a515873e76e62dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb35e2058e1fa1189a515873e76e62dd">add_new_group</a> (array $group_data)</td></tr>
 <tr class="memdesc:acb35e2058e1fa1189a515873e76e62dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавляет новую группу в систему через Админку.  <br /></td></tr>
 <tr class="separator:acb35e2058e1fa1189a515873e76e62dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,27 +171,42 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 <tr class="memitem:a9f839b5040591e4ea416cfc8f2ec8f44" id="r_a9f839b5040591e4ea416cfc8f2ec8f44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f839b5040591e4ea416cfc8f2ec8f44">login_user</a> (array $post, string $redirect_url)</td></tr>
 <tr class="memdesc:a9f839b5040591e4ea416cfc8f2ec8f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения.  <br /></td></tr>
 <tr class="separator:a9f839b5040591e4ea416cfc8f2ec8f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83a705ec9f27426c7e5315e26d136770" id="r_a83a705ec9f27426c7e5315e26d136770"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83a705ec9f27426c7e5315e26d136770">is_soft_delete_expired</a> (?string $deleted_at)</td></tr>
+<tr class="memdesc:a83a705ec9f27426c7e5315e26d136770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, истёк ли срок восстановления мягкого удаления.  <br /></td></tr>
+<tr class="separator:a83a705ec9f27426c7e5315e26d136770"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><p>Интерфейс для работы с пользователями и группами. </p>
-<p>Этот интерфейс определяет контракт для классов, реализующих методы добавления, обновления, удаления пользователей и групп, а также входа пользователя в систему. Реализация методов должна обеспечивать взаимодействие с базой данных и обработку ошибок. Основные возможности:</p><ul>
-<li>Установка объекта, реализующего интерфейс <code>Work_Interface</code> (<code>set_work</code>).</li>
-<li>Управление свойствами пользователя и сессии (<code>set_property_key</code>, <code>unset_property_key</code>).</li>
-<li>Генерация CSRF-токена для защиты от межсайтовой подделки запросов (<code>csrf_token</code>).</li>
-<li>Преобразование прав пользователя в строку JSON и обратно (<code>encode_user_rights</code>, <code>process_user_rights</code>).</li>
-<li>Добавление нового пользователя в базу данных (<code>add_new_user</code>).</li>
-<li>Обновление данных пользователя, включая пароль, email, имя и аватар (<code>update_user_data</code>).</li>
-<li>Обновление прав пользователя или группы через Админку (<code>update_user_rights</code>).</li>
-<li>Удаление пользователя из системы (<code>delete_user</code>).</li>
-<li>Добавление новой группы в систему (<code>add_new_group</code>).</li>
-<li>Обновление данных группы (<code>update_group_data</code>).</li>
-<li>Удаление группы из системы (<code>delete_group</code>).</li>
-<li>Проверка данных пользователя для входа в систему (<code>login_user</code>).</li>
+<p>Этот интерфейс определяет контракт для классов, реализующих методы добавления, обновления и удаления пользователей и групп. Он должен обеспечивать:</p><ul>
+<li>Работу с данными пользователя (логин, пароль, email, имя)</li>
+<li>Поддержку мягкого и окончательного удаления</li>
+<li>Генерацию CSRF-токенов</li>
+<li>Обработку прав доступа</li>
+<li>Совместимость с различными СУБД</li>
+<li>Логирование ошибок</li>
+<li>Защиту от некорректных действий администраторов</li>
+<li>Формирование данных для шаблонов Реализация обязана работать корректно как через cron, так и из веб-интерфейса.</li>
 </ul>
-<dl class="section note"><dt>Заметки</dt><dd>Используются константы с именами таблиц в базе данных.</dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Класс зависит от глобального массива $_SESSION. Некорректная реализация методов может привести к ошибкам при работе с пользователями и группами. </dd></dl>
+<p>Методы интерфейса:</p><ul>
+<li>Установка объекта Work (<code>set_work</code>)</li>
+<li>Управление свойствами (<code>set_property_key</code>, <code>unset_property_key</code>)</li>
+<li>Генерация CSRF-токена (<code>csrf_token</code>)</li>
+<li>Кодирование/декодирование прав (<code>encode_user_rights</code>, <code>process_user_rights</code>)</li>
+<li>Добавление пользователя (<code>add_new_user</code>)</li>
+<li>Обновление данных пользователя (<code>update_user_data</code>)</li>
+<li>Обновление прав пользователя (<code>update_user_rights</code>)</li>
+<li>Удаление пользователя (<code>delete_user</code>)</li>
+<li>Принудительное обезличивание и удаление (<code>hard_delete_user</code>)</li>
+<li>Запуск фоновой задачи удаления (<code>cron_user_delete</code>)</li>
+<li>Добавление группы (<code>add_new_group</code>)</li>
+<li>Обновление группы (<code>update_group_data</code>)</li>
+<li>Удаление группы (<code>delete_group</code>)</li>
+<li>Вход пользователя (<code>login_user</code>)</li>
+</ul>
+<dl class="section note"><dt>Заметки</dt><dd>Используются константы с именами таблиц базы данных.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Реализация зависит от глобального массива $_SESSION. Некорректная работа с ним может привести к ошибкам при работе с пользователями и группами. </dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="../../dc/db5/User__Interface_8php_source.html">User_Interface.php</a> строка <a class="el" href="../../dc/db5/User__Interface_8php_source.html#l00097">97</a></p>
+<p class="definition">См. определение в файле <a class="el" href="../../dc/db5/User__Interface_8php_source.html">User_Interface.php</a> строка <a class="el" href="../../dc/db5/User__Interface_8php_source.html#l00106">106</a></p>
 </div><h2 class="groupheader">Методы</h2>
 <a id="acb35e2058e1fa1189a515873e76e62dd" name="acb35e2058e1fa1189a515873e76e62dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb35e2058e1fa1189a515873e76e62dd">&#9670;&#160;</a></span>add_new_group()</h2>
@@ -203,49 +224,37 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 </div><div class="memdoc">
 
 <p>Добавляет новую группу в систему через Админку. </p>
-<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он выполняет следующие действия:</p><ol type="1">
-<li>Проверяет корректность входных данных:<ul>
-<li>Имя группы должно быть строкой и соответствовать требованиям (например, регулярному выражению).</li>
-<li>Права группы должны быть переданы в виде JSON-строки.</li>
+<p>Метод является частью контракта и должен быть реализован в классе. Он обязан:</p><ul>
+<li>Принимать данные группы, включая имя и права доступа</li>
+<li>Проверять корректность входных данных</li>
+<li>Создавать запись о группе в базе данных</li>
+<li>Возвращать ID созданной группы Реализация должна поддерживать вызов как из веб-интерфейса, так и фоновых задач.</li>
 </ul>
-</li>
-<li>Создает новую группу в базе данных, сохраняя её имя и права.</li>
-<li>Возвращает ID созданной группы.</li>
-</ol>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$group_data</td><td>Данные новой группы:<ul>
-<li><code>name</code> (string): Имя группы. Пример: "Moderators". Ограничения: имя должно быть непустой строкой.</li>
-<li><code>user_rights</code> (string): JSON-строка с правами группы. Пример: '{"read": true, "write": true}'. Ограничения: строка должна быть валидным JSON.</li>
+<li><code>name_group</code>: Имя группы (валидируется через REG_NAME)</li>
+<li>Права доступа: все поля из доступных. Пример: ['name_group' =&gt; 'Moderators', 'read' =&gt; true, 'write' =&gt; false]</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>int Возвращает ID созданной группы.</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>int ID новой группы при успешном добавлении.</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны:<ul>
-<li>Если имя группы отсутствует или пустое.</li>
-<li>Если права группы не являются валидной JSON-строкой.</li>
-</ul>
-</td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если данные группы не прошли проверку. </td></tr>
+    <tr><td class="paramname">JsonException</td><td>Выбрасывается, если не удалось кодировать права в JSON. </td></tr>
+    <tr><td class="paramname">Exception</td><td>При внутренних ошибках выполнения.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Заметки</dt><dd>Метод должен быть реализован с учетом всех зависимых данных группы (например, права доступа). Способ обработки этих данных определяется в реализации.</dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода. Невалидные данные могут привести к исключениям.</dd></dl>
-<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
-<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>();</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Добавление новой группы</span></div>
-<div class="line">$groupId = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;add_new_group([</div>
-<div class="line">    <span class="stringliteral">&#39;name&#39;</span> =&gt; <span class="stringliteral">&#39;Moderators&#39;</span>,</div>
-<div class="line">    <span class="stringliteral">&#39;user_rights&#39;</span> =&gt; <span class="stringliteral">&#39;{&quot;read&quot;: true, &quot;write&quot;: true}&#39;</span></div>
-<div class="line">]);</div>
-<div class="line">echo <span class="stringliteral">&quot;Новая группа создана с ID: $groupId&quot;</span>;</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html"><div class="ttname"><a href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">PhotoRigma\Classes\User</a></div><div class="ttdoc">Класс для работы с пользователями и хранения данных о текущем пользователе.</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l00102">User.php:103</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00300">index.php:300</a></div></div>
+<dl class="section note"><dt>Заметки</dt><dd>Формат <code>$group_data</code> определяется контрактом — реализация обязана его обработать.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Нарушение формата <code>$group_data</code> может привести к ошибкам валидации или SQL-запросам.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Через POST-запрос из админки</span></div>
+<div class="line">$groupId = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;add_new_group($_POST);</div>
+<div class="line">echo <span class="stringliteral">&quot;Группа создана с ID: &quot;</span> . $groupId;</div>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00322">index.php:322</a></div></div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd">User</a>.</p>
 
@@ -326,6 +335,44 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 
 </div>
 </div>
+<a id="af20ed50055d313a9cc9e78e7aace9d5d" name="af20ed50055d313a9cc9e78e7aace9d5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af20ed50055d313a9cc9e78e7aace9d5d">&#9670;&#160;</a></span>cron_user_delete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cron_user_delete </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Публичный метод для запуска фоновой задачи окончательного удаления пользователей. </p>
+<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он предназначен для выполнения фонового процесса обезличивания пользователей, у которых истёк срок восстановления после мягкого удаления.</p>
+<p>Реализация должна обеспечивать:</p><ul>
+<li>Защиту от запуска через веб-интерфейс</li>
+<li>Логирование всех этапов выполнения</li>
+<li>Совместимость с различными СУБД</li>
+<li>Корректную работу в режиме CLI (через cron)</li>
+</ul>
+<dl class="section return"><dt>Возвращает</dt><dd>void Метод не возвращает значения.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>Может выбрасываться при ошибках логирования или выполнении SQL-запросов.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что метод запускается только через <a class="el" href="../../d5/d5a/cron_8php.html" title="Фоновые задачи системы: удаление пользователей, обновление данных, логирование.">cron.php</a>. Нарушение условий может привести к исключениям.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Из cron.php</span></div>
+<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;cron_user_delete();</div>
+</div><!-- fragment --> 
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af20ed50055d313a9cc9e78e7aace9d5d">User</a>.</p>
+
+</div>
+</div>
 <a id="ae5e5917c41be4155a54de5e90827dc57" name="ae5e5917c41be4155a54de5e90827dc57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae5e5917c41be4155a54de5e90827dc57">&#9670;&#160;</a></span>csrf_token()</h2>
 
@@ -382,58 +429,46 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 </div><div class="memdoc">
 
 <p>Удаляет группу из системы через Админку. </p>
-<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он выполняет следующие действия:</p><ol type="1">
-<li>Проверяет корректность входных данных:<ul>
-<li>Идентификатор группы должен быть положительным целым числом.</li>
-<li>Удаление запрещено для групп с ID: 0 (Гость), 1 (Пользователь), 2 (Модератор), 3 (Администратор).</li>
+<p>Метод является частью контракта и должен быть реализован в классе. Он обязан:</p><ul>
+<li>Принимать ID группы как параметр</li>
+<li>Проверять, можно ли удалить эту группу (например, не защищена ли она)</li>
+<li>Переводить всех пользователей этой группы на группу по умолчанию</li>
+<li>Удалять запись группы из базы данных</li>
+<li>Возвращать логическое значение результата операции Реализация должна поддерживать вызов как из веб-интерфейса, так и фоновых задач.</li>
 </ul>
-</li>
-<li>Удаляет группу по её идентификатору, если удаление разрешено.</li>
-<li>Возвращает результат операции:<ul>
-<li><code>true</code>, если группа успешно удалена.</li>
-<li><code>false</code>, если удаление не выполнено (например, для запрещенных ID).</li>
-</ul>
-</li>
-</ol>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$group_id</td><td>Идентификатор группы:<ul>
-<li>Должен быть положительным целым числом. Пример: 123. Ограничения: удаление запрещено для групп с ID: 0, 1, 2, 3.</li>
-</ul>
-</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$group_id</td><td>ID группы, которую нужно удалить. Должен быть положительным целым числом (<code>&gt; 0</code>). Пример: 123.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает:<ul>
-<li><code>true</code>, если группа успешно удалена.</li>
-<li><code>false</code>, если удаление не выполнено (например, для запрещенных ID).</li>
-</ul>
-</dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool <code>TRUE</code>, если группа успешно удалена. <code>FALSE</code>, если удаление невозможно (группа защищена или ошибка БД).</dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, отрицательный ID).</td></tr>
+    <tr><td class="paramname">Exception</td><td>При внутренних ошибках выполнения.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Заметки</dt><dd>Метод должен быть реализован с учетом ограничений на удаление системных групп (ID: 0, 1, 2, 3). Эти группы являются критически важными для работы системы и не должны удаляться.</dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода. Невалидные данные могут привести к исключениям.</dd></dl>
-<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
-<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>();</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Удаление группы</span></div>
-<div class="line">$result = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;delete_group(123);</div>
-<div class="line"><span class="keywordflow">if</span> ($result) {</div>
-<div class="line">    echo <span class="stringliteral">&quot;Группа успешно удалена.&quot;</span>;</div>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация обязана обеспечить:<ul>
+<li>Чистый вывод данных</li>
+<li>Защиту от инъекций</li>
+<li>Совместимость с различными СУБД</li>
+</ul>
+</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Нарушение контракта может привести к некорректной работе системы прав и групп. Убедитесь, что реализация соответствует заданным требованиям.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Из клиентского кода</span></div>
+<div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;delete_group(123)) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Группа удалена&quot;</span>;</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
-<div class="line">    echo <span class="stringliteral">&quot;Удаление группы запрещено или произошла ошибка.&quot;</span>;</div>
+<div class="line">    echo <span class="stringliteral">&quot;Ошибка удаления или группа защищена&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4045f753ad732e5f01bafd4b6c04d961">User</a>.</p>
 
 </div>
 </div>
-<a id="ab2ab959808354af438bd760ef89d09eb" name="ab2ab959808354af438bd760ef89d09eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2ab959808354af438bd760ef89d09eb">&#9670;&#160;</a></span>delete_user()</h2>
+<a id="ab2c4aecffb50ad3f568cc504c6aea0c3" name="ab2c4aecffb50ad3f568cc504c6aea0c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c4aecffb50ad3f568cc504c6aea0c3">&#9670;&#160;</a></span>delete_user()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,56 +476,58 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
         <tr>
           <td class="memname">delete_user </td>
           <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_id</em></span></td><td>)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>$permanent</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Удаляет пользователя через Админку. </p>
-<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он выполняет следующие действия:</p><ol type="1">
-<li>Проверяет корректность входных данных:<ul>
-<li>Идентификатор пользователя должен быть положительным целым числом.</li>
+<p>Публичный метод для мягкого или окончательного удаления пользователя. </p>
+<p>Метод является частью контракта и определяет следующие обязательства:</p><ul>
+<li>Должен поддерживать мягкое удаление (помечаем <code>deleted_at</code>)</li>
+<li>Должен поддерживать окончательное удаление (удаляем запись)</li>
+<li>Должен учитывать права доступа при окончательном удалении</li>
+<li>Должен запрещать самоудаление администратором</li>
+<li>Должен предотвращать удаление последнего активного админа</li>
+<li>Должен логировать действия</li>
+<li>Должен возвращать FALSE при нарушении ограничений</li>
 </ul>
-</li>
-<li>Удаляет все данные пользователя, включая файл аватара.</li>
-<li>Обрабатывает связанные данные пользователя (например, категории и фотографии) в зависимости от логики реализации.</li>
-<li>Возвращает результат операции удаления.</li>
-</ol>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя:<ul>
-<li>Должен быть положительным целым числом. Пример: 123. Ограничения: ID должен быть больше 0.</li>
+    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>Идентификатор пользователя, которого нужно удалить. Должен быть положительным целым числом (<code>&gt; 0</code>). Пример: 123. Ограничения: ID должен быть больше 0. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$permanent</td><td>[optional] Указывает, какое удаление выполнить:<ul>
+<li><code>FALSE</code> (по умолчанию): мягкое удаление</li>
+<li><code>TRUE</code>: окончательное удаление</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>bool Возвращает:<ul>
-<li><code>true</code>, если пользователь успешно удален.</li>
-<li><code>false</code>, если удаление не выполнено.</li>
+<dl class="section return"><dt>Возвращает</dt><dd>bool <code>TRUE</code>, если удаление прошло успешно, <code>FALSE</code> в случае ошибки:<ul>
+<li>Пользователь не найден</li>
+<li>Нарушены ограничения безопасности (самоудаление админа, последний админ)</li>
+<li>Не удалось выполнить SQL-запрос</li>
 </ul>
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если входные данные некорректны (например, отрицательный ID).</td></tr>
+    <tr><td class="paramname">Exception</td><td>Выбрасывается, если произошла ошибка на уровне СУБД (например, ошибка запроса). Это позволяет внешнему коду обрабатывать такие ошибки отдельно.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Заметки</dt><dd>Метод должен быть реализован с учетом всех зависимых данных пользователя (например, файлы аватаров, категории, фотографии). Способ обработки этих данных определяется в реализации.</dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что входные данные корректны перед вызовом метода. Невалидные данные могут привести к исключениям.</dd></dl>
-<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
-<div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = <span class="keyword">new</span> <a class="code hl_class" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">User</a>();</div>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация должна обеспечивать чистый вывод данных и совместимость с различными СУБД.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Нарушение контракта может привести к некорректной работе системы удаления. Убедитесь, что реализация соответствует заданному поведению.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Мягкое удаление</span></div>
+<div class="line">$success = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;delete_user(123);</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Удаление пользователя</span></div>
-<div class="line">$result = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;delete_user(123);</div>
-<div class="line"><span class="keywordflow">if</span> ($result) {</div>
-<div class="line">    echo <span class="stringliteral">&quot;Пользователь успешно удален!&quot;</span>;</div>
-<div class="line">} <span class="keywordflow">else</span> {</div>
-<div class="line">    echo <span class="stringliteral">&quot;Не удалось удалить пользователя.&quot;</span>;</div>
-<div class="line">}</div>
+<div class="line"><span class="comment">// Окончательное удаление из админки</span></div>
+<div class="line">$success = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;delete_user(123, <span class="keyword">true</span>);</div>
 </div><!-- fragment --> 
-<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2ab959808354af438bd760ef89d09eb">User</a>.</p>
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab2c4aecffb50ad3f568cc504c6aea0c3">User</a>.</p>
 
 </div>
 </div>
@@ -555,6 +592,127 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 
 </div>
 </div>
+<a id="ae5495df50f19c5657eccf4d313bbc98c" name="ae5495df50f19c5657eccf4d313bbc98c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5495df50f19c5657eccf4d313bbc98c">&#9670;&#160;</a></span>hard_delete_user()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">hard_delete_user </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$user_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>$force</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Публичный метод для окончательного обезличивания и удаления пользователя. </p>
+<p>Метод является частью контракта интерфейса и определяет требования к реализации. Он должен обеспечивать:</p><ul>
+<li>Удаление личного контента перед окончательным удалением аккаунта</li>
+<li>Обезличивание данных пользователя</li>
+<li>Проверку истечения срока мягкого удаления</li>
+<li>Логирование всех действий</li>
+<li>Предотвращение удаления последнего администратора</li>
+<li>Защиту от самоудаления администратора</li>
+<li>Поддержку принудительного удаления из админки (через параметр $force)</li>
+<li>Совместимость с вызовом как через cron, так и через админ-панель</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$user_id</td><td>ID пользователя, которого нужно окончательно удалить. Должен быть положительным целым числом (<code>&gt; 0</code>). Пример: 123. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$force</td><td>[optional] Режим принудительного удаления:<ul>
+<li>FALSE (по умолчанию): удаление через cron после истечения срока восстановления.</li>
+<li>TRUE: принудительное удаление из админки — требует подтверждения прав администратора.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>bool TRUE при успехе, FALSE при ошибке или невозможности удаления.</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>При ошибках выполнения SQL-запросов.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация обязана возвращать FALSE при попытке удалить последнего админа или при нарушении условий.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Нарушение контракта может привести к некорректной работе системы удаления. Убедитесь, что реализация соответствует заданному поведению.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Из фонового скрипта (cron.php)</span></div>
+<div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;hard_delete_user(123)) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Пользователь 123 успешно обезличен\n&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Ошибка при обезличивании пользователя 123\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Из админки (принудительное удаление)</span></div>
+<div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;hard_delete_user(123, <span class="keyword">true</span>)) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Пользователь 123 принудительно удален\n&quot;</span>;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Ошибка при принудительном удалении пользователя 123\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5495df50f19c5657eccf4d313bbc98c">User</a>.</p>
+
+</div>
+</div>
+<a id="a83a705ec9f27426c7e5315e26d136770" name="a83a705ec9f27426c7e5315e26d136770"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83a705ec9f27426c7e5315e26d136770">&#9670;&#160;</a></span>is_soft_delete_expired()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">is_soft_delete_expired </td>
+          <td>(</td>
+          <td class="paramtype">?string</td>          <td class="paramname"><span class="paramname"><em>$deleted_at</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Проверяет, истёк ли срок восстановления мягкого удаления. </p>
+<p>Метод является частью контракта интерфейса и определяет обязательное поведение:</p><ul>
+<li>Должен принимать дату мягкого удаления из внешнего источника</li>
+<li>Должен возвращать информацию о: a) Дате удаления b) Сроке истечения c) Факте истечения (<code>expired</code>)</li>
+<li>Должен корректно обрабатывать NULL <code>$deleted_at</code></li>
+<li>Должен обеспечивать совместимость с публичными и фоновыми задачами</li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string&#160;|&#160;null</td><td class="paramname">$deleted_at</td><td>Дата и время мягкого удаления (формат MySQL DATETIME). Может быть NULL, если пользователь не удален.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>array Ассоциативный массив с данными о сроке:<ul>
+<li>'restore_date' =&gt; ?DateTime Дата мягкого удаления</li>
+<li>'restore_expiry' =&gt; ?DateTime Дата истечения срока восстановления</li>
+<li>'expired' =&gt; bool Указывает, истёк ли срок</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td>При внутренних ошибках выполнения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация должна быть совместима с вызовом из публичного кода и фоновых задач.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Некорректная реализация может привести к неверной оценке срока восстановления.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Проверка истечения срока</span></div>
+<div class="line">$restore_info = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;is_soft_delete_expired(<span class="stringliteral">&#39;2025-05-01 10:00:00&#39;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> ($restore_info[<span class="stringliteral">&#39;expired&#39;</span>]) {</div>
+<div class="line">    echo <span class="stringliteral">&quot;Срок истёк&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+<p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a83a705ec9f27426c7e5315e26d136770">User</a>.</p>
+
+</div>
+</div>
 <a id="a9f839b5040591e4ea416cfc8f2ec8f44" name="a9f839b5040591e4ea416cfc8f2ec8f44"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9f839b5040591e4ea416cfc8f2ec8f44">&#9670;&#160;</a></span>login_user()</h2>
 
@@ -575,9 +733,15 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 </div><div class="memdoc">
 
 <p>Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат хранения. </p>
-<p>Этот метод выполняет следующие действия:</p><ul>
+<p>Метод выполняет следующие действия:</p><ul>
 <li>Проверяет корректность входных данных (логин и пароль) с использованием <code>Work::check_input()</code>.</li>
 <li>Ищет пользователя в базе данных по логину.</li>
+<li>Проверяет статус удаления пользователя:<ul>
+<li>Если установлен флаг <code>permanently_deleted</code>, доступ запрещён.</li>
+<li>Если установлена дата <code>deleted_at</code> и срок восстановления истёк, доступ запрещён.</li>
+<li>Если срок восстановления не истёк, аккаунт восстанавливается (обнуляется <code>deleted_at</code>).</li>
+</ul>
+</li>
 <li>Проверяет пароль через <code>password_verify()</code> и, при необходимости, через <code>md5</code>.</li>
 <li>Если пароль хранится в старом формате (md5), он обновляется до формата <code>password_hash()</code>.</li>
 <li>Возвращает ID пользователя или 0 в случае ошибки.</li>
@@ -589,13 +753,13 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 <li>string $password: Пароль пользователя (не должен быть пустым). </li>
 </ul>
 </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$redirect_url</td><td>URL для перенаправления пользователя в случае возникновения ошибок.</td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$redirect_url</td><td>URL для перенаправления пользователя в случае возникновения ошибок. Ограничения: должен быть валидным URL.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>int ID пользователя, если авторизация успешна, или 0 в случае ошибки.</dd></dl>
-<dl class="section note"><dt>Заметки</dt><dd>Поддерживается совместимость со старым форматом хранения паролей (md5).</dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректной конфигурации базы данных.</dd></dl>
+<dl class="section note"><dt>Заметки</dt><dd>Поддерживается совместимость со старым форматом хранения паролей (md5). При обнаружении старого формата пароль автоматически обновляется до формата <code>password_hash()</code>. Также поддерживается восстановление временно удалённых аккаунтов, если срок восстановления ещё не истёк.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод зависит от корректной конфигурации базы данных. Убедитесь, что таблица пользователей и поля (<code>id</code>, <code>login</code>, <code>password</code>, <code>deleted_at</code>, <code>permanently_deleted</code>) настроены правильно. Невалидные данные могут привести к исключениям.</dd></dl>
 <p>Пример использования метода: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User();</div>
 <div class="line">$redirectUrl = <span class="stringliteral">&#39;/login/error&#39;</span>;</div>
 <div class="line">$userId = <a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;login_user($_POST, $redirectUrl);</div>
@@ -604,12 +768,7 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Ошибка входа.&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a6e6ea2a212c3c2dee206a1753b673b7d" title="Проверяет входные данные через вызов внутреннего метода.">PhotoRigma\Classes\Work\check_input()</a> Метод для проверки правильности входных данных. </dd>
-<dd>
-<a class="el" href="../../db/d02/namespacePhotoRigma_1_1Include.html#a2d74c46a21e4ce612a98eee60981aef0" title="Записывает сообщение об ошибке в лог-файл и, при необходимости, завершает выполнение скрипта.">PhotoRigma\Include\log_in_file()</a> Функция логирования событий.</dd>
-<dd>
-<a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a9f839b5040591e4ea416cfc8f2ec8f44" title="Проверяет данные пользователя для входа в систему через вызов внутреннего метода.">PhotoRigma\Classes\User\login_user</a> Метод реализации в классе User. </dd></dl>
-
+</div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a9f839b5040591e4ea416cfc8f2ec8f44">User</a>.</p>
 
 </div>
@@ -756,7 +915,6 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 
 <p>Устанавливает объект, реализующий интерфейс Work_Interface. </p>
 <p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он выполняет следующие действия:</p><ol type="1">
-<li>Проверяет, что переданный объект реализует интерфейс <code>Work_Interface</code>.</li>
 <li>Присваивает объект для дальнейшего использования.</li>
 <li>Если в сессии отсутствует тема (<code>theme</code>), она инициализируется значением из конфигурации объекта, реализующего интерфейс <code>Work_Interface</code>.</li>
 </ol>
@@ -770,12 +928,6 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>void Метод ничего не возвращает.</dd></dl>
-<dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если передан некорректный объект (не реализует интерфейс <code>Work_Interface</code>).</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section note"><dt>Заметки</dt><dd>Метод проверяет тип переданного объекта. Объект используется для дальнейшего взаимодействия в текущем классе.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Некорректный объект (не реализует интерфейс <code>Work_Interface</code>) вызывает исключение.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта User</span></div>
@@ -786,13 +938,14 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 <div class="line"> </div>
 <div class="line"><span class="comment">// Установка объекта Work</span></div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>-&gt;set_work(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">$work</a>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></div><div class="ttdoc">Основной класс приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00149">Work.php:150</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00284">index.php:284</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html"><div class="ttname"><a href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">PhotoRigma\Classes\User</a></div><div class="ttdoc">Класс для работы с пользователями и хранения данных о текущем пользователе.</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l00108">User.php:109</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1Work_html"><div class="ttname"><a href="../../d7/d53/classPhotoRigma_1_1Classes_1_1Work.html">PhotoRigma\Classes\Work</a></div><div class="ttdoc">Основной класс приложения.</div><div class="ttdef"><b>Определения</b> <a href="../../d1/dce/Work_8php_source.html#l00163">Work.php:164</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a2429001fb0fa404b4fe0ab42a91a9a48"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a2429001fb0fa404b4fe0ab42a91a9a48">PhotoRigma\$work</a></div><div class="ttdeci">$work</div><div class="ttdoc">Создание объекта класса Work.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00306">index.php:306</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html" title="Интерфейс для центральной точки приложения.">PhotoRigma\Interfaces\Work_Interface</a> Интерфейс, которому должен соответствовать объект. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0bb4e25a2291e3792c181a821de0c88c">User</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00284">PhotoRigma\$work</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00306">PhotoRigma\$work</a>.</p>
 
 </div>
 </div>
@@ -1153,7 +1306,7 @@ $(function(){initNavTree('dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Inte
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></li><li class="navelem"><a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html">User_Interface</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

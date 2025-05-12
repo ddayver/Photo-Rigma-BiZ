@@ -3,66 +3,74 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /**
- * @file        action/photo.php
- * @brief       Работа с фотографиями: вывод, редактирование, загрузка и обработка изображений, оценок.
+ * @file      action/photo.php
+ * @brief     Работа с фотографиями: вывод, редактирование, загрузка и обработка изображений, оценок.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   Photorigma\\Action
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace Photorigma\\Action
  *
- * @details     Этот файл отвечает за управление фотографиями в системе, включая:
- *              - Отображение фотографий с информацией о них (название, описание, категория, автор, оценки).
- *              - Редактирование данных фотографии (название, описание, категория) для автора или модератора.
- *              - Удаление фотографий (для автора или модератора).
- *              - Загрузку новых фотографий (для авторизованных пользователей с правами на загрузку).
- *              - Оценку фотографий пользователями и модераторами.
- *              - Логирование ошибок и подозрительных действий.
+ * @details   Этот файл отвечает за управление фотографиями в системе, включая:
+ *            - Отображение фотографий с информацией о них (название, описание, категория, автор, оценки).
+ *            - Редактирование данных фотографии (название, описание, категория) для автора или модератора.
+ *            - Удаление фотографий (для автора или модератора).
+ *            - Загрузку новых фотографий (для авторизованных пользователей с правами на загрузку).
+ *            - Оценку фотографий пользователями и модераторами.
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     Photo_Main_Functions Основные функции
- *              - Отображение фотографий с детальной информацией.
- *              - Редактирование данных фотографии.
- *              - Удаление фотографий.
- *              - Загрузка новых фотографий.
- *              - Оценка фотографий пользователями и модераторами.
- *              - Логирование ошибок и подозрительных действий.
+ * @section   Photo_Main_Functions Основные функции
+ *            - Отображение фотографий с детальной информацией.
+ *            - Редактирование данных фотографии.
+ *            - Удаление фотографий.
+ *            - Загрузка новых фотографий.
+ *            - Оценка фотографий пользователями и модераторами.
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     Photo_Error_Handling Обработка ошибок
- *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
- *              - `RuntimeException`: Если возникают ошибки при работе с базой данных или файловой системой.
- *              - `RuntimeException`: Если пользователь не имеет прав на выполнение действия.
- *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
- *              - `Exception`: При выполнении прочих методов классов, функций или операций.
+ * @section   Photo_Error_Handling Обработка ошибок
+ *            При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *            - `RuntimeException`: Если возникают ошибки при работе с базой данных или файловой системой.
+ *            - `RuntimeException`: Если пользователь не имеет прав на выполнение действия.
+ *            - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *            - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @throws      RuntimeException Если возникают ошибки при работе с базой данных или файловой системой.
- *              Пример сообщения: "Не удалось получить данные фотографии | ID: $photo_id".
- * @throws      RuntimeException Если пользователь не имеет прав на выполнение действия.
- *              Пример сообщения: "Пользователь не имеет прав на редактирование фотографии | ID: {$user->user['id']}".
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ * @throws    RuntimeException       Если возникают ошибки при работе с базой данных или файловой системой.
+ *                                   Пример сообщения:
+ *                                   "Не удалось получить данные фотографии | ID: $photo_id".
+ * @throws    RuntimeException       Если пользователь не имеет прав на выполнение действия.
+ *                                   Пример сообщения:
+ *                                   "Пользователь не имеет прав на редактирование фотографии | ID:
+ *                                   {$user->user['id']}".
+ * @throws    Random\RandomException При выполнении методов, использующих random().
+ * @throws    Exception              При выполнении прочих методов классов, функций или операций.
  *
- * @section     Photo_Related_Files Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
- *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
- *              - Вспомогательные функции:
- *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
- *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/photo.php по запросу из `$_GET`.
+ * @section   Photo_Related_Files Связанные файлы и компоненты
+ *            - Классы приложения:
+ *              - @see PhotoRigma::Classes::Work
+ *                     Класс используется для выполнения вспомогательных операций.
+ *              - @see PhotoRigma::Classes::Database
+ *                     Класс для работы с базой данных.
+ *              - @see PhotoRigma::Classes::User
+ *                     Класс для управления пользователями.
+ *              - @see PhotoRigma::Classes::Template
+ *                     Класс для работы с шаблонами.
+ *            - Вспомогательные функции:
+ *              - @see PhotoRigma::Include::log_in_file()
+ *                     Функция для логирования ошибок.
+ *            - Файлы приложения:
+ *              - @see index.php Этот файл подключает action/photo.php по запросу из `$_GET`.
  *
- * @note        Этот файл является частью системы PhotoRigma.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
- *              Используются подготовленные выражения для защиты от SQL-инъекций.
+ * @note      Этот файл является частью системы PhotoRigma.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ *            Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать,
- *              распространять, сублицензировать и/или продавать копии программного обеспечения,
- *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
- *              делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *            делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
 
@@ -128,7 +136,7 @@ $db->join(
     ]
 );
 
-$photo_data = $db->res_row();
+$photo_data = $db->result_row();
 
 if ($photo_data) {
     // Формирование пути к файлу с использованием sprintf()
@@ -152,7 +160,7 @@ if ($photo_data) {
 $template->template_file = 'photo.html';
 
 // Добавление условий в шаблон
-$template->add_if_ar([
+$template->add_if_array([
     'EDIT_BLOCK' => false,
     'RATE_PHOTO' => false,
     'RATE_USER'  => false,
@@ -196,7 +204,7 @@ if ($photo_id !== 0) {
         ]
     );
 
-    $photo_data = $db->res_row();
+    $photo_data = $db->result_row();
 
     if (!$photo_data) {
         throw new RuntimeException(
@@ -233,7 +241,7 @@ if ($photo_id !== 0) {
                 'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]
         );
-        $temp = $db->res_row();
+        $temp = $db->result_row();
         $rate_user = $temp ? $temp['rate'] : false;
 
         if ($user->user['pic_rate_user'] && !$rate_user && $work->check_input('_POST', 'rate_user', [
@@ -259,7 +267,7 @@ if ($photo_id !== 0) {
                 'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]
         );
-        $temp = $db->res_row();
+        $temp = $db->result_row();
         $rate_moder = $temp ? $temp['rate'] : false;
 
         if ($user->user['pic_rate_moder'] && !$rate_moder && $work->check_input('_POST', 'rate_moder', [
@@ -336,7 +344,7 @@ if ($photo_id !== 0) {
                     'params' => [':id' => $_POST['name_category']], // Параметры для prepared statements
                 ]
             );
-            $temp_category_data = $db->res_row();
+            $temp_category_data = $db->result_row();
             if (!$temp_category_data) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные категории | ID: {$_POST['name_category']}"
@@ -355,7 +363,7 @@ if ($photo_id !== 0) {
                     'params' => [':id' => $_POST['name_category']], // Параметры для prepared statements
                 ]
             );
-            $temp_new_category_data = $db->res_row();
+            $temp_new_category_data = $db->result_row();
             if (!$temp_new_category_data) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось получить данные новой категории | ID: {$_POST['name_category']}"
@@ -499,7 +507,7 @@ if ($photo_id !== 0) {
 
         // Получаем список категорий
         $db->select('*', TBL_CATEGORY, $select_cat);
-        $category_list = $db->res_arr();
+        $category_list = $db->result_array();
         if (!$category_list) {
             throw new RuntimeException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить список категорий'
@@ -512,12 +520,12 @@ if ($photo_id !== 0) {
                 $val['name'] .= ' ' . $photo['user'];
             }
             if ($val['id'] === $photo_data['category']) {
-                $template->add_string_ar([
+                $template->add_string_array([
                     'D_SELECTED_CATEGORY' => (string)$val['id'],
                     'L_SELECT_CATEGORY'   => Work::clean_field($val['name']),
                 ]);
             }
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_ID_CATEGORY'   => (string)$val['id'],
                 'D_NAME_CATEGORY' => $val['name'],
             ], 'SELECT_CATEGORY[' . $key . ']');
@@ -526,7 +534,7 @@ if ($photo_id !== 0) {
         // Генерируем CSRF-токен для защиты от атак типа CSRF
         $template->add_string('CSRF_TOKEN', $user->csrf_token());
         // Добавляем данные в шаблон
-        $template->add_string_ar([
+        $template->add_string_array([
             'L_NAME_BLOCK'        => $work->lang['photo']['edit'] . ' - ' . Work::clean_field($photo_data['name']),
             'L_NAME_PHOTO'        => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
             'L_DESCRIPTION_PHOTO' => $work->lang['main']['description_of'] . ' ' . $work->lang['photo']['of_photo'],
@@ -569,7 +577,7 @@ if ($photo_id !== 0) {
                 ]
             );
 
-            $result = $db->res_row();
+            $result = $db->result_row();
             if ($result === false) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные о количестве фотографий'
@@ -601,7 +609,7 @@ if ($photo_id !== 0) {
                 ]
             );
 
-            $result = $db->res_row();
+            $result = $db->result_row();
             if ($result === false) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные о количестве фотографий'
@@ -642,7 +650,7 @@ if ($photo_id !== 0) {
         );
 
         // Добавляем основные данные в шаблон
-        $template->add_string_ar([
+        $template->add_string_array([
             'L_NAME_BLOCK'           => $work->lang['photo']['title'] . ' - ' . Work::clean_field($photo_data['name']),
             'L_DESCRIPTION_BLOCK'    => Work::clean_field($photo_data['description']),
             'L_USER_ADD'             => $work->lang['main']['user_add'],
@@ -659,7 +667,7 @@ if ($photo_id !== 0) {
 
         // Если пользователь имеет права на редактирование/удаление
         if (($photo_data['user_upload'] === $user->user['id'] && $user->user['id'] !== 0) || $user->user['pic_moderate']) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_EDIT_BLOCK'           => $work->lang['photo']['edit'],
                 'L_CONFIRM_DELETE_BLOCK' => $work->lang['photo']['confirm_delete'] . ' ' . Work::clean_field(
                     $photo_data['name']
@@ -682,7 +690,7 @@ if ($photo_id !== 0) {
         }
 
         // Добавляем данные о пользователе
-        $template->add_string_ar([
+        $template->add_string_array([
             'D_USER_ADD' => $photo_data['real_name'] ?? $work->lang['main']['no_user_add'],
             'U_USER_ADD' => $photo_data['real_name'] ? sprintf(
                 '%s?action=profile&subact=profile&uid=%d',
@@ -693,7 +701,7 @@ if ($photo_id !== 0) {
 
         // Добавляем данные о категории
         if ($photo_data['category'] === 0) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_NAME_CATEGORY'        => $photo_data['category_name'] . ' ' . ($photo_data['real_name'] ?? ''),
                 'D_DESCRIPTION_CATEGORY' => $photo_data['category_description'] . ' ' . ($photo_data['real_name'] ?? ''),
                 'U_CATEGORY'             => sprintf(
@@ -703,7 +711,7 @@ if ($photo_id !== 0) {
                 ),
             ]);
         } else {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_NAME_CATEGORY'        => $photo_data['category_name'],
                 'D_DESCRIPTION_CATEGORY' => $photo_data['category_description'],
                 'U_CATEGORY'             => sprintf(
@@ -715,7 +723,7 @@ if ($photo_id !== 0) {
         }
 
         // Добавляем данные об оценках
-        $template->add_string_ar([
+        $template->add_string_array([
             'L_RATE_USER'  => $work->lang['photo']['rate_user'] . ': ' . $photo_data['rate_user'],
             'L_RATE_MODER' => $work->lang['photo']['rate_moder'] . ': ' . $photo_data['rate_moder'],
             'D_RATE_USER'  => (string)$photo_data['rate_user'],
@@ -729,14 +737,14 @@ if ($photo_id !== 0) {
                 'where'  => '`id_foto` = :id_foto AND `id_user` = :id_user',
                 'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]);
-            $user_rate = $db->res_row() === false;
+            $user_rate = $db->result_row() === false;
 
             if ($user_rate) {
                 $template->add_if('RATE_USER', true);
                 $key = 0;
                 for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++) {
                     $template->add_string('D_SELECTED_LVL_USER', '0');
-                    $template->add_string_ar([
+                    $template->add_string_array([
                         'D_LVL_RATE' => (string)$i,
                     ], 'SELECT_USER_RATE[' . $key++ . ']');
                 }
@@ -751,14 +759,14 @@ if ($photo_id !== 0) {
                 'where'  => '`id_foto` = :id_foto AND `id_user` = :id_user',
                 'params' => [':id_foto' => $photo_id, ':id_user' => $user->user['id']],
             ]);
-            $moder_rate = $db->res_row() === false;
+            $moder_rate = $db->result_row() === false;
 
             if ($moder_rate) {
                 $template->add_if('RATE_MODER', true);
                 $key = 0;
                 for ($i = -$work->config['max_rate']; $i <= $work->config['max_rate']; $i++) {
                     $template->add_string('D_SELECTED_LVL_MODER', '0');
-                    $template->add_string_ar([
+                    $template->add_string_array([
                         'D_LVL_RATE' => (string)$i,
                     ], 'SELECT_MODER_RATE[' . $key++ . ']');
                 }
@@ -775,7 +783,7 @@ if ($photo_id !== 0) {
             // Генерируем CSRF-токен для защиты от атак типа CSRF
             $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_RATE'       => $work->lang['photo']['rate_you'],
                 'L_USER_RATE'  => $work->lang['photo']['if_user'],
                 'L_MODER_RATE' => $work->lang['photo']['if_moder'],
@@ -809,7 +817,7 @@ if ($photo_id !== 0) {
 
     // Получаем список категорий
     $db->select('*', TBL_CATEGORY, $select_cat);
-    $category_data = $db->res_arr();
+    $category_data = $db->result_array();
     if (!$category_data) {
         throw new RuntimeException(
             __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить список категорий'
@@ -820,12 +828,12 @@ if ($photo_id !== 0) {
     foreach ($category_data as $key => $val) {
         if ($val['id'] === 0) {
             $val['name'] .= ' ' . $user->user['real_name'];
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_SELECTED_CATEGORY' => (string)$val['id'],
                 'L_SELECT_CATEGORY'   => Work::clean_field($val['name']),
             ]);
         }
-        $template->add_string_ar([
+        $template->add_string_array([
             'D_ID_CATEGORY'   => (string)$val['id'],
             'D_NAME_CATEGORY' => Work::clean_field($val['name']),
         ], 'UPLOAD_CATEGORY[' . $key . ']');
@@ -834,7 +842,7 @@ if ($photo_id !== 0) {
     // Генерируем CSRF-токен для защиты от атак типа CSRF
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
     // Добавляем данные в шаблон
-    $template->add_string_ar([
+    $template->add_string_array([
         'L_NAME_BLOCK'        => $work->lang['photo']['title'] . ' - ' . $work->lang['photo']['upload'],
         'L_NAME_PHOTO'        => $work->lang['main']['name_of'] . ' ' . $work->lang['photo']['of_photo'],
         'L_DESCRIPTION_PHOTO' => $work->lang['main']['description_of'] . ' ' . $work->lang['photo']['of_photo'],
@@ -898,7 +906,7 @@ if ($photo_id !== 0) {
 
         // Выполняем запрос к базе данных для проверки существования категории
         $db->select('`id`, `folder`', TBL_CATEGORY, $category_condition); // Ограничиваем выборку только нужными полями
-        $category_data = $db->res_row();
+        $category_data = $db->result_row();
         if (!$category_data) {
             $submit_upload = false; // Если категория не найдена, отменяем загрузку
         }
@@ -1034,7 +1042,7 @@ if ($photo_id !== 0) {
     /** @noinspection PhpAutovivificationOnFalseValuesInspection */
     $photo_data['file'] = 'no_foto.png';
 
-    $template->add_string_ar([
+    $template->add_string_array([
         'L_NAME_BLOCK'           => $work->lang['photo']['title'] . ' - ' . $work->lang['main']['no_foto'],
         'L_DESCRIPTION_BLOCK'    => $work->lang['main']['no_foto'],
         'L_USER_ADD'             => $work->lang['main']['user_add'],
@@ -1062,7 +1070,7 @@ if ($photo_id !== 0) {
 
 if (!empty($photo['path'])) {
     $size_photo = $work->size_image($photo['path']);
-    $template->add_string_ar([
+    $template->add_string_array([
         'D_FOTO_WIDTH'  => (string)$size_photo['width'],
         'D_FOTO_HEIGHT' => (string)$size_photo['height'],
     ]);

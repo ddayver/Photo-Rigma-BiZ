@@ -1,40 +1,42 @@
 <?php
 
 /**
- * @file        include/Template.php
- * @brief       Класс для работы с HTML-шаблонами, включая рендеринг и подстановку данных.
+ * @file      include/Template.php
+ * @brief     Класс для работы с HTML-шаблонами, включая рендеринг и подстановку данных.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   PhotoRigma\\Classes
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace PhotoRigma\\Classes
  *
- * @details     Этот файл содержит реализацию класса `Template`, который предоставляет методы для работы с
- *              HTML-шаблонами:
- *              - Обработка шаблонов с реализацией алгоритмов IF/ELSE, ARRAY, SWITCH/CASE.
- *              - Формирование заголовка и подвала HTML-страницы.
- *              - Поддержка читаемых URL через параметр `$mod_rewrite`.
- *              - Все ошибки, возникающие при работе с шаблонами, обрабатываются через исключения.
+ * @details   Этот файл содержит реализацию класса `Template`, который предоставляет методы для работы с
+ *            HTML-шаблонами:
+ *            - Обработка шаблонов с реализацией алгоритмов IF/ELSE, ARRAY, SWITCH/CASE.
+ *            - Формирование заголовка и подвала HTML-страницы.
+ *            - Поддержка читаемых URL через параметр `$mod_rewrite`.
+ *            - Все ошибки, возникающие при работе с шаблонами, обрабатываются через исключения.
  *
- * @section     Template_Main_Functions Основные функции
- *              - Добавление строковых данных, условий и блоков выбора для замены в шаблоне.
- *              - Формирование заголовка и подвала HTML-страницы.
- *              - Создание и обработка шаблона с подстановкой данных.
- *              - Поддержка читаемых URL через параметр `$mod_rewrite`.
+ * @section   Template_Main_Functions Основные функции
+ *            - Добавление строковых данных, условий и блоков выбора для замены в шаблоне.
+ *            - Формирование заголовка и подвала HTML-страницы.
+ *            - Создание и обработка шаблона с подстановкой данных.
+ *            - Поддержка читаемых URL через параметр `$mod_rewrite`.
  *
- * @see         PhotoRigma::Classes::Template Класс для работы с шаблонами.
- * @see         PhotoRigma::Classes::Template_Interface Интерфейс для работы с шаблонами.
+ * @see       PhotoRigma::Classes::Template
+ *            Класс для работы с шаблонами.
+ * @see       PhotoRigma::Classes::Template_Interface
+ *            Интерфейс для работы с шаблонами.
  *
- * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
- *              Реализованы меры безопасности для предотвращения внедрения вредоносного кода через шаблоны.
+ * @note      Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
+ *            Реализованы меры безопасности для предотвращения внедрения вредоносного кода через шаблоны.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *                части программного обеспечения.
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *            сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *            предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -70,6 +72,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Поддержка читаемых URL через параметр `$mod_rewrite`.
  *          Все ошибки, возникающие при работе с шаблонами, обрабатываются через исключения.
  *
+ * @implements Template_Interface
+ *
  * @property string              $ins_header    Данные, вставляемые в заголовок.
  * @property string              $content       Содержимое для вывода.
  * @property bool                $mod_rewrite   Включение читаемых URL.
@@ -94,7 +98,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *     true
  * );
  * @endcode
- * @see     Photorigma::Interfaces::Template_Interface Интерфейс, который реализует класс.
+ * @see    Photorigma::Interfaces::Template_Interface
+ *         Интерфейс, который реализует класс.
  */
 class Template implements Template_Interface
 {
@@ -126,7 +131,7 @@ class Template implements Template_Interface
      *          4. Инициализирует свойства класса (`$site_url`, `$site_dir`, `$theme`, `$mod_rewrite`).
      *          5. Вычисляет пути к директориям тем (`$themes_path` и `$themes_url`).
      *          6. Проверяет, что директория тем существует и доступна для чтения.
-     *          7. Проверяет наличие шаблона по умолчанию с помощью метода `find_template_file()`.
+     *          7. Проверяет наличие шаблона по умолчанию с помощью метода `_find_template_file()`.
      *          Если на любом этапе возникает ошибка, выбрасывается соответствующее исключение.
      *
      * @callgraph
@@ -157,7 +162,7 @@ class Template implements Template_Interface
      *                                  - `$theme` пустое или содержит недопустимые символы.
      *                                    Пример сообщения:
      *                                        Некорректное имя темы | Значение: [$theme]
-     * @throws RuntimeException Выбрасывается, если:
+     * @throws RuntimeException         Выбрасывается, если:
      *                                  - Директория тем не найдена.
      *                                    Пример сообщения:
      *                                        Директория тем не найдена | Путь: [$themes_path]
@@ -185,19 +190,19 @@ class Template implements Template_Interface
      *     true
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$site_url
+     * @see    PhotoRigma::Classes::Template::$site_url
      *         Свойство, хранящее URL сайта.
-     * @see     PhotoRigma::Classes::Template::$site_dir
+     * @see    PhotoRigma::Classes::Template::$site_dir
      *         Свойство, хранящее директорию сайта.
-     * @see     PhotoRigma::Classes::Template::$theme
+     * @see    PhotoRigma::Classes::Template::$theme
      *         Свойство, хранящее имя темы.
-     * @see     PhotoRigma::Classes::Template::$themes_path
+     * @see    PhotoRigma::Classes::Template::$themes_path
      *         Свойство, хранящее путь к директории тем.
-     * @see     PhotoRigma::Classes::Template::$themes_url
+     * @see    PhotoRigma::Classes::Template::$themes_url
      *         Свойство, хранящее URL директории тем.
-     * @see     PhotoRigma::Classes::Template::$mod_rewrite
+     * @see    PhotoRigma::Classes::Template::$mod_rewrite
      *         Свойство, указывающее на включение читаемых URL.
-     * @see     PhotoRigma::Classes::Template::find_template_file()
+     * @see    PhotoRigma::Classes::Template::_find_template_file()
      *         Метод, проверяющий наличие шаблона по умолчанию.
      */
     public function __construct(string $site_url, string $site_dir, string $theme, bool $mod_rewrite = false)
@@ -248,7 +253,7 @@ class Template implements Template_Interface
         }
 
         // Проверяем существует ли шаблон по-умолчанию.
-        $this->find_template_file();
+        $this->_find_template_file();
     }
 
     /**
@@ -261,15 +266,16 @@ class Template implements Template_Interface
      *          4. Если все проверки пройдены, сохраняет полный путь к файлу в свойство `$template_file`.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Указанный путь не является файлом.
-     *                                    Пример сообщения:
-     *                                        Указанный путь не является файлом | Путь: [$full_path]
-     *                                  - Файл недоступен для чтения.
-     *                                    Пример сообщения:
-     *                                        Файл недоступен для чтения | Путь: [$full_path]
+     *                          - Указанный путь не является файлом.
+     *                            Пример сообщения:
+     *                                Указанный путь не является файлом | Путь: [$full_path]
+     *                          - Файл недоступен для чтения.
+     *                            Пример сообщения:
+     *                                Файл недоступен для чтения | Путь: [$full_path]
      *
      * @note    Метод автоматически проверяет корректность передаваемого имени файла шаблона.
      *          Полный путь к файлу строится на основе свойств `$themes_path` и `$template_file`.
@@ -279,14 +285,14 @@ class Template implements Template_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->find_template_file();
+     * $this->_find_template_file();
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$template_file
+     * @see    PhotoRigma::Classes::Template::$template_file
      *         Свойство, содержащее имя или путь к файлу шаблона.
-     * @see     PhotoRigma::Classes::Template::$themes_path
+     * @see    PhotoRigma::Classes::Template::$themes_path
      *         Свойство, содержащее путь к директории тем.
      */
-    private function find_template_file(): void
+    private function _find_template_file(): void
     {
         $full_path = $this->themes_path . $this->template_file;
         // Проверяем существование файла шаблона по указанному пути
@@ -317,8 +323,6 @@ class Template implements Template_Interface
      *          2. Если имя свойства корректно, возвращает значение свойства `$content`.
      *          3. Если имя свойства некорректно, выбрасывает исключение.
      *
-     * @callgraph
-     *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'content'.
      *                     - Если указано другое имя, выбрасывается исключение.
@@ -342,7 +346,7 @@ class Template implements Template_Interface
      * $template = new \PhotoRigma\Classes\Template();
      * echo $template->content; // Выведет содержимое свойства $content
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$content
+     * @see    PhotoRigma::Classes::Template::$content
      *         Свойство, содержащее содержимое для вывода.
      */
     public function __get(string $name): string
@@ -365,7 +369,7 @@ class Template implements Template_Interface
      *             - Для `$template_file`:
      *               - Устанавливается новое значение.
      *               - Выполняется проверка доступности файла по пути `$themes_path . $template_file` с помощью метода
-     *                 `find_template_file()`.
+     *                 `_find_template_file()`.
      *               - Если файл не найден или недоступен для чтения, выбрасывается исключение.
      *             - Для `$ins_header`:
      *               - Устанавливается новое значение без дополнительных проверок.
@@ -383,10 +387,10 @@ class Template implements Template_Interface
      *                      Пример: 'main.html'.
      *
      * @throws InvalidArgumentException Выбрасывается, если переданное имя свойства не соответствует допустимым
-     *                                  значениям. Пример сообщения: Свойство не может быть установлено | Получено:
-     *                                  [$name]
-     * @throws RuntimeException Выбрасывается, если файл по указанному пути не существует или недоступен для чтения.
-     *                                  Пример сообщения:
+     *                                  значениям. Пример сообщения:
+     *                                      Свойство не может быть установлено | Получено: [$name]
+     * @throws RuntimeException         Выбрасывается, если файл по указанному пути не существует или недоступен для
+     *                                  чтения. Пример сообщения:
      *                                      Файл недоступен для чтения | Путь: [$themes_path . $template_file]
      *
      * @note    Этот метод предназначен только для изменения свойств `$template_file` и `$ins_header`.
@@ -401,20 +405,20 @@ class Template implements Template_Interface
      * $template->template_file = 'main.html'; // Установит файл шаблона, если он доступен
      * $template->ins_header = '<meta name="description" content="Example">'; // Установит содержимое заголовка
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$themes_path
+     * @see    PhotoRigma::Classes::Template::$themes_path
      *         Свойство, содержащее путь к директории тем.
-     * @see     PhotoRigma::Classes::Template::$template_file
+     * @see    PhotoRigma::Classes::Template::$template_file
      *         Свойство, содержащее имя файла шаблона.
-     * @see     PhotoRigma::Classes::Template::$ins_header
+     * @see    PhotoRigma::Classes::Template::$ins_header
      *         Свойство, вставляемое в заголовок.
-     * @see     PhotoRigma::Classes::Template::find_template_file()
+     * @see    PhotoRigma::Classes::Template::_find_template_file()
      *         Метод, проверяющий правильность переданного имени файла шаблона.
      */
     public function __set(string $name, string $value): void
     {
         if ($name === 'template_file') {
             $this->template_file = $value;
-            $this->find_template_file();
+            $this->_find_template_file();
             $this->template_file = $this->themes_path . $value;
         } elseif ($name === 'ins_header') {
             $this->ins_header = $value;
@@ -431,8 +435,6 @@ class Template implements Template_Interface
      * @details Этот метод вызывается автоматически при использовании оператора `isset()` для проверки
      *          существования недоступного свойства. Метод возвращает `true`, если свойство существует,
      *          и `false` в противном случае.
-     *
-     * @callgraph
      *
      * @param string $name Имя свойства:
      *                     - Проверяется на существование.
@@ -463,13 +465,11 @@ class Template implements Template_Interface
     /**
      * @brief   Установка объекта, реализующего интерфейс Work_Interface, через сеттер.
      *
-     * @details Этот метод позволяет установить объект, реализующий интерфейс `Work_Interface`.
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что переданный объект реализует интерфейс `Work_Interface`.
-     *          2. Присваивает объект свойству текущего класса для дальнейшего использования.
+     * @details Этот метод позволяет установить объект, реализующий интерфейс `Work_Interface`. Присваивает объект
+     *          свойству текущего класса для дальнейшего использования.
      *
      * @param Work_Interface $work Объект, реализующий интерфейс `Work_Interface`:
-     *                               - Должен быть экземпляром класса, реализующего интерфейс `Work_Interface`.
+     *                             - Должен быть экземпляром класса, реализующего интерфейс `Work_Interface`.
      *
      * @throws InvalidArgumentException Если передан некорректный объект (не реализует интерфейс `Work_Interface`).
      *
@@ -485,8 +485,8 @@ class Template implements Template_Interface
      * $work = new \PhotoRigma\Classes\Work(); // Класс, реализующий Work_Interface
      * $template->set_work($work);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Interface
-     *          Интерфейс, которому должен соответствовать объект.
+     * @see    PhotoRigma::Classes::Work_Interface
+     *         Интерфейс, которому должен соответствовать объект.
      */
     public function set_work(Work_Interface $work): void
     {
@@ -496,10 +496,12 @@ class Template implements Template_Interface
     /**
      * @brief   Добавляет массив условий для вывода фрагментов шаблона через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _add_if_ar_internal().
+     * @details Этот публичный метод является обёрткой для защищённого метода _add_if_array_internal().
      *          Он добавляет массив данных об условиях вывода фрагментов шаблона, с возможностью рекурсивного
      *          размещения. Метод проверяет корректность входных данных и использует метод `add_if()` для добавления
      *          каждой пары ключ-значение. Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @param array        $array_data Массив условий:
      *                                 - Ключи должны содержать только латинские буквы, цифры и подчеркивания.
@@ -508,7 +510,7 @@ class Template implements Template_Interface
      *                                 Ограничения: массив не может быть пустым.
      * @param string|false $path_array Путь для рекурсивного размещения условий:
      *                                 - Должен быть строкой (например, "Массив1[0]->Массив1.0[0]") или `false` (по
-     *                                 умолчанию).
+     *                                   умолчанию).
      *                                 - Убедитесь, что путь передан в правильном формате.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
@@ -526,7 +528,7 @@ class Template implements Template_Interface
      *                                        Некорректное значение массива | Значение: [значение]
      *
      * @note    Этот метод является точкой входа для добавления условий вывода фрагментов шаблона. Все проверки и
-     *          обработка выполняются в защищённом методе _add_if_ar_internal().
+     *          обработка выполняются в защищённом методе _add_if_array_internal().
      *
      * @warning Метод чувствителен к параметру `$path_array`. Убедитесь, что он передан в правильном формате (строка
      *          или `false`). Также убедитесь, что массив данных содержит только допустимые ключи и булевы значения.
@@ -540,15 +542,15 @@ class Template implements Template_Interface
      *     'SHOW_HEADER' => true,
      *     'SHOW_FOOTER' => false
      * ];
-     * $object->add_if_ar($data);
-     * $object->add_if_ar($data, 'Массив1[0]->Массив1.0[0]');
+     * $object->add_if_array($data);
+     * $object->add_if_array($data, 'Массив1[0]->Массив1.0[0]');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_add_if_ar_internal()
-     *          Защищённый метод, реализующий основную логику добавления условий вывода фрагментов шаблона.
+     * @see    PhotoRigma::Classes::Template::_add_if_array_internal()
+     *         Защищённый метод, реализующий основную логику добавления условий вывода фрагментов шаблона.
      */
-    public function add_if_ar(array $array_data, string|false $path_array = false): void
+    public function add_if_array(array $array_data, string|false $path_array = false): void
     {
-        $this->_add_if_ar_internal($array_data, $path_array);
+        $this->_add_if_array_internal($array_data, $path_array);
     }
 
     /**
@@ -562,7 +564,7 @@ class Template implements Template_Interface
      *             подчеркивания) и значения (булево значение).
      *          4. Добавляет каждую пару ключ-значение в шаблон с помощью метода `add_if()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод-редирект `add_if_ar()`.
+     *          Основная логика вызывается через публичный метод-редирект `add_if_array()`.
      *
      * @callergraph
      * @callgraph
@@ -592,16 +594,16 @@ class Template implements Template_Interface
      *          формате (строка или `false`). Также убедитесь, что массив данных содержит только допустимые ключи и
      *          булевы значения. Некорректные данные могут привести к выбросу исключения.
      *
-     * Пример использования метода _add_if_ar_internal():
+     * Пример использования метода _add_if_array_internal():
      * @code
      * // Добавление условий без указания пути
-     * $this->_add_if_ar_internal([
+     * $this->_add_if_array_internal([
      *     'SHOW_HEADER' => true,
      *     'SHOW_FOOTER' => false
      * ]);
      *
      * // Добавление условий с указанием пути
-     * $this->_add_if_ar_internal(
+     * $this->_add_if_array_internal(
      *     [
      *         'SHOW_HEADER' => true,
      *         'SHOW_FOOTER' => false
@@ -609,12 +611,12 @@ class Template implements Template_Interface
      *     'Массив1[0]->Массив1.0[0]'
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::add_if()
-     *          Метод, используемый для добавления отдельных условий.
-     * @see     PhotoRigma::Classes::Template::add_if_ar()
-     *          Метод, для публичного доступа к методу _add_if_ar_internal().
+     * @see    PhotoRigma::Classes::Template::_add_if_internal()
+     *         Метод, используемый для добавления отдельных условий.
+     * @see    PhotoRigma::Classes::Template::add_if_array()
+     *         Метод, для публичного доступа к методу _add_if_array_internal().
      */
-    protected function _add_if_ar_internal(array $array_data, string|false $path_array = false): void
+    protected function _add_if_array_internal(array $array_data, string|false $path_array = false): void
     {
         // Проверка на пустой массив
         if (empty($array_data)) {
@@ -642,7 +644,7 @@ class Template implements Template_Interface
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: $value"
                 );
             }
-            $this->add_if($key, $value, $path_array);
+            $this->_add_if_internal($key, $value, $path_array);
         }
     }
 
@@ -654,6 +656,8 @@ class Template implements Template_Interface
      *          Метод проверяет корректность входных данных и добавляет условие в массив `block_if` или объекты в
      *          зависимости от пути. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param string       $name       Название условия:
      *                                 - Должно содержать только латинские буквы, цифры и подчеркивания.
      *                                 - Пример: "SHOW_HEADER".
@@ -663,7 +667,7 @@ class Template implements Template_Interface
      *                                 - Пример: true.
      * @param string|false $path_array Путь для рекурсивного размещения условия:
      *                                 - Должен быть строкой (например, "Массив1[0]->Массив1.0[0]") или `false` (по
-     *                                 умолчанию).
+     *                                   умолчанию).
      *                                 - Убедитесь, что путь передан в правильном формате.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
@@ -676,9 +680,9 @@ class Template implements Template_Interface
      *                                  - Формат `next_path` некорректен (не строка и не `false`).
      *                                    Пример сообщения:
      *                                        Некорректный формат next_path | Ожидается строка или FALSE
-     * @throws RuntimeException Выбрасывается, если результат метода `test_is_object()` некорректен.
+     * @throws RuntimeException         Выбрасывается, если результат метода `_test_is_object()` некорректен.
      *                                  Пример сообщения:
-     *                                      Некорректный результат test_is_object | Передавался путь: [путь]
+     *                                      Некорректный результат _test_is_object | Передавался путь: [путь]
      *
      * @note    Этот метод является точкой входа для добавления условий вывода фрагментов шаблона. Все проверки и
      *          обработка выполняются в защищённом методе _add_if_internal().
@@ -694,8 +698,8 @@ class Template implements Template_Interface
      * $object->add_if('SHOW_HEADER', true);
      * $object->add_if('SHOW_FOOTER', false, 'Массив1[0]->Массив1.0[0]');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_add_if_internal()
-     *          Защищённый метод, реализующий основную логику добавления условий вывода фрагментов шаблона.
+     * @see    PhotoRigma::Classes::Template::_add_if_internal()
+     *         Защищённый метод, реализующий основную логику добавления условий вывода фрагментов шаблона.
      */
     public function add_if(string $name, bool $value, string|false $path_array = false): void
     {
@@ -707,12 +711,12 @@ class Template implements Template_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет корректность имени условия (только латинские буквы, цифры и подчеркивания). Если имя
-     *          некорректно, выбрасывается исключение.
+     *             некорректно, выбрасывается исключение.
      *          2. Проверяет формат пути (`$path_array`), если он указан. Путь должен быть строкой или `false`.
      *          3. Если путь не указан, добавляет условие в массив `block_if`. Если путь указан, рекурсивно добавляет
-     *          условие в объекты с использованием метода `test_is_object()`. Этот метод является защищенным и
-     *          предназначен для использования внутри класса или его наследников. Основная логика вызывается через
-     *          публичный метод-редирект `add_if()`.
+     *             условие в объекты с использованием метода `_test_is_object()`. Этот метод является защищенным и
+     *             предназначен для использования внутри класса или его наследников. Основная логика вызывается через
+     *             публичный метод-редирект `add_if()`.
      *
      * @callergraph
      * @callgraph
@@ -736,14 +740,13 @@ class Template implements Template_Interface
      *                                  - Формат `next_path` некорректен (не строка и не `false`).
      *                                    Пример сообщения:
      *                                        Некорректный формат next_path | Ожидается строка или FALSE
-     * @throws RuntimeException Выбрасывается, если результат метода `test_is_object()` некорректен.
+     * @throws RuntimeException         Выбрасывается, если результат метода `_test_is_object()` некорректен.
      *                                  Пример сообщения:
-     *                                      Некорректный результат test_is_object | Передавался путь: [путь]
+     *                                      Некорректный результат _test_is_object | Передавался путь: [путь]
      *
      * @warning Метод особенно чувствителен к параметру `$path_array`. Убедитесь, что он передается в правильном
-     *          формате
-     *          (строка или `false`). Также убедитесь, что имя условия содержит только допустимые символы. Некорректные
-     *          данные могут привести к выбросу исключения.
+     *          формате (строка или `false`). Также убедитесь, что имя условия содержит только допустимые символы.
+     *          Некорректные данные могут привести к выбросу исключения.
      *
      * Пример использования метода _add_if_internal():
      * @code
@@ -757,14 +760,14 @@ class Template implements Template_Interface
      *     'Массив1[0]->Массив1.0[0]'
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$block_if
-     *          Свойство, содержащее массив условий.
-     * @see     PhotoRigma::Classes::Template::$block_object
-     *          Свойство, содержащее объекты для рекурсивного размещения условий.
-     * @see     PhotoRigma::Classes::Template::test_is_object()
-     *          Метод, используемый для разбора пути.
-     * @see     PhotoRigma::Classes::Template::add_if()
-     *          Метод, для публичного доступа к методу _add_if_internal().
+     * @see    PhotoRigma::Classes::Template::$block_if
+     *         Свойство, содержащее массив условий.
+     * @see    PhotoRigma::Classes::Template::$block_object
+     *         Свойство, содержащее объекты для рекурсивного размещения условий.
+     * @see    PhotoRigma::Classes::Template::_test_is_object()
+     *         Метод, используемый для разбора пути.
+     * @see    PhotoRigma::Classes::Template::add_if()
+     *         Метод, для публичного доступа к методу _add_if_internal().
      */
     protected function _add_if_internal(string $name, bool $value, string|false $path_array = false): void
     {
@@ -787,10 +790,10 @@ class Template implements Template_Interface
             $this->block_if['IF_' . strtoupper($name)] = $value;
         } else {
             // Разбираем путь и проверяем результат
-            $parsed_path = $this->test_is_object($path_array);
+            $parsed_path = $this->_test_is_object($path_array);
             if (!isset($parsed_path['current'], $parsed_path['index'])) {
                 throw new RuntimeException(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: $path_array"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат _test_is_object | Передавался путь: $path_array"
                 );
             }
 
@@ -802,7 +805,7 @@ class Template implements Template_Interface
             }
 
             // Рекурсивно добавляем условие
-            $this->block_object[$parsed_path['current']][$parsed_path['index']]->add_if(
+            $this->block_object[$parsed_path['current']][$parsed_path['index']]->_add_if_internal(
                 $name,
                 $value,
                 $parsed_path['next_path']
@@ -824,8 +827,8 @@ class Template implements Template_Interface
      *          4. Возвращает массив с текущим именем объекта, индексом и остатком пути.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
-     * @callgraph
      *
      * @param string $path_array Путь, по которому рекурсивно необходимо создать объект-массив.
      *                           Должен быть строкой в формате: `ИМЯ_ОБЪЕКТА[ИНДЕКС]->ИМЯ_ОБЪЕКТА.ИНДЕКС[ИНДЕКС]`.
@@ -835,9 +838,9 @@ class Template implements Template_Interface
      *                           Пример: 'BLOCK_ARRAY[0]->BLOCK_ARRAY.0[1]'.
      *
      * @return array Массив с ключами:
-     *               - `'current'`: имя объекта (строка).
-     *               - `'index'`: порядковый номер в массиве (целое число).
-     *               - `'next_path'`: остаток пути (строка или `false`, если путь полностью разобран).
+     *               - 'current':   имя объекта (строка).
+     *               - 'index':     порядковый номер в массиве (целое число).
+     *               - 'next_path': остаток пути (строка или `false`, если путь полностью разобран).
      *
      * @throws InvalidArgumentException Выбрасывается, если путь некорректен:
      *                                  - Имя объекта содержит недопустимые символы.
@@ -858,17 +861,17 @@ class Template implements Template_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $result = $this->test_is_object('BLOCK_ARRAY[0]->BLOCK_ARRAY.0[1]');
+     * $result = $this->_test_is_object('BLOCK_ARRAY[0]->BLOCK_ARRAY.0[1]');
      * if ($result['next_path'] === false) {
      *     echo "Путь полностью разобран.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Template
+     * @see    PhotoRigma::Classes::Template
      *         Класс, используемый для создания новых объектов.
-     * @see     PhotoRigma::Classes::Template::$block_object
+     * @see    PhotoRigma::Classes::Template::$block_object
      *         Свойство, содержащее массив объектов.
      */
-    private function test_is_object(string $path_array): array
+    private function _test_is_object(string $path_array): array
     {
         // Разбор пути
         $path_parts = explode('->', $path_array);
@@ -911,19 +914,21 @@ class Template implements Template_Interface
     /**
      * @brief   Добавляет массив данных о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _add_case_ar_internal().
+     * @details Этот публичный метод является обёрткой для защищённого метода _add_case_array_internal().
      *          Он добавляет массив данных о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивного
      *          размещения. Метод проверяет корректность входных данных и использует метод `add_case()` для добавления
      *          каждой пары ключ-значение. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param array        $array_data Массив данных о выборе блока:
      *                                 - Ключи и значения должны содержать только латинские буквы, цифры и
-     *                                 подчеркивания.
+     *                                   подчеркивания.
      *                                 - Пример: ["BLOCK_TYPE" => "HEADER", "BLOCK_STYLE" => "COMPACT"].
      *                                 Ограничения: массив не может быть пустым.
      * @param string|false $path_array Путь для рекурсивного размещения условия:
      *                                 - Должен быть строкой (например, "Массив1[0]->Массив1.0[0]") или `false` (по
-     *                                 умолчанию).
+     *                                   умолчанию).
      *                                 - Убедитесь, что путь передан в правильном формате.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
@@ -941,7 +946,7 @@ class Template implements Template_Interface
      *                                        Некорректное значение массива | Значение: [значение]
      *
      * @note    Этот метод является точкой входа для добавления данных о выборе блока. Все проверки и обработка
-     *          выполняются в защищённом методе _add_case_ar_internal().
+     *          выполняются в защищённом методе _add_case_array_internal().
      *
      * @warning Метод чувствителен к параметру `$path_array`. Убедитесь, что он передан в правильном формате (строка
      *          или `false`). Также убедитесь, что массив данных содержит только допустимые ключи и значения.
@@ -955,15 +960,15 @@ class Template implements Template_Interface
      *     'BLOCK_TYPE' => 'HEADER',
      *     'BLOCK_STYLE' => 'COMPACT'
      * ];
-     * $object->add_case_ar($data);
-     * $object->add_case_ar($data, 'Массив1[0]->Массив1.0[0]');
+     * $object->add_case_array($data);
+     * $object->add_case_array($data, 'Массив1[0]->Массив1.0[0]');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_add_case_ar_internal()
-     *          Защищённый метод, реализующий основную логику добавления данных о выборе блока.
+     * @see    PhotoRigma::Classes::Template::_add_case_array_internal()
+     *         Защищённый метод, реализующий основную логику добавления данных о выборе блока.
      */
-    public function add_case_ar(array $array_data, string|bool $path_array = false): void
+    public function add_case_array(array $array_data, string|bool $path_array = false): void
     {
-        $this->_add_case_ar_internal($array_data, $path_array);
+        $this->_add_case_array_internal($array_data, $path_array);
     }
 
     /**
@@ -977,7 +982,7 @@ class Template implements Template_Interface
      *             и подчеркивания). Если ключ или значение некорректны, выбрасывается исключение.
      *          4. Добавляет каждую пару ключ-значение в шаблон с помощью метода `add_case()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод-редирект `add_case_ar()`.
+     *          Основная логика вызывается через публичный метод-редирект `add_case_array()`.
      *
      * @callergraph
      * @callgraph
@@ -1007,16 +1012,16 @@ class Template implements Template_Interface
      *          (строка или `false`). Также убедитесь, что массив данных содержит только допустимые ключи и значения.
      *          Некорректные данные могут привести к выбросу исключения.
      *
-     * Пример использования метода _add_case_ar_internal():
+     * Пример использования метода _add_case_array_internal():
      * @code
      * // Добавление данных без указания пути
-     * $this->_add_case_ar_internal([
+     * $this->_add_case_array_internal([
      *     'BLOCK_TYPE' => 'HEADER',
      *     'BLOCK_STYLE' => 'COMPACT'
      * ]);
      *
      * // Добавление данных с указанием пути
-     * $this->_add_case_ar_internal(
+     * $this->_add_case_array_internal(
      *     [
      *         'BLOCK_TYPE' => 'HEADER',
      *         'BLOCK_STYLE' => 'COMPACT'
@@ -1024,12 +1029,12 @@ class Template implements Template_Interface
      *     'Массив1[0]->Массив1.0[0]'
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::add_case()
-     *          Метод, используемый для добавления отдельных условий выбора блока.
-     * @see     PhotoRigma::Classes::Template::add_case_ar()
-     *          Метод, предоставляющий публичный доступ к методу _add_case_ar_internal().
+     * @see    PhotoRigma::Classes::Template::_add_case_internal()
+     *         Метод, используемый для добавления отдельных условий выбора блока.
+     * @see    PhotoRigma::Classes::Template::add_case_array()
+     *         Метод, предоставляющий публичный доступ к методу _add_case_array_internal().
      */
-    protected function _add_case_ar_internal(array $array_data, string|bool $path_array = false): void
+    protected function _add_case_array_internal(array $array_data, string|bool $path_array = false): void
     {
         // Проверка на пустой массив
         if (empty($array_data)) {
@@ -1057,7 +1062,7 @@ class Template implements Template_Interface
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: $value"
                 );
             }
-            $this->add_case($key, $value, $path_array);
+            $this->_add_case_internal($key, $value, $path_array);
         }
     }
 
@@ -1069,6 +1074,8 @@ class Template implements Template_Interface
      *          размещения. Метод проверяет корректность входных данных и добавляет условие в массив `block_case` или
      *          объекты в зависимости от пути. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param string       $name       Название условия:
      *                                 - Должно содержать только латинские буквы, цифры и подчеркивания.
      *                                 - Пример: "BLOCK_TYPE".
@@ -1079,7 +1086,7 @@ class Template implements Template_Interface
      *                                 Ограничения: не может быть пустым или содержать недопустимые символы.
      * @param string|false $path_array Путь для рекурсивного размещения условия:
      *                                 - Должен быть строкой (например, "Массив1[0]->Массив1.0[0]") или `false` (по
-     *                                 умолчанию).
+     *                                   умолчанию).
      *                                 - Убедитесь, что путь передан в правильном формате.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
@@ -1095,9 +1102,9 @@ class Template implements Template_Interface
      *                                  - Формат `next_path` некорректен (не строка и не `false`).
      *                                    Пример сообщения:
      *                                        Некорректный формат next_path | Ожидается строка или FALSE
-     * @throws RuntimeException Выбрасывается, если результат метода `test_is_object()` некорректен.
+     * @throws RuntimeException         Выбрасывается, если результат метода `_test_is_object()` некорректен.
      *                                  Пример сообщения:
-     *                                      Некорректный результат test_is_object | Передавался путь: [путь]
+     *                                      Некорректный результат _test_is_object | Передавался путь: [путь]
      *
      * @note    Этот метод является точкой входа для добавления данных о выборе блока. Все проверки и обработка
      *          выполняются в защищённом методе _add_case_internal().
@@ -1113,8 +1120,8 @@ class Template implements Template_Interface
      * $object->add_case('BLOCK_TYPE', 'HEADER');
      * $object->add_case('BLOCK_TYPE', 'FOOTER', 'Массив1[0]->Массив1.0[0]');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_add_case_internal()
-     *          Защищённый метод, реализующий основную логику добавления данных о выборе блока.
+     * @see    PhotoRigma::Classes::Template::_add_case_internal()
+     *         Защищённый метод, реализующий основную логику добавления данных о выборе блока.
      */
     public function add_case(string $name, string $value, string|false $path_array = false): void
     {
@@ -1127,14 +1134,14 @@ class Template implements Template_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет корректность имени условия (только латинские буквы, цифры и подчеркивания). Если имя
-     *          некорректно, выбрасывается исключение.
+     *             некорректно, выбрасывается исключение.
      *          2. Проверяет корректность значения условия (только латинские буквы, цифры и подчеркивания). Если
-     *          значение некорректно, выбрасывается исключение.
+     *             значение некорректно, выбрасывается исключение.
      *          3. Проверяет формат пути (`$path_array`), если он указан. Путь должен быть строкой или `false`.
      *          4. Если путь не указан, добавляет условие в массив `block_case`. Если путь указан, рекурсивно добавляет
-     *          условие в объекты с использованием метода `test_is_object()`. Этот метод является защищенным и
-     *          предназначен для использования внутри класса или его наследников. Основная логика вызывается через
-     *          публичный метод-редирект `add_case()`.
+     *             условие в объекты с использованием метода `_test_is_object()`. Этот метод является защищенным и
+     *             предназначен для использования внутри класса или его наследников. Основная логика вызывается через
+     *             публичный метод-редирект `add_case()`.
      *
      * @callergraph
      * @callgraph
@@ -1163,14 +1170,13 @@ class Template implements Template_Interface
      *                                  - Формат `next_path` некорректен (не строка и не `false`).
      *                                    Пример сообщения:
      *                                        Некорректный формат next_path | Ожидается строка или FALSE
-     * @throws RuntimeException Выбрасывается, если результат метода `test_is_object()` некорректен.
+     * @throws RuntimeException         Выбрасывается, если результат метода `_test_is_object()` некорректен.
      *                                  Пример сообщения:
-     *                                      Некорректный результат test_is_object | Передавался путь: [путь]
+     *                                      Некорректный результат _test_is_object | Передавался путь: [путь]
      *
      * @warning Метод особенно чувствителен к параметру `$path_array`. Убедитесь, что он передается в правильном
-     *          формате
-     *          (строка или `false`). Также убедитесь, что имя и значение условия содержат только допустимые символы.
-     *          Некорректные данные могут привести к выбросу исключения.
+     *          формате (строка или `false`). Также убедитесь, что имя и значение условия содержат только допустимые
+     *          символы. Некорректные данные могут привести к выбросу исключения.
      *
      * Пример использования метода _add_case_internal():
      * @code
@@ -1184,14 +1190,14 @@ class Template implements Template_Interface
      *     'Массив1[0]->Массив1.0[0]'
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$block_case
-     *          Свойство, содержащее массив данных о выборе блока.
-     * @see     PhotoRigma::Classes::Template::$block_object
-     *          Свойство, содержащее объекты для рекурсивного размещения условий.
-     * @see     PhotoRigma::Classes::Template::test_is_object()
-     *          Метод, используемый для разбора пути.
-     * @see     PhotoRigma::Classes::Template::add_case()
-     *          Метод, предоставляющий публичный доступ к методу _add_case_internal().
+     * @see    PhotoRigma::Classes::Template::$block_case
+     *         Свойство, содержащее массив данных о выборе блока.
+     * @see    PhotoRigma::Classes::Template::$block_object
+     *         Свойство, содержащее объекты для рекурсивного размещения условий.
+     * @see    PhotoRigma::Classes::Template::_test_is_object()
+     *         Метод, используемый для разбора пути.
+     * @see    PhotoRigma::Classes::Template::add_case()
+     *         Метод, предоставляющий публичный доступ к методу _add_case_internal().
      */
     protected function _add_case_internal(string $name, string $value, string|false $path_array = false): void
     {
@@ -1221,10 +1227,10 @@ class Template implements Template_Interface
             $this->block_case['SELECT_' . strtoupper($name)] = strtoupper($value);
         } else {
             // Разбираем путь и проверяем результат
-            $parsed_path = $this->test_is_object($path_array);
+            $parsed_path = $this->_test_is_object($path_array);
             if (!isset($parsed_path['current'], $parsed_path['index'])) {
                 throw new RuntimeException(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: $path_array"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат _test_is_object | Передавался путь: $path_array"
                 );
             }
 
@@ -1236,7 +1242,7 @@ class Template implements Template_Interface
             }
 
             // Рекурсивно добавляем условие
-            $this->block_object[$parsed_path['current']][$parsed_path['index']]->add_case(
+            $this->block_object[$parsed_path['current']][$parsed_path['index']]->_add_case_internal(
                 $name,
                 $value,
                 $parsed_path['next_path']
@@ -1252,6 +1258,8 @@ class Template implements Template_Interface
      *          Он формирует заголовок HTML-страницы, включая меню, метаданные и блоки контента, на основе переданных
      *          параметров. Метод проверяет корректность входных данных, генерирует данные для меню и фотографий, и
      *          добавляет контент в начало страницы. Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @param string $title      Дополнительное название страницы для тега `<title>`:
      *                           - Может быть пустым. Если пустой, используется значение из конфигурации.
@@ -1272,20 +1280,20 @@ class Template implements Template_Interface
      *                                    Пример сообщения:
      *                                        Некорректный параметр $action | Значение: [значение]
      *                                  - Параметр `$csrf_token` некорректен (пустой или содержит недопустимые
-     *                                  символы).
+     *                                    символы).
      *                                    Пример сообщения:
      *                                        Некорректный параметр $csrf_token | Значение: [значение]
-     * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     * @throws RuntimeException         Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
      *                                  Пример сообщения:
      *                                        Ошибка при обработке шаблона | Файл: header.html
-     * @throws Exception Выбрасывается методом `create_photo()` в случае ошибок.
+     * @throws Exception                Выбрасывается методом `create_photo()` в случае ошибок.
      *                                  Пример сообщения:
      *                                        Ошибка при генерации данных фотографий
      *
      * @note    Метод использует шаблон `header.html` для формирования заголовка. Убедитесь, что шаблон существует и
      *          доступен. Также используются следующие константы:
      *          - `LOCALHOST_SERVER`: Указывает, является ли сервер локальным. Если `true`, JS и CSS загружаются
-     *          локально, чтобы избежать проблем с доступом в интернет. По умолчанию: `false`.
+     *            локально, чтобы избежать проблем с доступом в интернет. По умолчанию: `false`.
      *          - `SHORT_MENU`: Константа для формирования краткого меню из базы данных. Значение: `0`.
      *          - `LONG_MENU`: Константа для формирования полного меню из базы данных. Значение: `1`.
      *
@@ -1299,8 +1307,8 @@ class Template implements Template_Interface
      * $object = new \PhotoRigma\Classes\Template('https://example.com', '/var/www/example', 'default');
      * $object->page_header('Главная страница', 'home', 'abc123xyz');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_page_header_internal()
-     *          Защищённый метод, реализующий основную логику формирования заголовка HTML-страницы.
+     * @see    PhotoRigma::Classes::Template::_page_header_internal()
+     *         Защищённый метод, реализующий основную логику формирования заголовка HTML-страницы.
      */
     public function page_header(string $title, string $action, string $csrf_token): void
     {
@@ -1321,8 +1329,8 @@ class Template implements Template_Interface
      *             - Для длинного меню добавляет название блока, ссылки и проверяет наличие URL.
      *             - Для блоков с последними фотографиями добавляет данные о фотографии, категории и пользователе.
      *          5. Устанавливает файл шаблона и создает контент, который добавляется в начало текущего содержимого
-     *          страницы. Этот метод является защищенным и предназначен для использования внутри класса или его
-     *          наследников. Основная логика вызывается через публичный метод-редирект `page_header()`.
+     *             страницы. Этот метод является защищенным и предназначен для использования внутри класса или его
+     *             наследников. Основная логика вызывается через публичный метод-редирект `page_header()`.
      *
      * @callergraph
      * @callgraph
@@ -1345,10 +1353,10 @@ class Template implements Template_Interface
      *                                  - Параметр `$action` некорректен (пустой или содержит недопустимые символы).
      *                                    Пример сообщения:
      *                                        Некорректный параметр $action | Значение: [значение]
-     * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     * @throws RuntimeException         Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
      *                                  Пример сообщения:
      *                                        Ошибка при обработке шаблона | Файл: header.html
-     * @throws Exception Выбрасывается методом `create_photo()` в случае ошибок.
+     * @throws Exception                Выбрасывается методом `create_photo()` в случае ошибок.
      *                                  Пример сообщения:
      *                                        Ошибка при генерации данных фотографий
      *
@@ -1356,7 +1364,7 @@ class Template implements Template_Interface
      *          доступен.
      *          Также используются следующие константы:
      *          - `LOCALHOST_SERVER`: Указывает, является ли сервер локальным. Если `true`, JS и CSS загружаются
-     *          локально, чтобы избежать проблем с доступом в интернет. По умолчанию: `false`.
+     *            локально, чтобы избежать проблем с доступом в интернет. По умолчанию: `false`.
      *          - `SHORT_MENU`: Константа для формирования краткого меню из базы данных. Значение: `0`.
      *          - `LONG_MENU`: Константа для формирования полного меню из базы данных. Значение: `1`.
      *          Эти константы позволяют гибко настраивать поведение метода в зависимости от требований системы.
@@ -1370,22 +1378,26 @@ class Template implements Template_Interface
      * // Формирование заголовка страницы
      * $this->_page_header_internal('Главная страница', 'home', 'abc123xyz');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$content
-     *          Свойство, содержащее текущее содержимое страницы.
-     * @see     PhotoRigma::Classes::Template::add_if()
-     *          Метод, используемый для добавления условий вывода фрагментов шаблона.
-     * @see     PhotoRigma::Classes::Template::add_case()
-     *          Метод, используемый для выбора блоков для вывода фрагментов шаблона.
-     * @see     PhotoRigma::Classes::Template::create_template()
-     *          Метод, используемый для создания контента из шаблона.
-     * @see     PhotoRigma::Classes::Work::create_menu()
-     *          Метод, используемый для генерации данных меню.
-     * @see     PhotoRigma::Classes::Work::create_photo()
-     *          Метод, используемый для генерации данных фотографий.
-     * @see     Work::clean_field()
-     *          Функция, используемая для очистки данных.
-     * @see     PhotoRigma::Classes::Template::page_header()
-     *          Метод, предоставляющий публичный доступ к методу _page_header_internal().
+     * @see    PhotoRigma::Classes::Template::$content
+     *         Свойство, содержащее текущее содержимое страницы.
+     * @see    PhotoRigma::Classes::Template::add_if()
+     *         Метод, используемый для добавления условий вывода фрагментов шаблона.
+     * @see    PhotoRigma::Classes::Template::add_case()
+     *         Метод, используемый для выбора блоков для вывода фрагментов шаблона.
+     * @see    PhotoRigma::Classes::Template::add_string_array()
+     *         Метод, используемый для передачи массива строк в шаблон
+     * @see    PhotoRigma::Classes::Template::add_string()
+     *         Метод, используемый для передачи строк в шаблон
+     * @see    PhotoRigma::Classes::Template::create_template()
+     *         Метод, используемый для создания контента из шаблона.
+     * @see    PhotoRigma::Classes::Work::create_menu()
+     *         Метод, используемый для генерации данных меню.
+     * @see    PhotoRigma::Classes::Work::create_photo()
+     *         Метод, используемый для генерации данных фотографий.
+     * @see    Work::clean_field()
+     *         Функция, используемая для очистки данных.
+     * @see    PhotoRigma::Classes::Template::page_header()
+     *         Метод, предоставляющий публичный доступ к методу _page_header_internal().
      */
     protected function _page_header_internal(string $title, string $action, string $csrf_token): void
     {
@@ -1409,7 +1421,7 @@ class Template implements Template_Interface
         $header_template->add_if('LOCALHOST_SERVER', LOCALHOST_SERVER);
 
         // Добавление строковых данных в шаблон
-        $header_template->add_string_ar([
+        $header_template->add_string_array([
             'TITLE'             => empty($title) ? $this->work->config['title_name'] : Work::clean_field(
                 $this->work->config['title_name']
             ) . ' - ' . Work::clean_field($title),
@@ -1432,7 +1444,7 @@ class Template implements Template_Interface
         if ($short_menu) {
             $header_template->add_if('SHORT_MENU', true);
             foreach ($short_menu as $id => $value) {
-                $header_template->add_string_ar([
+                $header_template->add_string_array([
                     'U_SHORT_MENU' => $value['url'] ?? '',
                     'L_SHORT_MENU' => $value['name'],
                 ], 'SHORT_MENU[' . $id . ']');
@@ -1451,7 +1463,7 @@ class Template implements Template_Interface
                 'LEFT_PANEL[0]'
             );
             foreach ($long_menu as $id => $value) {
-                $header_template->add_string_ar([
+                $header_template->add_string_array([
                     'U_LONG_MENU' => $value['url'] ?? '',
                     'L_LONG_MENU' => $value['name'],
                 ], 'LEFT_PANEL[0]->LONG_MENU[' . $id . ']');
@@ -1465,7 +1477,7 @@ class Template implements Template_Interface
 
         // Обработка блока с последними фотографиями
         $header_template->add_case('LEFT_BLOCK', 'TOP_LAST_PHOTO', 'LEFT_PANEL[1]');
-        $header_template->add_string_ar([
+        $header_template->add_string_array([
             'NAME_BLOCK'             => $top_photo['name_block'],
             'PHOTO_WIDTH'            => (string)$top_photo['width'],
             'PHOTO_HEIGHT'           => (string)$top_photo['height'],
@@ -1486,7 +1498,7 @@ class Template implements Template_Interface
 
         // Обработка блока с последними фотографиями (второй блок)
         $header_template->add_case('LEFT_BLOCK', 'TOP_LAST_PHOTO', 'LEFT_PANEL[2]');
-        $header_template->add_string_ar([
+        $header_template->add_string_array([
             'NAME_BLOCK'             => $last_photo['name_block'],
             'PHOTO_WIDTH'            => (string)$last_photo['width'],
             'PHOTO_HEIGHT'           => (string)$last_photo['height'],
@@ -1515,10 +1527,12 @@ class Template implements Template_Interface
     /**
      * @brief   Добавляет массив строковых данных для замены в шаблоне через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода _add_string_ar_internal().
+     * @details Этот публичный метод является обёрткой для защищённого метода _add_string_array_internal().
      *          Он добавляет массив строковых данных для замены в шаблоне, с возможностью рекурсивного размещения.
      *          Метод проверяет корректность входных данных и использует метод `add_string()` для добавления каждой
      *          пары ключ-значение. Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @param array        $array_data Массив данных:
      *                                 - Ключи должны содержать только латинские буквы, цифры и подчеркивания.
@@ -1527,7 +1541,7 @@ class Template implements Template_Interface
      *                                 Ограничения: массив не может быть пустым.
      * @param string|false $path_array Путь для рекурсивного размещения переменных:
      *                                 - Должен быть строкой (например, "Массив1[0]->Массив1.0[0]") или `false` (по
-     *                                 умолчанию).
+     *                                   умолчанию).
      *                                 - Убедитесь, что путь передан в правильном формате.
      *
      * @throws InvalidArgumentException Выбрасывается, если:
@@ -1545,8 +1559,7 @@ class Template implements Template_Interface
      *                                        Некорректное значение массива | Значение: [ключ] = [значение]
      *
      * @note    Этот метод является точкой входа для добавления строковых данных. Все проверки и обработка выполняются
-     *          в
-     *          защищённом методе _add_string_ar_internal().
+     *          в защищённом методе _add_string_array_internal().
      *
      * @warning Метод чувствителен к параметру `$path_array`. Убедитесь, что он передан в правильном формате (строка
      *          или `false`). Также убедитесь, что массив данных содержит только допустимые ключи и строковые значения.
@@ -1560,15 +1573,15 @@ class Template implements Template_Interface
      *     'TITLE' => 'Welcome to the Site',
      *     'HEADER_TITLE' => 'Main Page'
      * ];
-     * $object->add_string_ar($data);
-     * $object->add_string_ar($data, 'Массив1[0]->Массив1.0[0]');
+     * $object->add_string_array($data);
+     * $object->add_string_array($data, 'Массив1[0]->Массив1.0[0]');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_add_string_ar_internal()
-     *          Защищённый метод, реализующий основную логику добавления строковых данных для замены в шаблоне.
+     * @see    PhotoRigma::Classes::Template::_add_string_array_internal()
+     *         Защищённый метод, реализующий основную логику добавления строковых данных для замены в шаблоне.
      */
-    public function add_string_ar(array $array_data, string|false $path_array = false): void
+    public function add_string_array(array $array_data, string|false $path_array = false): void
     {
-        $this->_add_string_ar_internal($array_data, $path_array);
+        $this->_add_string_array_internal($array_data, $path_array);
     }
 
     /**
@@ -1581,7 +1594,7 @@ class Template implements Template_Interface
      *             подчеркивания) и значения (строка). Если ключ или значение некорректны, выбрасывается исключение.
      *          4. Добавляет каждую пару ключ-значение в шаблон с помощью метода `add_string()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод-редирект `add_string_ar()`.
+     *          Основная логика вызывается через публичный метод-редирект `add_string_array()`.
      *
      * @callergraph
      * @callgraph
@@ -1611,16 +1624,16 @@ class Template implements Template_Interface
      *          (строка или `false`). Также убедитесь, что массив данных содержит только допустимые ключи и строковые
      *          значения. Некорректные данные могут привести к выбросу исключения.
      *
-     * Пример использования метода _add_string_ar_internal():
+     * Пример использования метода _add_string_array_internal():
      * @code
      * // Добавление данных без указания пути
-     * $this->_add_string_ar_internal([
+     * $this->_add_string_array_internal([
      *     'TITLE' => 'Welcome to the Site',
      *     'HEADER_TITLE' => 'Main Page'
      * ]);
      *
      * // Добавление данных с указанием пути
-     * $this->_add_string_ar_internal(
+     * $this->_add_string_array_internal(
      *     [
      *         'TITLE' => 'Welcome to the Site',
      *         'HEADER_TITLE' => 'Main Page'
@@ -1628,12 +1641,12 @@ class Template implements Template_Interface
      *     'Массив1[0]->Массив1.0[0]'
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::add_string()
-     *          Метод, используемый для добавления отдельных строковых переменных.
-     * @see     PhotoRigma::Classes::Template::add_string_ar()
-     *          Метод, предоставляющий публичный доступ к методу _add_string_ar_internal().
+     * @see    PhotoRigma::Classes::Template::_add_string_internal()
+     *         Метод, используемый для добавления отдельных строковых переменных.
+     * @see    PhotoRigma::Classes::Template::add_string_array()
+     *         Метод, предоставляющий публичный доступ к методу _add_string_array_internal().
      */
-    protected function _add_string_ar_internal(array $array_data, string|false $path_array = false): void
+    protected function _add_string_array_internal(array $array_data, string|false $path_array = false): void
     {
         // Проверка на пустой массив
         if (empty($array_data)) {
@@ -1661,7 +1674,7 @@ class Template implements Template_Interface
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректное значение массива | Значение: $key = $value"
                 );
             }
-            $this->add_string($key, $value, $path_array);
+            $this->_add_string_internal($key, $value, $path_array);
         }
     }
 
@@ -1672,6 +1685,8 @@ class Template implements Template_Interface
      *          Он добавляет строковую переменную для замены в шаблоне, с возможностью рекурсивного размещения.
      *          Метод проверяет корректность входных данных и добавляет переменную в массив `block_string` или объекты
      *          в зависимости от пути. Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @param string       $name       Название переменной:
      *                                 - Должно содержать только латинские буквы, цифры и подчеркивания.
@@ -1695,9 +1710,9 @@ class Template implements Template_Interface
      *                                  - Путь (`$path_array`) имеет некорректный формат (не строка и не `false`).
      *                                    Пример сообщения:
      *                                        Некорректный формат пути | Ожидается строка или FALSE
-     * @throws RuntimeException Выбрасывается, если результат метода `test_is_object()` некорректен.
+     * @throws RuntimeException         Выбрасывается, если результат метода `_test_is_object()` некорректен.
      *                                  Пример сообщения:
-     *                                      Некорректный результат test_is_object | Передавался путь: [путь]
+     *                                      Некорректный результат _test_is_object | Передавался путь: [путь]
      *
      * @note    Этот метод является точкой входа для добавления строковых переменных. Все проверки и обработка
      *          выполняются в защищённом методе _add_string_internal().
@@ -1713,8 +1728,8 @@ class Template implements Template_Interface
      * $object->add_string('TITLE', 'Welcome to the Site');
      * $object->add_string('HEADER_TITLE', 'Main Page', 'header.block');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_add_string_internal()
-     *          Защищённый метод, реализующий основную логику добавления строковых переменных для замены в шаблоне.
+     * @see    PhotoRigma::Classes::Template::_add_string_internal()
+     *         Защищённый метод, реализующий основную логику добавления строковых переменных для замены в шаблоне.
      */
     public function add_string(string $name, string $value, string|false $path_array = false): void
     {
@@ -1729,7 +1744,7 @@ class Template implements Template_Interface
      *             некорректно, выбрасывается исключение.
      *          2. Проверяет, что значение является строкой. Если значение некорректно, выбрасывается исключение.
      *          3. Если указан путь (`$path_array`), проверяет его формат (строка или `false`) и разбирает с помощью
-     *             метода `test_is_object()`. Если результат разбора некорректен, выбрасывается исключение.
+     *             метода `_test_is_object()`. Если результат разбора некорректен, выбрасывается исключение.
      *          4. Если путь не указан, добавляет переменную в массив `block_string`. Если путь указан, рекурсивно
      *             добавляет переменную в объекты.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
@@ -1757,14 +1772,13 @@ class Template implements Template_Interface
      *                                  - Путь (`$path_array`) имеет некорректный формат (не строка и не `false`).
      *                                    Пример сообщения:
      *                                        Некорректный формат пути | Ожидается строка или FALSE
-     * @throws RuntimeException Выбрасывается, если результат метода `test_is_object()` некорректен.
+     * @throws RuntimeException         Выбрасывается, если результат метода `_test_is_object()` некорректен.
      *                                  Пример сообщения:
-     *                                      Некорректный результат test_is_object | Передавался путь: [путь]
+     *                                      Некорректный результат _test_is_object | Передавался путь: [путь]
      *
      * @warning Метод особенно чувствителен к параметру `$path_array`. Убедитесь, что он передается в правильном
-     *          формате
-     *          (строка или `false`). Также убедитесь, что имя переменной и её значение содержат допустимые символы.
-     *          Некорректные данные могут привести к выбросу исключения.
+     *          формате (строка или `false`). Также убедитесь, что имя переменной и её значение содержат допустимые
+     * с        имволы. Некорректные данные могут привести к выбросу исключения.
      *
      * Пример использования метода _add_string_internal():
      * @code
@@ -1778,14 +1792,14 @@ class Template implements Template_Interface
      *     'header.block'
      * );
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$block_string
-     *          Свойство, содержащее массив строковых переменных.
-     * @see     PhotoRigma::Classes::Template::$block_object
-     *          Свойство, содержащее объекты для рекурсивного размещения переменных.
-     * @see     PhotoRigma::Classes::Template::test_is_object()
-     *          Метод, используемый для разбора пути.
-     * @see     PhotoRigma::Classes::Template::add_string()
-     *          Метод, предоставляющий публичный доступ к методу _add_string_internal().
+     * @see    PhotoRigma::Classes::Template::$block_string
+     *         Свойство, содержащее массив строковых переменных.
+     * @see    PhotoRigma::Classes::Template::$block_object
+     *         Свойство, содержащее объекты для рекурсивного размещения переменных.
+     * @see    PhotoRigma::Classes::Template::_test_is_object()
+     *         Метод, используемый для разбора пути.
+     * @see    PhotoRigma::Classes::Template::add_string()
+     *         Метод, предоставляющий публичный доступ к методу _add_string_internal().
      */
     protected function _add_string_internal(string $name, string $value, string|false $path_array = false): void
     {
@@ -1808,15 +1822,15 @@ class Template implements Template_Interface
             $this->block_string[strtoupper($name)] = $value;
         } else {
             // Разбираем путь и проверяем результат
-            $parsed_path = $this->test_is_object($path_array);
+            $parsed_path = $this->_test_is_object($path_array);
             if (!isset($parsed_path['current'], $parsed_path['index'])) {
                 throw new RuntimeException(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат test_is_object | Передавался путь: $path_array"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный результат _test_is_object | Передавался путь: $path_array"
                 );
             }
 
             // Рекурсивно добавляем переменную
-            $this->block_object[$parsed_path['current']][$parsed_path['index']]->add_string(
+            $this->block_object[$parsed_path['current']][$parsed_path['index']]->_add_string_internal(
                 $name,
                 $value,
                 $parsed_path['next_path']
@@ -1830,6 +1844,8 @@ class Template implements Template_Interface
      * @details Этот публичный метод является обёрткой для защищённого метода _create_template_internal().
      *          Он выполняет чтение файла шаблона, парсинг его содержимого и замену плейсхолдеров `{SITE_URL}` и
      *          `{THEME_URL}` на реальные значения. Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @throws RuntimeException Выбрасывается, если:
      *                          - Произошла ошибка при чтении файла шаблона.
@@ -1851,8 +1867,8 @@ class Template implements Template_Interface
      * $object = new \PhotoRigma\Classes\Template('https://example.com', '/var/www/example', 'default');
      * $object->create_template();
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_create_template_internal()
-     *          Защищённый метод, реализующий основную логику создания и обработки шаблона.
+     * @see    PhotoRigma::Classes::Template::_create_template_internal()
+     *         Защищённый метод, реализующий основную логику создания и обработки шаблона.
      */
     public function create_template(): void
     {
@@ -1868,7 +1884,7 @@ class Template implements Template_Interface
      *             пробелы, выбрасывается исключение.
      *          3. Заменяет плейсхолдеры `{SITE_URL}` и `{THEME_URL}` на реальные значения с использованием функции
      *             `Work::clean_field()`.
-     *          4. Выполняет парсинг шаблона с помощью метода `pars_template()`.
+     *          4. Выполняет парсинг шаблона с помощью метода `_pars_template()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `create_template()`.
      *
@@ -1876,12 +1892,12 @@ class Template implements Template_Interface
      * @callgraph
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Произошла ошибка при чтении файла шаблона.
-     *                                    Пример сообщения:
-     *                                        Ошибка при чтении файла шаблона | Путь: [путь]
-     *                                  - Файл шаблона пуст или содержит только пробелы.
-     *                                    Пример сообщения:
-     *                                        Файл шаблона пуст или содержит только пробелы | Путь: [путь]
+     *                          - Произошла ошибка при чтении файла шаблона.
+     *                            Пример сообщения:
+     *                                Ошибка при чтении файла шаблона | Путь: [путь]
+     *                          - Файл шаблона пуст или содержит только пробелы.
+     *                            Пример сообщения:
+     *                                Файл шаблона пуст или содержит только пробелы | Путь: [путь]
      *
      * @warning Метод чувствителен к корректности пути к файлу шаблона (`$template_file`) и его содержимому. Убедитесь,
      *          что файл существует, доступен для чтения и содержит допустимые данные.
@@ -1891,16 +1907,16 @@ class Template implements Template_Interface
      * // Создание и обработка шаблона
      * $this->_create_template_internal();
      * @endcode
-     * @see     PhotoRigma::Classes::Template::pars_template()
-     *          Метод, используемый для парсинга шаблона.
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Внешняя функция, используемая для очистки данных.
-     * @see     PhotoRigma::Classes::Template::$template_file
-     *          Свойство, содержащее путь к файлу шаблона.
-     * @see     PhotoRigma::Classes::Template::$content
-     *          Свойство, содержащее содержимое шаблона после обработки.
-     * @see     PhotoRigma::Classes::Template::create_template()
-     *          Метод, предоставляющий публичный доступ к методу _create_template_internal().
+     * @see    PhotoRigma::Classes::Template::_pars_template()
+     *         Метод, используемый для парсинга шаблона.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Внешняя функция, используемая для очистки данных.
+     * @see    PhotoRigma::Classes::Template::$template_file
+     *         Свойство, содержащее путь к файлу шаблона.
+     * @see    PhotoRigma::Classes::Template::$content
+     *         Свойство, содержащее содержимое шаблона после обработки.
+     * @see    PhotoRigma::Classes::Template::create_template()
+     *         Метод, предоставляющий публичный доступ к методу _create_template_internal().
      */
     protected function _create_template_internal(): void
     {
@@ -1918,7 +1934,7 @@ class Template implements Template_Interface
         $this->content = str_replace('{THEME_URL}', Work::clean_field($this->themes_url), $this->content);
 
         // Парсим шаблон
-        $this->pars_template();
+        $this->_pars_template();
     }
 
     /**
@@ -1930,20 +1946,21 @@ class Template implements Template_Interface
      *             - Содержимое должно быть непустой строкой.
      *             - Если содержимое некорректно, выбрасывается исключение.
      *          2. Рекурсивно обрабатывает объектные блоки (`$this->block_object`) в цикле с помощью метода
-     *          `template_object()`.
-     *          3. Обрабатывает условия вывода (`$this->block_if`) в цикле с помощью метода `template_if()`.
-     *          4. Обрабатывает выбор блоков (`$this->block_case`) в цикле с помощью метода `template_case()`.
+     *            `_template_object()`.
+     *          3. Обрабатывает условия вывода (`$this->block_if`) в цикле с помощью метода `_template_if()`.
+     *          4. Обрабатывает выбор блоков (`$this->block_case`) в цикле с помощью метода `_template_case()`.
      *          5. Заменяет строковые переменные (`$this->block_string`) в содержимом шаблона с помощью `str_replace`.
-     *          6. Модифицирует URL в содержимом с помощью метода `url_mod_rewrite()`.
+     *          6. Модифицирует URL в содержимом с помощью метода `_url_mod_rewrite()`.
      *          7. Нормализует переносы строк в содержимом с помощью регулярного выражения `/\\R+/`.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
      * @throws RuntimeException Выбрасывается, если содержимое шаблона некорректно (не является непустой строкой).
-     *                                  Пример сообщения:
-     *                                      Некорректное содержимое шаблона | Значение должно быть непустой строкой
+     *                          Пример сообщения:
+     *                              Некорректное содержимое шаблона | Значение должно быть непустой строкой
      *
      * @note    Метод выполняет комплексную обработку шаблона, включая рекурсивную обработку блоков, замену переменных,
      *          модификацию URL и нормализацию переносов строк.
@@ -1953,26 +1970,26 @@ class Template implements Template_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->pars_template();
+     * $this->_pars_template();
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$block_if
+     * @see    PhotoRigma::Classes::Template::$block_if
      *         Свойство, содержащее массив условий.
-     * @see     PhotoRigma::Classes::Template::$block_case
+     * @see    PhotoRigma::Classes::Template::$block_case
      *         Свойство, содержащее массив выбора блоков.
-     * @see     PhotoRigma::Classes::Template::$block_string
+     * @see    PhotoRigma::Classes::Template::$block_string
      *         Свойство, содержащее массив строковых переменных.
-     * @see     PhotoRigma::Classes::Template::$block_object
+     * @see    PhotoRigma::Classes::Template::$block_object
      *         Свойство, содержащее массив объектных блоков.
-     * @see     PhotoRigma::Classes::Template::template_object()
+     * @see    PhotoRigma::Classes::Template::_template_object()
      *         Метод, используемый для обработки объектных блоков.
-     * @see     PhotoRigma::Classes::Template::template_if()
+     * @see    PhotoRigma::Classes::Template::_template_if()
      *         Метод, используемый для обработки условий.
-     * @see     PhotoRigma::Classes::Template::template_case()
+     * @see    PhotoRigma::Classes::Template::_template_case()
      *         Метод, используемый для обработки выбора блоков.
-     * @see     PhotoRigma::Classes::Template::url_mod_rewrite()
+     * @see    PhotoRigma::Classes::Template::_url_mod_rewrite()
      *         Метод, используемый для модификации URL.
      */
-    private function pars_template(): void
+    private function _pars_template(): void
     {
         // Проверка, что $this->content является строкой и не пустая
         if (empty($this->content)) {
@@ -1982,22 +1999,22 @@ class Template implements Template_Interface
         }
         // Обработка блоков объектов
         foreach ($this->block_object as $key => $val) {
-            $this->template_object($key, $val);
+            $this->_template_object($key, $val);
         }
         // Обработка условий
         foreach ($this->block_if as $key => $val) {
-            $this->template_if($key, $val);
+            $this->_template_if($key, $val);
         }
         // Обработка выбора блоков
         foreach ($this->block_case as $key => $val) {
-            $this->template_case($key, $val);
+            $this->_template_case($key, $val);
         }
         // Замена строковых переменных
         foreach ($this->block_string as $key => $val) {
             $this->content = str_replace('{' . $key . '}', $val, $this->content);
         }
         // Модификация URL
-        $this->content = $this->url_mod_rewrite($this->content);
+        $this->content = $this->_url_mod_rewrite($this->content);
         // Нормализация переносов строк
         $this->content = preg_replace('/\R+/', PHP_EOL, $this->content);
     }
@@ -2015,13 +2032,14 @@ class Template implements Template_Interface
      *          3. Использует регулярное выражение с флагом `/s` (single-line mode) для поиска всех блоков, заключенных
      *             между этими тегами.
      *          4. Для каждого элемента массива `$index` проверяет, что он является объектом и имеет метод
-     *             `pars_template()`.
-     *          5. Рекурсивно обрабатывает содержимое каждого объекта с помощью метода `pars_template()`:
+     *             `_pars_template()`.
+     *          5. Рекурсивно обрабатывает содержимое каждого объекта с помощью метода `_pars_template()`:
      *             - Содержимое между тегами (`$matches[1]`) передается каждому объекту.
      *             - Результаты объединяются и заменяют найденные блоки в шаблоне.
      *          6. Если остались незакрытые или несоответствующие теги, выбрасывается исключение.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
@@ -2030,42 +2048,41 @@ class Template implements Template_Interface
      *                      `<!-- ARRAY_НАЗВАНИЕ_BEGIN -->`).
      *                      Пример: 'EXAMPLE_BLOCK'.
      * @param array  $index Индекс-блок элементов для рекурсивной замены.
-     *                      Должен быть массивом объектов, каждый из которых имеет метод `pars_template()`.
+     *                      Должен быть массивом объектов, каждый из которых имеет метод `_pars_template()`.
      *                      Пример: [$object1, $object2].
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Содержимое шаблона некорректно (не является непустой строкой).
-     *                                    Пример сообщения:
-     *                                        Некорректное содержимое шаблона | Значение должно быть непустой строкой
-     *                                  - Объекты в индексе имеют неверный формат (не являются объектами или не имеют
-     *                                  метода
-     *                                    `pars_template()`).
-     *                                    Пример сообщения:
-     *                                        Некорректный объект в индексе | ID: [$id]
-     *                                  - Остались незакрытые или несоответствующие теги после обработки.
-     *                                    Пример сообщения:
-     *                                        Ошибка обработки блока объектов | Незакрытые или несоответствующие теги
-     *                                        для ключа: [$key]
+     *                          - Содержимое шаблона некорректно (не является непустой строкой).
+     *                            Пример сообщения:
+     *                                Некорректное содержимое шаблона | Значение должно быть непустой строкой
+     *                          - Объекты в индексе имеют неверный формат (не являются объектами или не имеют метода
+     *                            `_pars_template()`).
+     *                            Пример сообщения:
+     *                                Некорректный объект в индексе | ID: [$id]
+     *                          - Остались незакрытые или несоответствующие теги после обработки.
+     *                            Пример сообщения:
+     *                                Ошибка обработки блока объектов | Незакрытые или несоответствующие теги для
+     *                                ключа: [$key]
      *
      * @note    Метод выполняет рекурсивную обработку блоков, заменяя содержимое между тегами на результаты обработки
      *          каждого объекта.
      *
      * @warning Убедитесь, что:
      *          - Содержимое шаблона (`$this->content`) является непустой строкой.
-     *          - Все элементы массива `$index` являются объектами и имеют метод `pars_template()`.
+     *          - Все элементы массива `$index` являются объектами и имеют метод `_pars_template()`.
      *          - Теги `<!-- ARRAY_НАЗВАНИЕ_BEGIN -->` и `<!-- ARRAY_НАЗВАНИЕ_END -->` правильно закрыты.
      *          Несоблюдение этих условий вызовет исключение.
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->template_object('EXAMPLE_BLOCK', $this->block_object['EXAMPLE_BLOCK']);
+     * $this->_template_object('EXAMPLE_BLOCK', $this->block_object['EXAMPLE_BLOCK']);
      * @endcode
-     * @see     PhotoRigma::Classes::Template::pars_template()
+     * @see    PhotoRigma::Classes::Template::_pars_template()
      *         Метод, используемый для рекурсивной обработки объектов.
-     * @see     PhotoRigma::Classes::Template::$content
+     * @see    PhotoRigma::Classes::Template::$content
      *         Свойство, содержащее содержимое шаблона.
      */
-    private function template_object(string $key, array $index): void
+    private function _template_object(string $key, array $index): void
     {
         // Проверка, что $this->content является строкой и не пустая
         if (empty($this->content)) {
@@ -2082,16 +2099,16 @@ class Template implements Template_Interface
         $this->content = preg_replace_callback($pattern, static function ($matches) use ($index) {
             $block_content = '';
             $temp_content = $matches[1];
-            // Проверка, что $index содержит только объекты с методом pars_template
+            // Проверка, что $index содержит только объекты с методом _pars_template
             foreach ($index as $id => $value) {
-                if (!is_object($value) || !method_exists($value, 'pars_template')) {
+                if (!is_object($value) || !method_exists($value, '_pars_template')) {
                     throw new RuntimeException(
                         __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный объект в индексе | ID: $id"
                     );
                 }
                 // Обработка содержимого для каждого объекта
                 $value->content = $temp_content;
-                $value->pars_template();
+                $value->_pars_template();
                 $block_content .= $value->content;
             }
             return $block_content;
@@ -2106,15 +2123,14 @@ class Template implements Template_Interface
 
     /**
      * @brief   Метод обрабатывает блоки условий вывода фрагментов шаблона, выбирая содержимое до `_ELSE` или после
-     *          него
-     *          в зависимости от значения условия.
+     *          него в зависимости от значения условия.
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет корректность содержимого шаблона (`$this->content`):
      *             - Содержимое должно быть непустой строкой.
      *             - Если содержимое некорректно, выбрасывается исключение.
-     *          2. Формирует ключи для поиска блоков в шаблоне: `<!-- IF_НАЗВАНИЕ_BEGIN -->`, `<!-- IF_НАЗВАНИЕ_ELSE
-     *          -->` и `<!-- IF_НАЗВАНИЕ_END -->`.
+     *          2. Формирует ключи для поиска блоков в шаблоне: `<!-- IF_НАЗВАНИЕ_BEGIN -->`,
+     *             `<!-- IF_НАЗВАНИЕ_ELSE -->` и `<!-- IF_НАЗВАНИЕ_END -->`.
      *          3. Использует регулярное выражение с флагом `/s` (single-line mode) для поиска всех блоков, заключенных
      *             между этими тегами.
      *          4. Разделяет содержимое блока на две части:
@@ -2124,10 +2140,11 @@ class Template implements Template_Interface
      *             - Если `$val` равно `true`, используется содержимое до `_ELSE` или `_END`.
      *             - Если `$val` равно `false`, используется содержимое после `_ELSE` (если есть).
      *          6. Заменяет найденные блоки в шаблоне на выбранное содержимое, удаляя лишние пробелы с помощью
-     *          `trim()`.
+     *             `trim()`.
      *          7. Если остались незакрытые или несоответствующие теги, выбрасывается исключение.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
@@ -2141,13 +2158,13 @@ class Template implements Template_Interface
      *                    Пример: `true`.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Содержимое шаблона некорректно (не является непустой строкой).
-     *                                    Пример сообщения:
-     *                                        Некорректное содержимое шаблона | Значение должно быть непустой строкой
-     *                                  - Остались незакрытые или несоответствующие теги после обработки.
-     *                                    Пример сообщения:
-     *                                        Ошибка обработки блока условий | Незакрытые или несоответствующие теги
-     *                                        для ключа: [$key]
+     *                          - Содержимое шаблона некорректно (не является непустой строкой).
+     *                            Пример сообщения:
+     *                                Некорректное содержимое шаблона | Значение должно быть непустой строкой
+     *                          - Остались незакрытые или несоответствующие теги после обработки.
+     *                            Пример сообщения:
+     *                                Ошибка обработки блока условий | Незакрытые или несоответствующие теги для
+     *                                ключа: [$key]
      *
      * @note    Метод выполняет выбор содержимого между тегами в зависимости от значения условия `$val`.
      *          Лишние пробелы в содержимом удаляются с помощью `trim()`.
@@ -2159,12 +2176,12 @@ class Template implements Template_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->template_if('IF_EXAMPLE', true);
+     * $this->_template_if('IF_EXAMPLE', true);
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$content
+     * @see    PhotoRigma::Classes::Template::$content
      *         Свойство, содержащее содержимое шаблона.
      */
-    private function template_if(string $key, bool $val): void
+    private function _template_if(string $key, bool $val): void
     {
         // Проверка, что $this->content является строкой и не пустая
         if (empty($this->content)) {
@@ -2206,8 +2223,8 @@ class Template implements Template_Interface
      *          1. Проверяет корректность содержимого шаблона (`$this->content`):
      *             - Содержимое должно быть непустой строкой.
      *             - Если содержимое некорректно, выбрасывается исключение.
-     *          2. Формирует ключи для поиска блоков в шаблоне: `<!-- SELECT_НАЗВАНИЕ_BEGIN -->` и `<!--
-     *             SELECT_НАЗВАНИЕ_END -->`.
+     *          2. Формирует ключи для поиска блоков в шаблоне: `<!-- SELECT_НАЗВАНИЕ_BEGIN -->` и
+     *             `<!-- SELECT_НАЗВАНИЕ_END -->`.
      *          3. Использует регулярное выражение с флагом `/s` (single-line mode) для поиска всех блоков, заключенных
      *             между этими тегами.
      *          4. Проверяет, что внутри блока нет вложенных блоков (вложенные блоки не допускаются).
@@ -2219,6 +2236,7 @@ class Template implements Template_Interface
      *          8. Если остались незакрытые или несоответствующие теги, выбрасывается исключение.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
@@ -2231,17 +2249,17 @@ class Template implements Template_Interface
      *                    Пример: 'VALUE1'.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Содержимое шаблона некорректно (не является непустой строкой).
-     *                                    Пример сообщения:
-     *                                        Некорректное содержимое шаблона | Значение должно быть непустой строкой
-     *                                  - Обнаружены вложенные блоки внутри `SELECT_НАЗВАНИЕ`.
-     *                                    Пример сообщения:
-     *                                        Ошибка обработки блока выбора | Вложенные блоки не допускаются для ключа:
-     *                                        [$key], значение: [$val]
-     *                                  - Остались незакрытые или несоответствующие теги после обработки.
-     *                                    Пример сообщения:
-     *                                        Ошибка обработки блока выбора | Незакрытые или несоответствующие теги для
-     *                                        ключа: [$key], значение: [$val]
+     *                          - Содержимое шаблона некорректно (не является непустой строкой).
+     *                            Пример сообщения:
+     *                                Некорректное содержимое шаблона | Значение должно быть непустой строкой
+     *                          - Обнаружены вложенные блоки внутри `SELECT_НАЗВАНИЕ`.
+     *                            Пример сообщения:
+     *                                Ошибка обработки блока выбора | Вложенные блоки не допускаются для ключа:
+     *                                [$key], значение: [$val]
+     *                          - Остались незакрытые или несоответствующие теги после обработки.
+     *                            Пример сообщения:
+     *                                Ошибка обработки блока выбора | Незакрытые или несоответствующие теги для
+     *                                ключа: [$key], значение: [$val]
      *
      * @note    Метод выполняет выбор одного из блоков `CASE_ЗНАЧЕНИЕ` или `CASE_DEFAULT` в зависимости от значения
      *          `$val`. Если блок `CASE_ЗНАЧЕНИЕ` не найден, используется блок `CASE_DEFAULT` (если он существует).
@@ -2254,12 +2272,12 @@ class Template implements Template_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->template_case('SELECT_EXAMPLE', 'VALUE1');
+     * $this->_template_case('SELECT_EXAMPLE', 'VALUE1');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$content
+     * @see    PhotoRigma::Classes::Template::$content
      *         Свойство, содержащее содержимое шаблона.
      */
-    private function template_case(string $key, string $val): void
+    private function _template_case(string $key, string $val): void
     {
         // Проверка, что $this->content является строкой и не пустая
         if (empty($this->content)) {
@@ -2338,6 +2356,7 @@ class Template implements Template_Interface
      *          5. Возвращает обработанное содержимое.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
      * @param string $content Содержимое для обработки.
@@ -2357,13 +2376,13 @@ class Template implements Template_Interface
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $processed_content = $this->url_mod_rewrite('<a href="?action=profile&id=123">Profile</a>');
+     * $processed_content = $this->_url_mod_rewrite('<a href="?action=profile&id=123">Profile</a>');
      * echo $processed_content; // Результат: <a href="profile/id_123.html">Profile</a>
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$mod_rewrite
+     * @see    PhotoRigma::Classes::Template::$mod_rewrite
      *         Свойство, определяющее, включен ли режим `mod_rewrite`.
      */
-    private function url_mod_rewrite(string $content): string
+    private function _url_mod_rewrite(string $content): string
     {
         // Проверка, включен ли mod_rewrite
         if ($this->mod_rewrite) {
@@ -2373,16 +2392,16 @@ class Template implements Template_Interface
             // Шаблоны для замены URL
             $patterns = [
                 // Пример: ?action=profile&id=123 -> profile/id_123.html
-                '/\?action=([A-Za-z0-9]+)(\&|\&)id=([0-9]+)' . $end . '/',
+                '/\?action=([A-Za-z0-9]+)([&&])id=([0-9]+)' . $end . '/',
 
-                // Пример: ?action=resend&login=user&email=user@example.com&resend=true -> resend/login=user/email=user@example.com/resend.html
-                '/\?action=([A-Za-z0-9]+)(\&|\&)login=([^"?]+)(\&|\&)email=([^"?]+)(\&|\&)resend=true' . $end . '/',
+                // Пример: ?action=resend&login=user&email=user@local.com&resend=true -> resend/login=user/email=user@local.com/resend.html
+                '/\?action=([A-Za-z0-9]+)([&&])login=([^"?]+)([&&])email=([^"?]+)([&&])resend=true' . $end . '/',
 
-                // Пример: ?action=activate&login=user&email=user@example.com&activated_code=abc123 -> activate/login=user/email=user@example.com/activated_code_abc123.html
-                '/\?action=([A-Za-z0-9]+)(\&|\&)login=([^"?]+)(\&|\&)email=([^"?]+)(\&|\&)activated_code=([A-Za-z0-9]+)' . $end . '/',
+                // Пример: ?action=activate&login=user&email=user@local.com&activated_code=abc123 -> activate/login=user/email=user@local.com/activated_code_abc123.html
+                '/\?action=([A-Za-z0-9]+)([&&])login=([^"?]+)([&&])email=([^"?]+)([&&])activated_code=([A-Za-z0-9]+)' . $end . '/',
 
-                // Пример: ?action=reset&login=user&email=user@example.com -> reset/login=user/email=user@example.com/
-                '/\?action=([A-Za-z0-9]+)(\&|\&)login=([^"?]+)(\&|\&)email=([^"?]+)' . $end . '/',
+                // Пример: ?action=reset&login=user&email=user@local.com -> reset/login=user/email=user@local.com/
+                '/\?action=([A-Za-z0-9]+)([&&])login=([^"?]+)([&&])email=([^"?]+)' . $end . '/',
 
                 // Пример: ?action=home -> home/
                 '/\?action=([A-Za-z0-9]+)' . $end . '/',
@@ -2393,11 +2412,11 @@ class Template implements Template_Interface
                 '\\1/id_\\3.html\\4',
                 // profile/id_123.html
                 '\\1/login=\\3/email=\\5/resend.html\\7',
-                // resend/login=user/email=user@example.com/resend.html
+                // resend/login=user/email=user@local.com/resend.html
                 '\\1/login=\\3/email=\\5/activated_code_\\6.html\\7',
-                // activate/login=user/email=user@example.com/activated_code_abc123.html
+                // activate/login=user/email=user@local.com/activated_code_abc123.html
                 '\\1/login=\\3/email=\\5/\\6',
-                // reset/login=user/email=user@example.com/
+                // reset/login=user/email=user@local.com/
                 '\\1/\\2',
                 // home/
             ];
@@ -2417,9 +2436,11 @@ class Template implements Template_Interface
      *          фотографию. Метод проверяет корректность входных данных, генерирует необходимые данные и добавляет
      *          контент в конец страницы. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param int    $login_id   Идентификатор пользователя, авторизованного на сайте:
      *                           - Должен быть целым числом >= 0. Значение `0` используется для неавторизованных
-     *                           пользователей.
+     *                             пользователей.
      *                           - Пример: 123.
      * @param string $csrf_token CSRF-токен для защиты от межсайтовой подделки запросов:
      *                           - Пример: "abc123xyz".
@@ -2435,9 +2456,9 @@ class Template implements Template_Interface
      *                                  - Параметр `$csrf_token` пустой.
      *                                    Пример сообщения:
      *                                        Некорректный параметр \$csrf_token | Значение: [значение]
-     * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
-     * @throws Random\RandomException Выбрасывается методом `template_user()` в случае ошибок.
-     * @throws Exception Выбрасывается методом `create_photo()` в случае ошибок.
+     * @throws RuntimeException         Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     * @throws Random\RandomException   Выбрасывается методом `template_user()` в случае ошибок.
+     * @throws Exception                Выбрасывается методом `create_photo()` в случае ошибок.
      *
      * @note    Метод использует шаблон `footer.html` для формирования подвала. Убедитесь, что шаблон существует и
      *          доступен.
@@ -2452,8 +2473,8 @@ class Template implements Template_Interface
      * $object = new \PhotoRigma\Classes\Template('https://example.com', '/var/www/example', 'default');
      * $object->page_footer(123, 'abc123xyz');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::_page_footer_internal()
-     *          Защищённый метод, реализующий основную логику формирования подвала HTML-страницы.
+     * @see    PhotoRigma::Classes::Template::_page_footer_internal()
+     *         Защищённый метод, реализующий основную логику формирования подвала HTML-страницы.
      */
     public function page_footer(int $login_id, string $csrf_token): void
     {
@@ -2467,8 +2488,7 @@ class Template implements Template_Interface
      * @details Этот метод выполняет следующие шаги:
      *          1. Генерирует данные для подвала, включая информацию о пользователе, статистику, лучших пользователей и
      *             случайную фотографию с помощью методов `template_user()`, `template_stat()`, `template_best_user()`
-     *             и
-     *             `create_photo()`.
+     *             и `create_photo()`.
      *          2. Создает экземпляр шаблона подвала (`footer.html`) и заполняет его строковыми данными, условиями и
      *             выбором блоков.
      *          3. Обрабатывает блоки для правой панели:
@@ -2477,8 +2497,8 @@ class Template implements Template_Interface
      *             - Лучшие пользователи.
      *             - Случайная фотография.
      *          4. Устанавливает файл шаблона и создает контент, который добавляется в конец текущего содержимого
-     *          страницы. Этот метод является защищенным и предназначен для использования внутри класса или его
-     *          наследников. Основная логика вызывается через публичный метод-редирект `page_footer()`.
+     *             страницы. Этот метод является защищенным и предназначен для использования внутри класса или его
+     *             наследников. Основная логика вызывается через публичный метод-редирект `page_footer()`.
      *
      * @callergraph
      * @callgraph
@@ -2501,12 +2521,13 @@ class Template implements Template_Interface
      *                                  - Параметр `$csrf_token` пустой.
      *                                    Пример сообщения:
      *                                        Некорректный параметр \$csrf_token | Значение: [значение]
-     * @throws RuntimeException Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
-     * @throws Random\RandomException Выбрасывается методом `template_user()` в случае ошибок.
-     * @throws Exception Выбрасывается методом `create_photo()` в случае ошибок.
+     * @throws RuntimeException         Выбрасывается, если возникают ошибки при обработке шаблонов или данных.
+     * @throws Random\RandomException   Выбрасывается методом `template_user()` в случае ошибок.
+     * @throws Exception                Выбрасывается методом `create_photo()` в случае ошибок.
      *
      * @note    Метод использует шаблон `footer.html` для формирования подвала. Убедитесь, что шаблон существует и
      *          доступен.
+     *
      * @warning Входные параметры должны быть корректными. Невалидные данные могут привести к исключениям или ошибкам в
      *          работе метода. Особое внимание уделите параметру `$csrf_token`, так как его отсутствие или
      *          некорректность могут привести к уязвимостям безопасности.
@@ -2516,26 +2537,26 @@ class Template implements Template_Interface
      * // Формирование подвала страницы
      * $this->_page_footer_internal(123, 'abc123xyz');
      * @endcode
-     * @see     PhotoRigma::Classes::Template::$content
-     *          Свойство, содержащее текущее содержимое страницы.
-     * @see     PhotoRigma::Classes::Template::add_if()
-     *          Метод, используемый для добавления условий вывода фрагментов шаблона.
-     * @see     PhotoRigma::Classes::Template::add_case()
-     *          Метод, используемый для выбора блоков для вывода фрагментов шаблона.
-     * @see     PhotoRigma::Classes::Template::create_template()
-     *          Метод, используемый для создания контента из шаблона.
-     * @see     PhotoRigma::Classes::Work::template_user()
-     *          Метод, используемый для генерации данных о пользователе.
-     * @see     PhotoRigma::Classes::Work::template_stat()
-     *          Метод, используемый для генерации статистики.
-     * @see     PhotoRigma::Classes::Work::template_best_user()
-     *          Метод, используемый для генерации данных о лучших пользователях.
-     * @see     PhotoRigma::Classes::Work::create_photo()
-     *          Метод, используемый для генерации данных случайной фотографии.
-     * @see     Work::clean_field()
-     *          Функция, используемая для очистки данных.
-     * @see     PhotoRigma::Classes::Template::page_footer()
-     *          Метод, предоставляющий публичный доступ к методу _page_footer_internal().
+     * @see    PhotoRigma::Classes::Template::$content
+     *         Свойство, содержащее текущее содержимое страницы.
+     * @see    PhotoRigma::Classes::Template::add_if()
+     *         Метод, используемый для добавления условий вывода фрагментов шаблона.
+     * @see    PhotoRigma::Classes::Template::add_case()
+     *         Метод, используемый для выбора блоков для вывода фрагментов шаблона.
+     * @see    PhotoRigma::Classes::Template::create_template()
+     *         Метод, используемый для создания контента из шаблона.
+     * @see    PhotoRigma::Classes::Work::template_user()
+     *         Метод, используемый для генерации данных о пользователе.
+     * @see    PhotoRigma::Classes::Work::template_stat()
+     *         Метод, используемый для генерации статистики.
+     * @see    PhotoRigma::Classes::Work::template_best_user()
+     *         Метод, используемый для генерации данных о лучших пользователях.
+     * @see    PhotoRigma::Classes::Work::create_photo()
+     *         Метод, используемый для генерации данных случайной фотографии.
+     * @see    Work::clean_field()
+     *         Функция, используемая для очистки данных.
+     * @see    PhotoRigma::Classes::Template::page_footer()
+     *         Метод, предоставляющий публичный доступ к методу _page_footer_internal().
      */
     protected function _page_footer_internal(int $login_id, string $csrf_token): void
     {
@@ -2549,38 +2570,43 @@ class Template implements Template_Interface
         $footer_template = new Template($this->site_url, $this->site_dir, $this->theme);
 
         // Добавление строковых данных в шаблон
-        $footer_template->add_string_ar([
+        $footer_template->add_string_array([
             'COPYRIGHT_YEAR' => Work::clean_field($this->work->config['copyright_year']),
             'COPYRIGHT_URL'  => Work::clean_field($this->work->config['copyright_url']),
             'COPYRIGHT_TEXT' => Work::clean_field($this->work->config['copyright_text']),
+            'CODE_VERSION'   => Work::clean_field($this->work->config['code_version']),
+            'DB_VERSION'   => Work::clean_field($this->work->config['db_version']),
         ]);
 
         // Обработка блока информации о пользователе
         $footer_template->add_case('RIGHT_BLOCK', 'USER_INFO', 'RIGHT_PANEL[0]');
-        $footer_template->add_string_ar($user, 'RIGHT_PANEL[0]');
+        $footer_template->add_string_array($user, 'RIGHT_PANEL[0]');
         $footer_template->add_string('CSRF_TOKEN', $csrf_token, 'RIGHT_PANEL[0]');
         $footer_template->add_if('USER_NOT_LOGIN', ($login_id === 0), 'RIGHT_PANEL[0]');
 
         // Обработка блока статистики
         $footer_template->add_case('RIGHT_BLOCK', 'STATISTIC', 'RIGHT_PANEL[1]');
-        $footer_template->add_string_ar($stat, 'RIGHT_PANEL[1]');
+        $footer_template->add_string_array($stat, 'RIGHT_PANEL[1]');
 
         // Обработка блока лучших пользователей
         $footer_template->add_case('RIGHT_BLOCK', 'BEST_USER', 'RIGHT_PANEL[2]');
-        $footer_template->add_string_ar($best_user[0], 'RIGHT_PANEL[2]');
+        $footer_template->add_string_array($best_user[0], 'RIGHT_PANEL[2]');
         unset($best_user[0]);
         foreach ($best_user as $key => $val) {
-            $footer_template->add_string_ar([
+            $footer_template->add_string_array([
                 'U_BEST_USER_PROFILE' => $val['user_url'],
                 'D_USER_NAME'         => $val['user_name'],
                 'D_USER_PHOTO'        => (string)$val['user_photo'],
             ], 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
             $footer_template->add_if('USER_EXIST', !empty($val['user_url']), 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
+            if (!empty($val['user_url'])) {
+                $footer_template->add_if('USER_BANNED', $val['banned'], 'RIGHT_PANEL[2]->BEST_USER[' . $key . ']');
+            }
         }
 
         // Обработка блока случайной фотографии
         $footer_template->add_case('RIGHT_BLOCK', 'RANDOM_PHOTO', 'RIGHT_PANEL[3]');
-        $footer_template->add_string_ar([
+        $footer_template->add_string_array([
             'NAME_BLOCK'             => $rand_photo['name_block'],
             'PHOTO_WIDTH'            => (string)$rand_photo['width'],
             'PHOTO_HEIGHT'           => (string)$rand_photo['height'],

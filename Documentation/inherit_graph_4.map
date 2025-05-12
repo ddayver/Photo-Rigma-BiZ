@@ -1,5 +1,5 @@
 <map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
-<area shape="rect" id="Node000000" href="$dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами." alt="" coords="5,5,113,30"/>
-<area shape="rect" id="Node000001" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html" title="Класс для работы с пользователями и хранения данных о текущем пользователе." alt="" coords="161,5,210,30"/>
-<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="128,15,161,15,161,20,128,20"/>
+<area shape="rect" id="Node000000" href="$df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html" title="Интерфейс, определяющий контракт для классов, реализующих базовую логику приложения." alt="" coords="5,5,181,30"/>
+<area shape="rect" id="Node000001" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html" title="Класс для выполнения базовой логики приложения." alt="" coords="229,5,346,30"/>
+<area shape="poly" id="edge5_Node000000_Node000001" title=" " alt="" coords="196,15,229,15,229,20,196,20"/>
 </map>

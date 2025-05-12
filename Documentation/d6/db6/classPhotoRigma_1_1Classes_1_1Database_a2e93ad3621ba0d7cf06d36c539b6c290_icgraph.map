@@ -1,0 +1,31 @@
+<map id="_convert_from_pgsql_to" name="_convert_from_pgsql_to">
+<area shape="rect" id="Node000001" title="Производит преобразование SQL&#45;запроса из формата PostgreSQL в целевой формат СУБД (MySQL или SQLite)." alt="" coords="611,129,771,154"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af1b08f0490df0963b0daac6690d4765f" title="Выполняет преобразование SQL&#45;запроса в зависимости от текущего формата и типа СУБД." alt="" coords="453,129,563,154"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="595,144,563,144,563,139,595,139"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a941629b86b9c9e34bc5926c0db2478b5" title="Выполняет SQL&#45;запрос с использованием подготовленных выражений." alt="" coords="294,129,405,154"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="438,144,406,144,406,139,438,139"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa4094e522b4780bd58666dba20fdd09d" title="Формирует SQL&#45;запрос на удаление данных из таблицы, проверяет входные данные, обрабатывает недопустим..." alt="" coords="128,5,240,30"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="326,120,290,82,245,45,221,33,224,28,247,41,294,78,330,116"/>
+<area shape="rect" id="Node000006" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a442c0348c8bd3cd7104cb110cc71348a" title="Формирует SQL&#45;запрос на вставку данных в таблицу, проверяет входные данные, обрабатывает различные ти..." alt="" coords="129,55,238,79"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="308,124,245,95,216,82,218,77,247,90,310,120"/>
+<area shape="rect" id="Node000008" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa3fbbc7c98d1c241e897f0bf80177d2b" title="Формирует SQL&#45;запрос с использованием JOIN для выборки данных из нескольких таблиц,..." alt="" coords="135,104,232,129"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="278,133,233,126,233,121,279,128"/>
+<area shape="rect" id="Node000010" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a3e40bb61553455b6f52be0ab9a6062b1" title="Формирует SQL&#45;запрос на выборку данных из таблицы, основываясь на полученных аргументах,..." alt="" coords="128,153,240,178"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="279,155,241,160,240,155,278,149"/>
+<area shape="rect" id="Node000012" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad353291f086236ab7be0d1edc0ed3ba8" title="Формирует SQL&#45;запрос на очистку таблицы (TRUNCATE), размещает его в свойстве $txt_query и выполняет." alt="" coords="122,203,246,227"/>
+<area shape="poly" id="edge11_Node000003_Node000012" title=" " alt="" coords="309,163,247,192,218,205,216,200,245,187,307,159"/>
+<area shape="rect" id="Node000014" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ab1dc7ae1ce60a864b1d7c865e99029b0" title="Формирует SQL&#45;запрос на обновление данных в таблице, основываясь на полученных аргументах,..." alt="" coords="126,252,242,277"/>
+<area shape="poly" id="edge13_Node000003_Node000014" title=" " alt="" coords="329,168,293,205,247,241,224,254,221,249,245,237,290,201,326,164"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a73d8e6acdfb996002f980ab7c9c18515" title="Удаляет данные из таблицы через вызов внутреннего метода." alt="" coords="11,5,68,30"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="112,20,68,20,68,15,112,15"/>
+<area shape="rect" id="Node000007" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a6e5af1f386c0c7968aa10ea928c7a110" title="Вставляет данные в таблицу через вызов внутреннего метода." alt="" coords="13,55,66,79"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="113,70,67,70,67,64,113,64"/>
+<area shape="rect" id="Node000009" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aa2b6c23b3a70e9ef06c22d8a4885d69a" title="Выполняет SQL&#45;запрос с использованием JOIN через вызов внутреннего метода." alt="" coords="19,104,60,129"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="119,119,61,119,61,114,119,114"/>
+<area shape="rect" id="Node000011" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aab30d2495bb1362d218cd62e1556b13e" title="Выполняет SQL&#45;запрос на выборку данных из таблицы." alt="" coords="11,153,68,178"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="112,168,68,168,68,163,112,163"/>
+<area shape="rect" id="Node000013" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad4d4e455d9e4bf865126c72cf23a517b" title="Очищает таблицу (TRUNCATE) через вызов внутреннего метода." alt="" coords="5,203,74,227"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="106,218,74,218,74,212,106,212"/>
+<area shape="rect" id="Node000015" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a539e51bc2144b972bfafeccdda56ee9e" title="Обновляет данные в таблице через вызов внутреннего метода." alt="" coords="9,252,70,277"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="110,267,70,267,70,262,110,262"/>
+</map>

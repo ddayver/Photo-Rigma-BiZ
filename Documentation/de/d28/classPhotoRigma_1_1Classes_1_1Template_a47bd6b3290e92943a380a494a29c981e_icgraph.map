@@ -1,7 +1,0 @@
-<map id="add_case" name="add_case">
-<area shape="rect" id="Node000001" title="Добавляет данные о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="348,5,425,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a25206fa7e00f2e90cb0e86e1e93881b4" title="Метод добавляет массив данных о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивно..." alt="" coords="149,5,300,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="332,20,300,20,300,15,332,15"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a9acabbaa532d9e3d00e768499020060d" title="Добавляет массив данных о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="5,5,101,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="133,20,101,20,101,15,133,15"/>
-</map>

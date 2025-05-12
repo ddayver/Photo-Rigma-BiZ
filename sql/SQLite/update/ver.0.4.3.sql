@@ -85,3 +85,8 @@ CREATE TRIGGER photo_fts_before_delete BEFORE DELETE ON photo BEGIN
     DELETE FROM photo_fts WHERE rowid = old.id;
 END;
 
+-- Final
+-- Очистка таблицы
+DELETE FROM db_version;
+-- Вставка значения
+INSERT INTO db_version (ver) VALUES ('0.4.3');

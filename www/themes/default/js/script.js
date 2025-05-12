@@ -18,10 +18,52 @@
  */
 
 $(document).ready(function () {
-    // Инициализация стандартныx компонентов Fomantic-UI
+    // Инициализация стандартных компонентов Fomantic-UI
     $('.ui.checkbox').checkbox();
     $('.ui.icon.button').popup();
+
+    // Инициализация ВСЕХ dropdown'ов (остаётся)
     $('.ui.dropdown').dropdown();
+
+    // Работаем только если дропдаун существует
+    const $groupDropdown = $('.ui.dropdown[name="group"]');
+    const $deleteButton = $('#delete-button');
+
+    let protectedGroups = [];
+
+    // Проверяем наличие элемента перед попыткой парсить data-атрибут
+    if ($groupDropdown.length) {
+        try {
+            const protectedGroupsRaw = $groupDropdown.attr('data-protected-groups');
+            protectedGroups = protectedGroupsRaw ? JSON.parse(protectedGroupsRaw) : [];
+        } catch (e) {
+            console.error('Ошибка парсинга data-protected-groups:', e);
+            protectedGroups = [];
+        }
+
+        // Перепривязываем dropdown с onChange
+        $groupDropdown.dropdown({
+            onChange: function () {
+                toggleDeleteButton();
+            }
+        });
+
+        // Проверяем при загрузке
+        toggleDeleteButton();
+    }
+
+    function toggleDeleteButton() {
+        const selectedGroup = parseInt($groupDropdown.find('input[type="hidden"]').val());
+
+        if (protectedGroups.includes(selectedGroup)) {
+            $deleteButton.addClass('disabled');
+        } else {
+            $deleteButton.removeClass('disabled');
+        }
+
+        $('#delete-modal input[name="group"]').val(selectedGroup);
+    }
+
     $('.ui.sticky').sticky({context: '#short_menu'});
 
     function initializeReadOnlyRating() {
@@ -65,7 +107,6 @@ $(document).ready(function () {
                 const activeIconIndex = Math.floor(Math.abs(ratingValue));
                 const partialIcon = ratingContainer.find('.icon').eq(activeIconIndex);
                 partialIcon.addClass('partial');
-
                 const fillPercent = `${fractionalPart * 100}%`;
                 partialIcon.css('--fill-percent', fillPercent);
             }
@@ -74,16 +115,29 @@ $(document).ready(function () {
 
     initializeReadOnlyRating();
 
+    // Обработка модального окна удаления
     $(document).on('click', '.delete-button', function () {
         const modalSelector = $(this).data('target');
         const $modal = $(modalSelector);
 
         $modal.modal({
-            closable: false, transition: 'fly left', duration: 500, onHide: function () {
+            closable: false,
+            transition: 'fly left',
+            duration: 500,
+            onHide: function () {
                 $modal.modal('setting', 'transition', 'fly right');
-            }, onApprove: function () {
+            },
+            onApprove: function () {
                 const url = $modal.data('url');
+                const $form = $modal.find('#delete-profile-form');
+
+                if ($form.length) {
+                    $form.submit();
+                    return false;
+                }
+
                 window.location.href = url;
+                return false;
             }
         }).modal('show');
     });

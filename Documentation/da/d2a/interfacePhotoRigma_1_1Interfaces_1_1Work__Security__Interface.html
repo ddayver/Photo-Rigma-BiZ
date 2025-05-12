@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -332,7 +332,7 @@ $(function(){initNavTree('da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Secu
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$email</td><td>Email-адрес для обработки:<ul>
-<li>Должен быть непустым и соответствовать формату email (например, "example@example.com").</li>
+<li>Должен быть непустым и соответствовать формату email (например, "example@local.com").</li>
 <li>Если email некорректен или пуст, метод возвращает пустую строку.</li>
 </ul>
 </td></tr>
@@ -352,7 +352,7 @@ $(function(){initNavTree('da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Secu
 <div class="line">$securityHelper = <span class="keyword">new</span> Work_Security();</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Обработка email-адреса</span></div>
-<div class="line">$email = <span class="stringliteral">&quot;example@example.com&quot;</span>;</div>
+<div class="line">$email = <span class="stringliteral">&quot;example@local.com&quot;</span>;</div>
 <div class="line">$filtered_email = $securityHelper-&gt;filt_email($email);</div>
 <div class="line"><span class="keywordflow">if</span> (!empty($filtered_email)) {</div>
 <div class="line">    echo <span class="stringliteral">&quot;Обработанный email: {$filtered_email}&quot;</span>;</div>
@@ -465,7 +465,7 @@ $(function(){initNavTree('da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Secu
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></li><li class="navelem"><a class="el" href="../../da/d2a/interfacePhotoRigma_1_1Interfaces_1_1Work__Security__Interface.html">Work_Security_Interface</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

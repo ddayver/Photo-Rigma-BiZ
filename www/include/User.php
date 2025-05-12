@@ -1,50 +1,52 @@
 <?php
 
 /**
- * @file        include/User.php
- * @brief       Класс для управления пользователями, включая регистрацию, аутентификацию, управление профилем и
- *              хранение текущих настроек пользователя.
+ * @file      include/User.php
+ * @brief     Класс для управления пользователями, включая регистрацию, аутентификацию, управление профилем и
+ *            хранение текущих настроек пользователя.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   PhotoRigma\\Classes
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace PhotoRigma\\Classes
  *
- * @details     Этот файл содержит реализацию класса `User` и интерфейса `User_Interface`, которые предоставляют методы
- *              для работы с пользователями:
- *              - Управление данными текущего пользователя (добавление, обновление, удаление).
- *              - Работа с группами пользователей (добавление, обновление, удаление).
- *              - Генерация CSRF-токенов для защиты форм.
- *              - Обработка прав доступа пользователей и групп.
- *              - Проверка данных для входа в систему.
- *              Все ошибки, возникающие при работе с пользователями, обрабатываются через исключения.
+ * @details   Этот файл содержит реализацию класса `User` и интерфейса `User_Interface`, которые предоставляют методы
+ *            для работы с пользователями:
+ *            - Управление данными текущего пользователя (добавление, обновление, удаление).
+ *            - Работа с группами пользователей (добавление, обновление, удаление).
+ *            - Генерация CSRF-токенов для защиты форм.
+ *            - Обработка прав доступа пользователей и групп.
+ *            - Проверка данных для входа в систему.
+ *            Все ошибки, возникающие при работе с пользователями, обрабатываются через исключения.
  *
- * @section     User_Main_Functions Основные функции
- *              - Управление данными текущего пользователя.
- *              - Работа с группами пользователей.
- *              - Генерация CSRF-токенов для защиты форм.
- *              - Обработка прав доступа пользователей и групп.
- *              - Проверка данных для входа в систему.
+ * @section   User_Main_Functions Основные функции
+ *            - Управление данными текущего пользователя.
+ *            - Работа с группами пользователей.
+ *            - Генерация CSRF-токенов для защиты форм.
+ *            - Обработка прав доступа пользователей и групп.
+ *            - Проверка данных для входа в систему.
  *
- * @see         PhotoRigma::Classes::User Класс для работы с пользователями.
- * @see         PhotoRigma::Interfaces::User_Interface Интерфейс для работы с пользователями.
+ * @see       PhotoRigma::Classes::User
+ *            Класс для работы с пользователями.
+ * @see       PhotoRigma::Interfaces::User_Interface
+ *            Интерфейс для работы с пользователями.
  *
- * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа и модификации данных.
+ * @note      Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа и модификации данных.
  *
- * @todo        Закончить реализацию и документирование класса.
- *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *                части программного обеспечения.
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *            сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *            предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
 
+use DateTime;
+use DateTimeZone;
 use Exception;
 use InvalidArgumentException;
 use JsonException;
@@ -78,11 +80,14 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          пользователей. Идентификация пользователя происходит через данные из глобального массива $_SESSION.
  *          Основные возможности:
  *          - Управление данными текущего пользователя (добавление, обновление, удаление).
- *          - Работа с группами пользователей (добавление, обновление, удаление).
- *          - Генерация CSRF-токенов для защиты форм.
- *          - Обработка прав доступа пользователей и групп.
- *          - Проверка данных для входа в систему.
+ *          - Поддержка мягкого удаления (`deleted_at`) и окончательного удаления (`permanently_deleted`)
+ *          - Работа с группами пользователей (добавление, обновление, удаление)
+ *          - Генерация CSRF-токенов для защиты форм
+ *          - Обработка прав доступа пользователей и групп
+ *          - Проверка данных для входа в систему
  *          Все ошибки, возникающие при работе с пользователями, обрабатываются через исключения.
+ *
+ * @implements User_Interface
  *
  * @property array               $user              Массив, содержащий все данные о текущем пользователе.
  * @property Database_Interface  $db                Объект для работы с базой данных.
@@ -90,14 +95,15 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * @property array               $user_right_fields Массив с полями наименований прав доступа.
  * @property Work_Interface|null $work              Свойство для объекта класса Work.
  *
- * @todo    Внедрить ряд методов по работе с группами (добавление, удаление) и пользователями (удаление).
+ * @todo    Внедрить ряд методов по работе с группами (добавление, удаление).
  *
  * Пример создания объекта класса User:
  * @code
- * $db = new \\PhotoRigma\\Classes\\Database();
- * $user = new \\PhotoRigma\\Classes\\User($db, $_SESSION);
+ * $db = new \PhotoRigma\Classes\Database();
+ * $user = new \PhotoRigma\Classes\User($db, $_SESSION);
  * @endcode
- * @see     PhotoRigma::Interfaces::User_Interface Интерфейс, который реализует класс.
+ * @see    PhotoRigma::Interfaces::User_Interface
+ *         Интерфейс, который реализует класс.
  */
 class User implements User_Interface
 {
@@ -119,8 +125,8 @@ class User implements User_Interface
      *          2. Проверяет наличие ключа `KEY_SESSION` в массиве сессии:
      *             - Если ключ отсутствует, инициализирует его пустым массивом.
      *          3. Создает ссылку на массив сессии по ключу `KEY_SESSION` в свойстве `$session`.
-     *          4. Вызывает метод `all_right_fields()` для наполнения массива именами полей прав пользователей и групп.
-     *          5. Вызывает метод `initialize_user()` для инициализации данных о текущем пользователе.
+     *          4. Вызывает метод `_all_right_fields()` для наполнения массива именами полей прав пользователей и групп.
+     *          5. Вызывает метод `_initialize_user()` для инициализации данных о текущем пользователе.
      *
      * @callgraph
      *
@@ -132,7 +138,7 @@ class User implements User_Interface
      *                                    Пример: `$_SESSION`.
      *
      * @throws JsonException Выбрасывается, если произошла ошибка при работе с JSON (например, при сериализации данных
-     *                       в методах `initialize_user()` или `all_right_fields()`).
+     *                       в методах `_initialize_user()` или `_all_right_fields()`).
      *
      * @note    Используется константа `KEY_SESSION`: Ключ для использования в глобальном массиве $_SESSION.
      *
@@ -149,13 +155,13 @@ class User implements User_Interface
      * // Создание объекта класса User с передачей $_SESSION напрямую
      * $user = new \PhotoRigma\Classes\User($db, $_SESSION);
      * @endcode
-     * @see     PhotoRigma::Classes::User::$db
+     * @see    PhotoRigma::Classes::User::$db
      *         Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство, содержащее ссылку на массив сессии ($_SESSION) по ключу `KEY_SESSION`.
-     * @see     PhotoRigma::Classes::User::initialize_user()
+     * @see    PhotoRigma::Classes::User::_initialize_user()
      *         Метод, выполняющий инициализацию данных о пользователе.
-     * @see     PhotoRigma::Classes::User::all_right_fields()
+     * @see    PhotoRigma::Classes::User::_all_right_fields()
      *         Метод, наполняющий массив именами полей прав пользователей и групп.
      */
     public function __construct(Database_Interface $db, array &$session)
@@ -165,8 +171,8 @@ class User implements User_Interface
             $session[KEY_SESSION] = [];
         }
         $this->session = &$session[KEY_SESSION];
-        $this->all_right_fields();
-        $this->initialize_user();
+        $this->_all_right_fields();
+        $this->_initialize_user();
     }
 
     /**
@@ -188,19 +194,20 @@ class User implements User_Interface
      *             - Объединённые уникальные поля: `$user_right_fields['all']`.
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Не удаётся получить права первого пользователя из таблицы `TBL_USERS`.
-     *                                    Пример сообщения:
-     *                                        Ошибка базы данных | Не удалось получить права первого пользователя
-     *                                  - Не удаётся получить права первой группы из таблицы `TBL_GROUP`.
-     *                                    Пример сообщения:
-     *                                        Ошибка базы данных | Не удалось получить права первой группы
+     *                          - Не удаётся получить права первого пользователя из таблицы `TBL_USERS`.
+     *                            Пример сообщения:
+     *                                Ошибка базы данных | Не удалось получить права первого пользователя
+     *                          - Не удаётся получить права первой группы из таблицы `TBL_GROUP`.
+     *                            Пример сообщения:
+     *                                Ошибка базы данных | Не удалось получить права первой группы
      * @throws JsonException    Выбрасывается, если произошла ошибка при декодировании JSON.
-     *                                  Пример сообщения:
-     *                                        Ошибка при обработке JSON | Поле: user_rights
+     *                            Пример сообщения:
+     *                                Ошибка при обработке JSON | Поле: user_rights
      * @throws Exception        Выбрасывается при выполнении запросов к СУБД.
      *
      * @note    Метод сохраняет имена полей прав пользователей и групп в свойство `$user_right_fields`:
@@ -215,18 +222,18 @@ class User implements User_Interface
      *
      * @warning Поле `user_rights` должно содержать валидный JSON. Невалидные данные могут привести к исключению.
      *
-     * Пример вызова метода all_right_fields():
+     * Пример вызова метода _all_right_fields():
      * @code
-     * $this->all_right_fields();
+     * $this->_all_right_fields();
      * @endcode
-     * @see     PhotoRigma::Classes::User::$user_right_fields
-     *          Свойство, содержащее имена полей прав пользователей и групп.
-     * @see     PhotoRigma::Classes::User::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::User::process_user_rights()
-     *          Метод для обработки прав пользователя/группы.
+     * @see    PhotoRigma::Classes::User::$user_right_fields
+     *         Свойство, содержащее имена полей прав пользователей и групп.
+     * @see    PhotoRigma::Classes::User::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::User::process_user_rights()
+     *         Метод для обработки прав пользователя/группы.
      */
-    private function all_right_fields(): void
+    private function _all_right_fields(): void
     {
         // === Загрузка прав первого пользователя ===
         if (!$this->db->select('`user_rights`', TBL_USERS, ['limit' => 1])) {
@@ -235,7 +242,7 @@ class User implements User_Interface
             );
         }
 
-        $user_result = $this->db->res_row();
+        $user_result = $this->db->result_row();
         if ($user_result && isset($user_result['user_rights'])) {
             // Обрабатываем права пользователя
             $user_rights = $this->process_user_rights($user_result['user_rights']);
@@ -253,7 +260,7 @@ class User implements User_Interface
             );
         }
 
-        $group_result = $this->db->res_row();
+        $group_result = $this->db->result_row();
         if ($group_result && isset($group_result['user_rights'])) {
             // Обрабатываем права группы
             $group_rights = $this->process_user_rights($group_result['user_rights']);
@@ -281,9 +288,11 @@ class User implements User_Interface
      *          Он проверяет корректность входных данных, декодирует строку JSON в ассоциативный массив прав и
      *          возвращает результат. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param string $user_rights Значение поля `user_rights`:
-     *                            - Должно быть строкой, содержащей валидный JSON (например, '{"edit": 1, "delete":
-     *                            0}').
+     *                            - Должно быть строкой, содержащей валидный JSON (например, '{"edit": 1,
+     *                            "delete": 0}').
      *                            - Если значение пустое или некорректное, возвращается пустой массив.
      *
      * @return array Ассоциативный массив прав пользователя. Если поле `user_rights` отсутствует или содержит
@@ -292,7 +301,7 @@ class User implements User_Interface
      * @throws InvalidArgumentException Выбрасывается, если поле `user_rights` не является строкой.
      *                                  Пример сообщения:
      *                                      Некорректный формат JSON | Поле user_rights содержит невалидные данные
-     * @throws JsonException Выбрасывается, если поле `user_rights` содержит невалидный JSON.
+     * @throws JsonException            Выбрасывается, если поле `user_rights` содержит невалидный JSON.
      *
      * @note    Метод возвращает пустой массив, если поле `user_rights` отсутствует или содержит некорректные данные.
      *          Если декодирование JSON завершается успешно, возвращается ассоциативный массив прав.
@@ -324,7 +333,7 @@ class User implements User_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет, существует ли поле `user_rights`. Если поле отсутствует или пустое, возвращается пустой
-     *          массив.
+     *             массив.
      *          2. Проверяет, что поле является строкой. Если тип данных некорректен, выбрасывается исключение.
      *          3. Декодирует строку JSON в ассоциативный массив с использованием `json_decode()`. Если декодирование
      *             завершается с ошибкой, выбрасывается исключение.
@@ -344,7 +353,7 @@ class User implements User_Interface
      * @throws InvalidArgumentException Выбрасывается, если поле `user_rights` не является строкой.
      *                                  Пример сообщения:
      *                                      Некорректный формат JSON | Поле user_rights содержит невалидные данные
-     * @throws JsonException Выбрасывается, если поле `user_rights` содержит невалидный JSON.
+     * @throws JsonException            Выбрасывается, если поле `user_rights` содержит невалидный JSON.
      *
      * @note    Метод возвращает пустой массив, если поле `user_rights` отсутствует или содержит некорректные данные.
      *          Если декодирование JSON завершается успешно, возвращается ассоциативный массив прав.
@@ -362,7 +371,7 @@ class User implements User_Interface
      * $rights = $this->_process_user_rights_internal('');
      * print_r($rights); // Выведет: []
      * @endcode
-     * @see     PhotoRigma::Classes::User::process_user_rights()
+     * @see    PhotoRigma::Classes::User::process_user_rights()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _process_user_rights_internal(string $user_rights): array
@@ -393,43 +402,44 @@ class User implements User_Interface
      *             - Если `login_id` отсутствует, используется значение по умолчанию: 0.
      *          2. Преобразует `login_id` в целое число и сохраняет его обратно в сессию.
      *          3. Определяет тип пользователя:
-     *             - Если `login_id` равен 0, загружается гость с помощью метода `load_guest_user()`.
+     *             - Если `login_id` равен 0, загружается гость с помощью метода `_load_guest_user()`.
      *             - Если `login_id` не равен 0, загружается аутентифицированный пользователь с помощью метода
-     *               `load_authenticated_user($login_id)`.
+     *               `_load_authenticated_user($login_id)`.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
-     * @throws JsonException Выбрасывается, если вызываемые методы `load_guest_user()` или `load_authenticated_user()`
+     * @throws JsonException Выбрасывается, если вызываемые методы `_load_guest_user()` или `_load_authenticated_user()`
      *                       выбрасывают исключение при работе с JSON.
      *
      * @note    Значение `login_id` всегда преобразуется в целое число и сохраняется в сессии.
      *
      * @warning Убедитесь, что:
      *          - Массив сессии содержит корректные данные.
-     *          - Методы `load_guest_user()` и `load_authenticated_user()` корректно обрабатывают JSON.
+     *          - Методы `_load_guest_user()` и `_load_authenticated_user()` корректно обрабатывают JSON.
      *          Несоблюдение этих условий может привести к ошибкам инициализации.
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->initialize_user();
+     * $this->_initialize_user();
      * @endcode
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство, содержащее данные сессии.
-     * @see     PhotoRigma::Classes::User::load_guest_user()
+     * @see    PhotoRigma::Classes::User::_load_guest_user()
      *         Метод для загрузки данных гостя.
-     * @see     PhotoRigma::Classes::User::load_authenticated_user()
+     * @see    PhotoRigma::Classes::User::_load_authenticated_user()
      *         Метод для загрузки данных аутентифицированного пользователя.
      */
-    private function initialize_user(): void
+    private function _initialize_user(): void
     {
         $login_id = (int)($this->session['login_id'] ?? 0);
         $this->session['login_id'] = $login_id;
         if ($login_id === 0) {
-            $this->load_guest_user();
+            $this->_load_guest_user();
         } else {
-            $this->load_authenticated_user($login_id);
+            $this->_load_authenticated_user($login_id);
         }
     }
 
@@ -438,8 +448,8 @@ class User implements User_Interface
      *          итоговые данные в свойство `$user`.
      *
      * @details Этот метод выполняет следующие шаги:
-     *          1. Выполняет запрос к базе данных для получения данных группы гостя с `id = 0`, используя константу
-     *             `TBL_GROUP` для указания таблицы.
+     *          1. Выполняет запрос к базе данных для получения данных группы гостя с `id = GROUP_GUEST`, используя
+     *             константу `GROUP_GUEST` и константу `TBL_GROUP` для указания таблицы.
      *             - Если запрос не выполнен или данные отсутствуют, выбрасывается исключение.
      *          2. Проверяет корректность полученных данных:
      *             - Данные должны быть массивом. Если данные некорректны, выбрасывается исключение.
@@ -450,10 +460,11 @@ class User implements User_Interface
      *          6. Сохраняет итоговые данные в свойство `$user`.
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
-     * @throws RuntimeException Выбрасывается, если:
+     * @throws RuntimeException         Выбрасывается, если:
      *                                  - Не удаётся получить данные группы гостя из базы данных.
      *                                    Пример сообщения:
      *                                        Ошибка базы данных | Не удалось получить данные группы гостя
@@ -462,35 +473,36 @@ class User implements User_Interface
      *                                    Пример сообщения:
      *                                        Некорректные данные группы гостя | Проверьте формат данных в таблице
      *                                        groups
-     * @throws JsonException    Выбрасывается, если произошла ошибка при декодировании JSON.
+     * @throws JsonException            Выбрасывается, если произошла ошибка при декодировании JSON.
      *                                  Пример сообщения:
      *                                        Ошибка при обработке JSON | Поле: user_rights
-     * @throws Exception        Выбрасывается при выполнении запросов к СУБД.
+     * @throws Exception                Выбрасывается при выполнении запросов к СУБД.
      *
      * @note    Для указания таблицы базы данных используется константа `TBL_GROUP`. Например: '`groups`'.
+     *          Константа `GROUP_GUEST` содержит ID группы гостей.
      *          Поле `user_rights` должно содержать валидный JSON. После обработки права объединяются с данными группы.
      *
      * @warning Поле `user_rights` обязательно должно содержать валидный JSON. Невалидные данные могут привести к
      *          ошибкам.
      *
-     * Пример вызова метода load_guest_user():
+     * Пример вызова метода _load_guest_user():
      * @code
-     * $this->load_guest_user();
+     * $this->_load_guest_user();
      * @endcode
-     * @see     PhotoRigma::Classes::User::$user
-     *          Свойство, содержащее данные текущего пользователя.
-     * @see     PhotoRigma::Classes::User::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::User::process_user_rights()
-     *          Метод для обработки прав пользователя.
+     * @see    PhotoRigma::Classes::User::$user
+     *         Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Classes::User::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::User::process_user_rights()
+     *         Метод для обработки прав пользователя.
      */
-    private function load_guest_user(): void
+    private function _load_guest_user(): void
     {
         // Выполняем запрос к базе данных для получения данных группы гостя
         if (!$this->db->select(
             '`id`, `user_rights`',
             TBL_GROUP,
-            ['where' => '`id` = :group_id', 'params' => ['group_id' => 0]]
+            ['where' => '`id` = :group_id', 'params' => ['group_id' => GROUP_GUEST]]
         )) {
             throw new RuntimeException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | Не удалось получить данные группы гостя'
@@ -498,7 +510,7 @@ class User implements User_Interface
         }
 
         // Получаем данные группы гостя
-        $guest_group = $this->db->res_row();
+        $guest_group = $this->db->result_row();
         if (!$guest_group || !is_array($guest_group)) {
             throw new UnexpectedValueException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Некорректные данные группы гостя | Проверьте формат данных в таблице ' . TBL_GROUP
@@ -524,20 +536,24 @@ class User implements User_Interface
      * @details Этот метод выполняет следующие шаги:
      *          1. Загружает данные пользователя из таблицы `TBL_USERS` по `user_id`.
      *             - Если данные пользователя отсутствуют, сбрасывает сессию до гостя и вызывает метод
-     *               `load_guest_user()`.
+     *               `_load_guest_user()`.
      *          2. Удаляет поле `user_rights` из данных пользователя и обрабатывает его с помощью метода
      *             `process_user_rights()`.
      *          3. Сохраняет обработанные права в свойство `$user`.
      *          4. Загружает данные группы пользователя из таблицы `TBL_GROUP` по `group_id`.
-     *             - Если данные группы отсутствуют, сбрасывает сессию до гостя и вызывает метод `load_guest_user()`.
+     *             - Если данные группы отсутствуют, сбрасывает сессию до гостя и вызывает метод `_load_guest_user()`.
      *          5. Удаляет поле `user_rights` из данных группы и обрабатывает его с помощью метода
      *             `process_user_rights()`.
-     *          6. Объединяет данные пользователя и группы через метод `merge_user_with_group()`.
+     *          6. Объединяет данные пользователя и группы через метод `_merge_user_with_group()`.
      *          7. Устанавливает язык и тему сайта в сессии (`$this->session['language']` и `$this->session['theme']`)
-     *          на основе данных пользователя.
+     *             на основе данных пользователя.
      *          8. Обновляет дату последней активности пользователя в таблице `TBL_USERS`.
+     *          9. Проверяет статус удаления пользователя:
+     *              - Если пользователь окончательно удален (`permanently_deleted = TRUE`), переводит в гости.
+     *              - Если пользователь был мягко удален, и срок восстановления истек, также переводит в гости.
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
@@ -546,20 +562,21 @@ class User implements User_Interface
      *                     Ограничения: ID должен быть больше 0.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Не удаётся получить данные пользователя из таблицы `TBL_USERS`.
-     *                                    Пример сообщения:
-     *                                        Ошибка базы данных | Не удалось получить данные пользователя с ID:
-     *                                        [user_id]
-     *                                  - Не удаётся получить данные группы пользователя из таблицы `TBL_GROUP`.
-     *                                    Пример сообщения:
-     *                                        Ошибка базы данных | Не удалось получить данные группы пользователя с ID:
-     *                                        [group_id]
-     *                                  - Не удаётся обновить дату последней активности пользователя в таблице
-     *                                  `TBL_USERS`. Пример сообщения: Ошибка базы данных | Не удалось обновить дату
-     *                                  последней активности пользователя с ID: [user_id]
+     *                          - Не удаётся получить данные пользователя из таблицы `TBL_USERS`.
+     *                            Пример сообщения:
+     *                                Ошибка базы данных | Не удалось получить данные пользователя с ID:
+     *                                [user_id]
+     *                          - Не удаётся получить данные группы пользователя из таблицы `TBL_GROUP`.
+     *                            Пример сообщения:
+     *                                Ошибка базы данных | Не удалось получить данные группы пользователя с ID:
+     *                                [group_id]
+     *                          - Не удаётся обновить дату последней активности пользователя в таблице `TBL_USERS`.
+     *                            Пример сообщения:
+     *                                Ошибка базы данных | Не удалось обновить дату последней активности пользователя
+     *                                с ID: [user_id]
      * @throws JsonException    Выбрасывается, если произошла ошибка при работе с JSON.
-     *                                  Пример сообщения:
-     *                                        Ошибка при обработке JSON | Поле: user_rights
+     *                          Пример сообщения:
+     *                                Ошибка при обработке JSON | Поле: user_rights
      * @throws Exception        Выбрасывается при выполнении запросов к СУБД.
      *
      * @note    Для указания таблиц базы данных используются константы:
@@ -569,25 +586,26 @@ class User implements User_Interface
      *          объединяются с данными пользователя.
      *
      * @warning Поля `user_rights` в данных пользователя и группы обязательно должны содержать валидный JSON.
-     *          Невалидные
-     *          данные могут привести к ошибкам.
+     *          Невалидные данные могут привести к ошибкам.
      *
-     * Пример вызова метода load_authenticated_user():
+     * Пример вызова метода _load_authenticated_user():
      * @code
-     * $this->load_authenticated_user(123);
+     * $this->_load_authenticated_user(123);
      * @endcode
-     * @see     PhotoRigma::Classes::User::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::User::$user
-     *          Свойство, содержащее данные текущего пользователя.
-     * @see     PhotoRigma::Classes::User::$session
-     *          Свойство, содержащее данные сессии.
-     * @see     PhotoRigma::Classes::User::process_user_rights()
-     *          Метод для обработки прав пользователя/группы.
-     * @see     PhotoRigma::Classes::User::merge_user_with_group()
-     *          Метод для объединения данных пользователя и группы.
+     * @see    PhotoRigma::Classes::User::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::User::$user
+     *         Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Classes::User::$session
+     *         Свойство, содержащее данные сессии.
+     * @see    PhotoRigma::Classes::User::process_user_rights()
+     *         Метод для обработки прав пользователя/группы.
+     * @see    PhotoRigma::Classes::User::_merge_user_with_group()
+     *         Метод для объединения данных пользователя и группы.
+     * @see    PhotoRigma::Classes::User::_is_soft_delete_expired_internal()
+     *         Метод для проверки истечения срока мягкого удаления.
      */
-    private function load_authenticated_user(int $user_id): void
+    private function _load_authenticated_user(int $user_id): void
     {
         // Загружаем данные пользователя
         if (!$this->db->select('*', TBL_USERS, ['where' => '`id` = :user_id', 'params' => ['user_id' => $user_id]])) {
@@ -596,10 +614,24 @@ class User implements User_Interface
             );
         }
 
-        $user_data = $this->db->res_row();
+        $user_data = $this->db->result_row();
         if (!$user_data) {
             $this->session['login_id'] = 0;
-            $this->load_guest_user();
+            $this->_load_guest_user();
+            return;
+        }
+
+        // Проверяем окончательное удаление
+        if (!empty($user_data['permanently_deleted'])) {
+            $this->session['login_id'] = 0;
+            $this->_load_guest_user();
+            return;
+        }
+
+        // Проверяем, прошло ли время восстановления после мягкого удаления
+        if (!empty($user_data['deleted_at']) && $this->_is_soft_delete_expired_internal($user_data['deleted_at'])['expired']) {
+            $this->session['login_id'] = 0;
+            $this->_load_guest_user();
             return;
         }
 
@@ -626,16 +658,17 @@ class User implements User_Interface
             );
         }
 
-        $group_data = $this->db->res_row();
+        $group_data = $this->db->result_row();
         if (!$group_data) {
             $this->session['login_id'] = 0;
-            $this->load_guest_user();
+            $this->_load_guest_user();
             return;
         }
 
         // Устанавливаем язык и тему сайта
         $this->session['language'] = $this->user['language'];
         $this->session['theme'] = $this->user['theme'];
+        $this->session['timezone'] = $this->user['timezone'];
 
         // Удаляем поле user_rights из данных группы
         $group_rights = $group_data['user_rights'] ?? null;
@@ -645,7 +678,7 @@ class User implements User_Interface
         $processed_rights = $this->process_user_rights($group_rights);
 
         // Присваиваем данные пользователя с добавлением прав группы
-        $this->merge_user_with_group(array_merge($group_data, $processed_rights));
+        $this->_merge_user_with_group(array_merge($group_data, $processed_rights));
 
         // Обновляем данные о последней активности пользователя
         if (!$this->db->update(
@@ -676,23 +709,25 @@ class User implements User_Interface
      *          2. Для обработки ключей используется оператор `match`.
      *          Этот метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      *
      * @param array $group_data Ассоциативный массив, содержащий данные группы пользователя.
      *                          Ключи должны соответствовать полям в таблице групп.
      *
      * @note    Ключ `id` в данных группы игнорируется.
+     *
      * @warning Метод предполагает, что структура данных группы совпадает с ожидаемой. Неправильная структура может
      *          привести к ошибкам.
      *
      * Пример вызова метода внутри класса:
      * @code
-     * $this->merge_user_with_group(['name' => 'Admins', 'id' => 1, 'permission_edit' => true]);
+     * $this->_merge_user_with_group(['name' => 'Admins', 'id' => 1, 'permission_edit' => true]);
      * @endcode
-     * @see     PhotoRigma::Classes::User::$user
-     *          Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Classes::User::$user
+     *         Свойство, содержащее данные текущего пользователя.
      */
-    private function merge_user_with_group(array $group_data): void
+    private function _merge_user_with_group(array $group_data): void
     {
         foreach ($group_data as $key => $value) {
             match ($key) {
@@ -712,17 +747,19 @@ class User implements User_Interface
      *          Он проверяет корректность входных данных, определяет целевой массив (`$user` или `$session`) и
      *          устанавливает значение по указанному ключу. Предназначен для прямого использования извне.
      *
-     * @param string          $name   Имя свойства:
-     *                                - Допустимые значения: 'user' (для массива данных пользователя) или 'session'
-     *                                (для массива данных сессии).
-     *                                - Пример: "user".
-     *                                Ограничения: только допустимые значения ('user' или 'session').
-     * @param string          $key    Ключ, по которому будет установлено значение:
-     *                                - Должен быть строкой.
-     *                                - Пример: "username".
-     * @param string|int|bool $value  Значение, которое будет установлено:
-     *                                - Может быть строкой, целым числом или булевым значением.
-     *                                - Пример: "admin" (строка), 123 (целое число), true (булево значение).
+     * @callgraph
+     *
+     * @param string          $name  Имя свойства:
+     *                               - Допустимые значения: 'user' (для массива данных пользователя) или 'session'
+     *                               (для массива данных сессии).
+     *                               - Пример: "user".
+     *                               Ограничения: только допустимые значения ('user' или 'session').
+     * @param string          $key   Ключ, по которому будет установлено значение:
+     *                               - Должен быть строкой.
+     *                               - Пример: "username".
+     * @param string|int|bool $value Значение, которое будет установлено:
+     *                               - Может быть строкой, целым числом или булевым значением.
+     *                               - Пример: "admin" (строка), 123 (целое число), true (булево значение).
      *
      * @throws InvalidArgumentException Выбрасывается, если параметр `$name` содержит недопустимое значение.
      *                                  Пример сообщения:
@@ -745,8 +782,8 @@ class User implements User_Interface
      * // Установка значения в массиве $session
      * $object->set_property_key('session', 'logged_in', true);
      * @endcode
-     * @see     PhotoRigma::Classes::User::_set_property_key_internal()
-     *          Защищённый метод, реализующий основную логику установки значения свойства.
+     * @see    PhotoRigma::Classes::User::_set_property_key_internal()
+     *         Защищённый метод, реализующий основную логику установки значения свойства.
      */
     public function set_property_key(string $name, string $key, string|int|bool $value): void
     {
@@ -794,11 +831,11 @@ class User implements User_Interface
      * // Установка значения в массиве $session
      * $this->_set_property_key_internal('session', 'logged_in', true);
      * @endcode
-     * @see     PhotoRigma::Classes::User::$user
+     * @see    PhotoRigma::Classes::User::$user
      *         Свойство класса User, содержащее данные пользователя.
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство класса User, содержащее данные сессии.
-     * @see     PhotoRigma::Classes::User::set_property_key()
+     * @see    PhotoRigma::Classes::User::set_property_key()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _set_property_key_internal(string $name, string $key, string|int|bool $value): void
@@ -829,11 +866,10 @@ class User implements User_Interface
      *          реализующего интерфейс `Work_Interface`.
      *          Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param Work_Interface $work Объект, реализующий интерфейс `Work_Interface`:
      *                             - Должен быть экземпляром класса, реализующего интерфейс `Work_Interface`.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если передан некорректный объект (не реализует интерфейс
-     *                                  `Work_Interface`). Пример сообщения: Некорректный объект | Передан: [тип]
      *
      * @note    Метод проверяет тип переданного объекта.
      *          Объект, реализующий интерфейс `Work_Interface`, используется для дальнейшего взаимодействия в текущем
@@ -852,8 +888,8 @@ class User implements User_Interface
      * // Установка объекта Work
      * $user->set_work($work);
      * @endcode
-     * @see     PhotoRigma::Classes::User::_set_work_internal()
-     *          Защищённый метод, реализующий основную логику установки объекта Work.
+     * @see    PhotoRigma::Classes::User::_set_work_internal()
+     *         Защищённый метод, реализующий основную логику установки объекта Work.
      */
     public function set_work(Work_Interface $work): void
     {
@@ -896,19 +932,21 @@ class User implements User_Interface
      * // Установка объекта Work_Interface
      * $this->_set_work_internal($work);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Interface
+     * @see    PhotoRigma::Classes::Work_Interface
      *         Интерфейс, который должен реализовывать передаваемый объект.
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство класса User, содержащее данные сессии.
-     * @see     PhotoRigma::Classes::User::$work
+     * @see    PhotoRigma::Classes::User::$work
      *         Свойство для объекта, реализующего интерфейс Work_Interface.
-     * @see     PhotoRigma::Classes::User::set_work()
+     * @see    PhotoRigma::Classes::User::set_work()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _set_work_internal(Work_Interface $work): void
     {
         $this->work = $work;
-        $this->session['theme'] ??= $work->config['themes'];
+        $this->session['theme'] ??= $work->config['theme'];
+        $this->session['language'] ??= $work->config['language'];
+        $this->session['timezone'] ??= $work->config['timezone'];
     }
 
     /**
@@ -917,12 +955,10 @@ class User implements User_Interface
      * @details Этот метод позволяет получить доступ к приватным свойствам `$user`, `$session` и `$user_right_fields`.
      *          Алгоритм работы:
      *          1. Проверяет, соответствует ли имя свойства допустимым значениям (`user`, `session`,
-     *          `user_right_fields`).
+     *             `user_right_fields`).
      *          2. Если имя свойства корректно, возвращает значение соответствующего свойства.
      *          3. Если имя свойства некорректно, выбрасывается исключение.
      *          Метод является публичным и предназначен для получения доступа к указанным свойствам.
-     *
-     * @callgraph
      *
      * @param string $name Имя свойства:
      *                     - Допустимые значения: 'user', 'session', 'user_right_fields'.
@@ -956,11 +992,11 @@ class User implements User_Interface
      * echo $user->session['user_id']; // Выведет: ID пользователя из сессии
      * print_r($user->user_right_fields['user']); // Выведет список допустимых полей прав пользователя
      * @endcode
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство, привязанное к глобальному массиву $_SESSION.
-     * @see     PhotoRigma::Classes::User::$user
+     * @see    PhotoRigma::Classes::User::$user
      *         Свойство, содержащее данные о текущем пользователе.
-     * @see     PhotoRigma::Classes::User::$user_right_fields
+     * @see    PhotoRigma::Classes::User::$user_right_fields
      *         Свойство, содержащее допустимые значения прав пользователей и групп.
      */
     public function __get(string $name): array
@@ -1004,8 +1040,9 @@ class User implements User_Interface
      * @throws InvalidArgumentException Выбрасывается, если переданное имя свойства некорректно.
      *                                  Пример сообщения:
      *                                      Несуществующее свойство | Свойство: [$name]
-     * @throws JsonException Выбрасывается при ошибке кодирования данных в JSON (например, при логировании изменений).
-     * @throws Exception Выбрасывается, если произошла ошибка логирования в функции `log_in_file`.
+     * @throws JsonException            Выбрасывается при ошибке кодирования данных в JSON (например, при логировании
+     *                                  изменений).
+     * @throws Exception                Выбрасывается, если произошла ошибка логирования в функции `log_in_file`.
      *
      * @note    Этот метод предназначен только для изменения свойства `$session`.
      *          Любые другие запросы будут игнорироваться с выбросом исключения.
@@ -1020,9 +1057,9 @@ class User implements User_Interface
      * $user = new User($db, $_SESSION);
      * $user->session = ['user_id' => 123]; // Установит новое значение для $session
      * @endcode
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство, привязанное к глобальному массиву $_SESSION.
-     * @see     PhotoRigma::Include::log_in_file()
+     * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования ошибок и изменений.
      */
     public function __set(string $name, array $value): void
@@ -1074,8 +1111,6 @@ class User implements User_Interface
      *          существования недоступного свойства. Метод возвращает `true`, если свойство существует,
      *          и `false` в противном случае.
      *
-     * @callgraph
-     *
      * @param string $name Имя свойства:
      *                     - Проверяется на существование.
      *
@@ -1105,39 +1140,134 @@ class User implements User_Interface
     /**
      * @brief   Добавляет новую группу в систему через Админку.
      *
-     * @details Этот публичный метод создает новую группу по команде из Админки.
-     *          - Принимает данные новой группы, включая её имя и права.
-     *          - В текущей реализации метод не реализован и выбрасывает исключение.
-     *          Метод предназначен для прямого использования извне (например, через Админку).
+     * @details Метод является обёрткой для внутреннего метода `_add_new_group_internal()`.
+     *          Он передаёт данные о:
+     *          - Имени группы (`name_group`)
+     *          - Правах доступа (все поля из `$this->user_right_fields['all']`)
+     *          Реализация вызывает:
+     *          - Валидацию имени
+     *          - Нормализацию прав доступа (true/false)
+     *          - Кодирование прав в JSON
+     *          - Вставку записи в TBL_GROUP
+     *          Возвращает ID новой группы.
+     *
+     * @callgraph
      *
      * @param array $group_data Данные новой группы:
-     *                          - `name` (string): Имя группы.
-     *                          - `user_rights` (string): JSON-строка с правами группы.
+     *                          - `name_group`: Имя группы (валидируется через REG_NAME).
+     *                          - Все права из `$this->user_right_fields['all']` (true/false или строковые значения).
+     *                          Пример: ['name_group' => 'Moderators', 'read' => 'on', 'write' => false]
      *
-     * @return int Возвращает ID новой группы.
+     * @return int Возвращает ID новой группы при успешном добавлении.
      *
-     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
-     *                           Причина: Метод пока не имеет логики обработки данных.
+     * @throws RuntimeException Выбрасывается, если имя группы не прошло валидацию.
+     * @throws JsonException    Выбрасывается, если не удалось кодировать права в JSON.
+     * @throws Exception        Выбрасывается при ошибках SQL-запроса.
      *
-     * Пример вызова метода:
+     * @note    Метод использует защищённый `_add_new_group_internal()` для выполнения основной логики.
+     *
+     * @warning Убедитесь, что все поля прав доступа переданы в `$group_data`. Отсутствие полей может привести к ошибкам.
+     *
+     * Пример использования:
      * @code
-     * $object = new \PhotoRigma\Classes\User();
-     * $groupId = $object->add_new_group([
-     *     'name' => 'Moderators',
-     *     'user_rights' => '{"read": true, "write": true}'
-     * ]);
-     * echo "Новая группа создана с ID: $groupId";
+     * // Через объект класса User
+     * $groupId = $user->add_new_group($_POST);
+     * echo "Группа добавлена с ID: " . $groupId;
      * @endcode
-     * @todo    Продумать и реализовать метод.
-     *
-     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
-     *
+     * @see    PhotoRigma::Classes::User::_add_new_group_internal()
+     *         Защищённый метод, реализующий добавление группы и валидацию данных.
      */
     public function add_new_group(array $group_data): int
     {
-        throw new RuntimeException(
-            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Метод не реализован | Добавление новой группы'
-        );
+        return $this->_add_new_group_internal($group_data);
+    }
+
+    /**
+     * @brief   Добавляет новую группу в систему через Админку.
+     *
+     * @details Метод:
+     *          1. Принимает данные новой группы из `$group_data`:
+     *             - name_group — имя группы (валидация через REG_NAME)
+     *             - права доступа — булевы значения, фильтруются через FILTER_VALIDATE_BOOLEAN
+     *          2. Очищает и проверяет имя группы:
+     *             - Проверка на наличие
+     *             - Проверка на пустое значение
+     *             - Валидация через регулярное выражение REG_NAME
+     *          3. Преобразует все поля прав доступа к булевому типу
+     *          4. Кодирует права в JSON-строку через _encode_user_rights_internal()
+     *          5. Выполняет вставку новой записи в TBL_GROUP
+     *          6. Возвращает ID вставленной группы
+     *          Метод является защищённым и предназначен для вызова внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод add_new_group().
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array $group_data Данные новой группы:
+     *                          - `name_group`: Имя группы (должно быть передано).
+     *                          - Все ключи из `$this->user_right_fields['all']`.
+     *                          Пример: ['name_group' => 'Moderators', 'read' => true, 'write' => false]
+     *
+     * @return int Возвращает ID новой группы при успешном добавлении.
+     *
+     * @throws RuntimeException Выбрасывается, если имя группы не прошло валидацию.
+     * @throws JsonException    Выбрасывается, если не удалось кодировать права в JSON.
+     * @throws Exception        Выбрасывается при ошибках SQL-запроса.
+     *
+     * @note    Для работы метода необходимо:
+     *          - Поле `name_group` должно быть задано и пройти валидацию
+     *          - Все поля прав должны быть определены в массиве `$this->user_right_fields`
+     *          - Реализация зависит от констант: TBL_GROUP, REG_NAME
+     *          Права доступа кодируются в JSON-строку для хранения в базе данных
+     *          с последующим декодированием при работе с группами.
+     *
+     * @warning Убедитесь, что входные данные корректны. Невалидные данные могут привести к исключениям.
+     *
+     * Пример использования:
+     * @code
+     * // Внутри класса User
+     * $newGroupId = $this->_add_new_group_internal($_POST);
+     * echo "Группа добавлена с ID: " . $newGroupId;
+     * @endcode
+     * @see    PhotoRigma::Classes::User::add_new_group()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::User::_encode_user_rights_internal()
+     *         Для преобразования прав в JSON-строку.
+     */
+    protected function _add_new_group_internal(array $group_data): int
+    {
+        $query_data = [];
+        $params_data = [];
+
+        // Проверяем и добавляем имя группы
+        if ($this->work->check_input('_POST', 'name_group', ['isset' => true, 'empty' => true, 'regexp' => REG_NAME])) {
+            $clean_name = Work::clean_field($group_data['name_group']);
+            $query_data['`name`'] = ':name';
+            $params_data['name'] = $clean_name;
+        } else {
+            return 0;
+        }
+
+        $new_group_rights = [];
+
+        foreach ($this->user_right_fields['all'] as $value) {
+            // Используем filter_var для корректной конвертации всех значений в bool
+            $new_group_rights[$value] = filter_var(
+                $group_data[$value] ?? false,
+                FILTER_VALIDATE_BOOLEAN
+            );
+        }
+
+        // Кодируем права доступа
+        $encoded_group_rights = $this->_encode_user_rights_internal($new_group_rights);
+
+        $query_data['`user_rights`'] = ':user_rights';
+        $params_data['user_rights'] = $encoded_group_rights;
+
+        // Выполняем вставку
+        $this->db->insert($query_data, TBL_GROUP, '', ['params' => $params_data]);
+
+        return $this->db->get_last_insert_id();
     }
 
     /**
@@ -1148,29 +1278,31 @@ class User implements User_Interface
      *          добавляет нового пользователя в базу данных и назначает ему группу по умолчанию. В случае ошибок
      *          сохраняет их в сессии и завершает выполнение. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param array $post_data Массив данных из формы ($_POST), содержащий новые значения для полей пользователя:
      *                         - string $login: Логин пользователя (должен соответствовать регулярному выражению
-     *                         REG_LOGIN).
+     *                           REG_LOGIN).
      *                         - string $password: Пароль пользователя (не должен быть пустым).
      *                         - string $re_password: Повтор пароля (должен совпадать с $password).
      *                         - string $email: Email пользователя (должен соответствовать регулярному выражению
-     *                         REG_EMAIL).
+     *                           REG_EMAIL).
      *                         - string $real_name: Реальное имя пользователя (должно соответствовать регулярному
-     *                         выражению REG_NAME).
+     *                           выражению REG_NAME).
      *                         - string $captcha: Значение CAPTCHA (должно быть числом).
      *                         Все поля обязательны для заполнения.
      *
      * @return int ID нового пользователя, если регистрация успешна, или `0` в случае ошибки.
      *
      * @throws RuntimeException Выбрасывается, если группа по умолчанию не найдена в базе данных.
-     *                                  Пример сообщения:
-     *                                      Не удалось получить данные группы по умолчанию
-     * @throws PDOException Выбрасывается, если возникает ошибка при работе с базой данных.
-     *                                  Пример сообщения:
-     *                                      Ошибка при добавлении нового пользователя в базу данных
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Параметр: [имя_поля]
+     *                          Пример сообщения:
+     *                              Не удалось получить данные группы по умолчанию
+     * @throws PDOException     Выбрасывается, если возникает ошибка при работе с базой данных.
+     *                          Пример сообщения:
+     *                              Ошибка при добавлении нового пользователя в базу данных
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных.
+     *                          Пример сообщения:
+     *                              Ошибка валидации входных данных | Параметр: [имя_поля]
      *
      * @note    Используется CAPTCHA для защиты от автоматической регистрации.
      *          Константы, используемые в методе:
@@ -1199,8 +1331,8 @@ class User implements User_Interface
      *     echo "Ошибка регистрации.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::User::_add_new_user_internal()
-     *          Защищённый метод, реализующий основную логику добавления нового пользователя.
+     * @see    PhotoRigma::Classes::User::_add_new_user_internal()
+     *         Защищённый метод, реализующий основную логику добавления нового пользователя.
      */
     public function add_new_user(array $post_data): int
     {
@@ -1222,7 +1354,7 @@ class User implements User_Interface
      *             - Если одно из значений уже существует, ошибка сохраняется в сессии.
      *          3. Если возникли ошибки, метод завершает выполнение и возвращает `0`.
      *          4. При успешной валидации добавляет нового пользователя в таблицу `TBL_USERS`, назначая ему группу по
-     *          умолчанию (`DEFAULT_GROUP`).
+     *             умолчанию (`DEFAULT_GROUP`).
      *             - Пароль хэшируется с использованием `password_hash()`.
      *             - Данные группы по умолчанию загружаются из таблицы `TBL_GROUP`.
      *          5. Возвращает ID нового пользователя или `0` в случае ошибки.
@@ -1234,27 +1366,27 @@ class User implements User_Interface
      *
      * @param array $post_data Массив данных из формы ($_POST), содержащий новые значения для полей пользователя:
      *                         - string $login: Логин пользователя (должен соответствовать регулярному выражению
-     *                         REG_LOGIN).
+     *                           REG_LOGIN).
      *                         - string $password: Пароль пользователя (не должен быть пустым).
      *                         - string $re_password: Повтор пароля (должен совпадать с $password).
      *                         - string $email: Email пользователя (должен соответствовать регулярному выражению
-     *                         REG_EMAIL).
+     *                           REG_EMAIL).
      *                         - string $real_name: Реальное имя пользователя (должно соответствовать регулярному
-     *                         выражению REG_NAME).
+     *                           выражению REG_NAME).
      *                         - string $captcha: Значение CAPTCHA (должно быть числом).
      *                         Все поля обязательны для заполнения.
      *
      * @return int ID нового пользователя, если регистрация успешна, или `0` в случае ошибки.
      *
      * @throws RuntimeException Выбрасывается, если группа по умолчанию не найдена в базе данных.
-     *                                  Пример сообщения:
-     *                                      Не удалось получить данные группы по умолчанию
-     * @throws PDOException Выбрасывается, если возникает ошибка при работе с базой данных.
-     *                                  Пример сообщения:
-     *                                      Ошибка при добавлении нового пользователя в базу данных
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных через `Work::check_input()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Параметр: [имя_поля]
+     *                          Пример сообщения:
+     *                              Не удалось получить данные группы по умолчанию
+     * @throws PDOException     Выбрасывается, если возникает ошибка при работе с базой данных.
+     *                          Пример сообщения:
+     *                              Ошибка при добавлении нового пользователя в базу данных
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных через
+     *                          `Work::check_input()`. Пример сообщения: Ошибка валидации входных данных | Параметр:
+     *                          [имя_поля]
      *
      * @note    Используется CAPTCHA для защиты от автоматической регистрации.
      *          Константы, используемые в методе:
@@ -1282,15 +1414,15 @@ class User implements User_Interface
      *     echo "Ошибка регистрации.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work::check_input()
+     * @see    PhotoRigma::Classes::Work::check_input()
      *         Метод для проверки правильности входных данных.
-     * @see     PhotoRigma::Include::log_in_file()
+     * @see    PhotoRigma::Include::log_in_file()
      *         Функция логирования ошибок.
-     * @see     PhotoRigma::Classes::User::$session
+     * @see    PhotoRigma::Classes::User::$session
      *         Свойство класса User, связанное с $_SESSION.
-     * @see     PhotoRigma::Classes::$db
+     * @see    PhotoRigma::Classes::$db
      *         Объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::User::add_new_user()
+     * @see    PhotoRigma::Classes::User::add_new_user()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _add_new_user_internal(array $post_data): int
@@ -1349,7 +1481,7 @@ class User implements User_Interface
                 ],
             ]
         );
-        $unique_check_result = $this->db->res_row();
+        $unique_check_result = $this->db->result_row();
 
         if ($unique_check_result) {
             if ($unique_check_result['login_count'] > 0) {
@@ -1388,7 +1520,7 @@ class User implements User_Interface
             'where'  => '`id` = :group_id',
             'params' => [':group_id' => DEFAULT_GROUP],
         ]);
-        $group_data = $this->db->res_row();
+        $group_data = $this->db->result_row();
 
         if (!$group_data) {
             throw new RuntimeException(
@@ -1432,9 +1564,11 @@ class User implements User_Interface
      *          `$this->session`) и удаляет указанный ключ, если он существует. Предназначен для прямого использования
      *          извне.
      *
+     * @callgraph
+     *
      * @param string $name Имя свойства, из которого удаляется ключ:
      *                     - Допустимые значения: 'user' (для массива данных пользователя) или 'session' (для массива
-     *                     данных сессии).
+     *                       данных сессии).
      *                     - Пример: "user".
      *                     Ограничения: только допустимые значения ('user' или 'session').
      * @param string $key  Ключ, который нужно удалить:
@@ -1463,8 +1597,8 @@ class User implements User_Interface
      * // Удаление ключа из массива $session
      * $user->unset_property_key('session', 'logged_in');
      * @endcode
-     * @see     PhotoRigma::Classes::User::_unset_property_key_internal()
-     *          Защищённый метод, реализующий основную логику удаления ключа из указанного свойства.
+     * @see    PhotoRigma::Classes::User::_unset_property_key_internal()
+     *         Защищённый метод, реализующий основную логику удаления ключа из указанного свойства.
      */
     public function unset_property_key(string $name, string $key): void
     {
@@ -1480,6 +1614,8 @@ class User implements User_Interface
      *          3. Если указанный массив недопустим (не 'user' и не 'session'), выбрасывается исключение.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `unset_property_key()`.
+     *
+     * @callergraph
      *
      * @param string $name Имя свойства, из которого удаляется ключ.
      *                     Допустимые значения: 'user' (для массива данных пользователя) или 'session'
@@ -1508,12 +1644,12 @@ class User implements User_Interface
      * // Удаление ключа из массива $session
      * $this->_unset_property_key_internal('session', 'logged_in');
      * @endcode
-     * @see     PhotoRigma::Classes::User::$user
-     *          Свойство класса User, содержащее данные пользователя.
-     * @see     PhotoRigma::Classes::User::$session
-     *          Свойство класса User, содержащее данные сессии.
-     * @see     PhotoRigma::Classes::User::unset_property_key()
-     *          Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::User::$user
+     *         Свойство класса User, содержащее данные пользователя.
+     * @see    PhotoRigma::Classes::User::$session
+     *         Свойство класса User, содержащее данные сессии.
+     * @see    PhotoRigma::Classes::User::unset_property_key()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _unset_property_key_internal(string $name, string $key): void
     {
@@ -1545,6 +1681,8 @@ class User implements User_Interface
      *          Он проверяет наличие CSRF-токена в сессии. Если токен отсутствует, он генерируется с использованием
      *          `random_bytes(32)` (64 символа) и сохраняется в сессии. Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @return string CSRF-токен длиной 64 символа (генерируется с использованием `random_bytes(32)`).
      *
      * @throws Random\RandomException Выбрасывается, если возникает ошибка при генерации случайных байтов.
@@ -1562,8 +1700,8 @@ class User implements User_Interface
      * $csrfToken = $user->csrf_token();
      * echo "CSRF Token: {$csrfToken}";
      * @endcode
-     * @see     PhotoRigma::Classes::User::_csrf_token_internal()
-     *          Защищённый метод, реализующий основную логику генерации или получения CSRF-токена.
+     * @see    PhotoRigma::Classes::User::_csrf_token_internal()
+     *         Защищённый метод, реализующий основную логику генерации или получения CSRF-токена.
      */
     public function csrf_token(): string
     {
@@ -1582,7 +1720,6 @@ class User implements User_Interface
      *          Основная логика вызывается через публичный метод-редирект `csrf_token()`.
      *
      * @callergraph
-     * @callgraph
      *
      * @return string CSRF-токен длиной 64 символа (генерируется с использованием `random_bytes(32)`).
      *
@@ -1600,10 +1737,10 @@ class User implements User_Interface
      * $token = $this->_csrf_token_internal();
      * echo "CSRF Token: {$token}";
      * @endcode
-     * @see     PhotoRigma::Classes::User::$session
-     *          Свойство класса User, содержащее данные сессии.
-     * @see     PhotoRigma::Classes::User::csrf_token()
-     *          Метод, предоставляющий публичный доступ к методу _csrf_token_internal().
+     * @see    PhotoRigma::Classes::User::$session
+     *         Свойство класса User, содержащее данные сессии.
+     * @see    PhotoRigma::Classes::User::csrf_token()
+     *         Метод, предоставляющий публичный доступ к методу _csrf_token_internal().
      */
     protected function _csrf_token_internal(): string
     {
@@ -1616,83 +1753,304 @@ class User implements User_Interface
     /**
      * @brief   Удаляет группу из системы через Админку.
      *
-     * @details Этот публичный метод выполняет удаление группы по её идентификатору.
-     *          - Для групп с ID 0 (Гость), 1 (Пользователь), 2 (Модератор) и 3 (Администратор) удаление запрещено.
-     *          - В текущей реализации метод не реализован и выбрасывает исключение.
-     *          Метод предназначен для прямого использования извне (например, через Админку).
+     * @details Метод является обёрткой для защищённого метода `_delete_group_internal()`.
+     *          Он предназначен для вызова из клиентского кода (например, интерфейса Админки).
+     *          Передаёт управление на внутренний метод с проверками и логикой удаления.
+     *          Не требует дополнительных параметров, кроме ID группы.
      *
-     * @param int $group_id Идентификатор группы.
-     *                      Должен быть положительным целым числом.
-     *                      Удаление запрещено для групп с ID: 0 (Гость), 1 (Пользователь), 2 (Модератор), 3
-     *                      (Администратор).
+     * @callgraph
      *
-     * @return bool Возвращает:
-     *              - `true`, если группа успешно удалена.
-     *              - `false`, если удаление не выполнено (например, для запрещенных ID).
+     * @param int $group_id ID группы, которую нужно удалить.
+     *                      Должен быть положительным целым числом (`> 0`).
+     *                      Пример: 123.
      *
-     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
-     *                           Причина: Метод пока не имеет логики обработки данных.
+     * @return bool `TRUE`, если группа успешно удалена.
+     *              `FALSE`, если:
+     *              - Группа защищена от удаления
+     *              - Ни одна строка не была изменена при обновлении/удалении
      *
-     * Пример вызова метода:
+     * @throws Exception При ошибках выполнения SQL-запросов или записи в log_in_file().
+     *
+     * @note    Реализация находится в `_delete_group_internal()`.
+     *          Для защиты от удаления используются константы `PROTECTED_GROUPS`.
+     *
+     * @warning Убедитесь, что вы действительно хотите удалить группу.
+     *          Удаление затрагивает пользователей, состоящих в группе.
+     *
+     * Пример использования:
      * @code
-     * $object = new \PhotoRigma\Classes\User();
-     * $result = $object->delete_group(123);
-     * if ($result) {
-     *     echo "Группа успешно удалена.";
+     * // Из админки
+     * if ($user->delete_group(123)) {
+     *     echo "Группа удалена";
      * } else {
-     *     echo "Удаление группы запрещено или произошла ошибка.";
+     *     echo "Ошибка удаления или группа защищена";
      * }
      * @endcode
-     * @todo    Продумать и реализовать метод.
-     *
-     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
-     *
+     * @see    PhotoRigma::Classes::User::_delete_group_internal()
+     *         Защищённый метод, реализующий основную логику удаления группы.
      */
     public function delete_group(int $group_id): bool
     {
-        throw new RuntimeException(
-            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление группы с ID: $group_id"
-        );
+        return $this->_delete_group_internal($group_id);
     }
 
     /**
-     * @brief   Удаляет пользователя через Админку.
+     * @brief   Удаляет группу из базы данных.
      *
-     * @details Этот публичный метод выполняет следующие действия:
-     *          - Удаляет все данные пользователя, включая файл аватара.
-     *          - Относительно удаления категорий и фото методы и способы еще не определены.
-     *          Метод предназначен для прямого использования извне (например, через Админку).
+     * @details Метод:
+     *          1. Проверяет, не находится ли $group_id в PROTECTED_GROUPS → если да → возвращает FALSE.
+     *          2. Переводит всех пользователей этой группы на DEFAULT_GROUP.
+     *          3. Удаляет запись группы из TBL_GROUP.
+     *          4. Возвращает TRUE, если были затронуты строки (то есть группа удалена), иначе FALSE.
+     *          Метод является защищённым и предназначен для вызова внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод delete_group().
      *
-     * @param int $user_id Идентификатор пользователя.
-     *                     Должен быть положительным целым числом.
+     * @callergraph
      *
-     * @return bool Возвращает:
-     *              - `true`, если пользователь успешно удален.
-     *              - `false`, если удаление не выполнено.
+     * @param int $group_id ID группы, которую нужно удалить.
+     *                      Должен быть положительным целым числом (`> 0`).
+     *                      Пример: 123.
      *
-     * @throws RuntimeException Выбрасывается исключение, если метод не реализован.
-     *                           Причина: Метод пока не имеет логики обработки данных.
+     * @return bool `TRUE`, если группа успешно удалена (затронуты строки).
+     *              `FALSE`, если:
+     *              - Группа защищена от удаления
+     *              - Ни одна строка не была изменена при обновлении/удалении
      *
-     * Пример вызова метода:
+     * @throws Exception При ошибках выполнения SQL-запросов или записи в log_in_file()
+     *
+     * @note    Реализация использует следующие константы:
+     *          - `TBL_USERS`: Таблица пользователей
+     *          - `TBL_GROUP`: Таблица групп
+     *          - `PROTECTED_GROUPS`: Массив защищённых ID групп
+     *          - `DEFAULT_GROUP`: ID группы по умолчанию
+     *
+     * @warning Убедитесь, что таблицы базы данных содержат корректные данные.
+     *          Удаление может повлиять на большое количество пользователей.
+     *
+     * Пример использования:
      * @code
-     * $object = new \PhotoRigma\Classes\User();
-     * $result = $object->delete_user(123);
-     * if ($result) {
-     *     echo "Пользователь успешно удален!";
+     * // Из метода delete_group()
+     * if ($this->_delete_group_internal(123)) {
+     *     echo "Группа удалена";
      * } else {
-     *     echo "Не удалось удалить пользователя.";
+     *     echo "Ошибка удаления или группа защищена";
      * }
      * @endcode
-     * @todo    Продумать и реализовать метод.
-     *
-     * @warning Метод в текущей реализации не реализован и выбрасывает исключение.
-     *
+     * @see    PhotoRigma::Classes::User::delete_group()
+     *         Публичный метод-редирект для вызова этой логики.
      */
-    public function delete_user(int $user_id): bool
+    protected function _delete_group_internal(int $group_id): bool
     {
-        throw new RuntimeException(
-            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Метод не реализован | Удаление пользователя с ID: $user_id"
+        // 1. Проверяем, защищена ли группа от удаления
+        if (in_array($group_id, PROTECTED_GROUPS, true)) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                "Невозможно удалить защищенную группу | ID: $group_id"
+            );
+            return false;
+        }
+
+        // 2. Переводим всех пользователей группы на DEFAULT_GROUP
+        $this->db->update(
+            ['`group_id`' => ':new_group_id'],
+            TBL_USERS,
+            [
+                'where' => '`group_id` = :old_group_id',
+                'params' => [
+                    ':new_group_id' => DEFAULT_GROUP,
+                    ':old_group_id' => $group_id
+                ]
+            ]
         );
+
+        // 3. Удаляем саму группу
+        $this->db->delete(TBL_GROUP, [
+            'where' => '`id` = :group_id',
+            'params' => [':group_id' => $group_id]
+        ]);
+
+        // 4. Возвращаем результат
+        return (bool)$this->db->get_affected_rows();
+    }
+
+    /**
+     * @brief   Публичный метод-редирект для выполнения мягкого или окончательного удаления пользователя.
+     *
+     * @details Предназначен для прямого вызова из клиентского кода. Передаёт управление
+     *          защищённому методу `_delete_user_internal()`, который реализует основную логику:
+     *          - Проверяет, не пытается ли администратор удалить сам себя
+     *          - При окончательном удалении:
+     *            a) Инициатором считается текущий пользователь
+     *            b) Проверяется, что это администратор (`$this->user['admin']`)
+     *            c) Сессия админа должна быть подтверждена (`$this->session['admin_on']`)
+     *            d) Запрещено удалять последнего админа
+     *          Поддерживает мягкое удаление (пометка `deleted_at`) и окончательное удаление (через cron или админку).
+     *
+     * @callgraph
+     *
+     * @param int      $user_id   ID пользователя, которого нужно удалить.
+     *                            Должен быть положительным целым числом (`> 0`).
+     *                            Пример: 123.
+     * @param bool     $permanent [optional] Указывает, какое удаление выполнить:
+     *                            - `FALSE` (по умолчанию): мягкое удаление (помечаем `deleted_at`)
+     *                            - `TRUE`: окончательное удаление (удаляем запись из БД)
+     *
+     * @return bool `TRUE`, если удаление прошло успешно, `FALSE` в случае ошибки:
+     *              - Пользователь не найден
+     *              - Ограничение безопасности (самоудаление админа, последний админ)
+     *              - Не удалось выполнить SQL-запрос
+     *
+     * @throws Exception Выбрасывается, если произошла ошибка на уровне СУБД (например, ошибка запроса).
+     *                   Это позволяет внешнему коду обрабатывать такие ошибки отдельно.
+     *
+     * @note    Подробнее о работе удаления см. в защищённом методе `_delete_user_internal()`.
+     *
+     * Пример использования:
+     * @code
+     * // Мягкое удаление
+     * $success = $user->delete_user(123);
+     *
+     * // Окончательное удаление из админки
+     * $success = $user->delete_user(123, true);
+     * @endcode
+     * @see    PhotoRigma::Classes::User::_delete_user_internal()
+     *         Защищённый метод, реализующий основную логику удаления пользователя.
+     */
+    public function delete_user(int $user_id, bool $permanent = false): bool
+    {
+        return $this->_delete_user_internal($user_id, $permanent);
+    }
+
+    /**
+     * @brief   Выполняет мягкое или окончательное удаление пользователя с предварительными проверками.
+     *
+     * @details Метод реализует следующую логику:
+     *          1. Получает данные пользователя по `$user_id`.
+     *             - Если пользователь не найден — возвращает `FALSE`.
+     *          2. Проверяет, не пытается ли пользователь удалить сам себя:
+     *             - Если это администратор — запрещено даже мягкое удаление → возвращает `FALSE`.
+     *          3. При попытке окончательного удаления (`$permanent = TRUE`):
+     *             a) Инициатором считается текущий пользователь
+     *             b) Проверяется, что инициатор — администратор (`$this->user['admin']`)
+     *             c) Сессия админа должна быть подтверждена (`$this->session['admin_on']`)
+     *             d) Самоудаление админом запрещено
+     *             e) Если удаляется администратор, дополнительно проверяется наличие других активных админов
+     *                - Если он последний — запрещено → возвращаем `FALSE`
+     *          4. В зависимости от флага `$permanent`, вызывает:
+     *             - `_soft_delete($user_id)` — для пометки аккаунта как удалённого
+     *             - `_hard_delete_user_internal($user_id, true)` — для окончательного удаления
+     *          Все действия логируются через функцию `log_in_file()`.
+     *
+     *          Этот метод является защищённым и предназначен для использования внутри класса
+     *          или его наследников. Он служит центральной точкой входа для всех типов удаления.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param int      $user_id   ID пользователя, которого нужно удалить.
+     *                             Должен быть положительным целым числом (`> 0`).
+     *                             Пример: 123.
+     * @param bool     $permanent [optional] Указывает, какое удаление выполнить:
+     *                             - `FALSE` (по умолчанию): мягкое удаление (помечаем `deleted_at`)
+     *                             - `TRUE`: окончательное удаление (через метод _hard_delete_user_internal())
+     *
+     * @return bool `TRUE`, если удаление прошло успешно, `FALSE` в случае ошибки:
+     *              - Пользователь не найден
+     *              - Нарушены ограничения безопасности (самоудаление админа, последний админ)
+     *              - Не удалось выполнить SQL-запрос
+     *
+     * @throws Exception Выбрасывается, если произошла ошибка на уровне СУБД (например, ошибка запроса).
+     *                   Это позволяет внешнему коду обрабатывать такие ошибки отдельно.
+     *
+     * @note    Для работы метода необходимо:
+     *          - Поле `group_id` должно содержать корректную группу пользователя
+     *          - Константа GROUP_ADMIN должна быть определена
+     *          - При окончательном удалении должна быть установлена сессия админа (`$this->session['admin_on']`)
+     * @note    Мягкое удаление доступно всем, кроме администраторов (или их попытки самоудаления)
+     * @note    Окончательное удаление доступно только админам, и только если они не являются последним активным админом
+     *
+     * @warning Метод не выбрасывает исключений при бизнес-ошибках (например, "недостаточно прав").
+     *          Вместо этого он возвращает `FALSE` и пишет событие в лог.
+     *
+     * Пример использования метода _delete_user_internal():
+     * @code
+     * // Мягкое удаление
+     * $success = $this->_delete_user_internal(123);
+     *
+     * // Окончательное удаление из админки
+     * $success = $this->_delete_user_internal(123, true);
+     * @endcode
+     * @see    PhotoRigma::Classes::User::delete_user()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::User::_soft_delete()
+     *         Метод для выполнения мягкого удаления.
+     * @see    PhotoRigma::Classes::User::_hard_delete_user_internal()
+     *         Метод для выполнения окончательного удаления.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для записи логов.
+     */
+    protected function _delete_user_internal(int $user_id, bool $permanent = false): bool
+    {
+        // 1. Получаем данные пользователя
+        $this->db->select(
+            ['`id`', '`group_id`', '`deleted_at`', '`permanently_deleted`'],
+            TBL_USERS,
+            ['where' => '`id` = :id', 'params' => [':id' => $user_id]]
+        );
+        $user_data = $this->db->result_row();
+
+        if (!$user_data) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь с ID $user_id не найден"
+            );
+            return false;
+        }
+
+        // 2. Проверяем, не удаляем ли мы самого себя
+        if ((int)$user_data['id'] === $this->session['login_id'] && (int)$user_data['group_id'] === GROUP_ADMIN) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Администратор не может удалить сам себя | ID: $user_id"
+            );
+            return false;
+        }
+
+        // 3. Проверяем права на окончательное удаление
+        if ($permanent) {
+            // Только админ с подтверждённой сессией может окончательно удалить
+            if (
+                !$this->user['admin'] ||
+                !$this->session['admin_on']
+            ) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Только админ с подтвержденной сессией может окончательно удалить | ID: $user_id"
+                );
+                return false;
+            }
+
+            // Проверяем, не последний ли это админ
+            $this->db->select('COUNT(*) AS cnt', TBL_USERS, [
+                'where' => '`group_id` = :group AND `id` != :exclude_id AND `permanently_deleted` = 0',
+                'params' => [
+                    ':group' => GROUP_ADMIN,
+                    ':exclude_id' => $user_id,
+                ],
+            ]);
+            $count_result = $this->db->result_row();
+            $admin_count = (int)$count_result['cnt'];
+
+            if ($admin_count <= 0) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Невозможно удалить последнего админа | ID: $user_id"
+                );
+                return false;
+            }
+
+            // Вызываем окончательное удаление с флагом force = true
+            return $this->_hard_delete_user_internal($user_id, true);
+        }
+
+        // 4. Выполняем мягкое удаление
+        return $this->_soft_delete($user_id);
     }
 
     /**
@@ -1701,6 +2059,8 @@ class User implements User_Interface
      * @details Этот публичный метод является обёрткой для защищённого метода _update_group_data_internal().
      *          Он проверяет и обновляет название группы, если оно изменилось, обновляет права доступа группы и
      *          возвращает обновленные данные. Предназначен для прямого использования извне (например, через Админку).
+     *
+     * @callgraph
      *
      * @param array $group_data Данные группы:
      *                          - `name`: Текущее название группы.
@@ -1717,14 +2077,14 @@ class User implements User_Interface
      *               - Все поля, указанные в свойстве класса `user_right_fields`.
      *
      * @throws RuntimeException Выбрасывается, если произошла ошибка при обновлении данных в БД.
-     *                                  Пример сообщения:
-     *                                      Ошибка при обновлении данных группы | ID: [id_group]
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
-     *                                  Пример сообщения:
-     *                                      Ошибка при кодировании прав доступа в JSON
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
+     *                          Пример сообщения:
+     *                              Ошибка при обновлении данных группы | ID: [id_group]
+     * @throws JsonException    Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
+     *                          Пример сообщения:
+     *                              Ошибка при кодировании прав доступа в JSON
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных.
+     *                          Пример сообщения:
+     *                              Ошибка валидации входных данных | Поле: [имя_поля]
      *
      * @note    Метод использует следующие константы:
      *          - `TBL_GROUP`: Имя таблицы групп в базе данных. Например: '`groups`'.
@@ -1751,8 +2111,8 @@ class User implements User_Interface
      * $result = $object->update_group_data($group_data, $post_data);
      * print_r($result);
      * @endcode
-     * @see     PhotoRigma::Classes::User::_update_group_data_internal()
-     *          Защищённый метод, реализующий основную логику обновления данных группы.
+     * @see    PhotoRigma::Classes::User::_update_group_data_internal()
+     *         Защищённый метод, реализующий основную логику обновления данных группы.
      */
     public function update_group_data(array $group_data, array $post_data): array
     {
@@ -1795,14 +2155,14 @@ class User implements User_Interface
      *               - Все поля, указанные в свойстве класса `user_right_fields`.
      *
      * @throws RuntimeException Выбрасывается, если произошла ошибка при обновлении данных в БД.
-     *                                  Пример сообщения:
-     *                                      Ошибка при обновлении данных группы | ID: [id_group]
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
-     *                                  Пример сообщения:
-     *                                      Ошибка при кодировании прав доступа в JSON
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных через `Work::check_input()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
+     *                          Пример сообщения:
+     *                              Ошибка при обновлении данных группы | ID: [id_group]
+     * @throws JsonException    Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
+     *                          Пример сообщения:
+     *                              Ошибка при кодировании прав доступа в JSON
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных через
+     *                          `Work::check_input()`. Пример сообщения: Ошибка валидации входных данных | Поле:
+     *                          [имя_поля]
      *
      * @note    Метод использует следующие константы:
      *          - `TBL_GROUP`: Имя таблицы групп в базе данных. Например: '`groups`'.
@@ -1828,13 +2188,13 @@ class User implements User_Interface
      * $result = $this->_update_group_data_internal($group_data, $post_data);
      * print_r($result);
      * @endcode
-     * @see     PhotoRigma::Classes::User::$user_right_fields
+     * @see    PhotoRigma::Classes::User::$user_right_fields
      *         Свойство, содержащее массив с допустимыми полями прав пользователя.
-     * @see     PhotoRigma::Classes::User::process_user_rights()
+     * @see    PhotoRigma::Classes::User::_process_user_rights_internal()
      *         Метод, декодирующий JSON-строку прав пользователя в массив.
-     * @see     PhotoRigma::Classes::User::encode_user_rights()
+     * @see    PhotoRigma::Classes::User::_encode_user_rights_internal()
      *         Метод, кодирующий массив прав пользователя в JSON-строку для хранения в БД.
-     * @see     PhotoRigma::Classes::User::update_group_data()
+     * @see    PhotoRigma::Classes::User::update_group_data()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _update_group_data_internal(array $group_data, array $post_data): array
@@ -1879,7 +2239,7 @@ class User implements User_Interface
         }
 
         // Кодируем права доступа для сохранения в базе данных
-        $encoded_group_rights = $this->encode_user_rights($new_group_rights);
+        $encoded_group_rights = $this->_encode_user_rights_internal($new_group_rights);
 
         // Обновляем права доступа группы в базе данных
         $this->db->update(
@@ -1899,7 +2259,7 @@ class User implements User_Interface
             $group_data = array_merge($group_data, $new_group_rights);
         } else {
             // Если данные не изменились, обрабатываем права доступа через process_user_rights
-            $group_data = array_merge($group_data, $this->process_user_rights($group_data['user_rights']));
+            $group_data = array_merge($group_data, $this->_process_user_rights_internal($group_data['user_rights']));
         }
 
         // Удаляем ключ user_rights из результирующего массива, если он существует
@@ -1917,6 +2277,8 @@ class User implements User_Interface
      *          Он проверяет корректность входных данных, преобразует массив прав в строку JSON и возвращает результат.
      *          Предназначен для прямого использования извне.
      *
+     * @callgraph
+     *
      * @param array $rights Массив прав пользователя:
      *                      - Может быть ассоциативным массивом, пустым значением или `null`.
      *                      - Пример: ['edit' => true, 'delete' => false].
@@ -1928,7 +2290,7 @@ class User implements User_Interface
      * @throws InvalidArgumentException Выбрасывается, если входное значение не является массивом.
      *                                  Пример сообщения:
      *                                      Некорректный тип данных | Ожидался массив
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании массива в JSON.
+     * @throws JsonException            Выбрасывается, если возникает ошибка при кодировании массива в JSON.
      *                                  Пример сообщения:
      *                                      Ошибка кодирования JSON | [описание ошибки]
      *
@@ -1951,8 +2313,8 @@ class User implements User_Interface
      * $json = $object->encode_user_rights([]);
      * echo "JSON-строка: $json"; // Выведет: {}
      * @endcode
-     * @see     PhotoRigma::Classes::User::_encode_user_rights_internal()
-     *          Защищённый метод, реализующий основную логику преобразования массива прав в строку JSON.
+     * @see    PhotoRigma::Classes::User::_encode_user_rights_internal()
+     *         Защищённый метод, реализующий основную логику преобразования массива прав в строку JSON.
      */
     public function encode_user_rights(array $rights): string
     {
@@ -1964,9 +2326,9 @@ class User implements User_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет, существует ли входной массив. Если массив отсутствует или пуст, возвращается пустая
-     *          строка.
+     *             строка.
      *          2. Проверяет, что входное значение является массивом. Если тип данных некорректен, выбрасывается
-     *          исключение.
+     *             исключение.
      *          3. Кодирует массив в строку JSON с использованием `json_encode()` и флагов:
      *             - `JSON_THROW_ON_ERROR`: Генерирует исключение при ошибках кодирования.
      *             - `JSON_UNESCAPED_UNICODE`: Сохраняет Unicode-символы без экранирования.
@@ -1987,7 +2349,7 @@ class User implements User_Interface
      * @throws InvalidArgumentException Выбрасывается, если входное значение не является массивом.
      *                                  Пример сообщения:
      *                                      Некорректный тип данных | Ожидался массив
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании массива в JSON.
+     * @throws JsonException            Выбрасывается, если возникает ошибка при кодировании массива в JSON.
      *                                  Пример сообщения:
      *                                      Ошибка кодирования JSON | [описание ошибки]
      *
@@ -2007,7 +2369,7 @@ class User implements User_Interface
      * $json = $this->_encode_user_rights_internal([]);
      * echo "JSON-строка: $json"; // Выведет: {}
      * @endcode
-     * @see     PhotoRigma::Classes::User::encode_user_rights()
+     * @see    PhotoRigma::Classes::User::encode_user_rights()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _encode_user_rights_internal(array $rights): string
@@ -2038,11 +2400,98 @@ class User implements User_Interface
      * @details Этот публичный метод является обёрткой для защищённого метода _login_user_internal().
      *          Он проверяет корректность входных данных (логин и пароль), ищет пользователя в базе данных, проверяет
      *          пароль и выполняет "мягкое" обновление паролей на новый формат хранения (`password_hash()`).
+     *          Поддерживает восстановление аккаунтов, временно удалённых через мягкое удаление,
+     *          если срок восстановления ещё не истёк.
      *          Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @param array  $post         Массив данных из формы ($_POST), содержащий ключи:
      *                             - string $login: Логин пользователя (должен соответствовать регулярному выражению
-     *                             REG_LOGIN).
+     *                               REG_LOGIN).
+     *                             - string $password: Пароль пользователя (не должен быть пустым).
+     * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
+     *                             Ограничения: должен быть валидным URL.
+     *
+     * @return int ID пользователя, если авторизация успешна, или `0` в случае ошибки.
+     *
+     * @throws Exception Выбрасывается, если:
+     *                   - Возникает ошибка при проверке входных данных через `Work::check_input()`.
+     *                     Пример сообщения:
+     *                         Ошибка валидации входных данных | Поле: [имя_поля]
+     *                   - Возникает ошибка при логировании событий через `log_in_file()`.
+     *                     Пример сообщения:
+     *                         Ошибка логирования события | Действие: login
+     *
+     * @note    Поддерживается совместимость со старым форматом хранения паролей (md5). При обнаружении старого формата
+     *          пароль автоматически обновляется до формата `password_hash()`.
+     *          Также поддерживается восстановление аккаунтов, временно удалённых через мягкое удаление,
+     *          если срок восстановления ещё не истёк.
+     *          Константы, используемые в методе:
+     *          - `REG_LOGIN`: Регулярное выражение для проверки логина.
+     *            Пример: `/^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9_]$/`.
+     *            - Допустимые символы: латинские буквы, цифры, подчеркивание (_), дефис (-).
+     *            - Первый символ должен быть буквой или цифрой.
+     *            - Последний символ должен быть буквой, цифрой или подчеркиванием.
+     *            - Максимальная длина: 32 символа.
+     *          - `TBL_USERS`: Имя таблицы пользователей в базе данных. Например: '`users`'.
+     *          Эти константы позволяют гибко настраивать поведение метода.
+     *
+     * @warning Метод зависит от корректной конфигурации базы данных. Убедитесь, что таблица пользователей и поля
+     *          (`id`, `login`, `password`, `deleted_at`, `permanently_deleted`) настроены правильно.
+     *          Невалидные данные могут привести к исключениям.
+     *
+     * Пример использования:
+     * @code
+     * // Вызов метода из клиентского кода
+     * $user = new \PhotoRigma\Classes\User();
+     * $redirectUrl = '/login/error';
+     * $userId = $user->login_user($_POST, $redirectUrl);
+     * if ($userId > 0) {
+     *     echo "Вход выполнен успешно! ID пользователя: {$userId}";
+     * } else {
+     *     echo "Ошибка входа.";
+     * }
+     * @endcode
+     * @see    PhotoRigma::Classes::User::_login_user_internal()
+     *         Защищённый метод, реализующий основную логику проверки данных пользователя для входа.
+     */
+    public function login_user(array $post, string $redirect_url): int
+    {
+        return $this->_login_user_internal($post, $redirect_url);
+    }
+
+    /**
+     * @brief   Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат
+     *          хранения.
+     *
+     * @details Этот метод выполняет следующие шаги:
+     *          1. Проверяет корректность входных данных (логин и пароль) с использованием `Work::check_input()`.
+     *             - Логин проверяется на соответствие регулярному выражению `REG_LOGIN`.
+     *             - Пароль проверяется на пустоту.
+     *             Если данные некорректны, пользователь перенаправляется на указанный URL (`$redirect_url`).
+     *          2. Ищет пользователя в базе данных по логину:
+     *             - Если пользователь не найден, происходит перенаправление на `$redirect_url`.
+     *          3. Проверяет статус удаления пользователя:
+     *             - Если установлен флаг `permanently_deleted`, доступ запрещён.
+     *             - Если установлена дата `deleted_at` и срок восстановления истёк, доступ запрещён.
+     *             - Если срок восстановления не истёк, аккаунт восстанавливается (обнуляется `deleted_at`).
+     *          4. Проверяет пароль через `password_verify()`:
+     *             - Если проверка успешна, возвращается ID пользователя.
+     *             - Если проверка не проходит, выполняется дополнительная проверка через `md5` для поддержки старого
+     *               формата хранения паролей.
+     *          5. Если пароль хранится в старом формате (md5), он обновляется до формата `password_hash()` и
+     *             сохраняется в базе данных.
+     *          6. Возвращает ID пользователя или `0` в случае ошибки.
+     *          Этот метод является защищённым и предназначен для использования внутри класса или его наследников.
+     *          Основная логика вызывается через публичный метод-редирект `login_user()`.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @param array  $post         Массив данных из формы ($_POST), содержащий ключи:
+     *                             - string $login: Логин пользователя (должен соответствовать регулярному выражению
+     *                               REG_LOGIN).
      *                             - string $password: Пароль пользователя (не должен быть пустым).
      * @param string $redirect_url URL для перенаправления пользователя в случае возникновения ошибок.
      *                             Ограничения: должен быть валидным URL.
@@ -2070,83 +2519,8 @@ class User implements User_Interface
      *          Эти константы позволяют гибко настраивать поведение метода.
      *
      * @warning Метод зависит от корректной конфигурации базы данных. Убедитесь, что таблица пользователей и поля
-     *          (`id`, `login`, `password`) настроены правильно. Невалидные данные могут привести к исключениям.
-     *
-     * Пример использования:
-     * @code
-     * // Вызов метода из клиентского кода
-     * $user = new \PhotoRigma\Classes\User();
-     * $redirectUrl = '/login/error';
-     * $userId = $user->login_user($_POST, $redirectUrl);
-     * if ($userId > 0) {
-     *     echo "Вход выполнен успешно! ID пользователя: {$userId}";
-     * } else {
-     *     echo "Ошибка входа.";
-     * }
-     * @endcode
-     * @see     PhotoRigma::Classes::User::_login_user_internal()
-     *          Защищённый метод, реализующий основную логику проверки данных пользователя для входа.
-     */
-    public function login_user(array $post, string $redirect_url): int
-    {
-        return $this->_login_user_internal($post, $redirect_url);
-    }
-
-    /**
-     * @brief   Проверяет данные пользователя для входа в систему с "мягким" обновлением паролей на новый формат
-     *          хранения.
-     *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет корректность входных данных (логин и пароль) с использованием `Work::check_input()`.
-     *             - Логин проверяется на соответствие регулярному выражению `REG_LOGIN`.
-     *             - Пароль проверяется на пустоту.
-     *             Если данные некорректны, пользователь перенаправляется на указанный URL (`$redirect_url`).
-     *          2. Ищет пользователя в базе данных по логину:
-     *             - Если пользователь не найден, происходит перенаправление на `$redirect_url`.
-     *          3. Проверяет пароль через `password_verify()`:
-     *             - Если проверка успешна, возвращается ID пользователя.
-     *             - Если проверка не проходит, выполняется дополнительная проверка через `md5` для поддержки старого
-     *             формата хранения паролей.
-     *          4. Если пароль хранится в старом формате (md5), он обновляется до формата `password_hash()` и
-     *          сохраняется в базе данных.
-     *          5. Возвращает ID пользователя или `0` в случае ошибки.
-     *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод-редирект `login_user()`.
-     *
-     * @callergraph
-     * @callgraph
-     *
-     * @param array  $post           Массив данных из формы ($_POST), содержащий ключи:
-     *                               - string $login: Логин пользователя (должен соответствовать регулярному выражению
-     *                               REG_LOGIN).
-     *                               - string $password: Пароль пользователя (не должен быть пустым).
-     * @param string $redirect_url   URL для перенаправления пользователя в случае возникновения ошибок.
-     *                               Ограничения: должен быть валидным URL.
-     *
-     * @return int ID пользователя, если авторизация успешна, или `0` в случае ошибки.
-     *
-     * @throws Exception Выбрасывается, если:
-     *                   - Возникает ошибка при проверке входных данных через `Work::check_input()`.
-     *                   - Возникает ошибка при логировании событий через `log_in_file()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
-     *                                  Пример сообщения:
-     *                                      Ошибка логирования события | Действие: login
-     *
-     * @note    Поддерживается совместимость со старым форматом хранения паролей (md5). При обнаружении старого формата
-     *          пароль автоматически обновляется до формата `password_hash()`.
-     *          Константы, используемые в методе:
-     *          - `REG_LOGIN`: Регулярное выражение для проверки логина.
-     *            Пример: `/^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9_]$/`.
-     *            - Допустимые символы: латинские буквы, цифры, подчеркивание (_), дефис (-).
-     *            - Первый символ должен быть буквой или цифрой.
-     *            - Последний символ должен быть буквой, цифрой или подчеркиванием.
-     *            - Максимальная длина: 32 символа.
-     *          - `TBL_USERS`: Имя таблицы пользователей в базе данных. Например: '`users`'.
-     *          Эти константы позволяют гибко настраивать поведение метода.
-     *
-     * @warning Метод зависит от корректной конфигурации базы данных. Убедитесь, что таблица пользователей и поля
-     *          (`id`, `login`, `password`) настроены правильно. Невалидные данные могут привести к исключениям.
+     *          (`id`, `login`, `password`, `deleted_at`, `permanently_deleted`) настроены правильно.
+     *          Невалидные данные могут привести к исключениям.
      *
      * Пример использования метода _login_user_internal():
      * @code
@@ -2158,14 +2532,16 @@ class User implements User_Interface
      *     echo "Ошибка входа.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work::check_input()
+     * @see    PhotoRigma::Classes::Work::check_input()
      *         Метод для проверки правильности входных данных.
-     * @see     PhotoRigma::Classes::User::$db
+     * @see    PhotoRigma::Classes::User::$db
      *         Свойство, содержащее объект класса Database.
-     * @see     PhotoRigma::Include::log_in_file()
+     * @see    PhotoRigma::Include::log_in_file()
      *         Функция логирования событий.
-     * @see     PhotoRigma::Classes::User::login_user()
+     * @see    PhotoRigma::Classes::User::login_user()
      *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::User::_is_soft_delete_expired_internal()
+     *         Метод для проверки истечения срока мягкого удаления.
      */
     protected function _login_user_internal(array $post, string $redirect_url): int
     {
@@ -2185,39 +2561,84 @@ class User implements User_Interface
 
         // === 2. Поиск пользователя в базе данных по логину ===
         $this->db->select(
-            ['`id`', '`login`', '`password`'], // Список полей для выборки
-            TBL_USERS, // Имя таблицы
+            ['`id`', '`login`', '`password`', '`deleted_at`', '`permanently_deleted`'],
+            TBL_USERS,
             [
-                'where'  => '`login` = :login', // Условие WHERE
-                'params' => [':login' => $post['login']], // Параметры для prepared statements
+                'where'  => '`login` = :login',
+                'params' => [':login' => $post['login']],
             ]
         );
-        $user_data = $this->db->res_row();
+        $user_data = $this->db->result_row();
 
         if ($user_data === false) {
             // Пользователь с указанным логином не найден
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка получения данных пользователя | Логин: {$post['login']}"
+            );
             header('Location: ' . $redirect_url);
             exit;
         }
 
-        // === 3. Проверка пароля ===
-        if (!password_verify($post['password'], $user_data['password'])) {
-            // Если проверка через password_verify() не прошла, проверяем пароль через md5
-            if (md5($post['password']) !== $user_data['password']) {
-                // Пароль неверный
+        // === 3. Проверяем статус удаления ===
+        if (!empty($user_data['permanently_deleted'])) {
+            // Пользователь окончательно удалён
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка входа заблокированного пользователя ID: {$user_data['id']}"
+            );
+            header('Location: ' . $redirect_url);
+            exit;
+        }
+
+        if (!empty($user_data['deleted_at'])) {
+            // Пользователь мягко удалён — проверяем истечение срока
+            if ($this->_is_soft_delete_expired_internal($user_data['deleted_at'])['expired']) {
+                // Срок истёк — считаем аккаунт окончательно удалённым
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Срок восстановления истёк | Пользователь ID: {$user_data['id']}"
+                );
                 header('Location: ' . $redirect_url);
                 exit;
             }
 
-            // Пароль верный, но хранится в формате md5. Преобразуем его в формат password_hash()
+            // Срок не истёк — восстанавливаем аккаунт
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Аккаунт мягко удалён, но срок восстановления не истёк | Пользователь ID: {$user_data['id']}"
+            );
+
+            $this->db->update(
+                ['`deleted_at`' => 'NULL'],
+                TBL_USERS,
+                ['where' => '`id` = :id', 'params' => [':id' => $user_data['id']]]
+            );
+
+            $rows = $this->db->get_affected_rows();
+            if ($rows <= 0) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка восстановления аккаунта | Пользователь ID: {$user_data['id']}"
+                );
+            }
+        }
+
+        // === 4. Проверка пароля ===
+        if (!password_verify($post['password'], $user_data['password'])) {
+            // Если проверка через password_verify() не прошла, проверяем через md5
+            if (md5($post['password']) !== $user_data['password']) {
+                // Пароль неверный
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный пароль | Логин: {$post['login']}"
+                );
+                header('Location: ' . $redirect_url);
+                exit;
+            }
+
+            // Пароль верный, но хранится в формате md5. Преобразуем его в password_hash()
             $new_password_hash = password_hash($post['password'], PASSWORD_BCRYPT);
 
-            // Обновляем пароль в базе данных
             $this->db->update(
-                ['`password`' => ':password'], // Данные для обновления
-                TBL_USERS, // Таблица
+                ['`password`' => ':password'],
+                TBL_USERS,
                 [
-                    'where'  => '`id` = :id', // Условие WHERE
+                    'where'  => '`id` = :id',
                     'params' => [
                         ':password' => $new_password_hash,
                         ':id'       => $user_data['id'],
@@ -2225,22 +2646,19 @@ class User implements User_Interface
                 ]
             );
 
-            // Проверяем результат обновления
             $rows = $this->db->get_affected_rows();
             if ($rows > 0) {
-                // Пароль успешно обновлён
                 log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешное обновление пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пароль успешно обновлён до нового формата | Пользователь ID: {$user_data['id']}"
                 );
             } else {
-                // Ошибка при обновлении пароля
                 log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Действие: login, Пользователь ID: {$this->session['login_id']}"
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка обновления пароля | Пользователь ID: {$user_data['id']}"
                 );
             }
         }
 
-        // === 4. Возвращаем ID пользователя ===
+        // === 5. Возвращаем ID пользователя ===
         return $user_data['id'];
     }
 
@@ -2249,8 +2667,9 @@ class User implements User_Interface
      *
      * @details Этот публичный метод является обёрткой для защищённого метода _update_user_data_internal().
      *          Он проверяет существование пользователя, валидирует и обновляет пароль, email, имя, аватар, язык и
-     *          тему,
-     *          а также удаляет старый аватар при необходимости. Предназначен для прямого использования извне.
+     *          тему, а также удаляет старый аватар при необходимости. Предназначен для прямого использования извне.
+     *
+     * @callgraph
      *
      * @param int   $user_id    Идентификатор пользователя, данные которого необходимо обновить:
      *                          - Должен быть положительным целым числом и существовать в базе данных.
@@ -2260,9 +2679,9 @@ class User implements User_Interface
      *                          - string $password: Текущий пароль пользователя (обязательно для изменения пароля).
      *                          - string $edit_password: Новый пароль пользователя (необязательно).
      *                          - string $re_password: Повторный ввод нового пароля (должен совпадать с
-     *                          `edit_password`).
+     *                            `edit_password`).
      *                          - string $email: Новый email пользователя (должен соответствовать регулярному выражению
-     *                          REG_EMAIL).
+     *                            REG_EMAIL).
      *                          - string $real_name: Новое имя пользователя (должно быть строкой).
      *                          Все поля проходят валидацию перед использованием.
      * @param array $files_data Массив данных загруженного файла ($_FILES), содержащий информацию об аватаре:
@@ -2270,7 +2689,7 @@ class User implements User_Interface
      *                          Если файл не передан или не проходит валидацию, аватар остается без изменений.
      * @param int   $max_size   Максимальный размер файла для аватара в байтах:
      *                          - Определяется на основе конфигурации приложения и ограничений PHP (например,
-     *                          post_max_size).
+     *                            post_max_size).
      *                          - Пример: 5 * 1024 * 1024 (5 MB).
      *                          Ограничения: значение должно быть положительным целым числом.
      *
@@ -2278,23 +2697,19 @@ class User implements User_Interface
      *             Возвращается `0`, если данные не изменились или запрос завершился ошибкой.
      *
      * @throws RuntimeException Выбрасывается, если пользователь с указанным `$user_id` не найден в базе данных.
-     *                                  Пример сообщения:
-     *                                      Пользователь не найден | ID: [user_id]
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных через `Work::check_input()`
-     *                   или при обработке аватара через `edit_avatar()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
+     *                          Пример сообщения:
+     *                              Пользователь не найден | ID: [user_id]
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных через
+     *                          `Work::check_input()` или при обработке аватара через `_edit_avatar()`.
+     *                          Пример сообщения:
+     *                              Ошибка валидации входных данных | Поле: [имя_поля]
      *
-     * @note    Для обработки аватаров используется метод `edit_avatar()`. Старый аватар удаляется, если новый успешно
+     * @note    Для обработки аватаров используется метод `_edit_avatar()`. Старый аватар удаляется, если новый успешно
      *          загружен и отличается от старого. Константы, используемые в методе:
      *          - `DEFAULT_AVATAR`: Имя аватара по умолчанию. Например: `'no_avatar.jpg'`.
      *          - `TBL_USERS`: Имя таблицы пользователей в базе данных. Например: '`users`'.
      *          - `REG_EMAIL`: Регулярное выражение для проверки email.
      *            Пример: `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`.
-     *            - Допустимые символы: латинские буквы, цифры, точки (.), дефисы (-), подчеркивания (_) и знаки
-     *            процента (%).
-     *            - Доменное имя должно содержать хотя бы одну точку (.).
-     *            - Минимальная длина доменной части: 2 символа.
      *          Эти константы позволяют гибко настраивать поведение метода.
      *
      * @warning Не используйте этот метод для массового обновления данных. Он предназначен только для работы с одним
@@ -2313,8 +2728,8 @@ class User implements User_Interface
      *     echo "Ошибка при обновлении данных.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::User::_update_user_data_internal()
-     *          Защищённый метод, реализующий основную логику обновления данных пользователя.
+     * @see    PhotoRigma::Classes::User::_update_user_data_internal()
+     *         Защищённый метод, реализующий основную логику обновления данных пользователя.
      */
     public function update_user_data(int $user_id, array $post_data, array $files_data, int $max_size): int
     {
@@ -2326,13 +2741,13 @@ class User implements User_Interface
      *
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет существование пользователя с указанным `$user_id` в базе данных. Если пользователь не
-     *          найден, выбрасывается исключение.
+     *             найден, выбрасывается исключение.
      *          2. Валидирует и обновляет пароль:
      *             - Проверяет текущий пароль через `password_verify()`.
      *             - Если новый пароль передан и совпадает с повторным вводом, обновляет его через `password_hash()`.
      *          3. Проверяет уникальность email и имени пользователя в базе данных:
      *             - Если значения уже заняты другими пользователями, данные не обновляются.
-     *          4. Обрабатывает загрузку нового аватара через метод `edit_avatar()`:
+     *          4. Обрабатывает загрузку нового аватара через метод `_edit_avatar()`:
      *             - Если файл проходит валидацию, загружает новый аватар.
      *             - Удаляет старый аватар, если он отличается от нового и не является аватаром по умолчанию.
      *          5. Проверяет и обновляет язык (`language`) и тему (`theme`) сайта, если они переданы.
@@ -2353,9 +2768,9 @@ class User implements User_Interface
      *                          - string $password: Текущий пароль пользователя (обязательно для изменения пароля).
      *                          - string $edit_password: Новый пароль пользователя (необязательно).
      *                          - string $re_password: Повторный ввод нового пароля (должен совпадать с
-     *                          `edit_password`).
+     *                            `edit_password`).
      *                          - string $email: Новый email пользователя (должен соответствовать регулярному выражению
-     *                          REG_EMAIL).
+     *                            REG_EMAIL).
      *                          - string $real_name: Новое имя пользователя (должно быть строкой).
      *                          Все поля проходят валидацию перед использованием.
      * @param array $files_data Массив данных загруженного файла ($_FILES), содержащий информацию об аватаре:
@@ -2371,23 +2786,19 @@ class User implements User_Interface
      *             Возвращается `0`, если данные не изменились или запрос завершился ошибкой.
      *
      * @throws RuntimeException Выбрасывается, если пользователь с указанным `$user_id` не найден в базе данных.
-     *                                  Пример сообщения:
-     *                                      Пользователь не найден | ID: [user_id]
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных через `Work::check_input()`
-     *                   или при обработке аватара через `edit_avatar()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
+     *                          Пример сообщения:
+     *                              Пользователь не найден | ID: [user_id]
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных через
+     *                          `Work::check_input()` или при обработке аватара через `_edit_avatar()`.
+     *                          Пример сообщения:
+     *                              Ошибка валидации входных данных | Поле: [имя_поля]
      *
-     * @note    Для обработки аватаров используется метод `edit_avatar()`. Старый аватар удаляется, если новый успешно
+     * @note    Для обработки аватаров используется метод `_edit_avatar()`. Старый аватар удаляется, если новый успешно
      *          загружен и отличается от старого. Константы, используемые в методе:
      *          - `DEFAULT_AVATAR`: Имя аватара по умолчанию. Например: `'no_avatar.jpg'`.
      *          - `TBL_USERS`: Имя таблицы пользователей в базе данных. Например: '`users`'.
      *          - `REG_EMAIL`: Регулярное выражение для проверки email.
      *            Пример: `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`.
-     *            - Допустимые символы: латинские буквы, цифры, точки (.), дефисы (-), подчеркивания (_) и знаки
-     *            процента (%).
-     *            - Доменное имя должно содержать хотя бы одну точку (.).
-     *            - Минимальная длина доменной части: 2 символа.
      *          Эти константы позволяют гибко настраивать поведение метода.
      *
      * @warning Не используйте этот метод для массового обновления данных. Он предназначен только для работы с одним
@@ -2405,11 +2816,11 @@ class User implements User_Interface
      *     echo "Ошибка при обновлении данных.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work::check_input()
+     * @see    PhotoRigma::Classes::Work::check_input()
      *         Метод для проверки корректности входных данных.
-     * @see     PhotoRigma::Classes::User::edit_avatar()
+     * @see    PhotoRigma::Classes::User::_edit_avatar()
      *         Приватный метод для обработки загрузки аватара.
-     * @see     PhotoRigma::Classes::User::update_user_data()
+     * @see    PhotoRigma::Classes::User::update_user_data()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _update_user_data_internal(int $user_id, array $post_data, array $files_data, int $max_size): int
@@ -2419,7 +2830,7 @@ class User implements User_Interface
             'where'  => '`id` = :user_id',
             'params' => [':user_id' => $user_id],
         ]);
-        $user_data = $this->db->res_row();
+        $user_data = $this->db->result_row();
         if (!$user_data) {
             throw new RuntimeException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь не найден | ID: $user_id"
@@ -2456,7 +2867,7 @@ class User implements User_Interface
                     ],
                 ]
             );
-            $counts = $this->db->res_row();
+            $counts = $this->db->result_row();
             $new_user_data['email'] = $counts && isset($counts['email_count']) && $counts['email_count'] > 0 ? $user_data['email'] : $filtered_email;
             $new_user_data['real_name'] = $counts && isset($counts['real_count']) && $counts['real_count'] > 0 ? $user_data['real_name'] : $post_data['real_name'];
         } else {
@@ -2470,7 +2881,7 @@ class User implements User_Interface
             'delete_avatar',
             ['isset' => true, 'empty' => true]
         )) {
-            $new_user_data['avatar'] = $this->edit_avatar($files_data, $max_size);
+            $new_user_data['avatar'] = $this->_edit_avatar($files_data, $max_size);
             // Проверяем, нужно ли удалить старый аватар
             if ($user_data['avatar'] !== DEFAULT_AVATAR && $user_data['avatar'] !== $new_user_data['avatar']) {
                 $delete_old_avatar = true; // Устанавливаем флаг на удаление
@@ -2538,15 +2949,16 @@ class User implements User_Interface
      *             - Проверяется максимальный размер файла.
      *          2. Генерирует уникальное имя файла для аватара:
      *             - Используется временная метка (`time()`) и метод `Work::encodename()` для создания уникального
-     *             имени.
+     *               имени.
      *          3. Перемещает загруженный файл в директорию аватаров:
      *             - Если директория недоступна для записи, выбрасывается исключение.
      *          4. Корректирует расширение файла на основе его MIME-типа с помощью `Work::fix_file_extension()`:
      *             - Если расширение изменено, файл переименовывается.
      *          5. Возвращает имя нового аватара или значение по умолчанию (`DEFAULT_AVATAR`), если загрузка не
-     *          удалась.
+     *             удалась.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
@@ -2564,16 +2976,16 @@ class User implements User_Interface
      *                если загрузка аватара была отменена или произошла ошибка.
      *                Пример: '1698765432_encoded_name.jpg'.
      *
-     * @throws Exception Может быть выброшено вызываемыми методами:
-     *                   - `Work::check_input()`: При проверке входных данных.
-     *                   - `rename()`: При переименовании файла после корректировки расширения.
+     * @throws Exception        Может быть выброшено вызываемыми методами:
+     *                          - `Work::check_input()`: При проверке входных данных.
+     *                          - `rename()`: При переименовании файла после корректировки расширения.
      * @throws RuntimeException Выбрасывается исключение в следующих случаях:
-     *                           - Директория для аватаров недоступна для записи.
-     *                             Пример сообщения:
-     *                                 Директория для аватаров недоступна для записи.
-     *                           - Не удалось переместить загруженный файл.
-     *                             Пример сообщения:
-     *                                 Не удалось переместить загруженный файл: [временный_путь] -> [целевой_путь]
+     *                          - Директория для аватаров недоступна для записи.
+     *                            Пример сообщения:
+     *                                Директория для аватаров недоступна для записи.
+     *                          - Не удалось переместить загруженный файл.
+     *                            Пример сообщения:
+     *                                Не удалось переместить загруженный файл: [временный_путь] -> [целевой_путь]
      *
      * @note    Используются константы:
      *          - `DEFAULT_AVATAR`: Значение аватара по умолчанию (например, 'no_avatar.jpg').
@@ -2586,23 +2998,23 @@ class User implements User_Interface
      * Пример вызова метода внутри класса:
      * @code
      * $maxSize = 5 * 1024 * 1024; // 5 MB
-     * $newAvatar = $this->edit_avatar($_FILES, $maxSize);
+     * $newAvatar = $this->_edit_avatar($_FILES, $maxSize);
      * if ($newAvatar !== DEFAULT_AVATAR) {
      *     echo "Новый аватар успешно загружен: {$newAvatar}";
      * } else {
      *     echo "Загрузка аватара не удалась.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work::$config
+     * @see    PhotoRigma::Classes::Work::$config
      *         Свойство класса Work, содержащее конфигурацию приложения.
-     * @see     PhotoRigma::Classes::Work::encodename()
+     * @see    PhotoRigma::Classes::Work::encodename()
      *         Метод для генерации уникального имени файла.
-     * @see     PhotoRigma::Classes::Work::fix_file_extension()
+     * @see    PhotoRigma::Classes::Work::fix_file_extension()
      *         Метод для корректировки расширения файла на основе его MIME-типа.
-     * @see     PhotoRigma::Classes::Work::check_input()
+     * @see    PhotoRigma::Classes::Work::check_input()
      *         Метод для проверки корректности входных данных.
      */
-    private function edit_avatar(array $files_data, int $max_size): string
+    private function _edit_avatar(array $files_data, int $max_size): string
     {
         // Проверяем входные данные через check_input
         if ($this->work->check_input('_FILES', 'file_avatar', [
@@ -2654,6 +3066,8 @@ class User implements User_Interface
      *          возвращает обновленные данные пользователя. Предназначен для прямого использования извне (например,
      *          через Админку).
      *
+     * @callgraph
+     *
      * @param int   $user_id   Идентификатор пользователя:
      *                         - Должен быть положительным целым числом.
      *                         - Пример: 123.
@@ -2672,18 +3086,18 @@ class User implements User_Interface
      *               - Все поля, указанные в свойстве класса `user_right_fields`.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Не удалось получить данные группы из БД.
-     *                                    Пример сообщения:
-     *                                        Не удалось получить данные группы | ID группы: [group_id]
-     *                                  - Произошла ошибка при обновлении данных пользователя в БД.
-     *                                    Пример сообщения:
-     *                                        Ошибка при обновлении данных пользователя | ID пользователя: [user_id]
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
-     *                                  Пример сообщения:
-     *                                      Ошибка при кодировании прав доступа в JSON
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных через `Work::check_input()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
+     *                          - Не удалось получить данные группы из БД.
+     *                            Пример сообщения:
+     *                                Не удалось получить данные группы | ID группы: [group_id]
+     *                          - Произошла ошибка при обновлении данных пользователя в БД.
+     *                            Пример сообщения:
+     *                                Ошибка при обновлении данных пользователя | ID пользователя: [user_id]
+     * @throws JsonException    Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
+     *                          Пример сообщения:
+     *                              Ошибка при кодировании прав доступа в JSON
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных через
+     *                          `Work::check_input()`. Пример сообщения: Ошибка валидации входных данных | Поле:
+     *                          [имя_поля]
      *
      * @note    Метод использует свойство класса `user_right_fields` для определения допустимых полей прав
      *          пользователя.
@@ -2714,8 +3128,8 @@ class User implements User_Interface
      * $result = $object->update_user_rights($user_id, $user_data, $post_data);
      * print_r($result);
      * @endcode
-     * @see     PhotoRigma::Classes::User::_update_user_rights_internal()
-     *          Защищённый метод, реализующий основную логику обновления прав пользователя или группы.
+     * @see    PhotoRigma::Classes::User::_update_user_rights_internal()
+     *         Защищённый метод, реализующий основную логику обновления прав пользователя или группы.
      */
     public function update_user_rights(int $user_id, array $user_data, array $post_data): array
     {
@@ -2760,20 +3174,21 @@ class User implements User_Interface
      *               - Все поля, указанные в свойстве класса `user_right_fields`.
      *
      * @throws RuntimeException Выбрасывается, если:
-     *                                  - Не удалось получить данные группы из БД.
-     *                                    Пример сообщения:
-     *                                        Не удалось получить данные группы | ID группы: [group_id]
-     *                                  - Произошла ошибка при обновлении данных пользователя в БД.
-     *                                    Пример сообщения:
-     *                                        Ошибка при обновлении данных пользователя | ID пользователя: [user_id]
-     * @throws JsonException Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
-     *                                  Пример сообщения:
-     *                                      Ошибка при кодировании прав доступа в JSON
-     * @throws Exception Выбрасывается, если возникает ошибка при проверке входных данных через `Work::check_input()`.
-     *                                  Пример сообщения:
-     *                                      Ошибка валидации входных данных | Поле: [имя_поля]
+     *                          - Не удалось получить данные группы из БД.
+     *                            Пример сообщения:
+     *                                Не удалось получить данные группы | ID группы: [group_id]
+     *                          - Произошла ошибка при обновлении данных пользователя в БД.
+     *                            Пример сообщения:
+     *                                Ошибка при обновлении данных пользователя | ID пользователя: [user_id]
+     * @throws JsonException    Выбрасывается, если возникает ошибка при кодировании или декодировании JSON.
+     *                          Пример сообщения:
+     *                              Ошибка при кодировании прав доступа в JSON
+     * @throws Exception        Выбрасывается, если возникает ошибка при проверке входных данных через
+     *                          `Work::check_input()`. Пример сообщения: Ошибка валидации входных данных | Поле:
+     *                          [имя_поля]
      *
-     * @note    Метод использует свойство класса `user_right_fields` для определения допустимых полей прав пользователя.
+     * @note    Метод использует свойство класса `user_right_fields` для определения допустимых полей прав
+     *          пользователя.
      *          Обновление прав доступа происходит с нормализацией значений (true/false) и их последующим кодированием
      *          в JSON-строку.
      *          Константы, используемые в методе:
@@ -2800,15 +3215,15 @@ class User implements User_Interface
      * $result = $this->_update_user_rights_internal($userId, $userData, $postData);
      * print_r($result);
      * @endcode
-     * @see     PhotoRigma::Classes::User::encode_user_rights()
+     * @see    PhotoRigma::Classes::User::encode_user_rights()
      *         Метод, кодирующий массив прав пользователя в JSON-строку для хранения в БД.
-     * @see     PhotoRigma::Classes::User::process_user_rights()
+     * @see    PhotoRigma::Classes::User::process_user_rights()
      *         Метод, декодирующий JSON-строку прав пользователя в массив.
-     * @see     PhotoRigma::Classes::Work::check_input()
+     * @see    PhotoRigma::Classes::Work::check_input()
      *         Метод для проверки правильности входных данных.
-     * @see     PhotoRigma::Classes::User::$user_right_fields
+     * @see    PhotoRigma::Classes::User::$user_right_fields
      *         Свойство, содержащее массив с допустимыми полями прав пользователя.
-     * @see     PhotoRigma::Classes::User::update_user_rights()
+     * @see    PhotoRigma::Classes::User::update_user_rights()
      *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _update_user_rights_internal(int $user_id, array $user_data, array $post_data): array
@@ -2827,7 +3242,7 @@ class User implements User_Interface
                 'where'  => '`id` = :group_id',
                 'params' => [':group_id' => $post_data['group']],
             ]);
-            $group_data = $this->db->res_row();
+            $group_data = $this->db->result_row();
 
             if ($group_data) {
                 $query = [];
@@ -2904,5 +3319,644 @@ class User implements User_Interface
         }
 
         return $new_user_data;
+    }
+
+    /**
+     * @brief   Проверяет, истёк ли срок восстановления мягкого удаления.
+     *
+     * @details Метод является публичным редиректом для защищённого метода _is_soft_delete_expired_internal().
+     *          Он используется как в веб-интерфейсе, так и фоновыми задачами.
+     *
+     * @callgraph
+     *
+     * @param string|null $deleted_at Дата и время мягкого удаления (формат MySQL DATETIME).
+     *                                Может быть NULL, если пользователь не удален.
+     *
+     * @return array Ассоциативный массив с данными о сроке:
+     *               - 'restore_date'   => ?DateTime Дата мягкого удаления
+     *               - 'restore_expiry' => ?DateTime Дата истечения срока восстановления
+     *               - 'expired'        => bool Указывает, истёк ли срок
+     *
+     * @throws Exception При ошибке парсинга даты или других внутренних ошибках.
+     *
+     * @note    Реализация находится в `_is_soft_delete_expired_internal()`.
+     *
+     * @warning Не передавайте невалидные строки как `$deleted_at`. Это приведёт к возврату пустых данных.
+     *
+     * Пример использования:
+     * @code
+     * // Проверка истечения срока
+     * $restore_info = $user->is_soft_delete_expired('2025-05-01 10:00:00');
+     *
+     * if ($restore_info['expired']) {
+     *     echo "Срок истёк";
+     * } else {
+     *     echo "Еще можно восстановить до " . $restore_info['restore_expiry']->format('Y-m-d H:i:s');
+     * }
+     * @endcode
+     * @see     PhotoRigma::Classes::User::_is_soft_delete_expired_internal()
+     *         Защищённый метод, реализующий основную логику.
+     */
+    public function is_soft_delete_expired(?string $deleted_at): array
+    {
+        return $this->_is_soft_delete_expired_internal($deleted_at);
+    }
+
+    /**
+     * @brief   Возвращает данные о сроке восстановления аккаунта.
+     *
+     * @details Метод:
+     *          1. Принимает дату мягкого удаления (`deleted_at`).
+     *          2. Если дата не задана → возвращает пустые значения и `expired = false`.
+     *          3. Парсит дату удаления в формате UTC.
+     *          4. Вычисляет дату истечения срока восстановления:
+     *             - На основе константы SOFT_DELETE_RETENTION_INTERVAL
+     *             - Отсчёт от даты `$deleted_at`
+     *          5. Проверяет, истёк ли срок:
+     *             - TRUE → удаление окончательно
+     *             - FALSE → пользователь ещё может восстановиться
+     *          Все операции выполняются в защищённом методе _is_soft_delete_expired_internal().
+     *          Реализация вызывается через публичный метод is_soft_delete_expired().
+     *
+     * @callergraph
+     *
+     * @param string|null $deleted_at Дата и время мягкого удаления (формат MySQL DATETIME).
+     *                                Может быть NULL, если пользователь не удален.
+     *
+     * @return array Ассоциативный массив с данными о сроке восстановления:
+     *               - 'restore_date'   => ?DateTime Дата мягкого удаления
+     *               - 'restore_expiry' => ?DateTime Дата истечения срока восстановления
+     *               - 'expired'        => bool Указывает, истёк ли срок
+     *
+     * @throws Exception При ошибке парсинга даты или других внутренних ошибках.
+     *
+     * @note    Метод использует константу SOFT_DELETE_RETENTION_INTERVAL для расчёта срока.
+     *          Все даты обрабатываются в часовом поясе UTC.
+     *
+     * @warning Не передавайте невалидные строки как `$deleted_at`. Это приведёт к возврату пустых данных.
+     *
+     * Пример использования:
+     * @code
+     * // Получаем информацию о сроке
+     * $restore_info = $this->_is_soft_delete_expired_internal('2025-05-01 10:00:00');
+     *
+     * if ($restore_info['expired']) {
+     *     echo "Срок истёк";
+     * } else {
+     *     echo "Еще можно восстановить до " . $restore_info['restore_expiry']->format('Y-m-d H:i:s');
+     * }
+     * @endcode
+     * @see    PhotoRigma::Classes::User::is_soft_delete_expired()
+     *         Публичный метод, вызывающий этот внутренний метод.
+     */
+    protected function _is_soft_delete_expired_internal(?string $deleted_at): array
+    {
+        if (empty($deleted_at)) {
+            return [
+                'restore_date'   => null,
+                'restore_expiry' => null,
+                'expired'        => false,
+            ];
+        }
+
+        try {
+            // Парсим дату удаления
+            $deleted_date = new DateTime($deleted_at, new DateTimeZone('UTC'));
+
+            // Срок окончания восстановления
+            $restore_expiry = clone $deleted_date;
+            $restore_expiry->modify('+' . SOFT_DELETE_RETENTION_INTERVAL);
+
+            // Проверяем истечение срока
+            $now = new DateTime('now', new DateTimeZone($this->session['timezone']));
+            $expired = $restore_expiry <= $now;
+
+            return [
+                'restore_date'   => $deleted_date,
+                'restore_expiry' => $restore_expiry,
+                'expired'        => $expired
+            ];
+
+        } catch (Exception) {
+            return [
+                'restore_date'   => null,
+                'restore_expiry' => null,
+                'expired'        => false
+            ];
+        }
+    }
+
+    /**
+     * @brief   Выполняет мягкое удаление пользователя.
+     *
+     * @details Метод устанавливает дату удаления (`deleted_at`) для указанного пользователя.
+     *          Если пользователь уже помечен как окончательно удалённый (`permanently_deleted = TRUE`),
+     *          мягкое удаление не выполняется. Все действия логируются.
+     *
+     * @internal
+     * @callergraph
+     *
+     * @param int $user_id ID пользователя, которого нужно мягко удалить
+     *
+     * @return bool TRUE при успехе, FALSE при ошибке или невозможности удаления
+     *
+     * @throws Exception Выбрасывается, если произошла ошибка на уровне БД
+     *
+     * @note    Этот метод должен вызываться только через `_delete_user_internal()`, чтобы соблюсти все проверки.
+     * @see     _delete_user_internal()
+     */
+    private function _soft_delete(int $user_id): bool
+    {
+        // Проверяем, не был ли пользователь уже окончательно удалён
+        $this->db->select('`permanently_deleted`', TBL_USERS, [
+            'where' => '`id` = :id',
+            'params' => [':id' => $user_id],
+        ]);
+
+        $result = $this->db->result_row();
+        if ($result && (int)$result['permanently_deleted'] === 1) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Невозможно мягко удалить пользователя — аккаунт уже окончательно удалён | ID: $user_id"
+            );
+            return false;
+        }
+
+        // Устанавливаем дату мягкого удаления
+        if (!$this->db->update(
+            ['`deleted_at`' => 'CURRENT_TIMESTAMP'],
+            TBL_USERS,
+            ['where' => '`id` = :id', 'params' => [':id' => $user_id]]
+        )) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось установить флаг deleted_at для пользователя | ID: $user_id"
+            );
+            return false;
+        }
+
+        $rows = $this->db->get_affected_rows();
+
+        if ($rows > 0) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Аккаунт пользователя временно удален | ID: $user_id"
+            );
+            return true;
+        }
+
+        log_in_file(
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось выполнить мягкое удаление | ID: $user_id"
+        );
+
+        return false;
+    }
+
+    /**
+     * @brief   Публичный метод для окончательного обезличивания личных данных пользователя.
+     *
+     * @details Предназначен для вызова из клиентского кода:
+     *          - Из фоновой задачи cron → с $force = FALSE
+     *          - Из админки → с $force = TRUE
+     *          Передаёт управление защищённому методу `_hard_delete_user_internal()`, который реализует основную логику.
+     *          Метод должен использоваться только после истечения срока восстановления мягкого удаления.
+     *
+     * @callgraph
+     *
+     * @param int  $user_id ID пользователя, которого нужно окончательно удалить.
+     *                       Должен быть положительным целым числом (`> 0`).
+     *                       Пример: 123.
+     * @param bool $force   [optional] Режим принудительного удаления:
+     *                       - FALSE (по умолчанию): удаление через cron, после истечения срока мягкого удаления.
+     *                       - TRUE: принудительное удаление из админки — требует:
+     *                         - наличия прав администратора
+     *                         - подтверждения в интерфейсе
+     *                         - запрет на самоудаление админа
+     *
+     * @return bool TRUE при успехе, FALSE при ошибке или невозможности удаления.
+     *
+     * @throws Exception При ошибках выполнения SQL-запросов.
+     *
+     * @note    Подробнее о работе удаления см. в защищённом методе `_hard_delete_user_internal()`.
+     *
+     * Пример использования:
+     * @code
+     * // Из фонового скрипта (cron.php)
+     * if ($user->hard_delete_user(123)) {
+     *     echo "Пользователь 123 успешно обезличен\n";
+     * } else {
+     *     echo "Ошибка при обезличивании пользователя 123\n";
+     * }
+     *
+     * // Из админки (принудительное удаление)
+     * if ($user->hard_delete_user(123, true)) {
+     *     echo "Пользователь 123 принудительно удален\n";
+     * } else {
+     *     echo "Ошибка при принудительном удалении пользователя 123\n";
+     * }
+     * @endcode
+     * @see     PhotoRigma::Classes::User::_hard_delete_user_internal()
+     *          Защищённый метод, реализующий окончательное обезличивание и удаление.
+     */
+    public function hard_delete_user(int $user_id, bool $force = false): bool
+    {
+        return $this->_hard_delete_user_internal($user_id, $force);
+    }
+
+    /**
+     * @brief   Выполняет окончательное обезличивание записи пользователя.
+     *
+     * @details Метод:
+     *          1. Получает данные пользователя по ID.
+     *             - Если пользователь не найден → возвращает FALSE.
+     *          2. При $force = FALSE:
+     *             - Проверяет, был ли мягко удалён ранее
+     *             - Убеждается, что срок истёк через _is_soft_delete_expired_internal()
+     *          3. При $force = TRUE:
+     *             - Проверяет, что вызов делает администратор
+     *             - Проверяет, что админ подтвердил права в админке
+     *             - НЕ позволяет админу удалить сам себя
+     *          4. Проверяет, не последний ли это админ → если да, запрещаем
+     *          5. Удаляет личный контент через _delete_personal_content()
+     *          6. Обезличивает запись пользователя
+     *             - email → deleted_{ID}@local.com
+     *             - login → deleted_{ID}
+     *             - password → случайная строка (до 20 символов)
+     *             - avatar → DEFAULT_AVATAR
+     *             - real_name → оставляем для фронтенда
+     *             - permanently_deleted → устанавливаем в TRUE
+     *          7. Все действия логируются через log_in_file()
+     *
+     * @param int  $user_id ID пользователя, которого нужно окончательно удалить
+     * @param bool $force   [optional] Если TRUE → удаляем без проверок (админка), иначе только после мягкого удаления (cron)
+     *
+     * @return bool TRUE при успехе, FALSE при ошибке или невозможности удаления
+     *
+     * @throws Exception При ошибках выполнения SQL-запросов
+     *
+     * @note    Этот метод должен вызываться:
+     *              - Из фоновой задачи cron → с $force = FALSE
+     *              - Из админки → с $force = TRUE
+     * @note    Поле real_name остаётся без изменений, так как используется на frontend
+     * @note    Метод использует существующие свойства: $this->user['admin'], $this->session['admin_on']
+     * @warning Не позволяет удалить последнего админа
+     */
+    protected function _hard_delete_user_internal(int $user_id, bool $force = false): bool
+    {
+        // 1. Получаем данные пользователя
+        $this->db->select(
+            ['`id`', '`group_id`', '`deleted_at`', '`permanently_deleted`', '`email`', '`real_name`', '`login`', '`avatar`'],
+            TBL_USERS,
+            ['where' => '`id` = :id', 'params' => [':id' => $user_id]]
+        );
+        $user_data = $this->db->result_row();
+
+        if (!$user_data) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь с ID $user_id не найден"
+            );
+            return false;
+        }
+
+        // 2. Проверяем, уже ли помечен как окончательно удалённый
+        if ((int)$user_data['permanently_deleted'] === 1) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь уже окончательно удалён | ID: $user_id"
+            );
+            return true;
+        }
+
+        // 3. Если НЕ force — проверяем срок мягкого удаления
+        if (!$force) {
+            if (empty($user_data['deleted_at'])) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Пользователь не был мягко удалён | ID: $user_id"
+                );
+                return false;
+            }
+
+            if (!$this->_is_soft_delete_expired_internal($user_data['deleted_at'])['expired']) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Срок мягкого удаления ещё не истёк | ID: $user_id"
+                );
+                return false;
+            }
+        }
+
+        // 4. Если force = TRUE → проверяем права админа
+        if ($force) {
+            // Проверяем, является ли текущий пользователь админом
+            if (!$this->user['admin']) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Текущий пользователь не администратор | ID: $user_id"
+                );
+                return false;
+            }
+
+            // Проверяем, что админ подтвердил сессию
+            if (!$this->session['admin_on']) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Админ не подтвердил сессию | ID: $user_id"
+                );
+                return false;
+            }
+
+            // Проверяем, не пытается ли админ удалить сам себя
+            if ((int)$user_data['id'] === $this->user['id']) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Админ не может удалить сам себя | ID: $user_id"
+                );
+                return false;
+            }
+        }
+
+        // 5. Проверяем, не последний ли это админ
+        if ((int)$user_data['group_id'] === GROUP_ADMIN) {
+            $this->db->select('COUNT(*) AS cnt', TBL_USERS, [
+                'where'  => '`group_id` = :group AND `id` != :exclude_id AND `permanently_deleted` = 0',
+                'params' => [
+                    ':group'      => GROUP_ADMIN,
+                    ':exclude_id' => $user_id,
+                ],
+            ]);
+            $count_result = $this->db->result_row();
+            $admin_count = (int)$count_result['cnt'];
+
+            if ($admin_count <= 0) {
+                log_in_file(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Невозможно удалить последнего админа | ID: $user_id"
+                );
+                return false;
+            }
+        }
+
+        // 6. Удаляем личный контент
+        if (!$this->_delete_personal_content($user_id)) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось удалить личный контент пользователя | ID: $user_id"
+            );
+            return false;
+        }
+
+        // 7. Генерируем обезличенные данные
+        $anonymized_login = "deleted_$user_id";
+        $anonymized_email = "deleted_$user_id@local.com";
+        $delete_token = substr(basename(tempnam(sys_get_temp_dir(), 'del_')), 0, 20);
+
+        // 8. Обезличиваем запись пользователя
+        $this->db->update(
+            [
+                '`email`'               => ':email',
+                '`login`'               => ':login',
+                '`password`'            => ':password',
+                '`avatar`'              => ':avatar',
+                '`permanently_deleted`' => '1',
+            ],
+            TBL_USERS,
+            [
+                'where'  => '`id` = :id',
+                'params' => [
+                    ':id'       => $user_id,
+                    ':login'    => $anonymized_login,
+                    ':email'    => $anonymized_email,
+                    ':password' => $delete_token,
+                    ':avatar'   => DEFAULT_AVATAR,
+                ],
+            ]
+        );
+
+        // 9. Дополнительно проверяем, действительно ли обновилась запись
+        $this->db->select('`email`, `login`, `password`, `avatar`, `permanently_deleted`', TBL_USERS, [
+            'where'  => '`id` = :id',
+            'params' => [':id' => $user_id],
+        ]);
+        $updated_data = $this->db->result_row();
+
+        if (
+            $updated_data === false ||
+            $updated_data['email'] !== $anonymized_email ||
+            $updated_data['login'] !== $anonymized_login ||
+            $updated_data['password'] !== $delete_token ||
+            $updated_data['avatar'] !== DEFAULT_AVATAR ||
+            (int)$updated_data['permanently_deleted'] !== 1
+        ) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось подтвердить обезличивание пользователя | ID: $user_id"
+            );
+            return false;
+        }
+
+        // 10. Логируем событие
+        log_in_file(
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Аккаунт пользователя окончательно удален | ID: $user_id"
+        );
+
+        return true;
+    }
+
+    /**
+     * @brief   Удаляет личные фото пользователя (категория 0) через существующий метод `del_photo()`.
+     *
+     * @details Метод:
+     *          1. Находит все фото, где user_upload = $user_id и category = 0.
+     *          2. Для каждого photo_id вызывает $this->work->del_photo($photo_id).
+     *          3. Считает количество успешно удалённых фото.
+     *          4. Логирует общий результат.
+     *          Не работает с альбомами — всё определяется полем category.
+     *
+     *          Этот метод является внутренним и предназначен только для вызова из `_hard_delete_user_internal()`.
+     *          Он не выбрасывает исключений при ошибке отдельного удаления фото — только общая ошибка БД останавливает выполнение.
+     *
+     * @internal
+     * @callergraph
+     * @callgraph
+     *
+     * @param int $user_id ID пользователя, чьи личные фото нужно удалить.
+     *                     Должен быть положительным целым числом (`> 0`).
+     *                     Пример: 123.
+     *
+     * @return bool TRUE если удаление начато и выполнено частично или полностью,
+     *              FALSE только при критической ошибке БД (например, выборка фото не удалась).
+     *
+     * @throws Exception При ошибках SQL-запроса (например, ошибка выборки фото).
+     *
+     * @note    Личные фото = TBL_PHOTO WHERE user_upload = $user_id AND category = 0.
+     *          Метод `$this->work->del_photo($photo_id)` уже содержит логику удаления файла и записи.
+     *
+     * @warning Этот метод должен вызываться только из `_hard_delete_user_internal()`.
+     *          Он не обеспечивает полной гарантии удаления всех фото — отдельные ошибки игнорируются.
+     *
+     * Пример использования:
+     * @code
+     * // Из метода _hard_delete_user_internal()
+     * if (!$this->_delete_personal_content(123)) {
+     *     log_in_file(__FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка при удалении личного контента | ID: 123");
+     *     return false;
+     * }
+     * @endcode
+     * @see    PhotoRigma::Classes::Work::del_photo()
+     *         Внешний метод, реализующий окончательное удаление одного фото.
+     * @see    PhotoRigma::Classes::User::_hard_delete_user_internal()
+     *         Защищённый метод, использующий этот метод перед обезличиванием аккаунта.
+     */
+    private function _delete_personal_content(int $user_id): bool
+    {
+        // 1. Получаем список личных фото
+        $this->db->select(
+            '`id` AS photo_id',
+            TBL_PHOTO,
+            [
+                'where' => '`user_upload` = :user_id AND `category` = 0',
+                'params' => [':user_id' => $user_id],
+            ]
+        );
+        $photos = $this->db->result_array();
+
+        if (!$photos) {
+            return true; // Нет фото → ничего не удалять
+        }
+
+        $deleted_count = 0;
+
+        foreach ($photos as $row) {
+            $photo_id = (int)$row['photo_id'];
+
+            // 2. Вызываем внешний метод удаления фото
+            if ($this->work->del_photo($photo_id)) {
+                $deleted_count++;
+            }
+        }
+
+        // 3. Логируем результат
+        log_in_file(
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Успешно удален контент: $deleted_count шт. | Пользователь: $user_id"
+        );
+
+        return true;
+    }
+
+    /**
+     * @brief   Публичный метод для запуска фоновой задачи окончательного удаления пользователей.
+     *
+     * @details Предназначен для вызова из cron.php. Содержит защиту от запуска через веб-интерфейс.
+     *          Передаёт управление защищённому методу `_cron_user_delete_internal()`, который реализует логику:
+     *          - Выборка пользователей с истёкшим сроком мягкого удаления
+     *          - Обезличивание аккаунтов
+     *          - Удаление личного контента
+     *
+     * @callgraph
+     *
+     * @return void Метод не возвращает значения.
+     *
+     * @throws Exception Меожет выбрасываться:
+     *                   - При логировании ошибок.
+     *                   - Из метода `_cron_user_delete_internal()`.
+     *
+     * @note    Метод содержит защиту от запуска через веб-запрос:
+     *              - Проверяется, что скрипт запущен в режиме CLI (через cron).
+     *              - В случае веб-запроса — выводится ошибка и выполнение прерывается.
+     *
+     * @warning Этот метод должен запускаться только через cron.php и никогда — из веб-интерфейса.
+     *          Он не должен быть доступен извне.
+     *
+     * Пример использования:
+     * @code
+     * // Из cron.php
+     * $user->cron_user_delete();
+     * @endcode
+     * @see    PhotoRigma::Classes::User::_cron_user_delete_internal()
+     *         Защищённый метод, реализующий фоновую логику обезличивания пользователей.
+     */
+    public function cron_user_delete(): void
+    {
+        // Защита от запуска через веб-интерфейс
+        if (PHP_SAPI !== 'cli') {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                'Запрещён запуск через веб | cron_user_delete()'
+            );
+            exit('Доступ запрещён');
+        }
+
+        // Запуск внутренней логики
+        $this->_cron_user_delete_internal();
+    }
+
+    /**
+     * @brief   Фоновая задача: выполняет окончательное обезличивание пользователей,
+     *          у которых истёк срок восстановления.
+     *
+     * @details Алгоритм:
+     *          1. Выбираем всех пользователей, где:
+     *             - deleted_at ≠ NULL
+     *             - permanently_deleted = 0
+     *          2. Для каждого пользователя:
+     *             - Проверяем, истёк ли срок мягкого удаления через _is_soft_delete_expired_internal()
+     *             - Если истёк → вызываем _hard_delete_user_internal()
+     *          Все действия логируются через log_in_file()
+     *
+     *          Этот метод является защищённым и предназначен только для вызова из публичного метода `cron_user_delete()`.
+     *          Работает строго по PHP-логике, а не SQL, чтобы обеспечить совместимость со всеми СУБД.
+     *          Должен вызываться только через cron.php.
+     *
+     * @callergraph
+     * @callgraph
+     *
+     * @return void Метод не возвращает значения.
+     *
+     * @throws Exception                    Может выбрасываться:
+     *                                      - При логировании ошибок.
+     *                                      - При выполнении запросов к базе данных.
+     *
+     * @note    Метод не выбрасывает исключений, но может завершиться досрочно при критических ошибках БД.
+     *          Логика реализована на стороне PHP, чтобы сохранить совместимость с разными СУБД.
+     *
+     * @warning Этот метод должен запускаться только фоновой задачей (cron).
+     *          Он не должен быть доступен из внешнего интерфейса.
+     *
+     * Пример использования:
+     * @code
+     * $this->_cron_user_delete_internal();
+     * @endcode
+     * @see    PhotoRigma::Classes::User::cron_user_delete()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::User::_is_soft_delete_expired_internal()
+     *         Для проверки истечения срока мягкого удаления.
+     * @see    PhotoRigma::Classes::User::_hard_delete_user_internal()
+     *         Для окончательного обезличивания аккаунта.
+     */
+    protected function _cron_user_delete_internal(): void
+    {
+        // 1. Получаем список пользователей на окончательное удаление
+        $this->db->select(
+            ['`id`', '`deleted_at`'],
+            TBL_USERS,
+            [
+                'where' => '`deleted_at` IS NOT NULL AND `permanently_deleted` = 0'
+            ]
+        );
+        $users = $this->db->result_array();
+
+        if (!$users) {
+            log_in_file(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                'Нет пользователей к окончательному удалению'
+            );
+            return;
+        }
+
+        foreach ($users as $user) {
+            $user_id = (int)$user['id'];
+
+            // 2. Проверяем, истёк ли срок мягкого удаления
+            if (!$this->_is_soft_delete_expired_internal($user['deleted_at'])['expired']) {
+                continue; // Срок ещё не истёк
+            }
+
+            // 3. Вызываем окончательное удаление
+            $this->_hard_delete_user_internal($user_id);
+        }
+
+        log_in_file(
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+            'Фоновая задача окончательного удаления завершена'
+        );
     }
 }

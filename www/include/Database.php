@@ -1,55 +1,55 @@
 <?php
 
 /**
- * @file        include/Database.php
- * @brief       Класс для работы с базами данных через PDO.
+ * @file      include/Database.php
+ * @brief     Класс для работы с базами данных через PDO.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   Photorigma\\Classes
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace Photorigma\\Classes
  *
- * @details     Этот файл содержит реализацию класса `Database`, который предоставляет полный набор методов для работы
- *              с различными реляционными базами данных. Класс `Database` обеспечивает:
- *              - Выполнение стандартных операций с данными (SELECT, JOIN, INSERT, UPDATE, DELETE, TRUNCATE).
- *              - **Гибкое формирование условий запросов**, включая поддержку сложных условий `WHERE` с использованием
- *                операторов `OR` и `NOT` через массивный синтаксис.
- *              - Реализацию **полнотекстового поиска (Full-Text Search - FTS)**, специфичного для каждой поддерживаемой
- *                СУБД (MySQL, PostgreSQL, SQLite), включая механизмы fallback на `LIKE`/`ILIKE` и кеширование ошибок индексов.
- *              - Обработка результатов запросов, включая получение данных в различных форматах и метаданных.
- *              - Управление соединением с базой данных и транзакциями.
- *              - Обработка ошибок через централизованную систему логирования и обработки ошибок.
- *              - Временное изменение формата SQL-синтаксиса для совместимости запросов между разными СУБД.
- *              - Интеграция с обработчиком кеша для долгосрочного хранения оптимизационных данных.
+ * @details   Этот файл содержит реализацию класса `Database`, который предоставляет полный набор методов для работы
+ *            с различными реляционными базами данных. Класс `Database` обеспечивает:
+ *            - Выполнение стандартных операций с данными (SELECT, JOIN, INSERT, UPDATE, DELETE, TRUNCATE).
+ *            - **Гибкое формирование условий запросов**, включая поддержку сложных условий `WHERE` с использованием
+ *              операторов `OR` и `NOT` через массивный синтаксис.
+ *            - Реализацию **полнотекстового поиска (Full-Text Search - FTS)**, специфичного для каждой поддерживаемой
+ *              СУБД (MySQL, PostgreSQL, SQLite), включая механизмы fallback на `LIKE`/`ILIKE` и кеширование ошибок индексов.
+ *            - Обработка результатов запросов, включая получение данных в различных форматах и метаданных.
+ *            - Управление соединением с базой данных и транзакциями.
+ *            - Обработка ошибок через централизованную систему логирования и обработки ошибок.
+ *            - Временное изменение формата SQL-синтаксиса для совместимости запросов между разными СУБД.
+ *            - Интеграция с обработчиком кеша для долгосрочного хранения оптимизационных данных.
  *
- * @section     Database_Main_Functions Основные функции
- *              - Безопасное и гибкое выполнение запросов через подготовленные выражения, с поддержкой сложных условий
- *                WHERE (OR, NOT).
- *              - Реализация полнотекстового поиска (FTS) с fallback'ом на LIKE/ILIKE.
- *              - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной
- *                строки).
- *              - Форматирование даты с учётом специфики используемой СУБД.
- *              - Управление транзакциями.
+ * @section   Database_Main_Functions Основные функции
+ *            - Безопасное и гибкое выполнение запросов через подготовленные выражения, с поддержкой сложных условий
+ *              WHERE (OR, NOT).
+ *            - Реализация полнотекстового поиска (FTS) с fallback'ом на LIKE/ILIKE.
+ *            - Получение метаданных запросов (например, количество затронутых строк или ID последней вставленной
+ *              строки).
+ *            - Форматирование даты с учётом специфики используемой СУБД.
+ *            - Управление транзакциями.
  *
- * @see         PhotoRigma::Interfaces::Database_Interface
- *              Интерфейс, который реализует класс.
- * @see         PhotoRigma::Interfaces::Cache_Handler_Interface
- *              Интерфейс обработчика кеша, используемый классом.
- * @see         PhotoRigma::Include::log_in_file()
- *              Функция для логирования ошибок.
+ * @see       PhotoRigma::Interfaces::Database_Interface
+ *            Интерфейс, который реализует класс.
+ * @see       PhotoRigma::Interfaces::Cache_Handler_Interface
+ *            Интерфейс обработчика кеша, используемый классом.
+ * @see       PhotoRigma::Include::log_in_file()
+ *            Функция для логирования ошибок.
  *
- * @note        Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с базами данных.
- *              Реализованы меры безопасности для предотвращения SQL-инъекций через использование подготовленных
- *              выражений.
+ * @note      Этот файл является частью системы PhotoRigma и обеспечивает взаимодействие приложения с базами данных.
+ *            Реализованы меры безопасности для предотвращения SQL-инъекций через использование подготовленных
+ *            выражений.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать,
- *              распространять, сублицензировать и/или продавать копии программного обеспечения,
- *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
- *              делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *                части программного обеспечения.
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *            делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -106,6 +106,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *            снятия экранирования) через интегрированный объект, реализующий `Cache_Handler_Interface`.
  *            Все ошибки, возникающие на уровне работы с базой данных или при обработке запросов,
  *            обрабатываются через исключения (`PDOException`, `InvalidArgumentException`, `Exception` и др.).
+ *
+ * @implements Database_Interface
  *
  * @property ?PDO        $pdo             Объект PDO для подключения к базе данных.
  * @property string|null $txt_query       Текст последнего SQL-запроса, сформированного методами класса.
@@ -183,7 +185,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *     );
  *
  *     // Получение результата
- *     return $db->res_arr();
+ *     return $db->result_array();
  * });
  *
  * echo "Список годов (получен через формат PostgreSQL на MySQL):";
@@ -859,8 +861,8 @@ class Database implements Database_Interface
      *             - Ключи `order` и `limit` должны использоваться совместно. Если указан только один из них, оба
      *               удаляются с записью в лог.
      *          4. Формирует базовый SQL-запрос на удаление данных и сохраняет его в свойстве `$txt_query`.
-     *          5. Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод `build_conditions`.
-     *          6. Выполняет сформированный запрос через метод `execute_query`, передавая параметры `params` для
+     *          5. Добавляет условия WHERE, ORDER BY и LIMIT (если они корректны) через метод `_build_conditions`.
+     *          6. Выполняет сформированный запрос через метод `_execute_query`, передавая параметры `params` для
      *             подготовленного выражения.
      *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
@@ -940,9 +942,9 @@ class Database implements Database_Interface
      * @endcode
      * @see    PhotoRigma::Classes::Database::delete()
      *         Публичный метод-редирект для вызова этой логики.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Выполняет SQL-запрос.
-     * @see    PhotoRigma::Classes::Database::build_conditions()
+     * @see    PhotoRigma::Classes::Database::_build_conditions()
      *         Формирует условия WHERE, ORDER BY и LIMIT для запроса.
      * @see    PhotoRigma::Classes::Database::$txt_query
      *         Свойство, в которое помещается текст SQL-запроса.
@@ -983,11 +985,11 @@ class Database implements Database_Interface
         $this->txt_query = "DELETE FROM $from_tbl";
 
         // === 4. Добавление условий ===
-        [$conditions, $params] = $this->build_conditions($options);
+        [$conditions, $params] = $this->_build_conditions($options);
         $this->txt_query .= $conditions;
 
         // === 5. Выполнение запроса ===
-        return $this->execute_query($params);
+        return $this->_execute_query($params);
     }
 
     /**
@@ -1068,7 +1070,7 @@ class Database implements Database_Interface
      *     'params' => [':other_param' => 'value'],
      * ];
      *
-     * [$conditions, $params] = $this->build_conditions($options);
+     * [$conditions, $params] = $this->_build_conditions($options);
      * // $conditions будет примерно " WHERE id = :id AND status = :status LIMIT 10" (в зависимости от порядка)
      * // $params будет примерно [':other_param' => 'value', ':id' => 1, ':status' => 'active']
      *
@@ -1083,23 +1085,23 @@ class Database implements Database_Interface
      *     'params' => [':min_views' => 1000, ':min_likes' => 50], // Входящие параметры для OR
      * ];
      *
-     * [$complex_conditions, $complex_params] = $this->build_conditions($complex_options);
+     * [$complex_conditions, $complex_params] = $this->_build_conditions($complex_options);
      * // $complex_conditions будет примерно " WHERE (views > :min_views OR likes > :min_likes) AND NOT (deleted = :deleted) AND category_id = :category_id ORDER BY created_at DESC"
      * // $complex_params будет примерно [':min_views' => 1000, ':min_likes' => 50, ':deleted' => 1, ':category_id' => 5]
      * @endcode
      *
      * @see    PhotoRigma::Classes::Database::update()
-     *         Метод, который вызывает build_conditions() для формирования UPDATE-запроса.
+     *         Метод, который вызывает _build_conditions() для формирования UPDATE-запроса.
      * @see    PhotoRigma::Classes::Database::select()
-     *         Метод, который вызывает build_conditions() для формирования SELECT-запроса.
+     *         Метод, который вызывает _build_conditions() для формирования SELECT-запроса.
      * @see    PhotoRigma::Classes::Database::join()
-     *         Метод, который вызывает build_conditions() для формирования JOIN-запроса.
+     *         Метод, который вызывает _build_conditions() для формирования JOIN-запроса.
      * @see    PhotoRigma::Classes::Database::delete()
-     *         Метод, который вызывает build_conditions() для формирования DELETE-запроса.
-     * @see    PhotoRigma::Classes::Database::build_where_group()
+     *         Метод, который вызывает _build_conditions() для формирования DELETE-запроса.
+     * @see    PhotoRigma::Classes::Database::_build_where_group()
      *         Приватный метод, используемый для рекурсивной обработки групп условий (OR, NOT) внутри WHERE.
      */
-    private function build_conditions(array $options): array
+    private function _build_conditions(array $options): array
     {
         $conditions = '';
         $params = $options['params'] ?? [];
@@ -1113,12 +1115,12 @@ class Database implements Database_Interface
 
                 foreach ($options['where'] as $key => $value) {
                     if ($key === 'OR') {
-                        $or_conditions = $this->build_where_group($value, 'OR');
+                        $or_conditions = $this->_build_where_group($value, 'OR');
                         if ($or_conditions) {
                             $where_parts[] = $or_conditions;
                         }
                     } elseif ($key === 'NOT') {
-                        $not_conditions = $this->build_where_group($value, 'NOT');
+                        $not_conditions = $this->_build_where_group($value, 'NOT');
                         if ($not_conditions) {
                             $where_parts[] = $not_conditions;
                         }
@@ -1201,7 +1203,7 @@ class Database implements Database_Interface
      *          - Готовые строки условий (если ключ числовой) — используются как есть.
      *          - Ассоциативные массивы в формате `['поле' => значение]` (если ключ строковый) — преобразуются в
      *            синтаксис для подготовленного выражения: `"поле = :поле"`. (Подстановка и экранирование значений
-     *            происходят на этапе выполнения запроса в методе `execute_query()`).
+     *            происходят на этапе выполнения запроса в методе `_execute_query()`).
      *
      * @internal
      * @callergraph
@@ -1225,7 +1227,7 @@ class Database implements Database_Interface
      * Пример использования:
      * @code
      * // Пример с готовыми строками условий и оператором OR
-     * $or_condition = $this->build_where_group(
+     * $or_condition = $this->_build_where_group(
      *     ['views > 1000', 'likes > 50'],
      *     'OR'
      * ); // Результат: "(views > 1000 OR likes > 50)"
@@ -1233,15 +1235,15 @@ class Database implements Database_Interface
      * // Пример с ассоциативным массивом условий и оператором NOT
      * // Обратите внимание: значения (1, 1) не используются этим методом напрямую,
      * // но необходимы для создания плейсхолдеров :deleted и :hidden.
-     * $not_condition = $this->build_where_group(
+     * $not_condition = $this->_build_where_group(
      *     ['deleted' => 1, 'hidden' => 1],
      *     'NOT'
      * ); // Результат: "NOT (deleted = :deleted AND hidden = :hidden)"
      * @endcode
-     * @see    PhotoRigma::Classes::Database::build_conditions()
-     *         Приватный метод, который вызывает build_where_group() для формирования сложных условий в WHERE.
+     * @see    PhotoRigma::Classes::Database::_build_conditions()
+     *         Приватный метод, который вызывает _build_where_group() для формирования сложных условий в WHERE.
      */
-    private function build_where_group(array $conditions, string $operator): string
+    private function _build_where_group(array $conditions, string $operator): string
     {
         if (!in_array($operator, ['OR', 'NOT'], true)) {
             throw new InvalidArgumentException(
@@ -1278,15 +1280,15 @@ class Database implements Database_Interface
      *          2. Очищает внутренние свойства для вывода результата предыдущего запроса (`$this->res_query`,
      *             `$this->aff_rows`, `$this->insert_id`).
      *          3. Преобразует текст запроса (`$this->txt_query`) в формат, специфичный для текущей СУБД, с помощью
-     *             метода `convert_query()`.
+     *             метода `_convert_query()`.
      *          4. Если константа `SQL_ANALYZE` установлена в `true`, выполняет анализ запроса (например, `EXPLAIN
-     *             ANALYZE`) с помощью метода `log_explain()`.
+     *             ANALYZE`) с помощью метода `_log_explain()`.
      *          5. Подготавливает и выполняет SQL-запрос с использованием объекта PDO (`$this->pdo`) и переданных
      *             параметров `$params`. Получает количество затронутых строк (`$this->aff_rows`) и, если запрос
      *             является INSERT, ID последней вставленной записи (`$this->insert_id`).
      *          6. Измеряет время выполнения запроса и, если константа `SQL_LOG` установлена в `true`:
-     *             - Логирует запрос как "медленный" с помощью `log_query()`, если время выполнения превышает 200 мс.
-     *             - Логирует запрос как "без плейсхолдеров" с помощью `log_query()`, если массив `$params` пустой.
+     *             - Логирует запрос как "медленный" с помощью `_log_query()`, если время выполнения превышает 200 мс.
+     *             - Логирует запрос как "без плейсхолдеров" с помощью `_log_query()`, если массив `$params` пустой.
      *          7. Очищает текст запроса (`$this->txt_query = null`) после его выполнения.
      *          8. Возвращает `true`, указывая на успешное выполнение запроса (даже если затронуто 0 строк или SELECT
      *             не вернул результатов).
@@ -1322,8 +1324,8 @@ class Database implements Database_Interface
      *                                  Пример сообщения:
      *                                  Ошибка при выполнении SQL-запроса | Запрос: [текст запроса или сообщение PDO]
      *                                  | Код ошибки PDO: [код ошибки]
-     * @throws Exception                Выбрасывается, если возникает ошибка при вызове метода `log_explain()` или
-     *                                  `log_query()`.
+     * @throws Exception                Выбрасывается, если возникает ошибка при вызове метода `_log_explain()` или
+     *                                  `_log_query()`.
      *                                  Пример сообщения:
      *                                  Ошибка при выполнении EXPLAIN ANALYZE | Запрос: [текст запроса] | Сообщение:
      *                                  [текст ошибки]
@@ -1342,12 +1344,12 @@ class Database implements Database_Interface
      *          - Соединение с базой данных установлено (`$this->pdo` является валидным объектом PDO).
      *          Невалидные входные данные или некорректное состояние могут привести к выбросу исключений.
      *
-     * Пример использования метода execute_query() (вызывается из других методов класса):
+     * Пример использования метода _execute_query() (вызывается из других методов класса):
      * @code
-     * // Пример вызова execute_query из метода select()
+     * // Пример вызова _execute_query из метода select()
      * // Assume $this->txt_query is set to "SELECT * FROM users WHERE id = :id"
      * // Assume $params is set to [':id' => 1]
-     * $success = $this->execute_query($params);
+     * $success = $this->_execute_query($params);
      * if ($success) {
      *     // Запрос выполнен, результат доступен через $this->res_query
      *     // Количество затронутых строк (для SELECT может быть 0, но метод все равно вернет true)
@@ -1356,7 +1358,7 @@ class Database implements Database_Interface
      *     $lastId = $this->insert_id;
      * } else {
      *     // Обработка ошибки (обычно происходит через исключение)
-     *     echo "Ошибка выполнения запроса execute_query";
+     *     echo "Ошибка выполнения запроса _execute_query";
      * }
      * @endcode
      * @see    PhotoRigma::Classes::Database::$pdo
@@ -1370,25 +1372,25 @@ class Database implements Database_Interface
      * @see    PhotoRigma::Classes::Database::$txt_query
      *         Свойство, хранящее текст SQL-запроса для выполнения.
      * @see    PhotoRigma::Classes::Database::delete()
-     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `_execute_query()`.
      * @see    PhotoRigma::Classes::Database::truncate()
-     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `_execute_query()`.
      * @see    PhotoRigma::Classes::Database::update()
-     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `_execute_query()`.
      * @see    PhotoRigma::Classes::Database::insert()
-     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `_execute_query()`.
      * @see    PhotoRigma::Classes::Database::select()
-     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `_execute_query()`.
      * @see    PhotoRigma::Classes::Database::join()
-     *         Метод, который устанавливает `$this->txt_query` и вызывает `execute_query()`.
-     * @see    PhotoRigma::Classes::Database::convert_query()
+     *         Метод, который устанавливает `$this->txt_query` и вызывает `_execute_query()`.
+     * @see    PhotoRigma::Classes::Database::_convert_query()
      *         Приватный метод для преобразования запроса в нужный формат СУБД перед выполнением.
-     * @see    PhotoRigma::Classes::Database::log_explain()
+     * @see    PhotoRigma::Classes::Database::_log_explain()
      *         Приватный метод для выполнения EXPLAIN ANALYZE.
-     * @see    PhotoRigma::Classes::Database::log_query()
+     * @see    PhotoRigma::Classes::Database::_log_query()
      *         Приватный метод для логирования запросов.
      */
-    private function execute_query(array $params = []): bool
+    private function _execute_query(array $params = []): bool
     {
         // Валидация состояния запроса и аргументов
         if (isset($this->res_query) && !($this->res_query instanceof PDOStatement)) {
@@ -1412,11 +1414,11 @@ class Database implements Database_Interface
         }
 
         // Финальное преобразование запроса в нужный формат СУБД.
-        $this->convert_query();
+        $this->_convert_query();
 
         // Выполняем EXPLAIN ANALYZE, если включено
         if (SQL_ANALYZE) {
-            $this->log_explain($params);
+            $this->_log_explain($params);
         }
 
         // Начало замера времени
@@ -1435,10 +1437,10 @@ class Database implements Database_Interface
         $slow_query_threshold = 200; // Порог в миллисекундах
         if (SQL_LOG && $execution_time > $slow_query_threshold) {
             // Сохраняем запрос в БД
-            $this->log_query('slow', $execution_time);
+            $this->_log_query('slow', $execution_time);
         } elseif (SQL_LOG && empty($params)) {
             // Сохраняем запрос в БД с пустым плейсхолдером
-            $this->log_query('no_placeholders', $execution_time);
+            $this->_log_query('no_placeholders', $execution_time);
         }
         // Очистка строки запроса после её выполнения
         $this->txt_query = null;
@@ -1457,16 +1459,17 @@ class Database implements Database_Interface
      *             Если форматы совпадают, преобразование не требуется, и метод завершает работу.
      *          2. Если форматы не совпадают, вызывает соответствующий приватный метод для выполнения преобразования
      *             из текущего формата (`$this->current_format`) в формат целевой СУБД (`$this->db_type`).
-     *             Вызываемые методы (`convert_from_mysql_to()`, `convert_from_pgsql_to()`, `convert_from_sqlite_to()`)
+     *             Вызываемые методы (`_convert_from_mysql_to()`, `_convert_from_pgsql_to()`, `_convert_from_sqlite_to()`)
      *             модифицируют свойство `$this->txt_query` с преобразованным текстом запроса.
      *          3. Если текущий формат строки (`$this->current_format`) не поддерживается для преобразования,
      *             выбрасывается исключение InvalidArgumentException.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Основной вызывающий метод — `execute_query()`.
+     *          Основной вызывающий метод — `_execute_query()`.
      *
      * @internal
      * @callergraph
+     * @callgraph
      *
      * @return void Метод ничего не возвращает напрямую. Результат преобразования сохраняется в свойстве `$this->txt_query`.
      *
@@ -1484,14 +1487,14 @@ class Database implements Database_Interface
      *          Недопустимый формат может привести к выбросу исключения. Убедитесь также, что `$this->txt_query`
      *          содержит исходный текст запроса, который требуется преобразовать.
      *
-     * Пример вызова метода внутри класса (например, из execute_query()):
+     * Пример вызова метода внутри класса (например, из _execute_query()):
      * @code
      * // Предположим:
      * // $this->txt_query = "SELECT * FROM `users` WHERE id = 1";
      * // $this->current_format = 'mysql';
      * // $this->db_type = 'pgsql';
      *
-     * $this->convert_query(); // Выполнит $this->convert_from_mysql_to('pgsql')
+     * $this->_convert_query(); // Выполнит $this->_convert_from_mysql_to('pgsql')
      *
      * // Теперь $this->txt_query содержит преобразованный запрос для PostgreSQL:
      * // echo $this->txt_query; // Результат: SELECT * FROM "users" WHERE id = 1
@@ -1502,16 +1505,16 @@ class Database implements Database_Interface
      *         Свойство, определяющее исходный формат строки запроса.
      * @see    PhotoRigma::Classes::Database::$db_type
      *         Свойство, определяющее целевой тип используемой СУБД.
-     * @see    PhotoRigma::Classes::Database::convert_from_mysql_to()
+     * @see    PhotoRigma::Classes::Database::_convert_from_mysql_to()
      *         Приватный метод для преобразования запросов из формата MySQL в другие.
-     * @see    PhotoRigma::Classes::Database::convert_from_pgsql_to()
+     * @see    PhotoRigma::Classes::Database::_convert_from_pgsql_to()
      *         Приватный метод для преобразования запросов из формата PostgreSQL в другие.
-     * @see    PhotoRigma::Classes::Database::convert_from_sqlite_to()
+     * @see    PhotoRigma::Classes::Database::_convert_from_sqlite_to()
      *         Приватный метод для преобразования запросов из формата SQLite в другие.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_query(): void
+    private function _convert_query(): void
     {
         // Если формат строки совпадает с типом базы данных, ничего не меняем
         if ($this->current_format === $this->db_type) {
@@ -1520,9 +1523,9 @@ class Database implements Database_Interface
 
         // Выполняем преобразование в зависимости от текущего формата и типа базы данных
         match ($this->current_format) {
-            'mysql'  => $this->convert_from_mysql_to($this->db_type),
-            'pgsql'  => $this->convert_from_pgsql_to($this->db_type),
-            'sqlite' => $this->convert_from_sqlite_to($this->db_type),
+            'mysql'  => $this->_convert_from_mysql_to($this->db_type),
+            'pgsql'  => $this->_convert_from_pgsql_to($this->db_type),
+            'sqlite' => $this->_convert_from_sqlite_to($this->db_type),
             default  => throw new InvalidArgumentException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
                 "Не поддерживаемый формат строки | Тип: $this->current_format"
@@ -1546,7 +1549,7 @@ class Database implements Database_Interface
      *             выбрасывается исключение InvalidArgumentException.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `convert_query()`.
+     *          Вызывается из метода `_convert_query()`.
      *
      * @internal
      * @callergraph
@@ -1559,7 +1562,7 @@ class Database implements Database_Interface
      *              `$this->txt_query`.
      *
      * @throws InvalidArgumentException Выбрасывается, если тип целевой СУБД (`$target_db_type`) не поддерживается
-     *                                  методом `convert_from_mysql_to`.
+     *                                  методом `_convert_from_mysql_to`.
      *                                  Пример сообщения:
      *                                  Неподдерживаемый тип базы данных | Тип: [target_db_type]
      *
@@ -1570,14 +1573,14 @@ class Database implements Database_Interface
      *          'sqlite'). Недопустимый тип может привести к выбросу исключения. Метод предполагает, что
      *          `$this->txt_query` содержит SQL-запрос, использующий синтаксис идентификаторов MySQL (обратные кавычки).
      *
-     * Пример вызова метода внутри класса (например, из convert_query()):
+     * Пример вызова метода внутри класса (например, из _convert_query()):
      * @code
      * // Предположим:
      * // $this->txt_query = "SELECT `id`, `name` FROM `users` WHERE `status` = 1 AND `description` LIKE 'Test\\`s'";
      * // $this->db_type установлен в 'pgsql' или 'sqlite'
      *
      * // Преобразование запроса из MySQL
-     * $this->convert_from_mysql_to($this->db_type);
+     * $this->_convert_from_mysql_to($this->db_type);
      *
      * // Если $this->db_type был 'pgsql':
      * // echo $this->txt_query; // Результат: SELECT "id", "name" FROM "users" WHERE "status" = 1 AND "description" LIKE 'Test\\`s'
@@ -1588,10 +1591,10 @@ class Database implements Database_Interface
      * @endcode
      * @see    PhotoRigma::Classes::Database::$txt_query
      *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом.
-     * @see    PhotoRigma::Classes::Database::convert_query()
+     * @see    PhotoRigma::Classes::Database::_convert_query()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_from_mysql_to(string $target_db_type): void
+    private function _convert_from_mysql_to(string $target_db_type): void
     {
         $this->txt_query = match ($target_db_type) {
             'pgsql', 'sqlite' => preg_replace_callback(
@@ -1623,7 +1626,7 @@ class Database implements Database_Interface
      *             выбрасывается исключение InvalidArgumentException.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `convert_query()`.
+     *          Вызывается из метода `_convert_query()`.
      *
      * @internal
      * @callergraph
@@ -1636,7 +1639,7 @@ class Database implements Database_Interface
      *              `$this->txt_query` (если было преобразование).
      *
      * @throws InvalidArgumentException Выбрасывается, если тип целевой СУБД (`$target_db_type`) не поддерживается
-     *                                  методом `convert_from_pgsql_to`.
+     *                                  методом `_convert_from_pgsql_to`.
      *                                  Пример сообщения:
      *                                  Неподдерживаемый тип базы данных | Тип: [target_db_type]
      *
@@ -1649,7 +1652,7 @@ class Database implements Database_Interface
      *          `$this->txt_query` содержит SQL-запрос, использующий синтаксис идентификаторов PostgreSQL (двойные
      *          кавычки).
      *
-     * Пример вызова метода внутри класса (например, из convert_query()):
+     * Пример вызова метода внутри класса (например, из _convert_query()):
      * @code
      * // Предположим:
      * // $this->txt_query = 'SELECT "id", "name" FROM "users" WHERE "status" = 1 AND "description" LIKE \'Test\\"s\'';
@@ -1657,7 +1660,7 @@ class Database implements Database_Interface
      * // $this->db_type установлен в 'mysql' или 'sqlite'
      *
      * // Преобразование запроса из PostgreSQL
-     * $this->convert_from_pgsql_to($this->db_type);
+     * $this->_convert_from_pgsql_to($this->db_type);
      *
      * // Если $this->db_type был 'mysql':
      * // echo $this->txt_query; // Результат: SELECT `id`, `name` FROM `users` WHERE `status` = 1 AND `description` LIKE 'Test\\"s'
@@ -1668,10 +1671,10 @@ class Database implements Database_Interface
      * @endcode
      * @see    PhotoRigma::Classes::Database::$txt_query
      *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом (или остается без изменений).
-     * @see    PhotoRigma::Classes::Database::convert_query()
+     * @see    PhotoRigma::Classes::Database::_convert_query()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_from_pgsql_to(string $target_db_type): void
+    private function _convert_from_pgsql_to(string $target_db_type): void
     {
         $this->txt_query = match ($target_db_type) {
             'mysql'  => preg_replace_callback(
@@ -1707,7 +1710,7 @@ class Database implements Database_Interface
      *             свойство `$this->txt_query`.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `convert_query()`.
+     *          Вызывается из метода `_convert_query()`.
      *
      * @internal
      * @callergraph
@@ -1720,7 +1723,7 @@ class Database implements Database_Interface
      *              `$this->txt_query`.
      *
      * @throws InvalidArgumentException Выбрасывается, если тип целевой СУБД (`$target_db_type`) не поддерживается
-     *                                  методом `convert_from_sqlite_to`.
+     *                                  методом `_convert_from_sqlite_to`.
      *                                  Пример сообщения:
      *                                  Неподдерживаемый тип базы данных | Тип: [target_db_type]
      *
@@ -1732,7 +1735,7 @@ class Database implements Database_Interface
      *          `$this->txt_query` содержит SQL-запрос, использующий синтаксис идентификаторов SQLite (двойные
      *          кавычки или квадратные скобки).
      *
-     * Пример вызова метода внутри класса (например, из convert_query()):
+     * Пример вызова метода внутри класса (например, из _convert_query()):
      * @code
      * // Предположим:
      * // $this->txt_query = 'SELECT "id", [name] FROM [users] WHERE id = 1';
@@ -1740,7 +1743,7 @@ class Database implements Database_Interface
      * // $this->db_type установлен в 'mysql' или 'pgsql'
      *
      * // Преобразование запроса из SQLite в MySQL
-     * $this->convert_from_sqlite_to('mysql');
+     * $this->_convert_from_sqlite_to('mysql');
      * // echo $this->txt_query; // Результат: SELECT `id`, `name` FROM `users` WHERE id = 1
      *
      * // Предположим:
@@ -1749,25 +1752,47 @@ class Database implements Database_Interface
      * // $this->db_type установлен в 'pgsql'
      *
      * // Преобразование запроса из SQLite в PostgreSQL
-     * $this->convert_from_sqlite_to('pgsql');
+     * $this->_convert_from_sqlite_to('pgsql');
      * // echo $this->txt_query; // Результат: SELECT "id", "name" FROM "users" WHERE id = 1
      * @endcode
      * @see    PhotoRigma::Classes::Database::$txt_query
      *         Свойство, содержащее текст SQL-запроса, которое модифицируется методом.
-     * @see    PhotoRigma::Classes::Database::convert_query()
+     * @see    PhotoRigma::Classes::Database::_convert_query()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_from_sqlite_to(string $target_db_type): void
+    private function _convert_from_sqlite_to(string $target_db_type): void
     {
+        /**
+         * @noinspection RegExpUnnecessaryNonCapturingGroup
+         * @noinspection RegExpSimplifiable
+         * @noinspection RegExpDuplicateCharacterInClass
+         * @noinspection RegExpRedundantEscape
+         */
         $this->txt_query = match ($target_db_type) {
             'mysql'  => preg_replace_callback(
-                '/(?<!\\\\)["\[](.*?)[\]""]/', // Ищем идентификаторы в двойных кавычках или квадратных скобках
-                static fn ($matches) => "`$matches[1]`", // Заменяем их на обратные апострофы
+                '/(?<!\w)(?<!\\\\)(?:((?:[a-zA-Z_][\w]*\.)?(?:["\[]|\\["\[])+)([^"\]\\\\]*(?:\\\\.[^"\]\\\\]*)*)(["\]]+))/',
+                static function ($matches) {
+                    // Обрабатываем префикс (например, 'schema.["table' → 'schema.`table')
+                    $prefix = preg_replace(['/^\./', '/["\[]+/'], ['', ''], $matches[1]);
+
+                    // Обрабатываем содержимое (убираем экранирование)
+                    $content = preg_replace('/\\\\(["\[])/', '$1', $matches[2]);
+
+                    return $prefix . '`' . $content . '`';
+                },
                 $this->txt_query
             ),
             'pgsql'  => preg_replace_callback(
-                '/(?<!\\\\)\[(.*?)\]/', // Ищем идентификаторы в квадратных скобках
-                static fn ($matches) => "\"$matches[1]\"", // Заменяем их на двойные кавычки
+                '/(?<!\w)(?<!\\\\)(?:((?:[a-zA-Z_][\w]*\.)?(?:\[|\\\\\[)+)([^\]\\\\]*(?:\\\\.[^\]\\\\]*)*)(\]+))/',
+                static function ($matches) {
+                    // Обрабатываем префикс (например, 'schema.[table' → 'schema."table')
+                    $prefix = preg_replace(['/^\./', '/\[+/'], ['', ''], $matches[1]);
+
+                    // Обрабатываем содержимое (убираем экранирование только для скобок)
+                    $content = preg_replace('/\\\[\[\]]/', '', $matches[2]);
+
+                    return $prefix . '"' . $content . '"';
+                },
                 $this->txt_query
             ),
             default => throw new InvalidArgumentException(
@@ -1800,14 +1825,14 @@ class Database implements Database_Interface
      *             сообщение об ошибке.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса.
-     *          Вызывается из метода `execute_query()`, если включена константа `SQL_ANALYZE`.
+     *          Вызывается из метода `_execute_query()`, если включена константа `SQL_ANALYZE`.
      *
      * @internal
      * @callergraph
      * @callgraph
      *
      * @param array $params Ассоциативный массив параметров для подготовленного запроса (такой же, как передается в
-     *                      `execute_query()`).
+     *                      `_execute_query()`).
      *                      Пример: `[':id' => 1, ':name' => 'John Doe']`.
      *                      Ключи массива должны соответствовать именам плейсхолдеров в `$this->txt_query`.
      *                      Если параметры отсутствуют, можно передать пустой массив (`[]`).
@@ -1815,7 +1840,7 @@ class Database implements Database_Interface
      * @return void Метод ничего не возвращает. Результат анализа логируется.
      *
      * @throws InvalidArgumentException Выбрасывается, если тип текущей СУБД (`$this->db_type`) не поддерживается
-     *                                  методом `log_explain` для определения типа команды анализа.
+     *                                  методом `_log_explain` для определения типа команды анализа.
      *                                  Пример сообщения:
      *                                  Не поддерживаемый тип СУБД | Тип: [db_type]
      * @throws Exception                Выбрасывается, если произошла ошибка при получении версии СУБД (для
@@ -1833,7 +1858,7 @@ class Database implements Database_Interface
      *          метода, чтобы избежать ошибок при выполнении команды анализа.
      *          Метод предполагает, что соединение с базой данных `$this->pdo` установлено.
      *
-     * Пример вызова метода внутри класса (например, из execute_query()):
+     * Пример вызова метода внутри класса (например, из _execute_query()):
      * @code
      * // Предположим:
      * // $this->txt_query = "SELECT * FROM users WHERE id = :id";
@@ -1841,7 +1866,7 @@ class Database implements Database_Interface
      * // $params = [':id' => 1];
      * // SQL_ANALYZE = true
      *
-     * $this->log_explain($params);
+     * $this->_log_explain($params);
      *
      * // В файл лога будет записан отчет по анализу, содержащий:
      * // - Использованную команду анализа (EXPLAIN или EXPLAIN ANALYZE)
@@ -1857,10 +1882,10 @@ class Database implements Database_Interface
      *         Объект PDO, используемый для выполнения команды анализа.
      * @see    PhotoRigma::Classes::Database::$db_type
      *         Свойство, определяющее тип используемой СУБД.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Приватный метод, из которого вызывается данный метод (при SQL_ANALYZE=true).
      */
-    private function log_explain(array $params): void
+    private function _log_explain(array $params): void
     {
         $explain = '';
         try {
@@ -1973,7 +1998,7 @@ class Database implements Database_Interface
      *               и временем выполнения.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
-     *          Вызывается из метода `execute_query()` при выполнении определенных условий логирования (`SQL_LOG`).
+     *          Вызывается из метода `_execute_query()` при выполнении определенных условий логирования (`SQL_LOG`).
      *
      * @internal
      * @callergraph
@@ -2005,7 +2030,7 @@ class Database implements Database_Interface
      *          структурой. Также учтите, что слишком длинные запросы будут обрезаны до `$max_query_length` символов
      *          перед сохранением.
      *
-     * Пример вызова метода log_query() внутри класса (например, из execute_query()):
+     * Пример вызова метода _log_query() внутри класса (например, из _execute_query()):
      * @code
      * // Предположим:
      * // $this->txt_query содержит текст выполненного запроса
@@ -2015,12 +2040,12 @@ class Database implements Database_Interface
      *
      * // Логирование медленного запроса (если $execution_time_ms > 200)
      * if ($execution_time_ms > 200) {
-     *     $this->log_query('slow', $execution_time_ms);
+     *     $this->_log_query('slow', $execution_time_ms);
      * }
      *
      * // Логирование запроса без плейсхолдеров (если $params был пуст)
      * // else if (empty($params)) { // ... применимо, если не был медленным
-     * //     $this->log_query('no_placeholders', $execution_time_ms); // Время выполнения все равно полезно
+     * //     $this->_log_query('no_placeholders', $execution_time_ms); // Время выполнения все равно полезно
      * // }
      * @endcode
      * @see    PhotoRigma::Classes::Database::$txt_query
@@ -2029,10 +2054,10 @@ class Database implements Database_Interface
      *         Объект PDO, используемый для выполнения запросов к таблице логов.
      * @see    PhotoRigma::Classes::Database::$query_cache
      *         Внутреннее свойство, используемое для кэширования результатов проверки существования запросов.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function log_query(string $reason = 'other', ?float $execution_time_ms = null): void
+    private function _log_query(string $reason = 'other', ?float $execution_time_ms = null): void
     {
         // Проверяем, что запрос существует, является строкой и не является запросом к таблице логов
         if (!is_string($this->txt_query) || empty($this->txt_query) || str_contains($this->txt_query, TBL_LOG_QUERY)) {
@@ -2112,6 +2137,8 @@ class Database implements Database_Interface
      *          Метод предназначен для использования клиентским кодом для получения SQL-выражений для форматирования
      *          дат в запросах.
      *
+     * @callgraph
+     *
      * @param string $column Название столбца с датой:
      *                       - Должен быть непустой строкой в формате имени столбца таблицы в БД.
      * @param string $format Формат даты:
@@ -2156,11 +2183,11 @@ class Database implements Database_Interface
      *
      * @details Этот защищённый метод выполняет следующие шаги:
      *          1. Проверяет тип СУБД через свойство `$this->db_type`.
-     *          2. Для MariaDB (MySQL) преобразует переданный формат `$format` через метод `convert_to_mysql_format()`
+     *          2. Для MariaDB (MySQL) преобразует переданный формат `$format` через метод `_convert_to_mysql_format()`
      *             и использует функцию `DATE_FORMAT`.
-     *          3. Для PostgreSQL преобразует формат через метод `convert_to_postgres_format()` и использует функцию
+     *          3. Для PostgreSQL преобразует формат через метод `_convert_to_postgres_format()` и использует функцию
      *             `TO_CHAR`. Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
-     *          4. Для SQLite преобразует формат через метод `convert_to_sqlite_format()` и использует функцию
+     *          4. Для SQLite преобразует формат через метод `_convert_to_sqlite_format()` и использует функцию
      *             `strftime`. Метод принимает формат не только в стиле MySQL, но и другие поддерживаемые форматы.
      *          5. Если тип СУБД не поддерживается, выбрасывает исключение InvalidArgumentException.
      *
@@ -2210,11 +2237,11 @@ class Database implements Database_Interface
      *         Текущий формат SQL.
      * @see    PhotoRigma::Classes::Database::$allowed_formats
      *         Список допустимых форматов SQL.
-     * @see    PhotoRigma::Classes::Database::convert_to_mysql_format()
+     * @see    PhotoRigma::Classes::Database::_convert_to_mysql_format()
      *         Преобразовывает формат даты в стиль MySQL.
-     * @see    PhotoRigma::Classes::Database::convert_to_postgres_format()
+     * @see    PhotoRigma::Classes::Database::_convert_to_postgres_format()
      *         Преобразовывает формат даты в стиль PostgreSQL.
-     * @see    PhotoRigma::Classes::Database::convert_to_sqlite_format()
+     * @see    PhotoRigma::Classes::Database::_convert_to_sqlite_format()
      *         Преобразовывает формат даты в стиль SQLite.
      * @see    PhotoRigma::Classes::Database::_with_sql_format_internal()
      *         Временно изменяет формат SQL для выполнения запросов.
@@ -2225,13 +2252,13 @@ class Database implements Database_Interface
     {
         // Используем match для выбора логики в зависимости от типа СУБД
         return match ($this->db_type) {
-            'mysql' => "DATE_FORMAT($column, '" . $this->convert_to_mysql_format(
+            'mysql' => "DATE_FORMAT($column, '" . $this->_convert_to_mysql_format(
                 $format
             ) . "')", // Для MySQL преобразуем формат
-            'pgsql' => "TO_CHAR($column, '" . $this->convert_to_postgres_format(
+            'pgsql' => "TO_CHAR($column, '" . $this->_convert_to_postgres_format(
                 $format
             ) . "')", // Для PostgreSQL преобразуем формат
-            'sqlite' => "strftime('" . $this->convert_to_sqlite_format(
+            'sqlite' => "strftime('" . $this->_convert_to_sqlite_format(
                 $format
             ) . "', $column)",   // Для SQLite преобразуем формат
             default => throw new InvalidArgumentException(
@@ -2275,7 +2302,7 @@ class Database implements Database_Interface
      *                `DATE_FORMAT ()`. Пример: '%Y-%m-%d'.
      *
      * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
-     *                                  поддерживается методом `convert_to_mysql_format` в качестве исходного формата
+     *                                  поддерживается методом `_convert_to_mysql_format` в качестве исходного формата
      *                                  для преобразования в MySQL.
      *                                  Пример сообщения:
      *                                  Неизвестный формат | Формат: [current_format]
@@ -2297,7 +2324,7 @@ class Database implements Database_Interface
      * // $this->db_type = 'mysql';
      * // $pgsql_format = 'YYYY-MM-DD HH24:MI:SS';
      *
-     * $mysql_format = $this->convert_to_mysql_format($pgsql_format);
+     * $mysql_format = $this->_convert_to_mysql_format($pgsql_format);
      * // $mysql_format будет равен '%Y-%m-%d %H:%i:%s' (взято из кэша или преобразовано)
      *
      * // Затем этот формат может быть использован с функцией MySQL DATE_FORMAT:
@@ -2310,7 +2337,7 @@ class Database implements Database_Interface
      * @see    PhotoRigma::Classes::Database::_format_date_internal()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_to_mysql_format(string $format): string
+    private function _convert_to_mysql_format(string $format): string
     {
         // Проверяем, нужно ли преобразование
         if ($this->current_format === 'mysql') {
@@ -2391,7 +2418,7 @@ class Database implements Database_Interface
      *                Пример: 'YYYY-MM-DD HH24:MI:SS'.
      *
      * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
-     *                                  поддерживается методом `convert_to_postgres_format` в качестве исходного
+     *                                  поддерживается методом `_convert_to_postgres_format` в качестве исходного
      *                                  формата для преобразования в PostgreSQL (т.е., не 'mysql' и не 'sqlite').
      *                                  Пример сообщения:
      *                                  Неизвестный формат | Формат: [current_format]
@@ -2413,7 +2440,7 @@ class Database implements Database_Interface
      * // $this->db_type = 'pgsql';
      * // $mysql_format = '%Y-%m-%d %H:%i:%s';
      *
-     * $postgres_format = $this->convert_to_postgres_format($mysql_format);
+     * $postgres_format = $this->_convert_to_postgres_format($mysql_format);
      * // $postgres_format будет равен 'YYYY-MM-DD HH24:MI:SS' (взято из кэша или преобразовано)
      *
      * // Затем этот формат может быть использован с функцией PostgreSQL TO_CHAR:
@@ -2426,7 +2453,7 @@ class Database implements Database_Interface
      * @see    PhotoRigma::Classes::Database::_format_date_internal()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_to_postgres_format(string $format): string
+    private function _convert_to_postgres_format(string $format): string
     {
         // Проверяем, нужно ли преобразование
         if ($this->current_format === 'pgsql') {
@@ -2505,7 +2532,7 @@ class Database implements Database_Interface
      *                Пример: '%Y-%m-%d %H:%M:%S'.
      *
      * @throws InvalidArgumentException Выбрасывается, если текущий формат строки (`$this->current_format`) не
-     *                                  поддерживается методом `convert_to_sqlite_format` в качестве исходного
+     *                                  поддерживается методом `_convert_to_sqlite_format` в качестве исходного
      *                                  формата для преобразования в SQLite (т.е., не 'mysql' и не 'pgsql').
      *                                  Пример сообщения:
      *                                  Неизвестный формат | Формат: [current_format]
@@ -2527,7 +2554,7 @@ class Database implements Database_Interface
      * // $this->db_type = 'sqlite';
      * // $mysql_format = '%Y-%m-%d %H:%i:%s';
      *
-     * $sqlite_format = $this->convert_to_sqlite_format($mysql_format);
+     * $sqlite_format = $this->_convert_to_sqlite_format($mysql_format);
      * // $sqlite_format будет равен '%Y-%m-%d %H:%M:%S' (взято из кэша или преобразовано)
      *
      * // Предположим:
@@ -2535,7 +2562,7 @@ class Database implements Database_Interface
      * // $this->db_type = 'sqlite';
      * // $pgsql_format = 'YYYY-MM-DD HH24:MI:SS';
      *
-     * $sqlite_format_from_pgsql = $this->convert_to_sqlite_format($pgsql_format);
+     * $sqlite_format_from_pgsql = $this->_convert_to_sqlite_format($pgsql_format);
      * // $sqlite_format_from_pgsql будет равен '%Y-%m-%d %H:%M:%S' (взято из кэша или преобразовано)
      * @endcode
      * @see    PhotoRigma::Classes::Database::$format_cache
@@ -2545,7 +2572,7 @@ class Database implements Database_Interface
      * @see    PhotoRigma::Classes::Database::_format_date_internal()
      *         Приватный метод, из которого вызывается данный метод.
      */
-    private function convert_to_sqlite_format(string $format): string
+    private function _convert_to_sqlite_format(string $format): string
     {
         // Проверяем, нужно ли преобразование
         if ($this->current_format === 'sqlite') {
@@ -2599,6 +2626,8 @@ class Database implements Database_Interface
      *          Метод предназначен для использования клиентским кодом как точка входа для получения информации о
      *          результатах модифицирующих запросов.
      *
+     * @callgraph
+     *
      * @return int Количество строк, затронутых последним SQL-запросом.
      *
      * @throws InvalidArgumentException Выбрасывается, если количество затронутых строк не установлено
@@ -2646,7 +2675,7 @@ class Database implements Database_Interface
      *
      *          Метод только читает значение свойства `$this->aff_rows` и не выполняет дополнительной логики для его
      *          обновления. Значение `$this->aff_rows` должно быть установлено внешними методами, такими как
-     *          `execute_query()`, `delete()`, `update()` или `insert()`.
+     *          `_execute_query()`, `delete()`, `update()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `get_affected_rows()`.
      *
@@ -2682,14 +2711,14 @@ class Database implements Database_Interface
      * @endcode
      * @see    PhotoRigma::Classes::Database::$aff_rows
      *         Свойство, хранящее количество строк, затронутых последним запросом.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Метод нижнего уровня, который обновляет значение `$aff_rows` после выполнения запроса.
      * @see    PhotoRigma::Classes::Database::delete()
-     *         Метод, который вызывает `execute_query` и, таким образом, может изменять значение `$aff_rows`.
+     *         Метод, который вызывает `_execute_query` и, таким образом, может изменять значение `$aff_rows`.
      * @see    PhotoRigma::Classes::Database::update()
-     *         Метод, который вызывает `execute_query` и, таким образом, может изменять значение `$aff_rows`.
+     *         Метод, который вызывает `_execute_query` и, таким образом, может изменять значение `$aff_rows`.
      * @see    PhotoRigma::Classes::Database::insert()
-     *         Метод, который вызывает `execute_query` и, таким образом, может изменять значение `$aff_rows`.
+     *         Метод, который вызывает `_execute_query` и, таким образом, может изменять значение `$aff_rows`.
      * @see    PhotoRigma::Classes::Database::get_affected_rows()
      *         Публичный метод-редирект для вызова этой логики.
      */
@@ -2713,6 +2742,8 @@ class Database implements Database_Interface
      *          после соответствующих проверок.
      *          Метод предназначен для использования клиентским кодом как точка входа для
      *          получения информации о результатах операций вставки данных.
+     *
+     * @callgraph
      *
      * @return int ID последней вставленной строки.
      *
@@ -2760,12 +2791,11 @@ class Database implements Database_Interface
      *
      *          Метод только читает значение свойства `$this->insert_id` и не выполняет дополнительной логики для его
      *          обновления. Значение `$this->insert_id` должно быть установлено внешними методами, такими как
-     *          `execute_query()` или `insert()`.
+     *          `_execute_query()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `get_last_insert_id()`.
      *
      * @callergraph
-     * @callgraph
      *
      * @return int ID последней вставленной строки.
      *
@@ -2788,7 +2818,7 @@ class Database implements Database_Interface
      * Пример использования метода _get_last_insert_id_internal():
      * @code
      * // Предполагается, что перед этим был выполнен INSERT запрос, например:
-     * // $this->insert(['name' => 'John Doe', 'email' => 'john@example.com'], 'users');
+     * // $this->insert(['name' => 'John Doe', 'email' => 'john@local.com'], 'users');
      *
      * // Получаем ID последней вставленной строки
      * $lastInsertId = $this->_get_last_insert_id_internal();
@@ -2799,7 +2829,7 @@ class Database implements Database_Interface
      *         Свойство, хранящее ID последней вставленной строки.
      * @see    PhotoRigma::Classes::Database::insert()
      *         Метод, который может устанавливать значение `$insert_id`.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Метод нижнего уровня, который может обновлять значение `$insert_id` после выполнения запроса.
      * @see    PhotoRigma::Classes::Database::get_last_insert_id()
      *         Публичный метод-редирект для вызова этой логики.
@@ -2827,6 +2857,8 @@ class Database implements Database_Interface
      *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операций вставки
      *          данных.
      *
+     * @callgraph
+     *
      * @param array  $insert  Ассоциативный массив данных для вставки в формате: 'имя_поля' => 'значение' или
      *                        'имя_поля' => ':плейсхолдер'.
      *                        Если передан пустой массив, выбрасывается исключение.
@@ -2843,7 +2875,7 @@ class Database implements Database_Interface
      * @param array  $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив
      *                          значений, используемых в запросе (например, [":name" => "John Doe", ":email" =>
-     *                          "john@example.com"]).
+     *                          "john@local.com"]).
      *                          Обязателен для использования с данными для вставки, требующими
      *                          подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
      *                          Может быть пустым массивом, если параметры не требуются.
@@ -2890,7 +2922,7 @@ class Database implements Database_Interface
      *     ['name' => ':name', 'email' => ':email'],
      *     'users',
      *     '', // или 'ignore', 'replace', 'into'
-     *     ['params' => [':name' => 'John Doe', ':email' => 'john@example.com']]
+     *     ['params' => [':name' => 'John Doe', ':email' => 'john@local.com']]
      * );
      * @endcode
      * @see    PhotoRigma::Classes::Database::_insert_internal()
@@ -2917,7 +2949,7 @@ class Database implements Database_Interface
      *             - `'into'` или пустая строка (`''`): Формирует запрос типа "INSERT INTO" (по умолчанию).
      *          5. Формирует базовый SQL-запрос INSERT с использованием преобразованных данных и сохраняет его в
      *              свойстве `$txt_query`.
-     *          6. Выполняет сформированный запрос через метод `execute_query`, передавая параметры `params` из
+     *          6. Выполняет сформированный запрос через метод `_execute_query`, передавая параметры `params` из
      *             `$options` для подготовленного выражения.
      *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
@@ -2944,7 +2976,7 @@ class Database implements Database_Interface
      * @param array  $options Массив опций для формирования запроса. Поддерживаемые ключи:
      *                        - params (array): Параметры для подготовленного выражения. Ассоциативный массив
      *                          значений, используемых в запросе (например, [":name" => "John Doe", ":email" =>
-     *                          "john@example.com"]).
+     *                          "john@local.com"]).
      *                          Обязателен для использования с данными для вставки, требующими
      *                          подготовленных выражений. Обеспечивает защиту от SQL-инъекций.
      *                          Может быть пустым массивом, если параметры не требуются.
@@ -2987,14 +3019,14 @@ class Database implements Database_Interface
      *     ['name' => ':name', 'email' => ':email'],
      *     'users',
      *     '',
-     *     ['params' => [':name' => 'John Doe', ':email' => 'john@example.com']]
+     *     ['params' => [':name' => 'John Doe', ':email' => 'john@local.com']]
      * );
      * @endcode
      * @see    PhotoRigma::Classes::Database::$txt_query
      *         Свойство, в которое помещается текст SQL-запроса.
      * @see    PhotoRigma::Classes::Database::insert()
      *         Публичный метод-редирект для вызова этой логики.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Выполняет SQL-запрос.
      */
     protected function _insert_internal(array $insert, string $to_tbl, string $type = '', array $options = []): bool
@@ -3031,7 +3063,7 @@ class Database implements Database_Interface
         $this->txt_query = "$query_type $to_tbl ($keys) VALUES ($values)";
 
         // === 5. Выполнение запроса ===
-        return $this->execute_query($options['params']);
+        return $this->_execute_query($options['params']);
     }
 
     /**
@@ -3042,6 +3074,8 @@ class Database implements Database_Interface
      *          выполняет формирование и выполнение SQL-запроса с использованием JOIN.
      *          Безопасность обеспечивается использованием подготовленных выражений с параметрами.
      *          Метод предназначен для использования клиентским кодом как точка входа для выполнения запросов с JOIN.
+     *
+     * @callgraph
      *
      * @param string|array $select   Список полей для выборки. Может быть строкой (имя одного поля) или массивом
      *                                (список полей). Если передан массив, он преобразуется в строку с разделителем
@@ -3154,7 +3188,7 @@ class Database implements Database_Interface
      *          5. Формирует базовый SQL-запрос с использованием JOIN-операций.
      *          6. Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          7. Сохраняет сформированный запрос в свойстве `$txt_query`.
-     *          8. Выполняет запрос через метод `execute_query`, передавая параметры `params` для подготовленного
+     *          8. Выполняет запрос через метод `_execute_query`, передавая параметры `params` для подготовленного
      *             выражения.
      *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
@@ -3250,9 +3284,9 @@ class Database implements Database_Interface
      *         Свойство, в которое помещается текст SQL-запроса.
      * @see    PhotoRigma::Classes::Database::join()
      *         Публичный метод-редирект для вызова этой логики.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Выполняет SQL-запрос.
-     * @see    PhotoRigma::Classes::Database::build_conditions()
+     * @see    PhotoRigma::Classes::Database::_build_conditions()
      *         Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
      */
     protected function _join_internal(string|array $select, string $from_tbl, array $join, array $options = []): bool
@@ -3286,21 +3320,23 @@ class Database implements Database_Interface
         $this->txt_query = "SELECT $select FROM $from_tbl " . implode(' ', $join_clauses);
 
         // === 4. Добавление условий ===
-        [$conditions, $params] = $this->build_conditions($options);
+        [$conditions, $params] = $this->_build_conditions($options);
         $this->txt_query .= $conditions;
 
         // === 5. Выполнение запроса ===
-        return $this->execute_query($params);
+        return $this->_execute_query($params);
     }
 
     /**
      * @brief   Извлекает все строки результата из подготовленного выражения.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода `_res_arr_internal()`.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_result_array_internal()`.
      *          Он вызывает внутренний метод для извлечения всех строк результата последнего выполненного
      *          запроса из свойства `$res_query` в виде массива ассоциативных массивов, после соответствующих проверок.
      *          Метод предназначен для использования клиентским кодом как точка входа для
      *          получения всех результатов запроса SELECT.
+     *
+     * @callgraph
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если
      *                     они доступны. Если результатов нет (запрос не вернул строк), возвращает `false`.
@@ -3313,8 +3349,8 @@ class Database implements Database_Interface
      *
      * @note    Этот метод является точкой входа для получения всех строк результата запроса.
      *          Результат запроса (объект PDOStatement в свойстве `$res_query`) устанавливается методом выполнения
-     *          запроса (например, `execute_query()`). Внутренняя логика получения данных и проверки их корректности
-     *          выполняется в защищённом методе `_res_arr_internal()`.
+     *          запроса (например, `_execute_query()`). Внутренняя логика получения данных и проверки их корректности
+     *          выполняется в защищённом методе `_result_array_internal()`.
      * @warning Убедитесь, что перед вызовом этого метода был успешно выполнен запрос (например, SELECT), который
      *          установил доступный для чтения результат (`$res_query`).
      *
@@ -3325,7 +3361,7 @@ class Database implements Database_Interface
      * // ... например: $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      *
      * // Получаем все строки результата в виде массива
-     * $results = $db->res_arr();
+     * $results = $db->result_array();
      *
      * if ($results !== false) {
      *     foreach ($results as $row) {
@@ -3335,12 +3371,12 @@ class Database implements Database_Interface
      *     echo "No results found.";
      * }
      * @endcode
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Защищённый метод, выполняющий основную логику извлечения всех строк результата.
      */
-    public function res_arr(): array|false
+    public function result_array(): array|false
     {
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -3357,12 +3393,11 @@ class Database implements Database_Interface
      *
      *          Метод только читает значение свойства `$this->res_query` и не выполняет дополнительной логики для его
      *          обновления. Значение `$this->res_query` должно быть установлено внешними методами, такими как
-     *          `execute_query()`, `delete()`, `update()` или `insert()`.
+     *          `_execute_query()`, `delete()`, `update()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод-редирект `res_arr()`.
+     *          Основная логика вызывается через публичный метод-редирект `result_array()`.
      *
      * @callergraph
-     * @callgraph
      *
      * @return array|false Возвращает массив ассоциативных массивов, содержащих данные всех строк результата, если они
      *                     доступны. Если результатов нет (запрос не вернул строк), возвращает `false`.
@@ -3383,13 +3418,13 @@ class Database implements Database_Interface
      *          выполнен запрос (например, SELECT), который корректно установил значение `$this->res_query` как
      *          объект `PDOStatement`.
      *
-     * Пример использования метода _res_arr_internal():
+     * Пример использования метода _result_array_internal():
      * @code
      * // Предполагается, что перед этим был выполнен SELECT запрос, например:
      * // $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      *
      * // Получаем все строки результата в виде массива
-     * $results = $this->_res_arr_internal();
+     * $results = $this->_result_array_internal();
      *
      * if ($results !== false) {
      *     foreach ($results as $row) {
@@ -3401,17 +3436,17 @@ class Database implements Database_Interface
      * @endcode
      * @see    PhotoRigma::Classes::Database::$res_query
      *         Свойство, хранящее результат подготовленного выражения (объект PDOStatement).
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Метод нижнего уровня, который устанавливает значение `$res_query` после выполнения запроса.
      * @see    PhotoRigma::Classes::Database::select()
-     *         Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса.
+     *         Метод, который может использовать `_result_array_internal()` для получения результатов SELECT-запроса.
      * @see    PhotoRigma::Classes::Database::join()
-     *         Метод, который может использовать `_res_arr_internal()` для получения результатов SELECT-запроса с
+     *         Метод, который может использовать `_result_array_internal()` для получения результатов SELECT-запроса с
      *         использованием JOIN.
-     * @see    PhotoRigma::Classes::Database::res_arr()
+     * @see    PhotoRigma::Classes::Database::result_array()
      *         Публичный метод-редирект для вызова этой логики.
      */
-    protected function _res_arr_internal(): array|false
+    protected function _result_array_internal(): array|false
     {
         // === 1. Валидация состояния запроса ===
         if (!isset($this->res_query) || !($this->res_query instanceof PDOStatement)) {
@@ -3431,11 +3466,13 @@ class Database implements Database_Interface
     /**
      * @brief   Извлекает одну строку результата из подготовленного выражения.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода `_res_row_internal()`.
+     * @details Этот публичный метод является обёрткой для защищённого метода `_result_row_internal()`.
      *          Он вызывает внутренний метод для извлечения одной строки результата последнего выполненного запроса
      *          из свойства `$res_query` в виде ассоциативного массива, после соответствующих проверок.
      *          При последовательных вызовах метода извлекается следующая строка результата.
      *          Метод предназначен для использования клиентским кодом для получения результатов запроса по одной строке.
+     *
+     * @callgraph
      *
      * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если она
      *                     доступна. При последовательных вызовах переходит к следующей строке.
@@ -3448,8 +3485,8 @@ class Database implements Database_Interface
      *
      * @note    Этот метод является точкой входа для получения строк результата запроса по одной.
      *          Результат запроса (объект PDOStatement в свойстве `$res_query`) устанавливается методом выполнения
-     *          запроса (например, `execute_query()`). Внутренняя логика получения данных и проверки их корректности
-     *          выполняется в защищённом методе `_res_row_internal()`.
+     *          запроса (например, `_execute_query()`). Внутренняя логика получения данных и проверки их корректности
+     *          выполняется в защищённом методе `_result_row_internal()`.
      * @warning Убедитесь, что перед вызовом этого метода был успешно выполнен запрос (например, SELECT), который
      *          установил доступный для чтения результат (`$res_query`).
      *
@@ -3460,16 +3497,16 @@ class Database implements Database_Interface
      * // ... например: $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      *
      * // Извлекаем строки по одной
-     * while ($row = $db->res_row()) {
+     * while ($row = $db->result_row()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      * }
      * @endcode
-     * @see    PhotoRigma::Classes::Database::_res_row_internal()
+     * @see    PhotoRigma::Classes::Database::_result_row_internal()
      *         Защищённый метод, выполняющий основную логику извлечения одной строки результата.
      */
-    public function res_row(): array|false
+    public function result_row(): array|false
     {
-        return $this->_res_row_internal();
+        return $this->_result_row_internal();
     }
 
     /**
@@ -3485,12 +3522,11 @@ class Database implements Database_Interface
      *
      *          Метод только читает значение свойства `$this->res_query` и не выполняет дополнительной логики для его
      *          обновления. Значение `$this->res_query` должно быть установлено внешними методами, такими как
-     *          `execute_query()`, `delete()`, `update()` или `insert()`.
+     *          `_execute_query()`, `delete()`, `update()` или `insert()`.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
-     *          Основная логика вызывается через публичный метод-редирект `res_row()`.
+     *          Основная логика вызывается через публичный метод-редирект `result_row()`.
      *
      * @callergraph
-     * @callgraph
      *
      * @return array|false Возвращает ассоциативный массив, содержащий данные одной строки результата, если она
      *                     доступна. При последовательных вызовах переходит к следующей строке.
@@ -3513,29 +3549,29 @@ class Database implements Database_Interface
      *          объект `PDOStatement`. Последовательные вызовы извлекают следующую строку; для начала извлечения
      *          сначала нужно выполнить запрос.
      *
-     * Пример использования метода _res_row_internal():
+     * Пример использования метода _result_row_internal():
      * @code
      * // Предполагается, что перед этим был выполнен SELECT запрос, например:
      * // $db->select(['id', 'name'], 'users', ['where' => 'status = 1']);
      *
      * // Извлекаем строки по одной
-     * while ($row = $this->_res_row_internal()) {
+     * while ($row = $this->_result_row_internal()) {
      *     echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
      * }
      * @endcode
      * @see    PhotoRigma::Classes::Database::$res_query
      *         Свойство, хранящее результат подготовленного выражения (объект PDOStatement).
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Метод нижнего уровня, который устанавливает значение `$res_query` после выполнения запроса.
      * @see    PhotoRigma::Classes::Database::select()
-     *         Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса.
+     *         Метод, который может использовать `_result_row_internal()` для получения результатов SELECT-запроса.
      * @see    PhotoRigma::Classes::Database::join()
-     *         Метод, который может использовать `_res_row_internal()` для получения результатов SELECT-запроса с
+     *         Метод, который может использовать `_result_row_internal()` для получения результатов SELECT-запроса с
      *         использованием JOIN.
-     * @see    PhotoRigma::Classes::Database::res_row()
+     * @see    PhotoRigma::Classes::Database::result_row()
      *         Публичный метод-редирект для вызова этой логики.
      */
-    protected function _res_row_internal(): array|false
+    protected function _result_row_internal(): array|false
     {
         // === 1. Валидация состояния запроса ===
         if (!isset($this->res_query) || !($this->res_query instanceof PDOStatement)) {
@@ -3556,6 +3592,8 @@ class Database implements Database_Interface
      *          на уровне PDO и записывает соответствующий лог.
      *          Метод предназначен для использования клиентским кодом как точка входа для
      *          явного управления транзакциями.
+     *
+     * @callgraph
      *
      * @param string $context Контекст транзакции (необязательный параметр).
      *                        Используется для описания цели или места отмены транзакции.
@@ -3604,7 +3642,6 @@ class Database implements Database_Interface
      *          Основная логика вызывается через публичный метод-редирект `rollback_transaction()`.
      *
      * @callergraph
-     * @callgraph
      *
      * @param string $context Контекст транзакции (необязательный параметр).
      *                        Используется для описания цели или места отмены транзакции.
@@ -3651,6 +3688,8 @@ class Database implements Database_Interface
      *          Безопасность обеспечивается использованием подготовленных выражений с параметрами.
      *          Метод предназначен для использования клиентским кодом как точка входа для выполнения запросов на
      *          выборку данных.
+     *
+     * @callgraph
      *
      * @param string|array $select   Список полей для выборки. Может быть строкой (имя одного поля) или массивом
      *                               (список полей). Если передан массив, он преобразуется в строку с разделителем
@@ -3744,7 +3783,7 @@ class Database implements Database_Interface
      *          3. Формирует базовый SQL-запрос `SELECT ... FROM ...`.
      *          4. Добавляет условия WHERE, GROUP BY, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          5. Сохраняет сформированный запрос в свойстве `$txt_query`.
-     *          6. Выполняет запрос через метод `execute_query`, передавая параметры `params` для подготовленного
+     *          6. Выполняет запрос через метод `_execute_query`, передавая параметры `params` для подготовленного
      *             выражения.
      *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
@@ -3826,9 +3865,9 @@ class Database implements Database_Interface
      *         Свойство, в которое помещается текст SQL-запроса.
      * @see    PhotoRigma::Classes::Database::select()
      *         Публичный метод-редирект для вызова этой логики.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Выполняет SQL-запрос.
-     * @see    PhotoRigma::Classes::Database::build_conditions()
+     * @see    PhotoRigma::Classes::Database::_build_conditions()
      *         Формирует условия WHERE, GROUP BY, ORDER BY и LIMIT для запроса.
      */
     protected function _select_internal(string|array $select, string $from_tbl, array $options = []): bool
@@ -3856,11 +3895,11 @@ class Database implements Database_Interface
         $this->txt_query = "SELECT $select FROM $from_tbl";
 
         // === 3. Добавление условий ===
-        [$conditions, $params] = $this->build_conditions($options);
+        [$conditions, $params] = $this->_build_conditions($options);
         $this->txt_query .= $conditions;
 
         // === 4. Выполнение запроса ===
-        return $this->execute_query($params);
+        return $this->_execute_query($params);
     }
 
     /**
@@ -3872,6 +3911,8 @@ class Database implements Database_Interface
      *          через транзакции.
      *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операции очистки
      *          таблицы.
+     *
+     * @callgraph
      *
      * @param string $from_tbl Имя таблицы, которую необходимо очистить.
      *                         Должно быть строкой, содержащей только допустимые имена таблиц без специальных символов.
@@ -3916,7 +3957,7 @@ class Database implements Database_Interface
      *             выбрасывается исключение InvalidArgumentException.
      *          2. Формирует базовый SQL-запрос `TRUNCATE TABLE` для очистки таблицы с использованием `$from_tbl`.
      *          3. Сохраняет сформированный запрос в свойстве `$this->txt_query`.
-     *          4. Выполняет запрос через метод `execute_query()`.
+     *          4. Выполняет запрос через метод `_execute_query()`.
      *
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод-редирект `truncate()`.
@@ -3949,7 +3990,7 @@ class Database implements Database_Interface
      *         Свойство, в которое помещается текст SQL-запроса.
      * @see    PhotoRigma::Classes::Database::truncate()
      *         Публичный метод-редирект для вызова этой логики.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Выполняет SQL-запрос.
      */
     protected function _truncate_internal(string $from_tbl): bool
@@ -3957,7 +3998,7 @@ class Database implements Database_Interface
         // Формирование базового запроса
         $this->txt_query = "TRUNCATE TABLE $from_tbl";
         // Выполнение запроса
-        return $this->execute_query();
+        return $this->_execute_query();
     }
 
     /**
@@ -3970,6 +4011,8 @@ class Database implements Database_Interface
      *          подготовленных выражений с параметрами.
      *          Метод предназначен для использования клиентским кодом как точка входа для выполнения операций
      *          обновления данных.
+     *
+     * @callgraph
      *
      * @param array  $update   Ассоциативный массив данных для обновления в формате: 'имя_поля' => 'значение'.
      *                         Пример: ["name" => ":name", "status" => ":status"].
@@ -4067,7 +4110,7 @@ class Database implements Database_Interface
      *          4. Формирует базовый SQL-запрос UPDATE с использованием преобразованных данных.
      *          5. Добавляет условия WHERE, ORDER BY и LIMIT, если они указаны в параметре `$options`.
      *          6. Сохраняет сформированный запрос в свойстве `$txt_query`.
-     *          7. Выполняет запрос через метод `execute_query`, передавая параметры `params` для подготовленного
+     *          7. Выполняет запрос через метод `_execute_query`, передавая параметры `params` для подготовленного
      *             выражения.
      *
      *          Использование параметров `params` является обязательным для подготовленных выражений, так как это
@@ -4149,9 +4192,9 @@ class Database implements Database_Interface
      *         Свойство, в которое помещается текст SQL-запроса.
      * @see    PhotoRigma::Classes::Database::update()
      *         Публичный метод-редирект для вызова этой логики.
-     * @see    PhotoRigma::Classes::Database::execute_query()
+     * @see    PhotoRigma::Classes::Database::_execute_query()
      *         Выполняет SQL-запрос.
-     * @see    PhotoRigma::Classes::Database::build_conditions()
+     * @see    PhotoRigma::Classes::Database::_build_conditions()
      *         Формирует условия WHERE, ORDER BY и LIMIT для запроса.
      */
     protected function _update_internal(array $update, string $from_tbl, array $options = []): bool
@@ -4184,11 +4227,11 @@ class Database implements Database_Interface
         $this->txt_query = "UPDATE $from_tbl SET $set_clause";
 
         // === 5. Добавление условий ===
-        [$conditions, $params] = $this->build_conditions($options);
+        [$conditions, $params] = $this->_build_conditions($options);
         $this->txt_query .= $conditions;
 
         // === 6. Выполнение запроса ===
-        return $this->execute_query($params);
+        return $this->_execute_query($params);
     }
 
     /**
@@ -4200,6 +4243,8 @@ class Database implements Database_Interface
      *          восстановление исходного формата после его завершения, даже в случае исключения.
      *          Метод предназначен для использования клиентским кодом для выполнения набора операций
      *          с базой данных, которые требуют специфического формата SQL, отличного от текущего.
+     *
+     * @callgraph
      *
      * @param string   $format   Формат SQL, который нужно использовать временно.
      *                           Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
@@ -4247,7 +4292,7 @@ class Database implements Database_Interface
      *             'order' => 'year ASC',
      *         ]
      *     );
-     *     return $db->res_arr();
+     *     return $db->result_array();
      * });
      * print_r($years_list);
      *
@@ -4279,7 +4324,6 @@ class Database implements Database_Interface
      *          Основная логика вызывается через публичный метод-редирект `with_sql_format()`.
      *
      * @callergraph
-     * @callgraph
      *
      * @param string   $format   Формат SQL, который нужно использовать временно.
      *                           Поддерживаемые значения: 'mysql', 'pgsql', 'sqlite'.
@@ -4319,7 +4363,7 @@ class Database implements Database_Interface
      *         ]
      *     );
      *     // Получение результата
-     *     return $this->res_arr();
+     *     return $this->result_array();
      * });
      * print_r($years_list);
      * @endcode
@@ -4360,6 +4404,8 @@ class Database implements Database_Interface
      *          Он вызывает внутреннюю логику поиска, реализованную в защищённом методе
      *          `_full_text_search_internal()`, передавая ему все необходимые параметры и опции.
      *          Безопасность запроса обеспечивается использованием подготовленных выражений.
+     *
+     * @callgraph
      *
      * @param array  $columns_to_return Массив строк с именами столбцов, данные из которых нужно вернуть.
      * @param array  $columns_to_search Массив строк с именами столбцов, по которым выполняется поиск.
@@ -4450,13 +4496,13 @@ class Database implements Database_Interface
      *             `$search_string`). Проверяется их заполненность и тип.
      *          2. Обработка специального символа `*` в `$search_string`: если строка поиска равна `*`,
      *             выполняется обычный запрос на выборку всех записей из таблицы с помощью внутреннего метода
-     *             `_select_internal()`, применяя при этом фильтрацию опций через `fts_check_options()`,
-     *             и возвращается результат через `_res_arr_internal()`.
+     *             `_select_internal()`, применяя при этом фильтрацию опций через `_fts_check_options()`,
+     *             и возвращается результат через `_result_array_internal()`.
      *          3. Получение текущей версии базы данных из таблицы `db_version` с использованием
-     *             `_select_internal()` и `_res_row_internal()`. Это необходимо для выбора корректного
+     *             `_select_internal()` и `_result_row_internal()`. Это необходимо для выбора корректного
      *             метода полнотекстового поиска в зависимости от версии СУБД.
      *          4. Снятие экранирования идентификаторов (имен столбцов и таблицы) с использованием
-     *             метода `unescape_identifiers()` для обеспечения корректности SQL-запроса.
+     *             метода `_unescape_identifiers()` для обеспечения корректности SQL-запроса.
      *          5. Выбор и вызов специфического метода полнотекстового поиска в зависимости от типа
      *             используемой СУБД (`$this->db_type`). Используется конструкция `match`.
      *          6. Передача всех необходимых параметров в выбранный специфический метод поиска.
@@ -4550,19 +4596,19 @@ class Database implements Database_Interface
      * @endcode
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Используется для выборки всех записей при `$search_string = '*'` и для получения версии БД.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Используется для получения результата в виде массива при `$search_string = '*'`.
-     * @see    PhotoRigma::Classes::Database::_res_row_internal()
+     * @see    PhotoRigma::Classes::Database::_result_row_internal()
      *         Используется для получения одной строки результата (версии БД).
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Используется для фильтрации опций при `$search_string = '*'`.
-     * @see    PhotoRigma::Classes::Database::unescape_identifiers()
+     * @see    PhotoRigma::Classes::Database::_unescape_identifiers()
      *         Используется для снятия экранирования имен столбцов и таблицы.
-     * @see    PhotoRigma::Classes::Database::full_text_search_mysql()
+     * @see    PhotoRigma::Classes::Database::_full_text_search_mysql()
      *         Специфический метод для полнотекстового поиска в MySQL.
-     * @see    PhotoRigma::Classes::Database::full_text_search_pgsql()
+     * @see    PhotoRigma::Classes::Database::_full_text_search_pgsql()
      *         Специфический метод для полнотекстового поиска в PostgreSQL.
-     * @see    PhotoRigma::Classes::Database::full_text_search_sqlite()
+     * @see    PhotoRigma::Classes::Database::_full_text_search_sqlite()
      *         Специфический метод для полнотекстового поиска в SQLite.
      * @see    PhotoRigma::Classes::Database::$db_type
      *         Свойство, хранящее тип текущей СУБД.
@@ -4590,20 +4636,20 @@ class Database implements Database_Interface
 
         // 2. Если search_string == '*', делаем обычный SELECT через _select_internal
         if ($search_string === '*') {
-            $new_option = $this->fts_check_options($options, []);
+            $new_option = $this->_fts_check_options($options, []);
             $this->_select_internal(
                 $columns_to_return,
                 $table,
                 $new_option
             );
 
-            return $this->_res_arr_internal();
+            return $this->_result_array_internal();
         }
 
         // 3. Получение версии базы данных
         $this->_select_internal('ver', 'db_version', ['limit' => 1]);
 
-        $version_data = $this->_res_row_internal();
+        $version_data = $this->_result_row_internal();
 
         if ($version_data === false || !isset($version_data['ver'])) {
             throw new RuntimeException(
@@ -4614,13 +4660,13 @@ class Database implements Database_Interface
         $db_version = $version_data['ver'];
 
         // 4. Снятие экранирования
-        $columns_to_return = $this->unescape_identifiers($columns_to_return);
-        $columns_to_search = $this->unescape_identifiers($columns_to_search);
-        $table = $this->unescape_identifiers([$table])[0];
+        $columns_to_return = $this->_unescape_identifiers($columns_to_return);
+        $columns_to_search = $this->_unescape_identifiers($columns_to_search);
+        $table = $this->_unescape_identifiers([$table])[0];
 
         // 5. Выбор подметода в зависимости от типа СУБД
         return match ($this->db_type) {
-            'mysql'  => $this->full_text_search_mysql(
+            'mysql'  => $this->_full_text_search_mysql(
                 $columns_to_return,
                 $columns_to_search,
                 $search_string,
@@ -4628,7 +4674,7 @@ class Database implements Database_Interface
                 $db_version,
                 $options
             ),
-            'pgsql'  => $this->full_text_search_pgsql(
+            'pgsql'  => $this->_full_text_search_pgsql(
                 $columns_to_return,
                 $columns_to_search,
                 $search_string,
@@ -4636,7 +4682,7 @@ class Database implements Database_Interface
                 $db_version,
                 $options
             ),
-            'sqlite' => $this->full_text_search_sqlite(
+            'sqlite' => $this->_full_text_search_sqlite(
                 $columns_to_return,
                 $columns_to_search,
                 $search_string,
@@ -4665,33 +4711,33 @@ class Database implements Database_Interface
      *             соответствия синтаксису MySQL.
      *          2. Проверяет, что длина строки поиска `$search_string` превышает минимально допустимое значение,
      *             определенное константой `MIN_FULLTEXT_SEARCH_LENGTH`. Если длина недостаточна, метод сразу же
-     *             вызывает приватный метод `fallback_to_like_mysql()` для выполнения поиска с использованием `LIKE`
+     *             вызывает приватный метод `_fallback_to_like_mysql()` для выполнения поиска с использованием `LIKE`
      *             и возвращает его результат.
      *          3. Формирует уникальный ключ кеша на основе имени таблицы и столбцов для поиска для идентификации
      *             FTS-индекса в кеше.
      *          4. Проверяет кеш (`$this->cache`) на наличие записи, связанной с этим FTS-индексом, используя
      *             `$db_version` как параметр валидности кеша. Если в кеше найдена запись с флагом `query_error = true`,
      *             это означает, что предыдущая попытка выполнить FTS-запрос для этого индекса завершилась ошибкой.
-     *             В этом случае метод также вызывает `fallback_to_like_mysql()` и возвращает его результат.
+     *             В этом случае метод также вызывает `_fallback_to_like_mysql()` и возвращает его результат.
      *          5. Предпринимает попытку выполнить полнотекстовый поиск в блоке `try...catch`:
      *             - Формирует базовые опции FTS (`$base_options`), включающие условие `WHERE MATCH(...) AGAINST(...)
      *               IN NATURAL LANGUAGE MODE` и сортировку `ORDER BY MATCH(...) AGAINST(...) DESC`, используя
      *               переданную строку поиска `$search_string` как параметр.
      *             - Объединяет переданные внешние опции запроса (`$options`) с базовыми FTS-опциями
-     *               (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *               (`$base_options`) с помощью приватного метода `_fts_check_options()`. Этот метод разрешает
      *               конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
      *             - Вызывает приватный метод `_select_internal()` с экранированными столбцами, экранированным именем
      *               таблицы и объединенными опциями для выполнения SQL-запроса.
      *          6. В случае успешного выполнения FTS-запроса (блок `try` без исключений):
      *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = false` для данного FTS-индекса,
      *               указывая на успешность последнего запроса.
-     *             - Получает результат запроса в виде массива с помощью приватного метода `_res_arr_internal()` и
+     *             - Получает результат запроса в виде массива с помощью приватного метода `_result_array_internal()` и
      *               возвращает его.
      *          7. В случае возникновения исключения (`Throwable`) во время выполнения FTS-запроса (блок `catch`):
      *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая сообщение об ошибке.
      *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = true` для данного FTS-индекса,
      *               чтобы избежать повторных ошибок в будущем.
-     *             - Вызывает приватный метод `fallback_to_like_mysql()` для выполнения поиска с использованием
+     *             - Вызывает приватный метод `_fallback_to_like_mysql()` для выполнения поиска с использованием
      *               `LIKE` и возвращает его результат.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
@@ -4730,13 +4776,13 @@ class Database implements Database_Interface
      *                                  кеша.
      * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
      *                                  невозможности записи в файл.
-     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     * @throws PDOException             Может быть выброшено методами `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
      *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
      *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
      *                                  FTS перехватываются и приводят к fallback).
-     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     * @throws InvalidArgumentException Может быть выброшено методом `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) при некорректном формате опций. (Большинство таких
      *                                  ошибок внутри FTS перехватываются и приводят к fallback).
      *
      * @note    Метод использует константу `MIN_FULLTEXT_SEARCH_LENGTH` для проверки минимальной длины строки поиска.
@@ -4744,7 +4790,7 @@ class Database implements Database_Interface
      *          `_select_internal`) для оптимизации и запоминания FTS-индексов, вызывающих ошибки.
      *          При возникновении ошибок выполнения FTS-запроса (например, отсутствие FTS-индекса), метод
      *          автоматически переключается на более медленный поиск с помощью оператора `LIKE`, вызывая
-     *          `fallback_to_like_mysql()`.
+     *          `_fallback_to_like_mysql()`.
      *
      * @warning Убедитесь, что в таблице, указанной в `$table`, существуют столбцы из `$columns_to_search`,
      *          и по ним создан действующий полнотекстовый индекс (`FULLTEXT`). Отсутствие индекса приведет к ошибке
@@ -4769,7 +4815,7 @@ class Database implements Database_Interface
      * ];
      *
      * // Вызов метода
-     * $results = $this->full_text_search_mysql(
+     * $results = $this->_full_text_search_mysql(
      *     $columns_to_return,
      *     $columns_to_search,
      *     $search_string,
@@ -4786,16 +4832,16 @@ class Database implements Database_Interface
      *     echo "Произошла критическая ошибка поиска.";
      * }
      *
-     * // Если strlen($search_string) < 4, будет вызван fallback_to_like_mysql
-     * // Если FTS запрос упадет (нет индекса), будет вызван fallback_to_like_mysql, ошибка будет залогирована и закэширована.
+     * // Если strlen($search_string) < 4, будет вызван _fallback_to_like_mysql
+     * // Если FTS запрос упадет (нет индекса), будет вызван _fallback_to_like_mysql, ошибка будет залогирована и закэширована.
      * @endcode
-     * @see    PhotoRigma::Classes::Database::fallback_to_like_mysql()
+     * @see    PhotoRigma::Classes::Database::_fallback_to_like_mysql()
      *         Приватный метод, реализующий поиск по LIKE в качестве fallback.
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Приватный метод, объединяющий и обрабатывающий опции запроса для FTS.
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Приватный метод для выполнения SELECT-запроса.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Приватный метод для получения всех строк результата запроса.
      * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений.
@@ -4814,7 +4860,7 @@ class Database implements Database_Interface
      * @see    MIN_FULLTEXT_SEARCH_LENGTH
      *         Константа, определяющая минимальную длину строки для полнотекстового поиска.
      */
-    private function full_text_search_mysql(
+    private function _full_text_search_mysql(
         array $columns_to_return,
         array $columns_to_search,
         string $search_string,
@@ -4829,7 +4875,7 @@ class Database implements Database_Interface
 
         // 2. Проверка минимальной длины строки поиска
         if (strlen($search_string) < MIN_FULLTEXT_SEARCH_LENGTH) {
-            return $this->fallback_to_like_mysql(
+            return $this->_fallback_to_like_mysql(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -4846,7 +4892,7 @@ class Database implements Database_Interface
 
         if ($cached_index !== false && isset($cached_index['query_error']) && $cached_index['query_error'] === true) {
             // Запрос ранее упал — делаем fallback_to_like
-            return $this->fallback_to_like_mysql(
+            return $this->_fallback_to_like_mysql(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -4868,7 +4914,7 @@ class Database implements Database_Interface
             ];
 
             // Объединяем внешние и внутренние опции
-            $new_options = $this->fts_check_options($options, $base_options);
+            $new_options = $this->_fts_check_options($options, $base_options);
 
             // Выполняем SQL-запрос
             $this->_select_internal(
@@ -4887,7 +4933,7 @@ class Database implements Database_Interface
             $this->cache->update_cache($key, $db_version, ['query_error' => true]);
 
             // Переходим на LIKE
-            return $this->fallback_to_like_mysql(
+            return $this->_fallback_to_like_mysql(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -4900,7 +4946,7 @@ class Database implements Database_Interface
         $this->cache->update_cache($key, $db_version, ['query_error' => false]);
 
         // 7. Получаем результат и отдаем его
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -4922,7 +4968,7 @@ class Database implements Database_Interface
      *          4. Формирует базовые опции (`$base_options`) для поиска по `LIKE`, включающие сформированное условие
      *             `WHERE` и массив параметров для плейсхолдеров `LIKE`.
      *          5. Объединяет переданные внешние опции запроса (`$options`) с базовыми опциями `LIKE` (`$base_options`)
-     *             с помощью приватного метода `fts_check_options()`. Этот метод разрешает конфликты плейсхолдеров
+     *             с помощью приватного метода `_fts_check_options()`. Этот метод разрешает конфликты плейсхолдеров
      *             и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
      *          6. Предпринимает попытку выполнить SQL-запрос SELECT с использованием экранированных столбцов для
      *             возврата, экранированного имени таблицы и объединенных опций (`$new_options`) в блоке
@@ -4932,13 +4978,14 @@ class Database implements Database_Interface
      *               сообщение об ошибке.
      *             - Возвращает `false`, сигнализируя об ошибке выполнения поиска.
      *          8. В случае успешного выполнения запроса (блок `try` без исключений) получает результат запроса
-     *             в виде массива с помощью приватного метода `_res_arr_internal()` и возвращает его.
+     *             в виде массива с помощью приватного метода `_result_array_internal()` и возвращает его.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
-     *          Он вызывается из приватного метода `full_text_search_mysql()`.
+     *          Он вызывается из приватного метода `_full_text_search_mysql()`.
      *
      * @internal
      * @callergraph
+     * @callgraph
      *
      * @param array $columns_to_return_escaped  Массив строк с именами столбцов, которые нужно вернуть. Имена
      *                                          столбцов должны быть уже экранированы для MySQL (например, `` `id` ``).
@@ -4967,18 +5014,18 @@ class Database implements Database_Interface
      *
      * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
      *                                  невозможности записи в файл.
-     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     * @throws PDOException             Может быть выброшено методами `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
      *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
      *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
      *                                  LIKE перехватываются и приводят к возврату false).
-     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     * @throws InvalidArgumentException Может быть выброшено методом `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) при некорректном формате опций. (Большинство таких
      *                                  ошибок внутри LIKE перехватываются и приводят к возврату false).
      *
      * @note    Метод используется как резервный вариант поиска, когда полнотекстовый поиск (FTS) не может быть выполнен.
      *          Для каждого столбца поиска создается отдельное условие `LIKE` с уникальным плейсхолдером.
-     *          Использует приватный метод `fts_check_options()` для объединения условий `LIKE` с любыми
+     *          Использует приватный метод `_fts_check_options()` для объединения условий `LIKE` с любыми
      *          дополнительными опциями, предоставленными пользователем.
      *
      * @warning Убедитесь, что входные параметры `$columns_to_return_escaped`, `$columns_to_search_escaped` и
@@ -4986,7 +5033,7 @@ class Database implements Database_Interface
      *          Поиск с `LIKE` может быть неэффективен на больших объемах данных и может вызвать высокую нагрузку на
      *          базу данных.
      *
-     * Пример использования (вызывается из full_text_search_mysql()):
+     * Пример использования (вызывается из _full_text_search_mysql()):
      * @code
      * // Предположим:
      * // $columns_to_return_escaped = ['`id`', '`title`'];
@@ -4996,7 +5043,7 @@ class Database implements Database_Interface
      * // $options = ['limit' => 5];
      *
      * // Вызов fallback метода
-     * $results_like = $this->fallback_to_like_mysql(
+     * $results_like = $this->_fallback_to_like_mysql(
      *     $columns_to_return_escaped,
      *     $columns_to_search_escaped,
      *     $search_string,
@@ -5014,18 +5061,18 @@ class Database implements Database_Interface
      *
      * // Если $search_string был '', вернет false сразу.
      * @endcode
-     * @see    PhotoRigma::Classes::Database::full_text_search_mysql()
+     * @see    PhotoRigma::Classes::Database::_full_text_search_mysql()
      *         Приватный метод, который вызывает этот метод в случае необходимости fallback.
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Приватный метод, используемый для объединения опций.
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Приватный метод для выполнения SELECT-запроса.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Приватный метод для получения всех строк результата запроса.
      * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений.
      */
-    private function fallback_to_like_mysql(
+    private function _fallback_to_like_mysql(
         array $columns_to_return_escaped,
         array $columns_to_search_escaped,
         string $search_string,
@@ -5051,7 +5098,7 @@ class Database implements Database_Interface
             'where'  => $where_sql,
             'params' => $params,
         ];
-        $new_options = $this->fts_check_options($options, $base_options);
+        $new_options = $this->_fts_check_options($options, $base_options);
 
         // 3. Выполняем запрос через _select_internal
         try {
@@ -5068,7 +5115,7 @@ class Database implements Database_Interface
         }
 
         // 4. Возвращаем результат напрямую
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -5086,14 +5133,14 @@ class Database implements Database_Interface
      *             соответствия синтаксису PostgreSQL.
      *          2. Проверяет, что длина строки поиска `$search_string` превышает минимально допустимое значение,
      *             определенное константой `MIN_FULLTEXT_SEARCH_LENGTH`. Если длина недостаточна, метод сразу же
-     *             вызывает приватный метод `fallback_to_ilike_pgsql()` для выполнения поиска с использованием
+     *             вызывает приватный метод `_fallback_to_ilike_pgsql()` для выполнения поиска с использованием
      *             `ILIKE` и возвращает его результат.
      *          3. Формирует уникальный ключ кеша на основе имени таблицы и столбцов для поиска для идентификации
      *             FTS-индекса в кеше.
      *          4. Проверяет кеш (`$this->cache`) на наличие записи, связанной с этим FTS-индексом, используя
      *             `$db_version` как параметр валидности кеша. Если в кеше найдена запись с флагом `query_error = true`,
      *             это означает, что предыдущая попытка выполнить FTS-запрос для этого индекса завершилась ошибкой.
-     *             В этом случае метод также вызывает `fallback_to_ilike_pgsql()` и возвращает его результат.
+     *             В этом случае метод также вызывает `_fallback_to_ilike_pgsql()` и возвращает его результат.
      *          5. Предпринимает попытку выполнить полнотекстовый поиск в блоке `try...catch`:
      *             - Формирует базовые опции FTS (`$base_options`), включающие условие `WHERE tsv_weighted @@
      *               plainto_tsquery(:search_string_where)` и сортировку `ORDER BY ts_rank(tsv_weighted,
@@ -5101,21 +5148,21 @@ class Database implements Database_Interface
      *               `$search_string` как параметр. Предполагается наличие столбца `tsv_weighted` типа `TSVECTOR` в
      *               таблице, содержащего лексемы для поиска.
      *             - Объединяет переданные внешние опции запроса (`$options`) с базовыми FTS-опциями
-     *               (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *               (`$base_options`) с помощью приватного метода `_fts_check_options()`. Этот метод разрешает
      *               конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
      *             - Вызывает приватный метод `_select_internal()` с экранированными столбцами, экранированным именем
      *               таблицы и объединенными опциями для выполнения SQL-запроса.
      *          6. В случае успешного выполнения FTS-запроса (блок `try` без исключений):
      *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = false` для данного FTS-индекса,
      *               указывая на успешность последнего запроса.
-     *             - Получает результат запроса в виде массива с помощью приватного метода `_res_arr_internal()` и
+     *             - Получает результат запроса в виде массива с помощью приватного метода `_result_array_internal()` и
      *               возвращает его.
      *          7. В случае возникновения исключения (`Throwable`) во время выполнения FTS-запроса (блок `catch`):
      *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
      *               сообщение об ошибке.
      *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = true` для данного FTS-индекса,
      *               чтобы избежать повторных ошибок в будущем.
-     *             - Вызывает приватный метод `fallback_to_ilike_pgsql()` для выполнения поиска с использованием
+     *             - Вызывает приватный метод `_fallback_to_ilike_pgsql()` для выполнения поиска с использованием
      *               `ILIKE` и возвращает его результат.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
@@ -5154,13 +5201,13 @@ class Database implements Database_Interface
      *                                  кеша.
      * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
      *                                  невозможности записи в файл.
-     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     * @throws PDOException             Может быть выброшено методами `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
      *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
      *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
      *                                  FTS перехватываются и приводят к fallback).
-     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     * @throws InvalidArgumentException Может быть выброшено методом `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) при некорректном формате опций. (Большинство таких
      *                                  ошибок внутри FTS перехватываются и приводят к fallback).
      *
      * @note    Метод использует константу `MIN_FULLTEXT_SEARCH_LENGTH` для проверки минимальной длины строки поиска.
@@ -5168,7 +5215,7 @@ class Database implements Database_Interface
      *          вызывающих ошибки.
      *          При возникновении ошибок выполнения FTS-запроса (например, из-за проблем с FTS конфигурацией или
      *          отсутствия колонки tsv_weighted), метод автоматически переключается на поиск с помощью оператора
-     *          `ILIKE`, вызывая `fallback_to_ilike_pgsql()`.
+     *          `ILIKE`, вызывая `_fallback_to_ilike_pgsql()`.
      *          Для работы FTS в PostgreSQL требуется колонка типа TSVECTOR (например, `tsv_weighted`) и
      *          соответствующая конфигурация.
      *
@@ -5196,7 +5243,7 @@ class Database implements Database_Interface
      * ];
      *
      * // Вызов метода
-     * $results = $this->full_text_search_pgsql(
+     * $results = $this->_full_text_search_pgsql(
      *     $columns_to_return,
      *     $columns_to_search, // Столбцы для поиска используются plainto_tsquery
      *     $search_string,
@@ -5213,16 +5260,16 @@ class Database implements Database_Interface
      *     echo "Произошла ошибка поиска (включая fallback).";
      * }
      *
-     * // Если strlen($search_string) < 4, будет вызван fallback_to_ilike_pgsql
-     * // Если FTS запрос упадет (например, нет колонки tsv_weighted), будет вызван fallback_to_ilike_pgsql, ошибка будет залогирована и закэширована.
+     * // Если strlen($search_string) < 4, будет вызван _fallback_to_ilike_pgsql
+     * // Если FTS запрос упадет (например, нет колонки tsv_weighted), будет вызван _fallback_to_ilike_pgsql, ошибка будет залогирована и закэширована.
      * @endcode
-     * @see    PhotoRigma::Classes::Database::fallback_to_ilike_pgsql()
+     * @see    PhotoRigma::Classes::Database::_fallback_to_ilike_pgsql()
      *         Приватный метод, реализующий поиск по ILIKE в качестве fallback.
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Приватный метод, объединяющий и обрабатывающий опции запроса для FTS.
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Приватный метод для выполнения SELECT-запроса.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Приватный метод для получения всех строк результата запроса.
      * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений.
@@ -5233,7 +5280,7 @@ class Database implements Database_Interface
      * @see    MIN_FULLTEXT_SEARCH_LENGTH
      *         Константа, определяющая минимальную длину строки для полнотекстового поиска.
      */
-    private function full_text_search_pgsql(
+    private function _full_text_search_pgsql(
         array $columns_to_return,
         array $columns_to_search,
         string $search_string,
@@ -5248,7 +5295,7 @@ class Database implements Database_Interface
 
         // 2. Проверка минимальной длины строки поиска
         if (strlen($search_string) < MIN_FULLTEXT_SEARCH_LENGTH) {
-            return $this->fallback_to_ilike_pgsql(
+            return $this->_fallback_to_ilike_pgsql(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -5264,7 +5311,7 @@ class Database implements Database_Interface
         $cached_index = $this->cache->is_valid($key, $db_version);
 
         if ($cached_index !== false && isset($cached_index['query_error']) && $cached_index['query_error'] === true) {
-            return $this->fallback_to_ilike_pgsql(
+            return $this->_fallback_to_ilike_pgsql(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -5286,7 +5333,7 @@ class Database implements Database_Interface
             ];
 
             // Объединяем внешние и внутренние опции
-            $new_options = $this->fts_check_options($options, $base_options);
+            $new_options = $this->_fts_check_options($options, $base_options);
 
             // Выполняем SQL-запрос
             $this->_select_internal(
@@ -5304,7 +5351,7 @@ class Database implements Database_Interface
             $this->cache->update_cache($key, $db_version, ['query_error' => true]);
 
             // Переходим на ILIKE
-            return $this->fallback_to_ilike_pgsql(
+            return $this->_fallback_to_ilike_pgsql(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -5317,7 +5364,7 @@ class Database implements Database_Interface
         $this->cache->update_cache($key, $db_version, ['query_error' => false]);
 
         // 7. Получаем результат и отдаем его
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -5346,7 +5393,7 @@ class Database implements Database_Interface
      *             сформированные строки `WHERE` и `ORDER BY`, а также массив параметров, содержащий плейсхолдеры как
      *             для `ILIKE`, так и для `similarity()`.
      *          7. Объединяет переданные внешние опции запроса (`$options`) с базовыми опциями (`$base_options`)
-     *             с помощью приватного метода `fts_check_options()`. Этот метод разрешает конфликты плейсхолдеров
+     *             с помощью приватного метода `_fts_check_options()`. Этот метод разрешает конфликты плейсхолдеров
      *             и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS (сортировка по рангу из
      *             $base_options имеет приоритет).
      *          8. Предпринимает попытку выполнить SQL-запрос SELECT с использованием экранированных столбцов для
@@ -5357,13 +5404,14 @@ class Database implements Database_Interface
      *               сообщение об ошибке.
      *             - Возвращает `false`, сигнализируя об ошибке выполнения поиска.
      *          10. В случае успешного выполнения запроса (блок `try` без исключений) получает результат запроса
-     *              в виде массива с помощью приватного метода `_res_arr_internal()` и возвращает его.
+     *              в виде массива с помощью приватного метода `_result_array_internal()` и возвращает его.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
-     *          Он вызывается из приватного метода `full_text_search_pgsql()`.
+     *          Он вызывается из приватного метода `_full_text_search_pgsql()`.
      *
      * @internal
      * @callergraph
+     * @callgraph
      *
      * @param array $columns_to_return_escaped Массив строк с именами столбцов, которые нужно вернуть. Имена
      *                                         столбцов должны быть уже экранированы для PostgreSQL (например, `"id"`).
@@ -5393,20 +5441,20 @@ class Database implements Database_Interface
      *
      * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
      *                                  невозможности записи в файл.
-     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     * @throws PDOException             Может быть выброшено методами `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
      *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
      *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
      *                                  перехватываются и приводят к возврату false).
-     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     * @throws InvalidArgumentException Может быть выброшено методом `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) при некорректном формате опций. (Большинство таких
      *                                  ошибок внутри перехватываются и приводят к возврату false).
      *
      * @note    Метод используется как резервный вариант поиска для PostgreSQL, когда полнотекстовый поиск (FTS) не
      *          может быть выполнен. Для каждого столбца поиска создается отдельное условие `ILIKE` и отдельное
      *          выражение `similarity()` с уникальными плейсхолдерами. Условия `ILIKE` объединяются оператором `OR`,
      *          а ранги `similarity()` суммируются для сортировки по убыванию.
-     *          Использует приватный метод `fts_check_options()` для объединения этих условий и сортировки с любыми
+     *          Использует приватный метод `_fts_check_options()` для объединения этих условий и сортировки с любыми
      *          дополнительными опциями, предоставленными пользователем.
      *          Для работы функции `similarity()` требуется установить и включить расширение `pg_trgm` в базе данных
      *          PostgreSQL.
@@ -5418,7 +5466,7 @@ class Database implements Database_Interface
      *          Поиск с `ILIKE` и ранжирование `similarity()` могут быть неэффективны на больших объемах данных по
      *          сравнению с FTS.
      *
-     * Пример использования (вызывается из full_text_search_pgsql()):
+     * Пример использования (вызывается из _full_text_search_pgsql()):
      * @code
      * // Предположим:
      * // $columns_to_return_escaped = ['"id"', '"title"'];
@@ -5428,7 +5476,7 @@ class Database implements Database_Interface
      * // $options = ['limit' => 5];
      *
      * // Вызов fallback метода
-     * $results_ilike = $this->fallback_to_ilike_pgsql(
+     * $results_ilike = $this->_fallback_to_ilike_pgsql(
      *     $columns_to_return_escaped,
      *     $columns_to_search_escaped,
      *     $search_string,
@@ -5446,20 +5494,20 @@ class Database implements Database_Interface
      *
      * // Если $search_string был '', вернет false сразу.
      * @endcode
-     * @see    PhotoRigma::Classes::Database::full_text_search_pgsql()
+     * @see    PhotoRigma::Classes::Database::_full_text_search_pgsql()
      *         Приватный метод, который вызывает этот метод в случае необходимости fallback.
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Приватный метод, используемый для объединения опций.
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Приватный метод для выполнения SELECT-запроса.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Приватный метод для получения всех строк результата запроса.
      * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений.
      * @see    https://www.postgresql.org/docs/current/pgtrgm.html
      *         Документация по расширению pg_trgm и функции similarity().
      */
-    private function fallback_to_ilike_pgsql(
+    private function _fallback_to_ilike_pgsql(
         array $columns_to_return_escaped,
         array $columns_to_search_escaped,
         string $search_string,
@@ -5494,7 +5542,7 @@ class Database implements Database_Interface
             'order'  => $order_sql,
             'params' => $params,
         ];
-        $new_options = $this->fts_check_options($options, $base_options);
+        $new_options = $this->_fts_check_options($options, $base_options);
 
         // 3. Выполняем запрос через _select_internal
         try {
@@ -5511,7 +5559,7 @@ class Database implements Database_Interface
         }
 
         // 4. Возвращаем результат
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -5529,20 +5577,20 @@ class Database implements Database_Interface
      *             таблицы, добавляя суффикс `_fts` к имени основной таблицы.
      *          2. Проверяет, что длина строки поиска `$search_string` превышает минимально допустимое значение,
      *             определенное константой `MIN_FULLTEXT_SEARCH_LENGTH`. Если длина недостаточна, метод сразу же
-     *             вызывает приватный метод `fallback_to_like_sqlite()` для выполнения поиска с использованием `LIKE`
+     *             вызывает приватный метод `_fallback_to_like_sqlite()` для выполнения поиска с использованием `LIKE`
      *             и возвращает его результат.
      *          3. Формирует уникальный ключ кеша на основе имени основной таблицы и столбцов для поиска для
      *             идентификации соответствующего FTS5-индекса в кеше.
      *          4. Проверяет кеш (`$this->cache`) на наличие записи, связанной с этим FTS5-индексом, используя
      *             `$db_version` как параметр валидности кеша. Если в кеше найдена запись с флагом `query_error =
      *             true`, это означает, что предыдущая попытка выполнить FTS5-запрос для этого индекса завершилась
-     *             ошибкой. В этом случае метод также вызывает `fallback_to_like_sqlite()` и возвращает его результат.
+     *             ошибкой. В этом случае метод также вызывает `_fallback_to_like_sqlite()` и возвращает его результат.
      *          5. Предпринимает попытку выполнить полнотекстовый поиск FTS5 в блоке `try...catch`:
      *             - Формирует базовые опции FTS (`$base_options`), включающие условие `WHERE "имя_fts_таблицы" MATCH
      *               :search_string_where` и сортировку `ORDER BY rank DESC`, используя переданную строку поиска
      *               `$search_string` как параметр.
      *             - Объединяет переданные внешние опции запроса (`$options`) с базовыми FTS-опциями
-     *               (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *               (`$base_options`) с помощью приватного метода `_fts_check_options()`. Этот метод разрешает
      *               конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
      *             - Вызывает приватный метод `_select_internal()` с экранированными столбцами для возврата,
      *               **экранированным именем FTS5 таблицы** (`$fts_table_escaped`) и объединенными опциями
@@ -5550,14 +5598,14 @@ class Database implements Database_Interface
      *          6. В случае успешного выполнения FTS5-запроса (блок `try` без исключений):
      *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = false` для данного FTS5-индекса,
      *               указывая на успешность последнего запроса.
-     *             - Получает результат запроса в виде массива с помощью приватного метода `_res_arr_internal()` и
+     *             - Получает результат запроса в виде массива с помощью приватного метода `_result_array_internal()` и
      *               возвращает его.
      *          7. В случае возникновения исключения (`Throwable`) во время выполнения FTS5-запроса (блок `catch`):
      *             - Логирует информацию об ошибке с помощью функции `log_in_file()`, включая текст запроса и
      *               сообщение об ошибке.
      *             - Обновляет кеш (`$this->cache`), устанавливая флаг `query_error = true` для данного FTS5-индекса,
      *               чтобы избежать повторных ошибок в будущем.
-     *             - Вызывает приватный метод `fallback_to_like_sqlite()` для выполнения поиска с использованием
+     *             - Вызывает приватный метод `_fallback_to_like_sqlite()` для выполнения поиска с использованием
      *               `LIKE` и возвращает его результат.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
@@ -5597,20 +5645,20 @@ class Database implements Database_Interface
      *                                  `$this->cache->update_cache`) при ошибках сериализации/десериализации данных кеша.
      * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
      *                                  невозможности записи в файл.
-     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     * @throws PDOException             Может быть выброшено методами `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
      *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
      *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
      *                                  FTS5 перехватываются и приводят к fallback).
-     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     * @throws InvalidArgumentException Может быть выброшено методом `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) при некорректном формате опций. (Большинство таких
      *                                  ошибок внутри FTS5 перехватываются и приводят к fallback).
      *
      * @note    Метод использует константу `MIN_FULLTEXT_SEARCH_LENGTH` для проверки минимальной длины строки поиска.
      *          Активно используется кеширование (`$this->cache`) для оптимизации и запоминания FTS5-индексов,
      *          вызывающих ошибки. При возникновении ошибок выполнения FTS5-запроса (например, из-за отсутствия
      *          виртуальной таблицы или некорректного синтаксиса FTS5), метод автоматически переключается на поиск с
-     *          использованием оператора `LIKE`, вызывая `fallback_to_like_sqlite()`.
+     *          использованием оператора `LIKE`, вызывая `_fallback_to_like_sqlite()`.
      *          Для работы требуется создание виртуальной таблицы FTS5 с именем `имя_основной_таблицы_fts` и
      *          соответствующей структурой, содержащей столбцы для поиска.
      *
@@ -5636,7 +5684,7 @@ class Database implements Database_Interface
      * ];
      *
      * // Вызов метода
-     * $results = $this->full_text_search_sqlite(
+     * $results = $this->_full_text_search_sqlite(
      *     $columns_to_return,
      *     $columns_to_search, // Столбцы для поиска используются для MATCH
      *     $search_string,
@@ -5653,16 +5701,16 @@ class Database implements Database_Interface
      *     echo "Произошла ошибка поиска (включая fallback).";
      * }
      *
-     * // Если strlen($search_string) < 4, будет вызван fallback_to_like_sqlite
-     * // Если FTS5 запрос упадет (например, нет таблицы articles_fts), будет вызван fallback_to_like_sqlite, ошибка будет залогирована и закэширована.
+     * // Если strlen($search_string) < 4, будет вызван _fallback_to_like_sqlite
+     * // Если FTS5 запрос упадет (например, нет таблицы articles_fts), будет вызван _fallback_to_like_sqlite, ошибка будет залогирована и закэширована.
      * @endcode
-     * @see    PhotoRigma::Classes::Database::fallback_to_like_sqlite()
+     * @see    PhotoRigma::Classes::Database::_fallback_to_like_sqlite()
      *         Приватный метод, реализующий поиск по LIKE в качестве fallback.
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Приватный метод, объединяющий и обрабатывающий опции запроса для FTS.
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Приватный метод для выполнения SELECT-запроса к FTS5 таблице.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Приватный метод для получения всех строк результата запроса.
      * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений.
@@ -5675,7 +5723,7 @@ class Database implements Database_Interface
      * @see    https://www.sqlite.org/fts5.html
      *         Документация по модулю SQLite FTS5.
      */
-    private function full_text_search_sqlite(
+    private function _full_text_search_sqlite(
         array $columns_to_return,
         array $columns_to_search,
         string $search_string,
@@ -5691,7 +5739,7 @@ class Database implements Database_Interface
 
         // 2. Проверка длины строки
         if (strlen($search_string) < MIN_FULLTEXT_SEARCH_LENGTH) {
-            return $this->fallback_to_like_sqlite(
+            return $this->_fallback_to_like_sqlite(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -5707,7 +5755,7 @@ class Database implements Database_Interface
         $cached_index = $this->cache->is_valid($key, $db_version);
 
         if ($cached_index !== false && isset($cached_index['query_error']) && $cached_index['query_error'] === true) {
-            return $this->fallback_to_like_sqlite(
+            return $this->_fallback_to_like_sqlite(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -5728,7 +5776,7 @@ class Database implements Database_Interface
             ];
 
             // Объединяем внешние и внутренние опции
-            $new_options = $this->fts_check_options($options, $base_options);
+            $new_options = $this->_fts_check_options($options, $base_options);
 
             // Выполняем SQL-запрос
             $this->_select_internal(
@@ -5743,7 +5791,7 @@ class Database implements Database_Interface
 
             $this->cache->update_cache($key, $db_version, ['query_error' => true]);
 
-            return $this->fallback_to_like_sqlite(
+            return $this->_fallback_to_like_sqlite(
                 $columns_to_return_escaped,
                 $columns_to_search_escaped,
                 $search_string,
@@ -5756,7 +5804,7 @@ class Database implements Database_Interface
         $this->cache->update_cache($key, $db_version, ['query_error' => false]);
 
         // 7. Возвращаем результат
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -5778,7 +5826,7 @@ class Database implements Database_Interface
      *          4. Формирует базовые опции (`$base_options`) для поиска по `LIKE`, включающие сформированное условие
      *             `WHERE` и массив параметров для плейсхолдеров `LIKE`.
      *          5. Объединяет переданные внешние опции запроса (`$options`) с базовыми опциями `LIKE`
-     *             (`$base_options`) с помощью приватного метода `fts_check_options()`. Этот метод разрешает
+     *             (`$base_options`) с помощью приватного метода `_fts_check_options()`. Этот метод разрешает
      *             конфликты плейсхолдеров и определяет приоритеты для WHERE, ORDER BY, GROUP BY, LIMIT и PARAMS.
      *          6. Предпринимает попытку выполнить SQL-запрос SELECT с использованием экранированных столбцов для
      *             возврата, экранированного имени таблицы и объединенных опций (`$new_options`) в блоке `try...catch`,
@@ -5788,13 +5836,14 @@ class Database implements Database_Interface
      *               сообщение об ошибке.
      *             - Возвращает `false`, сигнализируя об ошибке выполнения поиска.
      *          8. В случае успешного выполнения запроса (блок `try` без исключений) получает результат запроса в
-     *             виде массива с помощью приватного метода `_res_arr_internal()` и возвращает его.
+     *             виде массива с помощью приватного метода `_result_array_internal()` и возвращает его.
      *
      *          Этот метод является приватным и предназначен только для использования внутри класса `Database`.
-     *          Он вызывается из приватного метода `full_text_search_sqlite()`.
+     *          Он вызывается из приватного метода `_full_text_search_sqlite()`.
      *
      * @internal
      * @callergraph
+     * @callgraph
      *
      * @param array $columns_to_return_escaped  Массив строк с именами столбцов, которые нужно вернуть. Имена
      *                                          столбцов должны быть уже экранированы для SQLite (например, `"id"`
@@ -5825,25 +5874,25 @@ class Database implements Database_Interface
      *
      * @throws Exception                Может быть выброшено функцией логирования `log_in_file()` в случае
      *                                  невозможности записи в файл.
-     * @throws PDOException             Может быть выброшено методами `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
+     * @throws PDOException             Может быть выброшено методами `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) или `_select_internal()` в случае ошибок, связанных с
      *                                  базой данных или некорректным SQL, если они не перехватываются в блоке
      *                                  `try...catch` или выбрасываются после него. (Большинство таких ошибок внутри
      *                                  LIKE перехватываются и приводят к возврату false).
-     * @throws InvalidArgumentException Может быть выброшено методом `fts_check_options()` (через вызов
-     *                                  `build_conditions()`) при некорректном формате опций. (Большинство таких
+     * @throws InvalidArgumentException Может быть выброшено методом `_fts_check_options()` (через вызов
+     *                                  `_build_conditions()`) при некорректном формате опций. (Большинство таких
      *                                  ошибок внутри LIKE перехватываются и приводят к возврату false).
      *
      * @note    Метод используется как резервный вариант поиска для SQLite, когда полнотекстовый поиск (FTS5) не
      *          может быть выполнен. Для каждого столбца поиска создается отдельное условие `LIKE` с уникальным
-     *          плейсхолдером. Использует приватный метод `fts_check_options()` для объединения условий `LIKE` с
+     *          плейсхолдером. Использует приватный метод `_fts_check_options()` для объединения условий `LIKE` с
      *          любыми дополнительными опциями, предоставленными пользователем.
      *
      * @warning Убедитесь, что входные параметры `$columns_to_return_escaped`, `$columns_to_search_escaped` и
      *          `$table_escaped` уже экранированы для SQLite.
      *          Поиск с `LIKE` может быть неэффективен на больших объемах данных по сравнению с FTS5.
      *
-     * Пример использования (вызывается из full_text_search_sqlite()):
+     * Пример использования (вызывается из _full_text_search_sqlite()):
      * @code
      * // Предположим:
      * // $columns_to_return_escaped = ['"id"', '"title"'];
@@ -5853,7 +5902,7 @@ class Database implements Database_Interface
      * // $options = ['limit' => 5];
      *
      * // Вызов fallback метода
-     * $results_like = $this->fallback_to_like_sqlite(
+     * $results_like = $this->_fallback_to_like_sqlite(
      *     $columns_to_return_escaped,
      *     $columns_to_search_escaped,
      *     $search_string,
@@ -5871,18 +5920,18 @@ class Database implements Database_Interface
      *
      * // Если $search_string был '', вернет false сразу.
      * @endcode
-     * @see    PhotoRigma::Classes::Database::full_text_search_sqlite()
+     * @see    PhotoRigma::Classes::Database::_full_text_search_sqlite()
      *         Приватный метод, который вызывает этот метод в случае необходимости fallback.
-     * @see    PhotoRigma::Classes::Database::fts_check_options()
+     * @see    PhotoRigma::Classes::Database::_fts_check_options()
      *         Приватный метод, используемый для объединения опций.
      * @see    PhotoRigma::Classes::Database::_select_internal()
      *         Приватный метод для выполнения SELECT-запроса.
-     * @see    PhotoRigma::Classes::Database::_res_arr_internal()
+     * @see    PhotoRigma::Classes::Database::_result_array_internal()
      *         Приватный метод для получения всех строк результата запроса.
      * @see    PhotoRigma::Include::log_in_file()
      *         Функция для логирования сообщений.
      */
-    private function fallback_to_like_sqlite(
+    private function _fallback_to_like_sqlite(
         array $columns_to_return_escaped,
         array $columns_to_search_escaped,
         string $search_string,
@@ -5909,7 +5958,7 @@ class Database implements Database_Interface
             'where'  => $where_sql,
             'params' => $params,
         ];
-        $new_options = $this->fts_check_options($options, $base_options);
+        $new_options = $this->_fts_check_options($options, $base_options);
 
         // 3. Выполняем запрос
         try {
@@ -5925,7 +5974,7 @@ class Database implements Database_Interface
             return false;
         }
 
-        return $this->_res_arr_internal();
+        return $this->_result_array_internal();
     }
 
     /**
@@ -5945,8 +5994,8 @@ class Database implements Database_Interface
      *          3. Обновляет использование переименованных плейсхолдеров в условиях `WHERE` внешних опций
      *             (`$options['where']`), если `where` является массивом.
      *          4. Обрабатывает внешнее условие `WHERE` из `$options['where']`, вызывая приватный метод
-     *             `build_conditions()` для его преобразования в SQL-строку и получения соответствующих параметров.
-     *             Начальный `WHERE` из строки условий, возвращенной `build_conditions()`, удаляется. Если после
+     *             `_build_conditions()` для его преобразования в SQL-строку и получения соответствующих параметров.
+     *             Начальный `WHERE` из строки условий, возвращенной `_build_conditions()`, удаляется. Если после
      *             обработки внешнее условие непустое, оно сохраняется для последующего объединения.
      *          5. Формирует финальный массив опций (`$new_options`) на основе объединенных данных с учетом следующих
      *             правил приоритета:
@@ -5975,10 +6024,10 @@ class Database implements Database_Interface
      *                              Может быть:
      *                              - Строкой (используется как есть)
      *                              - Массивом:
-     *                                * Простые условия: `['поле' => значение]` (обрабатывается `build_conditions`,
+     *                                * Простые условия: `['поле' => значение]` (обрабатывается `_build_conditions`,
      *                                                   генерируются плейсхолдеры)
      *                                * Сложные условия: `['OR' => [условия], 'NOT' => [условия]]` (обрабатывается
-     *                                                   `build_conditions`)
+     *                                                   `_build_conditions`)
      *                              - `false`: Игнорируется.
      *                            - group (string|false): Группировка GROUP BY. Должна быть строкой. Игнорируется,
      *                              если равно `false`.
@@ -6004,11 +6053,10 @@ class Database implements Database_Interface
      *               - params (array): Объединенный ассоциативный массив параметров, включая параметры FTS и
      *                 параметры внешних условий (с разрешенными конфликтами именования).
      *
-     * @throws InvalidArgumentException Может быть выброшено методом `build_conditions()` при обработке
+     * @throws InvalidArgumentException Может быть выброшено методом `_build_conditions()` при обработке
      *                                  `$options['where']`, если его формат недопустим.
      *
      * Пример объединения опций с конфликтующими плейсхолдерами:
-     * @example
      * @code
      * $options = [
      *     'where' => ['status' => ':search'], // Внешнее условие с плейсхолдером ':search'
@@ -6020,7 +6068,7 @@ class Database implements Database_Interface
      *     'params' => [':search' => 'term'] // Значение базового FTS плейсхолдера
      * ];
      *
-     * $final_options = $this->fts_check_options($options, $base_options);
+     * $final_options = $this->_fts_check_options($options, $base_options);
      * // Результат $final_options:
      * // [
      * //    'where' => "MATCH(title) AGAINST (:search) AND (status = :search_ext_0)", // Объединенное WHERE, плейсхолдер во внешнем условии переименован
@@ -6030,10 +6078,10 @@ class Database implements Database_Interface
      * //    'params' => [':search' => 'term', ':search_ext_0' => 'active'] // Объединенные параметры, где :search имеет значение из $base_options
      * // ]
      * @endcode
-     * @see    PhotoRigma::Classes::Database::build_conditions()
+     * @see    PhotoRigma::Classes::Database::_build_conditions()
      *         Приватный метод, используемый для обработки внешней части условия WHERE.
      */
-    private function fts_check_options(array $options, array $base_options): array
+    private function _fts_check_options(array $options, array $base_options): array
     {
         // 1. Трим всех строковых значений
         $trim_array = static fn (array $arr) => array_map(
@@ -6072,14 +6120,14 @@ class Database implements Database_Interface
             }
         }
 
-        // 3. Обработка внешнего WHERE через build_conditions
+        // 3. Обработка внешнего WHERE через _build_conditions
         if (!empty($options['where'])) {
-            [$additional_where, $additional_params] = $this->build_conditions([
+            [$additional_where, $additional_params] = $this->_build_conditions([
                 'where' => $options['where'],
                 'params' => $options['params'] ?? [],
             ]);
-
-            $additional_where = preg_replace('/^WHERE\s+/i', '', $additional_where);
+            // Удаляем 'WHERE' в начале (если есть) и чистим начальные и конечные пробелы
+            $additional_where = trim(preg_replace('/^\s*WHERE\s+/i', '', $additional_where));
 
             if ($additional_where !== '') {
                 $options['where'] = $additional_where;
@@ -6184,7 +6232,7 @@ class Database implements Database_Interface
      * // $this->current_format = 'sqlite';
      * $quoted = ['"id"', '[name]', 'user."email"', '`field`']; // Идентификаторы с разным экранированием
      *
-     * $clean = $this->unescape_identifiers($quoted);
+     * $clean = $this->_unescape_identifiers($quoted);
      * // Если current_format был 'sqlite':
      * // $clean = ['id', 'name', 'user.email', '`field`'] // Обратные кавычки останутся, т.к. не правило SQLite
      *
@@ -6192,7 +6240,7 @@ class Database implements Database_Interface
      * // $this->current_format = 'mysql';
      * $quoted_mysql = ['`id`', '"name"', '[created_at]', 'user.`email`'];
      *
-     * $clean_mysql = $this->unescape_identifiers($quoted_mysql);
+     * $clean_mysql = $this->_unescape_identifiers($quoted_mysql);
      * // Если current_format был 'mysql':
      * // $clean_mysql = ['id', '"name"', '[created_at]', 'user.email'] // Двойные кавычки и скобки останутся
      * @endcode
@@ -6201,7 +6249,7 @@ class Database implements Database_Interface
      * @see    PhotoRigma::Classes::Database::$current_format
      *         Свойство, хранящее текущий формат SQL, определяющий правила снятия экранирования.
      */
-    private function unescape_identifiers(array $identifiers): array
+    private function _unescape_identifiers(array $identifiers): array
     {
         static $rules = [
             'mysql'  => ['`' => ''],

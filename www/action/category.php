@@ -3,63 +3,68 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /**
- * @file        action/category.php
- * @brief       Обзор и управление разделами галереи.
+ * @file      action/category.php
+ * @brief     Обзор и управление разделами галереи.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   Photorigma\\Action
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace Photorigma\\Action
  *
- * @details     Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею.
- *              Основные функции:
- *              - Отображение списка категорий и фотографий в них.
- *              - Редактирование названия и описания категорий.
- *              - Удаление категорий и связанных с ними фотографий.
- *              - Добавление новых категорий.
- *              - Проверка прав доступа пользователя на выполнение операций.
+ * @details   Этот файл отвечает за отображение, редактирование, удаление и добавление разделов в галерею.
+ *            Основные функции:
+ *            - Отображение списка категорий и фотографий в них.
+ *            - Редактирование названия и описания категорий.
+ *            - Удаление категорий и связанных с ними фотографий.
+ *            - Добавление новых категорий.
+ *            - Проверка прав доступа пользователя на выполнение операций.
  *
- * @section     Category_Main_Functions Основные функции
- *              - Отображение списка категорий и фотографий.
- *              - Редактирование данных категорий.
- *              - Удаление категорий и связанных фотографий.
- *              - Добавление новых категорий.
- *              - Проверка прав доступа пользователя.
+ * @section   Category_Main_Functions Основные функции
+ *            - Отображение списка категорий и фотографий.
+ *            - Редактирование данных категорий.
+ *            - Удаление категорий и связанных фотографий.
+ *            - Добавление новых категорий.
+ *            - Проверка прав доступа пользователя.
  *
- * @section     Category_Error_Handling Обработка ошибок
- *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
- *              - `RuntimeException`: Если возникают ошибки при выполнении операций с базой данных или файловой
- *                системой.
- *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
- *              - `JsonException`: При выполнении методов, использующих JSON.
- *              - `Exception`: При выполнении прочих методов классов, функций или операций.
+ * @section   Category_Error_Handling Обработка ошибок
+ *            При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *            - `RuntimeException`: Если возникают ошибки при выполнении операций с базой данных или файловой
+ *              системой.
+ *            - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *            - `JsonException`: При выполнении методов, использующих JSON.
+ *            - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @throws      RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
- *              Пример сообщения: "Не удалось получить данные категории | ID: $cat".
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      JsonException При выполнении методов, использующих JSON.
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ * @throws    RuntimeException Если возникают ошибки при выполнении операций с базой данных или файловой системой.
+ *                             Пример сообщения:
+ *                             "Не удалось получить данные категории | ID: $cat".
+ * @throws    Random\RandomException При выполнении методов, использующих random().
+ * @throws    JsonException          При выполнении методов, использующих JSON.
+ * @throws    Exception              При выполнении прочих методов классов, функций или операций.
  *
- * @section     Category_Related_Files Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
- *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
- *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/category.php по запросу из `$_GET`.
+ * @section   Category_Related_Files Связанные файлы и компоненты
+ *            - Классы приложения:
+ *              - @see PhotoRigma::Classes::Work
+ *                     Класс используется для выполнения вспомогательных операций.
+ *              - @see PhotoRigma::Classes::Database
+ *                     Класс для работы с базой данных.
+ *              - @see PhotoRigma::Classes::User
+ *                     Класс для управления пользователями.
+ *              - @see PhotoRigma::Classes::Template
+ *                     Класс для работы с шаблонами.
+ *            - Файлы приложения:
+ *              - @see index.php Этот файл подключает action/category.php по запросу из `$_GET`.
  *
- * @note        Этот файл является частью системы PhotoRigma.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
- *              Используются подготовленные выражения для защиты от SQL-инъекций.
+ * @note      Этот файл является частью системы PhotoRigma.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
+ *            Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать,
- *              распространять, сублицензировать и/или продавать копии программного обеспечения,
- *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
- *              делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *            делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
 
@@ -103,7 +108,7 @@ if (!$work->check_input('_GET', 'cat', [
 }
 
 // Добавление начальных условий в шаблонизатор
-$template->add_if_ar([
+$template->add_if_array([
     'ISSET_CATEGORY' => false, // Категория не установлена
     'EDIT_BLOCK'     => false,     // Блок редактирования не активен
     'ISSET_PIC'      => false,      // Изображение не установлено
@@ -139,14 +144,14 @@ if ($cat === 'user' || $cat === 0) {
             ]
         );
 
-        $users_list = $db->res_arr();
+        $users_list = $db->result_array();
         $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 
         if ($users_list) {
             foreach ($users_list as $key => $user_data) {
                 // Получаем данные о категории пользователя
                 $photo_data = $work->category($user_data['user_upload'], 1);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'D_NAME_CATEGORY'        => $photo_data['name'],
                     'D_DESCRIPTION_CATEGORY' => $photo_data['description'],
                     'D_COUNT_PHOTO'          => (string)$photo_data['count_photo'],
@@ -166,11 +171,11 @@ if ($cat === 'user' || $cat === 0) {
                     'where' => '`id` = 0',
                 ]
             );
-            $category_data = $db->res_row();
+            $category_data = $db->result_row();
 
             if ($category_data) {
                 $template->add_if('ISSET_CATEGORY', true);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'NAME_BLOCK'             => $work->lang['category']['users_album'],
                     'L_NAME_CATEGORY'        => $category_data['name'],
                     'L_DESCRIPTION_CATEGORY' => $category_data['description'],
@@ -186,7 +191,7 @@ if ($cat === 'user' || $cat === 0) {
             }
         } else {
             // Если список пользователей пуст, отображаем сообщение об отсутствии данных
-            $template->add_string_ar([
+            $template->add_string_array([
                 'NAME_BLOCK'             => $work->lang['category']['users_album'],
                 'L_NAME_CATEGORY'        => $work->lang['main']['name_of'] . $work->lang['category']['of_category'],
                 'L_DESCRIPTION_CATEGORY' => $work->lang['main']['description_of'] . $work->lang['category']['of_category'],
@@ -240,7 +245,7 @@ if ($cat === 'user' || $cat === 0) {
         );
 
         // Получаем результат запроса
-        $photos_list = $db->res_arr();
+        $photos_list = $db->result_array();
 
         $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 
@@ -250,7 +255,7 @@ if ($cat === 'user' || $cat === 0) {
             foreach ($photos_list as $key => $photo_data) {
                 // Формируем массив данных для отображения списка фотографий
                 $photo_info = $work->create_photo('cat', $photo_data['id']);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_USER_ADD'           => $work->lang['main']['user_add'],
                     'MAX_PHOTO_HEIGHT'     => (string)($work->config['temp_photo_h'] + 10),
                     'PHOTO_WIDTH'          => (string)$photo_info['width'],
@@ -277,11 +282,11 @@ if ($cat === 'user' || $cat === 0) {
                     'where' => '`id` = 0',
                 ]
             );
-            $category_data = $db->res_row();
+            $category_data = $db->result_row();
 
             if ($category_data) {
                 // Формируем заголовок и описание блока для отображения данных категории
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_NAME_BLOCK'        => $work->lang['category']['category'] . ' - ' . $category_data['name'] . ' ' . $photos_list[0]['real_name'],
                     'L_DESCRIPTION_BLOCK' => $category_data['description'] . ' ' . $photos_list[0]['real_name'],
                 ]);
@@ -293,7 +298,7 @@ if ($cat === 'user' || $cat === 0) {
             }
         } else {
             // Если список фотографий пуст, отображаем сообщение об отсутствии данных
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_NAME_BLOCK'        => $work->lang['category']['name_block'],
                 'L_DESCRIPTION_BLOCK' => $work->lang['category']['error_no_category'],
                 'L_NO_PHOTO'          => $work->lang['category']['error_no_photo'],
@@ -326,7 +331,7 @@ if ($cat === 'user' || $cat === 0) {
             'where'  => '`id` = :id',
             'params' => [':id' => $cat],
         ]);
-        $category_data = $db->res_row();
+        $category_data = $db->result_row();
 
         if ($category_data) {
             // Проверка и получение имени категории с очисткой данных
@@ -391,7 +396,7 @@ if ($cat === 'user' || $cat === 0) {
             'where'  => '`id` = :id',
             'params' => [':id' => $cat],
         ]);
-        $category_data = $db->res_row();
+        $category_data = $db->result_row();
 
         if ($category_data) {
             // Добавляем шаблон для редактирования категории
@@ -401,11 +406,11 @@ if ($cat === 'user' || $cat === 0) {
             $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
             // Добавляем данные в шаблон
-            $template->add_if_ar([
+            $template->add_if_array([
                 'ISSET_CATEGORY' => true,
                 'CATEGORY_EDIT'  => true,
             ]);
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_NAME_BLOCK'           => sprintf('%s - %s', $work->lang['category']['edit'], $category_data['name']),
                 'L_NAME_DIR'             => $work->lang['category']['cat_dir'],
                 'L_NAME_CATEGORY'        => sprintf(
@@ -431,7 +436,7 @@ if ($cat === 'user' || $cat === 0) {
             ]);
         } else {
             // Если данные категории не найдены, добавляем сообщение об ошибке
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_NAME_BLOCK'  => $work->lang['category']['error_no_category'],
                 'L_NO_CATEGORY' => $work->lang['category']['error_no_category'],
             ]);
@@ -452,7 +457,7 @@ if ($cat === 'user' || $cat === 0) {
             'where'  => '`id` = :id',
             'params' => [':id' => $cat],
         ]);
-        $category_data = $db->res_row();
+        $category_data = $db->result_row();
 
         if ($category_data) {
             // Удаление всех фотографий, связанных с категорией
@@ -460,7 +465,7 @@ if ($cat === 'user' || $cat === 0) {
                 'where'  => '`category` = :category',
                 'params' => [':category' => $cat],
             ]);
-            $photo_ids = $db->res_row();
+            $photo_ids = $db->result_row();
 
             if ($photo_ids) {
                 foreach ($photo_ids as $val) {
@@ -504,7 +509,7 @@ if ($cat === 'user' || $cat === 0) {
             'order'  => '`date_upload` DESC',
             'params' => [':category' => $cat],
         ]);
-        $photos = $db->res_arr();
+        $photos = $db->result_array();
         $template->add_case('CATEGORY_BLOCK', 'VIEW_PIC');
 
         if ($photos && $user->user['pic_view']) {
@@ -514,7 +519,7 @@ if ($cat === 'user' || $cat === 0) {
             // Проходим по всем фотографиям и добавляем их данные в шаблон
             foreach ($photos as $key => $val) {
                 $photo_data = $work->create_photo('cat', $val['id']);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_USER_ADD'           => $work->lang['main']['user_add'],
                     'MAX_PHOTO_HEIGHT'     => (string)($work->config['temp_photo_h'] + 10),
                     // Максимальная высота фото
@@ -549,12 +554,12 @@ if ($cat === 'user' || $cat === 0) {
                 'where'  => '`id` = :id',
                 'params' => [':id' => $cat],
             ]);
-            $category_data = $db->res_row();
+            $category_data = $db->result_row();
 
             if ($category_data) {
                 // Добавляем данные категории в шаблон
                 $template->add_if('EDIT_BLOCK', (bool)$user->user['cat_moderate']);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_NAME_BLOCK'           => sprintf(
                         '%s - %s',
                         $work->lang['category']['category'],
@@ -601,7 +606,7 @@ if ($cat === 'user' || $cat === 0) {
                 'where'  => '`id` = :id',
                 'params' => [':id' => $cat],
             ]);
-            $category_data = $db->res_row();
+            $category_data = $db->result_row();
 
             if ($category_data) {
                 // Формируем данные для отображения ошибки "Нет фотографий"
@@ -623,7 +628,7 @@ if ($cat === 'user' || $cat === 0) {
 
             // Добавляем данные в шаблон
             $template->add_if('EDIT_BLOCK', $if_edit);
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_NAME_BLOCK'           => $category_name,
                 // Название категории
                 'L_DESCRIPTION_BLOCK'    => $category_description,
@@ -678,7 +683,7 @@ if ($cat === 'user' || $cat === 0) {
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
     // Добавляем данные в шаблон
-    $template->add_string_ar([
+    $template->add_string_array([
         'L_NAME_BLOCK'           => $work->lang['category']['add'],
         // Заголовок блока
         'L_NAME_DIR'             => $work->lang['category']['cat_dir'],
@@ -740,7 +745,7 @@ if ($cat === 'user' || $cat === 0) {
         'where'  => '`folder` = :folder',
         'params' => [':folder' => $directory_name],
     ]);
-    $directory_count_data = $db->res_row();
+    $directory_count_data = $db->result_row();
 
     if ((isset($directory_count_data['count_dir']) && $directory_count_data['count_dir'] > 0) || is_dir(
         $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $directory_name
@@ -800,14 +805,14 @@ if ($cat === 'user' || $cat === 0) {
         'where'  => '`id` != :id',
         'params' => [':id' => 0],
     ]);
-    $categories = $db->res_arr();
+    $categories = $db->result_array();
     $template->add_case('CATEGORY_BLOCK', 'VIEW_DIR');
 
     if ($categories) {
         $key = 0;
         foreach ($categories as $key => $val) {
             $category_data = $work->category($val['id']);
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_NAME_CATEGORY'        => Work::clean_field($category_data['name']),
                 'D_DESCRIPTION_CATEGORY' => Work::clean_field($category_data['description']),
                 'D_COUNT_PHOTO'          => (string)$category_data['count_photo'],
@@ -822,7 +827,7 @@ if ($cat === 'user' || $cat === 0) {
         // Добавляем данные для категории "Все фото"
         $all_photos_category = $work->category();
         if ($all_photos_category['user_upload_count_data'] > 0) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_NAME_CATEGORY'        => Work::clean_field($all_photos_category['name']),
                 'D_DESCRIPTION_CATEGORY' => Work::clean_field($all_photos_category['description']),
                 'D_COUNT_PHOTO'          => (string)$all_photos_category['count_photo'],
@@ -835,7 +840,7 @@ if ($cat === 'user' || $cat === 0) {
         }
 
         $template->add_if('ISSET_CATEGORY', true);
-        $template->add_string_ar([
+        $template->add_string_array([
             'NAME_BLOCK'             => $work->lang['category']['name_block'],
             'L_NAME_CATEGORY'        => sprintf(
                 '%s %s',
@@ -860,7 +865,7 @@ if ($cat === 'user' || $cat === 0) {
             ),
         ]);
     } else {
-        $template->add_string_ar([
+        $template->add_string_array([
             'NAME_BLOCK'             => $work->lang['category']['name_block'],
             'L_NAME_CATEGORY'        => sprintf(
                 '%s %s',

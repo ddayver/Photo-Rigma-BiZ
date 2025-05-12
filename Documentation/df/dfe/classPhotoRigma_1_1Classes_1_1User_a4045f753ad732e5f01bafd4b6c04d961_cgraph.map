@@ -1,0 +1,5 @@
+<map id="delete_group" name="delete_group">
+<area shape="rect" id="Node000001" title="Удаляет группу из системы через Админку." alt="" coords="5,5,101,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aab7ca272675fb69fed326d0094ec13e2" title="Удаляет группу из базы данных." alt="" coords="149,5,300,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,15,133,15,133,20,101,20"/>
+</map>

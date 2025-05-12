@@ -140,7 +140,7 @@
 							</div>
 							<div class="seven wide column ui action input custom-input">
 								<div class="ui inverted small dropdown selection">
-									<input type="hidden" name="language" value="{D_SELECTED_THEME}">
+									<input type="hidden" name="theme" value="{D_SELECTED_THEME}">
 									<i class="dropdown icon"></i>
 									<div class="default text">{L_SELECTED_THEME}</div>
 									<div class="menu">
@@ -347,6 +347,16 @@
 									<div class="nine wide column">{L_LOGIN}:</div>
 									<div class="seven wide column">{D_LOGIN}<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}"></div>
 								</div>
+<!-- IF_SOFT_DELETE_BEGIN -->
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_DELETED_AT}:</div>
+									<div class="seven wide column">{D_DELETED_AT}</div>
+								</div>
+								<div class="row middle aligned tiny-space">
+									<div class="nine wide column">{L_RESTORE_EXPIRY}:</div>
+									<div class="seven wide column">{D_RESTORE_EXPIRY}</div>
+								</div>
+<!-- IF_SOFT_DELETE_END -->
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_REAL_NAME}:</div>
 									<div class="seven wide column">{D_REAL_NAME}</div>
@@ -358,13 +368,13 @@
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_AVATAR}:</div>
 									<div class="seven wide column">
-										<img src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" class="ui small rounded image">
+										<img src="{U_AVATAR}" title="{D_REAL_NAME}" alt="{D_REAL_NAME}" class="ui{D_DISABLE_FIELD} small rounded image">
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column"><b>{L_GROUP}*</b>:</div>
 									<div class="seven wide column">
-										<div class="ui inverted small dropdown selection">
+										<div class="ui inverted small{D_DISABLE_FIELD} dropdown selection">
 											<input type="hidden" name="group" value="{D_SELECTED_GROUP}">
 											<i class="dropdown icon"></i>
 											<div class="default text">{L_SELECTED_GROUP}</div>
@@ -384,85 +394,85 @@
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_PIC_VIEW}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="pic_view"{D_PIC_VIEW}>
+										<input type="checkbox" name="pic_view"{D_PIC_VIEW}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_PIC_RATE_USER}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="pic_rate_user"{D_PIC_RATE_USER}>
+										<input type="checkbox" name="pic_rate_user"{D_PIC_RATE_USER}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_PIC_RATE_MODER}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="pic_rate_moder"{D_PIC_RATE_MODER}>
+										<input type="checkbox" name="pic_rate_moder"{D_PIC_RATE_MODER}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_PIC_UPLOAD}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="pic_upload"{D_PIC_UPLOAD}>
+										<input type="checkbox" name="pic_upload"{D_PIC_UPLOAD}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_PIC_MODERATE}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="pic_moderate"{D_PIC_MODERATE}>
+										<input type="checkbox" name="pic_moderate"{D_PIC_MODERATE}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_CAT_MODERATE}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="cat_moderate"{D_CAT_MODERATE}>
+										<input type="checkbox" name="cat_moderate"{D_CAT_MODERATE}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_CAT_USER}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="cat_user"{D_CAT_USER}>
+										<input type="checkbox" name="cat_user"{D_CAT_USER}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_COMMENT_VIEW}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="comment_view"{D_COMMENT_VIEW}>
+										<input type="checkbox" name="comment_view"{D_COMMENT_VIEW}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_COMMENT_ADD}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="comment_add"{D_COMMENT_ADD}>
+										<input type="checkbox" name="comment_add"{D_COMMENT_ADD}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_COMMENT_MODERATE}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="comment_moderate"{D_COMMENT_MODERATE}>
+										<input type="checkbox" name="comment_moderate"{D_COMMENT_MODERATE}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_NEWS_VIEW}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="news_view"{D_NEWS_VIEW}>
+										<input type="checkbox" name="news_view"{D_NEWS_VIEW}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_NEWS_ADD}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="news_add"{D_NEWS_ADD}>
+										<input type="checkbox" name="news_add"{D_NEWS_ADD}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_NEWS_MODERATE}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="news_moderate"{D_NEWS_MODERATE}>
+										<input type="checkbox" name="news_moderate"{D_NEWS_MODERATE}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="nine wide column">{L_ADMIN}:</div>
 									<div class="seven wide column ui action input custom-input">
-										<input type="checkbox" name="admin"{D_ADMIN}>
+										<input type="checkbox" name="admin"{D_ADMIN}{D_DISABLE_FIELD}>
 									</div>
 								</div>
 								<div class="row middle aligned tiny-space">
@@ -474,7 +484,7 @@
 								</div>
 								<div class="row middle aligned tiny-space">
 									<div class="sixteen wide column center aligned">
-										<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_SAVE_USER}" value="true">
+										<button class="small ui secondary basic inverted{D_DISABLE_FIELD} button" name="submit" type="submit" title="{L_SAVE_USER}" value="true">
 											<i class="save outline icon"></i> {L_SAVE_USER}
 										</button>
 									</div>
@@ -482,6 +492,36 @@
 							</div>
 						</form>
 					</div>
+<!-- IF_CAN_DELETE_BEGIN -->
+					<div style="margin: 10px;">
+						<div class="ui grid regist_data no-space" style="margin: 0;">
+							<div class="row middle aligned tiny-space">
+								<div class="sixteen wide column" style="text-align: center;">
+									<div style="text-align: center; width: 100%;">
+										<div class="tiny ui center aligned buttons">
+											<button class="small ui inverted circular red basic icon button delete-button" data-target="#delete-modal">
+												<i class="trash alternate icon"></i> {L_DELETE_BLOCK}
+											</button>
+										</div>
+									</div>
+									<div id="delete-modal" class="ui basic modal" data-url="{U_DELETE_BLOCK}">
+										<div class="header">{L_DELETE_BLOCK}</div>
+										<div class="content">
+											<p>{L_CONFIRM_DELETE_BLOCK}</p>
+											<form id="delete-profile-form" method="post" action="{U_DELETE_BLOCK}">
+												<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+											</form>
+										</div>
+										<div class="actions">
+											<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+											<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+<!-- IF_CAN_DELETE_END -->
 <!-- IF_FIND_USER_END -->
 				</div>
 <!-- BREAK_ADMIN_USER -->
@@ -499,7 +539,7 @@
 								<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
 								<label>{L_SELECT_GROUP}:</label>
 								<div class="ui action input custom-input">
-									<div class="ui inverted small dropdown selection">
+									<div class="ui inverted small dropdown selection" name="group" data-protected-groups="{D_PROTECTED_GROUPS}">
 										<input type="hidden" name="group" value="{D_SELECTED_GROUP}">
 										<i class="dropdown icon"></i>
 										<div class="default text">{L_SELECTED_GROUP}</div>
@@ -512,14 +552,37 @@
 								</div>
 							</div>
 							<div class="tiny-space" style="text-align: center;">
-								<button class="small ui secondary basic inverted button" name="submit" type="submit" title="{L_EDIT}" value="true">
-									{L_EDIT}
+								<button class="small ui inverted circular secondary basic icon button" name="submit" type="submit" title="{L_EDIT}" value="true">
+									<i class="users cog icon"></i> {L_EDIT}
 								</button>
 							</div>
 						</form>
+						<div class="custom-divider"></div>
+						<div class="tiny-space" style="text-align: center;">
+							<button class="small ui inverted circular green basic icon button" name="add" type="button" title="{L_ADD_GROUP}" value="true" onclick="window.location.href='{U_ADD_GROUP}'">
+								<i class="plus icon"></i> {L_ADD_GROUP}
+							</button>
+							<button id="delete-button" class="small ui inverted circular red basic icon button delete-button" data-target="#delete-modal" name="delete" type="button" title="{L_DELETE}" value="true">
+								<i class="minus icon"></i> {L_DELETE}
+							</button>
+						</div>
+						<div id="delete-modal" class="ui basic modal" data-url="{L_DELETE}">
+							<div class="header">{L_DELETE}</div>
+							<div class="content">
+								<p>{L_CONFIRM_DELETE_BLOCK}</p>
+								<form id="delete-profile-form" method="post" action="{U_DELETE_BLOCK}">
+									<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+									<input type="hidden" name="group" value="{D_SELECTED_GROUP}">
+								</form>
+							</div>
+							<div class="actions">
+								<div class="ui cancel button">{L_CANCEL_DELETE}</div>
+								<div class="ui approve red button">{L_CONFIRM_DELETE}</div>
+							</div>
+						</div>
 <!-- IF_SELECT_GROUP_END -->
 <!-- IF_EDIT_GROUP_BEGIN -->
-						<form name="save_group" action="" method="post">
+						<form name="save_group" action="{U_BLOCK_GROUP}" method="post">
 							<div class="ui grid" style="margin: 5px;">
 								<div class="row middle aligned tiny-space">
 									<div class="sixteen wide column center aligned">

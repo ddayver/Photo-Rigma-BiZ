@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -214,8 +214,10 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 <li>'name' (string): Название категории или альбома.</li>
 <li>'description' (string): Описание категории или альбома.</li>
 <li>'count_photo' (int): Количество фотографий.</li>
-<li>'last_photo' (string): Форматированное название последней фотографии.</li>
-<li>'top_photo' (string): Форматированное название лучшей фотографии.</li>
+<li>'last_photo' (string): Форматированное название последней фотографии (например, "Название
+                                           (Описание)").</li>
+<li>'top_photo' (string): Форматированное название лучшей фотографии (например, "Название
+                                           (Описание)").</li>
 <li>'url_cat' (string): Ссылка на категорию или альбом.</li>
 <li>'url_last_photo' (string): Ссылка на последнюю фотографию.</li>
 <li>'url_top_photo' (string): Ссылка на лучшую фотографию.</li>
@@ -280,7 +282,10 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 <li>Проверяет корректность входных параметров <code>$type</code> и <code>$id_photo</code>.</li>
 <li>Проверяет права пользователя на просмотр изображений.</li>
 <li>Формирует данные для вывода изображения в зависимости от типа:<ul>
-<li>&lsquo;'top&rsquo;<code>: Лучшее изображение (по рейтингу). -</code>'last'<code>: Последнее загруженное изображение. -</code>'cat'<code>: Изображение из конкретной категории по</code>$id_photo<code>. -</code>'rand'`: Любое случайное изображение.</li>
+<li>'top': Лучшее изображение (по рейтингу).</li>
+<li>'last': Последнее загруженное изображение.</li>
+<li>'cat': Изображение из конкретной категории по <code>$id_photo</code>.</li>
+<li>'rand': Любое случайное изображение.</li>
 </ul>
 </li>
 <li>Возвращает массив данных для вывода изображения или данные по умолчанию, если изображение недоступно.</li>
@@ -288,14 +293,30 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$type</td><td>Тип изображения:<ul>
-<li>&lsquo;'top&rsquo;<code>: Лучшее изображение (по рейтингу). -</code>'last'<code>: Последнее загруженное изображение. -</code>'cat'<code>: Изображение из конкретной категории (требует указания</code>$id_photo<code>). -</code>'rand'<code>: Любое случайное изображение. По умолчанию:</code>'top'<code>. Допустимые значения:</code>'top'<code>,</code>'last'<code>,</code>'cat'<code>,</code>'rand'<code>. @param int $id_photo Идентификатор фото. Используется только при</code>$type == 'cat'<code>. Должен быть целым числом &gt;=</code>0<code>. По умолчанию:</code>0`.</li>
+<li>'top': Лучшее изображение (по рейтингу).</li>
+<li>'last': Последнее загруженное изображение.</li>
+<li>'cat': Изображение из конкретной категории (требует указания <code>$id_photo</code>).</li>
+<li>'rand': Любое случайное изображение. По умолчанию: 'top'. Допустимые значения: 'top', 'last', 'cat', 'rand'. </li>
 </ul>
 </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id_photo</td><td>Идентификатор фото. Используется только при &lsquo;$type == 'cat&rsquo;<code>. Должен быть целым числом &gt;=</code>0<code>. По умолчанию:</code>0`.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>array Массив данных для вывода изображения:<ul>
-<li>&lsquo;'name_block&rsquo;<code>(string): Название блока изображения (например, "Лучшее фото"). -</code>'url'<code>(string): URL для просмотра полного изображения. -</code>'thumbnail_url'<code>(string): URL для миниатюры изображения. -</code>'name'<code>(string): Название изображения. -</code>'description'<code>(string): Описание изображения. -</code>'category_name'<code>(string): Название категории. -</code>'category_description'<code>(string): Описание категории. -</code>'rate'<code>(string): Рейтинг изображения (например, "Рейтинг: 5/10"). -</code>'url_user'<code>(string|null): URL профиля пользователя, добавившего изображение. -</code>'real_name'<code>(string): Реальное имя пользователя. -</code>'category_url'<code>(string): URL категории или пользовательского альбома. -</code>'width'<code>(int): Ширина изображения после масштабирования. -</code>'height'` (int): Высота изображения после масштабирования.</li>
+<li>'name_block' (string): Название блока изображения (например, "Лучшее фото").</li>
+<li>'url' (string): URL для просмотра полного изображения.</li>
+<li>'thumbnail_url' (string): URL для миниатюры изображения.</li>
+<li>'name' (string): Название изображения.</li>
+<li>'description' (string): Описание изображения.</li>
+<li>'category_name' (string): Название категории.</li>
+<li>'category_description' (string): Описание категории.</li>
+<li>'rate' (string): Рейтинг изображения (например, "Рейтинг: 5/10").</li>
+<li>'url_user' (string|null): URL профиля пользователя, добавившего изображение.</li>
+<li>'real_name' (string): Реальное имя пользователя.</li>
+<li>'category_url' (string): URL категории или пользовательского альбома.</li>
+<li>'width' (int): Ширина изображения после масштабирования.</li>
+<li>'height' (int): Высота изображения после масштабирования.</li>
 </ul>
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
@@ -538,7 +559,8 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 </ul>
 </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$act</td><td>Тип запроса:<ul>
-<li>&lsquo;'id&rsquo;<code>: Получение новости по её ID. -</code>'last'`: Получение списка последних новостей.</li>
+<li>'id': Получение новости по её ID.</li>
+<li>'last': Получение списка последних новостей.</li>
 </ul>
 </td></tr>
   </table>
@@ -613,7 +635,8 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$table</td><td>Имя таблицы для вставки оценки:<ul>
-<li>&lsquo;'rate_user&rsquo;<code>: Таблица с оценками фотографий от пользователей. -</code>'rate_moder'`: Таблица с оценками фотографий от модераторов. </li>
+<li>'rate_user': Таблица с оценками фотографий от пользователей.</li>
+<li>'rate_moder': Таблица с оценками фотографий от модераторов. </li>
 </ul>
 </td></tr>
     <tr><td class="paramtype">int</td><td class="paramname">$photo_id</td><td>ID фотографии:<ul>
@@ -642,7 +665,7 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 </dl>
 <dl class="section note"><dt>Заметки</dt><dd>Метод автоматически пересчитывает среднюю оценку через триггеры и функции в СУБД.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что:<ul>
-<li>Параметр <code>$table</code> соответствует одной из допустимых таблиц (&lsquo;'rate_user&rsquo;<code>или</code>'rate_moder'`).</li>
+<li>Параметр <code>$table</code> соответствует одной из допустимых таблиц ('rate_user' или 'rate_moder').</li>
 <li>В СУБД настроены триггеры и функции для перерасчета средней оценки.</li>
 </ul>
 </dd></dl>
@@ -673,10 +696,7 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 </div><div class="memdoc">
 
 <p>Установка языковых данных через сеттер. </p>
-<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он выполняет следующие действия:</p><ol type="1">
-<li>Проверяет, что переданные данные являются массивом.</li>
-<li>Присваивает массив свойству текущего класса для дальнейшего использования.</li>
-</ol>
+<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Присваивает массив свойству текущего класса для дальнейшего использования.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$lang</td><td>Языковые данные:<ul>
@@ -689,16 +709,6 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>void Метод ничего не возвращает.</dd></dl>
-<dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если:<ul>
-<li>Передан некорректный тип данных (не массив).</li>
-<li>Передан пустой массив.</li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section note"><dt>Заметки</dt><dd>Метод проверяет тип переданных данных. Языковые данные используются для локализации интерфейса и других текстовых элементов системы.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Передавайте только корректные языковые данные. Пустой массив или некорректные значения могут привести к ошибкам при использовании.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
@@ -731,10 +741,7 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 </div><div class="memdoc">
 
 <p>Установка объекта, реализующего интерфейс User_Interface, через сеттер. </p>
-<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Он выполняет следующие действия:</p><ol type="1">
-<li>Проверяет, что переданный объект реализует интерфейс <code>User_Interface</code>.</li>
-<li>Присваивает объект свойству текущего класса для дальнейшего использования.</li>
-</ol>
+<p>Этот метод является частью контракта интерфейса и должен быть реализован в классе. Присваивает объект свойству текущего класса для дальнейшего использования.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">User_Interface</td><td class="paramname">$user</td><td>Объект, реализующий интерфейс <code>User_Interface</code>:<ul>
@@ -745,12 +752,6 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>void Метод ничего не возвращает.</dd></dl>
-<dl class="exception"><dt>Исключения</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если передан некорректный объект (не реализует интерфейс <code>User_Interface</code>).</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section note"><dt>Заметки</dt><dd>Метод проверяет тип переданного объекта. Объект пользователя используется для взаимодействия с другими компонентами системы.</dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Некорректный объект (не реализует интерфейс <code>User_Interface</code>) вызывает исключение.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
@@ -761,13 +762,13 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 <div class="line"> </div>
 <div class="line"><span class="comment">// Установка объекта пользователя</span></div>
 <div class="line">$corelogic-&gt;set_user(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>);</div>
-<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html"><div class="ttname"><a href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">PhotoRigma\Classes\User</a></div><div class="ttdoc">Класс для работы с пользователями и хранения данных о текущем пользователе.</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l00102">User.php:103</a></div></div>
-<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00300">index.php:300</a></div></div>
+<div class="ttc" id="aclassPhotoRigma_1_1Classes_1_1User_html"><div class="ttname"><a href="../../df/dfe/classPhotoRigma_1_1Classes_1_1User.html">PhotoRigma\Classes\User</a></div><div class="ttdoc">Класс для работы с пользователями и хранения данных о текущем пользователе.</div><div class="ttdef"><b>Определения</b> <a href="../../db/da2/User_8php_source.html#l00108">User.php:109</a></div></div>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00322">index.php:322</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>User_Interface Интерфейс, которому должен соответствовать объект пользователя. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a75c62c77591a021c5555660ce20e84b3">Work_CoreLogic</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00300">PhotoRigma\$user</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00322">PhotoRigma\$user</a>.</p>
 
 </div>
 </div>
@@ -780,7 +781,7 @@ $(function(){initNavTree('df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__Core
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></li><li class="navelem"><a class="el" href="../../df/d80/interfacePhotoRigma_1_1Interfaces_1_1Work__CoreLogic__Interface.html">Work_CoreLogic_Interface</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

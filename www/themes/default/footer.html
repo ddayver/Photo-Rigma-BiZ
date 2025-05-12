@@ -127,7 +127,11 @@
 							<div class="row middle aligned tiny-space">
 								<div class="eight wide column news_data">
 <!-- IF_USER_EXIST_BEGIN -->
+<!-- IF_USER_BANNED_BEGIN -->
+									<a href="{U_BEST_USER_PROFILE}" style="white-space: nowrap;" title="{D_USER_NAME}"><s><i class="ban icon"></i>{D_USER_NAME}</s></a>
+<!-- IF_USER_BANNED_ELSE -->
 									<a href="{U_BEST_USER_PROFILE}" title="{D_USER_NAME}">{D_USER_NAME}</a>
+<!-- IF_USER_BANNED_END -->
 <!-- IF_USER_EXIST_ELSE -->
 									{D_USER_NAME}
 <!-- IF_USER_EXIST_END -->
@@ -181,7 +185,7 @@
 			</div>
 		</div>
 		<div class="field_copyright" style="margin-top: 10px; border-radius: 15px;">
-			&copy;&nbsp;{COPYRIGHT_YEAR}&nbsp;<a href="{COPYRIGHT_URL}" title="{COPYRIGHT_TEXT}" target="_blank">{COPYRIGHT_TEXT}</a>
+			<i class="tyni copyright outline icon"></i>&nbsp;{COPYRIGHT_YEAR}&nbsp;<a href="{COPYRIGHT_URL}" title="{COPYRIGHT_TEXT}" target="_blank">{COPYRIGHT_TEXT}</a>&nbsp;(<i class="tyni code icon"></i>&nbsp;{CODE_VERSION}&nbsp;/&nbsp;<i class="tyni database icon"></i>&nbsp;{DB_VERSION})
 		</div>
 	</div>
 </div>

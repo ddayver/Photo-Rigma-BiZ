@@ -70,3 +70,8 @@ COMMENT ON COLUMN photo.tsv_weighted IS 'Взвешенный полнотекс
 CREATE INDEX idx_photo_name_trgm ON photo USING GIN (name gin_trgm_ops);
 CREATE INDEX idx_photo_description_trgm ON photo USING GIN (description gin_trgm_ops);
 
+-- Final
+-- Очистка таблицы
+TRUNCATE TABLE db_version;
+-- Вставка значения
+INSERT INTO db_version (ver) VALUES ('0.4.3');

@@ -1,7 +1,0 @@
-<map id="process_lang_array" name="process_lang_array">
-<area shape="rect" id="Node000001" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения...." alt="" coords="298,5,431,30"/>
-<area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa120c9e1e0a365baa86516f395843036" title="Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах." alt="" coords="124,5,250,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,20,250,20,250,15,282,15"/>
-<area shape="rect" id="Node000003" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода." alt="" coords="5,5,76,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,20,76,20,76,15,108,15"/>
-</map>

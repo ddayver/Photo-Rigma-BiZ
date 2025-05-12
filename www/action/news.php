@@ -3,71 +3,77 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /**
- * @file        action/news.php
- * @brief       Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.
+ * @file      action/news.php
+ * @brief     Реализует функциональность работы с новостями: добавление, редактирование, удаление и отображение.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   Photorigma\\Action
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace Photorigma\\Action
  *
- * @details     Этот файл отвечает за управление новостями в системе, включая:
- *              - Добавление новой новости (при наличии прав `$user->user['news_add']`).
- *              - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если
- *                пользователь является автором новости).
- *              - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является
- *                автором новости).
- *              - Отображение списка новостей с фильтрацией по годам и месяцам.
- *              - Защита от CSRF-атак при добавлении и редактировании новостей.
- *              - Логирование ошибок и подозрительных действий.
+ * @details   Этот файл отвечает за управление новостями в системе, включая:
+ *            - Добавление новой новости (при наличии прав `$user->user['news_add']`).
+ *            - Редактирование существующей новости (при наличии прав `$user->user['news_moderate']` или если
+ *              пользователь является автором новости).
+ *            - Удаление новости (при наличии прав `$user->user['news_moderate']` или если пользователь является
+ *              автором новости).
+ *            - Отображение списка новостей с фильтрацией по годам и месяцам.
+ *            - Защита от CSRF-атак при добавлении и редактировании новостей.
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     News_Main_Functions Основные функции
- *              - Добавление новой новости.
- *              - Редактирование существующей новости.
- *              - Удаление новости.
- *              - Отображение списка новостей с фильтрацией по годам и месяцам.
- *              - Логирование ошибок и подозрительных действий.
+ * @section   News_Main_Functions Основные функции
+ *            - Добавление новой новости.
+ *            - Редактирование существующей новости.
+ *            - Удаление новости.
+ *            - Отображение списка новостей с фильтрацией по годам и месяцам.
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     News_Error_Handling Обработка ошибок
- *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
- *              - `RuntimeException`: Если не удалось выполнить действие с новостью (например, добавление,
- *                редактирование или удаление).
- *              - `RuntimeException`: Если новость не найдена.
- *              - `RuntimeException`: Если CSRF-токен неверен.
- *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
- *              - `JsonException`: При выполнении методов, использующих JSON.
- *              - `Exception`: При выполнении прочих методов классов, функций или операций.
+ * @section   News_Error_Handling Обработка ошибок
+ *            При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *            - `RuntimeException`: Если не удалось выполнить действие с новостью (например, добавление,
+ *              редактирование или удаление).
+ *            - `RuntimeException`: Если новость не найдена.
+ *            - `RuntimeException`: Если CSRF-токен неверен.
+ *            - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *            - `JsonException`: При выполнении методов, использующих JSON.
+ *            - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @throws      RuntimeException Если не удалось выполнить действие с новостью (например, добавление, редактирование
- *                               или удаление). Пример сообщения: "Ошибка добавления новости | Данные:
- *                               json_encode($query_news)".
- * @throws      RuntimeException Если новость не найдена.
- *              Пример сообщения: "Новость не найдена | ID: {$news}".
- * @throws      RuntimeException Если CSRF-токен неверен.
- *              Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      JsonException При выполнении методов, использующих JSON.
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ * @throws    RuntimeException       Если не удалось выполнить действие с новостью (например, добавление,
+ *                                   редактирование или удаление).
+ *                                   Пример сообщения: "Ошибка добавления новости | Данные: json_encode($query_news)".
+ * @throws    RuntimeException       Если новость не найдена.
+ *                                   Пример сообщения:
+ *                                   "Новость не найдена | ID: {$news}".
+ * @throws    RuntimeException       Если CSRF-токен неверен.
+ *                                   Пример сообщения:
+ *                                   "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
+ * @throws    Random\RandomException При выполнении методов, использующих random().
+ * @throws    JsonException          При выполнении методов, использующих JSON.
+ * @throws    Exception              При выполнении прочих методов классов, функций или операций.
  *
- * @section     News_Related_Files Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
- *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
- *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/news.php по запросу из `$_GET`.
+ * @section   News_Related_Files Связанные файлы и компоненты
+ *            - Классы приложения:
+ *              - @see PhotoRigma::Classes::Work
+ *                     Класс используется для выполнения вспомогательных операций.
+ *              - @see PhotoRigma::Classes::Database
+ *                     Класс для работы с базой данных.
+ *              - @see PhotoRigma::Classes::User
+ *                     Класс для управления пользователями.
+ *              - @see PhotoRigma::Classes::Template
+ *                     Класс для работы с шаблонами.
+ *            - Файлы приложения:
+ *              - @see index.php Этот файл подключает action/news.php по запросу из `$_GET`.
  *
- * @note        Этот файл является частью системы PhotoRigma.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ * @note      Этот файл является частью системы PhotoRigma.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать,
- *              распространять, сублицензировать и/или продавать копии программного обеспечения,
- *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
- *              делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *            делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
 
@@ -117,7 +123,7 @@ $news = match (true) {
 if ($news !== false) {
     // Используем подготовленные выражения для защиты от SQL-инъекций
     $db->select('*', TBL_NEWS, ['where' => '`id` = :id', 'params' => [':id' => $news]]);
-    $news_data = $db->res_row();
+    $news_data = $db->result_row();
 
     if (!$news_data) {
         $news = false; // Если новость не найдена, сбрасываем значение
@@ -265,10 +271,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
     // Получение данных новости
     $db->select('*', TBL_NEWS, ['where' => '`id` = :id', 'params' => [':id' => $news]]);
-    $news_data = $db->res_row();
+    $news_data = $db->result_row();
 
     if ($news_data) {
-        $template->add_if_ar([
+        $template->add_if_array([
             'NEED_USER'   => true,
             'USER_EXISTS' => false,
         ]);
@@ -279,11 +285,11 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             TBL_USERS,
             ['where' => '`id` = :id', 'params' => [':id' => $news_data['user_post']]]
         );
-        $user_data = $db->res_row();
+        $user_data = $db->result_row();
 
         if ($user_data) {
             $template->add_if('USER_EXISTS', true);
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name']),
                 'U_PROFILE_USER_POST'   => sprintf(
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
@@ -300,7 +306,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         $template->add_case('NEWS_BLOCK', 'NEWS_SAVE');
         // Генерируем CSRF-токен для защиты от атак типа CSRF
         $template->add_string('CSRF_TOKEN', $user->csrf_token());
-        $template->add_string_ar([
+        $template->add_string_array([
             'NAME_BLOCK'  => $work->lang['main']['edit_news'] . ' - ' . Work::clean_field($news_data['name_post']),
             'L_NAME_USER' => $user_add,
             'L_NAME_POST' => $work->lang['news']['name_post'],
@@ -360,7 +366,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
     $template->add_if('NEED_USER', false);
     // Генерируем CSRF-токен для защиты от атак типа CSRF
     $template->add_string('CSRF_TOKEN', $user->csrf_token());
-    $template->add_string_ar([
+    $template->add_string_array([
         'NAME_BLOCK'  => $work->lang['news']['add_post'],
         'L_NAME_USER' => '',
         'L_NAME_POST' => $work->lang['news']['name_post'],
@@ -379,14 +385,14 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
     if (!empty($news_data)) {
         foreach ($news_data as $key => $val) {
             $template->add_case('NEWS_BLOCK', 'LAST_NEWS');
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_TITLE_NEWS_BLOCK' => $work->lang['main']['title_news'] . ' - ' . Work::clean_field(
                     $val['name_post']
                 ),
                 'L_NEWS_DATA'        => $work->lang['main']['data_add'] . ': ' . $val['data_post'] . ' (' . $val['data_last_edit'] . ').',
                 'L_TEXT_POST'        => trim(nl2br(Work::ubb($val['text_post']))),
             ], 'LAST_NEWS[0]');
-            $template->add_if_ar([
+            $template->add_if_array([
                 'USER_EXISTS' => false,
                 'EDIT_SHORT'  => false,
                 'EDIT_LONG'   => false,
@@ -398,11 +404,11 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 TBL_USERS,
                 ['where' => '`id` = :id', 'params' => [':id' => $val['user_post']]]
             );
-            $user_data = $db->res_row();
+            $user_data = $db->result_row();
 
             if ($user_data) {
                 $template->add_if('USER_EXISTS', true, 'LAST_NEWS[0]');
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_USER_ADD'            => $work->lang['main']['user_add'],
                     'U_PROFILE_USER_POST'   => sprintf(
                         '%s?action=profile&amp;subact=profile&amp;uid=%d',
@@ -416,7 +422,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             // Проверка прав на редактирование
             if ($user->user['news_moderate'] || ($user->user['id'] !== 0 && $user->user['id'] === $val['user_post'])) {
                 $template->add_if('EDIT_LONG', true, 'LAST_NEWS[0]');
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_EDIT_BLOCK'           => $work->lang['main']['edit_news'],
                     'L_DELETE_BLOCK'         => $work->lang['main']['delete_news'],
                     'L_CONFIRM_DELETE_BLOCK' => $work->lang['main']['confirm_delete_news'] . ' ' . Work::clean_field(
@@ -472,7 +478,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'order' => '`year` ASC',
             ]
         );
-        $years_list = $db->res_arr();
+        $years_list = $db->result_array();
 
         if ($years_list === false) {
             header('Location: ' . $work->config['site_url']);
@@ -489,10 +495,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'params' => [':year' => $year_data['year']],
                 ]
             );
-            $news_count_row = $db->res_row();
+            $news_count_row = $db->result_row();
             $news_count = $news_count_row['count_news'] ?? 0;
 
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_LIST_DATA'  => (string)$year_data['year'],
                 'L_LIST_COUNT' => (string)$news_count,
                 'L_LIST_TITLE' => $year_data['year'] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
@@ -504,7 +510,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             ], 'LIST_NEWS[' . $key . ']');
         }
 
-        $template->add_string_ar([
+        $template->add_string_array([
             'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
             'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on_years'],
         ]);
@@ -534,7 +540,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'order'  => '`month` ASC',
                 ]
             );
-            $months_list = $db->res_arr();
+            $months_list = $db->result_array();
 
             if ($months_list === false) {
                 header('Location: ' . $work->config['site_url']);
@@ -554,10 +560,10 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                         'params' => [':year' => $year, ':month' => $month_data['month']],
                     ]
                 );
-                $news_count_row = $db->res_row();
+                $news_count_row = $db->result_row();
                 $news_count = $news_count_row['count_news'] ?? 0;
 
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_LIST_DATA'  => $work->lang['news'][$month_data['month']],
                     'L_LIST_COUNT' => (string)$news_count,
                     'L_LIST_TITLE' => $work->lang['news'][$month_data['month']] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
@@ -570,7 +576,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 ], 'LIST_NEWS[' . $key . ']');
             }
 
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
                 'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $year . ' ' . $work->lang['news']['on_month'],
             ]);
@@ -595,7 +601,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'order'  => '`data_last_edit` ASC',
                 ]
             );
-            $news_list = $db->res_arr();
+            $news_list = $db->result_array();
 
             if ($news_list === false) {
                 header('Location: ' . $work->config['site_url']);
@@ -603,7 +609,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             }
 
             foreach ($news_list as $key => $news_data) {
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_LIST_DATA'  => $news_data['name_post'],
                     'L_LIST_COUNT' => date('d.m.Y', strtotime($news_data['data_last_edit'])),
                     'L_LIST_TITLE' => Work::utf8_wordwrap(Work::clean_field($news_data['text_post']), 100),
@@ -615,7 +621,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 ], 'LIST_NEWS[' . $key . ']');
             }
 
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_TITLE_NEWS_BLOCK' => $work->lang['news']['news'],
                 'L_NEWS_DATA'        => $work->lang['news']['news'] . ' ' . $work->lang['news']['on'] . ' ' . $work->lang['news'][$month] . ' ' . $year . ' ' . $work->lang['news']['years'],
             ]);

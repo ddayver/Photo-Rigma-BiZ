@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 30 2025 г., 23:46
+-- Время создания: Май 11 2025 г., 21:49
 -- Версия сервера: 10.11.11-MariaDB
--- Версия PHP: 8.4.7RC1
+-- Версия PHP: 8.4.7
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,8 +28,6 @@ USE `photorigma`;
 
 --
 -- Структура таблицы `category`
---
--- Создание: Апр 30 2025 г., 23:06
 --
 
 DROP TABLE IF EXISTS `category`;
@@ -72,8 +70,6 @@ DELIMITER ;
 --
 -- Структура таблицы `change_timestamp`
 --
--- Создание: Апр 09 2025 г., 23:48
---
 
 DROP TABLE IF EXISTS `change_timestamp`;
 CREATE TABLE IF NOT EXISTS `change_timestamp` (
@@ -91,14 +87,12 @@ CREATE TABLE IF NOT EXISTS `change_timestamp` (
 --
 
 INSERT INTO `change_timestamp` (`table_name`, `last_update`) VALUES
-('config', '2025-04-09 13:48:37');
+('config', '2025-05-10 22:59:57');
 
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `config`
---
--- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `config`;
@@ -133,12 +127,13 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('max_photo_w', '640'),
 ('time_user_online', '900'),
 ('gal_width', '95%'),
-('themes', 'default'),
+('theme', 'default'),
 ('copyright_url', 'https://rigma.biz/'),
 ('title_name', 'Rigma Foto'),
 ('meta_description', 'Rigma.BiZ - фотогалерея Gold Rigma'),
 ('meta_keywords', 'Rigma.BiZ photo gallery Gold Rigma'),
 ('language', 'russian'),
+('timezone', 'UTC'),
 ('copyright_text', 'Проекты Rigma.BiZ'),
 ('title_description', 'Фотогалерея Rigma и Co');
 
@@ -172,8 +167,6 @@ DELIMITER ;
 --
 -- Структура таблицы `db_version`
 --
--- Создание: Апр 09 2025 г., 23:48
---
 
 DROP TABLE IF EXISTS `db_version`;
 CREATE TABLE IF NOT EXISTS `db_version` (
@@ -190,19 +183,17 @@ CREATE TABLE IF NOT EXISTS `db_version` (
 --
 
 INSERT INTO `db_version` (`ver`) VALUES
-('0.4.1');
+('0.4.4');
 
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `groups`
 --
--- Создание: Апр 09 2025 г., 23:48
---
 
 DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Идентификатор группы',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Идентификатор группы',
   `name` varchar(50) NOT NULL COMMENT 'Название группы',
   `user_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Права доступа' CHECK (json_valid(`user_rights`)),
   PRIMARY KEY (`id`)
@@ -241,8 +232,6 @@ DELIMITER ;
 
 --
 -- Структура таблицы `menu`
---
--- Создание: Апр 10 2025 г., 00:39
 --
 
 DROP TABLE IF EXISTS `menu`;
@@ -288,8 +277,6 @@ INSERT INTO `menu` (`id`, `action`, `url_action`, `name_action`, `short`, `long`
 --
 -- Структура таблицы `news`
 --
--- Создание: Апр 30 2025 г., 23:07
---
 
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE IF NOT EXISTS `news` (
@@ -314,8 +301,6 @@ CREATE TABLE IF NOT EXISTS `news` (
 
 --
 -- Структура таблицы `photo`
---
--- Создание: Апр 30 2025 г., 23:07
 --
 
 DROP TABLE IF EXISTS `photo`;
@@ -348,8 +333,6 @@ CREATE TABLE IF NOT EXISTS `photo` (
 --
 -- Структура таблицы `query_logs`
 --
--- Создание: Апр 09 2025 г., 23:48
---
 
 DROP TABLE IF EXISTS `query_logs`;
 CREATE TABLE IF NOT EXISTS `query_logs` (
@@ -373,8 +356,6 @@ CREATE TABLE IF NOT EXISTS `query_logs` (
 
 --
 -- Структура таблицы `rate_moder`
---
--- Создание: Апр 09 2025 г., 23:48
 --
 
 DROP TABLE IF EXISTS `rate_moder`;
@@ -433,8 +414,6 @@ DELIMITER ;
 --
 -- Структура таблицы `rate_user`
 --
--- Создание: Апр 09 2025 г., 23:48
---
 
 DROP TABLE IF EXISTS `rate_user`;
 CREATE TABLE IF NOT EXISTS `rate_user` (
@@ -492,9 +471,6 @@ DELIMITER ;
 --
 -- Структура таблицы `users`
 --
--- Создание: Апр 30 2025 г., 07:17
--- Последнее обновление: Апр 30 2025 г., 23:07
---
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -503,19 +479,31 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL COMMENT 'Пароль пользователя',
   `real_name` varchar(50) NOT NULL COMMENT 'Отображаемое имя пользователя',
   `email` varchar(50) NOT NULL COMMENT 'E-mail пользователя',
+  `email_confirmed` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Подтверждён ли email',
   `avatar` varchar(50) NOT NULL DEFAULT 'no_avatar.jpg' COMMENT 'Имя файла аватара пользователя',
   `language` varchar(32) NOT NULL DEFAULT 'russian' COMMENT 'Язык сайта',
   `theme` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'Тема сайта',
+  `timezone` varchar(50) NOT NULL DEFAULT 'UTC' COMMENT 'Часовой пояс пользователя',
+  `activation` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Флаг активации аккаунта',
   `date_regist` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата регистрации',
   `date_last_activ` timestamp NULL DEFAULT NULL COMMENT 'Дата последней активности',
   `date_last_logout` timestamp NULL DEFAULT NULL,
-  `group_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Идентификатор группы пользователя',
+  `deleted_at` datetime DEFAULT NULL COMMENT 'Дата и время мягкого удаления пользователя',
+  `permanently_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Флаг окончательного удаления пользователя',
+  `token` varchar(255) DEFAULT NULL COMMENT 'Для временных токенов',
+  `token_expires_at` datetime DEFAULT NULL COMMENT 'Время истечения токена',
+  `group_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `allow_newsletter` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Разрешает ли пользователь рассылку',
   `user_rights` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Права доступа' CHECK (json_valid(`user_rights`)),
+  `other_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Прочие параметры пользователя' CHECK (json_valid(`other_params`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
-  KEY `users_groups` (`group_id`),
-  KEY `user_rights` (`user_rights`(768)),
-  KEY `date_last_activ` (`date_last_activ`)
+  KEY `date_last_activ` (`date_last_activ`),
+  KEY `idx_users_deleted_at` (`deleted_at`),
+  KEY `idx_users_token` (`token`),
+  KEY `idx_users_token_expires` (`token_expires_at`),
+  KEY `idx_users_allow_newsletter` (`allow_newsletter`),
+  KEY `fk_users_group_id` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Таблица данных пользователя' ROW_FORMAT=DYNAMIC;
 
 --
@@ -528,10 +516,32 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `avatar`, `language`, `theme`, `date_regist`, `date_last_activ`, `date_last_logout`, `group_id`, `user_rights`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-30 23:07:52', '2025-04-05 11:21:57', 3, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}');
+INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `email_confirmed`, `avatar`, `language`, `theme`, `timezone`, `activation`, `date_regist`, `date_last_activ`, `date_last_logout`, `deleted_at`, `permanently_deleted`, `token`, `token_expires_at`, `group_id`, `allow_newsletter`, `user_rights`, `other_params`) VALUES
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 1, 'no_avatar.jpg', 'russian', 'default', 'UTC', 1, '2009-01-20 12:31:35', '2025-05-11 18:43:48', '2025-05-09 19:45:42', NULL, 0, NULL, NULL, 3, 0, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}', NULL);
 
 -- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_bans`
+--
+
+DROP TABLE IF EXISTS `user_bans`;
+CREATE TABLE IF NOT EXISTS `user_bans` (
+  `user_id` int(10) UNSIGNED NOT NULL COMMENT 'Идентификатор пользователя',
+  `banned` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'Флаг: пользователь заблокирован',
+  `reason` text DEFAULT NULL COMMENT 'Причина блокировки',
+  `expires_at` datetime DEFAULT NULL COMMENT 'Дата окончания бана (если временный)',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Дата и время установки бана',
+  PRIMARY KEY (`user_id`),
+  KEY `idx_user_bans_expires` (`expires_at`),
+  KEY `idx_user_bans_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Информация о бане пользователей';
+
+--
+-- ССЫЛКИ ТАБЛИЦЫ `user_bans`:
+--   `user_id`
+--       `users` -> `id`
+--
 
 --
 -- Индексы сохранённых таблиц
@@ -573,7 +583,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `random_photo`  AS SELECT `
 --
 DROP TABLE IF EXISTS `users_online`;
 DROP VIEW IF EXISTS `users_online`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `users_online`  AS SELECT `users`.`id` AS `id`, `users`.`real_name` AS `real_name` FROM `users` WHERE `users`.`date_last_activ` >= current_timestamp() - interval (select `config`.`value` from `config` where `config`.`name` = 'time_user_online') second ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `users_online`  AS SELECT `u`.`id` AS `id`, `u`.`real_name` AS `real_name`, CASE WHEN `b`.`user_id` is not null THEN 1 ELSE 0 END AS `banned` FROM (`users` `u` left join `user_bans` `b` on(`u`.`id` = `b`.`user_id` and `b`.`banned` = 1)) WHERE `u`.`date_last_activ` >= current_timestamp() - interval (select `config`.`value` from `config` where `config`.`name` = 'time_user_online') second AND `u`.`activation` = 1 AND `u`.`email_confirmed` = 1 AND `u`.`deleted_at` is null AND `u`.`permanently_deleted` = 0 ;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -610,9 +620,13 @@ ALTER TABLE `rate_user`
 -- Ограничения внешнего ключа таблицы `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_groups` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
+  ADD CONSTRAINT `fk_users_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
 
-
+--
+-- Ограничения внешнего ключа таблицы `user_bans`
+--
+ALTER TABLE `user_bans`
+  ADD CONSTRAINT `user_bans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 

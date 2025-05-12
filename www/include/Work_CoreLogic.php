@@ -1,40 +1,41 @@
 <?php
 
 /**
- * @file        include/Work_CoreLogic.php
- * @brief       Файл содержит класс Work_CoreLogic, который отвечает за выполнение базовой логики приложения.
+ * @file      include/Work_CoreLogic.php
+ * @brief     Файл содержит класс Work_CoreLogic, который отвечает за выполнение базовой логики приложения.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   PhotoRigma\\Classes
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace PhotoRigma\\Classes
  *
- * @details     Этот файл содержит класс `Work_CoreLogic`, который реализует интерфейс `Work_CoreLogic_Interface`.
- *              Класс предоставляет методы для выполнения ключевых операций приложения, таких как:
- *              - Работа с категориями и альбомами (метод `category`).
- *              - Управление изображениями (методы `del_photo`, `create_photo`).
- *              - Получение данных о новостях, языках и темах (методы `news`, `get_languages`, `get_themes`).
- *              Все методы зависят от конфигурации приложения и данных, полученных из базы данных.
+ * @details   Этот файл содержит класс `Work_CoreLogic`, который реализует интерфейс `Work_CoreLogic_Interface`.
+ *            Класс предоставляет методы для выполнения ключевых операций приложения, таких как:
+ *            - Работа с категориями и альбомами (метод `category`).
+ *            - Управление изображениями (методы `del_photo`, `create_photo`).
+ *            - Получение данных о новостях, языках и темах (методы `news`, `get_languages`, `get_themes`).
+ *            Все методы зависят от конфигурации приложения и данных, полученных из базы данных.
  *
- * @section     WorkCoreLogic_Main_Functions Основные функции
- *              - Формирование информационных строк для категорий и пользовательских альбомов.
- *              - Удаление изображений и связанных данных.
- *              - Получение данных о новостях, языках и темах.
- *              - Генерация блоков вывода изображений для различных типов запросов.
- *              - Обработка оценок и расчёт средней оценки.
+ * @section   WorkCoreLogic_Main_Functions Основные функции
+ *            - Формирование информационных строк для категорий и пользовательских альбомов.
+ *            - Удаление изображений и связанных данных.
+ *            - Получение данных о новостях, языках и темах.
+ *            - Генерация блоков вывода изображений для различных типов запросов.
+ *            - Обработка оценок и расчёт средней оценки.
  *
- * @see         PhotoRigma::Interfaces::Work_CoreLogic_Interface Интерфейс, который реализует данный класс.
+ * @see       PhotoRigma::Interfaces::Work_CoreLogic_Interface
+ *            Интерфейс, который реализует данный класс.
  *
- * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в выполнении базовой логики
- *              приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
+ * @note      Этот файл является частью системы PhotoRigma и играет ключевую роль в выполнении базовой логики
+ *            приложения. Реализованы меры безопасности для предотвращения несанкционированного доступа к данным.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *                части программного обеспечения.
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *            сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *            предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -79,6 +80,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          - Обработка оценок и расчёт средней оценки.
  *          Все ошибки, возникающие при работе с данными, обрабатываются через исключения.
  *
+ * @implements Work_CoreLogic_Interface
+ *
  * @property array               $config Конфигурация приложения.
  * @property array|null          $lang   Языковые данные (могут быть null при инициализации).
  * @property Database_Interface  $db     Объект для работы с базой данных (обязательный).
@@ -98,7 +101,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * $top_photo = $work->create_photo('top', 0);
  * print_r($top_photo);
  * @endcode
- * @see     PhotoRigma::Interfaces::Work_CoreLogic_Interface Интерфейс, который реализует данный класс.
+ * @see    PhotoRigma::Interfaces::Work_CoreLogic_Interface
+ *         Интерфейс, который реализует данный класс.
  */
 class Work_CoreLogic implements Work_CoreLogic_Interface
 {
@@ -122,8 +126,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *             - `$work`: основной объект приложения.
      *          2. Проверяет, что все зависимости корректно инициализированы.
      *          Метод вызывается автоматически при создании нового объекта класса.
-     *
-     * @callgraph
      *
      * @param array              $config Конфигурация приложения.
      *                                   Должен быть ассоциативным массивом.
@@ -150,13 +152,13 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $work = new Work();
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic($config, $db, $work);
      * @endcode
-     * @see     PhotoRigma::Classes::Work
+     * @see    PhotoRigma::Classes::Work
      *         Родительский класс, через который передаются зависимости.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
      *         Свойство, содержащее конфигурацию приложения.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$db
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$db
      *         Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$work
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$work
      *         Свойство, содержащее основной объект приложения.
      */
     public function __construct(Database_Interface $db, array $config, Work_Interface $work)
@@ -175,8 +177,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          2. Если имя свойства корректно, возвращает значение свойства `$config`.
      *          3. Если имя свойства некорректно, выбрасывается исключение.
      *          Метод является публичным и предназначен для получения доступа к свойству `$config`.
-     *
-     * @callgraph
      *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
@@ -204,7 +204,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic(['temp_photo_w' => 800], $db, $work);
      * echo $corelogic->config['temp_photo_w']; // Выведет: 800
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
      *         Свойство, к которому обращается метод.
      */
     public function __get(string $name): array
@@ -226,8 +226,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          2. Если имя свойства корректно, обновляет значение свойства `$config`.
      *          3. Если имя свойства некорректно, выбрасывается исключение.
      *          Метод является публичным и предназначен для изменения свойства `$config`.
-     *
-     * @callgraph
      *
      * @param string $name  Имя свойства:
      *                      - Допустимое значение: 'config'.
@@ -254,7 +252,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $corelogic = new \PhotoRigma\Classes\Work_CoreLogic([], $db, $work);
      * $corelogic->config = ['temp_photo_w' => 1024];
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
      *         Свойство, которое изменяет метод.
      */
     public function __set(string $name, array $value): void
@@ -274,8 +272,6 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @details Этот метод вызывается автоматически при использовании оператора `isset()` для проверки
      *          существования недоступного свойства. Метод возвращает `true`, если свойство существует,
      *          и `false` в противном случае.
-     *
-     * @callgraph
      *
      * @param string $name Имя свойства:
      *                     - Проверяется на существование.
@@ -317,6 +313,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          В противном случае поведение метода может быть непредсказуемым, так как он зависит от внутренней логики
      *          и настроек родительского класса.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @param int $cat_id    Идентификатор категории или пользователя (если `$user_flag = 1`):
      *                       - Должен быть целым числом >= `0`.
      *                       - Пример: `5` (для категории) или `123` (для пользовательского альбома).
@@ -330,9 +329,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               - 'description'    (string): Описание категории или альбома.
      *               - 'count_photo'    (int):    Количество фотографий.
      *               - 'last_photo'     (string): Форматированное название последней фотографии (например, "Название
-     *               (Описание)").
+     *                                            (Описание)").
      *               - 'top_photo'      (string): Форматированное название лучшей фотографии (например, "Название
-     *               (Описание)").
+     *                                            (Описание)").
      *               - 'url_cat'        (string): Ссылка на категорию или альбом.
      *               - 'url_last_photo' (string): Ссылка на последнюю фотографию.
      *               - 'url_top_photo'  (string): Ссылка на лучшую фотографию.
@@ -372,10 +371,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * print_r($user_album_data);
      * @endcode
      *
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_category_internal()
-     *          Защищённый метод, реализующий основную логику формирования информационной строки.
-     * @see     PhotoRigma::Classes::Work::category()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_category_internal()
+     *         Защищённый метод, реализующий основную логику формирования информационной строки.
+     * @see    PhotoRigma::Classes::Work::category()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array
     {
@@ -403,22 +402,22 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @param int $cat_id       Идентификатор категории или пользователя (если `$user_flag = 1`).
-     *                          Должен быть целым числом >= `0`.
-     *                          Пример: `5` (для категории) или `123` (для пользовательского альбома).
-     * @param int $user_flag    Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском
-     *                          альбоме (`1`).
-     *                          По умолчанию: `0`.
-     *                          Допустимые значения: `0` или `1`.
+     * @param int $cat_id    Идентификатор категории или пользователя (если `$user_flag = 1`).
+     *                       Должен быть целым числом >= `0`.
+     *                       Пример: `5` (для категории) или `123` (для пользовательского альбома).
+     * @param int $user_flag Флаг, указывающий формировать ли информацию о категории (`0`) или пользовательском
+     *                       альбоме (`1`).
+     *                       По умолчанию: `0`.
+     *                       Допустимые значения: `0` или `1`.
      *
      * @return array Информационная строка для категории или пользовательского альбома:
      *               - 'name'           (string): Название категории или альбома.
      *               - 'description'    (string): Описание категории или альбома.
      *               - 'count_photo'    (int):    Количество фотографий.
      *               - 'last_photo'     (string): Форматированное название последней фотографии (например, "Название
-     *               (Описание)").
+     *                                            (Описание)").
      *               - 'top_photo'      (string): Форматированное название лучшей фотографии (например, "Название
-     *               (Описание)").
+     *                                            (Описание)").
      *               - 'url_cat'        (string): Ссылка на категорию или альбом.
      *               - 'url_last_photo' (string): Ссылка на последнюю фотографию.
      *               - 'url_top_photo'  (string): Ссылка на лучшую фотографию.
@@ -426,10 +425,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @throws InvalidArgumentException Если входные параметры имеют некорректный тип или значение.
      *                                  Пример сообщения:
      *                                      cat_id и user_flag должны быть 0 или положительным целым числом.
-     * @throws PDOException            Если возникают ошибки при получении данных из базы данных.
+     * @throws PDOException             Если возникают ошибки при получении данных из базы данных.
      *                                  Пример сообщения:
      *                                      Не удалось получить данные категории или пользователя.
-     * @throws Exception               При выполнении запросов к базам данных.
+     * @throws Exception                При выполнении запросов к базам данных.
      *
      * @note    Используются константы:
      *          - TBL_CATEGORY: Таблица для хранения данных о категориях (`category`).
@@ -451,16 +450,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $user_album_data = $this->_category_internal(123, 1);
      * print_r($user_album_data);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::category()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$lang
-     *          Свойство, содержащее языковые строки.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$user
-     *          Свойство, содержащее данные текущего пользователя.
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Метод для очистки данных.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::category()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$lang
+     *         Свойство, содержащее языковые строки.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$user
+     *         Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Метод для очистки данных.
      */
     protected function _category_internal(int $cat_id = 0, int $user_flag = 0): array
     {
@@ -481,7 +480,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 TBL_CATEGORY,
                 ['where' => '`id` = :id', 'params' => [':id' => 0]]
             );
-            $category_data = $this->db->res_row();
+            $category_data = $this->db->result_row();
             if (!$category_data) {
                 throw new PDOException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные категории'
@@ -494,7 +493,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 TBL_USERS,
                 ['where' => '`id` = :id', 'params' => [':id' => $cat_id]]
             );
-            $user_data = $this->db->res_row();
+            $user_data = $this->db->result_row();
             if (!$user_data) {
                 throw new PDOException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные пользователя с ID: ' . $cat_id
@@ -511,7 +510,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 TBL_CATEGORY,
                 ['where' => '`id` = :id', 'params' => [':id' => $cat_id]]
             );
-            $category_data = $this->db->res_row();
+            $category_data = $this->db->result_row();
             if (!$category_data) {
                 throw new PDOException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные категории'
@@ -559,7 +558,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         $this->db->join($select, $from_tbl, $join, $options);
-        $photo_data = $this->db->res_row();
+        $photo_data = $this->db->result_row();
         if (!$photo_data) {
             throw new PDOException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ошибка базы данных | ' . 'Не удалось получить данные фотографий для категории с ID: ' . $category_data['id']
@@ -624,7 +623,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 TBL_PHOTO,
                 ['where' => '`category` = :category', 'params' => [':category' => 0]]
             );
-            $user_upload_count_data = $this->db->res_row();
+            $user_upload_count_data = $this->db->result_row();
             $num_user_upload = $user_upload_count_data['num_user_upload'];
             if ($num_user_upload > 0) {
                 $category_data['id'] = 'user';
@@ -669,31 +668,34 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @param string $type     Тип изображения:
-     *                         - `'top'`: Лучшее изображение (по рейтингу).
-     *                         - `'last'`: Последнее загруженное изображение.
-     *                         - `'cat'`: Изображение из конкретной категории (требует указания `$id_photo`).
-     *                         - `'rand'`: Любое случайное изображение.
-     *                         По умолчанию: `'top'`.
-     *                         Допустимые значения: `'top'`, `'last'`, `'cat'`, `'rand'`.
+     *                         - 'top':  Лучшее изображение (по рейтингу).
+     *                         - 'last': Последнее загруженное изображение.
+     *                         - 'cat':  Изображение из конкретной категории (требует указания `$id_photo`).
+     *                         - 'rand': Любое случайное изображение.
+     *                         По умолчанию: 'top'.
+     *                         Допустимые значения: 'top', 'last', 'cat', 'rand'.
      * @param int    $id_photo Идентификатор фото. Используется только при `$type == 'cat'`.
      *                         Должен быть целым числом >= `0`.
      *                         По умолчанию: `0`.
      *
      * @return array Массив данных для вывода изображения:
-     *               - `'name_block'`         (string): Название блока изображения (например, "Лучшее фото").
-     *               - `'url'`                (string): URL для просмотра полного изображения.
-     *               - `'thumbnail_url'`      (string): URL для миниатюры изображения.
-     *               - `'name'`               (string): Название изображения.
-     *               - `'description'`        (string): Описание изображения.
-     *               - `'category_name'`      (string): Название категории.
-     *               - `'category_description'` (string): Описание категории.
-     *               - `'rate'`               (string): Рейтинг изображения (например, "Рейтинг: 5/10").
-     *               - `'url_user'`           (string|null): URL профиля пользователя, добавившего изображение.
-     *               - `'real_name'`          (string): Реальное имя пользователя.
-     *               - `'category_url'`       (string): URL категории или пользовательского альбома.
-     *               - `'width'`              (int): Ширина изображения после масштабирования.
-     *               - `'height'`             (int): Высота изображения после масштабирования.
+     *               - 'name_block'           (string):      Название блока изображения (например, "Лучшее фото").
+     *               - 'url'                  (string):      URL для просмотра полного изображения.
+     *               - 'thumbnail_url'        (string):      URL для миниатюры изображения.
+     *               - 'name'                 (string):      Название изображения.
+     *               - 'description'          (string):      Описание изображения.
+     *               - 'category_name'        (string):      Название категории.
+     *               - 'category_description' (string):      Описание категории.
+     *               - 'rate'                 (string):      Рейтинг изображения (например, "Рейтинг: 5/10").
+     *               - 'url_user'             (string|null): URL профиля пользователя, добавившего изображение.
+     *               - 'real_name'            (string):      Реальное имя пользователя.
+     *               - 'category_url'         (string):      URL категории или пользовательского альбома.
+     *               - 'width'                (int):         Ширина изображения после масштабирования.
+     *               - 'height'               (int):         Высота изображения после масштабирования.
      *
      * @throws InvalidArgumentException Если передан недопустимый `$type` или `$id_photo < 0`.
      *                                  Пример сообщения:
@@ -705,15 +707,15 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @throws Exception                При записи ошибок в лог через `log_in_file()`.
      *
      * @note    Используются следующие константы:
-     *       - TBL_CATEGORY: Таблица для хранения данных о категориях (`category`).
-     *       - TBL_PHOTO: Таблица для хранения данных об изображениях (`photo`).
-     *       - TBL_USERS: Таблица для хранения данных о пользователях (`users`).
-     *       - VIEW_RANDOM_PHOTO: Представление для выбора случайных изображений (`random_photo`).
+     *          - TBL_CATEGORY: Таблица для хранения данных о категориях (`category`).
+     *          - TBL_PHOTO: Таблица для хранения данных об изображениях (`photo`).
+     *          - TBL_USERS: Таблица для хранения данных о пользователях (`users`).
+     *          - VIEW_RANDOM_PHOTO: Представление для выбора случайных изображений (`random_photo`).
      *
      * @warning Метод чувствителен к правам доступа пользователя (`$this->user->user['pic_view']`).
      *          Убедитесь, что пользователь имеет право на просмотр изображений.
      *          Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через
-     *          `generate_photo_data()`.
+     *          `_generate_photo_data()`.
      *          Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри
      *          `$this->config['gallery_folder']`.
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
@@ -732,10 +734,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $category_photo = $childObject->create_photo('cat', 5);
      * print_r($category_photo);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal()
-     *          Защищённый метод, реализующий основную логику генерации блока данных для вывода изображений.
-     * @see     PhotoRigma::Classes::Work::create_photo()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal()
+     *         Защищённый метод, реализующий основную логику генерации блока данных для вывода изображений.
+     * @see    PhotoRigma::Classes::Work::create_photo()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function create_photo(string $type = 'top', int $id_photo = 0): array
     {
@@ -748,68 +750,68 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @details Этот метод выполняет следующие шаги:
      *          1. Проверяет корректность входных параметров:
      *             - `$id_photo` должен быть целым числом >= `0`.
-     *             - `$type` должен принимать одно из значений: `'top'`, `'last'`, `'cat'`, `'rand'`.
+     *             - `$type` должен принимать одно из значений: 'top', 'last', 'cat', 'rand'.
      *          2. Проверяет права пользователя на просмотр изображений (`$this->user->user['pic_view']`).
      *          3. Формирует SQL-запрос для получения данных изображения и категории через JOIN:
-     *             - Для типа `'top'`: Выбирает лучшее изображение с учетом рейтинга.
-     *             - Для типа `'last'`: Выбирает последнее загруженное изображение.
-     *             - Для типа `'cat'`: Выбирает изображение из конкретной категории по `$id_photo`.
-     *             - Для типа `'rand'`: Выбирает любое случайное изображение (использует представление
+     *             - Для типа 'top':  Выбирает лучшее изображение с учетом рейтинга.
+     *             - Для типа 'last': Выбирает последнее загруженное изображение.
+     *             - Для типа 'cat':  Выбирает изображение из конкретной категории по `$id_photo`.
+     *             - Для типа 'rand': Выбирает любое случайное изображение (использует представление
      *             `VIEW_RANDOM_PHOTO`).
      *          4. Проверяет существование файла изображения и его доступность.
      *          5. Ограничивает доступ к файлам внутри директории `$this->config['gallery_folder']`.
      *          6. Вычисляет размеры изображения через метод `size_image()`.
-     *          7. Формирует массив данных для вывода изображения или вызывает `generate_photo_data()` в случае ошибки.
+     *          7. Формирует массив данных для вывода изображения или вызывает `_generate_photo_data()` в случае ошибки.
      *          Метод является защищенным и вызывается через публичный метод `create_photo()`.
      *
      * @callergraph
      * @callgraph
      *
      * @param string $type     Тип изображения:
-     *                         - `'top'`: Лучшее изображение (по рейтингу).
-     *                         - `'last'`: Последнее загруженное изображение.
-     *                         - `'cat'`: Изображение из конкретной категории (требует указания `$id_photo`).
-     *                         - `'rand'`: Любое случайное изображение.
-     *                         По умолчанию: `'top'`.
-     *                         Допустимые значения: `'top'`, `'last'`, `'cat'`, `'rand'`.
+     *                         - 'top':  Лучшее изображение (по рейтингу).
+     *                         - 'last': Последнее загруженное изображение.
+     *                         - 'cat':  Изображение из конкретной категории (требует указания `$id_photo`).
+     *                         - 'rand': Любое случайное изображение.
+     *                         По умолчанию: 'top'.
+     *                         Допустимые значения: 'top', 'last', 'cat', 'rand'.
      * @param int    $id_photo Идентификатор фото. Используется только при `$type == 'cat'`.
      *                         Должен быть целым числом >= `0`.
      *                         По умолчанию: `0`.
      *
      * @return array Массив данных для вывода изображения:
-     *               - `'name_block'`         (string): Название блока изображения (например, "Лучшее фото").
-     *               - `'url'`                (string): URL для просмотра полного изображения.
-     *               - `'thumbnail_url'`      (string): URL для миниатюры изображения.
-     *               - `'name'`               (string): Название изображения.
-     *               - `'description'`        (string): Описание изображения.
-     *               - `'category_name'`      (string): Название категории.
-     *               - `'category_description'` (string): Описание категории.
-     *               - `'rate'`               (string): Рейтинг изображения (например, "Рейтинг: 5/10").
-     *               - `'url_user'`           (string|null): URL профиля пользователя, добавившего изображение.
-     *               - `'real_name'`          (string): Реальное имя пользователя.
-     *               - `'category_url'`       (string): URL категории или пользовательского альбома.
-     *               - `'width'`              (int): Ширина изображения после масштабирования.
-     *               - `'height'`             (int): Высота изображения после масштабирования.
+     *               - 'name_block'           (string):      Название блока изображения (например, "Лучшее фото").
+     *               - 'url'                  (string):      URL для просмотра полного изображения.
+     *               - 'thumbnail_url'        (string):      URL для миниатюры изображения.
+     *               - 'name'                 (string):      Название изображения.
+     *               - 'description'          (string):      Описание изображения.
+     *               - 'category_name'        (string):      Название категории.
+     *               - 'category_description' (string):      Описание категории.
+     *               - 'rate'                 (string):      Рейтинг изображения (например, "Рейтинг: 5/10").
+     *               - 'url_user'             (string|null): URL профиля пользователя, добавившего изображение.
+     *               - 'real_name'            (string):      Реальное имя пользователя.
+     *               - 'category_url'         (string):      URL категории или пользовательского альбома.
+     *               - 'width'                (int):         Ширина изображения после масштабирования.
+     *               - 'height'               (int):         Высота изображения после масштабирования.
      *
      * @throws InvalidArgumentException Если передан недопустимый `$type` или `$id_photo < 0`.
      *                                  Пример сообщения:
      *                                      Некорректный идентификатор фотографии | Значение: {$id_photo}.
-     * @throws PDOException            Если произошла ошибка при выборке данных из базы данных.
+     * @throws PDOException             Если произошла ошибка при выборке данных из базы данных.
      *                                  Пример сообщения:
      *                                      Не удалось получить данные категории с ID: {$photo_data['category']}.
      * @throws RuntimeException         Если файл изображения недоступен или не существует.
      * @throws Exception                При записи ошибок в лог через `log_in_file()`.
      *
      * @note    Используются следующие константы:
-     *       - TBL_CATEGORY: Таблица для хранения данных о категориях (`category`).
-     *       - TBL_PHOTO: Таблица для хранения данных об изображениях (`photo`).
-     *       - TBL_USERS: Таблица для хранения данных о пользователях (`users`).
-     *       - VIEW_RANDOM_PHOTO: Представление для выбора случайных изображений (`random_photo`).
+     *          - TBL_CATEGORY: Таблица для хранения данных о категориях (`category`).
+     *          - TBL_PHOTO: Таблица для хранения данных об изображениях (`photo`).
+     *          - TBL_USERS: Таблица для хранения данных о пользователях (`users`).
+     *          - VIEW_RANDOM_PHOTO: Представление для выбора случайных изображений (`random_photo`).
      *
      * @warning Метод чувствителен к правам доступа пользователя (`$this->user->user['pic_view']`).
      *          Убедитесь, что пользователь имеет право на просмотр изображений.
      *          Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через
-     *          `generate_photo_data()`.
+     *          `_generate_photo_data()`.
      *          Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри
      *          `$this->config['gallery_folder']`.
      *
@@ -823,20 +825,20 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $category_photo = $this->_create_photo_internal('cat', 5);
      * print_r($category_photo);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::create_photo()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
-     *          Свойство, содержащее конфигурацию приложения.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$user
-     *          Свойство, содержащее данные текущего пользователя.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::generate_photo_data()
-     *          Приватный метод для формирования массива данных по умолчанию.
-     * @see     PhotoRigma::Classes::Work::size_image()
-     *          Метод, используемый для вычисления размеров изображения.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Функция для логирования ошибок.
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Метод для очистки данных.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::create_photo()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
+     *         Свойство, содержащее конфигурацию приложения.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$user
+     *         Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_generate_photo_data()
+     *         Приватный метод для формирования массива данных по умолчанию.
+     * @see    PhotoRigma::Classes::Work::size_image()
+     *         Метод, используемый для вычисления размеров изображения.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования ошибок.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Метод для очистки данных.
      */
     protected function _create_photo_internal(string $type = 'top', int $id_photo = 0): array
     {
@@ -890,20 +892,20 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                     $options
                 );
             }
-            $photo_data = $this->db->res_row();
+            $photo_data = $this->db->result_row();
 
             // Если изображение не найдено, возвращаем данные по умолчанию
             if (!$photo_data) {
                 $size = $this->work->size_image(
                     $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png'
                 );
-                return $this->generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
+                return $this->_generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
             }
         } else {
             $size = $this->work->size_image(
                 $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png'
             );
-            return $this->generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
+            return $this->_generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
         }
 
         // Получение данных категории
@@ -915,7 +917,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 'params' => [':category_id' => $photo_data['category']],
             ]
         );
-        $category_data = $this->db->res_row();
+        $category_data = $this->db->result_row();
         if (!$category_data) {
             throw new PDOException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ошибка базы данных | Не удалось получить данные категории с ID: {$photo_data['category']}"
@@ -955,9 +957,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 'params' => [':user_id' => $photo_data['user_upload']],
             ]
         );
-        $user_data = $this->db->res_row();
+        $user_data = $this->db->result_row();
 
-        // Формирование массива данных для передачи в generate_photo_data
+        // Формирование массива данных для передачи в _generate_photo_data
         $photo_data_for_generate = [
             'name_block'           => $this->lang['main'][$type . '_foto'],
             'url'                  => sprintf(
@@ -993,7 +995,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         ];
 
         // Генерация данных изображения
-        return $this->generate_photo_data($photo_data_for_generate, $type);
+        return $this->_generate_photo_data($photo_data_for_generate, $type);
     }
 
     /**
@@ -1008,6 +1010,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          3. Возвращает массив данных для вывода изображения.
      *          Метод является приватным и предназначен только для использования внутри класса.
      *
+     * @internal
      * @callergraph
      * @callgraph
      *
@@ -1015,24 +1018,24 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *                           Может быть пустым, если требуется сгенерировать массив только со значениями по
      *                           умолчанию. Пример: `['name' => 'Лучшее фото', 'description' => 'Описание лучшего
      *                           фото']`.
-     * @param string $type       Тип изображения: `'top'`, `'last'`, `'cat'` или `'rand'`.
-     *                           По умолчанию: `'top'`.
-     *                           Пример: `'top'`.
+     * @param string $type       Тип изображения: 'top', 'last', 'cat' или 'rand'.
+     *                           По умолчанию: 'top'.
+     *                           Пример: 'top'.
      *
      * @return array Массив данных для вывода изображения:
-     *               - 'name_block'         (string): Название блока изображения.
-     *               - 'url'                (string): URL для просмотра полного изображения.
-     *               - 'thumbnail_url'      (string): URL для миниатюры изображения.
-     *               - 'name'               (string): Название изображения.
-     *               - 'description'        (string): Описание изображения.
-     *               - 'category_name'      (string): Название категории.
-     *               - 'category_description' (string): Описание категории.
-     *               - 'rate'               (string): Рейтинг изображения (например, "Рейтинг: 0/0").
-     *               - 'url_user'           (string|null): URL профиля пользователя, добавившего изображение.
-     *               - 'real_name'          (string): Реальное имя пользователя.
-     *               - 'category_url'       (string): URL категории.
-     *               - 'width'              (int): Ширина изображения.
-     *               - 'height'             (int): Высота изображения.
+     *               - 'name_block'           (string):      Название блока изображения (например, "Лучшее фото").
+     *               - 'url'                  (string):      URL для просмотра полного изображения.
+     *               - 'thumbnail_url'        (string):      URL для миниатюры изображения.
+     *               - 'name'                 (string):      Название изображения.
+     *               - 'description'          (string):      Описание изображения.
+     *               - 'category_name'        (string):      Название категории.
+     *               - 'category_description' (string):      Описание категории.
+     *               - 'rate'                 (string):      Рейтинг изображения (например, "Рейтинг: 5/10").
+     *               - 'url_user'             (string|null): URL профиля пользователя, добавившего изображение.
+     *               - 'real_name'            (string):      Реальное имя пользователя.
+     *               - 'category_url'         (string):      URL категории или пользовательского альбома.
+     *               - 'width'                (int):         Ширина изображения после масштабирования.
+     *               - 'height'               (int):         Высота изображения после масштабирования.
      *
      * @note    Значения по умолчанию берутся из конфигурации приложения (`$this->config`) и языковых переменных
      *          (`$this->lang`).
@@ -1045,7 +1048,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * Пример вызова метода внутри класса:
      * @code
      * // Пример генерации массива данных только со значениями по умолчанию
-     * $default_photo = $this->generate_photo_data();
+     * $default_photo = $this->_generate_photo_data();
      * print_r($default_photo);
      *
      * // Пример с передачей данных
@@ -1053,17 +1056,17 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     'name' => 'Лучшее фото',
      *     'description' => 'Описание лучшего фото',
      * ];
-     * $photo_block = $this->generate_photo_data($photo_data, 'top');
+     * $photo_block = $this->_generate_photo_data($photo_data, 'top');
      * print_r($photo_block);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
      *         Свойство, содержащее конфигурацию приложения.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$lang
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$lang
      *         Свойство, содержащее языковые переменные.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal()
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_create_photo_internal()
      *         Метод, вызывающий этот приватный метод.
      */
-    private function generate_photo_data(array $photo_data = [], string $type = 'top'): array
+    private function _generate_photo_data(array $photo_data = [], string $type = 'top'): array
     {
         // Значения по умолчанию
         $default_data = [
@@ -1101,6 +1104,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
+     *
+     * @callergraph
+     * @callgraph
      *
      * @param int $photo_id Идентификатор удаляемого изображения:
      *                      - Должен быть положительным целым числом.
@@ -1140,11 +1146,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Не удалось удалить изображение.";
      * }
      * @endcode
-     *
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_del_photo_internal()
-     *          Защищённый метод, реализующий основную логику удаления изображения.
-     * @see     PhotoRigma::Classes::Work::del_photo()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_del_photo_internal()
+     *         Защищённый метод, реализующий основную логику удаления изображения.
+     * @see    PhotoRigma::Classes::Work::del_photo()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function del_photo(int $photo_id): bool
     {
@@ -1204,14 +1209,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Не удалось удалить изображение.";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::del_photo()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
-     *          Свойство, содержащее конфигурацию приложения.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Функция для логирования ошибок.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::del_photo()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
+     *         Свойство, содержащее конфигурацию приложения.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования ошибок.
      */
     protected function _del_photo_internal(int $photo_id): bool
     {
@@ -1237,7 +1242,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 'params' => [':photo_id' => $photo_id], // Параметры для prepared statements
             ]
         );
-        $temp_data = $this->db->res_row();
+        $temp_data = $this->db->result_row();
         if (!$temp_data) {
             throw new RuntimeException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Не удалось найти изображение | Переменная \$photo_id = $photo_id"
@@ -1278,6 +1283,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
      *               - `value`: Имя директории языка (строка).
      *               - `name`: Название языка из файла `main.php` (строка).
@@ -1304,10 +1312,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_get_languages_internal()
-     *          Защищённый метод, реализующий основную логику загрузки доступных языков.
-     * @see     PhotoRigma::Classes::Work::get_languages()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_get_languages_internal()
+     *         Защищённый метод, реализующий основную логику загрузки доступных языков.
+     * @see    PhotoRigma::Classes::Work::get_languages()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function get_languages(): array
     {
@@ -1354,12 +1362,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
      * }
      * @endcode
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Функция для логирования ошибок.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::get_languages()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
-     *          Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования ошибок.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::get_languages()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
+     *         Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
      */
     protected function _get_languages_internal(): array
     {
@@ -1466,6 +1474,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @return array Массив с именами доступных тем (строки).
      *
      * @throws RuntimeException Если:
@@ -1490,10 +1501,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Доступная тема: $theme\n";
      * }
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_get_themes_internal()
-     *          Защищённый метод, реализующий основную логику загрузки доступных тем.
-     * @see     PhotoRigma::Classes::Work::get_themes()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_get_themes_internal()
+     *         Защищённый метод, реализующий основную логику загрузки доступных тем.
+     * @see    PhotoRigma::Classes::Work::get_themes()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function get_themes(): array
     {
@@ -1539,12 +1550,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *     echo "Доступная тема: $theme\n";
      * }
      * @endcode
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Функция для логирования ошибок.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::get_themes()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$config
-     *          Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования ошибок.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::get_themes()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
+     *         Свойство, содержащее конфигурацию приложения, включая путь к директории (`site_dir`).
      */
     protected function _get_themes_internal(): array
     {
@@ -1618,12 +1629,15 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра `$act`):
      *                                 - Должен быть положительным целым числом.
      * @param string $act              Тип запроса:
-     *                                 - `'id'`: Получение новости по её ID.
-     *                                 - `'last'`: Получение списка новостей с сортировкой по дате последнего
-     *                                 редактирования.
+     *                                 - 'id':   Получение новости по её ID.
+     *                                 - 'last': Получение списка новостей с сортировкой по дате последнего
+     *                                           редактирования.
      *
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
@@ -1661,10 +1675,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $news_list = $childObject->news(10, 'last');
      * print_r($news_list);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_news_internal()
-     *          Защищённый метод, реализующий основную логику получения данных о новостях.
-     * @see     PhotoRigma::Classes::Work::news()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_news_internal()
+     *         Защищённый метод, реализующий основную логику получения данных о новостях.
+     * @see    PhotoRigma::Classes::Work::news()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function news(int $news_id_or_limit, string $act): array
     {
@@ -1678,11 +1692,11 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          1. Проверяет корректность входных параметров `$news_id_or_limit` и `$act`:
      *             - Для `$act = 'id'`: `$news_id_or_limit` должен быть положительным целым числом (ID новости).
      *             - Для `$act = 'last'`: `$news_id_or_limit` должен быть положительным целым числом (количество
-     *             новостей).
+     *               новостей).
      *          2. Формирует параметры запроса через `match()`:
      *             - Для `$act = 'id'`: Выполняется выборка новости по её ID.
      *             - Для `$act = 'last'`: Выполняется выборка списка новостей с сортировкой по дате последнего
-     *             редактирования.
+     *               редактирования.
      *          3. Выполняет запрос к таблице `TBL_NEWS` с использованием сформированных параметров.
      *          4. Возвращает массив с данными о новостях или пустой массив, если новости не найдены.
      *          Этот метод является защищенным и предназначен для использования внутри класса или его наследников.
@@ -1691,12 +1705,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @callergraph
      * @callgraph
      *
-     * @param int    $news_id_or_limit   Количество новостей или ID новости (в зависимости от параметра `$act`).
-     *                                   Должен быть положительным целым числом.
-     * @param string $act                Тип запроса:
-     *                                   - `'id'`: Получение новости по её ID.
-     *                                   - `'last'`: Получение списка новостей с сортировкой по дате последнего
-     *                                   редактирования.
+     * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра `$act`).
+     *                                 Должен быть положительным целым числом.
+     * @param string $act              Тип запроса:
+     *                                 - 'id':   Получение новости по её ID.
+     *                                 - 'last': Получение списка новостей с сортировкой по дате последнего
+     *                                           редактирования.
      *
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
@@ -1729,10 +1743,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $news_list = $this->_news_internal(10, 'last');
      * print_r($news_list);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::news()
-     *          Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::news()
+     *         Публичный метод-редирект для вызова этой логики.
      */
     protected function _news_internal(int $news_id_or_limit, string $act): array
     {
@@ -1782,7 +1796,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             ])
         );
         // Получение результатов
-        $news_results = $this->db->res_arr();
+        $news_results = $this->db->result_array();
         // Возврат результата
         return $news_results ?: [];
     }
@@ -1797,9 +1811,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @param string $table      Имя таблицы для вставки оценки:
-     *                           - `'rate_user'`: Таблица с оценками фотографий от пользователей.
-     *                           - `'rate_moder'`: Таблица с оценками фотографий от модераторов.
+     *                           - 'rate_user':  Таблица с оценками фотографий от пользователей.
+     *                           - 'rate_moder': Таблица с оценками фотографий от модераторов.
      * @param int    $photo_id   ID фотографии:
      *                           - Должен быть положительным целым числом.
      * @param int    $user_id    ID пользователя:
@@ -1811,14 +1828,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               Если оценок нет, возвращается `0`.
      *
      * @throws RuntimeException Если не удалось добавить оценку.
-     *                           Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
+     *                             Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
      * @throws Exception        При выполнении запросов к базам данных.
      *
      * @note    Используются константы:
      *          - TBL_PHOTO: Таблица для хранения данных о фотографиях (`photo`).
      *
      * @warning Убедитесь, что:
-     *           - Параметр `$table` соответствует одной из допустимых таблиц (`'rate_user'` или `'rate_moder'`).
+     *           - Параметр `$table` соответствует одной из допустимых таблиц ('rate_user' или 'rate_moder').
      *           - В СУБД настроены триггеры и функции для перерасчета средней оценки.
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
@@ -1832,10 +1849,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $averageRate = $childObject->process_rating('rate_user', 123, 456, 5);
      * echo "Средняя оценка: {$averageRate}";
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::_process_rating_internal()
-     *          Защищённый метод, реализующий основную логику добавления оценки и расчёта средней оценки.
-     * @see     PhotoRigma::Classes::Work::process_rating()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::_process_rating_internal()
+     *         Защищённый метод, реализующий основную логику добавления оценки и расчёта средней оценки.
+     * @see    PhotoRigma::Classes::Work::process_rating()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float
     {
@@ -1855,11 +1872,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          и предназначен для использования внутри класса или его наследников.
      *
      * @callergraph
+     * @callgraph
      *
      * @param string $table      Имя таблицы для вставки оценки.
      *                           Должен быть строкой, соответствующей одной из двух допустимых таблиц:
-     *                           - `'rate_user'`: Таблица с оценками фотографий от пользователей.
-     *                           - `'rate_moder'`: Таблица с оценками фотографий от модераторов.
+     *                           - 'rate_user':  Таблица с оценками фотографий от пользователей.
+     *                           - 'rate_moder': Таблица с оценками фотографий от модераторов.
      * @param int    $photo_id   ID фотографии.
      *                           Должен быть положительным целым числом.
      * @param int    $user_id    ID пользователя.
@@ -1871,14 +1889,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *               Если оценок нет, возвращается `0`.
      *
      * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку.
-     *                           Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
+     *                             Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
      * @throws Exception        При выполнении запросов к базам данных.
      *
      * @note    Используются константы:
      *          - TBL_PHOTO: Таблица для хранения данных о фотографиях (`photo`).
      *
      * @warning Убедитесь, что:
-     *          - Параметр `$table` соответствует одной из допустимых таблиц (`'rate_user'` или `'rate_moder'`).
+     *          - Параметр `$table` соответствует одной из допустимых таблиц ('rate_user' или 'rate_moder').
      *          - В СУБД настроены триггеры и функции для перерасчета средней оценки.
      *
      * Пример вызова метода внутри класса или наследника:
@@ -1887,10 +1905,10 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $averageRate = $this->_process_rating_internal('rate_user', 123, 456, 5);
      * echo "Средняя оценка: {$averageRate}";
      * @endcode
-     * @see     PhotoRigma::Classes::Work_CoreLogic::process_rating()
-     *          Публичный метод-редирект для вызова этой логики.
-     * @see     PhotoRigma::Classes::Work_CoreLogic::$db
-     *          Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::process_rating()
+     *         Публичный метод-редирект для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_CoreLogic::$db
+     *         Свойство, содержащее объект для работы с базой данных.
      */
     protected function _process_rating_internal(string $table, int $photo_id, int $user_id, int $rate_value): float
     {
@@ -1909,28 +1927,26 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Получение средней оценки (перерасчет выполняется внутри СУБД с помощью Тригеров и функций).
         $this->db->select($table, TBL_PHOTO, ['where' => '`id` = :id_foto', 'params' => [':id_foto' => $photo_id]]);
-        $rate = $this->db->res_row();
+        $rate = $this->db->result_row();
         return $rate ? $rate[trim($table, '`')] : 0;
     }
 
     /**
      * @brief   Установка языковых данных через сеттер.
      *
-     * @details Этот метод позволяет установить массив языковых данных для использования в системе.
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что переданные данные являются массивом.
-     *          2. Присваивает массив свойству текущего класса для дальнейшего использования.
+     * @details Этот метод позволяет установить массив языковых данных для использования в системе. Присваивает
+     *          массив свойству текущего класса для дальнейшего использования.
+     *
+     * @callergraph
      *
      * @param array $lang Языковые данные:
      *                    - Должен быть ассоциативным массивом.
      *                    - Каждый ключ должен быть строкой, представляющей собой уникальный идентификатор языковой
-     *                    переменной.
+     *                      переменной.
      *                    - Каждое значение должно быть строкой или другим допустимым типом данных для языковых
-     *                    значений.
+     *                      значений.
      *
      * @return void Метод ничего не возвращает.
-     *
-     * @throws InvalidArgumentException Если передан некорректный тип данных (не массив) или пустые данные.
      *
      * @note    Метод проверяет тип переданных данных.
      *          Языковые данные используются для локализации интерфейса и других текстовых элементов системы.
@@ -1948,8 +1964,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * ];
      * $corelogic->set_lang($langData);
      * @endcode
-     * @see     PhotoRigma::Classes::Work::set_lang()
-     *          Метод в родительском классе Work, который вызывает этот метод.
+     * @see    PhotoRigma::Classes::Work::set_lang()
+     *         Метод в родительском классе Work, который вызывает этот метод.
      */
     public function set_lang(array $lang): void
     {
@@ -1960,16 +1976,14 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * @brief   Установка объекта, реализующего интерфейс User_Interface, через сеттер.
      *
      * @details Этот метод позволяет установить объект пользователя, реализующий интерфейс `User_Interface`.
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что переданный объект реализует интерфейс `User_Interface`.
-     *          2. Присваивает объект свойству текущего класса для дальнейшего использования.
+     *          Присваивает объект свойству текущего класса для дальнейшего использования.
+     *
+     * @callergraph
      *
      * @param User_Interface $user Объект, реализующий интерфейс `User_Interface`:
      *                             - Должен быть экземпляром класса, реализующего интерфейс `User_Interface`.
      *
      * @return void Метод ничего не возвращает.
-     *
-     * @throws InvalidArgumentException Если передан некорректный объект (не реализует интерфейс `User_Interface`).
      *
      * @note    Метод проверяет тип переданного объекта.
      *          Объект пользователя используется для взаимодействия с другими компонентами системы.
@@ -1983,8 +1997,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      * $user = new \PhotoRigma\Classes\User(); // Класс, реализующий User_Interface
      * $corelogic->set_user($user);
      * @endcode
-     * @see     PhotoRigma::Classes::User_Interface
-     *          Интерфейс, которому должен соответствовать объект пользователя.
+     * @see    PhotoRigma::Classes::User_Interface
+     *         Интерфейс, которому должен соответствовать объект пользователя.
      */
     public function set_user(User_Interface $user): void
     {

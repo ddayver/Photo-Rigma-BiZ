@@ -1,5 +1,0 @@
-<map id="build_conditions" name="build_conditions">
-<area shape="rect" id="Node000001" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="5,5,120,30"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a4982b2155c9cd4124696eaf1f21c2d6f" title="Формирует группу условий для WHERE с указанным оператором (OR/NOT)." alt="" coords="168,5,297,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,15,152,15,152,20,120,20"/>
-</map>

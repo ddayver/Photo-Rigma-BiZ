@@ -2,36 +2,36 @@
 
 /** @noinspection PhpRedundantVariableDocTypeInspection */
 /**
- * @file        language/english/main.php
- * @brief       Localized strings for the core of the site in English.
+ * @file      language/english/main.php
+ * @brief     Localized strings for the core of the site in English.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   PhotoRigma\\Language
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace PhotoRigma\\Language
  *
- * @details     This file contains English language strings used in the core of the project.
- *              It includes texts for the interface, menus, forms, notifications, and other elements.
+ * @details   This file contains English language strings used in the core of the project.
+ *            It includes texts for the interface, menus, forms, notifications, and other elements.
  *
- * @section     LanguageEn_Main_Functions Main Functions
- *              - Providing localized strings for the interface.
- *              - Supporting multilingual functionality of the project.
- *              - Simplifying text updates through centralized storage.
+ * @section   LanguageEn_Main_Functions Main Functions
+ *            - Providing localized strings for the interface.
+ *            - Supporting multilingual functionality of the project.
+ *            - Simplifying text updates through centralized storage.
  *
- * @see         @ref LanguageEnglish Group for English localization.
+ * @see       @ref LanguageEnglish Group for English localization.
  *
- * @note        This file is part of the PhotoRigma system and provides localization for the project in English.
+ * @note      This file is part of the PhotoRigma system and provides localization for the project in English.
  *
- * @copyright   Copyright (c) 2025 Dark Dayver. All rights reserved.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Permission is hereby granted, free of charge, to any person obtaining a copy
- *              of this software and associated documentation files (the "Software"), to deal
- *              in the Software without restriction, including without limitation the rights
- *              to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *              copies of the Software, and to permit persons to whom the Software is
- *              furnished to do so, subject to the following conditions:
- *              - The above copyright notice and this permission notice shall be included in all
- *                copies or substantial portions of the Software.
+ * @copyright Copyright (c) 2025 Dark Dayver. All rights reserved.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Permission is hereby granted, free of charge, to any person obtaining a copy
+ *            of this software and associated documentation files (the "Software"), to deal
+ *            in the Software without restriction, including without limitation the rights
+ *            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *            copies of the Software, and to permit persons to whom the Software is
+ *            furnished to do so, subject to the following conditions:
+ *            - The above copyright notice and this permission notice shall be included in all
+ *              copies or substantial portions of the Software.
  */
 
 namespace PhotoRigma\Language;
@@ -135,6 +135,7 @@ $lang_en = [
         'confirm_delete_news'  => 'Are you sure you want to delete this news',
         'delete'               => 'Delete',
         'cancel'               => 'Cancel',
+        'undefined'            => '[undefined]',
     ],
 ];
 
@@ -200,33 +201,37 @@ $lang_en += [
  */
 $lang_en += [
     'profile' => [
-        'regist'                 => 'Registration',
-        'login'                  => 'Username',
-        'password'               => 'Password',
-        're_password'            => 'Confirm Password',
-        'email'                  => 'E-mail',
-        'real_name'              => 'Display Name',
-        'register'               => 'Register',
-        'user'                   => 'User',
-        'registered'             => 'successfully registered!',
-        'error'                  => 'Error(s)',
-        'error_login'            => 'Invalid username.',
-        'error_password'         => 'Invalid password.',
-        'error_re_password'      => 'Passwords do not match.',
-        'error_email'            => 'Invalid e-mail.',
-        'error_real_name'        => 'Invalid display name.',
-        'error_login_exists'     => 'This username already exists.',
-        'error_email_exists'     => 'This e-mail is already in use.',
-        'error_real_name_exists' => 'This display name already exists.',
-        'error_captcha'          => 'Incorrect CAPTCHA solution.',
-        'profile'                => 'Profile',
-        'edit_profile'           => 'Edit Profile',
-        'confirm_password'       => 'Confirm changes with your password',
-        'save_profile'           => 'Save Profile',
-        'help_edit'              => 'Only if you plan to change this data',
-        'avatar'                 => 'User Avatar',
-        'delete_avatar'          => 'Delete Avatar',
-        'captcha'                => 'Anti-bot protection. Solve the following example to register:',
+        'regist'                   => 'Registration',
+        'login'                    => 'Username',
+        'password'                 => 'Password',
+        're_password'              => 'Confirm Password',
+        'email'                    => 'E-mail',
+        'real_name'                => 'Display Name',
+        'register'                 => 'Register',
+        'user'                     => 'User',
+        'registered'               => 'successfully registered!',
+        'error'                    => 'Error(s)',
+        'error_login'              => 'Invalid username.',
+        'error_password'           => 'Invalid password.',
+        'error_re_password'        => 'Passwords do not match.',
+        'error_email'              => 'Invalid e-mail.',
+        'error_real_name'          => 'Invalid display name.',
+        'error_login_exists'       => 'This username already exists.',
+        'error_email_exists'       => 'This e-mail is already in use.',
+        'error_real_name_exists'   => 'This display name already exists.',
+        'error_captcha'            => 'Incorrect CAPTCHA solution.',
+        'profile'                  => 'Profile',
+        'edit_profile'             => 'Edit Profile',
+        'confirm_password'         => 'Confirm changes with your password',
+        'save_profile'             => 'Save Profile',
+        'help_edit'                => 'Only if you plan to change this data',
+        'avatar'                   => 'User Avatar',
+        'delete_avatar'            => 'Delete Avatar',
+        'captcha'                  => 'Anti-bot protection. Solve the following example to register:',
+        'soft_delete_user'         => 'Delete your account',
+        'confirm_soft_delete_user' => 'Are you sure you want to delete your account? To restore it, simply log in before: %s.',
+        'user_deleted_at' => 'Date of soft deletion',
+        'user_restore_expiry' => 'Restore deadline',
     ],
 ];
 
@@ -399,6 +404,11 @@ $lang_en += [
         'group_rights'                  => 'Group Rights',
         'save_group'                    => 'Save Group',
         'lockout_time'                  => 'Too many failed login attempts. Minutes remaining until the next attempt: %d.',
+        'hard_delete_user'              => 'Permanently delete user',
+        'confirm_hard_delete_user'      => 'Are you sure you want to permanently delete this user? This action cannot be undone.',
+        'add_group'                     => 'Add group',
+        'delete_group'                  => 'Delete group',
+        'confirm_delete_group'          => 'Are you sure you want to delete this group? Users from this group will be moved to the default group.',
     ],
 ];
 

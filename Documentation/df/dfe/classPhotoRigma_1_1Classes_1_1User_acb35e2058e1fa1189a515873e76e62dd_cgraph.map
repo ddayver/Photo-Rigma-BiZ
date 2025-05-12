@@ -1,0 +1,13 @@
+<map id="add_new_group" name="add_new_group">
+<area shape="rect" id="Node000001" title="Добавляет новую группу в систему через Админку." alt="" coords="5,44,118,69"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0e838259fa4a4581be6a51e6ae8ab238" title="Добавляет новую группу в систему через Админку." alt="" coords="166,44,334,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,54,150,54,150,59,118,59"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab6a181342a4b7b3aac421c86eb537238" title="Метод преобразует массив прав пользователя в строку JSON." alt="" coords="383,5,524,44"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="332,41,367,36,368,41,333,46"/>
+<area shape="rect" id="Node000004" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="382,68,525,107"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="335,67,367,72,366,77,334,72"/>
+<area shape="rect" id="Node000005" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="573,68,739,107"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="526,85,558,85,558,90,526,90"/>
+<area shape="rect" id="Node000006" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="787,61,930,114"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="739,85,772,85,772,90,739,90"/>
+</map>

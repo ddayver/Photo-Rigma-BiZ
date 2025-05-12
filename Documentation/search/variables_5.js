@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_5fsession_0',['KEY_SESSION',['../db/d02/namespacePhotoRigma_1_1Include.html#a2d14fb72179e20da7bf885771d2fb72e',1,'PhotoRigma::Include']]]
+  ['in_5fgallery_0',['IN_GALLERY',['../de/d90/namespacePhotoRigma.html#afc238d5007d9f82f9c59e7d33f7a75c6',1,'PhotoRigma']]]
 ];

@@ -1,0 +1,11 @@
+<map id="_delete_user_internal" name="_delete_user_internal">
+<area shape="rect" id="Node000001" title="Выполняет мягкое или окончательное удаление пользователя с предварительными проверками." alt="" coords="5,59,150,83"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac4c1020c1604de75d27c31dbe77e2fb7" title="Выполняет окончательное обезличивание записи пользователя." alt="" coords="198,33,374,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,60,182,56,182,61,151,65"/>
+<area shape="rect" id="Node000005" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a9a102a9a5c4c289295b12acbac2f5302" title="Выполняет мягкое удаление пользователя." alt="" coords="240,83,332,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="150,77,225,85,224,91,150,82"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acaafe0adac99eb3c3223a78198854401" title="Удаляет личные фото пользователя (категория 0) через существующий метод del_photo()." alt="" coords="422,5,591,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="374,32,406,28,407,33,375,37"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae7bbb3d70503c2c3ab7de0e44bf83798" title="Возвращает данные о сроке восстановления аккаунта." alt="" coords="428,54,585,93"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="375,54,413,59,412,64,374,60"/>
+</map>

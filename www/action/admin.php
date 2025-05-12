@@ -3,60 +3,65 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /**
- * @file        action/admin.php
- * @brief       Администрирование сайта.
+ * @file      action/admin.php
+ * @brief     Администрирование сайта.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   Photorigma\\Action
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace Photorigma\\Action
  *
- * @details     Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции
- *              включают:
- *              - Управление общими настройками сайта (название, описание, мета-теги, размеры изображений и т.д.).
- *              - Управление пользователями (редактирование прав, групп, поиск пользователей).
- *              - Управление группами (редактирование прав групп, создание и удаление групп).
- *              - Защита от несанкционированного доступа к админке (CSRF-токены, проверка прав доступа).
- *              - Логирование ошибок и подозрительных действий.
+ * @details   Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции
+ *            включают:
+ *            - Управление общими настройками сайта (название, описание, мета-теги, размеры изображений и т.д.).
+ *            - Управление пользователями (редактирование прав, групп, поиск пользователей).
+ *            - Управление группами (редактирование прав групп, создание и удаление групп).
+ *            - Защита от несанкционированного доступа к админке (CSRF-токены, проверка прав доступа).
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     Admin_Related_Files Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
- *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
- *              - Вспомогательные функции:
- *                - @see PhotoRigma::Include::log_in_file() Функция для логирования ошибок.
- *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/admin.php по запросу из `$_GET`.
+ * @section   Admin_Related_Files Связанные файлы и компоненты
+ *            - Классы приложения:
+ *              - @see PhotoRigma::Classes::Work
+ *                     Класс используется для выполнения вспомогательных операций.
+ *              - @see PhotoRigma::Classes::Database
+ *                     Класс для работы с базой данных.
+ *              - @see PhotoRigma::Classes::User
+ *                     Класс для управления пользователями.
+ *              - @see PhotoRigma::Classes::Template
+ *                     Класс для работы с шаблонами.
+ *            - Вспомогательные функции:
+ *              - @see PhotoRigma::Include::log_in_file()
+ *                     Функция для логирования ошибок.
+ *            - Файлы приложения:
+ *              - @see index.php Этот файл подключает action/admin.php по запросу из `$_GET`.
  *
- * @section     Admin_Main_Functions Основные функции
- *              - Управление общими настройками сайта.
- *              - Управление пользователями (редактирование, поиск, изменение прав).
- *              - Управление группами (редактирование, изменение прав).
- *              - Логирование ошибок и подозрительных действий.
+ * @section   Admin_Main_Functions Основные функции
+ *            - Управление общими настройками сайта.
+ *            - Управление пользователями (редактирование, поиск, изменение прав).
+ *            - Управление группами (редактирование, изменение прав).
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     Admin_Error_Handling Обработка ошибок
- *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
- *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
- *              - `JsonException`: При выполнении методов, использующих JSON.
- *              - `Exception`: При выполнении прочих методов классов, функций или операций.
+ * @section   Admin_Error_Handling Обработка ошибок
+ *            При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *            - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *            - `JsonException`: При выполнении методов, использующих JSON.
+ *            - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      JsonException При выполнении методов, использующих JSON.
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ * @throws    Random\RandomException При выполнении методов, использующих random().
+ * @throws    JsonException          При выполнении методов, использующих JSON.
+ * @throws    Exception              При выполнении прочих методов классов, функций или операций.
  *
- * @note        Этот файл является частью системы PhotoRigma.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
- *              Используются подготовленные выражения для защиты от SQL-инъекций.
+ * @note      Этот файл является частью системы PhotoRigma.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ *            Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать,
- *              распространять, сублицензировать и/или продавать копии программного обеспечения,
- *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
- *              делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *            делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
 
@@ -91,7 +96,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 $template->template_file = 'admin.html';
 
 // Инициализация флагов для шаблона
-$template->add_if_ar([
+$template->add_if_array([
     'SESSION_ADMIN_ON' => false, // Флаг активности сессии администратора
     'NEED_FIND'        => false,        // Флаг необходимости поиска
     'NEED_USER'        => false,        // Флаг необходимости отображения пользователей
@@ -205,10 +210,10 @@ if (!empty($user->user['admin']) && $work->check_input(
                         return is_dir($work->config['site_dir'] . 'language/' . $_POST['language']);
                     },
                 ],
-                'themes'               => [
+                'theme'               => [
                     'regexp'    => REG_LOGIN,
                     'condition' => static function () use ($work) {
-                        return is_dir($work->config['site_dir'] . 'themes/' . $_POST['themes']);
+                        return is_dir($work->config['site_dir'] . 'themes/' . $_POST['theme']);
                     },
                 ],
                 'max_file_size'        => ['regexp' => '/^[0-9]+$/'],
@@ -298,7 +303,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 
         // Добавление данных в шаблон
         $template->add_case('ADMIN_BLOCK', 'ADMIN_SETTINGS');
-        $template->add_string_ar([
+        $template->add_string_array([
             'L_NAME_BLOCK'                    => $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['settings'],
             'L_MAIN_SETTINGS'                 => $work->lang['admin']['main_settings'],
             'L_TITLE_NAME'                    => $work->lang['admin']['title_name'],
@@ -376,7 +381,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 
         // Добавление языков в шаблон
         foreach ($language as $key => $val) {
-            $template->add_string_ar(
+            $template->add_string_array(
                 [
                     'D_DIR_LANG'  => $val['value'],
                     'D_NAME_LANG' => $val['name'],
@@ -385,7 +390,7 @@ if (!empty($user->user['admin']) && $work->check_input(
             );
 
             if ($val['value'] === $work->config['language']) {
-                $template->add_string_ar(
+                $template->add_string_array(
                     [
                         'D_SELECTED_LANG' => $val['value'],
                         'L_SELECTED_LANG' => $val['name'],
@@ -396,7 +401,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 
         // Добавление тем в шаблон
         foreach ($themes as $key => $val) {
-            $template->add_string_ar(
+            $template->add_string_array(
                 [
                     'D_DIR_THEME'  => $val,
                     'D_NAME_THEME' => ucfirst($val),
@@ -404,8 +409,8 @@ if (!empty($user->user['admin']) && $work->check_input(
                 'SELECT_THEME[' . $key . ']'
             );
 
-            if ($val === $work->config['themes']) {
-                $template->add_string_ar(
+            if ($val === $work->config['theme']) {
+                $template->add_string_array(
                     [
                         'D_SELECTED_THEME' => $val,
                         'L_SELECTED_THEME' => ucfirst($val),
@@ -439,16 +444,37 @@ if (!empty($user->user['admin']) && $work->check_input(
         ])) {
             // Проверяем существование пользователя с указанным uid
             $db->select(
-                '`id`, `login`, `email`, `real_name`, `avatar`, `group_id`, `user_rights`',
+                '`id`, `login`, `email`, `real_name`, `avatar`, `group_id`, `user_rights`, `deleted_at`, `permanently_deleted`',
                 TBL_USERS,
                 [
                     'where'  => '`id` = :uid',
                     'params' => [':uid' => $_GET['uid']],
                 ]
             );
-            $user_data = $db->res_row();
+            $user_data = $db->result_row();
 
             if ($user_data) {
+                /** @noinspection NotOptimalIfConditionsInspection */
+                if ($user_data['id'] !== (int)$user->session['login_id'] && !$user_data['permanently_deleted'] && $work->check_input(
+                    '_GET',
+                    'do',
+                    ['isset' => true, 'empty' => true]
+                ) && $_GET['do'] === 'delete_user') {
+                    $target_uid = (int)$_GET['uid'];
+                    if ($user->delete_user($target_uid, true)) {
+                        header(sprintf(
+                            'Location: %s?action=admin&subact=admin_user',
+                            $work->config['site_url']
+                        ));
+                        exit;
+                    }
+                    header(sprintf(
+                        'Location: %s?action=admin&subact=admin_user&uid=%d',
+                        $work->config['site_url'],
+                        $target_uid
+                    ));
+                    exit;
+                }
                 // Получаем поля прав доступа пользователя
                 $user_permission_fields = $user->user_right_fields['all'];
                 $user_data = array_merge($user_data, $user->process_user_rights($user_data['user_rights']));
@@ -472,11 +498,11 @@ if (!empty($user->user['admin']) && $work->check_input(
                 $db->select('*', TBL_GROUP, [
                     'where' => '`id` != 0',
                 ]);
-                $groups = $db->res_arr();
+                $groups = $db->result_array();
 
                 if ($groups) {
                     foreach ($groups as $key => $val) {
-                        $template->add_string_ar(
+                        $template->add_string_array(
                             [
                                 'D_GROUP_ID'   => (string)$val['id'],
                                 'D_GROUP_NAME' => $val['name'],
@@ -485,7 +511,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         );
 
                         if ($val['id'] === $user_data['group_id']) {
-                            $template->add_string_ar(
+                            $template->add_string_array(
                                 [
                                     'D_SELECTED_GROUP' => (string)$val['id'],
                                     'L_SELECTED_GROUP' => $val['name'],
@@ -502,10 +528,28 @@ if (!empty($user->user['admin']) && $work->check_input(
                             $user_data[$field] ? ' checked="checked"' : ''
                         );
                     }
-
+                    $template->add_string('D_DISABLE_FIELD', ((int)$user_data['permanently_deleted'] === 0) ? '' : ' disabled');
+                    $template->add_if('SOFT_DELETE', false);
+                    // Проверяем, является ли текущий пользователь админом и мягко удален ли
+                    // просматриваемый пользователь и не окончательно
+                    if (!empty($user_data['deleted_at']) && (int)$user_data['permanently_deleted'] === 0) {
+                        /** @noinspection DuplicatedCode */
+                        $restore_info = $user->is_soft_delete_expired($user_data['deleted_at']);
+                        $template->add_if('SOFT_DELETE', true);
+                        $template->add_string_array([
+                            'L_DELETED_AT'   => $work->lang['profile']['user_deleted_at'],
+                            'L_RESTORE_EXPIRY' => $work->lang['profile']['user_restore_expiry'],
+                            'D_DELETED_AT'     => $restore_info['restore_date'] ?
+                                $restore_info['restore_date']->format('d.m.Y') : $work->lang['main']['undefined'],
+                            'D_RESTORE_EXPIRY' => $restore_info['restore_expiry'] ?
+                                $restore_info['restore_expiry']->format('d.m.Y') : $work->lang['main']['undefined'],
+                        ]);
+                    }
                     // Добавляем основные данные пользователя в шаблон
                     $template->add_if('FIND_USER', true);
-                    $template->add_string_ar([
+                    $template->add_if('CAN_DELETE', ($user_data['id'] !== (int)$user->session['login_id'] && (int)$user_data['permanently_deleted'] === 0));
+                    $template->add_string_array([
+                        'CSRF_TOKEN'    => $user->csrf_token(),
                         'L_LOGIN'       => $work->lang['admin']['login'],
                         'L_EMAIL'       => $work->lang['admin']['email'],
                         'L_REAL_NAME'   => $work->lang['admin']['real_name'],
@@ -514,11 +558,19 @@ if (!empty($user->user['admin']) && $work->check_input(
                         'L_USER_RIGHTS' => $work->lang['admin']['user_rights'],
                         'L_HELP_EDIT'   => $work->lang['admin']['help_edit_user'],
                         'L_SAVE_USER'   => $work->lang['admin']['save_user'],
+                        'L_DELETE_BLOCK'   => $work->lang['admin']['hard_delete_user'],
+                        'L_CONFIRM_DELETE_BLOCK' => $work->lang['admin']['confirm_hard_delete_user'],
+                        'L_CONFIRM_DELETE' => $work->lang['main']['delete'],
+                        'L_CANCEL_DELETE'  => $work->lang['main']['cancel'],
                         'D_LOGIN'       => $user_data['login'],
-                        'D_EMAIL'       => $user_data['email'],
-                        'D_REAL_NAME'   => $user_data['real_name'],
+                        'D_EMAIL'       => Work::clean_field($user_data['email']),
+                        'D_REAL_NAME'   => Work::clean_field($user_data['real_name']),
                         'U_AVATAR'      => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'],
-                        'CSRF_TOKEN'    => $user->csrf_token(),
+                        'U_DELETE_BLOCK'  => sprintf(
+                            '%s?action=admin&amp;subact=admin_user&amp;do=delete_user&amp;uid=%s',
+                            $work->config['site_url'],
+                            $user_data['id']
+                        ),
                     ]);
                 } else {
                     throw new RuntimeException(
@@ -545,24 +597,19 @@ if (!empty($user->user['admin']) && $work->check_input(
                 }
                 $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
 
-                $search_query = $_POST['search_user'] === '*' ? '%' : '%' . Work::clean_field(
-                    $_POST['search_user']
-                ) . '%';
-
-                // Выполняем запрос к БД
-                $db->select('*', TBL_USERS, [
-                    'where'  => '(`real_name` LIKE :real_name_query OR `email` LIKE :email_query OR `login` LIKE :login_query)',
-                    'params' => [
-                        ':real_name_query' => $search_query,
-                        ':email_query'     => $search_query,
-                        ':login_query'     => $search_query,
-                    ],
-                ]);
-                $found_users = $db->res_arr();
+                // Используем метод полнотекстового поиска.
+                $found_users = $db->full_text_search(
+                    ['`id`', '`real_name`'],
+                    ['`login`', '`real_name`', '`email`'],
+                    Work::clean_field(
+                        $_POST['search_user']
+                    ),
+                    TBL_USERS
+                );
 
                 if ($found_users) {
                     foreach ($found_users as $key => $value) {
-                        $template->add_string_ar([
+                        $template->add_string_array([
                             'D_FIND_USER' => $value['real_name'],
                             'U_FIND_USER' => sprintf(
                                 '%s?action=admin&amp;subact=admin_user&amp;uid=%s',
@@ -572,19 +619,18 @@ if (!empty($user->user['admin']) && $work->check_input(
                         ], 'FIND_USER[' . $key . ']');
                     }
                 } else {
-                    $template->add_string_ar([
+                    $template->add_string_array([
                         'D_FIND_USER' => $work->lang['admin']['no_find_user'],
                         'U_FIND_USER' => '#',
                     ], 'FIND_USER[0]');
                 }
 
                 $template->add_if('NEED_USER', true);
-                $_POST['search_user'] = $search_query === '%' ? '*' : $_POST['search_user'];
             }
 
             // Добавляем форму поиска в шаблон
             $template->add_if('NEED_FIND', true);
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_SEARCH_USER' => $work->lang['admin']['search_user'],
                 'L_HELP_SEARCH' => $work->lang['admin']['help_search_user'],
                 'L_SEARCH'      => $work->lang['main']['search'],
@@ -609,16 +655,80 @@ if (!empty($user->user['admin']) && $work->check_input(
     ) && $_GET['subact'] === 'admin_group') {
         // Добавляем блок для администрирования групп
         $template->add_case('ADMIN_BLOCK', 'ADMIN_GROUP');
-        $template->add_string(
-            'L_NAME_BLOCK',
-            $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['admin_group']
-        );
+        $add_group = false;
+        // Список полей для прав доступа группы
         $group_permission_fields = $user->user_right_fields['all'];
+
+        // Удаление группы
+        /** @noinspection NotOptimalIfConditionsInspection */
+        if ($work->check_input('_GET', 'do', ['isset' => true, 'empty' => true])
+            && $_GET['do'] === 'delete_group') {
+            // Проверяем CSRF-токен
+            if (!isset($_POST['csrf_token']) || !hash_equals(
+                $user->session['csrf_token'],
+                $_POST['csrf_token']
+            )) {
+                throw new RuntimeException(
+                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
+                );
+            }
+
+            if ($work->check_input('_POST', 'group', ['isset' => true, 'empty' => true, 'regexp' => '/^[0-9]+$/'])) {
+                $del_group_id = (int)$_POST['group'];
+                if (!$user->delete_group($del_group_id)) {
+                    log_in_file(
+                        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
+                        'Ошибка при удалении группы | Группа ID: ' . $del_group_id
+                    );
+                }
+            }
+            header(sprintf('Location: %s?action=admin&subact=admin_group', $work->config['site_url']));
+            exit;
+        }
+
+        // Добавление группы
+        /** @noinspection NotOptimalIfConditionsInspection */
+        if ($work->check_input('_GET', 'do', ['isset' => true, 'empty' => true])
+            && $_GET['do'] === 'add_group') {
+
+            // Создаем список чек-боксов для установки прав
+            foreach ($group_permission_fields as $value) {
+                $template->add_string('L_' . strtoupper($value), $work->lang['admin'][$value]);
+                $template->add_string(
+                    'D_' . strtoupper($value),
+                    ''
+                );
+            }
+
+            $template->add_if('EDIT_GROUP', true);
+            $template->add_string_array([
+                'L_NAME_GROUP'   => $work->lang['main']['group'],
+                'L_GROUP_RIGHTS' => $work->lang['admin']['group_rights'],
+                'L_SAVE_GROUP'   => $work->lang['admin']['save_group'],
+                'D_ID_GROUP'     => 'new',
+                'D_NAME_GROUP'   => '',
+                'U_BLOCK_GROUP'  => sprintf(
+                    '%s?action=admin&subact=admin_group',
+                    $work->config['site_url']
+                ),
+            ]);
+            $template->add_string(
+                'L_NAME_BLOCK',
+                $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['add_group']
+            );
+            $template->add_string('CSRF_TOKEN', $user->csrf_token());
+            $add_group = true;
+        } else {
+            $template->add_string(
+                'L_NAME_BLOCK',
+                $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['admin_group']
+            );
+        }
 
         if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true]) && $work->check_input(
             '_POST',
             'id_group',
-            ['isset' => true, 'regexp' => '/^[0-9]+$/']
+            ['isset' => true, 'regexp' => '/^(?:\d+|new)$/']
         )) {
             // Проверяем CSRF-токен
             if (!isset($_POST['csrf_token']) || !hash_equals(
@@ -630,30 +740,44 @@ if (!empty($user->user['admin']) && $work->check_input(
                 );
             }
 
-            // Выбираем данные группы по ID
-            $db->select('*', TBL_GROUP, [
-                'where'  => '`id` = :id_group',
-                'params' => [':id_group' => $_POST['id_group']],
-            ]);
-            $group_data = $db->res_row();
+            if ($_POST['id_group'] === 'new') {
+                $new_group_id = $user->add_new_group($_POST);
+                if ($new_group_id === 0) {
+                    header(sprintf('Location: %s?action=admin&subact=admin_group&do=add_group', $work->config['site_url']));
+                    exit;
+                }
+                $_POST['group'] = $new_group_id;
+                $template->add_string(
+                    'L_NAME_BLOCK',
+                    $work->lang['admin']['title'] . ' - ' . $work->lang['admin']['admin_group']
+                );
+            } else {
+                // Выбираем данные группы по ID
+                $db->select('*', TBL_GROUP, [
+                    'where'  => '`id` = :id_group',
+                    'params' => [':id_group' => $_POST['id_group']],
+                ]);
+                $group_data = $db->result_row();
 
-            if ($group_data) {
-                // Обновляем данные группы
-                $group_data = $user->update_group_data($group_data, $_POST);
-                $_POST['group'] = $group_data['id'];
+                if ($group_data) {
+                    // Обновляем данные группы
+                    $group_data = $user->update_group_data($group_data, $_POST);
+                    $_POST['group'] = $group_data['id'];
+                }
             }
         }
 
-        if ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true]) && $work->check_input(
-            '_POST',
-            'group',
-            ['isset' => true, 'regexp' => '/^[0-9]+$/']
-        )) {
+        if ($add_group || ($work->check_input('_POST', 'submit', ['isset' => true, 'empty' => true]) &&
+            $work->check_input(
+                '_POST',
+                'group',
+                ['isset' => true, 'regexp' => '/^[0-9]+$/']
+            ))) {
             // Проверяем CSRF-токен
-            if (!isset($_POST['csrf_token']) || !hash_equals(
+            if (!$add_group && (!isset($_POST['csrf_token']) || !hash_equals(
                 $user->session['csrf_token'],
                 $_POST['csrf_token']
-            )) {
+            ))) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}"
                 );
@@ -664,7 +788,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 'where'  => '`id` = :group_id',
                 'params' => [':group_id' => $_POST['group']],
             ]);
-            $group_data = $db->res_row();
+            $group_data = $db->result_row();
 
             if ($group_data) {
                 $group_data = array_merge($group_data, $user->process_user_rights($group_data['user_rights']));
@@ -683,7 +807,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 
                 // Добавляем основные данные группы в шаблон
                 $template->add_if('EDIT_GROUP', true);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_NAME_GROUP'   => $work->lang['main']['group'],
                     'L_GROUP_RIGHTS' => $work->lang['admin']['group_rights'],
                     'L_SAVE_GROUP'   => $work->lang['admin']['save_group'],
@@ -696,11 +820,11 @@ if (!empty($user->user['admin']) && $work->check_input(
         } else {
             $db->select('*', TBL_GROUP);
             // Получаем список всех групп
-            $groups = $db->res_arr();
+            $groups = $db->result_array();
 
             if ($groups) {
                 foreach ($groups as $key => $val) {
-                    $template->add_string_ar(
+                    $template->add_string_array(
                         [
                             'D_ID_GROUP'   => (string)$val['id'],
                             'D_NAME_GROUP' => $val['name'],
@@ -708,7 +832,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         'SELECT_GROUP[' . $key . ']'
                     );
                 }
-                $template->add_string_ar(
+                $template->add_string_array(
                     [
                         'D_SELECTED_GROUP' => (string)$groups[0]['id'],
                         'L_SELECTED_GROUP' => $groups[0]['name'],
@@ -716,10 +840,29 @@ if (!empty($user->user['admin']) && $work->check_input(
                 );
 
                 // Добавляем форму выбора группы в шаблон
+                $data_protected_groups = json_encode(PROTECTED_GROUPS, JSON_THROW_ON_ERROR);
                 $template->add_if('SELECT_GROUP', true);
-                $template->add_string_ar([
+                $template->add_string_array([
                     'L_SELECT_GROUP' => $work->lang['admin']['select_group'],
                     'L_EDIT'         => $work->lang['admin']['edit_group'],
+                    'L_DELETE'       => $work->lang['admin']['delete_group'],
+                    'L_CONFIRM_DELETE_BLOCK' => $work->lang['admin']['confirm_delete_group'],
+                    'L_CONFIRM_DELETE'       => $work->lang['main']['delete'],
+                    'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
+                    'L_ADD_GROUP'        => $work->lang['admin']['add_group'],
+                    'D_PROTECTED_GROUPS' => $data_protected_groups,
+                    'U_BLOCK_GROUP'         => sprintf(
+                        '%s?action=admin&subact=admin_group',
+                        $work->config['site_url']
+                    ),
+                    'U_ADD_GROUP'         => sprintf(
+                        '%s?action=admin&amp;subact=admin_group&amp;do=add_group',
+                        $work->config['site_url'],
+                    ),
+                    'U_DELETE_BLOCK'         => sprintf(
+                        '%s?action=admin&amp;subact=admin_group&amp;do=delete_group',
+                        $work->config['site_url'],
+                    ),
                 ]);
                 $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
                 $template->add_string('CSRF_TOKEN', $user->csrf_token());
@@ -751,14 +894,14 @@ if (!empty($user->user['admin']) && $work->check_input(
         // Добавляем блок администрирования в шаблон
         $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
         $template->add_if('SESSION_ADMIN_ON', true);
-        $template->add_string_ar([
+        $template->add_string_array([
             'L_NAME_BLOCK'    => $work->lang['admin']['title'],
             'L_SELECT_SUBACT' => $work->lang['admin']['select_subact'],
         ]);
 
         // Добавляем подразделы администрирования в шаблон
         foreach ($select_subact as $index => $item) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'L_SUBACT' => $item['txt'], // Текстовая метка подраздела
                 'U_SUBACT' => $item['url'], // URL подраздела
             ], 'SELECT_SUBACT[' . $index . ']');
@@ -773,7 +916,7 @@ if (!empty($user->user['admin']) && $work->check_input(
 } elseif ((!isset($user->session['admin_on']) || $user->session['admin_on'] !== true) && $user->user['admin']) {
     // Добавляем блок администрирования в шаблон
     $template->add_case('ADMIN_BLOCK', 'ADMIN_START');
-    $template->add_string_ar([
+    $template->add_string_array([
         'L_NAME_BLOCK'       => $work->lang['admin']['title'],
         'L_ENTER_ADMIN_PASS' => $work->lang['admin']['admin_pass'],
         'L_PASSWORD'         => $work->lang['profile']['password'],

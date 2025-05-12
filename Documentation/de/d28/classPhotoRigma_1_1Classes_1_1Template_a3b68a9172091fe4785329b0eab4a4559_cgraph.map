@@ -1,0 +1,11 @@
+<map id="_pars_template" name="_pars_template">
+<area shape="rect" id="Node000001" title="Метод обрабатывает шаблон для подготовки его к выводу: рекурсивно обрабатывает объектные блоки,..." alt="" coords="5,80,116,105"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a6116045ae8231953c531d463497be4dd" title="Метод обрабатывает блок выбора фрагмента шаблона, выбирая один из блоков CASE_ЗНАЧЕНИЕ или CASE_DEFAU..." alt="" coords="167,5,280,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,77,163,41,177,34,179,39,165,45,89,82"/>
+<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a5c6e04413a2010c88066198790b50fa8" title="Метод обрабатывает блоки условий вывода фрагментов шаблона, выбирая содержимое до _ELSE или после нег..." alt="" coords="178,55,270,79"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="116,81,162,74,163,79,117,86"/>
+<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a3360efabc0c012120eefacabfab26ce4" title="Метод выполняет рекурсивную обработку блока массивов&#45;объектов, подготавливая их содержимое для вывода..." alt="" coords="164,104,284,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="117,98,149,103,148,108,116,103"/>
+<area shape="rect" id="Node000005" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a850faf7edf881c3821fb24a7d0e73630" title="Метод преобразует URL в &quot;красивый&quot; вид (например, ?action=profile&amp;id=123 → profile/id_123...." alt="" coords="164,153,284,178"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="90,103,165,138,179,144,177,149,163,143,87,108"/>
+</map>

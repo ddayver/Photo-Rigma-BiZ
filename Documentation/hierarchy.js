@@ -1,7 +1,8 @@
 var hierarchy =
 [
-    [ "Cache_Handler", "d3/d14/classCache__Handler.html", null ],
-    [ "Cache_Handler_Interface", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html", null ],
+    [ "Cache_Handler_Interface", "d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html", [
+      [ "Cache_Handler", "d3/d14/classCache__Handler.html", null ]
+    ] ],
     [ "Database_Interface", "d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html", [
       [ "Database", "d6/db6/classPhotoRigma_1_1Classes_1_1Database.html", null ]
     ] ],

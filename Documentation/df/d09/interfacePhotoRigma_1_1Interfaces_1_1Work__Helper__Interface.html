@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -230,7 +230,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 
 <p>Транслитерирует строку и заменяет знаки пунктуации на "_". </p>
 <p>Этот метод выполняет следующие действия:</p><ol type="1">
-<li>Проверяет, что входная строка не является пустой. Если строка пустая, она возвращается без обработки.</li>
+<li>Проверяет, что входная строка не является пустой. Если строка пустая, то она возвращается без обработки.</li>
 <li>Транслитерирует не латинские символы в латиницу.</li>
 <li>Заменяет все символы, кроме букв и цифр, на <code>"_"</code>:<ul>
 <li>Заменяет множественные подчёркивания на одно.</li>
@@ -242,7 +242,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$string</td><td>Исходная строка:<ul>
-<li>Если строка пустая, она возвращается без обработки. Рекомендуется использовать строки в кодировке UTF-8.</li>
+<li>Если строка пустая, то она возвращается без обработки. Рекомендуется использовать строки в кодировке UTF-8.</li>
 </ul>
 </td></tr>
   </table>
@@ -371,7 +371,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <li>[u]Подчёркнутый текст[/u] -&gt; <code>&lt;u&gt;Подчёркнутый текст&lt;/u&gt;</code></li>
 <li>[i]Курсив[/i] -&gt; <code>&lt;em&gt;Курсив&lt;/em&gt;</code></li>
 <li>[url]Ссылка[/url], [url=URL]Текст ссылки[/url] -&gt; <code>&lt;a href="URL" target="_blank" rel="noopener
-         noreferrer"&gt;Текст ссылки&lt;/a&gt;</code></li>
+           noreferrer"&gt;Текст ссылки&lt;/a&gt;</code></li>
 <li>[color=COLOR]Цвет текста[/color] -&gt; <code>&lt;span style="color: COLOR;"&gt;Цвет текста&lt;/span&gt;</code></li>
 <li>[size=SIZE]Размер текста[/size] -&gt; <code>&lt;span style="font-size: SIZE;"&gt;Размер текста&lt;/span&gt;</code></li>
 <li>[quote]Цитата[/quote], [quote=AUTHOR]Цитата автора[/quote] -&gt; <code>&lt;blockquote&gt;Цитата&lt;/blockquote&gt;</code></li>
@@ -582,7 +582,7 @@ $dirty_input = '&lt;script&gt;alert("XSS")</li>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></li><li class="navelem"><a class="el" href="../../df/d09/interfacePhotoRigma_1_1Interfaces_1_1Work__Helper__Interface.html">Work_Helper_Interface</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

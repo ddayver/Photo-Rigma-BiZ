@@ -3,55 +3,59 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /**
- * @file        action/search.php
- * @brief       Обработка поисковых запросов на сайте.
+ * @file      action/search.php
+ * @brief     Обработка поисковых запросов на сайте.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   Photorigma\\Action
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace Photorigma\\Action
  *
- * @details     Этот файл отвечает за обработку поисковых запросов на сайте. Основные функции включают:
- *              - Поиск по пользователям, категориям, новостям и фотографиям.
- *              - Фильтрация результатов поиска в зависимости от выбранных параметров.
- *              - Отображение результатов поиска в удобном формате.
- *              - Логирование ошибок и подозрительных действий.
+ * @details   Этот файл отвечает за обработку поисковых запросов на сайте. Основные функции включают:
+ *            - Поиск по пользователям, категориям, новостям и фотографиям.
+ *            - Фильтрация результатов поиска в зависимости от выбранных параметров.
+ *            - Отображение результатов поиска в удобном формате.
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     Search_Main_Functions Основные функции
- *              - Поиск по пользователям (по имени).
- *              - Поиск по категориям (по названию и описанию).
- *              - Поиск по новостям (по заголовку и тексту).
- *              - Поиск по фотографиям (по названию и описанию).
- *              - Логирование ошибок и подозрительных действий.
+ * @section   Search_Main_Functions Основные функции
+ *            - Поиск по пользователям (по имени).
+ *            - Поиск по категориям (по названию и описанию).
+ *            - Поиск по новостям (по заголовку и тексту).
+ *            - Поиск по фотографиям (по названию и описанию).
+ *            - Логирование ошибок и подозрительных действий.
  *
- * @section     Search_Error_Handling Обработка ошибок
- *              При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
- *              - `Random\RandomException`: При выполнении методов, использующих `random()`.
- *              - `Exception`: При выполнении прочих методов классов, функций или операций.
+ * @section   Search_Error_Handling Обработка ошибок
+ *            При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
+ *            - `Random\RandomException`: При выполнении методов, использующих `random()`.
+ *            - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @throws      Random\RandomException При выполнении методов, использующих random().
- * @throws      Exception При выполнении прочих методов классов, функций или операций.
+ * @throws    Random\RandomException При выполнении методов, использующих random().
+ * @throws    Exception              При выполнении прочих методов классов, функций или операций.
  *
- * @section     Search_Related_Files Связанные файлы и компоненты
- *              - Классы приложения:
- *                - @see PhotoRigma::Classes::Work Класс используется для выполнения вспомогательных операций.
- *                - @see PhotoRigma::Classes::Database Класс для работы с базой данных.
- *                - @see PhotoRigma::Classes::User Класс для управления пользователями.
- *                - @see PhotoRigma::Classes::Template Класс для работы с шаблонами.
- *              - Файлы приложения:
- *                - @see index.php Этот файл подключает action/search.php по запросу из `$_GET`.
+ * @section   Search_Related_Files Связанные файлы и компоненты
+ *            - Классы приложения:
+ *              - @see PhotoRigma::Classes::Work
+ *                     Класс используется для выполнения вспомогательных операций.
+ *              - @see PhotoRigma::Classes::Database
+ *                     Класс для работы с базой данных.
+ *              - @see PhotoRigma::Classes::User
+ *                     Класс для управления пользователями.
+ *              - @see PhotoRigma::Classes::Template
+ *                     Класс для работы с шаблонами.
+ *            - Файлы приложения:
+ *              - @see index.php Этот файл подключает action/search.php по запросу из `$_GET`.
  *
- * @note        Этот файл является частью системы PhotoRigma.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
- *              Используются подготовленные выражения для защиты от SQL-инъекций.
+ * @note      Этот файл является частью системы PhotoRigma.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
+ *            Используются подготовленные выражения для защиты от SQL-инъекций.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать,
- *              распространять, сублицензировать и/или продавать копии программного обеспечения,
- *              а также разрешать лицам, которым предоставляется данное программное обеспечение,
- *              делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать,
+ *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
+ *            делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
 
@@ -140,7 +144,7 @@ if ($work->check_input('_POST', 'search_text', ['isset' => true, 'empty' => true
 }
 
 // Настройка шаблона: инициализация флагов для отображения результатов поиска
-$template->add_if_ar([
+$template->add_if_array([
     'NEED_USER'     => false,
     'NEED_CATEGORY' => false,
     'NEED_NEWS'     => false,
@@ -156,19 +160,32 @@ if ($search['user']) {
     $template->add_if('NEED_USER', true);
     $template->add_string('L_FIND_USER', $work->lang['search']['find'] . ' ' . $work->lang['search']['need_user']);
 
+    //Администратор может видеть всех пользователей
+    $options = $user->user['admin']
+        ? []
+        : [
+            'where' => '`activation` = :activated AND `email_confirmed` = :confirmed 
+                    AND `deleted_at` IS NULL AND `permanently_deleted` = :permanently_deleted',
+            'params' => [
+                ':activated' => 1,
+                ':confirmed' => 1,
+                ':permanently_deleted' => 0
+            ]
+        ];
     // Используем метод полнотекстового поиска.
     $find = $db->full_text_search(
         ['`id`', '`real_name`'],
         ['`login`', '`real_name`', '`email`'],
         $search_text,
-        TBL_USERS
+        TBL_USERS,
+        $options
     );
 
     if ($find) {
         // Если найдены пользователи, добавляем их в шаблон
         $template->add_if('USER_FIND', true);
         foreach ($find as $key => $val) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_USER_FIND' => Work::clean_field($val['real_name']), // Имя пользователя
                 'U_USER_FIND' => sprintf(
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
@@ -204,7 +221,7 @@ if ($search['category']) {
         // Если найдены категории, добавляем их в шаблон
         $template->add_if('CATEGORY_FIND', true);
         foreach ($find as $key => $val) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_CATEGORY_FIND_NAME' => Work::clean_field($val['name']),
                 // Название категории
                 'D_CATEGORY_FIND_DESC' => Work::clean_field($val['description']),
@@ -240,7 +257,7 @@ if ($search['news']) {
         // Если найдены новости, добавляем их в шаблон
         $template->add_if('NEWS_FIND', true);
         foreach ($find as $key => $val) {
-            $template->add_string_ar([
+            $template->add_string_array([
                 'D_NEWS_FIND_NAME' => Work::clean_field($val['name_post']),
                 // Заголовок новости
                 'D_NEWS_FIND_DESC' => mb_substr(Work::clean_field($val['text_post']), 0, 100, 'UTF-8') . '...',
@@ -273,7 +290,7 @@ if ($search['photo']) {
         $template->add_if('PHOTO_FIND', true);
         foreach ($find as $key => $val) {
             $find_photo = $work->create_photo('cat', $val['id']); // Создаем объект фотографии
-            $template->add_string_ar([
+            $template->add_string_array([
                 'MAX_PHOTO_HEIGHT'    => (string)($work->config['temp_photo_h'] + 10), // Максимальная высота фотографии
                 'PHOTO_WIDTH'         => (string)$find_photo['width'], // Ширина фотографии
                 'PHOTO_HEIGHT'        => (string)$find_photo['height'], // Высота фотографии
@@ -298,7 +315,7 @@ if (!empty($search_text)) {
 $template->add_string('CSRF_TOKEN', $user->csrf_token());
 
 // Добавляем данные в шаблон для отображения формы поиска
-$template->add_string_ar([
+$template->add_string_array([
     'NAME_BLOCK'      => $work->lang['main']['search'], // Заголовок блока
     'L_SEARCH'        => $work->lang['main']['search'], // Текст кнопки "Поиск"
     'L_SEARCH_TITLE'  => $work->lang['search']['title'], // Заголовок страницы поиска

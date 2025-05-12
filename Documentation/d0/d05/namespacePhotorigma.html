@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -380,8 +380,7 @@ $(function(){initNavTree('d0/d05/namespacePhotorigma.html','../../'); initResiza
 </ul>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление). Пример сообщения: "Ошибка добавления новости | Данные:
-                              json_encode($query_news)". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с новостью (например, добавление, редактирование или удаление). Пример сообщения: "Ошибка добавления новости | Данные: json_encode($query_news)". </td></tr>
     <tr><td class="paramname">RuntimeException</td><td>Если новость не найдена. Пример сообщения: "Новость не найдена | ID: {$news}". </td></tr>
     <tr><td class="paramname">RuntimeException</td><td>Если CSRF-токен неверен. Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user-&gt;session['login_id']}". </td></tr>
     <tr><td class="paramname">Random</td><td></td></tr>
@@ -448,7 +447,8 @@ $(function(){initNavTree('d0/d05/namespacePhotorigma.html','../../'); initResiza
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>Если возникают ошибки при работе с базой данных или файловой системой. Пример сообщения: "Не удалось получить данные фотографии | ID: $photo_id". </td></tr>
-    <tr><td class="paramname">RuntimeException</td><td>Если пользователь не имеет прав на выполнение действия. Пример сообщения: "Пользователь не имеет прав на редактирование фотографии | ID: {$user-&gt;user['id']}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если пользователь не имеет прав на выполнение действия. Пример сообщения: "Пользователь не имеет прав на редактирование фотографии | ID:
+                                  {$user-&gt;user['id']}". </td></tr>
     <tr><td class="paramname">Random</td><td></td></tr>
   </table>
   </dd>
@@ -516,10 +516,9 @@ $(function(){initNavTree('d0/d05/namespacePhotorigma.html','../../'); initResiza
 </ul>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID:
-                              {$user-&gt;session['login_id']}". </td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Если не удалось выполнить действие с профилем (например, вход, выход, регистрация, редактирование). Пример сообщения: "Неверный CSRF-токен | Пользователь ID: {$user-&gt;session['login_id']}". </td></tr>
     <tr><td class="paramname">LogicException</td><td>Если не удалось получить данные группы пользователя. Пример сообщения: "Не удалось получить данные гостевой группы | Вызов от пользователя с ID:
-             {$user-&gt;session['login_id']}". </td></tr>
+                                 {$user-&gt;session['login_id']}". </td></tr>
     <tr><td class="paramname">Random</td><td></td></tr>
   </table>
   </dd>
@@ -678,7 +677,7 @@ $(function(){initNavTree('d0/d05/namespacePhotorigma.html','../../'); initResiza
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../d0/d05/namespacePhotorigma.html">Photorigma</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

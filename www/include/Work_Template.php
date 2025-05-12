@@ -1,40 +1,42 @@
 <?php
 
 /**
- * @file        include/Work_Template.php
- * @brief       Файл содержит класс Work_Template, который отвечает за формирование данных для шаблонов.
+ * @file      include/Work_Template.php
+ * @brief     Файл содержит класс Work_Template, который отвечает за формирование данных для шаблонов.
  *
- * @author      Dark Dayver
- * @version     0.4.3
- * @date        2025-05-05
- * @namespace   PhotoRigma\\Classes
+ * @author    Dark Dayver
+ * @version   0.4.4
+ * @date      2025-05-07
+ * @namespace PhotoRigma\\Classes
  *
- * @details     Этот файл содержит класс `Work_Template`, который реализует интерфейс `Work_Template_Interface`.
- *              Класс предоставляет методы для генерации данных, необходимых для отображения различных блоков на
- *              странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Все данные
- *              формируются на основе запросов к базе данных и конфигурации. Реализация методов зависит от глобальных
- *              переменных, таких как $_SESSION, для проверки статуса авторизации.
+ * @details   Этот файл содержит класс `Work_Template`, который реализует интерфейс `Work_Template_Interface`.
+ *            Класс предоставляет методы для генерации данных, необходимых для отображения различных блоков на
+ *            странице, таких как меню, блок пользователя, статистика и список лучших пользователей. Все данные
+ *            формируются на основе запросов к базе данных и конфигурации. Реализация методов зависит от глобальных
+ *            переменных, таких как $_SESSION, для проверки статуса авторизации.
  *
- * @section     WorkTemplate_Main_Functions Основные функции
- *              - Формирование данных для меню.
- *              - Генерация списка лучших пользователей.
- *              - Генерация статистических данных.
- *              - Формирование блока пользователя.
+ * @section   WorkTemplate_Main_Functions Основные функции
+ *            - Формирование данных для меню.
+ *            - Генерация списка лучших пользователей.
+ *            - Генерация статистических данных.
+ *            - Формирование блока пользователя.
  *
- * @see         PhotoRigma::Interfaces::Work_Template_Interface Интерфейс, который реализует данный класс.
- * @see         PhotoRigma::Classes::Work Класс, через который вызываются методы для работы с шаблонами.
+ * @see       PhotoRigma::Interfaces::Work_Template_Interface
+ *            Интерфейс, который реализует данный класс.
+ * @see       PhotoRigma::Classes::Work
+ *            Класс, через который вызываются методы для работы с шаблонами.
  *
- * @note        Этот файл является частью системы PhotoRigma и играет ключевую роль в формировании данных для шаблонов.
- *              Реализованы меры безопасности для предотвращения несанкционированного доступа к данным через глобальные
- *              переменные.
+ * @note      Этот файл является частью системы PhotoRigma и играет ключевую роль в формировании данных для шаблонов.
+ *            Реализованы меры безопасности для предотвращения несанкционированного доступа к данным через глобальные
+ *            переменные.
  *
- * @copyright   Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license     MIT License (https://opensource.org/licenses/MIT)
- *              Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
- *              сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
- *              предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
- *              - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
- *                части программного обеспечения.
+ * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
+ * @license   MIT License (https://opensource.org/licenses/MIT)
+ *            Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
+ *            сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
+ *            предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
+ *            - Уведомление об авторских правах и условия лицензии должны быть включены во все копии или значимые
+ *              части программного обеспечения.
  */
 
 namespace PhotoRigma\Classes;
@@ -79,6 +81,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *          Методы класса предназначены для использования в различных частях приложения для отображения данных в
  *          шаблонах.
  *
+ * @implements Work_Template_Interface
+ *
  * @property array               $config Конфигурация приложения.
  * @property array|null          $lang   Языковые данные (могут быть null при инициализации).
  * @property Database_Interface  $db     Объект для работы с базой данных.
@@ -103,7 +107,8 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * $best_users = \\PhotoRigma\\Classes\\Work::template_best_user(3);
  * print_r($best_users);
  * @endcode
- * @see     PhotoRigma::Interfaces::Work_Template_Interface Интерфейс, который реализует данный класс.
+ * @see    PhotoRigma::Interfaces::Work_Template_Interface
+ *         Интерфейс, который реализует данный класс.
  */
 class Work_Template implements Work_Template_Interface
 {
@@ -124,8 +129,6 @@ class Work_Template implements Work_Template_Interface
      *             - `$db`: объект для работы с базой данных.
      *          2. Проверяет, что все зависимости корректно инициализированы.
      *          Метод вызывается автоматически при создании нового объекта класса.
-     *
-     * @callgraph
      *
      * @param array              $config Конфигурация приложения:
      *                                   - Должен быть ассоциативным массивом.
@@ -149,12 +152,12 @@ class Work_Template implements Work_Template_Interface
      * $db = new Database();
      * $template = new Work_Template($config, $db);
      * @endcode
-     * @see     PhotoRigma::Classes::Work
-     *          Родительский класс, через который передаются зависимости.
-     * @see     PhotoRigma::Classes::Work_Template::$config
-     *          Свойство, содержащее конфигурацию приложения.
-     * @see     PhotoRigma::Classes::Work_Template::$db
-     *          Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work
+     *         Родительский класс, через который передаются зависимости.
+     * @see    PhotoRigma::Classes::Work_Template::$config
+     *         Свойство, содержащее конфигурацию приложения.
+     * @see    PhotoRigma::Classes::Work_Template::$db
+     *         Свойство, содержащее объект для работы с базой данных.
      */
     public function __construct(Database_Interface $db, array $config)
     {
@@ -172,8 +175,6 @@ class Work_Template implements Work_Template_Interface
      *          3. Если имя свойства некорректно, выбрасывается исключение.
      *          Метод является публичным и предназначен для получения доступа к свойству `$config`.
      *
-     * @callgraph
-     *
      * @param string $name Имя свойства:
      *                     - Допустимое значение: 'config'.
      *                     - Если указано другое имя, выбрасывается исключение.
@@ -181,10 +182,7 @@ class Work_Template implements Work_Template_Interface
      *                     Ограничения: только одно допустимое значение.
      *
      * @return array Значение свойства `$config`.
-     *               Пример:
-     *               ```php
-     *               ['temp_photo_w' => 800]
-     *               ```
+     *               Пример: ['temp_photo_w' => 800]
      *
      * @throws InvalidArgumentException Выбрасывается, если запрашиваемое свойство не существует.
      *                                  Пример сообщения:
@@ -202,8 +200,8 @@ class Work_Template implements Work_Template_Interface
      * $template = new \PhotoRigma\Classes\Work_Template(['temp_photo_w' => 800], $db);
      * echo $template->config['temp_photo_w']; // Выведет: 800
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::$config
-     *          Свойство, к которому обращается метод.
+     * @see    PhotoRigma::Classes::Work_Template::$config
+     *         Свойство, к которому обращается метод.
      */
     public function __get(string $name): array
     {
@@ -224,8 +222,6 @@ class Work_Template implements Work_Template_Interface
      *          2. Если имя свойства корректно, обновляет значение свойства `$config`.
      *          3. Если имя свойства некорректно, выбрасывается исключение.
      *          Метод является публичным и предназначен для изменения свойства `$config`.
-     *
-     * @callgraph
      *
      * @param string $name  Имя свойства:
      *                      - Допустимое значение: 'config'.
@@ -253,8 +249,8 @@ class Work_Template implements Work_Template_Interface
      * $template->config = ['temp_photo_w' => 1024];
      * echo $template->config['temp_photo_w']; // Выведет: 1024
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::$config
-     *          Свойство, которое изменяет метод.
+     * @see    PhotoRigma::Classes::Work_Template::$config
+     *         Свойство, которое изменяет метод.
      */
     public function __set(string $name, array $value): void
     {
@@ -273,8 +269,6 @@ class Work_Template implements Work_Template_Interface
      * @details Этот метод вызывается автоматически при использовании оператора `isset()` для проверки
      *          существования недоступного свойства. Метод возвращает `true`, если свойство существует,
      *          и `false` в противном случае.
-     *
-     * @callgraph
      *
      * @param string $name Имя свойства:
      *                     - Проверяется на существование.
@@ -313,6 +307,9 @@ class Work_Template implements Work_Template_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @param string $action Активный пункт меню:
      *                       - Указывается строка, соответствующая активному пункту меню (например, 'home', 'profile').
      * @param int    $menu   Тип меню:
@@ -324,7 +321,7 @@ class Work_Template implements Work_Template_Interface
      *               - Каждый элемент массива содержит:
      *                 - Ключ 'url': URL пункта меню (null, если пункт активен).
      *                 - Ключ 'name': Название пункта меню (локализованное через $this->lang['menu'] или дефолтное
-     *                 значение). Если меню пустое, возвращается пустой массив.
+     *                   значение). Если меню пустое, возвращается пустой массив.
      *
      * @throws InvalidArgumentException Если передан некорректный $menu или $action.
      * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
@@ -353,10 +350,10 @@ class Work_Template implements Work_Template_Interface
      * $long_menu = $template->create_menu('profile', LONG_MENU);
      * print_r($long_menu);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::_create_menu_internal()
-     *          Защищённый метод, выполняющий основную логику.
-     * @see     PhotoRigma::Classes::Work::create_menu()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_Template::_create_menu_internal()
+     *         Защищённый метод, выполняющий основную логику.
+     * @see    PhotoRigma::Classes::Work::create_menu()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function create_menu(string $action, int $menu): array
     {
@@ -424,16 +421,16 @@ class Work_Template implements Work_Template_Interface
      * $long_menu = $this->_create_menu_internal('profile', LONG_MENU); // Создание вертикального меню
      * print_r($long_menu);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::$db
-     *          Свойство, содержащее объект базы данных.
-     * @see     PhotoRigma::Classes::Work_Template::$lang
-     *          Свойство, содержащее языковые строки.
-     * @see     PhotoRigma::Classes::Work_Template::$user
-     *          Свойство, содержащее данные текущего пользователя.
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Статический метод для очистки данных.
-     * @see     PhotoRigma::Classes::Work_Template::create_menu()
-     *          Публичный метод, который вызывает этот внутренний метод.
+     * @see    PhotoRigma::Classes::Work_Template::$db
+     *         Свойство, содержащее объект базы данных.
+     * @see    PhotoRigma::Classes::Work_Template::$lang
+     *         Свойство, содержащее языковые строки.
+     * @see    PhotoRigma::Classes::Work_Template::$user
+     *         Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Статический метод для очистки данных.
+     * @see    PhotoRigma::Classes::Work_Template::create_menu()
+     *         Публичный метод, который вызывает этот внутренний метод.
      */
     protected function _create_menu_internal(string $action, int $menu): array
     {
@@ -463,7 +460,7 @@ class Work_Template implements Work_Template_Interface
             ]
         );
         // Получение результатов запроса
-        $menu_data = $this->db->res_arr();
+        $menu_data = $this->db->result_array();
         if ($menu_data === false) {
             throw new RuntimeException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось получить данные из базы данных'
@@ -505,21 +502,19 @@ class Work_Template implements Work_Template_Interface
     /**
      * @brief   Установка языковых данных через сеттер.
      *
-     * @details Этот метод позволяет установить массив языковых данных для использования в системе.
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что переданные данные являются массивом.
-     *          2. Присваивает массив свойству текущего класса для дальнейшего использования.
+     * @details Этот метод позволяет установить массив языковых данных для использования в системе. Присваивает
+     *          массив свойству текущего класса для дальнейшего использования.
+     *
+     * @callergraph
      *
      * @param array $lang Языковые данные:
      *                    - Должен быть ассоциативным массивом.
      *                    - Каждый ключ должен быть строкой, представляющей собой уникальный идентификатор языковой
-     *                    переменной.
+     *                      переменной.
      *                    - Каждое значение должно быть строкой или другим допустимым типом данных для языковых
-     *                    значений.
+     *                      значений.
      *
      * @return void Метод ничего не возвращает.
-     *
-     * @throws InvalidArgumentException Если передан некорректный тип данных (не массив) или пустые данные.
      *
      * @note    Метод проверяет тип переданных данных.
      *          Языковые данные используются для локализации интерфейса и других текстовых элементов системы.
@@ -537,8 +532,8 @@ class Work_Template implements Work_Template_Interface
      * ];
      * $w_template->set_lang($langData);
      * @endcode
-     * @see     PhotoRigma::Classes::Work::set_lang()
-     *          Метод в родительском классе Work, который вызывает этот метод.
+     * @see    PhotoRigma::Classes::Work::set_lang()
+     *         Метод в родительском классе Work, который вызывает этот метод.
      */
     public function set_lang(array $lang): void
     {
@@ -549,16 +544,14 @@ class Work_Template implements Work_Template_Interface
      * @brief   Установка объекта, реализующего интерфейс User_Interface, через сеттер.
      *
      * @details Этот метод позволяет установить объект пользователя, реализующий интерфейс `User_Interface`.
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что переданный объект реализует интерфейс `User_Interface`.
-     *          2. Присваивает объект свойству текущего класса для дальнейшего использования.
+     *          Присваивает объект свойству текущего класса для дальнейшего использования.
+     *
+     * @callergraph
      *
      * @param User_Interface $user Объект, реализующий интерфейс `User_Interface`:
      *                             - Должен быть экземпляром класса, реализующего интерфейс `User_Interface`.
      *
      * @return void Метод ничего не возвращает.
-     *
-     * @throws InvalidArgumentException Если передан некорректный объект (не реализует интерфейс `User_Interface`).
      *
      * @note    Метод проверяет тип переданного объекта.
      *          Объект пользователя используется для взаимодействия с другими компонентами системы.
@@ -572,8 +565,8 @@ class Work_Template implements Work_Template_Interface
      * $user = new \PhotoRigma\Classes\User(); // Класс, реализующий User_Interface
      * $template->set_user($user);
      * @endcode
-     * @see     PhotoRigma::Classes::User_Interface
-     *          Интерфейс, которому должен соответствовать объект пользователя.
+     * @see    PhotoRigma::Classes::User_Interface
+     *         Интерфейс, которому должен соответствовать объект пользователя.
      */
     public function set_user(User_Interface $user): void
     {
@@ -592,17 +585,22 @@ class Work_Template implements Work_Template_Interface
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @param int $best_user Количество лучших пользователей для вывода:
      *                       - Должно быть положительным целым числом.
+     *                       Пример: 5.
      *                       Если передано недопустимое значение, выбрасывается исключение InvalidArgumentException.
      *
      * @return array Массив данных для вывода в шаблон:
-     *               - NAME_BLOCK: Название блока (локализованное через $this->lang['main']['best_user']).
-     *               - L_USER_NAME: Подпись для имени пользователя (локализованная строка).
+     *               - NAME_BLOCK:   Название блока (локализованное через $this->lang['main']['best_user']).
+     *               - L_USER_NAME:  Подпись для имени пользователя (локализованная строка).
      *               - L_USER_PHOTO: Подпись для количества фотографий (локализованная строка).
-     *               - user_url: Ссылка на профиль пользователя (null, если данных нет).
-     *               - user_name: Имя пользователя ('---', если данных нет).
-     *               - user_photo: Количество загруженных фотографий ('-', если данных нет).
+     *               - user_url:     Ссылка на профиль пользователя (null, если данных нет).
+     *               - user_name:    Имя пользователя ('---', если данных нет).
+     *               - user_photo:   Количество загруженных фотографий ('-', если данных нет).
+     *               - banned:       Булево значение, указывающее, находится ли пользователь в бане.
      *
      * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      * @throws Exception                При выполнении запросов к базам данных.
@@ -611,9 +609,10 @@ class Work_Template implements Work_Template_Interface
      *          - user_url: null.
      *          - user_name: '---'.
      *          - user_photo: '-'.
+     *          - banned: false.
      *
-     * @warning Убедитесь, что таблицы базы данных (TBL_USERS и TBL_PHOTO) содержат корректные данные.
-     *          Ошибки в структуре таблиц могут привести к некорректному результату.
+     * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_PHOTO, TBL_USERS_BANS)
+     *          содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректному результату.
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *
      * Пример использования:
@@ -625,10 +624,10 @@ class Work_Template implements Work_Template_Interface
      * $best_users = $template->template_best_user(3);
      * print_r($best_users);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::_template_best_user_internal()
-     *          Защищённый метод, выполняющий основную логику.
-     * @see     PhotoRigma::Classes::Work::template_best_user()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_Template::_template_best_user_internal()
+     *         Защищённый метод, выполняющий основную логику.
+     * @see    PhotoRigma::Classes::Work::template_best_user()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function template_best_user(int $best_user = 1): array
     {
@@ -643,21 +642,24 @@ class Work_Template implements Work_Template_Interface
      *             - Основная таблица: TBL_USERS (пользователи).
      *             - Присоединяемая таблица: TBL_PHOTO (фотографии).
      *             - Условие JOIN: связь между ID пользователя (TBL_USERS.id) и полем user_upload
-     *             (TBL_PHOTO.user_upload).
-     *          2. Группирует данные по ID пользователя (GROUP BY TBL_USERS.id).
-     *          3. Сортирует результаты по количеству фотографий в порядке убывания (ORDER BY user_photo DESC).
-     *          4. Ограничивает количество результатов параметром $best_user (LIMIT).
-     *          5. Обрабатывает полученные данные:
+     *               (TBL_PHOTO.user_upload).
+     *          2. Дополнительно присоединяет таблицу TBL_USERS_BANS для определения заблокированных пользователей.
+     *          3. Группирует данные по ID пользователя (GROUP BY TBL_USERS.id).
+     *          4. Сортирует результаты по количеству фотографий в порядке убывания (ORDER BY user_photo DESC).
+     *          5. Ограничивает количество результатов параметром $best_user (LIMIT).
+     *          6. Обрабатывает полученные данные:
      *             - Формирует ссылки на профиль пользователя.
      *             - Очищает имена пользователей с помощью Work::clean_field().
      *             - Преобразует количество фотографий в целочисленный формат.
-     *          6. Если данные отсутствуют, добавляет запись "пустого" пользователя:
-     *             - user_url: null.
-     *             - user_name: '---'.
+     *             - Помечает пользователей в бане через булево поле `banned`.
+     *          7. Если данные отсутствуют, добавляется запись "пустого" пользователя:
+     *             - user_url:   null.
+     *             - user_name:  '---'.
      *             - user_photo: '-'.
-     *          7. Формирует метаданные для шаблона:
-     *             - NAME_BLOCK: Название блока (локализованное через $this->lang['main']['best_user']).
-     *             - L_USER_NAME: Подпись для имени пользователя (локализованная строка).
+     *             - banned:     false.
+     *          8. Формирует метаданные для шаблона:
+     *             - NAME_BLOCK:   Название блока (локализованное через $this->lang['main']['best_user']).
+     *             - L_USER_NAME:  Подпись для имени пользователя (локализованная строка).
      *             - L_USER_PHOTO: Подпись для количества фотографий (локализованная строка).
      *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод template_best_user().
@@ -670,26 +672,33 @@ class Work_Template implements Work_Template_Interface
      *                       Если передано недопустимое значение, выбрасывается исключение InvalidArgumentException.
      *
      * @return array Массив данных для вывода в шаблон:
-     *               - NAME_BLOCK: Название блока (локализованное через $this->lang['main']['best_user']).
-     *               - L_USER_NAME: Подпись для имени пользователя (локализованная строка).
+     *               - NAME_BLOCK:   Название блока (локализованное через $this->lang['main']['best_user']).
+     *               - L_USER_NAME:  Подпись для имени пользователя (локализованная строка).
      *               - L_USER_PHOTO: Подпись для количества фотографий (локализованная строка).
-     *               - user_url: Ссылка на профиль пользователя (null, если данных нет).
-     *               - user_name: Имя пользователя ('---', если данных нет).
-     *               - user_photo: Количество загруженных фотографий ('-', если данных нет).
+     *               - user_url:     Ссылка на профиль пользователя (null, если данных нет).
+     *               - user_name:    Имя пользователя ('---', если данных нет).
+     *               - user_photo:   Количество загруженных фотографий ('-', если данных нет).
+     *               - banned:       Булево значение, указывающее, находится ли пользователь в бане.
      *
      * @throws InvalidArgumentException Если параметр $best_user не является положительным целым числом.
      * @throws Exception                При выполнении запросов к базам данных.
      *
      * @note    Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя:
-     *          - user_url: null.
-     *          - user_name: '---'.
+     *          - user_url:   null.
+     *          - user_name:  '---'.
      *          - user_photo: '-'.
-     *          Константы TBL_USERS и TBL_PHOTO определяют таблицы:
+     *          - banned:     false.
+     *          Константы, используемые в методе:
      *          - TBL_USERS: Таблица пользователей с их правами.
      *          - TBL_PHOTO: Таблица со списком фотографий на сервере.
+     *          - TBL_USERS_BANS: Таблица с информацией о заблокированных пользователях.
+     *          Все пользователи учитываются при условии:
+     *          - activation = 1 (активация)
+     *          - email_confirmed = 1 (подтверждение почты)
+     *          - deleted_at IS NULL AND permanently_deleted = 0 (не удалённые)
      *
-     * @warning Убедитесь, что таблицы базы данных (TBL_USERS и TBL_PHOTO) содержат корректные данные.
-     *          Ошибки в структуре таблиц могут привести к некорректному результату.
+     * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_PHOTO, TBL_USERS_BANS)
+     *          содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректному результату.
      *
      * Пример использования:
      * @code
@@ -697,37 +706,57 @@ class Work_Template implements Work_Template_Interface
      * $best_users = $this->_template_best_user_internal(3);
      * print_r($best_users);
      * @endcode
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Метод для очистки данных.
-     * @see     PhotoRigma::Classes::Work_Template::$lang
-     *          Свойство, содержащее языковые строки.
-     * @see     PhotoRigma::Classes::Work_Template::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::Work_Template::template_best_user()
-     *          Публичный метод, который вызывает этот внутренний метод.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Метод для очистки данных.
+     * @see    PhotoRigma::Classes::Work_Template::$lang
+     *         Свойство, содержащее языковые строки.
+     * @see    PhotoRigma::Classes::Work_Template::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work_Template::template_best_user()
+     *         Публичный метод, который вызывает этот внутренний метод.
      */
     protected function _template_best_user_internal(int $best_user = 1): array
     {
         // Блок получения данных через join()
         $this->db->join(
-            [TBL_USERS . '.`id`', TBL_USERS . '.`real_name`', 'COUNT(' . TBL_PHOTO . '.`id`) AS `user_photo`'],
-            TBL_USERS, // Основная таблица (user)
+            [
+                TBL_USERS . '.id',
+                TBL_USERS . '.real_name',
+                'COUNT(' . TBL_PHOTO . '.id) AS user_photo',
+                // Универсальная логика для banned
+                'COUNT(b.user_id) > 0 AS banned'
+            ],
+            TBL_USERS,
             [
                 [
-                    'type'  => 'INNER', // Тип JOIN
-                    'table' => TBL_PHOTO, // Присоединяемая таблица (photo)
-                    'on'    => TBL_USERS . '.`id` = ' . TBL_PHOTO . '.`user_upload`', // Условие JOIN
+                    'type' => 'INNER',
+                    'table' => TBL_PHOTO,
+                    'on' => TBL_USERS . '.id = ' . TBL_PHOTO . '.user_upload'
                 ],
+                [
+                    'type' => 'LEFT',
+                    'table' => TBL_USERS_BANS . ' b',
+                    'on' => TBL_USERS . '.id = b.user_id AND b.banned = 1'
+                ]
             ],
             [
-                'group' => TBL_USERS . '.`id`', // Группировка по ID пользователя
-                'order' => '`user_photo` DESC', // Сортировка по количеству фотографий
-                'limit' => $best_user, // Лимит на количество результатов
+                'where' => '
+                    activation = :activated 
+                    AND email_confirmed = :confirmed 
+                    AND deleted_at IS NULL 
+                    AND permanently_deleted = :permanently_deleted',
+                'group' => TBL_USERS . '.id',
+                'order' => 'user_photo DESC',
+                'limit' => $best_user,
+                'params' => [
+                        ':activated' => 1,
+                        ':confirmed' => 1,
+                        ':permanently_deleted' => 0,
+                ],
             ]
         );
-        $user_data = $this->db->res_arr();
-        // Проверка: $user_data может быть массивом (если данные есть) или false (если запрос не вернул данных).
-        // Обработка данных пользователей
+        $user_data = $this->db->result_array();
+        // Проверка: $user_data может быть массивом или false
         $array_data = ($user_data !== false) ? array_map(function ($current_user) {
             return [
                 'user_url'   => sprintf(
@@ -737,15 +766,17 @@ class Work_Template implements Work_Template_Interface
                 ),
                 'user_name'  => Work::clean_field($current_user['real_name']),
                 'user_photo' => (int)$current_user['user_photo'],
+                'banned'     => !empty($current_user['banned']) // универсально под все СУБД
             ];
         }, $user_data) : [];
 
-        // Добавление данных для пустого пользователя
+        // Добавление данных для "пустого" пользователя
         if (empty($array_data)) {
             $array_data[1] = [
                 'user_url'   => '',
                 'user_name'  => '---',
                 'user_photo' => '-',
+                'banned'     => false
             ];
         }
 
@@ -764,33 +795,43 @@ class Work_Template implements Work_Template_Interface
      * @brief   Генерирует массив статистических данных для шаблона через вызов внутреннего метода.
      *
      * @details Этот публичный метод является обёрткой для защищённого метода _template_stat_internal().
-     *          Он выполняет запросы к базе данных для получения статистической информации о пользователях,
-     *          категориях, фотографиях, оценках и онлайн-пользователях. Результат формируется в виде ассоциативного
-     *          массива для отображения статистики на странице. Метод также доступен через метод-фасад `template_stat()`
-     *          в родительском классе.
+     *          Он выполняет запросы к базе данных для получения статистической информации о:
+     *          - Зарегистрированных пользователях (с учётом активации, подтверждения email и мягкого удаления)
+     *          - Категориях и пользовательских альбомах
+     *          - Фотографиях
+     *          - Оценках от пользователей и модераторов
+     *          - Онлайн-пользователях (включая метку бана и перечёркнутое имя для заблокированных)
+     *
+     *          Результат формируется в виде ассоциативного массива для отображения статистики на странице.
+     *          Метод также доступен через метод-фасад `template_stat()` в родительском классе.
      *
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
+     * @callergraph
+     * @callgraph
+     *
      * @return array Ассоциативный массив данных для вывода статистики:
-     *               - NAME_BLOCK: Название блока статистики (локализованное через $this->lang['main']['stat_title']).
-     *               - L_STAT_REGIST: Подпись для количества зарегистрированных пользователей.
-     *               - D_STAT_REGIST: Количество зарегистрированных пользователей.
-     *               - L_STAT_PHOTO: Подпись для количества фотографий.
-     *               - D_STAT_PHOTO: Количество фотографий.
-     *               - L_STAT_CATEGORY: Подпись для количества категорий.
-     *               - D_STAT_CATEGORY: Количество категорий (включая пользовательские альбомы).
+     *               - NAME_BLOCK:        Название блока статистики (локализованное).
+     *               - L_STAT_REGIST:     Подпись для количества зарегистрированных пользователей.
+     *               - D_STAT_REGIST:     Количество зарегистрированных пользователей.
+     *               - L_STAT_PHOTO:      Подпись для количества фотографий.
+     *               - D_STAT_PHOTO:      Количество фотографий.
+     *               - L_STAT_CATEGORY:   Подпись для количества категорий.
+     *               - D_STAT_CATEGORY:   Количество категорий (включая пользовательские альбомы).
      *               - L_STAT_USER_ADMIN: Подпись для количества администраторов.
      *               - D_STAT_USER_ADMIN: Количество администраторов.
      *               - L_STAT_USER_MODER: Подпись для количества модераторов.
      *               - D_STAT_USER_MODER: Количество модераторов.
-     *               - L_STAT_RATE_USER: Подпись для количества пользовательских оценок.
-     *               - D_STAT_RATE_USER: Количество пользовательских оценок.
+     *               - L_STAT_RATE_USER:  Подпись для количества пользовательских оценок.
+     *               - D_STAT_RATE_USER:  Количество пользовательских оценок.
      *               - L_STAT_RATE_MODER: Подпись для количества модераторских оценок.
      *               - D_STAT_RATE_MODER: Количество модераторских оценок.
-     *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
-     *               - D_STAT_ONLINE: Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии
-     *                 онлайн-пользователей.
+     *               - L_STAT_ONLINE:     Подпись для онлайн-пользователей.
+     *               - D_STAT_ONLINE:     Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии
+     *                                    онлайн-пользователей. Пользователи в бане дополнительно выделяются:
+     *                                    - Иконкой `<i class="ban icon"></i>`
+     *                                    - Перечёркнутым именем `<s>...</s>`.
      *
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      * @throws Exception        При выполнении запросов к базам данных.
@@ -802,11 +843,15 @@ class Work_Template implements Work_Template_Interface
      *          - TBL_RATE_USER: Таблица с оценками фотографий от пользователей.
      *          - TBL_RATE_MODER: Таблица с оценками фотографий от модераторов.
      *          - VIEW_USERS_ONLINE: Представление со списком онлайн-пользователей.
+     *          Также используются глобальные константы групп:
+     *          - GROUP_ADMIN: ID группы администраторов.
+     *          - GROUP_MODER: ID группы модераторов.
      *
      * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER)
      *          и представление VIEW_USERS_ONLINE содержат корректные данные. Ошибки в структуре таблиц могут привести
      *          к некорректной статистике.
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
+     *          Это может привести к неожидаемому результату.
      *
      * Пример использования:
      * @code
@@ -817,10 +862,10 @@ class Work_Template implements Work_Template_Interface
      * $stat_data = $template->template_stat();
      * print_r($stat_data);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::_template_stat_internal()
-     *          Защищённый метод, выполняющий основную логику.
-     * @see     PhotoRigma::Classes::Work::template_stat()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_Template::_template_stat_internal()
+     *         Защищённый метод, выполняющий основную логику.
+     * @see    PhotoRigma::Classes::Work::template_stat()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function template_stat(): array
     {
@@ -833,13 +878,19 @@ class Work_Template implements Work_Template_Interface
      * @details Этот защищённый метод выполняет следующие действия:
      *          1. Выполняет запросы к базе данных для получения статистической информации:
      *             - Количество зарегистрированных пользователей, администраторов и модераторов из TBL_USERS.
+     *               Учитываются только:
+     *               - Пользователи с активацией (`activation = 1`)
+     *               - С подтверждённой почтой (`email_confirmed = 1`)
+     *               - Не удалённые (`deleted_at IS NULL AND permanently_deleted = 0`)
      *             - Количество категорий (включая пользовательские альбомы) из TBL_CATEGORY и TBL_PHOTO.
      *             - Количество фотографий из TBL_PHOTO.
      *             - Количество пользовательских и модераторских оценок из TBL_RATE_USER и TBL_RATE_MODER.
-     *             - Список онлайн-пользователей из VIEW_USERS_ONLINE.
+     *             - Список онлайн-пользователей из VIEW_USERS_ONLINE, соответствующих тем же условиям,
+     *               что и основная выборка.
      *          2. Обрабатывает результаты запросов:
      *             - Преобразует данные в целочисленные значения.
      *             - Для онлайн-пользователей формирует HTML-ссылки с очисткой данных через Work::clean_field().
+     *             - Пользователи в бане дополнительно обозначаются иконкой и перечёркнутым именем.
      *          3. Возвращает ассоциативный массив с локализованными подписями и данными для вывода статистики.
      *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
      *          Основная логика вызывается через публичный метод template_stat().
@@ -848,24 +899,26 @@ class Work_Template implements Work_Template_Interface
      * @callgraph
      *
      * @return array Ассоциативный массив данных для вывода статистики:
-     *               - NAME_BLOCK: Название блока статистики (локализованное через $this->lang['main']['stat_title']).
-     *               - L_STAT_REGIST: Подпись для количества зарегистрированных пользователей.
-     *               - D_STAT_REGIST: Количество зарегистрированных пользователей.
-     *               - L_STAT_PHOTO: Подпись для количества фотографий.
-     *               - D_STAT_PHOTO: Количество фотографий.
-     *               - L_STAT_CATEGORY: Подпись для количества категорий.
-     *               - D_STAT_CATEGORY: Количество категорий (включая пользовательские альбомы).
+     *               - NAME_BLOCK:        Название блока статистики (локализованное).
+     *               - L_STAT_REGIST:     Подпись для количества зарегистрированных пользователей.
+     *               - D_STAT_REGIST:     Количество зарегистрированных пользователей.
+     *               - L_STAT_PHOTO:      Подпись для количества фотографий.
+     *               - D_STAT_PHOTO:      Количество фотографий.
+     *               - L_STAT_CATEGORY:   Подпись для количества категорий.
+     *               - D_STAT_CATEGORY:   Количество категорий (включая пользовательские альбомы).
      *               - L_STAT_USER_ADMIN: Подпись для количества администраторов.
      *               - D_STAT_USER_ADMIN: Количество администраторов.
      *               - L_STAT_USER_MODER: Подпись для количества модераторов.
      *               - D_STAT_USER_MODER: Количество модераторов.
-     *               - L_STAT_RATE_USER: Подпись для количества пользовательских оценок.
-     *               - D_STAT_RATE_USER: Количество пользовательских оценок.
+     *               - L_STAT_RATE_USER:  Подпись для количества пользовательских оценок.
+     *               - D_STAT_RATE_USER:  Количество пользовательских оценок.
      *               - L_STAT_RATE_MODER: Подпись для количества модераторских оценок.
      *               - D_STAT_RATE_MODER: Количество модераторских оценок.
-     *               - L_STAT_ONLINE: Подпись для онлайн-пользователей.
-     *               - D_STAT_ONLINE: Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии
-     *                 онлайн-пользователей.
+     *               - L_STAT_ONLINE:     Подпись для онлайн-пользователей.
+     *               - D_STAT_ONLINE:     Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии
+     *                                    онлайн-пользователей. Пользователи в бане выделяются:
+     *                                    - Иконкой `<i class="ban icon"></i>`
+     *                                    - Перечёркнутым именем `<s>...</s>`.
      *
      * @throws RuntimeException Если возникает ошибка при выполнении запросов к базе данных.
      * @throws Exception        При выполнении запросов к базам данных.
@@ -877,6 +930,9 @@ class Work_Template implements Work_Template_Interface
      *          - TBL_RATE_USER: Таблица с оценками фотографий от пользователей.
      *          - TBL_RATE_MODER: Таблица с оценками фотографий от модераторов.
      *          - VIEW_USERS_ONLINE: Представление со списком онлайн-пользователей.
+     *          Также используются глобальные константы групп:
+     *          - GROUP_ADMIN: ID группы администраторов
+     *          - GROUP_MODER: ID группы модераторов
      *
      * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_CATEGORY, TBL_PHOTO, TBL_RATE_USER, TBL_RATE_MODER)
      *          и представление VIEW_USERS_ONLINE содержат корректные данные. Ошибки в структуре таблиц могут привести
@@ -888,14 +944,14 @@ class Work_Template implements Work_Template_Interface
      * $stat_data = $this->_template_stat_internal();
      * print_r($stat_data);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::$db
-     *          Свойство, содержащее объект для работы с базой данных.
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Метод для очистки данных.
-     * @see     PhotoRigma::Classes::Work_Template::template_stat()
-     *          Публичный метод, который вызывает этот внутренний метод.
-     * @see     PhotoRigma::Classes::Work_Template::$lang
-     *          Свойство, содержащее языковые строки.
+     * @see    PhotoRigma::Classes::Work_Template::$db
+     *         Свойство, содержащее объект для работы с базой данных.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Метод для очистки данных.
+     * @see    PhotoRigma::Classes::Work_Template::template_stat()
+     *         Публичный метод, который вызывает этот внутренний метод.
+     * @see    PhotoRigma::Classes::Work_Template::$lang
+     *         Свойство, содержащее языковые строки.
      */
     protected function _template_stat_internal(): array
     {
@@ -904,12 +960,21 @@ class Work_Template implements Work_Template_Interface
         $this->db->select(
             [
                 'COUNT(*) AS `regist_user`',
-                'SUM(CASE WHEN `group_id` = 3 THEN 1 ELSE 0 END) AS `user_admin`',
-                'SUM(CASE WHEN `group_id` = 2 THEN 1 ELSE 0 END) AS `user_moder`',
+                'SUM(CASE WHEN `group_id` = ' . GROUP_ADMIN . ' THEN 1 ELSE 0 END) AS `user_admin`',
+                'SUM(CASE WHEN `group_id` = ' . GROUP_MODER . ' THEN 1 ELSE 0 END) AS `user_moder`'
             ],
-            TBL_USERS
+            TBL_USERS,
+            [
+                'where' => '`activation` = :activated AND `email_confirmed` = :confirmed 
+                    AND `deleted_at` IS NULL AND `permanently_deleted` = :permanently_deleted',
+                'params' => [
+                    ':activated' => 1,
+                    ':confirmed' => 1,
+                    ':permanently_deleted' => 0
+                ]
+            ]
         );
-        $user_stats = $this->db->res_row();
+        $user_stats = $this->db->result_row();
         $stat['regist'] = $user_stats ? (int)$user_stats['regist_user'] : 0;
         $stat['user_admin'] = $user_stats ? (int)$user_stats['user_admin'] : 0;
         $stat['user_moder'] = $user_stats ? (int)$user_stats['user_moder'] : 0;
@@ -928,10 +993,13 @@ class Work_Template implements Work_Template_Interface
                 ],
             ],
             [
-                'where' => 'c.`id` != 0', // Условие WHERE
+                'where' => 'c.`id` != :id', // Условие WHERE
+                'params' => [
+                    ':id' => 0
+                ]
             ]
         );
-        $category_stats = $this->db->res_row();
+        $category_stats = $this->db->result_row();
 
         // Обработка результатов
         $stat['category'] = $category_stats ? (int)$category_stats['category'] : 0;
@@ -939,28 +1007,34 @@ class Work_Template implements Work_Template_Interface
         $stat['category'] += $stat['category_user'];
         // Получение статистики фотографий
         $this->db->select(['COUNT(*) AS `photo_count`'], TBL_PHOTO);
-        $photo_stats = $this->db->res_row();
+        $photo_stats = $this->db->result_row();
         $stat['photo'] = $photo_stats ? (int)$photo_stats['photo_count'] : 0;
         // Получение статистики оценок
         $this->db->select(['COUNT(*) AS `rate_user`'], TBL_RATE_USER);
-        $rate_user_stats = $this->db->res_row();
+        $rate_user_stats = $this->db->result_row();
         $stat['rate_user'] = $rate_user_stats ? (int)$rate_user_stats['rate_user'] : 0;
         $this->db->select(['COUNT(*) AS `rate_moder`'], TBL_RATE_MODER);
-        $rate_moder_stats = $this->db->res_row();
+        $rate_moder_stats = $this->db->result_row();
         $stat['rate_moder'] = $rate_moder_stats ? (int)$rate_moder_stats['rate_moder'] : 0;
         // Получение онлайн-пользователей
         $this->db->select(
             '*',
             VIEW_USERS_ONLINE
         );
-        $online_users_data = $this->db->res_arr();
+        $online_users_data = $this->db->result_array();
         $stat['online'] = $online_users_data ? implode(', ', array_map(function ($user) {
+            // Чистим имя
+            $name = Work::clean_field($user['real_name']);
+
+            // Формируем ссылку
+            /** @noinspection HtmlUnknownTarget */
             return sprintf(
-                '<a href="%s?action=profile&amp;subact=profile&amp;uid=%d" title="%s">%s</a>',
+                '<a href="%s?action=profile&amp;subact=profile&amp;uid=%d" style="white-space: nowrap;" title="%s">%s%s</a>',
                 $this->config['site_url'],
                 $user['id'],
-                Work::clean_field($user['real_name']),
-                Work::clean_field($user['real_name'])
+                $name,
+                (!empty($user['banned']) ? '<s><i class="ban icon"></i>' : ''),
+                $name . (!empty($user['banned']) ? '</s>' : '')
             );
         }, $online_users_data)) . '.' : $this->lang['main']['stat_no_online'];
         // Формирование результирующего массива
@@ -992,23 +1066,26 @@ class Work_Template implements Work_Template_Interface
      *          Он формирует массив данных для блока пользователя в зависимости от статуса авторизации:
      *          - Для неавторизованных пользователей: ссылки на вход, восстановление пароля и регистрацию.
      *          - Для авторизованных пользователей: приветствие, группа и аватар (или дефолтный аватар, если файл
-     *          недоступен). Метод также доступен через метод-фасад `template_user()` в родительском классе.
+     *            недоступен). Метод также доступен через метод-фасад `template_user()` в родительском классе.
      *
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
+     *
+     * @callergraph
+     * @callgraph
      *
      * @return array Массив с данными для блока пользователя:
      *               - Для неавторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока (локализованное через $this->lang['main']['user_block']).
      *                 - 'CSRF_TOKEN': CSRF-токен для защиты формы.
      *                 - 'L_LOGIN', 'L_PASSWORD', 'L_ENTER', 'L_FORGOT_PASSWORD', 'L_REGISTRATION': Локализованные
-     *                 строки.
+     *                   строки.
      *                 - 'U_LOGIN', 'U_FORGOT_PASSWORD', 'U_REGISTRATION': URL для входа, восстановления пароля и
-     *                 регистрации.
+     *                   регистрации.
      *               - Для авторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока (локализованное через $this->lang['main']['user_block']).
      *                 - 'L_HI_USER': Приветствие с именем пользователя (локализованное через
-     *                 $this->lang['main']['hi_user']).
+     *                   $this->lang['main']['hi_user']).
      *                 - 'L_GROUP': Группа пользователя (локализованная строка).
      *                 - 'U_AVATAR': URL аватара (или дефолтного аватара, если файл недоступен или некорректен).
      *
@@ -1032,10 +1109,10 @@ class Work_Template implements Work_Template_Interface
      * $user_block = $template->template_user();
      * print_r($user_block);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::_template_user_internal()
-     *          Защищённый метод, выполняющий основную логику.
-     * @see     PhotoRigma::Classes::Work::template_user()
-     *          Метод-фасад в родительском классе для вызова этой логики.
+     * @see    PhotoRigma::Classes::Work_Template::_template_user_internal()
+     *         Защищённый метод, выполняющий основную логику.
+     * @see    PhotoRigma::Classes::Work::template_user()
+     *         Метод-фасад в родительском классе для вызова этой логики.
      */
     public function template_user(): array
     {
@@ -1071,7 +1148,7 @@ class Work_Template implements Work_Template_Interface
      *               - Для авторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока (локализованное через $this->lang['main']['user_block']).
      *                 - 'L_HI_USER': Приветствие с именем пользователя (локализованное через
-     *                 $this->lang['main']['hi_user']).
+     *                   $this->lang['main']['hi_user']).
      *                 - 'L_GROUP': Группа пользователя (локализованная строка).
      *                 - 'U_AVATAR': URL аватара (или дефолтного аватара, если файл недоступен или некорректен).
      *
@@ -1091,18 +1168,18 @@ class Work_Template implements Work_Template_Interface
      * $array_data = $this->_template_user_internal();
      * print_r($array_data);
      * @endcode
-     * @see     PhotoRigma::Classes::Work_Template::$user
-     *          Свойство, содержащее данные текущего пользователя.
-     * @see     PhotoRigma::Include::log_in_file()
-     *          Функция для логирования ошибок.
-     * @see     PhotoRigma::Classes::Work::clean_field()
-     *          Метод для очистки данных.
-     * @see     PhotoRigma::Classes::Work::validate_mime_type()
-     *          Метод для проверки MIME-типа файла.
-     * @see     PhotoRigma::Classes::Work_Template::template_user()
-     *          Публичный метод, который вызывает этот внутренний метод.
-     * @see     PhotoRigma::Classes::Work_Template::$lang
-     *          Свойство, содержащее языковые строки.
+     * @see    PhotoRigma::Classes::Work_Template::$user
+     *         Свойство, содержащее данные текущего пользователя.
+     * @see    PhotoRigma::Include::log_in_file()
+     *         Функция для логирования ошибок.
+     * @see    PhotoRigma::Classes::Work::clean_field()
+     *         Метод для очистки данных.
+     * @see    PhotoRigma::Classes::Work::validate_mime_type()
+     *         Метод для проверки MIME-типа файла.
+     * @see    PhotoRigma::Classes::Work_Template::template_user()
+     *         Публичный метод, который вызывает этот внутренний метод.
+     * @see    PhotoRigma::Classes::Work_Template::$lang
+     *         Свойство, содержащее языковые строки.
      */
     protected function _template_user_internal(): array
     {

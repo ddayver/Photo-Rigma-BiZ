@@ -1,0 +1,9 @@
+<map id="hard_delete_user" name="hard_delete_user">
+<area shape="rect" id="Node000001" title="Публичный метод для окончательного обезличивания личных данных пользователя." alt="" coords="5,33,126,58"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ac4c1020c1604de75d27c31dbe77e2fb7" title="Выполняет окончательное обезличивание записи пользователя." alt="" coords="174,33,350,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,43,158,43,158,48,126,48"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acaafe0adac99eb3c3223a78198854401" title="Удаляет личные фото пользователя (категория 0) через существующий метод del_photo()." alt="" coords="398,5,567,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="350,32,382,28,383,33,351,37"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae7bbb3d70503c2c3ab7de0e44bf83798" title="Возвращает данные о сроке восстановления аккаунта." alt="" coords="404,54,561,93"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="351,54,389,59,388,64,350,60"/>
+</map>

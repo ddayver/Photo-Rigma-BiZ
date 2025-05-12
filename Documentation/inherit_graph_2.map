@@ -1,5 +1,5 @@
 <map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
-<area shape="rect" id="Node000000" href="$d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html" title="Интерфейс для работы с базами данных через PDO." alt="" coords="5,5,140,30"/>
-<area shape="rect" id="Node000001" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html" title="Класс для работы с базами данных через PDO." alt="" coords="188,5,264,30"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="155,15,187,15,187,20,155,20"/>
+<area shape="rect" id="Node000000" href="$da/d1b/interfacePhotoRigma_1_1Interfaces_1_1Template__Interface.html" title="Интерфейс для работы с шаблонами." alt="" coords="5,5,139,30"/>
+<area shape="rect" id="Node000001" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html" title="Класс для работы с шаблонами." alt="" coords="187,5,262,30"/>
+<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="154,15,186,15,186,20,154,20"/>
 </map>

@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "Photo-Rigma-BiZ", "index.html", [
     [ "Photo Rigma BiZ 📸", "index.html", "index" ],
-    [ "Список задач", "dd/da0/todo.html", null ],
     [ "Разделы", "topics.html", "topics" ],
     [ "Пространства имен", "namespaces.html", [
       [ "Пространства имен", "namespaces.html", "namespaces_dup" ],
@@ -55,10 +54,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af2c9d62818d2abcda848c5f966a7806a",
+"d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af1b08f0490df0963b0daac6690d4765f",
 "d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a89d4e7cb491d0c91282d16ff5abe3138",
-"de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a502e1ec863ea4d7c7fcda54ea1ec355f",
-"functions_func_b.html"
+"de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a3b68a9172091fe4785329b0eab4a4559",
+"df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae5495df50f19c5657eccf4d313bbc98c"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

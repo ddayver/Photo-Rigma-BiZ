@@ -1,0 +1,7 @@
+<map id="_edit_avatar" name="_edit_avatar">
+<area shape="rect" id="Node000001" title="Обрабатывает загрузку аватара пользователя и возвращает имя нового аватара или значение по умолчанию ..." alt="" coords="406,5,498,30"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2ca555fe6bbef0b0a691c03111ffe700" title="Обновляет данные существующего пользователя, включая пароль, email, имя и аватар." alt="" coords="178,5,358,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="390,20,359,20,359,15,390,15"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a855f88015180a39f2464a41a2ce2a5c2" title="Обновляет данные существующего пользователя через вызов внутреннего метода." alt="" coords="5,5,130,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="162,20,130,20,130,15,162,15"/>
+</map>

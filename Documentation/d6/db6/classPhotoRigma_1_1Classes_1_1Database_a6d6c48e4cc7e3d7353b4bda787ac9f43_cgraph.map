@@ -1,0 +1,8 @@
+<map id="_fts_check_options" name="_fts_check_options">
+<area shape="rect" id="Node000001" title="Формирует финальный массив опций для запроса с учетом базовых FTS&#45;опций и внешних условий/дополнений." alt="" coords="5,29,140,54"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="43,30,37,21,40,11,52,5,73,3,94,5,106,12,103,17,93,10,72,8,54,10,44,15,42,20,48,28"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a852d15f131983e6f53045146bede2958" title="Формирует строку дополнений для SQL&#45;запроса (например, WHERE, GROUP BY, ORDER BY, LIMIT)." alt="" coords="188,29,309,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,39,172,39,172,44,140,44"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a24acdb048ce17d880bd12b0f74567352" title="Формирует группу условий для WHERE с указанным оператором (OR/NOT)." alt="" coords="357,29,493,54"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="310,39,342,39,342,44,310,44"/>
+</map>

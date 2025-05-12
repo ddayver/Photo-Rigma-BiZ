@@ -1,9 +1,0 @@
-<map id="url_mod_rewrite" name="url_mod_rewrite">
-<area shape="rect" id="Node000001" title="Метод преобразует URL в &quot;красивый&quot; вид (например, ?action=profile&amp;id=123 → profile/id_123...." alt="" coords="537,5,651,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#adb3b69ac7b01b40a43410bad7576b9f4" title="Метод обрабатывает шаблон для подготовки его к выводу: рекурсивно обрабатывает объектные блоки,..." alt="" coords="386,5,489,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="522,20,490,20,490,15,522,15"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4ec1d1b401701fe4bc86759130951668" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="168,5,338,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="370,20,338,20,338,15,370,15"/>
-<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="5,5,120,30"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,20,120,20,120,15,152,15"/>
-</map>

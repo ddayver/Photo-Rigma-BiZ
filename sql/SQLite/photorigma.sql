@@ -1,5 +1,5 @@
 --
--- Файл сгенерирован с помощью SQLiteStudio v3.4.17 в чт мая 1 03:00:47 2025
+-- Файл сгенерирован с помощью SQLiteStudio v3.4.17 в пн мая 12 00:15:28 2025
 --
 -- Использованная кодировка текста: UTF-8
 --
@@ -27,35 +27,13 @@ CREATE VIRTUAL TABLE IF NOT EXISTS category_fts USING fts5(
 );
 INSERT INTO category_fts (name, description) VALUES ('Пользовательский альбом', 'Персональный пользовательский альбом');
 
--- Таблица: category_fts_config
-DROP TABLE IF EXISTS category_fts_config;
-CREATE TABLE IF NOT EXISTS 'category_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID;
-INSERT INTO category_fts_config (k, v) VALUES ('version', 4);
-
--- Таблица: category_fts_data
-DROP TABLE IF EXISTS category_fts_data;
-CREATE TABLE IF NOT EXISTS 'category_fts_data'(id INTEGER PRIMARY KEY, block BLOB);
-INSERT INTO category_fts_data (id, block) VALUES (1, X'010203');
-INSERT INTO category_fts_data (id, block) VALUES (10, X'000000000101010001010101');
-INSERT INTO category_fts_data (id, block) VALUES (137438953473, X'0000005B0D30D0B0D0BBD18CD0B1D0BED0BC0008030101040217BFD0B5D180D181D0BED0BDD0B0D0BBD18CD0BDD18BD0B90006010102041DBED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18CD181D0BAD0B8D0B900080201010304141E');
-
--- Таблица: category_fts_docsize
-DROP TABLE IF EXISTS category_fts_docsize;
-CREATE TABLE IF NOT EXISTS 'category_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB);
-INSERT INTO category_fts_docsize (id, sz) VALUES (0, X'0203');
-
--- Таблица: category_fts_idx
-DROP TABLE IF EXISTS category_fts_idx;
-CREATE TABLE IF NOT EXISTS 'category_fts_idx'(segid, term, pgno, PRIMARY KEY(segid, term)) WITHOUT ROWID;
-INSERT INTO category_fts_idx (segid, term, pgno) VALUES (1, NULL, 2);
-
 -- Таблица: change_timestamp
 DROP TABLE IF EXISTS change_timestamp;
 CREATE TABLE IF NOT EXISTS change_timestamp (
     table_name TEXT PRIMARY KEY, -- Имя таблицы
     last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Время последнего обновления
 );
-INSERT INTO change_timestamp (table_name, last_update) VALUES ('config', '2025-04-10 00:41:12');
+INSERT INTO change_timestamp (table_name, last_update) VALUES ('config', '2025-05-11 21:14:49');
 
 -- Таблица: config
 DROP TABLE IF EXISTS config;
@@ -78,7 +56,7 @@ INSERT INTO config (name, value) VALUES ('max_file_size', '5M');
 INSERT INTO config (name, value) VALUES ('max_photo_w', '640');
 INSERT INTO config (name, value) VALUES ('time_user_online', '900');
 INSERT INTO config (name, value) VALUES ('gal_width', '95%');
-INSERT INTO config (name, value) VALUES ('themes', 'default');
+INSERT INTO config (name, value) VALUES ('theme', 'default');
 INSERT INTO config (name, value) VALUES ('copyright_url', 'https://rigma.biz/');
 INSERT INTO config (name, value) VALUES ('title_name', 'Rigma Foto');
 INSERT INTO config (name, value) VALUES ('meta_description', 'Rigma.BiZ - фотогалерея Gold Rigma');
@@ -86,20 +64,21 @@ INSERT INTO config (name, value) VALUES ('meta_keywords', 'Rigma.BiZ photo galle
 INSERT INTO config (name, value) VALUES ('language', 'russian');
 INSERT INTO config (name, value) VALUES ('copyright_text', 'Проекты Rigma.BiZ');
 INSERT INTO config (name, value) VALUES ('title_description', 'Фотогалерея Rigma и Co');
+INSERT INTO config (name, value) VALUES ('timezone', 'UTC');
 
 -- Таблица: db_version
 DROP TABLE IF EXISTS db_version;
 CREATE TABLE IF NOT EXISTS db_version (
   ver TEXT PRIMARY KEY -- Номер версии
 );
-INSERT INTO db_version (ver) VALUES ('0.4.0');
+INSERT INTO db_version (ver) VALUES ('0.4.4');
 
 -- Таблица: groups
 DROP TABLE IF EXISTS groups;
 CREATE TABLE IF NOT EXISTS groups (
-  id INTEGER PRIMARY KEY DEFAULT 0, -- Идентификатор группы
-  name TEXT NOT NULL, -- Название группы
-  user_rights TEXT DEFAULT NULL -- Права доступа
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    user_rights TEXT DEFAULT NULL
 );
 INSERT INTO groups (id, name, user_rights) VALUES (0, 'Гость', '{"pic_view":true,"pic_rate_user":false,"pic_rate_moder":false,"pic_upload":false,"pic_moderate":false,"cat_moderate":false,"cat_user":false,"comment_view":true,"comment_add":false,"comment_moderate":false,"news_view":true,"news_add":false,"news_moderate":false,"admin":false}');
 INSERT INTO groups (id, name, user_rights) VALUES (1, 'Пользователь', '{"pic_view": true, "pic_rate_user": true, "pic_rate_moder": false, "pic_upload": true, "pic_moderate": false, "cat_moderate": false, "cat_user": true, "comment_view": true, "comment_add": true, "comment_moderate": false, "news_view": true, "news_add": false, "news_moderate": false, "admin": false}');
@@ -135,13 +114,13 @@ INSERT INTO menu (id, action, url_action, name_action, short, long, user_login, 
 -- Таблица: news
 DROP TABLE IF EXISTS news;
 CREATE TABLE IF NOT EXISTS news (
-  id INTEGER PRIMARY KEY AUTOINCREMENT, -- Идентификатор новости
-  data_post DATE NOT NULL, -- Дата публикации
-  data_last_edit TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Дата обновления
-  user_post INTEGER NOT NULL, -- Идентификатор добавившего новость пользователя
-  name_post TEXT NOT NULL, -- Название новости
-  text_post TEXT NOT NULL, -- Текст новости
-  FOREIGN KEY (user_post) REFERENCES users (id) -- Внешний ключ на таблицу `users`
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_post DATE NOT NULL,
+    data_last_edit TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_post INTEGER NOT NULL,
+    name_post TEXT NOT NULL,
+    text_post TEXT NOT NULL,
+    FOREIGN KEY (user_post) REFERENCES users (id)
 );
 
 -- Таблица: news_fts
@@ -154,39 +133,20 @@ CREATE VIRTUAL TABLE IF NOT EXISTS news_fts USING fts5(
     tokenize='porter'
 );
 
--- Таблица: news_fts_config
-DROP TABLE IF EXISTS news_fts_config;
-CREATE TABLE IF NOT EXISTS 'news_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID;
-INSERT INTO news_fts_config (k, v) VALUES ('version', 4);
-
--- Таблица: news_fts_data
-DROP TABLE IF EXISTS news_fts_data;
-CREATE TABLE IF NOT EXISTS 'news_fts_data'(id INTEGER PRIMARY KEY, block BLOB);
-INSERT INTO news_fts_data (id, block) VALUES (1, X'000000');
-INSERT INTO news_fts_data (id, block) VALUES (10, X'00000000000000');
-
--- Таблица: news_fts_docsize
-DROP TABLE IF EXISTS news_fts_docsize;
-CREATE TABLE IF NOT EXISTS 'news_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB);
-
--- Таблица: news_fts_idx
-DROP TABLE IF EXISTS news_fts_idx;
-CREATE TABLE IF NOT EXISTS 'news_fts_idx'(segid, term, pgno, PRIMARY KEY(segid, term)) WITHOUT ROWID;
-
 -- Таблица: photo
 DROP TABLE IF EXISTS photo;
 CREATE TABLE IF NOT EXISTS photo (
-  id INTEGER PRIMARY KEY AUTOINCREMENT, -- Идентификатор
-  file TEXT NOT NULL, -- Имя файла
-  name TEXT NOT NULL, -- Название фотографии
-  description TEXT NOT NULL, -- Описание фотографии
-  category INTEGER NOT NULL, -- Идентификатор раздела
-  date_upload TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Дата загрузки фото
-  user_upload INTEGER NOT NULL, -- Идентификатор пользователя, залившего фото
-  rate_user REAL NOT NULL DEFAULT 0, -- Оценка от пользователя
-  rate_moder REAL NOT NULL DEFAULT 0, -- Оценка от модератора
-  FOREIGN KEY (category) REFERENCES category (id), -- Внешний ключ на таблицу `category`
-  FOREIGN KEY (user_upload) REFERENCES users (id) -- Внешний ключ на таблицу `users`
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    file TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    category INTEGER NOT NULL,
+    date_upload TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_upload INTEGER NOT NULL,
+    rate_user REAL NOT NULL DEFAULT 0,
+    rate_moder REAL NOT NULL DEFAULT 0,
+    FOREIGN KEY (category) REFERENCES category(id),
+    FOREIGN KEY (user_upload) REFERENCES users(id)
 );
 
 -- Таблица: photo_fts
@@ -198,25 +158,6 @@ CREATE VIRTUAL TABLE IF NOT EXISTS photo_fts USING fts5(
     content_rowid='id',
     tokenize='porter'
 );
-
--- Таблица: photo_fts_config
-DROP TABLE IF EXISTS photo_fts_config;
-CREATE TABLE IF NOT EXISTS 'photo_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID;
-INSERT INTO photo_fts_config (k, v) VALUES ('version', 4);
-
--- Таблица: photo_fts_data
-DROP TABLE IF EXISTS photo_fts_data;
-CREATE TABLE IF NOT EXISTS 'photo_fts_data'(id INTEGER PRIMARY KEY, block BLOB);
-INSERT INTO photo_fts_data (id, block) VALUES (1, X'000000');
-INSERT INTO photo_fts_data (id, block) VALUES (10, X'00000000000000');
-
--- Таблица: photo_fts_docsize
-DROP TABLE IF EXISTS photo_fts_docsize;
-CREATE TABLE IF NOT EXISTS 'photo_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB);
-
--- Таблица: photo_fts_idx
-DROP TABLE IF EXISTS photo_fts_idx;
-CREATE TABLE IF NOT EXISTS 'photo_fts_idx'(segid, term, pgno, PRIMARY KEY(segid, term)) WITHOUT ROWID;
 
 -- Таблица: query_logs
 DROP TABLE IF EXISTS query_logs;
@@ -234,44 +175,63 @@ CREATE TABLE IF NOT EXISTS query_logs (
 -- Таблица: rate_moder
 DROP TABLE IF EXISTS rate_moder;
 CREATE TABLE IF NOT EXISTS rate_moder (
-  id_foto INTEGER NOT NULL, -- Идентификатор фото
-  id_user INTEGER NOT NULL, -- Идентификатор пользователя
-  rate INTEGER NOT NULL DEFAULT 0, -- Оценка от -2 до +2
-  PRIMARY KEY (id_foto, id_user), -- Составной первичный ключ
-  FOREIGN KEY (id_foto) REFERENCES photo (id) ON DELETE CASCADE, -- Внешний ключ на таблицу `photo`
-  FOREIGN KEY (id_user) REFERENCES users (id) ON DELETE CASCADE -- Внешний ключ на таблицу `users`
+    id_foto INTEGER NOT NULL,
+    id_user INTEGER NOT NULL,
+    rate INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (id_foto, id_user),
+    FOREIGN KEY (id_foto) REFERENCES photo(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Таблица: rate_user
 DROP TABLE IF EXISTS rate_user;
 CREATE TABLE IF NOT EXISTS rate_user (
-  id_foto INTEGER NOT NULL, -- Идентификатор фото
-  id_user INTEGER NOT NULL, -- Идентификатор пользователя
-  rate INTEGER NOT NULL DEFAULT 0, -- Оценка от -2 до +2
-  PRIMARY KEY (id_foto, id_user), -- Составной первичный ключ
-  FOREIGN KEY (id_foto) REFERENCES photo (id) ON DELETE CASCADE, -- Внешний ключ на таблицу `photo`
-  FOREIGN KEY (id_user) REFERENCES users (id) ON DELETE CASCADE -- Внешний ключ на таблицу `users`
+    id_foto INTEGER NOT NULL,
+    id_user INTEGER NOT NULL,
+    rate INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (id_foto, id_user),
+    FOREIGN KEY (id_foto) REFERENCES photo(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Таблица: user_bans
+DROP TABLE IF EXISTS user_bans;
+CREATE TABLE IF NOT EXISTS user_bans (
+    user_id INTEGER NOT NULL PRIMARY KEY,
+    banned INTEGER NOT NULL DEFAULT 1,        
+    reason TEXT,
+    expires_at DATETIME DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Таблица: users
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT, -- Идентификатор пользователя
-  login TEXT NOT NULL UNIQUE, -- Логин пользователя
-  password TEXT NOT NULL, -- Пароль пользователя
-  real_name TEXT NOT NULL, -- Отображаемое имя пользователя
-  email TEXT NOT NULL, -- E-mail пользователя
-  avatar TEXT NOT NULL DEFAULT 'no_avatar.jpg', -- Имя файла аватара пользователя
-  language TEXT NOT NULL DEFAULT 'russian', -- Язык сайта
-  theme TEXT NOT NULL DEFAULT 'default', -- Тема сайта
-  date_regist TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Дата регистрации
-  date_last_activ TIMESTAMP DEFAULT NULL, -- Дата последней активности
-  date_last_logout TIMESTAMP DEFAULT NULL, -- Дата последнего выхода
-  group_id INTEGER NOT NULL DEFAULT 0, -- Идентификатор группы пользователя
-  user_rights TEXT DEFAULT NULL, -- Права доступа
-  FOREIGN KEY (group_id) REFERENCES groups (id) -- Внешний ключ на таблицу `groups`
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    real_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    email_confirmed INTEGER NOT NULL DEFAULT 0,
+    avatar TEXT NOT NULL DEFAULT 'no_avatar.jpg',
+    language TEXT NOT NULL DEFAULT 'russian',
+    theme TEXT NOT NULL DEFAULT 'default',
+    timezone TEXT NOT NULL DEFAULT 'UTC',
+    activation INTEGER NOT NULL DEFAULT 0,
+    date_regist TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_last_activ TIMESTAMP DEFAULT NULL,
+    date_last_logout TIMESTAMP DEFAULT NULL,
+    deleted_at DATETIME DEFAULT NULL,
+    permanently_deleted INTEGER NOT NULL DEFAULT 0,
+    token TEXT DEFAULT NULL,
+    token_expires_at DATETIME DEFAULT NULL,
+    group_id INTEGER NOT NULL DEFAULT 0,
+    allow_newsletter INTEGER NOT NULL DEFAULT 0,
+    user_rights TEXT DEFAULT NULL,
+    other_params TEXT DEFAULT NULL
 );
-INSERT INTO users (id, login, password, real_name, email, avatar, language, theme, date_regist, date_last_activ, date_last_logout, group_id, user_rights) VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', 'default', '2009-01-20 12:31:35', '2025-04-07 15:10:36', '2025-04-05 11:21:57', 3, '{"pic_view": true, "pic_rate_user": true, "pic_rate_moder": true, "pic_upload": true, "pic_moderate": true, "cat_moderate": true, "cat_user": true, "comment_view": true, "comment_add": true, "comment_moderate": true, "news_view": true, "news_add": true, "news_moderate": true, "admin": true}');
+INSERT INTO users (id, login, password, real_name, email, email_confirmed, avatar, language, theme, timezone, activation, date_regist, date_last_activ, date_last_logout, deleted_at, permanently_deleted, token, token_expires_at, group_id, allow_newsletter, user_rights, other_params) VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 1, 'no_avatar.jpg', 'russian', 'default', 'UTC', 1, '2009-01-20 12:31:35', '2025-04-07 15:10:36', '2025-04-05 11:21:57', NULL, 0, NULL, NULL, 3, 0, '{"pic_view": true, "pic_rate_user": true, "pic_rate_moder": true, "pic_upload": true, "pic_moderate": true, "cat_moderate": true, "cat_user": true, "comment_view": true, "comment_add": true, "comment_moderate": true, "news_view": true, "news_add": true, "news_moderate": true, "admin": true}', NULL);
 
 -- Таблица: users_fts
 DROP TABLE IF EXISTS users_fts;
@@ -284,28 +244,6 @@ CREATE VIRTUAL TABLE IF NOT EXISTS users_fts USING fts5(
     tokenize='porter'
 );
 INSERT INTO users_fts (login, real_name, email) VALUES ('admin', 'Администратор', 'admin@rigma.biz');
-
--- Таблица: users_fts_config
-DROP TABLE IF EXISTS users_fts_config;
-CREATE TABLE IF NOT EXISTS 'users_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID;
-INSERT INTO users_fts_config (k, v) VALUES ('version', 4);
-
--- Таблица: users_fts_data
-DROP TABLE IF EXISTS users_fts_data;
-CREATE TABLE IF NOT EXISTS 'users_fts_data'(id INTEGER PRIMARY KEY, block BLOB);
-INSERT INTO users_fts_data (id, block) VALUES (1, X'01010103');
-INSERT INTO users_fts_data (id, block) VALUES (10, X'000000000101010001010101');
-INSERT INTO users_fts_data (id, block) VALUES (137438953473, X'00000048063061646D696E010802010202010362697A010601020401057269676D610106010203011AD0B0D0B4D0BCD0B8D0BDD0B8D181D182D180D0B0D182D0BED1800106010102040D0A0C');
-
--- Таблица: users_fts_docsize
-DROP TABLE IF EXISTS users_fts_docsize;
-CREATE TABLE IF NOT EXISTS 'users_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB);
-INSERT INTO users_fts_docsize (id, sz) VALUES (1, X'010103');
-
--- Таблица: users_fts_idx
-DROP TABLE IF EXISTS users_fts_idx;
-CREATE TABLE IF NOT EXISTS 'users_fts_idx'(segid, term, pgno, PRIMARY KEY(segid, term)) WITHOUT ROWID;
-INSERT INTO users_fts_idx (segid, term, pgno) VALUES (1, NULL, 2);
 
 -- Индекс: idx_config_value
 DROP INDEX IF EXISTS idx_config_value;
@@ -325,10 +263,6 @@ CREATE INDEX IF NOT EXISTS "idx_menu_short" ON "menu" (
 	"short"
 );
 
--- Индекс: idx_photo_category_user_upload
-DROP INDEX IF EXISTS idx_photo_category_user_upload;
-CREATE INDEX IF NOT EXISTS idx_photo_category_user_upload ON photo (category, user_upload);
-
 -- Индекс: idx_photo_date_upload
 DROP INDEX IF EXISTS idx_photo_date_upload;
 CREATE INDEX IF NOT EXISTS idx_photo_date_upload ON photo (date_upload);
@@ -345,18 +279,43 @@ CREATE INDEX IF NOT EXISTS idx_rate_moder_id_user ON rate_moder (id_user);
 DROP INDEX IF EXISTS idx_rate_user_id_user;
 CREATE INDEX IF NOT EXISTS idx_rate_user_id_user ON rate_user (id_user);
 
+-- Индекс: idx_user_bans_expires
+DROP INDEX IF EXISTS idx_user_bans_expires;
+CREATE INDEX IF NOT EXISTS idx_user_bans_expires ON user_bans(expires_at);
+
+-- Индекс: idx_user_bans_user_id
+DROP INDEX IF EXISTS idx_user_bans_user_id;
+CREATE INDEX IF NOT EXISTS idx_user_bans_user_id ON user_bans(user_id);
+
+-- Индекс: idx_users_allow_newsletter
+DROP INDEX IF EXISTS idx_users_allow_newsletter;
+CREATE INDEX IF NOT EXISTS idx_users_allow_newsletter ON users(allow_newsletter);
+
 -- Индекс: idx_users_date_last_activ
 DROP INDEX IF EXISTS idx_users_date_last_activ;
 CREATE INDEX IF NOT EXISTS idx_users_date_last_activ ON users (date_last_activ);
+
+-- Индекс: idx_users_deleted_at
+DROP INDEX IF EXISTS idx_users_deleted_at;
+CREATE INDEX IF NOT EXISTS idx_users_deleted_at ON users (deleted_at);
 
 -- Индекс: idx_users_group_id
 DROP INDEX IF EXISTS idx_users_group_id;
 CREATE INDEX IF NOT EXISTS idx_users_group_id ON users (group_id);
 
+-- Индекс: idx_users_token
+DROP INDEX IF EXISTS idx_users_token;
+CREATE INDEX IF NOT EXISTS idx_users_token ON users(token);
+
+-- Индекс: idx_users_token_expires
+DROP INDEX IF EXISTS idx_users_token_expires;
+CREATE INDEX IF NOT EXISTS idx_users_token_expires ON users(token_expires_at);
+
 -- Представление: random_photo
 DROP VIEW IF EXISTS random_photo;
 CREATE VIEW IF NOT EXISTS random_photo AS
-SELECT photo.id AS id, photo.file AS file, photo.name AS name, photo.description AS description, photo.category AS category, photo.rate_user AS rate_user, photo.rate_moder AS rate_moder, photo.user_upload AS user_upload
+SELECT photo.id AS id, photo.file AS file, photo.name AS name, photo.description AS description, photo.category AS category,
+       photo.rate_user AS rate_user, photo.rate_moder AS rate_moder, photo.user_upload AS user_upload
 FROM photo
 WHERE photo.id = (
     SELECT photo.id FROM photo ORDER BY RANDOM() LIMIT 1
@@ -365,9 +324,21 @@ WHERE photo.id = (
 -- Представление: users_online
 DROP VIEW IF EXISTS users_online;
 CREATE VIEW IF NOT EXISTS users_online AS
-SELECT users.id AS id, users.real_name AS real_name
-FROM users
-WHERE users.date_last_activ >= DATETIME('now', '-' || (SELECT value FROM config WHERE name = 'time_user_online') || ' seconds');
+SELECT
+    u.id,
+    u.real_name,
+    CASE
+        WHEN b.user_id IS NOT NULL THEN 1
+        ELSE 0
+    END AS banned
+FROM users u
+LEFT JOIN user_bans b ON u.id = b.user_id AND b.banned = 1
+WHERE
+    u.date_last_activ >= DATETIME('now', '-' || (SELECT value FROM config WHERE name = 'time_user_online') || ' seconds')
+    AND u.activation = 1
+    AND u.email_confirmed = 1
+    AND u.deleted_at IS NULL
+    AND u.permanently_deleted = 0;
 
 -- Триггер: category_fts_after_insert
 DROP TRIGGER IF EXISTS category_fts_after_insert;
@@ -470,11 +441,12 @@ END;
 
 -- Триггер: trg_prevent_deletion_groups
 DROP TRIGGER IF EXISTS trg_prevent_deletion_groups;
-CREATE TRIGGER IF NOT EXISTS trg_prevent_deletion_groups BEFORE DELETE ON groups
+CREATE TRIGGER IF NOT EXISTS trg_prevent_deletion_groups
+BEFORE DELETE ON groups
 FOR EACH ROW
+WHEN OLD.id BETWEEN 0 AND 3
 BEGIN
-    -- Проверяем, является ли id служебным
-    SELECT RAISE(IGNORE) WHERE OLD.id BETWEEN 0 AND 3;
+    SELECT RAISE(IGNORE);
 END;
 
 -- Триггер: trg_update_rate_moder_after_delete
@@ -551,9 +523,7 @@ END;
 -- Триггер: users_fts_after_update
 DROP TRIGGER IF EXISTS users_fts_after_update;
 CREATE TRIGGER IF NOT EXISTS users_fts_after_update AFTER UPDATE ON users BEGIN
-    -- Обновляем FTS-запись: сначала удаляем старую
     DELETE FROM users_fts WHERE rowid = old.id;
-    -- Затем добавляем новую
     INSERT INTO users_fts(rowid, login, real_name, email)
     VALUES (new.id, new.login, new.real_name, new.email);
 END;

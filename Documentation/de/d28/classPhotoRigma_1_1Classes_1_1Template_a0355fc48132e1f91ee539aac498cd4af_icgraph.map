@@ -1,9 +1,9 @@
 <map id="_add_case_internal" name="_add_case_internal">
-<area shape="rect" id="Node000001" title="Метод добавляет данные о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивного разм..." alt="" coords="473,5,607,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a47bd6b3290e92943a380a494a29c981e" title="Добавляет данные о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="348,5,425,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="458,20,426,20,426,15,458,15"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a25206fa7e00f2e90cb0e86e1e93881b4" title="Метод добавляет массив данных о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивно..." alt="" coords="149,5,300,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="332,20,300,20,300,15,332,15"/>
-<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a9acabbaa532d9e3d00e768499020060d" title="Добавляет массив данных о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="5,5,101,30"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="133,20,101,20,101,15,133,15"/>
+<area shape="rect" id="Node000001" title="Метод добавляет данные о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивного разм..." alt="" coords="382,31,515,55"/>
+<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ac99bdfb18ef04f15df9609e569e81186" title="Метод добавляет массив данных о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивно..." alt="" coords="166,5,334,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="366,35,334,31,335,26,367,30"/>
+<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a47bd6b3290e92943a380a494a29c981e" title="Добавляет данные о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="211,55,288,79"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="367,56,289,65,289,60,366,50"/>
+<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a8490e68302619389d0bb82d1e31728d5" title="Добавляет массив данных о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="5,5,118,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="150,20,118,20,118,15,150,15"/>
 </map>

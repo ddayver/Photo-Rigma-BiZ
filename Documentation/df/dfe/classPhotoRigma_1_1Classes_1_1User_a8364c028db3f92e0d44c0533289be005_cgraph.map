@@ -1,0 +1,14 @@
+<map id="_load_authenticated_user" name="_load_authenticated_user">
+<area shape="rect" id="Node000001" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="5,94,175,118"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae7bbb3d70503c2c3ab7de0e44bf83798" title="Возвращает данные о сроке восстановления аккаунта." alt="" coords="227,5,384,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,91,237,47,239,52,126,96"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a37a62de0669ef3c96b196350fdfed0f5" title="Метод загружает данные группы гостя из базы данных, обрабатывает права (user_rights) и сохраняет итог..." alt="" coords="244,68,368,93"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,93,228,87,229,92,175,99"/>
+<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a6031ba212847fdf2810753c120c4b4d2" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="437,94,575,118"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="175,103,421,103,421,109,175,109"/>
+<area shape="rect" id="Node000006" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#abc511791f65e1fca6093700a8a3fee23" title="Метод объединяет данные пользователя с данными его группы, применяя логику перезаписи значений,..." alt="" coords="223,167,389,192"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="130,116,253,159,252,164,128,121"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="368,86,422,93,421,98,368,91"/>
+<area shape="rect" id="Node000005" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="623,87,769,125"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="576,103,608,103,608,109,576,109"/>
+</map>

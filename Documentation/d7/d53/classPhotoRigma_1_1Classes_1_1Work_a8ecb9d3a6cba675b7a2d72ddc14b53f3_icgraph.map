@@ -1,49 +1,53 @@
 <map id="clean_field" name="clean_field">
-<area shape="rect" id="Node000001" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="605,406,688,431"/>
-<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="375,5,556,58"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="643,390,641,327,630,242,619,197,603,152,582,110,555,72,543,60,546,57,559,69,587,107,608,150,624,196,635,241,646,326,649,390"/>
-<area shape="rect" id="Node000004" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="384,83,547,135"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="641,391,635,340,620,276,595,209,577,178,555,149,542,138,545,134,559,146,582,175,600,207,625,275,640,339,646,390"/>
-<area shape="rect" id="Node000006" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="382,160,550,213"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="637,392,627,355,610,311,587,266,555,227,541,215,544,211,559,223,591,263,615,309,632,353,642,390"/>
-<area shape="rect" id="Node000008" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4ec1d1b401701fe4bc86759130951668" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="374,237,557,290"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="629,394,598,349,578,325,556,304,538,293,541,288,559,300,582,321,602,345,633,391"/>
-<area shape="rect" id="Node000010" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a289aef1b317a8dddb8e51e9f241174b3" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="386,315,545,367"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="601,402,556,382,529,370,531,366,558,377,603,397"/>
-<area shape="rect" id="Node000012" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#af50b710db64d502f42af9eed735a5bd7" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="384,392,548,445"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="589,421,548,421,548,416,589,416"/>
-<area shape="rect" id="Node000014" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="377,469,554,522"/>
-<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="603,440,558,459,531,471,529,466,556,455,601,435"/>
-<area shape="rect" id="Node000016" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="377,547,554,599"/>
-<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="633,446,602,491,582,515,559,536,541,548,538,544,556,532,578,512,598,488,629,443"/>
-<area shape="rect" id="Node000018" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="377,624,554,677"/>
-<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="642,446,632,483,615,528,591,573,559,614,544,626,541,621,555,610,587,570,610,525,627,482,637,445"/>
-<area shape="rect" id="Node000020" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="394,701,537,754"/>
-<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="646,446,640,497,625,562,600,630,582,662,559,691,539,707,536,703,555,687,577,659,595,628,620,560,635,496,641,446"/>
-<area shape="rect" id="Node000022" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aadd99c851f40cd6cfbe2d166477ab062" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения...." alt="" coords="399,778,532,803"/>
-<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="644,446,634,521,616,617,591,708,576,744,559,768,534,784,531,780,555,764,571,741,586,706,610,616,628,520,639,445"/>
-<area shape="rect" id="Node000003" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м..." alt="" coords="138,12,312,51"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="360,34,313,34,313,29,360,29"/>
-<area shape="rect" id="Node000005" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="127,90,322,128"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="369,112,323,112,323,106,369,106"/>
-<area shape="rect" id="Node000007" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода." alt="" coords="125,167,325,206"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="366,189,325,189,325,184,366,184"/>
-<area shape="rect" id="Node000009" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="137,244,313,283"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="359,266,313,266,313,261,359,261"/>
-<area shape="rect" id="Node000011" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30" title="Формирует подвал HTML&#45;страницы через вызов внутреннего метода." alt="" coords="149,322,300,360"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="371,344,301,344,301,338,371,338"/>
-<area shape="rect" id="Node000013" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2" title="Формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента через вызов внутреннего мето..." alt="" coords="146,399,304,438"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="368,421,304,421,304,416,368,416"/>
-<area shape="rect" id="Node000015" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="140,469,310,522"/>
-<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="362,498,310,498,310,493,362,493"/>
-<area shape="rect" id="Node000017" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода." alt="" coords="125,554,324,592"/>
-<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="361,576,325,576,325,570,361,570"/>
-<area shape="rect" id="Node000019" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="124,631,326,670"/>
-<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="362,653,327,653,327,648,362,648"/>
-<area shape="rect" id="Node000021" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a8432fa6f08d4982b9c9d9aaede7de566" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="141,708,308,747"/>
-<area shape="poly" id="edge20_Node000020_Node000021" title=" " alt="" coords="378,730,309,730,309,725,378,725"/>
-<area shape="rect" id="Node000023" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa120c9e1e0a365baa86516f395843036" title="Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах." alt="" coords="162,778,288,803"/>
-<area shape="poly" id="edge22_Node000022_Node000023" title=" " alt="" coords="383,793,288,793,288,788,383,788"/>
-<area shape="rect" id="Node000024" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода." alt="" coords="5,778,76,803"/>
-<area shape="poly" id="edge23_Node000023_Node000024" title=" " alt="" coords="146,793,76,793,76,788,146,788"/>
+<area shape="rect" id="Node000001" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="605,445,688,469"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0e838259fa4a4581be6a51e6ae8ab238" title="Добавляет новую группу в систему через Админку." alt="" coords="388,5,543,58"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="640,430,629,348,611,242,586,140,571,100,555,72,542,60,546,56,559,69,576,97,591,138,616,241,634,348,645,429"/>
+<area shape="rect" id="Node000004" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#af92390a67888a39d1aa0f3f10a045433" title="Формирует информационную строку для категории или пользовательского альбома." alt="" coords="375,83,556,135"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="642,430,638,372,625,298,614,259,599,219,580,183,555,149,543,138,546,134,559,146,584,180,604,217,619,257,630,297,643,372,648,429"/>
+<area shape="rect" id="Node000006" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a44160f09c7dbb17349602f0862c95d62" title="Метод формирует массив данных для меню в зависимости от типа и активного пункта." alt="" coords="384,160,547,213"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="639,429,631,386,615,332,591,276,575,250,555,227,541,215,545,211,559,223,579,247,595,274,620,330,636,384,644,428"/>
+<area shape="rect" id="Node000008" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a88355b68549854e972970158df564179" title="Генерирует блок данных для вывода изображений различных типов." alt="" coords="382,237,550,290"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="634,431,605,368,583,334,556,304,540,293,543,288,559,300,587,331,609,366,639,429"/>
+<area shape="rect" id="Node000010" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4ec1d1b401701fe4bc86759130951668" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="374,315,557,367"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="621,436,591,408,556,382,535,370,538,366,559,377,595,404,625,432"/>
+<area shape="rect" id="Node000012" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a289aef1b317a8dddb8e51e9f241174b3" title="Метод формирует подвал HTML&#45;страницы с выводом копирайта, статистики, информации о пользователе и слу..." alt="" coords="386,392,545,445"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="589,448,545,438,546,433,591,442"/>
+<area shape="rect" id="Node000014" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#af50b710db64d502f42af9eed735a5bd7" title="Метод формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента." alt="" coords="384,469,548,522"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="590,472,549,481,548,475,589,466"/>
+<area shape="rect" id="Node000016" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a87408b299cec421c72347cc399d95808" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения...." alt="" coords="396,546,536,571"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="626,483,596,511,559,537,532,548,530,543,556,532,592,507,622,479"/>
+<area shape="rect" id="Node000019" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a7c272bd5112b72e9047a6dafdd9cfd8c" title="Формирует список пользователей, загрузивших наибольшее количество изображений." alt="" coords="377,595,554,647"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="635,485,604,535,583,561,559,584,542,596,539,592,556,580,579,557,600,532,630,482"/>
+<area shape="rect" id="Node000021" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#ad1a946d518250f1085369cfad3719cc3" title="Генерирует массив статистических данных для шаблона." alt="" coords="377,672,554,725"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="643,485,633,524,616,571,592,619,559,662,545,673,541,669,555,658,588,616,611,568,628,522,637,484"/>
+<area shape="rect" id="Node000023" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a4c85b7dc68591aedd8df9848c1a08dd0" title="Формирование блока пользователя." alt="" coords="377,749,554,802"/>
+<area shape="poly" id="edge22_Node000001_Node000023" title=" " alt="" coords="647,485,641,538,627,605,601,675,582,709,559,739,546,751,542,747,555,735,578,706,596,673,621,603,635,537,641,485"/>
+<area shape="rect" id="Node000025" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a846904b254f7b59e420e58a68604dc77" title="Обновляет данные группы в системе через Админку." alt="" coords="394,827,537,879"/>
+<area shape="poly" id="edge24_Node000001_Node000025" title=" " alt="" coords="649,485,647,550,636,638,625,685,609,732,587,776,559,816,539,833,536,829,555,813,583,773,604,730,620,683,631,637,642,550,644,485"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acb35e2058e1fa1189a515873e76e62dd" title="Добавляет новую группу в систему через Админку." alt="" coords="151,12,299,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="372,34,299,34,299,29,372,29"/>
+<area shape="rect" id="Node000005" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a4dfb943f9b750ec6e1e2924a9620c7f5" title="Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего м..." alt="" coords="138,90,312,128"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="360,112,313,112,313,106,360,106"/>
+<area shape="rect" id="Node000007" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504" title="Формирует массив данных для меню через вызов внутреннего метода." alt="" coords="127,167,322,206"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="369,189,323,189,323,184,369,184"/>
+<area shape="rect" id="Node000009" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a930a20fbdd1b0e274b7e648d966516c5" title="Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода." alt="" coords="125,244,325,283"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="366,266,325,266,325,261,366,261"/>
+<area shape="rect" id="Node000011" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="137,322,313,360"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="359,344,313,344,313,338,359,338"/>
+<area shape="rect" id="Node000013" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a34feab7e9589b201ec7fbb6b3507bd30" title="Формирует подвал HTML&#45;страницы через вызов внутреннего метода." alt="" coords="149,399,300,438"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="371,421,301,421,301,416,371,416"/>
+<area shape="rect" id="Node000015" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a341d1f1abf0c06ad67bc2b47134718e2" title="Формирует заголовок HTML&#45;страницы с меню, метаданными и блоками контента через вызов внутреннего мето..." alt="" coords="146,476,304,515"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="368,498,304,498,304,493,368,493"/>
+<area shape="rect" id="Node000017" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa120c9e1e0a365baa86516f395843036" title="Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах." alt="" coords="162,546,288,571"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="380,561,288,561,288,556,380,556"/>
+<area shape="rect" id="Node000018" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#ae6a94cac0481f8a8ec6d71ddc120b1c6" title="Устанавливает языковые данные через вызов внутреннего метода." alt="" coords="5,546,76,571"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="146,561,76,561,76,556,146,556"/>
+<area shape="rect" id="Node000020" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a9143fed87a3064985e0b51fe5fbb4ac3" title="Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннег..." alt="" coords="140,595,310,647"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="362,624,310,624,310,618,362,618"/>
+<area shape="rect" id="Node000022" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7" title="Генерирует массив статистических данных для шаблона через вызов внутреннего метода." alt="" coords="125,679,324,718"/>
+<area shape="poly" id="edge21_Node000021_Node000022" title=" " alt="" coords="361,701,325,701,325,696,361,696"/>
+<area shape="rect" id="Node000024" href="$d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a1f3df8874c79377e6a8b4398ea6ad774" title="Формирует блок пользователя через вызов внутреннего метода." alt="" coords="124,756,326,795"/>
+<area shape="poly" id="edge23_Node000023_Node000024" title=" " alt="" coords="362,778,327,778,327,773,362,773"/>
+<area shape="rect" id="Node000026" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a8432fa6f08d4982b9c9d9aaede7de566" title="Обновляет данные группы в системе через вызов внутреннего метода." alt="" coords="141,834,308,872"/>
+<area shape="poly" id="edge25_Node000025_Node000026" title=" " alt="" coords="378,856,309,856,309,850,378,850"/>
 </map>

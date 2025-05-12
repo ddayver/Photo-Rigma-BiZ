@@ -1,0 +1,7 @@
+<map id="_full_text_search_sqlite" name="_full_text_search_sqlite">
+<area shape="rect" id="Node000001" title="Выполняет полнотекстовый поиск в SQLite через FTS5." alt="" coords="5,29,163,54"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="50,31,43,21,47,11,61,5,84,3,109,5,122,12,120,17,108,10,84,8,62,10,51,15,48,20,55,27"/>
+<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a960a7f20277c75940122885ec6b40d4b" title="Выполняет альтернативный LIKE&#45;поиск для SQLite." alt="" coords="211,29,367,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,39,195,39,195,44,163,44"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="255,31,248,21,252,11,266,5,289,3,314,5,327,12,324,17,313,10,289,8,267,10,256,15,253,20,259,27"/>
+</map>

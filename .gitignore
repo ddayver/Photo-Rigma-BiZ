@@ -16,3 +16,5 @@ doc_gen.bat
 .gitconfig-*
 /.idea/
 sql_*.txt
+*.log
+/cron.sh

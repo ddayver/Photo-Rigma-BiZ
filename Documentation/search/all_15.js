@@ -8,6 +8,5 @@ var searchData=
   ['max_5flog_5fsize_5',['MAX_LOG_SIZE',['../db/d02/namespacePhotoRigma_1_1Include.html#a53cff4e23bb5f13e5e08ca5e8b58d740',1,'PhotoRigma::Include']]],
   ['max_5flogin_5fattempts_6',['MAX_LOGIN_ATTEMPTS',['../db/d02/namespacePhotoRigma_1_1Include.html#a0c9fe713d3d1b6f166d8768aaf619275',1,'PhotoRigma::Include']]],
   ['menu_20item_20variables_7',['Menu Item Variables',['../d3/db1/group__LanguageEnglishMenu.html',1,'']]],
-  ['merge_5fuser_5fwith_5fgroup_8',['merge_user_with_group',['../df/dfe/classPhotoRigma_1_1Classes_1_1User.html#af4375f670c4016529de39c6a737806ea',1,'PhotoRigma::Classes::User']]],
-  ['min_5ffulltext_5fsearch_5flength_9',['MIN_FULLTEXT_SEARCH_LENGTH',['../db/d02/namespacePhotoRigma_1_1Include.html#ad8b556a1e05cc5e5d4fae7b42ff28093',1,'PhotoRigma::Include']]]
+  ['min_5ffulltext_5fsearch_5flength_8',['MIN_FULLTEXT_SEARCH_LENGTH',['../db/d02/namespacePhotoRigma_1_1Include.html#ad8b556a1e05cc5e5d4fae7b42ff28093',1,'PhotoRigma::Include']]]
 ];

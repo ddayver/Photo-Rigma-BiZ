@@ -29,7 +29,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="../../logo-1.png"/></td>
   <td id="projectalign">
-   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.3</span>
+   <div id="projectname">Photo-Rigma-BiZ<span id="projectnumber">&#160;0.4.4</span>
    </div>
    <div id="projectbrief">Gallery_Photo-Rigma-BiZ</div>
   </td>
@@ -130,10 +130,10 @@ $(function(){initNavTree('d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Temp
 <tr class="memdesc:a1f3df8874c79377e6a8b4398ea6ad774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует данные для блока пользователя.  <br /></td></tr>
 <tr class="separator:a1f3df8874c79377e6a8b4398ea6ad774"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a116ebcf799d07566a74e7e765aecc1b7" id="r_a116ebcf799d07566a74e7e765aecc1b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a116ebcf799d07566a74e7e765aecc1b7">template_stat</a> ()</td></tr>
-<tr class="memdesc:a116ebcf799d07566a74e7e765aecc1b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Генерирует массив статистических данных для шаблона.  <br /></td></tr>
+<tr class="memdesc:a116ebcf799d07566a74e7e765aecc1b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает массив данных для отображения статистики сайта в шаблоне.  <br /></td></tr>
 <tr class="separator:a116ebcf799d07566a74e7e765aecc1b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9143fed87a3064985e0b51fe5fbb4ac3" id="r_a9143fed87a3064985e0b51fe5fbb4ac3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9143fed87a3064985e0b51fe5fbb4ac3">template_best_user</a> (int $best_user=1)</td></tr>
-<tr class="memdesc:a9143fed87a3064985e0b51fe5fbb4ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует список пользователей, загрузивших наибольшее количество изображений.  <br /></td></tr>
+<tr class="memdesc:a9143fed87a3064985e0b51fe5fbb4ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Формирует список пользователей с наибольшим количеством загруженных изображений.  <br /></td></tr>
 <tr class="separator:a9143fed87a3064985e0b51fe5fbb4ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf95d95540a3e47c5905a47db3424ed9" id="r_aaf95d95540a3e47c5905a47db3424ed9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf95d95540a3e47c5905a47db3424ed9">set_lang</a> (array $lang)</td></tr>
 <tr class="memdesc:aaf95d95540a3e47c5905a47db3424ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает языковые данные.  <br /></td></tr>
@@ -245,7 +245,7 @@ $(function(){initNavTree('d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Temp
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#af970fc714c16e27d2d60d698522a8504">Work_Template</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00347">PhotoRigma\$action</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00369">PhotoRigma\$action</a>.</p>
 
 </div>
 </div>
@@ -337,12 +337,12 @@ $(function(){initNavTree('d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Temp
 <div class="line">$templateHelper = <span class="keyword">new</span> Work_Template();</div>
 <div class="line"><a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a> = new \PhotoRigma\Classes\User(); <span class="comment">// Класс, реализующий User_Interface</span></div>
 <div class="line">$templateHelper-&gt;set_user(<a class="code hl_variable" href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">$user</a>);</div>
-<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00300">index.php:300</a></div></div>
-</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd>User_Interface Интерфейс, которому должен соответствовать объект пользователя. </dd></dl>
+<div class="ttc" id="anamespacePhotoRigma_html_a598ca4e71b15a1313ec95f0df1027ca5"><div class="ttname"><a href="../../de/d90/namespacePhotoRigma.html#a598ca4e71b15a1313ec95f0df1027ca5">PhotoRigma\$user</a></div><div class="ttdeci">$user</div><div class="ttdoc">Создание объекта класса User.</div><div class="ttdef"><b>Определения</b> <a href="../../de/d20/index_8php_source.html#l00322">index.php:322</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>См. также</dt><dd><a class="el" href="../../dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами.">PhotoRigma\Interfaces\User_Interface</a> Интерфейс, которому должен соответствовать объект пользователя. </dd></dl>
 
 <p>Замещается в <a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a75c62c77591a021c5555660ce20e84b3">Work_Template</a>.</p>
 
-<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00300">PhotoRigma\$user</a>.</p>
+<p class="reference">Перекрестные ссылки <a class="el" href="../../de/d20/index_8php_source.html#l00322">PhotoRigma\$user</a>.</p>
 
 </div>
 </div>
@@ -361,45 +361,51 @@ $(function(){initNavTree('d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Temp
       </table>
 </div><div class="memdoc">
 
-<p>Формирует список пользователей, загрузивших наибольшее количество изображений. </p>
-<p>Этот метод выполняет следующие действия:</p><ol type="1">
-<li>Выполняет запрос к базе данных для получения списка пользователей с наибольшим количеством загруженных фотографий.</li>
-<li>Ограничивает количество результатов параметром $best_user.</li>
-<li>Возвращает массив данных для вывода в шаблон, включая ссылки на профили пользователей и количество загруженных фотографий. Если данные отсутствуют, добавляется запись "пустого" пользователя.</li>
-</ol>
+<p>Формирует список пользователей с наибольшим количеством загруженных изображений. </p>
+<p>Метод является частью контракта интерфейса и определяет обязательное поведение:</p><ul>
+<li>Получение данных о пользователях с наибольшим числом загрузок</li>
+<li>Формирование ассоциативного массива для вывода в шаблон</li>
+<li>Поддержка локализации всех подписей</li>
+<li>Совместимость с любыми СУБД</li>
+</ul>
+<p>Реализация обязана:</p><ul>
+<li>Возвращать данные в строго заданной структуре</li>
+<li>Учитывать только активных, подтверждённых и не удалённых пользователей</li>
+<li>Помечать заблокированных пользователей</li>
+<li>Обеспечивать защиту от инъекций</li>
+<li>Поддерживать чистый вывод данных</li>
+</ul>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$best_user</td><td>Количество лучших пользователей для вывода:<ul>
-<li>Должно быть положительным целым числом.</li>
-<li>Если передано недопустимое значение, выбрасывается исключение InvalidArgumentException.</li>
-</ul>
-</td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$best_user</td><td>Количество пользователей для вывода. Должно быть положительным целым числом. Пример: 5.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>array Массив данных для вывода в шаблон:<ul>
-<li>'NAME_BLOCK': Название блока (локализованное).</li>
-<li>'L_USER_NAME': Подпись для имени пользователя (локализованная строка).</li>
-<li>'L_USER_PHOTO': Подпись для количества фотографий (локализованная строка).</li>
-<li>'user_url': Ссылка на профиль пользователя (null, если данных нет).</li>
-<li>'user_name': Имя пользователя ('&mdash;', если данных нет).</li>
-<li>'user_photo': Количество загруженных фотографий ('-', если данных нет).</li>
+<dl class="section return"><dt>Возвращает</dt><dd>array Ассоциативный массив данных для вывода в шаблон:<ul>
+<li>NAME_BLOCK: Название блока (локализованное).</li>
+<li>L_USER_NAME: Подпись для имени пользователя (локализованная строка).</li>
+<li>L_USER_PHOTO: Подпись для количества фотографий (локализованная строка).</li>
+<li>user_url: Ссылка на профиль пользователя (null, если данных нет).</li>
+<li>user_name: Имя пользователя ('&mdash;', если данных нет).</li>
+<li>user_photo: Количество загруженных фотографий ('-', если данных нет).</li>
+<li>banned: Булево значение, указывающее, находится ли пользователь в бане.</li>
 </ul>
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidArgumentException</td><td>Выбрасывается, если параметр $best_user не является положительным целым числом. </td></tr>
-    <tr><td class="paramname">Exception</td><td>При выполнении запросов к базам данных.</td></tr>
+    <tr><td class="paramname">InvalidArgumentException</td><td>Если параметр <code>$best_user</code> не является положительным целым числом. </td></tr>
+    <tr><td class="paramname">Exception</td><td>При критических ошибках выполнения.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Заметки</dt><dd>Если запрос к базе данных не возвращает данных, добавляется запись "пустого" пользователя:<ul>
-<li>'user_url': null.</li>
-<li>'user_name': '&mdash;'.</li>
-<li>'user_photo': '-'.</li>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация должна обеспечивать:<ul>
+<li>Локализацию всех подписей</li>
+<li>Чистый вывод данных</li>
+<li>Защиту от инъекций</li>
+<li>Совместимость с различными СУБД</li>
 </ul>
 </dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что таблицы базы данных содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректному результату.</dd></dl>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Нарушение контракта может привести к некорректной работе шаблона и отображения данных. Убедитесь, что структура возвращаемого массива соответствует заданному формату.</dd></dl>
 <p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
 <div class="line">$templateHelper = <span class="keyword">new</span> Work_Template();</div>
 <div class="line"> </div>
@@ -426,59 +432,70 @@ $(function(){initNavTree('d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Temp
       </table>
 </div><div class="memdoc">
 
-<p>Генерирует массив статистических данных для шаблона. </p>
-<p>Этот метод выполняет следующие действия:</p><ol type="1">
-<li>Выполняет запросы к базе данных для получения статистической информации:<ul>
-<li>Количество пользователей, администраторов и модераторов.</li>
-<li>Количество категорий (включая пользовательские альбомы).</li>
-<li>Количество фотографий.</li>
-<li>Количество пользовательских и модераторских оценок.</li>
-<li>Список онлайн-пользователей.</li>
+<p>Возвращает массив данных для отображения статистики сайта в шаблоне. </p>
+<p>Метод является частью контракта интерфейса и определяет обязательное поведение. Он должен предоставлять данные о:</p><ul>
+<li>Общем количестве пользователей</li>
+<li>Количестве администраторов и модераторов</li>
+<li>Общем количестве фотографий</li>
+<li>Количестве категорий (включая пользовательские)</li>
+<li>Количестве пользовательских и модераторских оценок</li>
+<li>Списке онлайн-пользователей</li>
+</ul>
+<p>Реализация обязана:</p><ul>
+<li>Учитывать только активных пользователей:<ul>
+<li>С подтверждённой почтой</li>
+<li>Не удалённых</li>
 </ul>
 </li>
-<li>Возвращает ассоциативный массив с локализованными подписями и данными для вывода статистики.</li>
-</ol>
+<li>Корректно отображать забаненных онлайн-пользователей:<ul>
+<li>Иконка бана</li>
+<li>Перечёркнутое имя</li>
+</ul>
+</li>
+<li>Формировать ассоциативный массив с заданными ключами</li>
+</ul>
 <dl class="section return"><dt>Возвращает</dt><dd>array Ассоциативный массив данных для вывода статистики:<ul>
-<li>'NAME_BLOCK': Название блока статистики (локализованное).</li>
-<li>'L_STAT_REGIST': Подпись для количества зарегистрированных пользователей.</li>
-<li>'D_STAT_REGIST': Количество зарегистрированных пользователей.</li>
-<li>'L_STAT_PHOTO': Подпись для количества фотографий.</li>
-<li>'D_STAT_PHOTO': Количество фотографий.</li>
-<li>'L_STAT_CATEGORY': Подпись для количества категорий.</li>
-<li>'D_STAT_CATEGORY': Количество категорий (включая пользовательские альбомы).</li>
-<li>'L_STAT_USER_ADMIN': Подпись для количества администраторов.</li>
-<li>'D_STAT_USER_ADMIN': Количество администраторов.</li>
-<li>'L_STAT_USER_MODER': Подпись для количества модераторов.</li>
-<li>'D_STAT_USER_MODER': Количество модераторов.</li>
-<li>'L_STAT_RATE_USER': Подпись для количества пользовательских оценок.</li>
-<li>'D_STAT_RATE_USER': Количество пользовательских оценок.</li>
-<li>'L_STAT_RATE_MODER': Подпись для количества модераторских оценок.</li>
-<li>'D_STAT_RATE_MODER': Количество модераторских оценок.</li>
-<li>'L_STAT_ONLINE': Подпись для онлайн-пользователей.</li>
-<li>'D_STAT_ONLINE': Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии онлайн-пользователей.</li>
+<li>NAME_BLOCK: Название блока статистики (локализованное).</li>
+<li>L_STAT_REGIST: Подпись для количества зарегистрированных пользователей.</li>
+<li>D_STAT_REGIST: Количество зарегистрированных пользователей.</li>
+<li>L_STAT_PHOTO: Подпись для количества фотографий.</li>
+<li>D_STAT_PHOTO: Количество фотографий.</li>
+<li>L_STAT_CATEGORY: Подпись для количества категорий.</li>
+<li>D_STAT_CATEGORY: Количество категорий (включая пользовательские альбомы).</li>
+<li>L_STAT_USER_ADMIN: Подпись для количества администраторов.</li>
+<li>D_STAT_USER_ADMIN: Количество администраторов.</li>
+<li>L_STAT_USER_MODER: Подпись для количества модераторов.</li>
+<li>D_STAT_USER_MODER: Количество модераторов.</li>
+<li>L_STAT_RATE_USER: Подпись для количества пользовательских оценок.</li>
+<li>D_STAT_RATE_USER: Количество пользовательских оценок.</li>
+<li>L_STAT_RATE_MODER: Подпись для количества модераторских оценок.</li>
+<li>D_STAT_RATE_MODER: Количество модераторских оценок.</li>
+<li>L_STAT_ONLINE: Подпись для онлайн-пользователей.</li>
+<li>D_STAT_ONLINE: Список онлайн-пользователей (HTML-ссылки) или сообщение об отсутствии онлайн-пользователей. Пользователи в бане дополнительно выделяются:<ul>
+<li>Иконкой <code>&lt;i class="ban icon"&gt;&lt;/i&gt;</code></li>
+<li>Перечёркнутым именем <code>&lt;s&gt;...&lt;/s&gt;</code>.</li>
+</ul>
+</li>
 </ul>
 </dd></dl>
 <dl class="exception"><dt>Исключения</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается при ошибке выполнения запросов к базе данных. </td></tr>
-    <tr><td class="paramname">Exception</td><td>При выполнении запросов к базам данных.</td></tr>
+    <tr><td class="paramname">RuntimeException</td><td>Выбрасывается при ошибке получения данных. </td></tr>
+    <tr><td class="paramname">Exception</td><td>Выбрасывается при критических ошибках выполнения.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Заметки</dt><dd>Данные берутся из таблиц и представлений базы данных:<ul>
-<li>Пользователи, администраторы, модераторы.</li>
-<li>Категории и фотографии.</li>
-<li>Оценки пользователей и модераторов.</li>
-<li>Онлайн-пользователи.</li>
+<dl class="section note"><dt>Заметки</dt><dd>Реализация должна обеспечивать:<ul>
+<li>Локализацию всех подписей</li>
+<li>Совместимость с любыми СУБД</li>
+<li>Защиту от инъекций</li>
+<li>Чистый вывод данных</li>
 </ul>
 </dd></dl>
-<dl class="section warning"><dt>Предупреждения</dt><dd>Убедитесь, что структура базы данных корректна. Ошибки в структуре таблиц могут привести к некорректной статистике.</dd></dl>
-<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Создание объекта</span></div>
-<div class="line">$templateHelper = <span class="keyword">new</span> Work_Template();</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Генерация статистических данных</span></div>
-<div class="line">$statData = $templateHelper-&gt;template_stat();</div>
-<div class="line">print_r($statData);</div>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Метод должен быть совместим с базовым классом и фасадом <code>Work::template_stat()</code>. Нарушение контракта может привести к некорректной работе шаблона.</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="comment">// Получение статистики для шаблона</span></div>
+<div class="line">$stat_data = $template_helper-&gt;template_stat();</div>
+<div class="line">print_r($stat_data);</div>
 </div><!-- fragment --> 
 <p>Замещается в <a class="el" href="../../d4/d32/classPhotoRigma_1_1Classes_1_1Work__Template.html#a116ebcf799d07566a74e7e765aecc1b7">Work_Template</a>.</p>
 
@@ -564,7 +581,7 @@ $(function(){initNavTree('d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Temp
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../de/d90/namespacePhotoRigma.html">PhotoRigma</a></li><li class="navelem"><a class="el" href="../../dd/db0/namespacePhotoRigma_1_1Interfaces.html">Interfaces</a></li><li class="navelem"><a class="el" href="../../d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html">Work_Template_Interface</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+    <li class="footer">Документация по Photo-Rigma-BiZ. Последние изменения: Пн 12 Май 2025. Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>
 </body>

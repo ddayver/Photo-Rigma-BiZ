@@ -2,10 +2,10 @@
 <area shape="rect" id="Node000001" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="5,61,96,86"/>
 <area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ad7c3527d920ebf2dbcbc0c51845835d6" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="144,61,290,86"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,71,128,71,128,76,96,76"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a669971f2108b67a1114a8e0b978fe388" title="Производит преобразование строки формата даты/времени в формат, совместимый с MySQL (DATE_FORMAT)." alt="" coords="338,5,505,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="264,58,358,32,360,37,266,63"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#af2c9d62818d2abcda848c5f966a7806a" title="Преобразует формат даты/времени в формат, совместимый с PostgreSQL." alt="" coords="352,54,491,93"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="291,71,336,71,336,76,291,76"/>
-<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a98dfa8b7ea985e32ab3904f14c3d06f4" title="Преобразует формат даты/времени в формат, совместимый с SQLite (strftime)." alt="" coords="340,117,504,142"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="266,84,360,110,358,115,264,89"/>
+<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5f4312bd1da12e43a8f9a046ed068ebd" title="Производит преобразование строки формата даты/времени в формат, совместимый с MySQL (DATE_FORMAT)." alt="" coords="338,5,512,30"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="265,58,361,32,363,37,267,63"/>
+<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae74eea110900ed128b205a3d0c91687b" title="Преобразует формат даты/времени в формат, совместимый с PostgreSQL." alt="" coords="352,54,498,93"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="290,71,336,71,336,76,290,76"/>
+<area shape="rect" id="Node000005" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a80464f4180268442d13e5e319274a30a" title="Преобразует формат даты/времени в формат, совместимый с SQLite (strftime)." alt="" coords="362,117,489,156"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="262,84,347,110,346,115,260,89"/>
 </map>

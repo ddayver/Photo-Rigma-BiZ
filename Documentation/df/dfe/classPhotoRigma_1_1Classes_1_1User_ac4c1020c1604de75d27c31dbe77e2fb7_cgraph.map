@@ -1,0 +1,7 @@
+<map id="_hard_delete_user_internal" name="_hard_delete_user_internal">
+<area shape="rect" id="Node000001" title="Выполняет окончательное обезличивание записи пользователя." alt="" coords="5,33,182,58"/>
+<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#acaafe0adac99eb3c3223a78198854401" title="Удаляет личные фото пользователя (категория 0) через существующий метод del_photo()." alt="" coords="230,5,399,30"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,32,214,28,214,33,183,37"/>
+<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ae7bbb3d70503c2c3ab7de0e44bf83798" title="Возвращает данные о сроке восстановления аккаунта." alt="" coords="236,54,393,93"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,54,220,59,220,64,182,60"/>
+</map>

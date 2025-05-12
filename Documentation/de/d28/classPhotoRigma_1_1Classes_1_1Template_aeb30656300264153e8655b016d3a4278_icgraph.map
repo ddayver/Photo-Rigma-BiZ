@@ -1,7 +1,0 @@
-<map id="find_template_file" name="find_template_file">
-<area shape="rect" id="Node000001" title="Метод проверяет, является ли файл шаблона корректным и доступным для чтения." alt="" coords="143,31,264,55"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#af100467510eb7c7468ec1fcec0d1d06b" title="Конструктор класса, инициализирующий основные параметры сайта и темы оформления." alt="" coords="5,5,95,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,33,95,28,96,22,128,28"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a11e7b8cfec3ceb69514b0906b3cddf61" title="Устанавливает значение приватных свойств $template_file и $ins_header." alt="" coords="23,55,77,79"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="127,58,78,65,77,60,127,52"/>
-</map>

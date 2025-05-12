@@ -17,6 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_groups;
+ALTER TABLE ONLY public.user_bans DROP CONSTRAINT user_bans_user_id_fkey;
 ALTER TABLE ONLY public.rate_user DROP CONSTRAINT u_rate_users;
 ALTER TABLE ONLY public.rate_user DROP CONSTRAINT u_rate_photo;
 ALTER TABLE ONLY public.photo DROP CONSTRAINT photo_users;
@@ -34,12 +35,17 @@ DROP TRIGGER trg_config_update ON public.config;
 DROP TRIGGER trg_config_insert ON public.config;
 DROP TRIGGER trg_config_delete ON public.config;
 DROP INDEX public.query_logs_query_hash_key;
-DROP INDEX public.idx_users_user_rights;
 DROP INDEX public.idx_users_tsv_weighted;
+DROP INDEX public.idx_users_token_expires;
+DROP INDEX public.idx_users_token;
 DROP INDEX public.idx_users_real_name_trgm;
 DROP INDEX public.idx_users_login_trgm;
 DROP INDEX public.idx_users_email_trgm;
+DROP INDEX public.idx_users_deleted_at;
 DROP INDEX public.idx_users_date_last_activ;
+DROP INDEX public.idx_users_allow_newsletter;
+DROP INDEX public.idx_user_bans_user_id;
+DROP INDEX public.idx_user_bans_expires;
 DROP INDEX public.idx_photo_user_upload_group;
 DROP INDEX public.idx_photo_tsv_weighted;
 DROP INDEX public.idx_photo_name_trgm;
@@ -58,6 +64,7 @@ DROP INDEX public.idx_category_name_trgm;
 DROP INDEX public.idx_category_description_trgm;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_login_key;
+ALTER TABLE ONLY public.user_bans DROP CONSTRAINT user_bans_pkey;
 ALTER TABLE ONLY public.rate_user DROP CONSTRAINT rate_user_pkey;
 ALTER TABLE ONLY public.rate_moder DROP CONSTRAINT rate_moder_pkey;
 ALTER TABLE ONLY public.query_logs DROP CONSTRAINT query_logs_pkey;
@@ -78,6 +85,7 @@ ALTER TABLE public.category ALTER COLUMN id DROP DEFAULT;
 DROP VIEW public.users_online;
 DROP SEQUENCE public.users_id_seq;
 DROP TABLE public.users;
+DROP TABLE public.user_bans;
 DROP TABLE public.rate_user;
 DROP TABLE public.rate_moder;
 DROP VIEW public.random_photo;
@@ -90,6 +98,7 @@ DROP TABLE public.news;
 DROP SEQUENCE public.menu_id_seq;
 DROP TABLE public.menu;
 DROP TABLE public.groups;
+DROP SEQUENCE public.groups_id_seq;
 DROP TABLE public.db_version;
 DROP TABLE public.config;
 DROP TABLE public.change_timestamp;
@@ -111,7 +120,7 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
@@ -139,6 +148,13 @@ $$;
 ALTER FUNCTION public.prevent_deletion_of_service_categories() OWNER TO photorigma;
 
 --
+-- Name: FUNCTION prevent_deletion_of_service_categories(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.prevent_deletion_of_service_categories() IS 'Функция-триггер: запрещает удаление категории с id = 0 (служебная)';
+
+
+--
 -- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
@@ -157,6 +173,13 @@ $$;
 
 
 ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO photorigma;
+
+--
+-- Name: FUNCTION prevent_deletion_of_service_groups(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.prevent_deletion_of_service_groups() IS 'Функция-триггер: запрещает удаление групп с id от 0 до 3 (служебные)';
+
 
 --
 -- Name: update_change_timestamp(); Type: FUNCTION; Schema: public; Owner: photorigma
@@ -181,7 +204,7 @@ ALTER FUNCTION public.update_change_timestamp() OWNER TO photorigma;
 -- Name: FUNCTION update_change_timestamp(); Type: COMMENT; Schema: public; Owner: photorigma
 --
 
-COMMENT ON FUNCTION public.update_change_timestamp() IS 'Обновляет время последнего изменения в таблице change_timestamp';
+COMMENT ON FUNCTION public.update_change_timestamp() IS 'Функция-триггер: обновляет время последнего изменения config в таблице change_timestamp';
 
 
 --
@@ -208,6 +231,13 @@ $$;
 ALTER FUNCTION public.update_rate_moder_after_delete() OWNER TO photorigma;
 
 --
+-- Name: FUNCTION update_rate_moder_after_delete(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_rate_moder_after_delete() IS 'Функция-триггер: обновляет рейтинг фото после удаления оценки от модератора';
+
+
+--
 -- Name: update_rate_moder_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
@@ -229,6 +259,13 @@ $$;
 
 
 ALTER FUNCTION public.update_rate_moder_after_insert() OWNER TO photorigma;
+
+--
+-- Name: FUNCTION update_rate_moder_after_insert(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_rate_moder_after_insert() IS 'Функция-триггер: обновляет рейтинг фото при новой оценке от модератора';
+
 
 --
 -- Name: update_rate_user_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma
@@ -254,6 +291,13 @@ $$;
 ALTER FUNCTION public.update_rate_user_after_delete() OWNER TO photorigma;
 
 --
+-- Name: FUNCTION update_rate_user_after_delete(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_rate_user_after_delete() IS 'Функция-триггер: обновляет рейтинг фото после удаления оценки от пользователя';
+
+
+--
 -- Name: update_rate_user_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma
 --
 
@@ -275,6 +319,13 @@ $$;
 
 
 ALTER FUNCTION public.update_rate_user_after_insert() OWNER TO photorigma;
+
+--
+-- Name: FUNCTION update_rate_user_after_insert(); Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON FUNCTION public.update_rate_user_after_insert() IS 'Функция-триггер: обновляет рейтинг фото при новой оценке от пользователя';
+
 
 SET default_tablespace = '';
 
@@ -451,11 +502,25 @@ COMMENT ON COLUMN public.db_version.ver IS 'Номер версии';
 
 
 --
+-- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+--
+
+CREATE SEQUENCE public.groups_id_seq
+    START WITH 4
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.groups_id_seq OWNER TO photorigma;
+
+--
 -- Name: groups; Type: TABLE; Schema: public; Owner: photorigma
 --
 
 CREATE TABLE public.groups (
-    id integer DEFAULT 0 NOT NULL,
+    id integer DEFAULT nextval('public.groups_id_seq'::regclass) NOT NULL,
     name character varying(50) NOT NULL,
     user_rights jsonb
 );
@@ -1024,6 +1089,63 @@ COMMENT ON COLUMN public.rate_user.rate IS 'Оценка от -2 до +2';
 
 
 --
+-- Name: user_bans; Type: TABLE; Schema: public; Owner: photorigma
+--
+
+CREATE TABLE public.user_bans (
+    user_id integer NOT NULL,
+    banned boolean DEFAULT true NOT NULL,
+    reason text,
+    expires_at timestamp without time zone,
+    created_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.user_bans OWNER TO photorigma;
+
+--
+-- Name: TABLE user_bans; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON TABLE public.user_bans IS 'Информация о бане пользователей';
+
+
+--
+-- Name: COLUMN user_bans.user_id; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.user_bans.user_id IS 'Идентификатор пользователя';
+
+
+--
+-- Name: COLUMN user_bans.banned; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.user_bans.banned IS 'Флаг: пользователь заблокирован';
+
+
+--
+-- Name: COLUMN user_bans.reason; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.user_bans.reason IS 'Причина блокировки';
+
+
+--
+-- Name: COLUMN user_bans.expires_at; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.user_bans.expires_at IS 'Дата окончания бана (если временный)';
+
+
+--
+-- Name: COLUMN user_bans.created_at; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.user_bans.created_at IS 'Дата и время установки бана';
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: photorigma
 --
 
@@ -1041,7 +1163,16 @@ CREATE TABLE public.users (
     group_id integer DEFAULT 0 NOT NULL,
     user_rights jsonb,
     theme character varying(32) DEFAULT 'default'::character varying NOT NULL,
-    tsv_weighted tsvector GENERATED ALWAYS AS (((((((((setweight(to_tsvector('russian'::regconfig, (login)::text), 'A'::"char") || setweight(to_tsvector('russian'::regconfig, (real_name)::text), 'A'::"char")) || setweight(to_tsvector('russian'::regconfig, (email)::text), 'A'::"char")) || setweight(to_tsvector('english'::regconfig, (login)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (real_name)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (email)::text), 'B'::"char")) || setweight(to_tsvector('simple'::regconfig, (login)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (real_name)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (email)::text), 'D'::"char"))) STORED
+    tsv_weighted tsvector GENERATED ALWAYS AS (((((((((setweight(to_tsvector('russian'::regconfig, (login)::text), 'A'::"char") || setweight(to_tsvector('russian'::regconfig, (real_name)::text), 'A'::"char")) || setweight(to_tsvector('russian'::regconfig, (email)::text), 'A'::"char")) || setweight(to_tsvector('english'::regconfig, (login)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (real_name)::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (email)::text), 'B'::"char")) || setweight(to_tsvector('simple'::regconfig, (login)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (real_name)::text), 'D'::"char")) || setweight(to_tsvector('simple'::regconfig, (email)::text), 'D'::"char"))) STORED,
+    deleted_at timestamp without time zone,
+    permanently_deleted boolean DEFAULT false NOT NULL,
+    activation boolean DEFAULT false NOT NULL,
+    token character varying(255) DEFAULT NULL::character varying,
+    token_expires_at timestamp without time zone,
+    email_confirmed boolean DEFAULT false NOT NULL,
+    allow_newsletter boolean DEFAULT false NOT NULL,
+    timezone character varying(50) DEFAULT 'UTC'::character varying NOT NULL,
+    other_params jsonb
 );
 
 
@@ -1153,6 +1284,62 @@ COMMENT ON COLUMN public.users.tsv_weighted IS 'Взвешенный полно�
 
 
 --
+-- Name: COLUMN users.deleted_at; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.deleted_at IS 'Дата и время мягкого удаления пользователя';
+
+
+--
+-- Name: COLUMN users.permanently_deleted; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.permanently_deleted IS 'Флаг окончательного удаления пользователя';
+
+
+--
+-- Name: COLUMN users.activation; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.activation IS 'Флаг активации аккаунта';
+
+
+--
+-- Name: COLUMN users.token; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.token IS 'Для временных токенов';
+
+
+--
+-- Name: COLUMN users.token_expires_at; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.token_expires_at IS 'Время истечения токена';
+
+
+--
+-- Name: COLUMN users.email_confirmed; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.email_confirmed IS 'Подтверждён ли email';
+
+
+--
+-- Name: COLUMN users.allow_newsletter; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.allow_newsletter IS 'Часовой пояс пользователя';
+
+
+--
+-- Name: COLUMN users.other_params; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users.other_params IS 'Прочие параметры пользователя';
+
+
+--
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
 --
 
@@ -1179,12 +1366,14 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 --
 
 CREATE VIEW public.users_online AS
- SELECT id,
-    real_name
-   FROM public.users
-  WHERE (date_last_activ >= (now() - ( SELECT (((config.value)::text || ' seconds'::text))::interval AS "interval"
+ SELECT u.id,
+    u.real_name,
+    COALESCE(b.banned, false) AS banned
+   FROM (public.users u
+     LEFT JOIN public.user_bans b ON (((u.id = b.user_id) AND (b.banned = true))))
+  WHERE ((u.date_last_activ >= (now() - ( SELECT (((config.value)::text || ' seconds'::text))::interval AS "interval"
            FROM public.config
-          WHERE ((config.name)::text = 'time_user_online'::text))));
+          WHERE ((config.name)::text = 'time_user_online'::text)))) AND (u.activation = true) AND (u.email_confirmed = true) AND (u.deleted_at IS NULL) AND (u.permanently_deleted = false));
 
 
 ALTER VIEW public.users_online OWNER TO photorigma;
@@ -1208,6 +1397,13 @@ COMMENT ON COLUMN public.users_online.id IS 'Идентификатор поль
 --
 
 COMMENT ON COLUMN public.users_online.real_name IS 'Отображаемое имя пользователя';
+
+
+--
+-- Name: COLUMN users_online.banned; Type: COMMENT; Schema: public; Owner: photorigma
+--
+
+COMMENT ON COLUMN public.users_online.banned IS 'Флаг: пользователь забанен';
 
 
 --
@@ -1263,7 +1459,7 @@ INSERT INTO public.category VALUES (0, 'user', 'Пользовательский
 -- Data for Name: change_timestamp; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.change_timestamp VALUES ('config', '2025-04-09 17:02:22.247758');
+INSERT INTO public.change_timestamp VALUES ('config', '2025-05-11 02:06:20.053567');
 
 
 --
@@ -1287,19 +1483,20 @@ INSERT INTO public.config VALUES ('meta_keywords', 'Rigma.BiZ photo gallery Gold
 INSERT INTO public.config VALUES ('right_panel', '250');
 INSERT INTO public.config VALUES ('temp_photo_h', '200');
 INSERT INTO public.config VALUES ('temp_photo_w', '200');
-INSERT INTO public.config VALUES ('themes', 'default');
 INSERT INTO public.config VALUES ('title_description', 'Фотогалерея Rigma и Co');
 INSERT INTO public.config VALUES ('title_name', 'Rigma Foto');
 INSERT INTO public.config VALUES ('time_user_online', '900');
 INSERT INTO public.config VALUES ('copyright_year', '2008-2025');
 INSERT INTO public.config VALUES ('copyright_url', 'https://rigma.biz/');
+INSERT INTO public.config VALUES ('theme', 'default');
+INSERT INTO public.config VALUES ('timezone', 'UTC');
 
 
 --
 -- Data for Name: db_version; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.db_version VALUES ('0.4.1');
+INSERT INTO public.db_version VALUES ('0.4.4');
 
 
 --
@@ -1362,10 +1559,16 @@ INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', '
 
 
 --
+-- Data for Name: user_bans; Type: TABLE DATA; Schema: public; Owner: photorigma
+--
+
+
+
+--
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma
 --
 
-INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default', DEFAULT);
+INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default', DEFAULT, NULL, false, true, NULL, NULL, true, false, 'UTC', NULL);
 
 
 --
@@ -1373,6 +1576,13 @@ INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGz
 --
 
 SELECT pg_catalog.setval('public.category_id_seq', 1, false);
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+--
+
+SELECT pg_catalog.setval('public.groups_id_seq', 4, false);
 
 
 --
@@ -1496,6 +1706,14 @@ ALTER TABLE ONLY public.rate_moder
 
 ALTER TABLE ONLY public.rate_user
     ADD CONSTRAINT rate_user_pkey PRIMARY KEY (id_foto, id_user);
+
+
+--
+-- Name: user_bans user_bans_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.user_bans
+    ADD CONSTRAINT user_bans_pkey PRIMARY KEY (user_id);
 
 
 --
@@ -1627,10 +1845,38 @@ CREATE INDEX idx_photo_user_upload_group ON public.photo USING btree (user_uploa
 
 
 --
+-- Name: idx_user_bans_expires; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_user_bans_expires ON public.user_bans USING btree (expires_at);
+
+
+--
+-- Name: idx_user_bans_user_id; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_user_bans_user_id ON public.user_bans USING btree (user_id);
+
+
+--
+-- Name: idx_users_allow_newsletter; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_allow_newsletter ON public.users USING btree (allow_newsletter);
+
+
+--
 -- Name: idx_users_date_last_activ; Type: INDEX; Schema: public; Owner: photorigma
 --
 
 CREATE INDEX idx_users_date_last_activ ON public.users USING btree (date_last_activ);
+
+
+--
+-- Name: idx_users_deleted_at; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_deleted_at ON public.users USING btree (deleted_at);
 
 
 --
@@ -1655,6 +1901,20 @@ CREATE INDEX idx_users_real_name_trgm ON public.users USING gin (real_name publi
 
 
 --
+-- Name: idx_users_token; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_token ON public.users USING btree (token);
+
+
+--
+-- Name: idx_users_token_expires; Type: INDEX; Schema: public; Owner: photorigma
+--
+
+CREATE INDEX idx_users_token_expires ON public.users USING btree (token_expires_at);
+
+
+--
 -- Name: idx_users_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
 --
 
@@ -1666,13 +1926,6 @@ CREATE INDEX idx_users_tsv_weighted ON public.users USING gin (tsv_weighted);
 --
 
 COMMENT ON INDEX public.idx_users_tsv_weighted IS 'GIN-индекс для поля tsv_weighted';
-
-
---
--- Name: idx_users_user_rights; Type: INDEX; Schema: public; Owner: photorigma
---
-
-CREATE INDEX idx_users_user_rights ON public.users USING btree (user_rights);
 
 
 --
@@ -1799,6 +2052,14 @@ ALTER TABLE ONLY public.rate_user
 
 ALTER TABLE ONLY public.rate_user
     ADD CONSTRAINT u_rate_users FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_bans user_bans_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+--
+
+ALTER TABLE ONLY public.user_bans
+    ADD CONSTRAINT user_bans_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
