@@ -1,9 +1,0 @@
-<map id="_unset_property_key_internal" name="_unset_property_key_internal">
-<area shape="rect" id="Node000001" title="Удаляет ключ из указанного свойства объекта (user или session)." alt="" coords="549,5,690,44"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ab19c821428e4402d7669bc3940afe6d7" title="Удаляет ключ из указанного свойства объекта (user или session) через вызов внутреннего метода." alt="" coords="368,12,501,37"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="534,27,502,27,502,22,534,22"/>
-<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a2308665ad82b46f7f73e34750887dbee" title="Добавляет нового пользователя в базу данных, выполняя валидацию входных данных." alt="" coords="159,12,320,37"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="352,27,320,27,320,22,352,22"/>
-<area shape="rect" id="Node000004" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a4375fc668762fd63651b09a2a04f35bb" title="Добавляет нового пользователя в базу данных через вызов внутреннего метода." alt="" coords="5,12,111,37"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="143,27,111,27,111,22,143,22"/>
-</map>

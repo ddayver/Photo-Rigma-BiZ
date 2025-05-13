@@ -1,7 +1,0 @@
-<map id="_process_image_resize_gd" name="_process_image_resize_gd">
-<area shape="rect" id="Node000001" title="Создаёт эскиз изображения с использованием библиотеки GD, включая резервное копирование старого эскиз..." alt="" coords="352,5,530,30"/>
-<area shape="rect" id="Node000002" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#a7f18185f2629abbc3bf148d8addfcfe8" title="Изменяет размер изображения." alt="" coords="151,5,304,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="336,20,305,20,305,15,336,15"/>
-<area shape="rect" id="Node000003" href="$d9/dc1/classPhotoRigma_1_1Classes_1_1Work__Image.html#af37eb2b0693905dd71dd677f86d47831" title="Изменяет размер изображения через вызов внутреннего метода." alt="" coords="5,5,103,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="135,20,103,20,103,15,135,15"/>
-</map>

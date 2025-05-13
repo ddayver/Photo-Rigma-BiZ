@@ -1,5 +1,0 @@
-<map id="process_user_rights" name="process_user_rights">
-<area shape="rect" id="Node000001" title="Обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав, через вызов внутреннего м..." alt="" coords="5,12,144,37"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#ad202cf4189004edefa5403d1fad8c7f3" title="Метод обрабатывает поле user_rights, преобразуя его из строки JSON в массив прав." alt="" coords="192,5,337,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,22,176,22,176,27,144,27"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="add_string_array" name="add_string_array">
-<area shape="rect" id="Node000001" title="Добавляет массив строковых данных для замены в шаблоне через вызов внутреннего метода." alt="" coords="5,5,122,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a499fd6ff3a9e66067b5ea1f25b57a466" title="Метод добавляет массив строковых данных для замены в шаблоне, с возможностью рекурсивного размещения." alt="" coords="170,5,342,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,15,154,15,154,20,122,20"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ae3039ee8369e994369dfb203ece64467" title="Метод добавляет строковую переменную для замены в шаблоне, с возможностью рекурсивного размещения." alt="" coords="390,5,527,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="343,15,375,15,375,20,343,20"/>
-<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#afe519c98f15af68223415e9a57fd25bf" title="Метод проверяет путь, разбирает его на составные части и создает новый объект&#45;массив при необходимост..." alt="" coords="575,5,685,30"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="528,15,560,15,560,20,528,20"/>
-</map>

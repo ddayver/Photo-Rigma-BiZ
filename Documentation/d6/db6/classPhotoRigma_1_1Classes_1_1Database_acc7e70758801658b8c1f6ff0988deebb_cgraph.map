@@ -1,5 +1,0 @@
-<map id="result_row" name="result_row">
-<area shape="rect" id="Node000001" title="Извлекает одну строку результата из подготовленного выражения." alt="" coords="5,5,87,30"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#aac250b0e3e45a11bc29ad82a9feb64ec" title="Извлекает одну строку результата из подготовленного выражения, хранящегося в свойстве $res_query." alt="" coords="135,5,272,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,15,119,15,119,20,87,20"/>
-</map>

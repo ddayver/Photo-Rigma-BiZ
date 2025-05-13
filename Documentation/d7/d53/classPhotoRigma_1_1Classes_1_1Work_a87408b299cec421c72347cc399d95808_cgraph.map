@@ -1,9 +1,0 @@
-<map id="_process_lang_array" name="_process_lang_array">
-<area shape="rect" id="Node000001" title="Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения...." alt="" coords="5,19,146,44"/>
-<area shape="rect" id="Node000002" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#a8ecb9d3a6cba675b7a2d72ddc14b53f3" title="Очищает строку от HTML&#45;тегов и специальных символов через вызов публичного метода в дочернем классе." alt="" coords="194,19,276,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,29,178,29,178,34,146,34"/>
-<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a0164ea6f8d933962bca588651baedd44" title="Очистка строки от HTML&#45;тегов и специальных символов через вызов внутреннего метода." alt="" coords="324,12,489,51"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="276,29,309,29,309,34,276,34"/>
-<area shape="rect" id="Node000004" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="537,5,681,58"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="490,29,522,29,522,34,490,34"/>
-</map>

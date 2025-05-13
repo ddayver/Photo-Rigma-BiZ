@@ -1,9 +1,0 @@
-<map id="_format_date_internal" name="_format_date_internal">
-<area shape="rect" id="Node000001" title="Формирует SQL&#45;выражение для форматирования даты с учетом специфики используемой СУБД." alt="" coords="5,61,152,86"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a5f4312bd1da12e43a8f9a046ed068ebd" title="Производит преобразование строки формата даты/времени в формат, совместимый с MySQL (DATE_FORMAT)." alt="" coords="200,5,374,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,58,223,32,224,37,128,63"/>
-<area shape="rect" id="Node000003" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#ae74eea110900ed128b205a3d0c91687b" title="Преобразует формат даты/времени в формат, совместимый с PostgreSQL." alt="" coords="214,54,360,93"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,71,198,71,198,76,152,76"/>
-<area shape="rect" id="Node000004" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a80464f4180268442d13e5e319274a30a" title="Преобразует формат даты/времени в формат, совместимый с SQLite (strftime)." alt="" coords="223,117,350,156"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="123,84,209,110,207,115,122,89"/>
-</map>

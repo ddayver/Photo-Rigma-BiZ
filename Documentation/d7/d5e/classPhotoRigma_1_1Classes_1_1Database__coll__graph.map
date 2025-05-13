@@ -1,7 +1,0 @@
-<map id="Database" name="Database">
-<area shape="rect" id="Node000001" title="Класс для работы с базами данных через PDO." alt="" coords="122,92,199,117"/>
-<area shape="rect" id="Node000002" href="$d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html" title="Интерфейс для работы с базами данных через PDO." alt="" coords="5,5,140,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,39,151,90,147,94,93,43"/>
-<area shape="rect" id="Node000003" href="$d1/d44/interfacePhotoRigma_1_1Interfaces_1_1Cache__Handler__Interface.html" title="Интерфейс для работы с системами кеширования." alt="" coords="164,5,333,30"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,43,174,94,170,90,224,39"/>
-</map>

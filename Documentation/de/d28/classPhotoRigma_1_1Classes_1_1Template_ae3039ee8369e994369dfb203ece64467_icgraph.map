@@ -1,9 +1,0 @@
-<map id="_add_string_internal" name="_add_string_internal">
-<area shape="rect" id="Node000001" title="Метод добавляет строковую переменную для замены в шаблоне, с возможностью рекурсивного размещения." alt="" coords="390,31,527,55"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a499fd6ff3a9e66067b5ea1f25b57a466" title="Метод добавляет массив строковых данных для замены в шаблоне, с возможностью рекурсивного размещения." alt="" coords="170,5,342,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="374,35,342,31,343,26,375,30"/>
-<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a7a78613059d15e846fb072e468e5d4db" title="Добавляет строковую переменную для замены в шаблоне через вызов внутреннего метода." alt="" coords="215,55,296,79"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="375,56,297,65,297,60,374,50"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a440d606c454724c3e1166e8a9f863782" title="Добавляет массив строковых данных для замены в шаблоне через вызов внутреннего метода." alt="" coords="5,5,122,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="154,20,122,20,122,15,154,15"/>
-</map>

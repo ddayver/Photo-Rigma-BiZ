@@ -1,9 +1,0 @@
-<map id="User" name="User">
-<area shape="rect" id="Node000001" title="Класс для работы с пользователями и хранения данных о текущем пользователе." alt="" coords="180,92,229,117"/>
-<area shape="rect" id="Node000002" href="$dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами." alt="" coords="5,5,113,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,35,186,89,183,94,90,40"/>
-<area shape="rect" id="Node000003" href="$d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html" title="Интерфейс для работы с базами данных через PDO." alt="" coords="137,5,272,30"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,45,207,92,202,92,202,45"/>
-<area shape="rect" id="Node000004" href="$da/d79/interfacePhotoRigma_1_1Interfaces_1_1Work__Interface.html" title="Интерфейс для центральной точки приложения." alt="" coords="295,5,404,30"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="318,40,225,94,223,89,316,35"/>
-</map>

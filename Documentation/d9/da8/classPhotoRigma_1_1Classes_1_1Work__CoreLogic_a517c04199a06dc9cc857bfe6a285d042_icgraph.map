@@ -1,5 +1,0 @@
-<map id="_process_rating_internal" name="_process_rating_internal">
-<area shape="rect" id="Node000001" title="Добавляет новую оценку в таблицу, проверяет успешность вставки и возвращает среднюю оценку." alt="" coords="160,5,322,30"/>
-<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a35f2b39b21e9ee39a5878708e9211198" title="Добавляет новую оценку и возвращает среднюю оценку через вызов внутреннего метода." alt="" coords="5,5,112,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,20,112,20,112,15,144,15"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="_ubb_internal" name="_ubb_internal">
-<area shape="rect" id="Node000001" title="Преобразование BBCode в HTML (защищённый метод)." alt="" coords="5,9,104,33"/>
-<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#a76ecca6bcdca38a256cd4bdde4e03c22" title="Очистка строки от HTML&#45;тегов и специальных символов (защищённый метод)." alt="" coords="392,9,530,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,11,151,6,248,3,344,6,377,9,377,14,344,12,248,8,152,12,104,17"/>
-<area shape="rect" id="Node000003" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#ade4e103eed321eb69427d7a05f8e939a" title="Рекурсивно преобразует BBCode в HTML, проверяя глубину рекурсии и корректность тегов,..." alt="" coords="152,45,344,69"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="104,28,164,39,163,44,103,33"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="325,41,376,33,377,38,326,47"/>
-<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="216,46,209,36,213,26,226,20,248,18,272,21,284,28,281,32,270,26,248,23,227,25,217,30,214,36,220,43"/>
-</map>
