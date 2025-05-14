@@ -1,0 +1,152 @@
+.
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── config
+│   ├── config.php
+│   ├── README.md
+│   └── ver.php
+├── CONTRIBUTING.md
+├── core
+│   ├── Action
+│   │   ├── admin.php
+│   │   ├── attach.php
+│   │   ├── category.php
+│   │   ├── cron.php
+│   │   ├── main.php
+│   │   ├── news.php
+│   │   ├── photo.php
+│   │   ├── profile.php
+│   │   ├── README.md
+│   │   └── search.php
+│   ├── language
+│   │   ├── english
+│   │   │   └── main.php
+│   │   ├── README.md
+│   │   └── russian
+│   │       └── main.php
+│   ├── README.md
+│   ├── Resources
+│   │   ├── default_files
+│   │   │   ├── avatar
+│   │   │   │   └── no_avatar.jpg
+│   │   │   ├── gallery
+│   │   │   │   └── no_foto.png
+│   │   │   ├── README.md
+│   │   │   └── thumbnail
+│   │   │       └── no_foto.png
+│   │   └── README.md
+│   ├── templates
+│   │   ├── default
+│   │   │   ├── admin.html
+│   │   │   ├── category.html
+│   │   │   ├── footer.html
+│   │   │   ├── header.html
+│   │   │   ├── main.html
+│   │   │   ├── news.html
+│   │   │   ├── photo.html
+│   │   │   ├── profile.html
+│   │   │   └── search.html
+│   │   └── README.md
+│   └── themes
+│       ├── default
+│       │   ├── css
+│       │   │   ├── semantic.min.css
+│       │   │   └── style.css
+│       │   ├── image
+│       │   │   ├── gpadient_big.jpg
+│       │   │   ├── gpadient_small.jpg
+│       │   │   ├── logo-1.png
+│       │   │   └── logo-2.png
+│       │   └── js
+│       │       ├── jquery.min.js
+│       │       ├── script.js
+│       │       └── semantic.min.js
+│       └── README.md
+├── docker
+│   └── README.md
+├── Documentation
+│   └── README.md
+├── Doxyfile
+├── LICENSE
+├── LICENSE.ru
+├── public
+│   ├── avatar -> ../var/avatar
+│   ├── favicon.ico
+│   ├── index.php
+│   └── themes
+│       └── default -> ../../core/themes/default
+├── README.md
+├── SECURITY.md
+├── sql
+│   ├── mysql
+│   │   ├── photorigma.sql
+│   │   └── update
+│   │       ├── ver.0.4.0.sql
+│   │       ├── ver.0.4.1.sql
+│   │       ├── ver.0.4.3.sql
+│   │       └── ver.0.4.4.sql
+│   ├── pgsql
+│   │   ├── photorigma.sql
+│   │   └── update
+│   │       ├── ver.0.4.1.sql
+│   │       ├── ver.0.4.3.sql
+│   │       └── ver.0.4.4.sql
+│   ├── README.md
+│   └── sqlite
+│       ├── photorigma.sql
+│       └── update
+│           ├── ver.0.4.3.sql
+│           └── ver.0.4.4.sql
+├── src
+│   ├── Classes
+│   │   ├── Cache_Handler.php
+│   │   ├── Database.php
+│   │   ├── Template.php
+│   │   ├── User.php
+│   │   ├── Work_CoreLogic.php
+│   │   ├── Work_Helper.php
+│   │   ├── Work_Image.php
+│   │   ├── Work.php
+│   │   ├── Work_Security.php
+│   │   └── Work_Template.php
+│   ├── Include
+│   │   ├── constants.php
+│   │   ├── functions.php
+│   │   └── session_init.php
+│   ├── Interfaces
+│   │   ├── Cache_Handler_Interface.php
+│   │   ├── Database_Interface.php
+│   │   ├── Template_Interface.php
+│   │   ├── User_Interface.php
+│   │   ├── Work_CoreLogic_Interface.php
+│   │   ├── Work_Helper_Interface.php
+│   │   ├── Work_Image_Interface.php
+│   │   ├── Work_Interface.php
+│   │   ├── Work_Security_Interface.php
+│   │   └── Work_Template_Interface.php
+│   └── README.md
+├── submodule
+│   ├── naughty-words-js
+│   │   └── ... // структура субмодуля
+│   └── README.md
+├── tmp
+│   ├── favicon.svg
+│   ├── new_structure.txt
+│   ├── README.md
+│   └── screenshot.png
+└── var
+    ├── Action
+    ├── avatar
+    │   └── no_avatar.jpg
+    ├── cache
+    ├── gallery
+    │   ├── no_foto.png
+    │   └── user
+    ├── language
+    ├── README.md
+    ├── templates
+    ├── themes
+    └── thumbnail
+        ├── no_foto.png
+        └── user
+
