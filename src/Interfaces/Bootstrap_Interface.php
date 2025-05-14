@@ -27,7 +27,7 @@
  * \PhotoRigma\Classes\Bootstrap::init();
  *
  * @copyright Copyright (c) 2008–2025 Dark Dayver. Все права защищены.
- * @license   MIT License
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать,
  *            распространять, сублицензировать и продавать копии программного обеспечения,
  *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
@@ -61,9 +61,6 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  * - Проверка WORK_DIR и обязательных файлов
  * - Подключение системных компонентов
  * - Выброс исключений при ошибках
- *
- * @package    PhotoRigma\Interfaces
- * @subpackage Bootstrap_Interface
  *
  * @note       Реализация должна быть совместима с PSR-4 и PSR-12
  * @note       init() должен вызываться один раз — при запуске приложения

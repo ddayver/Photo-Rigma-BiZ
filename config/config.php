@@ -1,109 +1,40 @@
 <?php
 
 /**
- * @file      config.php
- * @brief     Редактируемые настройки сервера.
+ * Редактируемые настройки сервера.
  *
- * @author    Dark Dayver
- * @version   0.4.4
- * @date      2025-05-07
- * @namespace PhotoRigma
+ * Этот файл содержит конфигурационные данные, используемые ядром приложения:
+ * - Пути к директориям: gallery, thumbnail, avatar
+ * - Настройки подключения к базе данных (host, user, pass, name)
+ * - Тип и параметры кеширования: file, redis, memcached
+ * - Определение локального режима через LOCALHOST_SERVER
+ * - Автоматическое вычисление site_dir и site_url
  *
- * @details   Этот файл содержит настройки, необходимые для конфигурации приложения:
- *            - Указываются внешние (URL) и внутренние (на диске) пути к корню и подпапкам проекта.
- *            - Указываются параметры подключения к базе данных (например, хост, имя пользователя,
- *              пароль, имя базы данных).
- *            - Файл используется для централизованного управления конфигурацией приложения.
+ * @package    PhotoRigma
+ * @subpackage config
+ * @author     Dark Dayver
+ * @version    0.5.0
+ * @since      2025-05-15
  *
- *            Важно: Этот файл должен быть защищён от прямого доступа через веб-сервер.
+ * @note       Прямой вызов файла запрещён — используется только через точку входа index.php
+ * @note       Все ошибки генерируются в виде RuntimeException из точки входа
  *
- * @section   Config_Main_Functions Основные функции
- *            - Настройка подключения к базе данных.
- *            - Определение путей к директориям проекта.
- *            - Автоматическое определение протокола (HTTP/HTTPS) и URL сайта.
- *            - Проверка доступности и корректности путей к директориям.
+ * @warning    Убедитесь, что указанные папки существуют и доступны для записи.
+ *             Несоблюдение этого условия может привести к фатальным последствиям.
  *
- * @section   Config_Database_Settings Настройки подключения к базе данных
- *            Массив `$config['db']` содержит параметры подключения к базе данных:
- *            - **dbtype**: Тип базы данных (по умолчанию: `mysql`, можно использовать `pgsql` или `sqlite`).
- *            - **dbhost**: Сервер основной базы данных (по умолчанию: `localhost`). Не используется для SQLite.
- *            - **dbport**: Порт сервера основной базы данных (оставить пустым для значения по умолчанию, например: `3306` для MySQL).
- *                          Не используется для SQLite.
- *            - **dbsock**: Путь к сокету (используется, если хост не указан, например: `/var/lib/mysql/mysql.sock`).
- *                          Не используется для SQLite.
- *            - **dbuser**: Имя пользователя в БД (например: `root`). Не используется для SQLite.
- *            - **dbpass**: Пароль пользователя БД (например: `my_secure_password`). Не используется для SQLite.
- *            - **dbname**: Имя базы данных (например: `photorigma`). Для SQLite это путь к файлу базы данных.
+ * Пример использования:
+ * // Подключение в точке входа (index.php)
+ * require_once WORK_DIR . '/config/config.php';
  *
- * @see       include/Database.php Файл, где используется массив `$config['db']` для подключения к БД.
+ * @see index.php Файл, который подключает этот конфигурационный файл
+ * @see \PhotoRigma\Classes\Work::$config Массив, куда копируются настройки из $config
+ * @see include/Database.php Использование $config['db'] для подключения к БД
+ * @see include/Cache_Handler.php Использование $config['cache'] для работы с кешем
  *
- * @section   Config_Folder_Settings Настройки папок проекта
- *            - **gallery_folder**:   Имя папки для хранения фотографий (указывается относительно корня проекта).
- *                                    Пример: `'gallery'`.
- *            - **thumbnail_folder**: Имя папки для хранения эскизов фотографий (указывается относительно корня проекта).
- *                                    Пример: `'thumbnail'`.
- *            - **avatar_folder**:    Имя папки для хранения аватаров пользователей (указывается относительно корня проекта).
- *                                    Пример: `'avatar'`.
- *
- * @note      Убедитесь, что указанные папки существуют и доступны для записи. Несоблюдение этого условия может привести к ошибкам при работе с файлами.
- *
- * @section   Config_Local_Network Настройки использования проекта в локальной или внешней сети
- *            Константа `LOCALHOST_SERVER` указывает, является ли сервер локальным:
- *            - Если значение `true`, загрузка JS и CSS ограничивается локальными ресурсами (без интернета).
- *            - Если значение `false`, используются внешние ресурсы (например, CDN).
- *
- * @def       LOCALHOST_SERVER
- * @brief     Используется для указания, что сервер является локальным и не все его пользователи могут иметь доступ в интернет.
- * @details   Ограничение загрузки JS и CSS с интернета полезно для работы в изолированных сетях.
- *
- * @section   Config_Cache_Settings Настройки кеширования
- *            - Поддерживаемые типы кеширования:
- *              - **'file'**:      Файловое кеширование (данные хранятся в файлах).
- *              - **'redis'**:     Кеширование с использованием Redis.
- *              - **'memcached'**: Кеширование с использованием Memcached.
- *            - Параметры настройки зависят от выбранного типа кеширования:
- *              - Для файлового кеширования требуется указать путь к директории кеша (`cache_dir`).
- *              - Для Redis и Memcached требуется указать хост (`host`) и порт (`port`).
- *                Если порт не указан, используются значения по умолчанию:
- *                - Redis: 6379
- *                - Memcached: 11211
- *            - Массив `$config['cache']` содержит следующие ключи:
- *              - `type`:      Тип кеширования (`file`, `redis`, `memcached`). По умолчанию: `file`.
- *              - `cache_dir`: Путь к директории для файлового кеширования. Используется только при `type = 'file'`.
- *              - `host`:      Хост для Redis или Memcached. Используется только при `type = 'redis'` или `'memcached'`.
- *              - `port`:      Порт для Redis или Memcached. Если не указан, используются значения по умолчанию.
- *
- * @see       include/Cache_Handler.php Файл, где используется массив `$config['cache']` для работы с кешем.
- *
- * @section   Config_Error_Handling Обработка ошибок
- *            При возникновении ошибок генерируются исключения. Поддерживаемые типы исключений:
- *            - `RuntimeException`: Если не удалось определить `HTTP_HOST` или `SCRIPT_NAME`.
- *            - `RuntimeException`: Если путь к директории сайта некорректен или недоступен.
- *            - `RuntimeException`: Если обязательные директории отсутствуют или недоступны для записи.
- *
- * @throws    RuntimeException Если не удалось определить HTTP_HOST или SCRIPT_NAME.
- *            Пример сообщения: "Не удалось определить HTTP_HOST. Проверьте настройки сервера.".
- * @throws    RuntimeException Если путь к директории сайта некорректен или недоступен.
- *            Пример сообщения: "Директория недоступна для записи: {$config['site_dir']}".
- * @throws    RuntimeException Если обязательные директории отсутствуют или недоступны для записи.
- *            Пример сообщения: "Директория отсутствует или недоступна для записи: {$dir}".
- *
- * @section   Config_Related_Files Связанные файлы и компоненты
- *            - Классы приложения:
- *              - @see PhotoRigma::Classes::Work::$config
- *                     Массив, куда копируются настройки из $config.
- *            - Файлы приложения:
- *              - @see index.php Файл, который подключает config.php.
- *              - @see include/Database.php Файл, где используется массив `$config['db']` для подключения к БД.
- *              - @see include/Cache_Handler.php Файл, где используется массив `$config['cache']` для работы с кешем.
- *
- * @note      Этот файл является частью системы PhotoRigma и играет ключевую роль в настройке приложения.
- *            Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
- *
- * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license   MIT License (https://opensource.org/licenses/MIT)
+ * @copyright Copyright (c) 2008–2025 Dark Dayver. Все права защищены.
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать,
- *            распространять, сублицензировать и/или продавать копии программного обеспечения,
+ *            распространять, сублицензировать и продавать копии программного обеспечения,
  *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
  *            делать это при соблюдении следующих условий:
  *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
@@ -116,6 +47,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -158,7 +90,6 @@ $config = [];
  *          - dbname: Имя базы данных (например: photorigma). Для SQLite это путь к файлу базы данных.
  * @see     include/Database.php Файл, где используется этот массив для подключения к БД.
  */
-/** @noinspection PhpArrayWriteIsNotUsedInspection */
 $config['db'] = [
     'dbtype' => 'mysql',
     ///< Тип базы данных (по умолчанию: mysql, можно использовать pgsql или sqlite)
@@ -202,7 +133,6 @@ $config['avatar_folder'] = 'avatar';    ///< Имя папки для хране
  *
  * @see     include/Cache_Handler.php Файл, где используется этот массив для работы с кешем.
  */
-/** @noinspection PhpArrayWriteIsNotUsedInspection */
 $config['cache'] = [
     'type' => 'file',
     ///< Тип кеширования ('file', 'redis', 'memcached'). По умолчанию: file.
@@ -217,11 +147,11 @@ $config['cache'] = [
 // =============================================================================
 // Настройки использования проекта в локальной или внешней сети
 // =============================================================================
-/** @def LOCALHOST_SERVER
+/** @var $localhost_server
  * @brief Используется для указания, что сервер является локальным и не все его пользователи могут иметь доступ в
  *        интернет (ограничивает загрузку JS и CSS с интернета).
  */
-define('LOCALHOST_SERVER', false);
+$localhost_server = false;
 
 // =============================================================================
 // КОНЕЦ РЕДАКТИРУЕМОЙ ЧАСТИ НАСТРОЕК
@@ -230,94 +160,149 @@ define('LOCALHOST_SERVER', false);
 // =============================================================================
 // НАЧАЛО БЛОКА АВТО-НАСТРОЕК
 // =============================================================================
-/**
- * Определение протокола (HTTP/HTTPS).
- *
- * @details Проверяются различные способы определения протокола:
- *          - Переменная $_SERVER['HTTPS'] (учитываются значения 'on', '1', и случайный регистр).
- *          - Заголовок X-Forwarded-Proto (учитываются значения 'https', 'h2', и случайный регистр).
- *          - Порт сервера (443 для HTTPS).
- *          - Переменная $_SERVER['REQUEST_SCHEME'].
- *          Если ни один из способов не дал результата, используется HTTP.
+// Если в файле .env есть переменные, то они перезаписывают значения из $config.
+/** @noinspection PhpArrayWriteIsNotUsedInspection */
+$config['db'] = array_merge($config['db'], [
+    'dbtype' => $_ENV['DB_TYPE'] ?? $config['db']['dbtype'],
+    'dbhost' => $_ENV['DB_HOST'] ?? $config['db']['dbhost'],
+    'dbport' => $_ENV['DB_PORT'] ?? $config['db']['dbport'],
+    'dbsock' => $_ENV['DB_SOCKET'] ?? $config['db']['dbsock'],
+    'dbuser' => $_ENV['DB_USER'] ?? $config['db']['dbuser'],
+    'dbpass' => $_ENV['DB_PASSWORD'] ?? $config['db']['dbpass'],
+    'dbname' => $_ENV['DB_NAME'] ?? $config['db']['dbname'],
+]);
+
+$config['gallery_folder']     = $_ENV['GALLERY_FOLDER'] ?? $config['gallery_folder'];
+$config['thumbnail_folder']   = $_ENV['THUMBNAIL_FOLDER'] ?? $config['thumbnail_folder'];
+$config['avatar_folder']      = $_ENV['AVATAR_FOLDER'] ?? $config['avatar_folder'];
+
+/** @noinspection PhpArrayWriteIsNotUsedInspection */
+$config['cache'] = array_merge($config['cache'], [
+    'type' => $_ENV['CACHE_TYPE'] ?? $config['cache']['type'],
+    'cache_dir' => $_ENV['CACHE_DIR'] ?? $config['cache']['cache_dir'],
+    'host' => $_ENV['CACHE_HOST'] ?? $config['cache']['host'],
+    'port' => $_ENV['CACHE_PORT'] ?? $config['cache']['port'],
+]);
+
+/** @def LOCALHOST_SERVER
+ * @brief Используется для указания, что сервер является локальным и не все его пользователи могут иметь доступ в
+ *        интернет (ограничивает загрузку JS и CSS с интернета).
  */
-/** @noinspection HttpUrlsUsage */
-$config['site_url'] = 'http://'; // Резервное значение
-
-// Проверка $_SERVER['HTTPS']
-if (!empty($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === '1' || strtolower($_SERVER['HTTPS']) === 'on')) {
-    $config['site_url'] = 'https://';
-} // Проверка заголовка X-Forwarded-Proto
-elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && in_array(
-    strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']),
-    ['https', 'h2']
-)) {
-    $config['site_url'] = 'https://';
-} // Проверка порта сервера
-elseif (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443) {
-    $config['site_url'] = 'https://';
-} // Проверка $_SERVER['REQUEST_SCHEME']
-elseif (!empty($_SERVER['REQUEST_SCHEME']) && strtolower($_SERVER['REQUEST_SCHEME']) === 'https') {
-    $config['site_url'] = 'https://';
-}
-
+/** @noinspection PhpConditionAlreadyCheckedInspection */
+$localhost_server = $_ENV['LOCALHOST_SERVER'] ?? $localhost_server;
+define('LOCALHOST_SERVER', filter_var($localhost_server, FILTER_VALIDATE_BOOLEAN));
 
 /**
- * Безопасная проверка HTTP_HOST.
+ * Определение протокола (HTTP/HTTPS) и URL сайта.
  *
- * @details Используются различные источники данных для определения HTTP_HOST:
- *          - $_SERVER['HTTP_HOST'] (основной источник).
- *          - $_SERVER['SERVER_NAME'] (резервный источник).
- *          Выполняется валидация формата домена для предотвращения атак через заголовки.
+ * @details Проверяем:
+ *          1. $_ENV['APP_URL'] — приоритетный источник
+ *          2. $_SERVER — альтернативные способы определения
+ *          Если ничего не найдено, выбрасываем исключение
  */
-$http_host = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$config['site_url'] = '';
 
-// Если HTTP_HOST не установлен, пробуем SERVER_NAME
-if (!$http_host) {
-    /** @noinspection HostnameSubstitutionInspection */
-    $http_host = filter_var($_SERVER['SERVER_NAME'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// 1. Проверяем APP_URL из .env, если задан и валиден
+if (!empty($_ENV['APP_URL'])) {
+    $app_url = $_ENV['APP_URL'];
+
+    /** @noinspection BypassedUrlValidationInspection */
+    if (filter_var($app_url, FILTER_VALIDATE_URL) && preg_match('~^https?://~i', $app_url)) {
+        // Извлекаем хост из URL для последующей валидации
+        $parsed_url = parse_url($app_url);
+        $http_host = $parsed_url['host'] ?? '';
+
+        if ($http_host && preg_match('/^[a-z0-9.-]+$/i', $http_host)) {
+            $config['site_url'] = rtrim($app_url, '/') . '/';
+        } else {
+            /** @noinspection ForgottenDebugOutputInspection */
+            error_log(
+                date('H:i:s') . ' [ERROR] | ' . (filter_input(
+                    INPUT_SERVER,
+                    'REMOTE_ADDR',
+                    FILTER_VALIDATE_IP
+                ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый хост в APP_URL | Значение: $app_url"
+            );
+        }
+    } else {
+        /** @noinspection ForgottenDebugOutputInspection */
+        error_log(
+            date('H:i:s') . ' [ERROR] | ' . (filter_input(
+                INPUT_SERVER,
+                'REMOTE_ADDR',
+                FILTER_VALIDATE_IP
+            ) ?: 'UNKNOWN_IP') . ' | ' . __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Невалидный формат или протокол APP_URL | Значение: $app_url"
+        );
+    }
 }
 
-// Установка значения HTTP_HOST для CLI
-if (PHP_SAPI === 'cli' && !$http_host) {
-    $http_host = 'localhost';
+// 2. Если site_url ещё не установлен → используем данные из сервера
+if (empty($config['site_url'])) {
+    // Определяем протокол
+    $scheme = 'http://';
+
+    if (PHP_SAPI !== 'cli') {
+        if (!empty($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === '1')) {
+            $scheme = 'https://';
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && in_array(
+                strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']),
+                ['https', 'h2'],
+                true
+            )) {
+            $scheme = 'https://';
+        } elseif (!empty($_SERVER['REQUEST_SCHEME']) && strtolower($_SERVER['REQUEST_SCHEME']) === 'https') {
+            $scheme = 'https://';
+        } elseif (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443) {
+            $scheme = 'https://';
+        }
+    }
+
+    // Определяем хост
+    if (PHP_SAPI === 'cli') {
+        $http_host = 'localhost';
+    } else {
+        $http_host = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if (!$http_host) {
+            /** @noinspection HostnameSubstitutionInspection */
+            $http_host = filter_var($_SERVER['SERVER_NAME'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        }
+
+        if (!$http_host || !preg_match('/^[a-z0-9.-]+$/i', $http_host)) {
+            throw new RuntimeException(
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Невалидный формат хоста'
+            );
+        }
+    }
+
+    // Собираем site_url
+    $config['site_url'] = $scheme . $http_host . '/';
+
+    // Добавляем порт, если он не стандартный
+    if (PHP_SAPI !== 'cli' && !in_array($_SERVER['SERVER_PORT'] ?? 80, [80, 443], true)) {
+        $config['site_url'] = preg_replace(
+            '~^(https?://[^/]+)~',
+            '$1:' . ($_SERVER['SERVER_PORT'] ?? 80) . '/',
+            $config['site_url']
+        );
+    }
 }
 
-// Если HTTP_HOST всё ещё не установлен, выбрасываем исключение
-if (!$http_host) {
-    throw new RuntimeException(
-        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить HTTP_HOST | Рекомендация: проверьте настройки сервера'
-    );
-}
-
-// Валидация формата домена
-if (!preg_match('/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i', $http_host)) {
-    throw new RuntimeException(
-        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат HTTP_HOST | Значение: $http_host"
-    );
-}
 /**
  * Безопасное определение SCRIPT_NAME.
- *
- * @details Используются различные источники данных для определения SCRIPT_NAME:
- *          - $_SERVER['SCRIPT_NAME'] (основной источник).
- *          - $_SERVER['PHP_SELF'] (резервный источник).
- *          Выполняется валидация формата пути для предотвращения атак через заголовки.
  */
 $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-// Если SCRIPT_NAME не установлен, пробуем PHP_SELF
 if (!$script_name) {
     $script_name = filter_var($_SERVER['PHP_SELF'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 
-// Если SCRIPT_NAME всё ещё не установлен, выбрасываем исключение
 if (!$script_name) {
     throw new RuntimeException(
         __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить SCRIPT_NAME | Рекомендация: проверьте настройки сервера'
     );
 }
 
-// Валидация формата пути
 if (PHP_SAPI !== 'cli' && !preg_match('/^\/[a-zA-Z0-9._\-\/]*$/', $script_name)) {
     throw new RuntimeException(
         __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный формат SCRIPT_NAME | Значение: $script_name"
@@ -325,24 +310,21 @@ if (PHP_SAPI !== 'cli' && !preg_match('/^\/[a-zA-Z0-9._\-\/]*$/', $script_name))
 }
 
 /**
- * Генерация полного URL сайта.
- *
- * @details Формируется на основе протокола, HTTP_HOST и SCRIPT_NAME.
+ * Генерация полного URL сайта
  */
-$base_path = dirname($script_name); // Получаем директорию скрипта
+$base_path = dirname($script_name);
 
-// Если директория равна '.', заменяем её на '/'
 if ($base_path === '.') {
     $base_path = '/';
-}
-
-// Убедимся, что путь заканчивается слешем
-if (!str_ends_with($base_path, '/')) {
+} elseif ($base_path === '') {
+    $base_path = '/';
+} elseif (!str_ends_with($base_path, '/')) {
     $base_path .= '/';
 }
 
-// Формируем полный URL
-$config['site_url'] .= $http_host . $base_path;
+// Формируем окончательный URL
+/** @noinspection PhpArrayWriteIsNotUsedInspection */
+$config['site_url'] = rtrim($config['site_url'], '/') . $base_path;
 
 /**
  * Определение site_dir с нормализацией пути.
@@ -352,10 +334,10 @@ $config['site_url'] .= $http_host . $base_path;
  *          - Является ли путь директорией.
  *          - Доступна ли директория для чтения и записи.
  */
-$config['site_dir'] = realpath(__DIR__);
+$config['site_dir'] = WORK_DIR;
 
 // Если realpath вернул false, выбрасываем исключение
-if ($config['site_dir'] === false) {
+if (empty($config['site_dir'])) {
     throw new RuntimeException(
         __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Не удалось определить директорию сайта | Рекомендация: проверьте права доступа или корректность пути'
     );
@@ -381,16 +363,7 @@ if (PHP_SAPI !== 'cli' && !is_writable($config['site_dir'])) {
 }
 
 // Добавляем завершающий слеш
-if (!str_ends_with($config['site_dir'], '/')) {
-    $config['site_dir'] .= '/';
-}
-
-/**
- * Определение inc_dir.
- *
- * @details Указывает путь к директории include/, содержащей вспомогательные классы и функции.
- */
-$config['inc_dir'] = $config['site_dir'] . 'include/';
+$config['site_dir'] =rtrim($config['site_dir'], '/') . '/';
 
 /**
  * Проверка существования и доступности директорий.
@@ -398,10 +371,9 @@ $config['inc_dir'] = $config['site_dir'] . 'include/';
  * @details Проверяются директории, указанные в настройках ($gallery_folder, $thumbnail_folder, $avatar_folder).
  */
 $required_directories = [
-    $config['site_dir'] . $config['gallery_folder'] . '/',
-    $config['site_dir'] . $config['thumbnail_folder'] . '/',
-    $config['site_dir'] . $config['avatar_folder'] . '/',
-    $config['inc_dir'],
+    $config['site_dir'] . 'var/' . $config['gallery_folder'] . '/',
+    $config['site_dir'] . 'var/' . $config['thumbnail_folder'] . '/',
+    $config['site_dir'] . 'var/' . $config['avatar_folder'] . '/',
 ];
 foreach ($required_directories as $dir) {
     if (!is_dir($dir) || !is_writable($dir)) {

@@ -268,7 +268,7 @@ class Work implements Work_Interface
      *             - Если кеш актуален, данные загружаются из кеша.
      *             - Если кеш устарел или отсутствует, данные загружаются из базы данных и записываются в кеш.
      *          3. Загружает версию базы данных из таблицы `db_version`.
-     *          4. Читает версию приложения из файла по пути: `$this->config['inc_dir'] . 'ver.php'`
+     *          4. Читает версию приложения из файла по пути: `WORK_DIR . '/config/ver.php'`
      *             (без использования `eval()` или `include()` — только парсинг строки `$ver = '...'`).
      *          5. Возвращает ассоциативный массив с данными конфигурации, включая поля:
      *             - `'db_version'` — версия БД,
@@ -405,7 +405,7 @@ class Work implements Work_Interface
         $config_data['db_version'] = $version_data['ver'];
 
         // Чтение версии приложения из файла ver.php через парсинг содержимого
-        $version_file = $this->config['inc_dir'] . 'ver.php';
+        $version_file = WORK_DIR . '/config/ver.php';
 
         if (!is_file($version_file)) {
             throw new RuntimeException(

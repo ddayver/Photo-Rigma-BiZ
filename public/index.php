@@ -83,7 +83,7 @@
  *      Хранение и доступ к языковым переменным проекта
  *
  * @copyright Copyright (c) 2008–2025 Dark Dayver. Все права защищены.
- * @license   MIT License
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать,
  *            распространять, сублицензировать и/или продавать копии программного обеспечения,
  *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
@@ -117,6 +117,7 @@ use RangeException;
 use RuntimeException;
 use Throwable;
 use UnexpectedValueException;
+use Dotenv\Dotenv;
 
 use function PhotoRigma\Include\log_in_file;
 
@@ -139,7 +140,7 @@ define('DEBUG_GALLERY', false);
 /** @def WORK_DIR
  * @brief Используется для установки корневой папки проекта
  */
-define('WORK_DIR', dirname(__DIR__));
+define('WORK_DIR', rtrim(dirname(__DIR__), '/'));
 
 try {
     /**
@@ -155,6 +156,11 @@ try {
 
     // Подключаем загрузчик конфигурации и ядра проекта
     require_once WORK_DIR . '/vendor/autoload.php';
+
+    // Инициализация .env
+    $dotenv = Dotenv::createImmutable(WORK_DIR);
+    /** @noinspection UnusedFunctionResultInspection */
+    $dotenv->load();
 
     // Инициализируем ядро проекта (конфигурация, константы, сессию и функции)
     Bootstrap::init();
@@ -398,6 +404,7 @@ try {
                     $message .= "Трассировка:\n" . implode("\n\n", $trace_info) . PHP_EOL;
                 }
             }
+            /** @noinspection ForgottenDebugOutputInspection */
             error_log($message);
 
             // Экранирование спецсимволов и HTML-тегов перед выводом
