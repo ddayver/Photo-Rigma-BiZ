@@ -7,7 +7,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Interfaces
+ * @namespace PhotoRigma\\Interfaces
  *
  * @details   Этот файл содержит определение интерфейса `Database_Interface`, который устанавливает контракт
  *            для классов, предназначенных для работы с реляционными базами данных (MySQL/MariaDB, PostgreSQL, SQLite)

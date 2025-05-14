@@ -10,7 +10,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Action
+ * @namespace PhotoRigma\\Action
  *
  * @details   Файл используется для вывода фото из галереи по идентификатору, переданному через параметр
  *            `$_GET['foto']`. Реализованы следующие особенности:

@@ -9,7 +9,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Action
+ * @namespace PhotoRigma\\Action
  *
  * @details   Этот файл отвечает за управление фотографиями в системе, включая:
  *            - Отображение фотографий с информацией о них (название, описание, категория, автор, оценки).

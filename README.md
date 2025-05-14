@@ -320,7 +320,6 @@ Photo Rigma BiZ поддерживает возможность добавлен
    // Подключаем необходимые пространства имен
     namespace PhotoRigma\Action;
 
-    use PhotoRigma\Classes\Work;
     use PhotoRigma\Classes\User;
 
     // Устанавливаем файл шаблона

@@ -10,7 +10,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Action
+ * @namespace PhotoRigma\\Action
  *
  * @details   Этот файл отвечает за управление профилями пользователей, включая:
  *            - Вход и выход пользователя.
@@ -79,14 +79,14 @@
 
 namespace PhotoRigma\Action;
 
+use DateTime;
+use DateTimeZone;
 use LogicException;
 use PhotoRigma\Classes\Database;
 use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
 use RuntimeException;
-use DateTime;
-use DateTimeZone;
 
 use function PhotoRigma\Include\log_in_file;
 

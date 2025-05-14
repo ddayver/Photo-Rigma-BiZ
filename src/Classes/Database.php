@@ -7,7 +7,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Classes
+ * @namespace PhotoRigma\\Classes
  *
  * @details   Этот файл содержит реализацию класса `Database`, который предоставляет полный набор методов для работы
  *            с различными реляционными базами данных. Класс `Database` обеспечивает:

@@ -112,9 +112,9 @@
 
 namespace PhotoRigma;
 
-// Предотвращение прямого вызова файла
 use RuntimeException;
 
+// Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
@@ -273,6 +273,7 @@ $http_host = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SPECIA
 
 // Если HTTP_HOST не установлен, пробуем SERVER_NAME
 if (!$http_host) {
+    /** @noinspection HostnameSubstitutionInspection */
     $http_host = filter_var($_SERVER['SERVER_NAME'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 

@@ -9,7 +9,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Action
+ * @namespace PhotoRigma\\Action
  *
  * @details   Этот файл отвечает за обработку поисковых запросов на сайте. Основные функции включают:
  *            - Поиск по пользователям, категориям, новостям и фотографиям.

@@ -10,7 +10,7 @@
  * @author    Dark Dayver
  * @version   0.4.4
  * @date      2025-05-07
- * @namespace Photorigma\\Action
+ * @namespace PhotoRigma\\Action
  *
  * @details   Этот файл отвечает за формирование главной страницы сайта. Основная логика включает:
  *            - Загрузку последних новостей (количество определяется конфигурацией `last_news`).

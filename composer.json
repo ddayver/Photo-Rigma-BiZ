@@ -1,6 +1,6 @@
 {
     "name": "ddayver/photo-rigma-biz",
-    "description": "Open source photo gallery with multi-SUBD support",
+    "description": "Open source photo gallery with multi-DBMS support",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -12,7 +12,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.1",
+        "php": "^8.4",
         "ext-json": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
@@ -23,7 +23,10 @@
         "ext-session": "*",
         "ext-filter": "*",
         "ext-hash": "*",
-        "ext-exif": "*"
+        "ext-exif": "*",
+        "ext-iconv": "*",
+        "ext-zip": "*",
+        "ext-intl": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6",
@@ -31,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Photorigma\\Classes\\": "src/Classes/",
-            "Photorigma\\Interfaces\\": "src/Interfaces/"
+            "PhotoRigma\\Classes\\": "src/Classes/",
+            "PhotoRigma\\Interfaces\\": "src/Interfaces/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Photorigma\\Tests\\": "tests/"
+            "PhotoRigma\\Tests\\": "tests/"
         }
     },
     "scripts": {

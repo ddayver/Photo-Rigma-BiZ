@@ -1,6 +1,7 @@
 .
 ├── CHANGELOG.md
 ├── CODE_OF_CONDUCT.md
+├── composer.json
 ├── config
 │   ├── config.php
 │   ├── README.md
@@ -66,7 +67,6 @@
 │   └── README.md
 ├── Documentation
 │   └── README.md
-├── Doxyfile
 ├── LICENSE
 ├── LICENSE.ru
 ├── public
@@ -99,6 +99,7 @@
 │           └── ver.0.4.4.sql
 ├── src
 │   ├── Classes
+│   │   ├── Bootstrap.php
 │   │   ├── Cache_Handler.php
 │   │   ├── Database.php
 │   │   ├── Template.php
@@ -114,6 +115,7 @@
 │   │   ├── functions.php
 │   │   └── session_init.php
 │   ├── Interfaces
+│   │   ├── Bootstrap_Interface.php
 │   │   ├── Cache_Handler_Interface.php
 │   │   ├── Database_Interface.php
 │   │   ├── Template_Interface.php
@@ -129,6 +131,12 @@
 │   ├── naughty-words-js
 │   │   └── ... // структура субмодуля
 │   └── README.md
+├── tests
+│   ├── Photorigma
+│   │   ├── Action
+│   │   ├── Classes
+│   │   └── Interfaces
+│   └── README.md
 ├── tmp
 │   ├── favicon.svg
 │   ├── new_structure.txt
@@ -137,16 +145,16 @@
 └── var
     ├── Action
     ├── avatar
-    │   └── no_avatar.jpg
+    │   └── no_avatar.jpg -> ../../core/Resources/default_files/avatar/no_avatar.jpg
     ├── cache
     ├── gallery
-    │   ├── no_foto.png
+    │   ├── no_foto.png -> ../../core/Resources/default_files/gallery/no_foto.png
     │   └── user
     ├── language
     ├── README.md
     ├── templates
     ├── themes
     └── thumbnail
-        ├── no_foto.png
+        ├── no_foto.png -> ../../core/Resources/default_files/thumbnail/no_foto.png
         └── user
 
