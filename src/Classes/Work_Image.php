@@ -392,13 +392,13 @@ class Work_Image implements Work_Image_Interface
         $gallery_path = sprintf(
             '%s/%s/%s',
             $this->config['site_dir'],
-            $this->config['gallery_folder'],
+            $this->config['gallery_dir'],
             $directory_name
         );
         $thumbnail_path = sprintf(
             '%s/%s/%s',
             $this->config['site_dir'],
-            $this->config['thumbnail_folder'],
+            $this->config['thumbnail_dir'],
             $directory_name
         );
 
@@ -430,11 +430,11 @@ class Work_Image implements Work_Image_Interface
         }
 
         // Определяем пути к исходным файлам index.php
-        $gallery_index_file = sprintf('%s/%s/index.php', $this->config['site_dir'], $this->config['gallery_folder']);
+        $gallery_index_file = sprintf('%s/%s/index.php', $this->config['site_dir'], $this->config['gallery_dir']);
         $thumbnail_index_file = sprintf(
             '%s/%s/index.php',
             $this->config['site_dir'],
-            $this->config['thumbnail_folder']
+            $this->config['thumbnail_dir']
         );
 
         // Проверяем существование исходных файлов index.php
@@ -457,7 +457,7 @@ class Work_Image implements Work_Image_Interface
             );
         }
         $gallery_index_content = strtr($gallery_index_content, [
-            $this->config['gallery_folder'] . '/index.php' => $this->config['gallery_folder'] . "/$directory_name/index.php",
+            $this->config['gallery_dir'] . '/index.php' => $this->config['gallery_dir'] . "/$directory_name/index.php",
         ]);
         if (file_put_contents($gallery_path . '/index.php', $gallery_index_content, LOCK_EX) === false) {
             throw new RuntimeException(
@@ -473,7 +473,7 @@ class Work_Image implements Work_Image_Interface
             );
         }
         $thumbnail_index_content = strtr($thumbnail_index_content, [
-            $this->config['thumbnail_folder'] . '/index.php' => $this->config['thumbnail_folder'] . "/$directory_name/index.php",
+            $this->config['thumbnail_dir'] . '/index.php' => $this->config['thumbnail_dir'] . "/$directory_name/index.php",
         ]);
         if (file_put_contents($thumbnail_path . '/index.php', $thumbnail_index_content, LOCK_EX) === false) {
             throw new RuntimeException(
@@ -1875,8 +1875,8 @@ class Work_Image implements Work_Image_Interface
             'rate'                 => 'Rate: 0/0',
             'url_user'             => '',
             'real_name'            => 'No user',
-            'full_path'            => $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png',
-            'thumbnail_path'       => $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/no_foto.png',
+            'full_path'            => $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png',
+            'thumbnail_path'       => $this->config['site_dir'] . $this->config['thumbnail_dir'] . '/no_foto.png',
             'file'                 => 'no_foto.png',
         ];
     }

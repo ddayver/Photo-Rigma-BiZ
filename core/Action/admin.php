@@ -565,7 +565,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                         'D_LOGIN'       => $user_data['login'],
                         'D_EMAIL'       => Work::clean_field($user_data['email']),
                         'D_REAL_NAME'   => Work::clean_field($user_data['real_name']),
-                        'U_AVATAR'      => $work->config['site_url'] . $work->config['avatar_folder'] . '/' . $user_data['avatar'],
+                        'U_AVATAR'      => $work->config['site_url'] . $work->config['avatar_dir'] . '/' . $user_data['avatar'],
                         'U_DELETE_BLOCK'  => sprintf(
                             '%s?action=admin&amp;subact=admin_user&amp;do=delete_user&amp;uid=%s',
                             $work->config['site_url'],

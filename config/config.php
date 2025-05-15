@@ -110,9 +110,9 @@ $config['db'] = [
 // =============================================================================
 // Настройки папок проекта
 // =============================================================================
-$config['gallery_folder'] = 'gallery';   ///< Имя папки для хранения фотографий (указывается относительно корня проекта).
-$config['thumbnail_folder'] = 'thumbnail'; ///< Имя папки для хранения эскизов фотографий (указывается относительно корня проекта).
-$config['avatar_folder'] = 'avatar';    ///< Имя папки для хранения аватаров пользователей (указывается относительно корня проекта).
+$config['gallery_dir'] = 'gallery';   ///< Имя папки для хранения фотографий (указывается относительно корня проекта).
+$config['thumbnail_dir'] = 'thumbnail'; ///< Имя папки для хранения эскизов фотографий (указывается относительно корня проекта).
+$config['avatar_dir'] = 'avatar';    ///< Имя папки для хранения аватаров пользователей (указывается относительно корня проекта).
 
 // =============================================================================
 // Настройки кеширования
@@ -172,9 +172,9 @@ $config['db'] = array_merge($config['db'], [
     'dbname' => $_ENV['DB_NAME'] ?? $config['db']['dbname'],
 ]);
 
-$config['gallery_folder']     = $_ENV['GALLERY_FOLDER'] ?? $config['gallery_folder'];
-$config['thumbnail_folder']   = $_ENV['THUMBNAIL_FOLDER'] ?? $config['thumbnail_folder'];
-$config['avatar_folder']      = $_ENV['AVATAR_FOLDER'] ?? $config['avatar_folder'];
+$config['gallery_dir']     = $_ENV['GALLERY_DIR'] ?? $config['gallery_dir'];
+$config['thumbnail_dir']   = $_ENV['THUMBNAIL_DIR'] ?? $config['thumbnail_dir'];
+$config['avatar_dir']      = $_ENV['AVATAR_DIR'] ?? $config['avatar_dir'];
 
 /** @noinspection PhpArrayWriteIsNotUsedInspection */
 $config['cache'] = array_merge($config['cache'], [
@@ -365,22 +365,62 @@ if (PHP_SAPI !== 'cli' && !is_writable($config['site_dir'])) {
 // Добавляем завершающий слеш
 $config['site_dir'] =rtrim($config['site_dir'], '/') . '/';
 
+// Пути к директориям действий, языков, шаблонов
+$config['action_dir'] = [
+    $config['site_dir'] . 'var/Action',
+    $config['site_dir'] . 'core/Action'
+];
+$config['language_dirs'] = [
+    $config['site_dir'] . 'var/language',
+    $config['site_dir'] . 'core/language'
+];
+$config['template_dirs'] = [
+    $config['site_dir'] . 'var/templates',
+    $config['site_dir'] . 'core/templates'
+];
+
 /**
  * Проверка существования и доступности директорий.
- *
- * @details Проверяются директории, указанные в настройках ($gallery_folder, $thumbnail_folder, $avatar_folder).
  */
-$required_directories = [
-    $config['site_dir'] . 'var/' . $config['gallery_folder'] . '/',
-    $config['site_dir'] . 'var/' . $config['thumbnail_folder'] . '/',
-    $config['site_dir'] . 'var/' . $config['avatar_folder'] . '/',
+$required_directories_write = [
+    $config['site_dir'] . 'var/' . $config['gallery_dir'] . '/',
+    $config['site_dir'] . 'var/' . $config['thumbnail_dir'] . '/',
+    $config['site_dir'] . 'var/' . $config['avatar_dir'] . '/',
+    $config['site_dir'] . 'var/log/',
+    $config['site_dir'] . 'var/' . $config['cache']['cache_dir'] . '/',
 ];
-foreach ($required_directories as $dir) {
-    if (!is_dir($dir) || !is_writable($dir)) {
-        throw new RuntimeException(
-            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория отсутствует или недоступна для записи | Путь: $dir"
-        );
+$required_directories_read = array_merge(
+    $config['action_dir'],
+    $config['language_dirs'],
+    $config['template_dirs']
+);
+
+$error_dir = [];
+
+// Проверяем доступ на чтение
+foreach ($required_directories_read as $dir) {
+    if (!is_dir($dir)) {
+        $error_dir[] = "Директория не существует (для чтения): $dir";
+    } elseif (!is_readable($dir)) {
+        $error_dir[] = "Нет прав на чтение: $dir";
     }
+}
+
+// Проверяем доступ на запись
+foreach ($required_directories_write as $dir) {
+    if (!is_dir($dir)) {
+        $error_dir[] = "Директория не существует (для записи): $dir";
+    } elseif (!is_writable($dir)) {
+        $error_dir[] = "Нет прав на запись: $dir";
+    }
+}
+
+// Если есть ошибки → выбрасываем исключение
+if (!empty($error_dir)) {
+    $error = implode(PHP_EOL ?? '\n', $error_dir);
+    throw new RuntimeException(
+        __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Проблемы с доступом к директориям: ' . $error
+    );
 }
 // =============================================================================
 // КОНЕЦ БЛОКА АВТО-НАСТРОЕК

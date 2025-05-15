@@ -474,11 +474,11 @@ if ($cat === 'user' || $cat === 0) {
             }
 
             // Удаление файлов из папки галереи
-            $gallery_path = $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $category_data['folder'];
+            $gallery_path = $work->config['site_dir'] . $work->config['gallery_dir'] . '/' . $category_data['folder'];
             $work->remove_directory($gallery_path);
 
             // Удаление файлов из папки миниатюр
-            $thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $category_data['folder'];
+            $thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_dir'] . '/' . $category_data['folder'];
             $work->remove_directory($thumbnail_path);
 
             // Удаление категории из базы данных
@@ -748,8 +748,8 @@ if ($cat === 'user' || $cat === 0) {
     $directory_count_data = $db->result_row();
 
     if ((isset($directory_count_data['count_dir']) && $directory_count_data['count_dir'] > 0) || is_dir(
-        $work->config['site_dir'] . $work->config['gallery_folder'] . '/' . $directory_name
-    ) || is_dir($work->config['site_dir'] . $work->config['thumbnail_folder'] . '/' . $directory_name)) {
+        $work->config['site_dir'] . $work->config['gallery_dir'] . '/' . $directory_name
+    ) || is_dir($work->config['site_dir'] . $work->config['thumbnail_dir'] . '/' . $directory_name)) {
         $directory_name = time() . '_' . $directory_name;
     }
 

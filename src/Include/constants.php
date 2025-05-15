@@ -89,14 +89,24 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 // КОНСТАНТЫ ДЛЯ СИСТЕМНЫХ НАСТРОЕК, ТАБЛИЦ БАЗ ДАННЫХ
 // =============================================================================
 
-define('LOG_DIR', WORK_DIR . '/var/log'); ///< Путь к директории для хранения логов
+/** Путь к директории для хранения логов */
+define('LOG_DIR', WORK_DIR . '/var/log');
+/** Путь к директории с файлами ядра */
+define('CORE_DIR', WORK_DIR . '/core');
+/** Путь к директории с пользовательскими файлами */
+define('VAR_DIR', WORK_DIR . '/var/');
+/** URL-адрес сайта */
 define('SITE_URL', $config['site_url']);
-define('GALLERY_FOLDER', $config['site_dir'] . 'var/' . $config['gallery_folder'] . '/');
-define('THUMBNAIL_FOLDER', $config['site_dir'] . 'var/' . $config['thumbnail_folder'] . '/');
-define('AVATAR_FOLDER', $config['site_dir'] . 'var/' . $config['avatar_folder'] . '/');
+/** Путь к директории с фотографиями */
+define('GALLERY_DIR', VAR_DIR . '/' . $config['gallery_dir']);
+/** Путь к директории с миниатюрами */
+define('THUMBNAIL_DIR', VAR_DIR . '/' . $config['thumbnail_dir']);
+/** Путь к директории с аватарами */
+define('AVATAR_DIR', VAR_DIR . '/' . $config['avatar_dir']);
 
-/// Что использовать как конец строки (для Win-серверов).
+// Что использовать как конец строки (для старых Win-серверов).
 if (!defined('PHP_EOL')) {
+    /** Что использовать как конец строки */
     define('PHP_EOL', PHP_OS_FAMILY === 'Windows' ? "\r\n" : "\n");
 }
 

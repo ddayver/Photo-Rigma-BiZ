@@ -36,6 +36,7 @@ namespace PhotoRigma\Language;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,

@@ -1097,7 +1097,7 @@ class Work_Template implements Work_Template_Interface
      *          Константа DEFAULT_AVATAR определяет значение аватара по умолчанию (например, 'no_avatar.jpg').
      *
      * @warning Убедитесь, что объект пользователя ($this->user) корректно установлен перед вызовом метода.
-     *          Также убедитесь, что конфигурация аватаров ($this->config['avatar_folder']) настроена правильно.
+     *          Также убедитесь, что конфигурация аватаров ($this->config['avatar_dir']) настроена правильно.
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *
      * Пример использования:
@@ -1160,7 +1160,7 @@ class Work_Template implements Work_Template_Interface
      *          Константа DEFAULT_AVATAR определяет значение аватара по умолчанию (например, 'no_avatar.jpg').
      *
      * @warning Убедитесь, что объект пользователя ($this->user) корректно установлен перед вызовом метода.
-     *          Также убедитесь, что конфигурация аватаров ($this->config['avatar_folder']) настроена правильно.
+     *          Также убедитесь, что конфигурация аватаров ($this->config['avatar_dir']) настроена правильно.
      *
      * Пример использования:
      * @code
@@ -1192,21 +1192,21 @@ class Work_Template implements Work_Template_Interface
         // Определение пути к аватару
         $avatar_path = sprintf(
             '%s/%s',
-            $this->config['avatar_folder'],
+            $this->config['avatar_dir'],
             $this->user->user['avatar'] ?? DEFAULT_AVATAR
         );
         // Проверка существования файла и его MIME-типа
         if ($this->user->session['login_id'] > 0) {
             $full_avatar_path = $this->config['site_dir'] . '/' . $avatar_path;
             if (!file_exists($full_avatar_path)) {
-                $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], DEFAULT_AVATAR);
+                $avatar_path = sprintf('%s/%s', $this->config['avatar_dir'], DEFAULT_AVATAR);
             } else {
                 $mime_type = new finfo(FILEINFO_MIME_TYPE)->file($full_avatar_path);
                 if (!Work::validate_mime_type($mime_type)) {
                     log_in_file(
                         __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: $full_avatar_path"
                     );
-                    $avatar_path = sprintf('%s/%s', $this->config['avatar_folder'], DEFAULT_AVATAR);
+                    $avatar_path = sprintf('%s/%s', $this->config['avatar_dir'], DEFAULT_AVATAR);
                 }
             }
         }

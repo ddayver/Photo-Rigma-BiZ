@@ -143,7 +143,7 @@ if ($photo_data) {
     $file_path = sprintf(
         '%s%s/%s/%s',
         $work->config['site_dir'],
-        $work->config['gallery_folder'],
+        $work->config['gallery_dir'],
         $photo_data['folder'],
         $photo_data['file']
     );
@@ -374,14 +374,14 @@ if ($photo_id !== 0) {
             $old_photo_path = sprintf(
                 '%s%s/%s/%s',
                 $work->config['site_dir'],
-                $work->config['gallery_folder'],
+                $work->config['gallery_dir'],
                 $photo_data['folder'],
                 $photo_data['file']
             );
             $old_thumbnail_path = sprintf(
                 '%s%s/%s/%s',
                 $work->config['site_dir'],
-                $work->config['thumbnail_folder'],
+                $work->config['thumbnail_dir'],
                 $photo_data['folder'],
                 $photo_data['file']
             );
@@ -398,14 +398,14 @@ if ($photo_id !== 0) {
             $new_photo_path = sprintf(
                 '%s%s/%s/%s',
                 $work->config['site_dir'],
-                $work->config['gallery_folder'],
+                $work->config['gallery_dir'],
                 $temp_new_category_data['folder'],
                 $photo['file']
             );
             $new_thumbnail_path = sprintf(
                 '%s%s/%s/%s',
                 $work->config['site_dir'],
-                $work->config['thumbnail_folder'],
+                $work->config['thumbnail_dir'],
                 $temp_new_category_data['folder'],
                 $photo['file']
             );
@@ -498,7 +498,7 @@ if ($photo_id !== 0) {
         $photo['path'] = sprintf(
             '%s%s/%s/%s',
             $work->config['site_dir'],
-            $work->config['thumbnail_folder'],
+            $work->config['thumbnail_dir'],
             $photo_data['folder'],
             $photo_data['file']
         );
@@ -644,7 +644,7 @@ if ($photo_id !== 0) {
         $photo['path'] = sprintf(
             '%s%s/%s/%s',
             $work->config['site_dir'],
-            $work->config['gallery_folder'],
+            $work->config['gallery_dir'],
             $photo_data['folder'],
             $photo_data['file']
         );
@@ -933,14 +933,14 @@ if ($photo_id !== 0) {
             $photo['path'] = sprintf(
                 '%s%s/%s/%s',
                 $work->config['site_dir'],
-                $work->config['gallery_folder'],
+                $work->config['gallery_dir'],
                 $category_data['folder'],
                 $file_name
             );
             $photo['thumbnail_path'] = sprintf(
                 '%s%s/%s/%s',
                 $work->config['site_dir'],
-                $work->config['thumbnail_folder'],
+                $work->config['thumbnail_dir'],
                 $category_data['folder'],
                 $file_name
             );
@@ -1063,7 +1063,7 @@ if ($photo_id !== 0) {
     $photo['path'] = sprintf(
         '%s%s/%s',
         $work->config['site_dir'],
-        $work->config['gallery_folder'],
+        $work->config['gallery_dir'],
         $photo_data['file']
     );
 }

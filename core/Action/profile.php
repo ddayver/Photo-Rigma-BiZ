@@ -566,7 +566,7 @@ if ($subact === 'regist') {
             'U_AVATAR'        => sprintf(
                 '%s%s/%s',
                 $work->config['site_url'],
-                $work->config['avatar_folder'],
+                $work->config['avatar_dir'],
                 $user_data['avatar']
             ),
             'U_PROFILE_EDIT'  => sprintf(
@@ -664,7 +664,7 @@ if ($subact === 'regist') {
             'U_AVATAR'    => sprintf(
                 '%s%s/%s',
                 $work->config['site_url'],
-                $work->config['avatar_folder'],
+                $work->config['avatar_dir'],
                 $user_data['avatar']
             ),
         ]);

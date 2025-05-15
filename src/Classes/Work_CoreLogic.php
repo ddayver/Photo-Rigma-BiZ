@@ -717,7 +717,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через
      *          `_generate_photo_data()`.
      *          Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри
-     *          `$this->config['gallery_folder']`.
+     *          `$this->config['gallery_dir']`.
      *          Вызывать этот метод напрямую, минуя метод-фасад родительского класса, крайне не рекомендуется.
      *          В противном случае поведение метода может быть непредсказуемым.
      *
@@ -759,7 +759,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *             - Для типа 'rand': Выбирает любое случайное изображение (использует представление
      *             `VIEW_RANDOM_PHOTO`).
      *          4. Проверяет существование файла изображения и его доступность.
-     *          5. Ограничивает доступ к файлам внутри директории `$this->config['gallery_folder']`.
+     *          5. Ограничивает доступ к файлам внутри директории `$this->config['gallery_dir']`.
      *          6. Вычисляет размеры изображения через метод `size_image()`.
      *          7. Формирует массив данных для вывода изображения или вызывает `_generate_photo_data()` в случае ошибки.
      *          Метод является защищенным и вызывается через публичный метод `create_photo()`.
@@ -813,7 +813,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
      *          Если файл изображения недоступен или не существует, метод возвращает данные по умолчанию через
      *          `_generate_photo_data()`.
      *          Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри
-     *          `$this->config['gallery_folder']`.
+     *          `$this->config['gallery_dir']`.
      *
      * Пример вызова метода внутри класса или наследника:
      * @code
@@ -897,13 +897,13 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             // Если изображение не найдено, возвращаем данные по умолчанию
             if (!$photo_data) {
                 $size = $this->work->size_image(
-                    $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png'
+                    $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png'
                 );
                 return $this->_generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
             }
         } else {
             $size = $this->work->size_image(
-                $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png'
+                $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png'
             );
             return $this->_generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
         }
@@ -925,16 +925,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         // Формирование пути к файлу изображения
-        $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . ($category_data['folder'] ?? '') . '/' . $photo_data['file'];
+        $image_path = $this->config['site_dir'] . $this->config['gallery_dir'] . '/' . ($category_data['folder'] ?? '') . '/' . $photo_data['file'];
 
         // Ограничение доступа к файлам через $image_path
-        $base_dir = realpath($this->config['site_dir'] . $this->config['gallery_folder']);
+        $base_dir = realpath($this->config['site_dir'] . $this->config['gallery_dir']);
         $resolved_path = realpath($image_path);
         if (!$resolved_path || !str_starts_with($resolved_path, $base_dir)) {
             log_in_file(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: $image_path"
             );
-            $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
+            $image_path = $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png';
         }
 
         // Проверка существования файла
@@ -942,7 +942,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             log_in_file(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: $image_path, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
             );
-            $image_path = $this->config['site_dir'] . $this->config['gallery_folder'] . '/no_foto.png';
+            $image_path = $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png';
         }
 
         // Вычисление размеров изображения
@@ -1249,8 +1249,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             );
         }
         // Определение путей к файлам
-        $path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_folder'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
-        $path_photo = $this->config['site_dir'] . $this->config['gallery_folder'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
+        $path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_dir'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
+        $path_photo = $this->config['site_dir'] . $this->config['gallery_dir'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
         // Удаление записи об изображении из таблицы
         $this->db->delete(TBL_PHOTO, ['where' => '`id` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
         $aff_rows = $this->db->get_affected_rows();

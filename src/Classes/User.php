@@ -2887,7 +2887,7 @@ class User implements User_Interface
                 $delete_old_avatar = true; // Устанавливаем флаг на удаление
             }
         } else {
-            $old_avatar_path = $this->work->config['site_dir'] . $this->work->config['avatar_folder'] . '/' . $user_data['avatar'];
+            $old_avatar_path = $this->work->config['site_dir'] . $this->work->config['avatar_dir'] . '/' . $user_data['avatar'];
             if ($user_data['avatar'] !== DEFAULT_AVATAR && is_file($old_avatar_path) && is_writable(
                 $old_avatar_path
             )) {
@@ -2931,7 +2931,7 @@ class User implements User_Interface
         $affected_rows = $this->db->get_affected_rows();
         // Если данные успешно обновлены и флаг удаления установлен, удаляем старый аватар
         if ($affected_rows > 0 && $delete_old_avatar) {
-            $old_avatar_path = $this->work->config['site_dir'] . $this->work->config['avatar_folder'] . '/' . $user_data['avatar'];
+            $old_avatar_path = $this->work->config['site_dir'] . $this->work->config['avatar_dir'] . '/' . $user_data['avatar'];
             if (is_file($old_avatar_path) && is_writable($old_avatar_path)) {
                 unlink($old_avatar_path); // Безопасное удаление старого аватара
             }
@@ -3029,10 +3029,10 @@ class User implements User_Interface
             $file_extension = isset($file_info['extension']) ? '.' . $file_info['extension'] : '';
             $encoded_name = Work::encodename($file_name);
             $file_avatar = time() . '_' . $encoded_name . $file_extension;
-            $path_avatar = $this->work->config['site_dir'] . $this->work->config['avatar_folder'] . '/' . $file_avatar;
+            $path_avatar = $this->work->config['site_dir'] . $this->work->config['avatar_dir'] . '/' . $file_avatar;
 
             // Проверяем права доступа к директории
-            if (!is_writable($this->work->config['site_dir'] . $this->work->config['avatar_folder'])) {
+            if (!is_writable($this->work->config['site_dir'] . $this->work->config['avatar_dir'])) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Директория для аватаров недоступна для записи.'
                 );
