@@ -54,6 +54,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -491,7 +492,7 @@ class Work_Template implements Work_Template_Interface
                 $url_action = Work::clean_field($menu_item['url_action']);
                 $name_action = Work::clean_field($menu_item['name_action']);
                 $menu_items[$key] = [
-                    'url'  => ($menu_item['action'] === $action ? null : $this->config['site_url'] . $url_action),
+                    'url'  => ($menu_item['action'] === $action ? null : SITE_URL . $url_action),
                     'name' => $this->lang['menu'][$name_action] ?? ucfirst($name_action),
                 ];
             }
@@ -757,11 +758,11 @@ class Work_Template implements Work_Template_Interface
         );
         $user_data = $this->db->result_array();
         // Проверка: $user_data может быть массивом или false
-        $array_data = ($user_data !== false) ? array_map(function ($current_user) {
+        $array_data = ($user_data !== false) ? array_map(static function ($current_user) {
             return [
                 'user_url'   => sprintf(
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                    $this->config['site_url'],
+                    SITE_URL,
                     $current_user['id']
                 ),
                 'user_name'  => Work::clean_field($current_user['real_name']),
@@ -1022,7 +1023,7 @@ class Work_Template implements Work_Template_Interface
             VIEW_USERS_ONLINE
         );
         $online_users_data = $this->db->result_array();
-        $stat['online'] = $online_users_data ? implode(', ', array_map(function ($user) {
+        $stat['online'] = $online_users_data ? implode(', ', array_map(static function ($user) {
             // Чистим имя
             $name = Work::clean_field($user['real_name']);
 
@@ -1030,7 +1031,7 @@ class Work_Template implements Work_Template_Interface
             /** @noinspection HtmlUnknownTarget */
             return sprintf(
                 '<a href="%s?action=profile&amp;subact=profile&amp;uid=%d" style="white-space: nowrap;" title="%s">%s%s</a>',
-                $this->config['site_url'],
+                SITE_URL,
                 $user['id'],
                 $name,
                 (!empty($user['banned']) ? '<s><i class="ban icon"></i>' : ''),
@@ -1190,23 +1191,19 @@ class Work_Template implements Work_Template_Interface
             );
         }
         // Определение пути к аватару
-        $avatar_path = sprintf(
-            '%s/%s',
-            $this->config['avatar_dir'],
-            $this->user->user['avatar'] ?? DEFAULT_AVATAR
-        );
+        $avatar_file = $this->user->user['avatar'] ?? DEFAULT_AVATAR;
         // Проверка существования файла и его MIME-типа
         if ($this->user->session['login_id'] > 0) {
-            $full_avatar_path = $this->config['site_dir'] . '/' . $avatar_path;
+            $full_avatar_path = AVATAR_DIR . '/' . $avatar_file;
             if (!file_exists($full_avatar_path)) {
-                $avatar_path = sprintf('%s/%s', $this->config['avatar_dir'], DEFAULT_AVATAR);
+                $avatar_file = DEFAULT_AVATAR;
             } else {
                 $mime_type = new finfo(FILEINFO_MIME_TYPE)->file($full_avatar_path);
                 if (!Work::validate_mime_type($mime_type)) {
                     log_in_file(
                         __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый MIME-тип аватара | Файл: $full_avatar_path"
                     );
-                    $avatar_path = sprintf('%s/%s', $this->config['avatar_dir'], DEFAULT_AVATAR);
+                    $avatar_file = DEFAULT_AVATAR;
                 }
             }
         }
@@ -1220,9 +1217,9 @@ class Work_Template implements Work_Template_Interface
                 'L_ENTER'           => $this->lang['main']['enter'],
                 'L_FORGOT_PASSWORD' => $this->lang['main']['forgot_password'],
                 'L_REGISTRATION'    => $this->lang['main']['registration'],
-                'U_LOGIN'           => sprintf('%s?action=profile&amp;subact=login', $this->config['site_url']),
-                'U_FORGOT_PASSWORD' => sprintf('%s?action=profile&amp;subact=forgot', $this->config['site_url']),
-                'U_REGISTRATION'    => sprintf('%s?action=profile&amp;subact=regist', $this->config['site_url']),
+                'U_LOGIN'           => sprintf('%s?action=profile&amp;subact=login', SITE_URL),
+                'U_FORGOT_PASSWORD' => sprintf('%s?action=profile&amp;subact=forgot', SITE_URL),
+                'U_REGISTRATION'    => sprintf('%s?action=profile&amp;subact=regist', SITE_URL),
             ],
             default => [
                 'NAME_BLOCK' => $this->lang['main']['user_block'],
@@ -1230,7 +1227,7 @@ class Work_Template implements Work_Template_Interface
                     $this->user->user['real_name']
                 ),
                 'L_GROUP'    => $this->lang['main']['group'] . ': ' . $this->user->user['group_name'],
-                'U_AVATAR'   => $this->config['site_url'] . $avatar_path,
+                'U_AVATAR'   => AVATAR_URL . $avatar_file,
             ],
         };
     }

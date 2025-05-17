@@ -54,6 +54,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -587,9 +588,9 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
 
         // Инициализация информации о фотографиях
         $photo_info['last_name'] = $this->lang['main']['no_foto'];
-        $photo_info['last_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
+        $photo_info['last_url'] = sprintf('%s?action=photo&amp;id=%d', SITE_URL, 0);
         $photo_info['top_name'] = $this->lang['main']['no_foto'];
-        $photo_info['top_url'] = sprintf('%s?action=photo&amp;id=%d', $this->config['site_url'], 0);
+        $photo_info['top_url'] = sprintf('%s?action=photo&amp;id=%d', SITE_URL, 0);
 
         // Обновление информации о фотографиях, если пользователь имеет права на просмотр
         if ($this->user->user['pic_view']) {
@@ -599,7 +600,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 ) . ')';
                 $photo_info['last_url'] = sprintf(
                     '%s?action=photo&amp;id=%d',
-                    $this->config['site_url'],
+                    SITE_URL,
                     $latest_photo_data['id']
                 );
             }
@@ -610,7 +611,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 ) . ')';
                 $photo_info['top_url'] = sprintf(
                     '%s?action=photo&amp;id=%d',
-                    $this->config['site_url'],
+                    SITE_URL,
                     $top_rated_photo_data['id']
                 );
             }
@@ -649,7 +650,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'top_photo'              => $photo_info['top_name'],
             'url_cat'                => sprintf(
                 '%s?action=category&amp;cat=%s',
-                $this->config['site_url'],
+                SITE_URL,
                 $category_data['id']
             ),
             'url_last_photo'         => $photo_info['last_url'],
@@ -897,13 +898,13 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             // Если изображение не найдено, возвращаем данные по умолчанию
             if (!$photo_data) {
                 $size = $this->work->size_image(
-                    $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png'
+                    GALLERY_DIR . '/no_foto.png'
                 );
                 return $this->_generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
             }
         } else {
             $size = $this->work->size_image(
-                $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png'
+                GALLERY_DIR . '/no_foto.png'
             );
             return $this->_generate_photo_data(['width' => $size['width'], 'height' => $size['height']], $type);
         }
@@ -925,16 +926,16 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         }
 
         // Формирование пути к файлу изображения
-        $image_path = $this->config['site_dir'] . $this->config['gallery_dir'] . '/' . ($category_data['folder'] ?? '') . '/' . $photo_data['file'];
+        $image_path = GALLERY_DIR . '/' . ($category_data['folder'] ?? '') . '/' . $photo_data['file'];
 
         // Ограничение доступа к файлам через $image_path
-        $base_dir = realpath($this->config['site_dir'] . $this->config['gallery_dir']);
+        $base_dir = realpath(GALLERY_DIR);
         $resolved_path = realpath($image_path);
         if (!$resolved_path || !str_starts_with($resolved_path, $base_dir)) {
             log_in_file(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к недопустимому пути | Путь: $image_path"
             );
-            $image_path = $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png';
+            $image_path = GALLERY_DIR . '/no_foto.png';
         }
 
         // Проверка существования файла
@@ -942,7 +943,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             log_in_file(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл не найден или недоступен | Путь: $image_path, Пользователь: " . ($this->user->user['id'] ?? 'неизвестный')
             );
-            $image_path = $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png';
+            $image_path = GALLERY_DIR . '/no_foto.png';
         }
 
         // Вычисление размеров изображения
@@ -964,12 +965,12 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'name_block'           => $this->lang['main'][$type . '_foto'],
             'url'                  => sprintf(
                 '%s?action=photo&amp;id=%d',
-                $this->config['site_url'],
+                SITE_URL,
                 $photo_data['id']
             ),
             'thumbnail_url'        => sprintf(
                 '%s?action=attach&amp;foto=%d&amp;thumbnail=1',
-                $this->config['site_url'],
+                SITE_URL,
                 $photo_data['id']
             ),
             'name'                 => Work::clean_field($photo_data['name']),
@@ -979,7 +980,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'rate'                 => $this->lang['main']['rate'] . ': ' . $photo_data['rate_user'] . '/' . $photo_data['rate_moder'],
             'url_user'             => $user_data ? sprintf(
                 '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                $this->config['site_url'],
+                SITE_URL,
                 $photo_data['user_upload']
             ) : '',
             'real_name'            => $user_data ? Work::clean_field(
@@ -987,7 +988,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             ) : $this->lang['main']['no_user_add'],
             'category_url'         => sprintf(
                 '%s?action=category&amp;cat=%d',
-                $this->config['site_url'],
+                SITE_URL,
                 $category_data['id']
             ),
             'width'                => $size['width'],
@@ -1071,8 +1072,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         // Значения по умолчанию
         $default_data = [
             'name_block'           => $this->lang['main'][$type . '_foto'],
-            'url'                  => sprintf('%s?action=photo&amp;id=0', $this->config['site_url']),
-            'thumbnail_url'        => sprintf('%s?action=attach&amp;foto=0&amp;thumbnail=1', $this->config['site_url']),
+            'url'                  => sprintf('%s?action=photo&amp;id=0', SITE_URL),
+            'thumbnail_url'        => sprintf('%s?action=attach&amp;foto=0&amp;thumbnail=1', SITE_URL),
             'name'                 => $this->lang['main']['no_foto'],
             'description'          => $this->lang['main']['no_foto'],
             'category_name'        => $this->lang['main']['no_category'],
@@ -1080,7 +1081,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             'rate'                 => $this->lang['main']['rate'] . ': ' . $this->lang['main']['no_foto'],
             'url_user'             => '',
             'real_name'            => $this->lang['main']['no_user_add'],
-            'category_url'         => $this->config['site_url'],
+            'category_url'         => SITE_URL,
             'width'                => 0,
             'height'               => 0,
         ];
@@ -1249,8 +1250,8 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             );
         }
         // Определение путей к файлам
-        $path_thumbnail = $this->config['site_dir'] . $this->config['thumbnail_dir'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
-        $path_photo = $this->config['site_dir'] . $this->config['gallery_dir'] . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
+        $path_thumbnail = THUMBNAIL_DIR . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
+        $path_photo = GALLERY_DIR . '/' . $temp_data['folder'] . '/' . $temp_data['file'];
         // Удаление записи об изображении из таблицы
         $this->db->delete(TBL_PHOTO, ['where' => '`id` = :photo_id', 'params' => [':photo_id' => $photo_id]]);
         $aff_rows = $this->db->get_affected_rows();
@@ -1421,7 +1422,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
             }
 
             // Проверяем, что файл находится внутри разрешенной директории
-            if (strncmp($main_php_path, $language_dir, strlen($language_dir)) !== 0) {
+            if (!str_starts_with($main_php_path, $language_dir)) {
                 log_in_file(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
                 );
@@ -1599,7 +1600,7 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
                 continue;
             }
             // Проверяем, что директория находится внутри $themes_dir
-            if (strncmp($theme_dir, $themes_dir, strlen($themes_dir)) !== 0) {
+            if (!str_starts_with($theme_dir, $themes_dir)) {
                 log_in_file(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
                 );

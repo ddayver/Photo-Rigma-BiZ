@@ -3,13 +3,13 @@
 
 <head>
 	<title>{TITLE}</title>
-	<meta name="description" content="{META_DESRIPTION}">
+	<meta name="description" content="{META_DESCRIPTION}">
 	<meta name="keywords" content="{META_KEYWORDS}">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	{INSERT_HEADER}
 <!-- IF_LOCALHOST_SERVER_BEGIN -->
-	<link href="{THEME_URL}semantic.min.css" rel="stylesheet" type="text/css">
+	<link href="{THEME_URL}css/semantic.min.css" rel="stylesheet" type="text/css">
 	<script src="{THEME_URL}js/jquery.min.js" defer></script>
 	<script src="{THEME_URL}js/semantic.min.js" defer></script>
 <!-- IF_LOCALHOST_SERVER_ELSE -->
@@ -17,21 +17,21 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.js" defer></script>
 <!-- IF_LOCALHOST_SERVER_END -->
-	<link href="{THEME_URL}style.css" rel="stylesheet" type="text/css">
+	<link href="{THEME_URL}css/style.css" rel="stylesheet" type="text/css">
 	<script src="{THEME_URL}js/script.js" defer></script>
 	<style>
 		:root {
-			--left-panel-width: {LEFT_PANEL_WIDHT}px;
-			--right-panel-width: {RIGHT_PANEL_WIDHT}px;
+			--left-panel-width: {LEFT_PANEL_WIDTH}px;
+			--right-panel-width: {RIGHT_PANEL_WIDTH}px;
 		}
 	</style>
 </head>
 
 <body>
 <div style="display: flex; justify-content: center; align-items: center;">
-	<div class="my" style="width: {GALLERY_WIDHT} !important; border-radius: 15px;">
+	<div class="my" style="width: {GALLERY_WIDTH} !important; border-radius: 15px;">
 		<div class="header_site" style="border-radius: 15px;">
-			<img style="border-radius: 15px 0 0 15px; display: block;" src="{THEME_URL}images/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}">
+			<img style="border-radius: 15px 0 0 15px; display: block;" src="{THEME_URL}image/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}">
 		</div>
 		<div class="mini ui inverted transparent segment no-space" id="short_menu">
 			<div class="mini ui inverted transparent sticky no-space">

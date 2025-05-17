@@ -92,6 +92,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -293,7 +294,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name']),
                 'U_PROFILE_USER_POST'   => sprintf(
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $news_data['user_post']
                 ),
             ]);
@@ -318,7 +319,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
 
             'U_SAVE_NEWS' => sprintf(
                 '%s?action=news&amp;subact=save&amp;news=%d',
-                $work->config['site_url'],
+                SITE_URL,
                 $news
             ),
         ]);
@@ -331,9 +332,9 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
     // Проверка источника запроса (HTTP_REFERER)
     $referer = $_SERVER['HTTP_REFERER'] ?? '';
     if (!empty($referer) && str_contains($referer, 'action=news')) {
-        $redirect_url = sprintf('%s?action=news', $work->config['site_url']);
+        $redirect_url = sprintf('%s?action=news', SITE_URL);
     } else {
-        $redirect_url = $work->config['site_url'];
+        $redirect_url = SITE_URL;
     }
 
     // Проверка на возможную атаку (хитрый момент)
@@ -377,7 +378,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         'D_NAME_POST' => '',
         'D_TEXT_POST' => '',
 
-        'U_SAVE_NEWS' => sprintf('%s?action=news&amp;subact=save', $work->config['site_url']),
+        'U_SAVE_NEWS' => sprintf('%s?action=news&amp;subact=save', SITE_URL),
     ]);
 } elseif ($news !== false) {
     $news_data = $work->news($news, 'id');
@@ -412,7 +413,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'L_USER_ADD'            => $work->lang['main']['user_add'],
                     'U_PROFILE_USER_POST'   => sprintf(
                         '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $val['user_post']
                     ),
                     'D_REAL_NAME_USER_POST' => Work::clean_field($user_data['real_name']),
@@ -432,12 +433,12 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
                     'U_EDIT_BLOCK'           => sprintf(
                         '%s?action=news&amp;subact=edit&amp;news=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $val['id']
                     ),
                     'U_DELETE_BLOCK'         => sprintf(
                         '%s?action=news&subact=delete&news=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $val['id']
                     ),
                 ], 'LAST_NEWS[0]');
@@ -481,7 +482,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
         $years_list = $db->result_array();
 
         if ($years_list === false) {
-            header('Location: ' . $work->config['site_url']);
+            header('Location: ' . SITE_URL);
             exit;
         }
 
@@ -504,7 +505,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                 'L_LIST_TITLE' => $year_data['year'] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
                 'U_LIST_URL'   => sprintf(
                     '%s?action=news&amp;y=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $year_data['year']
                 ),
             ], 'LIST_NEWS[' . $key . ']');
@@ -543,7 +544,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             $months_list = $db->result_array();
 
             if ($months_list === false) {
-                header('Location: ' . $work->config['site_url']);
+                header('Location: ' . SITE_URL);
                 exit;
             }
 
@@ -569,7 +570,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'L_LIST_TITLE' => $work->lang['news'][$month_data['month']] . ' (' . $work->lang['news']['num_news'] . ': ' . $news_count . ')',
                     'U_LIST_URL'   => sprintf(
                         '%s?action=news&amp;y=%d&amp;m=%02d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $year,
                         $month_data['month']
                     ),
@@ -604,7 +605,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
             $news_list = $db->result_array();
 
             if ($news_list === false) {
-                header('Location: ' . $work->config['site_url']);
+                header('Location: ' . SITE_URL);
                 exit;
             }
 
@@ -615,7 +616,7 @@ if ($subact === 'edit' && $news !== false && ($user->user['news_moderate'] || ($
                     'L_LIST_TITLE' => Work::utf8_wordwrap(Work::clean_field($news_data['text_post']), 100),
                     'U_LIST_URL'   => sprintf(
                         '%s?action=news&amp;news=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $news_data['id']
                     ),
                 ], 'LIST_NEWS[' . $key . ']');

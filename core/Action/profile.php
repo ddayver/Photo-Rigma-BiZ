@@ -82,6 +82,7 @@ namespace PhotoRigma\Action;
 use DateTime;
 use DateTimeZone;
 use LogicException;
+use PhotoRigma\Classes\Bootstrap;
 use PhotoRigma\Classes\Database;
 use PhotoRigma\Classes\Template;
 use PhotoRigma\Classes\User;
@@ -97,6 +98,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -124,12 +126,13 @@ $subact = match (true) {
 };
 
 // Определяем URL для перенаправления
+/** @noinspection BypassedUrlValidationInspection */
 $redirect_url = match (true) {
     !empty($_SERVER['HTTP_REFERER']) && filter_var(
         $_SERVER['HTTP_REFERER'],
         FILTER_VALIDATE_URL
     )       => $_SERVER['HTTP_REFERER'],
-    default => $work->config['site_url'],
+    default => SITE_URL,
 };
 
 if ($subact === 'delete_profile') {
@@ -162,7 +165,7 @@ if ($subact === 'delete_profile') {
         session_regenerate_id(true);
 
         // Перенаправляем на главную
-        header('Location: ' . $work->config['site_url']);
+        header('Location: ' . SITE_URL);
         exit;
     }
 
@@ -227,10 +230,7 @@ if ($subact === 'saveprofile') {
         $user->update_user_data($user_id, $_POST, $_FILES, $max_size);
 
         // Переинициируем класс User для обновления данных в сессии.
-        $user = new User($db, $_SESSION);
-        $work->set_user($user);
-        $work->set_lang();
-        $template->set_work($work);
+        [$user, $template] = Bootstrap::change_user($db, $work, $_SESSION);
         header('Location: ' . $redirect_url);
         exit;
     }
@@ -273,16 +273,13 @@ if ($subact === 'logout') {
     // Регенерация session_id для безопасности
     session_regenerate_id(true);
 
-    $user = new User($db, $_SESSION);
-    $work->set_user($user);
-    $work->set_lang();
-    $template->set_work($work);
+    [$user, $template] = Bootstrap::change_user($db, $work, $_SESSION);
 
     // Уничтожение сессии
     session_destroy();
 
     // Перенаправление и логирование
-    header('Location: ' . $work->config['site_url']);
+    header('Location: ' . SITE_URL);
     exit;
 }
 
@@ -295,7 +292,7 @@ if ($subact === 'regist') {
         'not_zero' => true,
     ])) {
         // Если пользователь уже авторизован, перенаправляем на главную страницу
-        header('Location: ' . $work->config['site_url']);
+        header('Location: ' . SITE_URL);
         exit;
     }
 
@@ -335,7 +332,7 @@ if ($subact === 'regist') {
         'L_REAL_NAME'        => $work->lang['profile']['real_name'],
         'L_REGISTER'         => $work->lang['profile']['register'],
         'L_CAPTCHA'          => $work->lang['profile']['captcha'],
-        'U_REGISTER'         => sprintf('%s?action=profile&subact=register', $work->config['site_url']),
+        'U_REGISTER'         => sprintf('%s?action=profile&subact=register', SITE_URL),
         'D_CAPTCHA_QUESTION' => $captcha['question'],
         'D_LOGIN'            => '',
         'D_EMAIL'            => '',
@@ -386,7 +383,7 @@ if ($subact === 'regist') {
     // Обработка результата
     if ($new_user !== 0) {
         $user->set_property_key('session', 'login_id', $new_user);
-        header('Location: ' . sprintf('%s?action=profile&subact=profile', $work->config['site_url']));
+        header('Location: ' . sprintf('%s?action=profile&subact=profile', SITE_URL));
         exit;
     }
 
@@ -401,7 +398,7 @@ if ($subact === 'regist') {
         'not_zero' => true,
     ])) {
         // Если пользователь уже авторизован, перенаправляем его на главную страницу
-        header('Location: ' . $work->config['site_url']);
+        header('Location: ' . SITE_URL);
         exit;
     }
 
@@ -422,10 +419,7 @@ if ($subact === 'regist') {
     // Авторизуем пользователя
     $user->set_property_key('session', 'login_id', $user_id);
     // Инициализация ядра для пользователя (включая гостя)
-    $user = new User($db, $_SESSION);
-    $work->set_user($user);
-    $work->set_lang();
-    $template->set_work($work);
+    [$user, $template] = Bootstrap::change_user($db, $work, $_SESSION);
 
     // Перенаправляем пользователя на целевую страницу
     header('Location: ' . $redirect_url);
@@ -442,7 +436,7 @@ if ($subact === 'regist') {
     } else {
         // Если $_GET['uid'] не прошёл проверку, используем ID из сессии
         if (!isset($user->session['login_id']) || $user->session['login_id'] === 0) {
-            header('Location: ' . $work->config['site_url']);
+            header('Location: ' . SITE_URL);
             exit;
         }
         $uid = (int)$user->session['login_id'];
@@ -458,7 +452,7 @@ if ($subact === 'regist') {
     );
     $user_data = $db->result_row();
     if (!$user_data) {
-        header('Location: ' . $work->config['site_url']);
+        header('Location: ' . SITE_URL);
         exit;
     }
     if ($uid === $user->session['login_id'] || $user->user['admin']) {
@@ -563,20 +557,15 @@ if ($subact === 'regist') {
             'D_REAL_NAME'     => $user_data['real_name'],
             'D_MAX_FILE_SIZE' => (string)$max_size,
             'D_GROUP'         => Work::clean_field($group_data['name']),
-            'U_AVATAR'        => sprintf(
-                '%s%s/%s',
-                $work->config['site_url'],
-                $work->config['avatar_dir'],
-                $user_data['avatar']
-            ),
+            'U_AVATAR'        => AVATAR_URL . $user_data['avatar'],
             'U_PROFILE_EDIT'  => sprintf(
                 '%s?action=profile&amp;subact=saveprofile&amp;uid=%d',
-                $work->config['site_url'],
+                SITE_URL,
                 $uid
             ),
             'U_DELETE_BLOCK'  => sprintf(
                 '%s?action=profile&amp;subact=delete_profile',
-                $work->config['site_url']
+                SITE_URL
             ),
         ]);
         foreach ($language as $key => $val) {
@@ -661,15 +650,10 @@ if ($subact === 'regist') {
             'D_EMAIL'     => $work->filt_email($user_data['email']),
             'D_REAL_NAME' => Work::clean_field($user_data['real_name']),
             'D_GROUP'     => Work::clean_field($group_data['name']),
-            'U_AVATAR'    => sprintf(
-                '%s%s/%s',
-                $work->config['site_url'],
-                $work->config['avatar_dir'],
-                $user_data['avatar']
-            ),
+            'U_AVATAR'    => AVATAR_URL . $user_data['avatar'],
         ]);
     }
 } else {
-    header('Location: ' . $work->config['site_url']);
+    header('Location: ' . SITE_URL);
     exit;
 }

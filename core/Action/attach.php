@@ -129,8 +129,8 @@ if (!$user->user['pic_view'] || !$work->check_input('_GET', 'foto', [
             'id'             => $query_result['id'],
             'file'           => $query_result['file'],
             'category'       => $query_result['category'],
-            'full_path'      => $work->config['site_dir'] . $work->config['gallery_dir'] . '/' . $query_result['folder'] . '/' . $query_result['file'],
-            'thumbnail_path' => $work->config['site_dir'] . $work->config['thumbnail_dir'] . '/' . $query_result['folder'] . '/' . $query_result['file'],
+            'full_path'      => GALLERY_DIR . '/' . $query_result['folder'] . '/' . $query_result['file'],
+            'thumbnail_path' => THUMBNAIL_DIR . '/' . $query_result['folder'] . '/' . $query_result['file'],
         ];
     } else {
         $photo_data = $work->no_photo();
@@ -149,7 +149,7 @@ if (empty($photo_data['full_path'])) {
         $photo_data = $work->no_photo();
     } else {
         // Ограничиваем директорию папкой галереи
-        $allowed_directory = realpath($work->config['site_dir'] . $work->config['gallery_dir']);
+        $allowed_directory = realpath(GALLERY_DIR);
         if ($allowed_directory === false || !str_starts_with($real_path, $allowed_directory)) {
             log_in_file(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Попытка доступа к запрещенному файлу | Путь: {$photo_data['full_path']}"

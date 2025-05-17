@@ -38,10 +38,13 @@
 
 namespace PhotoRigma\Interfaces;
 
+use Exception;
+use JsonException;
 use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -93,5 +96,23 @@ interface Bootstrap_Interface
      * Пример использования:
      * \PhotoRigma\Classes\Bootstrap::init();
      */
-    public static function init(): void;
+    public static function init(): array;
+
+    /**
+     * @param array $config
+     * @param array $session
+     * @return array
+     * @throws JsonException
+     * @throws Exception
+     */
+    public static function load(array $config, array &$session): array;
+
+    /**
+     * @param Database_Interface $db
+     * @param Work_Interface $work
+     * @param array $session
+     * @return array
+     * @throws JsonException
+     */
+    public static function change_user(Database_Interface $db, Work_Interface $work, array &$session): array;
 }

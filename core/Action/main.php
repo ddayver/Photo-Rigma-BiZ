@@ -82,6 +82,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -142,7 +143,7 @@ if (!empty($news) && $user->user['news_view']) {
             'L_USER_ADD'            => $work->lang['main']['user_add'],
             'U_PROFILE_USER_POST'   => sprintf(
                 '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                $work->config['site_url'],
+                SITE_URL,
                 $value['user_post']
             ),
             'D_REAL_NAME_USER_POST' => Work::clean_field($user_add['real_name']),
@@ -169,12 +170,12 @@ if (!empty($news) && $user->user['news_view']) {
                 'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
                 'U_EDIT_BLOCK'           => sprintf(
                     '%s?action=news&amp;subact=edit&amp;news=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $value['id']
                 ),
                 'U_DELETE_BLOCK'         => sprintf(
                     '%s?action=news&subact=delete&news=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $value['id']
                 ),
             ], 'LAST_NEWS[' . $key . ']');

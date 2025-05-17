@@ -163,46 +163,14 @@ try {
     $dotenv->load();
 
     // Инициализируем ядро проекта (конфигурация, константы, сессию и функции)
-    Bootstrap::init();
+    $required_files = Bootstrap::init();
+    // Подключаем все файлы из списка обязательных файлов
+    foreach ($required_files as $file) {
+        require_once $file;
+    }
 
-    /** @var PhotoRigma::Classes $cache
-     * @brief   Создание объекта класса Cache_Handler для работы с системами кеширования.
-     * @details Инициализируется через конструктор с параметрами из массива $config['cache'].
-     *          - Для файлового кеширования (`file`) требуется указать путь к директории кеша.
-     *          - Для Redis/Memcached требуется указать хост и порт.
-     *          Дополнительно может быть передан путь к корневой директории проекта ($config['site_dir']) для файлового кеширования.
-     * @see     PhotoRigma::Classes::Cache_Handler Класс для работы с системами кеширования.
-     * @see     include/Cache_Handler.php Файл, содержащий реализацию класса Cache_Handler.
-     * @see     $config Массив конфигурации, используемый для настройки системы кеширования.
-     */
-    $cache = new Cache_Handler($config['cache'], $config['site_dir']);
-
-    /** @var PhotoRigma::Classes $db ::Database $db
-     * @brief   Создание объекта класса Database для работы с основной БД.
-     * @details Инициализируется через конструктор с параметрами из массива $config['db'].
-     * @see     PhotoRigma::Classes::Database Класс для работы с базой данных.
-     * @see     include/Database.php Файл, содержащий реализацию класса Database.
-     * @see     $config Массив конфигурации, используемый для подключения к БД.
-     */
-    $db = new Database($config['db'], $cache);
-
-    /** @var PhotoRigma::Classes $work
-     * @brief   Создание объекта класса Work.
-     * @details Используется для выполнения различных вспомогательных операций приложения:
-     *          - Управление конфигурацией через свойство `$config`.
-     *          - Работа с безопасностью через методы, такие как `check_input` и `url_check`.
-     *          - Взаимодействие с системой кеширования через объект `$cache`.
-     *          Объект создаётся с использованием экземпляра базы данных (`$db`), массива конфигурации (`$config`),
-     *          ссылки на массив сессии (`$_SESSION`) и объекта кеширования (`$cache`).
-     *
-     * @see     PhotoRigma::Classes::Work Класс для выполнения вспомогательных операций.
-     * @see     include/Work.php Файл, содержащий реализацию класса Work.
-     * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию приложения.
-     * @see     PhotoRigma::Classes::Work::$cache Свойство, содержащее объект для работы с кешем.
-     * @see     PhotoRigma::Classes::Work::check_input() Метод для проверки входных данных.
-     * @see     PhotoRigma::Classes::Work::url_check() Метод для проверки URL на наличие вредоносного кода.
-     */
-    $work = new Work($db, $config, $_SESSION, $cache);
+    // Загрузка и инициализация объектов
+    [$db, $work, $user, $template] = Bootstrap::load($config, $_SESSION, false);
 
     /**
      * Очищаем значение массива $config[], чтобы предотвратить его использование напрямую.
@@ -211,45 +179,6 @@ try {
      * @see PhotoRigma::Classes::Work::$config Свойство для хранения конфигурации проекта
      */
     unset($config);
-
-    /** @var PhotoRigma::Classes $user ::User $user
-     * @brief   Создание объекта класса User.
-     * @details Используется для управления пользователями системы.
-     * @see     PhotoRigma::Classes::User Класс для управления пользователями.
-     * @see     include/User.php Файл, содержащий реализацию класса User.
-     */
-    $user = new User($db, $_SESSION);
-
-    // Проверяем есть ли настройки темы у пользователя.
-    $themes_config = $user->session['theme'] ?? $work->config['theme'];
-
-    /** @var PhotoRigma::Classes $template ::Template $template
-     * @brief   Создание объекта класса Template.
-     * @details Используется для генерации HTML-контента страниц.
-     * @see     PhotoRigma::Classes::Template Класс для работы с HTML-шаблонами.
-     * @see     include/Template.php Файл, содержащий реализацию класса Template.
-     * @see     PhotoRigma::Classes::Work::$config Свойство, хранящее конфигурацию для шаблонов.
-     * @see     PhotoRigma::Classes::Template::create_template() Метод для создания содержимого страницы.
-     * @see     PhotoRigma::Classes::Template::page_header() Метод для добавления шапки страницы.
-     * @see     PhotoRigma::Classes::Template::page_footer() Метод для добавления подвала страницы.
-     * @see     PhotoRigma::Classes::Template::$content Свойство, хранящее содержимое всей страницы.
-     * @see     $title Переменная, используемая для добавления текста к заголовку страницы.
-     */
-    $template = new Template(
-        $work->config['site_url'],
-        $work->config['site_dir'],
-        $themes_config
-    );
-
-    // Передаем объект User в класс Work
-    $work->set_user($user);
-
-    // Загружаем языковый массив в классе Work
-    $work->set_lang();
-
-    // Передаем объект Work в классы Template и User
-    $template->set_work($work);
-    $user->set_work($work);
 
     /** @var string $title
      * @brief        Добавление текста к заголовку страницы.
@@ -289,18 +218,18 @@ try {
         // Используем более безопасный метод фильтрации входных данных
         $action = filter_var($_GET['action'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         // Формируем путь к файлу действия
-        $action_file = $work->config['site_dir'] . 'action/' . basename($action) . '.php';
+        $action_file = $work->config['action_dir'][1] . '/' . basename($action. '.php');
         // Проверяем существование файла перед подключением
         if (!is_file($action_file) || !is_readable($action_file)) {
             log_in_file(
                 __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: $action_file"
             );
-            $action_file = $work->config['site_dir'] . 'action/main.php'; // Подключаем файл по умолчанию
+            $action_file = $work->config['action_dir'][1] . '/main.php'; // Подключаем файл по умолчанию
             $action = 'main';
         }
     } else {
         // Если $action остается равным значению по умолчанию ('main'), формируем путь к файлу по умолчанию
-        $action_file = $work->config['site_dir'] . "action/$action.php";
+        $action_file = $work->config['action_dir'][1] . "/$action.php";
     }
     // Проверяем существование файла действий перед подключением
     if (is_file($action_file) && is_readable($action_file)) {

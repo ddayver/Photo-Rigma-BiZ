@@ -127,7 +127,7 @@ COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching
 
 
 --
--- Name: prevent_deletion_of_service_categories(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: prevent_deletion_of_service_categories(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.prevent_deletion_of_service_categories() RETURNS trigger
@@ -145,17 +145,17 @@ END;
 $$;
 
 
-ALTER FUNCTION public.prevent_deletion_of_service_categories() OWNER TO photorigma;
+ALTER FUNCTION public.prevent_deletion_of_service_categories() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION prevent_deletion_of_service_categories(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION prevent_deletion_of_service_categories(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.prevent_deletion_of_service_categories() IS 'Функция-триггер: запрещает удаление категории с id = 0 (служебная)';
 
 
 --
--- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: prevent_deletion_of_service_groups(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.prevent_deletion_of_service_groups() RETURNS trigger
@@ -172,17 +172,17 @@ END;
 $$;
 
 
-ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO photorigma;
+ALTER FUNCTION public.prevent_deletion_of_service_groups() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION prevent_deletion_of_service_groups(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION prevent_deletion_of_service_groups(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.prevent_deletion_of_service_groups() IS 'Функция-триггер: запрещает удаление групп с id от 0 до 3 (служебные)';
 
 
 --
--- Name: update_change_timestamp(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: update_change_timestamp(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.update_change_timestamp() RETURNS trigger
@@ -198,17 +198,17 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_change_timestamp() OWNER TO photorigma;
+ALTER FUNCTION public.update_change_timestamp() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION update_change_timestamp(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION update_change_timestamp(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.update_change_timestamp() IS 'Функция-триггер: обновляет время последнего изменения config в таблице change_timestamp';
 
 
 --
--- Name: update_rate_moder_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: update_rate_moder_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.update_rate_moder_after_delete() RETURNS trigger
@@ -228,17 +228,17 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_rate_moder_after_delete() OWNER TO photorigma;
+ALTER FUNCTION public.update_rate_moder_after_delete() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION update_rate_moder_after_delete(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION update_rate_moder_after_delete(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.update_rate_moder_after_delete() IS 'Функция-триггер: обновляет рейтинг фото после удаления оценки от модератора';
 
 
 --
--- Name: update_rate_moder_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: update_rate_moder_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.update_rate_moder_after_insert() RETURNS trigger
@@ -258,17 +258,17 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_rate_moder_after_insert() OWNER TO photorigma;
+ALTER FUNCTION public.update_rate_moder_after_insert() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION update_rate_moder_after_insert(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION update_rate_moder_after_insert(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.update_rate_moder_after_insert() IS 'Функция-триггер: обновляет рейтинг фото при новой оценке от модератора';
 
 
 --
--- Name: update_rate_user_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: update_rate_user_after_delete(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.update_rate_user_after_delete() RETURNS trigger
@@ -288,17 +288,17 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_rate_user_after_delete() OWNER TO photorigma;
+ALTER FUNCTION public.update_rate_user_after_delete() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION update_rate_user_after_delete(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION update_rate_user_after_delete(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.update_rate_user_after_delete() IS 'Функция-триггер: обновляет рейтинг фото после удаления оценки от пользователя';
 
 
 --
--- Name: update_rate_user_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma
+-- Name: update_rate_user_after_insert(); Type: FUNCTION; Schema: public; Owner: photorigma_wip
 --
 
 CREATE FUNCTION public.update_rate_user_after_insert() RETURNS trigger
@@ -318,10 +318,10 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_rate_user_after_insert() OWNER TO photorigma;
+ALTER FUNCTION public.update_rate_user_after_insert() OWNER TO photorigma_wip;
 
 --
--- Name: FUNCTION update_rate_user_after_insert(); Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: FUNCTION update_rate_user_after_insert(); Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON FUNCTION public.update_rate_user_after_insert() IS 'Функция-триггер: обновляет рейтинг фото при новой оценке от пользователя';
@@ -332,7 +332,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: category; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: category; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.category (
@@ -344,52 +344,52 @@ CREATE TABLE public.category (
 );
 
 
-ALTER TABLE public.category OWNER TO photorigma;
+ALTER TABLE public.category OWNER TO photorigma_wip;
 
 --
--- Name: TABLE category; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE category; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.category IS 'Таблица разделов';
 
 
 --
--- Name: COLUMN category.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN category.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.category.id IS 'Идентификатор';
 
 
 --
--- Name: COLUMN category.folder; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN category.folder; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.category.folder IS 'Имя папки раздела';
 
 
 --
--- Name: COLUMN category.name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN category.name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.category.name IS 'Название раздела';
 
 
 --
--- Name: COLUMN category.description; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN category.description; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.category.description IS 'Описание раздела';
 
 
 --
--- Name: COLUMN category.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN category.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.category.tsv_weighted IS 'Взвешенный полнотекстовый вектор для данных таблицы category (name, description). Используется для улучшенного поиска.';
 
 
 --
--- Name: category_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: category_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.category_id_seq
@@ -401,17 +401,17 @@ CREATE SEQUENCE public.category_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.category_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.category_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+-- Name: category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma_wip
 --
 
 ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
 
 
 --
--- Name: change_timestamp; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: change_timestamp; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.change_timestamp (
@@ -420,31 +420,31 @@ CREATE TABLE public.change_timestamp (
 );
 
 
-ALTER TABLE public.change_timestamp OWNER TO photorigma;
+ALTER TABLE public.change_timestamp OWNER TO photorigma_wip;
 
 --
--- Name: TABLE change_timestamp; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE change_timestamp; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.change_timestamp IS 'Хранение даты последних изменений в таблицах';
 
 
 --
--- Name: COLUMN change_timestamp.table_name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN change_timestamp.table_name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.change_timestamp.table_name IS 'Имя таблицы';
 
 
 --
--- Name: COLUMN change_timestamp.last_update; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN change_timestamp.last_update; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.change_timestamp.last_update IS 'Время последнего обновления';
 
 
 --
--- Name: config; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: config; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.config (
@@ -453,31 +453,31 @@ CREATE TABLE public.config (
 );
 
 
-ALTER TABLE public.config OWNER TO photorigma;
+ALTER TABLE public.config OWNER TO photorigma_wip;
 
 --
--- Name: TABLE config; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE config; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.config IS 'Таблица параметров';
 
 
 --
--- Name: COLUMN config.name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN config.name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.config.name IS 'Имя параметра';
 
 
 --
--- Name: COLUMN config.value; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN config.value; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.config.value IS 'Значение параметра';
 
 
 --
--- Name: db_version; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: db_version; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.db_version (
@@ -485,24 +485,24 @@ CREATE TABLE public.db_version (
 );
 
 
-ALTER TABLE public.db_version OWNER TO photorigma;
+ALTER TABLE public.db_version OWNER TO photorigma_wip;
 
 --
--- Name: TABLE db_version; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE db_version; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.db_version IS 'Номер версии сайта';
 
 
 --
--- Name: COLUMN db_version.ver; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN db_version.ver; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.db_version.ver IS 'Номер версии';
 
 
 --
--- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.groups_id_seq
@@ -513,10 +513,10 @@ CREATE SEQUENCE public.groups_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.groups_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.groups_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: groups; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: groups; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.groups (
@@ -526,38 +526,38 @@ CREATE TABLE public.groups (
 );
 
 
-ALTER TABLE public.groups OWNER TO photorigma;
+ALTER TABLE public.groups OWNER TO photorigma_wip;
 
 --
--- Name: TABLE groups; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE groups; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.groups IS 'Таблица групп пользователей и прав доступа';
 
 
 --
--- Name: COLUMN groups.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN groups.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.groups.id IS 'Идентификатор группы';
 
 
 --
--- Name: COLUMN groups.name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN groups.name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.groups.name IS 'Название группы';
 
 
 --
--- Name: COLUMN groups.user_rights; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN groups.user_rights; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.groups.user_rights IS 'Права доступа';
 
 
 --
--- Name: menu; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: menu; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.menu (
@@ -572,73 +572,73 @@ CREATE TABLE public.menu (
 );
 
 
-ALTER TABLE public.menu OWNER TO photorigma;
+ALTER TABLE public.menu OWNER TO photorigma_wip;
 
 --
--- Name: TABLE menu; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE menu; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.menu IS 'Таблица пунктов меню';
 
 
 --
--- Name: COLUMN menu.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.id IS 'Порядковый номер пункта меню';
 
 
 --
--- Name: COLUMN menu.action; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.action; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.action IS 'Фрагмент из URL, указывающий, что данный пункт меню должен быть неактивным (текущим)';
 
 
 --
--- Name: COLUMN menu.url_action; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.url_action; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.url_action IS 'URL перехода при выборе пункта меню';
 
 
 --
--- Name: COLUMN menu.name_action; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.name_action; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.name_action IS 'Пункт из массива $lang, содержащий название пункта меню';
 
 
 --
--- Name: COLUMN menu.short; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.short; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.short IS 'Использовать пункт в кратком (верхнем) меню';
 
 
 --
--- Name: COLUMN menu.long; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.long; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.long IS 'Использовать пункт в длинном (боковом) меню';
 
 
 --
--- Name: COLUMN menu.user_login; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.user_login; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.user_login IS 'Проверка - зарегистрирован ли пользователь';
 
 
 --
--- Name: COLUMN menu.user_access; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN menu.user_access; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.menu.user_access IS 'Дополнительные права';
 
 
 --
--- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.menu_id_seq
@@ -650,17 +650,17 @@ CREATE SEQUENCE public.menu_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.menu_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.menu_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+-- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma_wip
 --
 
 ALTER SEQUENCE public.menu_id_seq OWNED BY public.menu.id;
 
 
 --
--- Name: news; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: news; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.news (
@@ -674,66 +674,66 @@ CREATE TABLE public.news (
 );
 
 
-ALTER TABLE public.news OWNER TO photorigma;
+ALTER TABLE public.news OWNER TO photorigma_wip;
 
 --
--- Name: TABLE news; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE news; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.news IS 'Новости сайта';
 
 
 --
--- Name: COLUMN news.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.id IS 'Идентификатор новости';
 
 
 --
--- Name: COLUMN news.data_post; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.data_post; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.data_post IS 'Дата публикации';
 
 
 --
--- Name: COLUMN news.data_last_edit; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.data_last_edit; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.data_last_edit IS 'Дата обновления';
 
 
 --
--- Name: COLUMN news.user_post; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.user_post; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.user_post IS 'Идентификатор добавившего новость пользователя';
 
 
 --
--- Name: COLUMN news.name_post; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.name_post; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.name_post IS 'Название новости';
 
 
 --
--- Name: COLUMN news.text_post; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.text_post; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.text_post IS 'Текст новости';
 
 
 --
--- Name: COLUMN news.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN news.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.news.tsv_weighted IS 'Взвешенный полнотекстовый вектор для данных таблицы news (name_post, text_post). Используется для улучшенного поиска.';
 
 
 --
--- Name: news_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: news_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.news_id_seq
@@ -745,17 +745,17 @@ CREATE SEQUENCE public.news_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.news_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.news_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+-- Name: news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma_wip
 --
 
 ALTER SEQUENCE public.news_id_seq OWNED BY public.news.id;
 
 
 --
--- Name: photo; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: photo; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.photo (
@@ -772,87 +772,87 @@ CREATE TABLE public.photo (
 );
 
 
-ALTER TABLE public.photo OWNER TO photorigma;
+ALTER TABLE public.photo OWNER TO photorigma_wip;
 
 --
--- Name: TABLE photo; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE photo; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.photo IS 'Таблица размещения фотографий';
 
 
 --
--- Name: COLUMN photo.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.id IS 'Идентификатор';
 
 
 --
--- Name: COLUMN photo.file; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.file; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.file IS 'Имя файла';
 
 
 --
--- Name: COLUMN photo.name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.name IS 'Название фотографии';
 
 
 --
--- Name: COLUMN photo.description; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.description; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.description IS 'Описание фотографии';
 
 
 --
--- Name: COLUMN photo.category; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.category; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.category IS 'Идентификатор раздела';
 
 
 --
--- Name: COLUMN photo.date_upload; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.date_upload; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.date_upload IS 'Дата загрузки фото';
 
 
 --
--- Name: COLUMN photo.user_upload; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.user_upload; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.user_upload IS 'Идентификатор пользователя, залившего фото';
 
 
 --
--- Name: COLUMN photo.rate_user; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.rate_user; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.rate_user IS 'Оценка от пользователя';
 
 
 --
--- Name: COLUMN photo.rate_moder; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.rate_moder; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.rate_moder IS 'Оценка от модератора';
 
 
 --
--- Name: COLUMN photo.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN photo.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.photo.tsv_weighted IS 'Взвешенный полнотекстовый вектор для данных таблицы photo (name, description). Используется для улучшенного поиска.';
 
 
 --
--- Name: photo_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: photo_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.photo_id_seq
@@ -864,17 +864,17 @@ CREATE SEQUENCE public.photo_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.photo_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.photo_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: photo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+-- Name: photo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma_wip
 --
 
 ALTER SEQUENCE public.photo_id_seq OWNED BY public.photo.id;
 
 
 --
--- Name: query_logs; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: query_logs; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.query_logs (
@@ -890,73 +890,73 @@ CREATE TABLE public.query_logs (
 );
 
 
-ALTER TABLE public.query_logs OWNER TO photorigma;
+ALTER TABLE public.query_logs OWNER TO photorigma_wip;
 
 --
--- Name: TABLE query_logs; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE query_logs; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.query_logs IS 'Логирование SQL-запросов для анализа производительности';
 
 
 --
--- Name: COLUMN query_logs.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.id IS 'Уникальный идентификатор записи';
 
 
 --
--- Name: COLUMN query_logs.query_hash; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.query_hash; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.query_hash IS 'Хэш запроса для проверки дублирования';
 
 
 --
--- Name: COLUMN query_logs.query_text; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.query_text; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.query_text IS 'Текст SQL-запроса';
 
 
 --
--- Name: COLUMN query_logs.created_at; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.created_at; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.created_at IS 'Время первого логирования';
 
 
 --
--- Name: COLUMN query_logs.last_used_at; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.last_used_at; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.last_used_at IS 'Время последнего использования';
 
 
 --
--- Name: COLUMN query_logs.usage_count; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.usage_count; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.usage_count IS 'Количество использований запроса';
 
 
 --
--- Name: COLUMN query_logs.reason; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.reason; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.reason IS 'Причина логирования: медленный запрос, отсутствие плейсхолдеров или другое';
 
 
 --
--- Name: COLUMN query_logs.execution_time; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN query_logs.execution_time; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.query_logs.execution_time IS 'Время выполнения запроса (в миллисекундах)';
 
 
 --
--- Name: query_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: query_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.query_logs_id_seq
@@ -968,17 +968,17 @@ CREATE SEQUENCE public.query_logs_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.query_logs_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.query_logs_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: query_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+-- Name: query_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma_wip
 --
 
 ALTER SEQUENCE public.query_logs_id_seq OWNED BY public.query_logs.id;
 
 
 --
--- Name: random_photo; Type: VIEW; Schema: public; Owner: photorigma
+-- Name: random_photo; Type: VIEW; Schema: public; Owner: photorigma_wip
 --
 
 CREATE VIEW public.random_photo AS
@@ -997,17 +997,17 @@ CREATE VIEW public.random_photo AS
          LIMIT 1));
 
 
-ALTER VIEW public.random_photo OWNER TO photorigma;
+ALTER VIEW public.random_photo OWNER TO photorigma_wip;
 
 --
--- Name: VIEW random_photo; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: VIEW random_photo; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON VIEW public.random_photo IS 'Случайно фото';
 
 
 --
--- Name: rate_moder; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: rate_moder; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.rate_moder (
@@ -1017,38 +1017,38 @@ CREATE TABLE public.rate_moder (
 );
 
 
-ALTER TABLE public.rate_moder OWNER TO photorigma;
+ALTER TABLE public.rate_moder OWNER TO photorigma_wip;
 
 --
--- Name: TABLE rate_moder; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE rate_moder; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.rate_moder IS 'Оценки модераторов';
 
 
 --
--- Name: COLUMN rate_moder.id_foto; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN rate_moder.id_foto; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.rate_moder.id_foto IS 'Идентификатор фото';
 
 
 --
--- Name: COLUMN rate_moder.id_user; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN rate_moder.id_user; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.rate_moder.id_user IS 'Идентификатор пользователя';
 
 
 --
--- Name: COLUMN rate_moder.rate; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN rate_moder.rate; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.rate_moder.rate IS 'Оценка от -2 до +2';
 
 
 --
--- Name: rate_user; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: rate_user; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.rate_user (
@@ -1058,38 +1058,38 @@ CREATE TABLE public.rate_user (
 );
 
 
-ALTER TABLE public.rate_user OWNER TO photorigma;
+ALTER TABLE public.rate_user OWNER TO photorigma_wip;
 
 --
--- Name: TABLE rate_user; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE rate_user; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.rate_user IS 'Оценки пользователей';
 
 
 --
--- Name: COLUMN rate_user.id_foto; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN rate_user.id_foto; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.rate_user.id_foto IS 'Идентификатор фото';
 
 
 --
--- Name: COLUMN rate_user.id_user; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN rate_user.id_user; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.rate_user.id_user IS 'Идентификатор пользователя';
 
 
 --
--- Name: COLUMN rate_user.rate; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN rate_user.rate; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.rate_user.rate IS 'Оценка от -2 до +2';
 
 
 --
--- Name: user_bans; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: user_bans; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.user_bans (
@@ -1101,52 +1101,52 @@ CREATE TABLE public.user_bans (
 );
 
 
-ALTER TABLE public.user_bans OWNER TO photorigma;
+ALTER TABLE public.user_bans OWNER TO photorigma_wip;
 
 --
--- Name: TABLE user_bans; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE user_bans; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.user_bans IS 'Информация о бане пользователей';
 
 
 --
--- Name: COLUMN user_bans.user_id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN user_bans.user_id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.user_bans.user_id IS 'Идентификатор пользователя';
 
 
 --
--- Name: COLUMN user_bans.banned; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN user_bans.banned; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.user_bans.banned IS 'Флаг: пользователь заблокирован';
 
 
 --
--- Name: COLUMN user_bans.reason; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN user_bans.reason; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.user_bans.reason IS 'Причина блокировки';
 
 
 --
--- Name: COLUMN user_bans.expires_at; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN user_bans.expires_at; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.user_bans.expires_at IS 'Дата окончания бана (если временный)';
 
 
 --
--- Name: COLUMN user_bans.created_at; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN user_bans.created_at; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.user_bans.created_at IS 'Дата и время установки бана';
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: photorigma
+-- Name: users; Type: TABLE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TABLE public.users (
@@ -1176,171 +1176,171 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO photorigma;
+ALTER TABLE public.users OWNER TO photorigma_wip;
 
 --
--- Name: TABLE users; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: TABLE users; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON TABLE public.users IS 'Таблица данных пользователя';
 
 
 --
--- Name: COLUMN users.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.id IS 'Идентификатор пользователя';
 
 
 --
--- Name: COLUMN users.login; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.login; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.login IS 'Логин пользователя';
 
 
 --
--- Name: COLUMN users.password; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.password; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.password IS 'Пароль пользователя';
 
 
 --
--- Name: COLUMN users.real_name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.real_name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.real_name IS 'Отображаемое имя пользователя';
 
 
 --
--- Name: COLUMN users.email; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.email; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.email IS 'E-mail пользователя';
 
 
 --
--- Name: COLUMN users.avatar; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.avatar; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.avatar IS 'Имя файла аватара пользователя';
 
 
 --
--- Name: COLUMN users.language; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.language; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.language IS 'Язык сайта';
 
 
 --
--- Name: COLUMN users.date_regist; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.date_regist; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.date_regist IS 'Дата регистрации';
 
 
 --
--- Name: COLUMN users.date_last_activ; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.date_last_activ; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.date_last_activ IS 'Дата последней активности';
 
 
 --
--- Name: COLUMN users.date_last_logout; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.date_last_logout; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.date_last_logout IS 'Дата последнего выхода';
 
 
 --
--- Name: COLUMN users.group_id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.group_id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.group_id IS 'Идентификатор группы пользователя';
 
 
 --
--- Name: COLUMN users.user_rights; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.user_rights; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.user_rights IS 'Права доступа';
 
 
 --
--- Name: COLUMN users.theme; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.theme; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.theme IS 'Тема сайта';
 
 
 --
--- Name: COLUMN users.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.tsv_weighted IS 'Взвешенный полнотекстовый вектор для пользовательских данных (login, real_name, email). Используется для улучшенного поиска.';
 
 
 --
--- Name: COLUMN users.deleted_at; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.deleted_at; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.deleted_at IS 'Дата и время мягкого удаления пользователя';
 
 
 --
--- Name: COLUMN users.permanently_deleted; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.permanently_deleted; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.permanently_deleted IS 'Флаг окончательного удаления пользователя';
 
 
 --
--- Name: COLUMN users.activation; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.activation; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.activation IS 'Флаг активации аккаунта';
 
 
 --
--- Name: COLUMN users.token; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.token; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.token IS 'Для временных токенов';
 
 
 --
--- Name: COLUMN users.token_expires_at; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.token_expires_at; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.token_expires_at IS 'Время истечения токена';
 
 
 --
--- Name: COLUMN users.email_confirmed; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.email_confirmed; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.email_confirmed IS 'Подтверждён ли email';
 
 
 --
--- Name: COLUMN users.allow_newsletter; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.allow_newsletter; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.allow_newsletter IS 'Часовой пояс пользователя';
 
 
 --
--- Name: COLUMN users.other_params; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users.other_params; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users.other_params IS 'Прочие параметры пользователя';
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: photorigma_wip
 --
 
 CREATE SEQUENCE public.users_id_seq
@@ -1352,17 +1352,17 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.users_id_seq OWNER TO photorigma;
+ALTER SEQUENCE public.users_id_seq OWNER TO photorigma_wip;
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: photorigma_wip
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: users_online; Type: VIEW; Schema: public; Owner: photorigma
+-- Name: users_online; Type: VIEW; Schema: public; Owner: photorigma_wip
 --
 
 CREATE VIEW public.users_online AS
@@ -1376,94 +1376,94 @@ CREATE VIEW public.users_online AS
           WHERE ((config.name)::text = 'time_user_online'::text)))) AND (u.activation = true) AND (u.email_confirmed = true) AND (u.deleted_at IS NULL) AND (u.permanently_deleted = false));
 
 
-ALTER VIEW public.users_online OWNER TO photorigma;
+ALTER VIEW public.users_online OWNER TO photorigma_wip;
 
 --
--- Name: VIEW users_online; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: VIEW users_online; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON VIEW public.users_online IS 'Список пользователей онлайн';
 
 
 --
--- Name: COLUMN users_online.id; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users_online.id; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users_online.id IS 'Идентификатор пользователя';
 
 
 --
--- Name: COLUMN users_online.real_name; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users_online.real_name; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users_online.real_name IS 'Отображаемое имя пользователя';
 
 
 --
--- Name: COLUMN users_online.banned; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: COLUMN users_online.banned; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON COLUMN public.users_online.banned IS 'Флаг: пользователь забанен';
 
 
 --
--- Name: category id; Type: DEFAULT; Schema: public; Owner: photorigma
+-- Name: category id; Type: DEFAULT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
 --
--- Name: menu id; Type: DEFAULT; Schema: public; Owner: photorigma
+-- Name: menu id; Type: DEFAULT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.menu ALTER COLUMN id SET DEFAULT nextval('public.menu_id_seq'::regclass);
 
 
 --
--- Name: news id; Type: DEFAULT; Schema: public; Owner: photorigma
+-- Name: news id; Type: DEFAULT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.news ALTER COLUMN id SET DEFAULT nextval('public.news_id_seq'::regclass);
 
 
 --
--- Name: photo id; Type: DEFAULT; Schema: public; Owner: photorigma
+-- Name: photo id; Type: DEFAULT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.photo ALTER COLUMN id SET DEFAULT nextval('public.photo_id_seq'::regclass);
 
 
 --
--- Name: query_logs id; Type: DEFAULT; Schema: public; Owner: photorigma
+-- Name: query_logs id; Type: DEFAULT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.query_logs ALTER COLUMN id SET DEFAULT nextval('public.query_logs_id_seq'::regclass);
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: photorigma
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.category VALUES (0, 'user', 'Пользовательский альбом', 'Персональный пользовательский альбом', DEFAULT);
 
 
 --
--- Data for Name: change_timestamp; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: change_timestamp; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.change_timestamp VALUES ('config', '2025-05-11 02:06:20.053567');
 
 
 --
--- Data for Name: config; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: config; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.config VALUES ('best_user', '5');
@@ -1493,14 +1493,14 @@ INSERT INTO public.config VALUES ('timezone', 'UTC');
 
 
 --
--- Data for Name: db_version; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: db_version; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.db_version VALUES ('0.4.4');
 
 
 --
--- Data for Name: groups; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: groups; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.groups VALUES (0, 'Гость', '{"admin": 0, "cat_user": 0, "news_add": 0, "pic_view": 1, "news_view": 1, "pic_upload": 0, "comment_add": 0, "cat_moderate": 0, "comment_view": 1, "pic_moderate": 0, "news_moderate": 0, "pic_rate_user": 0, "pic_rate_moder": 0, "comment_moderate": 0}');
@@ -1510,7 +1510,7 @@ INSERT INTO public.groups VALUES (3, 'Администратор', '{"admin": 1,
 
 
 --
--- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.menu VALUES (1, 'main', './', 'home', 1, 1, NULL, NULL);
@@ -1529,99 +1529,99 @@ INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', '
 
 
 --
--- Data for Name: news; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: news; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 
 
 --
--- Data for Name: photo; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: photo; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 
 
 --
--- Data for Name: query_logs; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: query_logs; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 
 
 --
--- Data for Name: rate_moder; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: rate_moder; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 
 
 --
--- Data for Name: rate_user; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: rate_user; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 
 
 --
--- Data for Name: user_bans; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: user_bans; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
 INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default', DEFAULT, NULL, false, true, NULL, NULL, true, false, 'UTC', NULL);
 
 
 --
--- Name: category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.category_id_seq', 1, false);
 
 
 --
--- Name: groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.groups_id_seq', 4, false);
 
 
 --
--- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.menu_id_seq', 1, false);
 
 
 --
--- Name: news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.news_id_seq', 1, false);
 
 
 --
--- Name: photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 
 
 --
--- Name: query_logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: query_logs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.query_logs_id_seq', 17, true);
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: photorigma_wip
 --
 
 SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --
--- Name: category category_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.category
@@ -1629,7 +1629,7 @@ ALTER TABLE ONLY public.category
 
 
 --
--- Name: change_timestamp change_timestamp_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: change_timestamp change_timestamp_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.change_timestamp
@@ -1637,7 +1637,7 @@ ALTER TABLE ONLY public.change_timestamp
 
 
 --
--- Name: config config_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: config config_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.config
@@ -1645,7 +1645,7 @@ ALTER TABLE ONLY public.config
 
 
 --
--- Name: db_version db_version_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: db_version db_version_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.db_version
@@ -1653,7 +1653,7 @@ ALTER TABLE ONLY public.db_version
 
 
 --
--- Name: groups group_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: groups group_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.groups
@@ -1661,7 +1661,7 @@ ALTER TABLE ONLY public.groups
 
 
 --
--- Name: menu menu_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: menu menu_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.menu
@@ -1669,7 +1669,7 @@ ALTER TABLE ONLY public.menu
 
 
 --
--- Name: news news_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: news news_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.news
@@ -1677,7 +1677,7 @@ ALTER TABLE ONLY public.news
 
 
 --
--- Name: photo photo_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: photo photo_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.photo
@@ -1685,7 +1685,7 @@ ALTER TABLE ONLY public.photo
 
 
 --
--- Name: query_logs query_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: query_logs query_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.query_logs
@@ -1693,7 +1693,7 @@ ALTER TABLE ONLY public.query_logs
 
 
 --
--- Name: rate_moder rate_moder_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: rate_moder rate_moder_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.rate_moder
@@ -1701,7 +1701,7 @@ ALTER TABLE ONLY public.rate_moder
 
 
 --
--- Name: rate_user rate_user_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: rate_user rate_user_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.rate_user
@@ -1709,7 +1709,7 @@ ALTER TABLE ONLY public.rate_user
 
 
 --
--- Name: user_bans user_bans_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: user_bans user_bans_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.user_bans
@@ -1717,7 +1717,7 @@ ALTER TABLE ONLY public.user_bans
 
 
 --
--- Name: users users_login_key; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: users users_login_key; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.users
@@ -1725,7 +1725,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.users
@@ -1733,273 +1733,273 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: idx_category_description_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_category_description_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_category_description_trgm ON public.category USING gin (description public.gin_trgm_ops);
 
 
 --
--- Name: idx_category_name_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_category_name_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_category_name_trgm ON public.category USING gin (name public.gin_trgm_ops);
 
 
 --
--- Name: idx_category_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_category_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_category_tsv_weighted ON public.category USING gin (tsv_weighted);
 
 
 --
--- Name: idx_config_value; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_config_value; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_config_value ON public.config USING btree (value);
 
 
 --
--- Name: idx_menu_long; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_menu_long; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_menu_long ON public.menu USING btree (long);
 
 
 --
--- Name: idx_menu_short; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_menu_short; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_menu_short ON public.menu USING btree (short);
 
 
 --
--- Name: idx_news_data_last_edit; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_news_data_last_edit; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_news_data_last_edit ON public.news USING btree (data_last_edit);
 
 
 --
--- Name: idx_news_namepost_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_news_namepost_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_news_namepost_trgm ON public.news USING gin (name_post public.gin_trgm_ops);
 
 
 --
--- Name: idx_news_textpost_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_news_textpost_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_news_textpost_trgm ON public.news USING gin (text_post public.gin_trgm_ops);
 
 
 --
--- Name: idx_news_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_news_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_news_tsv_weighted ON public.news USING gin (tsv_weighted);
 
 
 --
--- Name: idx_photo_category_user_upload; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_photo_category_user_upload; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_photo_category_user_upload ON public.photo USING btree (category, user_upload);
 
 
 --
--- Name: idx_photo_date_upload; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_photo_date_upload; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_photo_date_upload ON public.photo USING btree (date_upload);
 
 
 --
--- Name: idx_photo_description_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_photo_description_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_photo_description_trgm ON public.photo USING gin (description public.gin_trgm_ops);
 
 
 --
--- Name: idx_photo_name_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_photo_name_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_photo_name_trgm ON public.photo USING gin (name public.gin_trgm_ops);
 
 
 --
--- Name: idx_photo_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_photo_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_photo_tsv_weighted ON public.photo USING gin (tsv_weighted);
 
 
 --
--- Name: idx_photo_user_upload_group; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_photo_user_upload_group; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_photo_user_upload_group ON public.photo USING btree (user_upload, id);
 
 
 --
--- Name: idx_user_bans_expires; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_user_bans_expires; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_user_bans_expires ON public.user_bans USING btree (expires_at);
 
 
 --
--- Name: idx_user_bans_user_id; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_user_bans_user_id; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_user_bans_user_id ON public.user_bans USING btree (user_id);
 
 
 --
--- Name: idx_users_allow_newsletter; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_allow_newsletter; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_allow_newsletter ON public.users USING btree (allow_newsletter);
 
 
 --
--- Name: idx_users_date_last_activ; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_date_last_activ; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_date_last_activ ON public.users USING btree (date_last_activ);
 
 
 --
--- Name: idx_users_deleted_at; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_deleted_at; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_deleted_at ON public.users USING btree (deleted_at);
 
 
 --
--- Name: idx_users_email_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_email_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_email_trgm ON public.users USING gin (email public.gin_trgm_ops);
 
 
 --
--- Name: idx_users_login_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_login_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_login_trgm ON public.users USING gin (login public.gin_trgm_ops);
 
 
 --
--- Name: idx_users_real_name_trgm; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_real_name_trgm; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_real_name_trgm ON public.users USING gin (real_name public.gin_trgm_ops);
 
 
 --
--- Name: idx_users_token; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_token; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_token ON public.users USING btree (token);
 
 
 --
--- Name: idx_users_token_expires; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_token_expires; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_token_expires ON public.users USING btree (token_expires_at);
 
 
 --
--- Name: idx_users_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: idx_users_tsv_weighted; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE INDEX idx_users_tsv_weighted ON public.users USING gin (tsv_weighted);
 
 
 --
--- Name: INDEX idx_users_tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma
+-- Name: INDEX idx_users_tsv_weighted; Type: COMMENT; Schema: public; Owner: photorigma_wip
 --
 
 COMMENT ON INDEX public.idx_users_tsv_weighted IS 'GIN-индекс для поля tsv_weighted';
 
 
 --
--- Name: query_logs_query_hash_key; Type: INDEX; Schema: public; Owner: photorigma
+-- Name: query_logs_query_hash_key; Type: INDEX; Schema: public; Owner: photorigma_wip
 --
 
 CREATE UNIQUE INDEX query_logs_query_hash_key ON public.query_logs USING btree (query_hash);
 
 
 --
--- Name: config trg_config_delete; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: config trg_config_delete; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER trg_config_delete AFTER DELETE ON public.config FOR EACH ROW EXECUTE FUNCTION public.update_change_timestamp();
 
 
 --
--- Name: config trg_config_insert; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: config trg_config_insert; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER trg_config_insert AFTER INSERT ON public.config FOR EACH ROW EXECUTE FUNCTION public.update_change_timestamp();
 
 
 --
--- Name: config trg_config_update; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: config trg_config_update; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER trg_config_update AFTER UPDATE ON public.config FOR EACH ROW EXECUTE FUNCTION public.update_change_timestamp();
 
 
 --
--- Name: category trg_prevent_deletion_category; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: category trg_prevent_deletion_category; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER trg_prevent_deletion_category BEFORE DELETE ON public.category FOR EACH ROW EXECUTE FUNCTION public.prevent_deletion_of_service_categories();
 
 
 --
--- Name: groups trg_prevent_deletion_groups; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: groups trg_prevent_deletion_groups; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER trg_prevent_deletion_groups BEFORE DELETE ON public.groups FOR EACH ROW EXECUTE FUNCTION public.prevent_deletion_of_service_groups();
 
 
 --
--- Name: rate_moder update_rate_moder_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: rate_moder update_rate_moder_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER update_rate_moder_after_delete AFTER DELETE ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder_after_delete();
 
 
 --
--- Name: rate_moder update_rate_moder_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: rate_moder update_rate_moder_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER update_rate_moder_after_insert AFTER INSERT ON public.rate_moder FOR EACH ROW EXECUTE FUNCTION public.update_rate_moder_after_insert();
 
 
 --
--- Name: rate_user update_rate_user_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: rate_user update_rate_user_after_delete; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER update_rate_user_after_delete AFTER DELETE ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user_after_delete();
 
 
 --
--- Name: rate_user update_rate_user_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma
+-- Name: rate_user update_rate_user_after_insert; Type: TRIGGER; Schema: public; Owner: photorigma_wip
 --
 
 CREATE TRIGGER update_rate_user_after_insert AFTER INSERT ON public.rate_user FOR EACH ROW EXECUTE FUNCTION public.update_rate_user_after_insert();
 
 
 --
--- Name: rate_moder m_rate_photo; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: rate_moder m_rate_photo; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.rate_moder
@@ -2007,7 +2007,7 @@ ALTER TABLE ONLY public.rate_moder
 
 
 --
--- Name: rate_moder m_rate_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: rate_moder m_rate_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.rate_moder
@@ -2015,7 +2015,7 @@ ALTER TABLE ONLY public.rate_moder
 
 
 --
--- Name: news news_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: news news_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.news
@@ -2023,7 +2023,7 @@ ALTER TABLE ONLY public.news
 
 
 --
--- Name: photo photo_category; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: photo photo_category; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.photo
@@ -2031,7 +2031,7 @@ ALTER TABLE ONLY public.photo
 
 
 --
--- Name: photo photo_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: photo photo_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.photo
@@ -2039,7 +2039,7 @@ ALTER TABLE ONLY public.photo
 
 
 --
--- Name: rate_user u_rate_photo; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: rate_user u_rate_photo; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.rate_user
@@ -2047,7 +2047,7 @@ ALTER TABLE ONLY public.rate_user
 
 
 --
--- Name: rate_user u_rate_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: rate_user u_rate_users; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.rate_user
@@ -2055,7 +2055,7 @@ ALTER TABLE ONLY public.rate_user
 
 
 --
--- Name: user_bans user_bans_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: user_bans user_bans_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.user_bans
@@ -2063,7 +2063,7 @@ ALTER TABLE ONLY public.user_bans
 
 
 --
--- Name: users users_groups; Type: FK CONSTRAINT; Schema: public; Owner: photorigma
+-- Name: users users_groups; Type: FK CONSTRAINT; Schema: public; Owner: photorigma_wip
 --
 
 ALTER TABLE ONLY public.users
@@ -2073,4 +2073,3 @@ ALTER TABLE ONLY public.users
 --
 -- PostgreSQL database dump complete
 --
-

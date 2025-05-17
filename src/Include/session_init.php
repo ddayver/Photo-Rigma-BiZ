@@ -46,6 +46,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -76,6 +77,7 @@ $cookie_domain = filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_FULL_SP
 
 // Если HTTP_HOST не установлен, пробуем SERVER_NAME
 if (!$cookie_domain) {
+    /** @noinspection HostnameSubstitutionInspection */
     $cookie_domain = filter_var($_SERVER['SERVER_NAME'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 

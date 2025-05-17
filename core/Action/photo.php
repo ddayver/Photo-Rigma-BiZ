@@ -91,6 +91,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -141,9 +142,8 @@ $photo_data = $db->result_row();
 if ($photo_data) {
     // Формирование пути к файлу с использованием sprintf()
     $file_path = sprintf(
-        '%s%s/%s/%s',
-        $work->config['site_dir'],
-        $work->config['gallery_dir'],
+        '%s/%s/%s',
+        GALLERY_DIR,
         $photo_data['folder'],
         $photo_data['file']
     );
@@ -372,16 +372,14 @@ if ($photo_id !== 0) {
 
             // Формируем пути для перемещения файлов
             $old_photo_path = sprintf(
-                '%s%s/%s/%s',
-                $work->config['site_dir'],
-                $work->config['gallery_dir'],
+                '%s/%s/%s',
+                GALLERY_DIR,
                 $photo_data['folder'],
                 $photo_data['file']
             );
             $old_thumbnail_path = sprintf(
-                '%s%s/%s/%s',
-                $work->config['site_dir'],
-                $work->config['thumbnail_dir'],
+                '%s/%s/%s',
+                THUMBNAIL_DIR,
                 $photo_data['folder'],
                 $photo_data['file']
             );
@@ -396,16 +394,14 @@ if ($photo_id !== 0) {
 
             // Формируем новые пути с учетом возможного изменения имени файла
             $new_photo_path = sprintf(
-                '%s%s/%s/%s',
-                $work->config['site_dir'],
-                $work->config['gallery_dir'],
+                '%s/%s/%s',
+                GALLERY_DIR,
                 $temp_new_category_data['folder'],
                 $photo['file']
             );
             $new_thumbnail_path = sprintf(
-                '%s%s/%s/%s',
-                $work->config['site_dir'],
-                $work->config['thumbnail_dir'],
+                '%s/%s/%s',
+                THUMBNAIL_DIR,
                 $temp_new_category_data['folder'],
                 $photo['file']
             );
@@ -478,7 +474,7 @@ if ($photo_id !== 0) {
             ]
         );
 
-        header(sprintf('Location: %s?action=photo&id=%d', $work->config['site_url'], $photo_id));
+        header(sprintf('Location: %s?action=photo&id=%d', SITE_URL, $photo_id));
         exit;
     }
 
@@ -496,9 +492,8 @@ if ($photo_id !== 0) {
         // Получаем данные о пользователе из JOIN (уже есть в $photo_data)
         $photo['user'] = Work::clean_field($photo_data['real_name']) ?? $work->lang['main']['no_user_add'];
         $photo['path'] = sprintf(
-            '%s%s/%s/%s',
-            $work->config['site_dir'],
-            $work->config['thumbnail_dir'],
+            '%s/%s/%s',
+            THUMBNAIL_DIR,
             $photo_data['folder'],
             $photo_data['file']
         );
@@ -546,12 +541,12 @@ if ($photo_id !== 0) {
             'D_DESCRIPTION_PHOTO' => $photo_data['description'],
             'U_EDITED'            => sprintf(
                 '%s?action=photo&amp;subact=saveedit&amp;id=%d',
-                $work->config['site_url'],
+                SITE_URL,
                 $photo_data['id']
             ),
             'U_PHOTO'             => sprintf(
                 '%s?action=attach&amp;foto=%d&amp;thumbnail=1',
-                $work->config['site_url'],
+                SITE_URL,
                 $photo_data['id']
             ),
         ]);
@@ -588,12 +583,12 @@ if ($photo_id !== 0) {
             $photo['category_url'] = match (true) {
                 $result['count_user_category'] > 0 => sprintf(
                     '%s?action=category&cat=user&id=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['user_upload']
                 ),
-                $result['count_category'] > 0      => sprintf('%s?action=category&cat=user', $work->config['site_url']),
-                $result['count_total'] > 0         => sprintf('%s?action=category', $work->config['site_url']),
-                default                            => $work->config['site_url']
+                $result['count_category'] > 0      => sprintf('%s?action=category&cat=user', SITE_URL),
+                $result['count_total'] > 0         => sprintf('%s?action=category', SITE_URL),
+                default                            => SITE_URL
             };
         } else {
             // Запрос для обычной категории
@@ -620,11 +615,11 @@ if ($photo_id !== 0) {
             $photo['category_url'] = match (true) {
                 $result['count_category'] > 0 => sprintf(
                     '%s?action=category&cat=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['category']
                 ),
-                $result['count_total'] > 0    => sprintf('%s?action=category', $work->config['site_url']),
-                default                       => $work->config['site_url']
+                $result['count_total'] > 0    => sprintf('%s?action=category', SITE_URL),
+                default                       => SITE_URL
             };
         }
 
@@ -634,7 +629,7 @@ if ($photo_id !== 0) {
             exit;
         }
 
-        header('Location: ' . sprintf('%s?action=photo&id=%d', $work->config['site_url'], $photo_id));
+        header('Location: ' . sprintf('%s?action=photo&id=%d', SITE_URL, $photo_id));
         exit;
     } else {
         // Добавляем блок PHOTO_BLOCK в шаблон
@@ -642,9 +637,8 @@ if ($photo_id !== 0) {
 
         // Формируем путь к фотографии
         $photo['path'] = sprintf(
-            '%s%s/%s/%s',
-            $work->config['site_dir'],
-            $work->config['gallery_dir'],
+            '%s/%s/%s',
+            GALLERY_DIR,
             $photo_data['folder'],
             $photo_data['file']
         );
@@ -660,7 +654,7 @@ if ($photo_id !== 0) {
             'D_DESCRIPTION_PHOTO'    => Work::clean_field($photo_data['description']),
             'U_PHOTO'                => sprintf(
                 '%s?action=attach&foto=%d',
-                $work->config['site_url'],
+                SITE_URL,
                 $photo_data['id']
             ),
         ]);
@@ -677,12 +671,12 @@ if ($photo_id !== 0) {
                 'L_CANCEL_DELETE'        => $work->lang['main']['cancel'],
                 'U_EDIT_BLOCK'           => sprintf(
                     '%s?action=photo&subact=edit&id=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['id']
                 ),
                 'U_DELETE_BLOCK'         => sprintf(
                     '%s?action=photo&subact=delete&id=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['id']
                 ),
             ]);
@@ -694,7 +688,7 @@ if ($photo_id !== 0) {
             'D_USER_ADD' => $photo_data['real_name'] ?? $work->lang['main']['no_user_add'],
             'U_USER_ADD' => $photo_data['real_name'] ? sprintf(
                 '%s?action=profile&subact=profile&uid=%d',
-                $work->config['site_url'],
+                SITE_URL,
                 $photo_data['user_upload']
             ) : '',
         ]);
@@ -706,7 +700,7 @@ if ($photo_id !== 0) {
                 'D_DESCRIPTION_CATEGORY' => $photo_data['category_description'] . ' ' . ($photo_data['real_name'] ?? ''),
                 'U_CATEGORY'             => sprintf(
                     '%s?action=category&cat=user&id=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['user_upload']
                 ),
             ]);
@@ -716,7 +710,7 @@ if ($photo_id !== 0) {
                 'D_DESCRIPTION_CATEGORY' => $photo_data['category_description'],
                 'U_CATEGORY'             => sprintf(
                     '%s?action=category&cat=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['category']
                 ),
             ]);
@@ -790,7 +784,7 @@ if ($photo_id !== 0) {
                 'L_RATE_THIS'  => $work->lang['photo']['rate'],
                 'U_RATE'       => sprintf(
                     '%s?action=photo&subact=rate&id=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $photo_data['id']
                 ),
             ]);
@@ -850,7 +844,7 @@ if ($photo_id !== 0) {
         'L_UPLOAD_THIS'       => $work->lang['photo']['upload'],
         'L_FILE_PHOTO'        => $work->lang['photo']['select_file'],
         'D_MAX_FILE_SIZE'     => (string)$max_size,
-        'U_UPLOADED'          => sprintf('%s?action=photo&subact=uploaded', $work->config['site_url']),
+        'U_UPLOADED'          => sprintf('%s?action=photo&subact=uploaded', SITE_URL),
     ]);
 } /** @noinspection NotOptimalIfConditionsInspection */ elseif ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
     '_GET',
@@ -931,16 +925,14 @@ if ($photo_id !== 0) {
 
             // Формируем пути для сохранения файла и миниатюры
             $photo['path'] = sprintf(
-                '%s%s/%s/%s',
-                $work->config['site_dir'],
-                $work->config['gallery_dir'],
+                '%s/%s/%s',
+                GALLERY_DIR,
                 $category_data['folder'],
                 $file_name
             );
             $photo['thumbnail_path'] = sprintf(
-                '%s%s/%s/%s',
-                $work->config['site_dir'],
-                $work->config['thumbnail_dir'],
+                '%s/%s/%s',
+                THUMBNAIL_DIR,
                 $category_data['folder'],
                 $file_name
             );
@@ -1017,7 +1009,7 @@ if ($photo_id !== 0) {
 
         if ($photo_id > 0) {
             // Если ID фотографии успешно получен, формируем URL для редиректа
-            $redirect_url = sprintf('%s?action=photo&id=%d', $work->config['site_url'], $photo_id);
+            $redirect_url = sprintf('%s?action=photo&id=%d', SITE_URL, $photo_id);
         } else {
             // Удаляем файлы, если сохранение в БД не удалось
             if (is_file($photo['path']) && is_writable($photo['path'])) {
@@ -1027,11 +1019,11 @@ if ($photo_id !== 0) {
                 unlink($photo['thumbnail_path']);
             }
             // Формируем URL для редиректа на форму загрузки
-            $redirect_url = sprintf('%s?action=photo&subact=upload', $work->config['site_url']);
+            $redirect_url = sprintf('%s?action=photo&subact=upload', SITE_URL);
         }
     } else {
         // Редирект на форму загрузки в случае ошибки
-        $redirect_url = sprintf('%s?action=photo&subact=upload', $work->config['site_url']);
+        $redirect_url = sprintf('%s?action=photo&subact=upload', SITE_URL);
     }
 
     // Выполняем редирект
@@ -1055,15 +1047,14 @@ if ($photo_id !== 0) {
         'D_DESCRIPTION_CATEGORY' => $work->lang['main']['no_category'],
         'D_RATE_USER'            => $work->lang['photo']['rate_user'] . ': ' . $work->lang['main']['no_foto'],
         'D_RATE_MODER'           => $work->lang['photo']['rate_moder'] . ': ' . $work->lang['main']['no_foto'],
-        'U_CATEGORY'             => $work->config['site_url'],
+        'U_CATEGORY'             => SITE_URL,
         'U_USER_ADD'             => '',
-        'U_PHOTO'                => sprintf('%s?action=attach&amp;foto=0', $work->config['site_url']),
+        'U_PHOTO'                => sprintf('%s?action=attach&amp;foto=0', SITE_URL),
     ]);
 
     $photo['path'] = sprintf(
-        '%s%s/%s',
-        $work->config['site_dir'],
-        $work->config['gallery_dir'],
+        '%s/%s',
+        GALLERY_DIR,
         $photo_data['file']
     );
 }
@@ -1085,7 +1076,7 @@ if ($user->user['id'] !== 0 && $user->user['pic_upload'] && $work->check_input(
             'empty' => true,
         ]
 ) && $_GET['subact'] === 'uploaded') {
-    $redirect_url = $redirect_url ?? $work->config['site_url'];
+    $redirect_url = $redirect_url ?? SITE_URL;
     header('Location: ' . $redirect_url);
     exit;
 }

@@ -19,10 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `photorigma`
+-- База данных: `photorigma_wip`
 --
-CREATE DATABASE IF NOT EXISTS `photorigma` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `photorigma`;
+CREATE DATABASE IF NOT EXISTS `photorigma_wip` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `photorigma_wip`;
 
 -- --------------------------------------------------------
 

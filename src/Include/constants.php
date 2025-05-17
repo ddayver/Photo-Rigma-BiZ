@@ -94,9 +94,11 @@ define('LOG_DIR', WORK_DIR . '/var/log');
 /** Путь к директории с файлами ядра */
 define('CORE_DIR', WORK_DIR . '/core');
 /** Путь к директории с пользовательскими файлами */
-define('VAR_DIR', WORK_DIR . '/var/');
+define('VAR_DIR', WORK_DIR . '/var');
 /** URL-адрес сайта */
 define('SITE_URL', $config['site_url']);
+/** URL-адрес сайта */
+define('AVATAR_URL', $config['site_url'] . '/' . $config['avatar_dir'] . '/');
 /** Путь к директории с фотографиями */
 define('GALLERY_DIR', VAR_DIR . '/' . $config['gallery_dir']);
 /** Путь к директории с миниатюрами */
@@ -162,6 +164,8 @@ define(
 define('MIN_FULLTEXT_SEARCH_LENGTH', 4); ///< Минимальная длина для полнотекстового поиска
 define('SQL_LOG', (bool)($_ENV['SQL_LOG'] ?? false)); ///< Включить логирование запросов без плейсхолдеров и медленных запросов
 define('SQL_ANALYZE', (bool)($_ENV['SQL_ANALYZE'] ?? false)); ///< Включить анализ запросов с помощью EXPLAIN/EXPLAIN ANALYZE
+$rewrite = $_ENV['URL_REWRITE'] ?? 'false';
+define('URL_REWRITE', in_array(strtolower($rewrite), ['1', 'true', 'y', 'yes'], true));
 
 /**
  * @def     REG_LOGIN

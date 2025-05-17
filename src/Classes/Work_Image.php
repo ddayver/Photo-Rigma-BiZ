@@ -63,6 +63,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -390,15 +391,13 @@ class Work_Image implements Work_Image_Interface
     {
         // Формируем пути для галереи и миниатюр с использованием sprintf()
         $gallery_path = sprintf(
-            '%s/%s/%s',
-            $this->config['site_dir'],
-            $this->config['gallery_dir'],
+            '%s/%s',
+            GALLERY_DIR,
             $directory_name
         );
         $thumbnail_path = sprintf(
-            '%s/%s/%s',
-            $this->config['site_dir'],
-            $this->config['thumbnail_dir'],
+            '%s/%s',
+            THUMBNAIL_DIR,
             $directory_name
         );
 
@@ -430,12 +429,8 @@ class Work_Image implements Work_Image_Interface
         }
 
         // Определяем пути к исходным файлам index.php
-        $gallery_index_file = sprintf('%s/%s/index.php', $this->config['site_dir'], $this->config['gallery_dir']);
-        $thumbnail_index_file = sprintf(
-            '%s/%s/index.php',
-            $this->config['site_dir'],
-            $this->config['thumbnail_dir']
-        );
+        $gallery_index_file = sprintf('%s/index.php', GALLERY_DIR);
+        $thumbnail_index_file = sprintf('%s/index.php',THUMBNAIL_DIR);
 
         // Проверяем существование исходных файлов index.php
         if (!is_file($gallery_index_file)) {
@@ -1866,8 +1861,8 @@ class Work_Image implements Work_Image_Interface
     protected function _no_photo_internal(): array
     {
         return [
-            'url'                  => sprintf('%s?action=photo&id=0', $this->config['site_url']),
-            'thumbnail_url'        => sprintf('%s?action=attach&foto=0&thumbnail=1', $this->config['site_url']),
+            'url'                  => sprintf('%s?action=photo&id=0', SITE_URL),
+            'thumbnail_url'        => sprintf('%s?action=attach&foto=0&thumbnail=1', SITE_URL),
             'name'                 => 'No photo',
             'description'          => 'No photo available',
             'category_name'        => 'No category',
@@ -1875,8 +1870,8 @@ class Work_Image implements Work_Image_Interface
             'rate'                 => 'Rate: 0/0',
             'url_user'             => '',
             'real_name'            => 'No user',
-            'full_path'            => $this->config['site_dir'] . $this->config['gallery_dir'] . '/no_foto.png',
-            'thumbnail_path'       => $this->config['site_dir'] . $this->config['thumbnail_dir'] . '/no_foto.png',
+            'full_path'            => GALLERY_DIR . '/no_foto.png',
+            'thumbnail_path'       => THUMBNAIL_DIR . '/no_foto.png',
             'file'                 => 'no_foto.png',
         ];
     }

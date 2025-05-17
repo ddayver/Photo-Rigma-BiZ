@@ -83,6 +83,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -379,7 +380,7 @@ if ($cat === 'user' || $cat === 0) {
         }
 
         // Перенаправление пользователя после успешного обновления
-        header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $cat));
+        header(sprintf('Location: %s?action=category&cat=%d', SITE_URL, $cat));
         exit;
     }
 
@@ -429,7 +430,7 @@ if ($cat === 'user' || $cat === 0) {
                 'D_DESCRIPTION_CATEGORY' => $category_data['description'],
                 'U_EDITED'               => sprintf(
                     '%s?action=category&subact=saveedit&cat=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $cat
                 ),
                 // Используем sprintf()
@@ -474,11 +475,11 @@ if ($cat === 'user' || $cat === 0) {
             }
 
             // Удаление файлов из папки галереи
-            $gallery_path = $work->config['site_dir'] . $work->config['gallery_dir'] . '/' . $category_data['folder'];
+            $gallery_path = GALLERY_DIR . '/' . $category_data['folder'];
             $work->remove_directory($gallery_path);
 
             // Удаление файлов из папки миниатюр
-            $thumbnail_path = $work->config['site_dir'] . $work->config['thumbnail_dir'] . '/' . $category_data['folder'];
+            $thumbnail_path = THUMBNAIL_DIR . '/' . $category_data['folder'];
             $work->remove_directory($thumbnail_path);
 
             // Удаление категории из базы данных
@@ -496,11 +497,11 @@ if ($cat === 'user' || $cat === 0) {
             }
 
             // Перенаправление пользователя после успешного удаления
-            header(sprintf('Location: %s?action=category', $work->config['site_url']));
+            header(sprintf('Location: %s?action=category', SITE_URL));
             exit;
         }
         // Если данные категории не найдены, перенаправляем на главную страницу
-        header(sprintf('Location: %s', $work->config['site_url']));
+        header(sprintf('Location: %s', SITE_URL));
         exit;
     } else {
         // Получение фотографий категории
@@ -583,13 +584,13 @@ if ($cat === 'user' || $cat === 0) {
                     // Подтверждение удаления
                     'U_EDIT_BLOCK'           => sprintf(
                         '%s?action=category&subact=edit&cat=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $cat
                     ),
                     // Ссылка на редактирование категории
                     'U_DELETE_BLOCK'         => sprintf(
                         '%s?action=category&subact=delete&cat=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $cat
                     ),
                     // Ссылка на удаление категории
@@ -648,13 +649,13 @@ if ($cat === 'user' || $cat === 0) {
                 // Подтверждение удаления
                 'U_EDIT_BLOCK'           => sprintf(
                     '%s?action=category&subact=edit&cat=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $cat
                 ),
                 // Ссылка на редактирование категории
                 'U_DELETE_BLOCK'         => sprintf(
                     '%s?action=category&subact=delete&cat=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $cat
                 ),
                 // Ссылка на удаление категории
@@ -708,7 +709,7 @@ if ($cat === 'user' || $cat === 0) {
         // Имя категории (пустое по умолчанию)
         'D_DESCRIPTION_CATEGORY' => '',
         // Описание категории (пустое по умолчанию)
-        'U_EDITED'               => sprintf('%s?action=category&subact=saveadd', $work->config['site_url']),
+        'U_EDITED'               => sprintf('%s?action=category&subact=saveadd', SITE_URL),
         // URL для отправки формы
     ]);
 } /** @noinspection NotOptimalIfConditionsInspection */ elseif ($user->user['cat_moderate'] && $work->check_input(
@@ -748,8 +749,8 @@ if ($cat === 'user' || $cat === 0) {
     $directory_count_data = $db->result_row();
 
     if ((isset($directory_count_data['count_dir']) && $directory_count_data['count_dir'] > 0) || is_dir(
-        $work->config['site_dir'] . $work->config['gallery_dir'] . '/' . $directory_name
-    ) || is_dir($work->config['site_dir'] . $work->config['thumbnail_dir'] . '/' . $directory_name)) {
+        GALLERY_DIR . '/' . $directory_name
+    ) || is_dir(THUMBNAIL_DIR . '/' . $directory_name)) {
         $directory_name = time() . '_' . $directory_name;
     }
 
@@ -797,7 +798,7 @@ if ($cat === 'user' || $cat === 0) {
         );
     }
     // Перенаправляем пользователя после успешного добавления
-    header(sprintf('Location: %s?action=category&cat=%d', $work->config['site_url'], $new_category_id));
+    header(sprintf('Location: %s?action=category&cat=%d', SITE_URL, $new_category_id));
     exit;
 } else {
     // Получаем список категорий

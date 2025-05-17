@@ -82,6 +82,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -173,7 +174,7 @@ if ((!$work->check_input(
         );
 
         // Перенаправляем пользователя на главную страницу
-        header('Location: ' . $work->config['site_url']);
+        header('Location: ' . SITE_URL);
         exit;
     }
 }
@@ -464,13 +465,13 @@ if (!empty($user->user['admin']) && $work->check_input(
                     if ($user->delete_user($target_uid, true)) {
                         header(sprintf(
                             'Location: %s?action=admin&subact=admin_user',
-                            $work->config['site_url']
+                            SITE_URL
                         ));
                         exit;
                     }
                     header(sprintf(
                         'Location: %s?action=admin&subact=admin_user&uid=%d',
-                        $work->config['site_url'],
+                        SITE_URL,
                         $target_uid
                     ));
                     exit;
@@ -565,10 +566,10 @@ if (!empty($user->user['admin']) && $work->check_input(
                         'D_LOGIN'       => $user_data['login'],
                         'D_EMAIL'       => Work::clean_field($user_data['email']),
                         'D_REAL_NAME'   => Work::clean_field($user_data['real_name']),
-                        'U_AVATAR'      => $work->config['site_url'] . $work->config['avatar_dir'] . '/' . $user_data['avatar'],
+                        'U_AVATAR'      => AVATAR_URL . $user_data['avatar'],
                         'U_DELETE_BLOCK'  => sprintf(
                             '%s?action=admin&amp;subact=admin_user&amp;do=delete_user&amp;uid=%s',
-                            $work->config['site_url'],
+                            SITE_URL,
                             $user_data['id']
                         ),
                     ]);
@@ -613,7 +614,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                             'D_FIND_USER' => $value['real_name'],
                             'U_FIND_USER' => sprintf(
                                 '%s?action=admin&amp;subact=admin_user&amp;uid=%s',
-                                $work->config['site_url'],
+                                SITE_URL,
                                 $value['id']
                             ),
                         ], 'FIND_USER[' . $key . ']');
@@ -682,7 +683,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                     );
                 }
             }
-            header(sprintf('Location: %s?action=admin&subact=admin_group', $work->config['site_url']));
+            header(sprintf('Location: %s?action=admin&subact=admin_group', SITE_URL));
             exit;
         }
 
@@ -709,7 +710,7 @@ if (!empty($user->user['admin']) && $work->check_input(
                 'D_NAME_GROUP'   => '',
                 'U_BLOCK_GROUP'  => sprintf(
                     '%s?action=admin&subact=admin_group',
-                    $work->config['site_url']
+                    SITE_URL
                 ),
             ]);
             $template->add_string(
@@ -743,7 +744,7 @@ if (!empty($user->user['admin']) && $work->check_input(
             if ($_POST['id_group'] === 'new') {
                 $new_group_id = $user->add_new_group($_POST);
                 if ($new_group_id === 0) {
-                    header(sprintf('Location: %s?action=admin&subact=admin_group&do=add_group', $work->config['site_url']));
+                    header(sprintf('Location: %s?action=admin&subact=admin_group&do=add_group', SITE_URL));
                     exit;
                 }
                 $_POST['group'] = $new_group_id;
@@ -853,15 +854,15 @@ if (!empty($user->user['admin']) && $work->check_input(
                     'D_PROTECTED_GROUPS' => $data_protected_groups,
                     'U_BLOCK_GROUP'         => sprintf(
                         '%s?action=admin&subact=admin_group',
-                        $work->config['site_url']
+                        SITE_URL
                     ),
                     'U_ADD_GROUP'         => sprintf(
                         '%s?action=admin&amp;subact=admin_group&amp;do=add_group',
-                        $work->config['site_url'],
+                        SITE_URL,
                     ),
                     'U_DELETE_BLOCK'         => sprintf(
                         '%s?action=admin&amp;subact=admin_group&amp;do=delete_group',
-                        $work->config['site_url'],
+                        SITE_URL,
                     ),
                 ]);
                 $user->unset_property_key('session', 'csrf_token'); // Удаляем использованный CSRF-токен из сессии
@@ -878,15 +879,15 @@ if (!empty($user->user['admin']) && $work->check_input(
         // Подготовка данных для выбора подразделов администрирования
         $select_subact = [
             [
-                'url' => sprintf('%s?action=admin&amp;subact=settings', $work->config['site_url']),
+                'url' => sprintf('%s?action=admin&amp;subact=settings', SITE_URL),
                 'txt' => $work->lang['admin']['settings'],
             ],
             [
-                'url' => sprintf('%s?action=admin&amp;subact=admin_user', $work->config['site_url']),
+                'url' => sprintf('%s?action=admin&amp;subact=admin_user', SITE_URL),
                 'txt' => $work->lang['admin']['admin_user'],
             ],
             [
-                'url' => sprintf('%s?action=admin&amp;subact=admin_group', $work->config['site_url']),
+                'url' => sprintf('%s?action=admin&amp;subact=admin_group', SITE_URL),
                 'txt' => $work->lang['admin']['admin_group'],
             ],
         ];
@@ -930,6 +931,6 @@ if (!empty($user->user['admin']) && $work->check_input(
     /** @noinspection PhpUnusedLocalVariableInspection */
     $title = $work->lang['admin']['title']; // Дополнительный заголовок - Администрирование
 } else {
-    Header('Location: ' . $work->config['site_url']);
+    Header('Location: ' . SITE_URL);
     exit;
 }

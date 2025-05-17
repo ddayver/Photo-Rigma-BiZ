@@ -50,6 +50,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -106,16 +107,14 @@ class Template implements Template_Interface
     // Свойства:
     private string $ins_header = ''; ///< Данные, вставляемые в заголовок
     private string $content = ''; ///< Содержимое для вывода
-    private bool $mod_rewrite; ///< Включение читаемых URL
     private string $template_file = 'main.html'; ///< Файл шаблона
     private array $block_object = []; ///< Блок массивов объектов для обработки
     private array $block_string = []; ///< Блок строковых данных для замены
     private array $block_if = []; ///< Блок условий для обработки
     private array $block_case = []; ///< Блок массивов выбора блока для обработки
-    private string $themes_path; ///< Путь к корню темы
+//    private string $themes_path; ///< Путь к корню темы
     private string $themes_url; ///< Ссылка на корень темы
-    private string $site_url; ///< Ссылка корня сайта
-    private string $site_dir; ///< Путь к корню сайта
+    private array $template_dirs; ///< Массив с путями к папкам шаблонов
     private string $theme; ///< Тема пользователя
     private ?Work_Interface $work = null; ///< Свойство для объекта класса Work_Interface
 
@@ -136,40 +135,12 @@ class Template implements Template_Interface
      *
      * @callgraph
      *
-     * @param string $site_url    URL сайта.
-     *                            Должен быть валидным URL.
-     *                            Пример: 'https://example.com'.
-     *                            Ограничения: должен проходить проверку через `FILTER_VALIDATE_URL`.
-     * @param string $site_dir    Директория сайта.
-     *                            Должна существовать и быть доступной для чтения.
-     *                            Пример: '/var/www/example'.
-     *                            Ограничения: должна быть действительной директорией.
-     * @param string $theme       Имя темы оформления.
+     * @param array $template_dirs Массив с путями к папкам шаблонов.
+     * @param string $theme Имя темы оформления.
      *                            Должно содержать только латинские буквы, цифры, дефисы и подчеркивания.
      *                            Пример: 'default'.
      *                            Ограничения: не должно быть пустым и должно соответствовать регулярному выражению
      *                            `/^[a-zA-Z0-9_-]+$/`.
-     * @param bool   $mod_rewrite Включение читаемых URL. По умолчанию `false`.
-     *                            Пример: `true`.
-     *
-     * @throws InvalidArgumentException Выбрасывается, если:
-     *                                  - `$site_url` не является валидным URL.
-     *                                    Пример сообщения:
-     *                                        Некорректный URL сайта | Значение: [$site_url]
-     *                                  - `$site_dir` не существует или не является директорией.
-     *                                    Пример сообщения:
-     *                                        Некорректная директория сайта | Значение: [$site_dir]
-     *                                  - `$theme` пустое или содержит недопустимые символы.
-     *                                    Пример сообщения:
-     *                                        Некорректное имя темы | Значение: [$theme]
-     * @throws RuntimeException         Выбрасывается, если:
-     *                                  - Директория тем не найдена.
-     *                                    Пример сообщения:
-     *                                        Директория тем не найдена | Путь: [$themes_path]
-     *                                  - Нет прав доступа к директории тем.
-     *                                    Пример сообщения:
-     *                                        Нет прав доступа к директории тем | Путь: [$themes_path]
-     *
      * @note    Метод использует свойства класса для хранения URL сайта, директории сайта, имени темы, путей к темам и
      *          настройки читаемых URL.
      *          Пример вычисляемых путей:
@@ -205,22 +176,8 @@ class Template implements Template_Interface
      * @see    PhotoRigma::Classes::Template::_find_template_file()
      *         Метод, проверяющий наличие шаблона по умолчанию.
      */
-    public function __construct(string $site_url, string $site_dir, string $theme, bool $mod_rewrite = false)
+    public function __construct(array $template_dirs, string $theme)
     {
-        // Проверяем, что $site_url является валидным URL
-        if (!filter_var($site_url, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректный URL сайта | Значение: $site_url"
-            );
-        }
-
-        // Проверяем, что $site_dir существует и является директорией
-        if (!is_dir($site_dir)) {
-            throw new InvalidArgumentException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Некорректная директория сайта | Значение: $site_dir"
-            );
-        }
-
         // Проверяем корректность $theme
         if (empty($theme) || !preg_match('/^[a-zA-Z0-9_-]+$/', $theme)) {
             throw new InvalidArgumentException(
@@ -229,31 +186,29 @@ class Template implements Template_Interface
         }
 
         // Инициализация свойств
-        $this->site_url = $site_url;
-        $this->site_dir = $site_dir;
         $this->theme = $theme;
-        $this->mod_rewrite = $mod_rewrite;
 
         // Вычисляем пути к темам
-        $this->themes_path = $this->site_dir . 'themes/' . $this->theme . '/';
-        $this->themes_url = $this->site_url . 'themes/' . $this->theme . '/';
+        $this->template_dirs = $template_dirs;
+        // $this->themes_path = WORK_DIR . '/themes/' . $this->theme . '/';
+        $this->themes_url = SITE_URL . 'themes/' . $this->theme . '/';
 
         // Проверяем, что директория тем существует
-        if (!is_dir($this->themes_path)) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем не найдена | Путь: $this->themes_path"
-            );
-        }
+//        if (!is_dir($this->themes_path)) {
+//            throw new RuntimeException(
+//                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем не найдена | Путь: $this->themes_path"
+//            );
+//        }
 
         // Проверяем права доступа к директории тем
-        if (!is_readable($this->themes_path)) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав доступа к директории тем | Путь: $this->themes_path"
-            );
-        }
+//        if (!is_readable($this->themes_path)) {
+//            throw new RuntimeException(
+//                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав доступа к директории тем | Путь: $this->themes_path"
+//            );
+//        }
 
         // Проверяем существует ли шаблон по-умолчанию.
-        $this->_find_template_file();
+        $this->template_file = $this->_find_template_file($this->template_file);
     }
 
     /**
@@ -292,24 +247,19 @@ class Template implements Template_Interface
      * @see    PhotoRigma::Classes::Template::$themes_path
      *         Свойство, содержащее путь к директории тем.
      */
-    private function _find_template_file(): void
+    private function _find_template_file(string $template_file): string
     {
-        $full_path = $this->themes_path . $this->template_file;
-        // Проверяем существование файла шаблона по указанному пути
-        if (!is_file($full_path)) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Указанный путь не является файлом | Путь: $full_path"
-            );
+        foreach ($this->template_dirs as $template_dir) {
+            $full_path = $template_dir . '/' . $this->theme . '/' . basename($template_file);
+
+            if (is_file($full_path) && is_readable($full_path)) {
+                return $full_path;
+            }
         }
 
-        // Проверяем, доступен ли файл для чтения
-        if (!is_readable($full_path)) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Путь: $full_path"
-            );
-        }
-        // Если все проверки пройдены, сохраняем полный путь к файлу
-        $this->template_file = $full_path;
+        throw new RuntimeException(
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл недоступен для чтения | Файл: $this->template_file, Тема: $this->theme"
+        );
     }
 
     /**
@@ -417,9 +367,7 @@ class Template implements Template_Interface
     public function __set(string $name, string $value): void
     {
         if ($name === 'template_file') {
-            $this->template_file = $value;
-            $this->_find_template_file();
-            $this->template_file = $this->themes_path . $value;
+            $this->template_file = $this->_find_template_file($value);
         } elseif ($name === 'ins_header') {
             $this->ins_header = $value;
         } else {
@@ -897,11 +845,7 @@ class Template implements Template_Interface
         if (!isset($this->block_object[$first_part_details[0]][$index]) || !is_object(
             $this->block_object[$first_part_details[0]][$index]
         )) {
-            $this->block_object[$first_part_details[0]][$index] = new Template(
-                $this->site_url,
-                $this->site_dir,
-                $this->theme
-            );
+            $this->block_object[$first_part_details[0]][$index] = new Template($this->template_dirs, $this->theme);
         }
         // Формирование результата
         return [
@@ -1415,7 +1359,9 @@ class Template implements Template_Interface
         $last_photo = $this->work->create_photo('last');
 
         // Создание экземпляра шаблона заголовка
-        $header_template = new Template($this->site_url, $this->site_dir, $this->theme);
+        $header_template = new Template($this->template_dirs, $this->theme);
+        // Установка файла шаблона
+        $header_template->template_file = $this->_find_template_file('header.html');
 
         // Добавление условия, что скрипты и CSS требуется использовать локальные.
         $header_template->add_if('LOCALHOST_SERVER', LOCALHOST_SERVER);
@@ -1426,16 +1372,16 @@ class Template implements Template_Interface
                 $this->work->config['title_name']
             ) . ' - ' . Work::clean_field($title),
             'INSERT_HEADER'     => $this->ins_header,
-            'META_DESRIPTION'   => Work::clean_field($this->work->config['meta_description']),
+            'META_DESCRIPTION'   => Work::clean_field($this->work->config['meta_description']),
             'META_KEYWORDS'     => Work::clean_field($this->work->config['meta_keywords']),
-            'GALLERY_WIDHT'     => $this->work->config['gal_width'],
+            'GALLERY_WIDTH'     => $this->work->config['gal_width'],
             'SITE_NAME'         => Work::clean_field($this->work->config['title_name']),
             'SITE_DESCRIPTION'  => Work::clean_field($this->work->config['title_description']),
-            'U_SEARCH'          => $this->work->config['site_url'] . '?action=search',
+            'U_SEARCH'          => SITE_URL . '?action=search',
             'L_SEARCH'          => $this->work->lang['main']['search'],
             'CSRF_TOKEN'        => $csrf_token,
-            'LEFT_PANEL_WIDHT'  => $this->work->config['left_panel'],
-            'RIGHT_PANEL_WIDHT' => $this->work->config['right_panel'],
+            'LEFT_PANEL_WIDTH'  => $this->work->config['left_panel'],
+            'RIGHT_PANEL_WIDTH' => $this->work->config['right_panel'],
             'HTML_LANG'         => $this->work->config['html_lang'],
         ]);
 
@@ -1517,8 +1463,7 @@ class Template implements Template_Interface
         ], 'LEFT_PANEL[2]');
         $header_template->add_if('USER_EXISTS', !empty($last_photo['url_user']), 'LEFT_PANEL[2]');
 
-        // Установка файла шаблона и создание контента
-        $header_template->template_file = $this->themes_path . 'header.html';
+        // Создание контента
         $header_template->create_template();
         $this->content = $header_template->content . $this->content;
         unset($header_template);
@@ -1930,7 +1875,7 @@ class Template implements Template_Interface
         }
 
         // Заменяем плейсхолдеры на реальные значения с использованием Work::clean_field
-        $this->content = str_replace('{SITE_URL}', Work::clean_field($this->site_url), $this->content);
+        $this->content = str_replace('{SITE_URL}', Work::clean_field(SITE_URL), $this->content);
         $this->content = str_replace('{THEME_URL}', Work::clean_field($this->themes_url), $this->content);
 
         // Парсим шаблон
@@ -2385,7 +2330,7 @@ class Template implements Template_Interface
     private function _url_mod_rewrite(string $content): string
     {
         // Проверка, включен ли mod_rewrite
-        if ($this->mod_rewrite) {
+        if (URL_REWRITE) {
             // Определение окончания ссылки в зависимости от флага $txt
             $end = '("|\')';
 
@@ -2567,7 +2512,9 @@ class Template implements Template_Interface
         $rand_photo = $this->work->create_photo('rand');
 
         // Создание экземпляра шаблона подвала
-        $footer_template = new Template($this->site_url, $this->site_dir, $this->theme);
+        $footer_template = new Template($this->template_dirs, $this->theme);
+        // Установка файла шаблона
+        $footer_template->template_file = $this->_find_template_file('footer.html');
 
         // Добавление строковых данных в шаблон
         $footer_template->add_string_array([
@@ -2625,8 +2572,7 @@ class Template implements Template_Interface
         ], 'RIGHT_PANEL[3]');
         $footer_template->add_if('USER_EXISTS', !empty($rand_photo['url_user']), 'RIGHT_PANEL[3]');
 
-        // Установка файла шаблона и создание контента
-        $footer_template->template_file = $this->themes_path . 'footer.html';
+        // Создание контента
         $footer_template->create_template();
         $this->content .= $footer_template->content;
         unset($footer_template);

@@ -154,21 +154,21 @@ body {
 }
 
 .field_small {
-    background: url(images/gpadient_small.jpg) repeat-x bottom !important;
+    background: url(../image/gpadient_small.jpg) repeat-x bottom !important;
     margin: 0 !important;
     padding: 0 !important;
 
 }
 
 .header_site {
-    background: url(images/logo-2.png) no-repeat right;
+    background: url(../image/logo-2.png) no-repeat right;
     overflow: hidden;
     border-radius: 15px;
     margin: 0 !important;
 }
 
 .field_big {
-    background: url(images/gpadient_big.jpg) repeat-x top !important;
+    background: url(../image/gpadient_big.jpg) repeat-x top !important;
     margin: 0 !important;
     padding: 0 !important;
 }

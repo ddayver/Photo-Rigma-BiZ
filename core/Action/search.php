@@ -74,6 +74,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -189,7 +190,7 @@ if ($search['user']) {
                 'D_USER_FIND' => Work::clean_field($val['real_name']), // Имя пользователя
                 'U_USER_FIND' => sprintf(
                     '%s?action=profile&amp;subact=profile&amp;uid=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $val['id']
                 ), // Ссылка на профиль пользователя
             ], 'SEARCH_USER[' . $key . ']');
@@ -228,7 +229,7 @@ if ($search['category']) {
                 // Описание категории
                 'U_CATEGORY_FIND'      => sprintf(
                     '%s?action=category&amp;cat=%d',
-                    $work->config['site_url'],
+                    SITE_URL,
                     $val['id']
                 ),
                 // Ссылка на категорию
@@ -262,7 +263,7 @@ if ($search['news']) {
                 // Заголовок новости
                 'D_NEWS_FIND_DESC' => mb_substr(Work::clean_field($val['text_post']), 0, 100, 'UTF-8') . '...',
                 // Краткое описание новости (первые 100 символов)
-                'U_NEWS_FIND'      => sprintf('%s?action=news&amp;news=%d', $work->config['site_url'], $val['id']),
+                'U_NEWS_FIND'      => sprintf('%s?action=news&amp;news=%d', SITE_URL, $val['id']),
                 // Ссылка на новость
             ], 'SEARCH_NEWS[' . $key . ']');
         }
@@ -328,5 +329,5 @@ $template->add_string_array([
     'D_NEED_CATEGORY' => isset($check['category']) ? 'checked="checked"' : '', // Флаг "Искать категории"
     'D_NEED_NEWS'     => isset($check['news']) ? 'checked="checked"' : '', // Флаг "Искать новости"
     'D_NEED_PHOTO'    => isset($check['photo']) ? 'checked="checked"' : '', // Флаг "Искать фотографии"
-    'U_SEARCH'        => sprintf('%s?action=search', $work->config['site_url']), // URL для отправки формы
+    'U_SEARCH'        => sprintf('%s?action=search', SITE_URL), // URL для отправки формы
 ]);

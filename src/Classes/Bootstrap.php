@@ -55,11 +55,16 @@
 
 namespace PhotoRigma\Classes;
 
+use Exception;
+use JsonException;
 use PhotoRigma\Interfaces\Bootstrap_Interface;
+use PhotoRigma\Interfaces\Database_Interface;
+use PhotoRigma\Interfaces\Work_Interface;
 use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -104,10 +109,7 @@ class Bootstrap implements Bootstrap_Interface
      * - Выбрасывает исключение при ошибках проверки
      * - Подключает все обязательные файлы через require_once
      *
-     * @return void
-     *
-     * @throws RuntimeException Если WORK_DIR не определена
-     * @throws RuntimeException Если один из обязательных файлов отсутствует или недоступен
+     * @return array
      *
      * @note   Метод вызывается один раз — при запуске приложения
      * @note   Все ошибки логируются через стандартное исключение RuntimeException
@@ -117,7 +119,7 @@ class Bootstrap implements Bootstrap_Interface
      * Пример использования:
      * \PhotoRigma\Classes\Bootstrap::init();
      */
-    public static function init(): void
+    public static function init(): array
     {
         // Проверяем, что WORK_DIR определена
         if (!defined('WORK_DIR')) {
@@ -156,9 +158,54 @@ class Bootstrap implements Bootstrap_Interface
             );
         }
 
-        // Подключаем все файлы из списка обязательных файлов
-        foreach ($required_files as $file) {
-            require_once $file;
-        }
+        return $required_files;
+    }
+
+    /**
+     * @param array $config
+     * @param array $session
+     * @return array
+     * @throws JsonException
+     * @throws Exception
+     */
+    public static function load(array $config, array &$session): array
+    {
+        // --- Кеширование ---
+        $cache = new Cache_Handler($config['cache'] ?? [], $config['site_dir'] ?? null);
+
+        // --- База данных ---
+        $db = new Database($config['db'] ?? [], $cache);
+
+        // --- Work - основной класс приложения ---
+        $work = new Work($db, $config, $session, $cache);
+
+        [$user, $template] = self::change_user($db, $work, $session);
+
+        return [$db, $work, $user, $template];
+    }
+
+    /**
+     * @param Database_Interface $db
+     * @param Work_Interface $work
+     * @param array $session
+     * @return array
+     * @throws JsonException
+     */
+    public static function change_user(Database_Interface $db, Work_Interface $work, array &$session): array
+    {
+        // --- User - работа с пользователем ---
+        $user = new User($db, $session);
+
+        // --- Template - шаблонизация ---
+        $themes_config = $user->session['theme'] ?? $work->config['theme'] ?? 'default';
+        $template = new Template($work->config['template_dirs'], $themes_config);
+
+        // --- DI между объектами ---
+        $work->set_user($user);
+        $work->set_lang();
+        $template->set_work($work);
+        $user->set_work($work);
+
+        return [$user, $template];
     }
 }
