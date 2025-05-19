@@ -89,16 +89,16 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 // КОНСТАНТЫ ДЛЯ СИСТЕМНЫХ НАСТРОЕК, ТАБЛИЦ БАЗ ДАННЫХ
 // =============================================================================
 
-/** Путь к директории для хранения логов */
-define('LOG_DIR', WORK_DIR . '/var/log');
 /** Путь к директории с файлами ядра */
 define('CORE_DIR', WORK_DIR . '/core');
 /** Путь к директории с пользовательскими файлами */
 define('VAR_DIR', WORK_DIR . '/var');
+/** Путь к директории для хранения логов */
+define('LOG_DIR', VAR_DIR . '/log');
 /** URL-адрес сайта */
 define('SITE_URL', $config['site_url']);
 /** URL-адрес сайта */
-define('AVATAR_URL', $config['site_url'] . '/' . $config['avatar_dir'] . '/');
+define('AVATAR_URL', SITE_URL . $config['avatar_dir'] . '/');
 /** Путь к директории с фотографиями */
 define('GALLERY_DIR', VAR_DIR . '/' . $config['gallery_dir']);
 /** Путь к директории с миниатюрами */

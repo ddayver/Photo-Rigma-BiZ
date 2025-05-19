@@ -58,14 +58,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "post-install-cmd": [
-            "echo \"[1/5] Инициализация...\"",
-            "test -f .env || cp .env.example .env",
-            "php -r \"\\$file='.env'; \\$content=file_get_contents(\\$file); if(preg_match('/^APP_KEY=\\s*$/m', \\$content)) { \\$content=preg_replace('/^APP_KEY=.*$/m', 'APP_KEY=base64:'.base64_encode(random_bytes(32)), \\$content); file_put_contents(\\$file, \\$content); echo '[2/5] APP_KEY установлен'.PHP_EOL; }\"",
-            "php -r \"\\$file='.env'; \\$content=file_get_contents(\\$file); if(preg_match('/^APP_SALT=\\s*$|^APP_SALT=change_this_to_random_string$/m', \\$content)) { \\$content=preg_replace('/^APP_SALT=.*$/m', 'APP_SALT='.bin2hex(random_bytes(16)), \\$content); file_put_contents(\\$file, \\$content); echo '[3/5] APP_SALT установлен'.PHP_EOL; }\"",
-            "php -r \"if(!file_exists('.env')) { echo '[4/5] Внимание: .env не создан!'; exit(1); }\"",
-            "echo \"[5/5] Готово! Запускайте index.php из public/\""
-        ],
+        "post-install-cmd": "php scripts/setup-structure.php",
         "post-update-cmd": [
             "php -r \"\\$isGit=is_dir('.git'); if(\\$isGit){ \\$changes=shell_exec('git diff --name-only HEAD@{1} HEAD 2>/dev/null'); \\$vendorOnly=\\$changes&&!preg_match('/^(?!vendor\\\\/).+/m',\\$changes); echo \\$vendorOnly?'=== Packages updated ===':'=== Code updated ==='; } else { \\$vendorTime=filemtime('vendor/composer'); \\$codeTime=max(array_map('filemtime',array_merge(glob('src/*'),glob('sql/*/*')))); echo \\$vendorTime>\\$codeTime?'=== Packages updated ===':'=== Code updated ==='; }\"",
             "php -r \"foreach(['mysql','pgsql','sqlite'] as \\$type){ if(file_exists('sql/'.\\$type.'/update/')&&count(glob('sql/'.\\$type.'/update/*.sql'))){echo 'DB migrations ('.\\$type.'): sql/'.\\$type.'/update/'.PHP_EOL;}}\""

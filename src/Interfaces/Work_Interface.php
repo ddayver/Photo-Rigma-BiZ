@@ -1023,6 +1023,16 @@ interface Work_Interface
     public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float;
 
     /**
+     * Ищет файл действия в директориях $this->config['action_dir']
+     *
+     * @param string|null $action Имя действия из $_GET
+     * @return array Имя действия и полный путь к .php-файлу
+     * @throws RuntimeException Если файл не найден
+     * @throws Exception При ошибках check_input()
+     */
+    public function find_action_file(?string $action): array;
+
+    /**
      * @brief   Формирует массив данных для меню в зависимости от типа и активного пункта.
      *
      * @details Этот метод выполняет следующие действия:

@@ -121,6 +121,12 @@ use Dotenv\Dotenv;
 
 use function PhotoRigma\Include\log_in_file;
 
+/** @var Cache_Handler $cache */
+/** @var Database $db */
+/** @var Work $work */
+/** @var User $user */
+/** @var Template $template */
+
 // Устанавливаем кодировку для работы с мультибайтовыми строками
 $encoding = mb_regex_encoding('UTF-8');
 mb_internal_encoding('UTF-8');
@@ -158,7 +164,7 @@ try {
     require_once WORK_DIR . '/vendor/autoload.php';
 
     // Инициализация .env
-    $dotenv = Dotenv::createImmutable(WORK_DIR);
+    $dotenv = Dotenv::createImmutable(WORK_DIR . '/config');
     /** @noinspection UnusedFunctionResultInspection */
     $dotenv->load();
 
@@ -170,7 +176,7 @@ try {
     }
 
     // Загрузка и инициализация объектов
-    [$db, $work, $user, $template] = Bootstrap::load($config, $_SESSION, false);
+    [$db, $work, $user, $template] = Bootstrap::load($config, $_SESSION);
 
     /**
      * Очищаем значение массива $config[], чтобы предотвратить его использование напрямую.
@@ -180,72 +186,22 @@ try {
      */
     unset($config);
 
-    /** @var string $title
-     * @brief        Добавление текста к заголовку страницы.
-     * @noinspection PhpRedundantVariableDocTypeInspection
-     */
-    $title = '';
-
-    /**
-     * @var string $action
-     * @brief        Действие, которое необходимо выполнить.
-     * @details      Возможные значения определяются динамически в зависимости от доступных файлов в директории 'action/'.
-     * Пример вызова действия 'profile':
-     * $_GET['action'] = 'profile';
-     * @noinspection PhpRedundantVariableDocTypeInspection
-     */
-    $action = 'main'; // Значение по умолчанию
-    // Установка значения $action для CLI
-    if (PHP_SAPI === 'cli') {
-        $action = 'cron';
-    }
     /**
      * Обработка действия, указанного в параметре 'action'.
+     * - Установка значения $action для CLI
      * - Проверяется существование и безопасность параметра 'action'.
      * - Формируется путь к файлу действия.
      * - Если файл не существует или недоступен, используется файл по умолчанию ('main.php').
      */
-    /** @noinspection NotOptimalIfConditionsInspection */
-    if ($work->check_input(
-        '_GET',
-        'action',
-        ['isset' => true, 'empty' => true]
-    ) && // Проверяем, что параметр 'action' существует и не пустой
-        $_GET['action'] !== 'index' &&                                             // Исключаем значение 'index'
-        $work->url_check(
-        )                                                        // Проверяем URL на наличие вредоносного кода
-    ) {
-        // Используем более безопасный метод фильтрации входных данных
-        $action = filter_var($_GET['action'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        // Формируем путь к файлу действия
-        $action_file = $work->config['action_dir'][1] . '/' . basename($action. '.php');
-        // Проверяем существование файла перед подключением
-        if (!is_file($action_file) || !is_readable($action_file)) {
-            log_in_file(
-                __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ") | Файл действия не найден или недоступен для чтения | Путь: $action_file"
-            );
-            $action_file = $work->config['action_dir'][1] . '/main.php'; // Подключаем файл по умолчанию
-            $action = 'main';
-        }
-    } else {
-        // Если $action остается равным значению по умолчанию ('main'), формируем путь к файлу по умолчанию
-        $action_file = $work->config['action_dir'][1] . "/$action.php";
-    }
-    // Проверяем существование файла действий перед подключением
-    if (is_file($action_file) && is_readable($action_file)) {
-        include_once $action_file;
-    } else {
-        throw new RuntimeException(
-            __FILE__ . ':' . __LINE__ . ' (' . (__FUNCTION__ ?: 'global') . ") | Файл действий не найден или недоступен для чтения | Путь: $action_file"
-        );
-    }
+    [$action, $action_file] = $work->find_action_file($_GET['action']);
+    include_once $action_file;
 
     // Создаем токен для CSRF-защиты в полях поиска и входа
     $csrf_token = $user->csrf_token();
 
     // Создание шаблона
     $template->create_template();
-    $template->page_header($title, $action, $csrf_token);
+    $template->page_header($title ?? '', $action ?? 'main', $csrf_token);
     $template->page_footer($user->session['login_id'], $csrf_token);
     header('Content-Type: text/html; charset=UTF-8');
     echo $template->content;

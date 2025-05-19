@@ -87,7 +87,7 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 
 // Устанавливаем заголовок страницы и подключаем шаблон для отображения результатов поиска
 /** @noinspection PhpUnusedLocalVariableInspection */
-$title = $work->lang['search']['title'];
+$title = $work->lang['main']['search'];
 $template->template_file = 'search.html';
 
 // Перенос текста из search_main_text в search_text, если search_text пуст

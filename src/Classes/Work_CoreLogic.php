@@ -1373,92 +1373,83 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
     protected function _get_languages_internal(): array
     {
         $list_languages = [];
-        // Нормализуем путь к site_dir и проверяем его существование
-        $site_dir = realpath(rtrim($this->config['site_dir'], '/'));
-        $language_dir = $site_dir . '/language/';
-        if (!is_dir($language_dir) || !is_readable($language_dir)) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков недоступна или не существует | Путь: $language_dir"
-            );
-        }
 
-        // Проверяем, что директория не пуста
-        $iterator = new DirectoryIterator($language_dir);
-        $has_subdirs = false;
-        foreach ($iterator as $file) {
-            if (!$file->isDot() && $file->isDir()) {
-                $has_subdirs = true;
-                break;
+        // Перебираем папки из настроек (для var/ и core/)
+        foreach ($this->config['language_dirs'] as $language_dir) {
+            // Проверяем, что директория не пуста
+            $iterator = new DirectoryIterator($language_dir);
+            $has_subdirs = false;
+            foreach ($iterator as $file) {
+                if (!$file->isDot() && $file->isDir()) {
+                    $has_subdirs = true;
+                    break;
+                }
             }
-        }
-        if (!$has_subdirs) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория языков пуста | Путь: $language_dir"
-            );
-        }
+            if ($has_subdirs) {
+                // Перебираем поддиректории
+                foreach ($iterator as $file) {
+                    if ($file->isDot() || !$file->isDir()) {
+                        continue;
+                    }
+                    $lang_subdir = $file->getPathname();
 
-        // Перебираем поддиректории
-        foreach ($iterator as $file) {
-            if ($file->isDot() || !$file->isDir()) {
-                continue;
+                    // Проверяем, что директория существует и доступна для чтения
+                    if (!is_dir($lang_subdir) || !is_readable($lang_subdir)) {
+                        log_in_file(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория языка недоступна для чтения | Директория: $lang_subdir"
+                        );
+                        continue;
+                    }
+
+                    // Формируем полный путь к main.php и нормализуем его
+                    $main_php_path = realpath($lang_subdir . '/main.php');
+                    if ($main_php_path === false || !is_file($main_php_path) || !is_readable($main_php_path)) {
+                        log_in_file(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл main.php отсутствует или недоступен | Директория: $lang_subdir"
+                        );
+                        continue;
+                    }
+
+                    // Проверяем, что файл находится внутри разрешенной директории
+                    if (!str_starts_with($main_php_path, $language_dir)) {
+                        log_in_file(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
+                        );
+                        continue;
+                    }
+
+                    // Безопасное подключение файла
+                    $lang_data = include($main_php_path);
+
+                    // Проверяем наличие и корректность lang_name
+                    if (
+                        !is_array($lang_data) ||
+                        !isset($lang_data['lang_name']) || !is_string($lang_data['lang_name']) || trim(
+                            $lang_data['lang_name']
+                        ) === ''
+                    ) {
+                        log_in_file(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"
+                        );
+                        continue;
+                    }
+
+                    // Извлекаем только lang_name и освобождаем память
+                    $lang_name = $lang_data['lang_name'];
+                    unset($lang_data); // Освобождаем память
+
+                    // Добавляем язык в список
+                    $list_languages[] = [
+                        'value' => $file->getFilename(),
+                        'name'  => mb_trim($lang_name),
+                    ];
+                }
             }
-            $lang_subdir = $file->getPathname();
-
-            // Проверяем, что директория существует и доступна для чтения
-            if (!is_dir($lang_subdir) || !is_readable($lang_subdir)) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория языка недоступна для чтения | Директория: $lang_subdir"
-                );
-                continue;
-            }
-
-            // Формируем полный путь к main.php и нормализуем его
-            $main_php_path = realpath($lang_subdir . '/main.php');
-            if ($main_php_path === false || !is_file($main_php_path) || !is_readable($main_php_path)) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл main.php отсутствует или недоступен | Директория: $lang_subdir"
-                );
-                continue;
-            }
-
-            // Проверяем, что файл находится внутри разрешенной директории
-            if (!str_starts_with($main_php_path, $language_dir)) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительный путь к файлу main.php | Директория: $lang_subdir"
-                );
-                continue;
-            }
-
-            // Безопасное подключение файла
-            $lang_data = include($main_php_path);
-
-            // Проверяем наличие и корректность lang_name
-            if (
-                !is_array($lang_data) ||
-                !isset($lang_data['lang_name']) || !is_string($lang_data['lang_name']) || trim(
-                    $lang_data['lang_name']
-                ) === ''
-            ) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Переменная \$lang_name не определена или некорректна | Файл: $main_php_path"
-                );
-                continue;
-            }
-
-            // Извлекаем только lang_name и освобождаем память
-            $lang_name = $lang_data['lang_name'];
-            unset($lang_data); // Освобождаем память
-
-            // Добавляем язык в список
-            $list_languages[] = [
-                'value' => $file->getFilename(),
-                'name'  => mb_trim($lang_name),
-            ];
         }
 
         if (empty($list_languages)) {
             throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни один язык не найден | Путь: $language_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ни один язык не найден | Путь: ' . implode(', ', $this->config['language_dirs'])
             );
         }
 
@@ -1561,58 +1552,51 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
     protected function _get_themes_internal(): array
     {
         $list_themes = [];
-        // Нормализуем путь к site_dir
-        $site_dir = realpath(rtrim($this->config['site_dir'], '/'));
-        $themes_dir = $site_dir . '/themes/';
-        // Проверяем существование и доступность директории /themes/
-        if (!is_dir($themes_dir) || !is_readable($themes_dir)) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем недоступна | Путь: $themes_dir"
-            );
-        }
-        // Проверяем, что директория не пуста
-        $iterator = new DirectoryIterator($themes_dir);
-        $has_subdirs = false;
-        foreach ($iterator as $file) {
-            if (!$file->isDot() && $file->isDir()) {
-                $has_subdirs = true;
-                break;
+
+        // Перебираем папки из настроек (для var/ и core/)
+        foreach ($this->config['template_dirs'] as $template_dir) {
+            // Проверяем, что директория не пуста
+            $iterator = new DirectoryIterator($template_dir);
+            $has_subdirs = false;
+            foreach ($iterator as $file) {
+                if (!$file->isDot() && $file->isDir()) {
+                    $has_subdirs = true;
+                    break;
+                }
+            }
+            if ($has_subdirs) {
+                // Перебираем поддиректории
+                foreach ($iterator as $file) {
+                    // Пропускаем точки (.) и файлы
+                    if ($file->isDot() || !$file->isDir()) {
+                        continue;
+                    }
+                    // Получаем нормализованный путь к поддиректории
+                    $theme_dir = $file->getRealPath();
+                    // Проверяем, что директория доступна для чтения
+                    if (!is_readable($theme_dir)) {
+                        log_in_file(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория темы недоступна для чтения | Директория: $theme_dir"
+                        );
+                        continue;
+                    }
+                    // Проверяем, что директория находится внутри $template_dir
+                    if (!str_starts_with($theme_dir, $template_dir)) {
+                        log_in_file(
+                            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
+                        );
+                        continue;
+                    }
+                    // Добавляем имя папки в список тем
+                    $list_themes[] = $file->getFilename();
+                }
             }
         }
-        if (!$has_subdirs) {
-            throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем пуста | Путь: $themes_dir"
-            );
-        }
-        // Перебираем поддиректории
-        foreach ($iterator as $file) {
-            // Пропускаем точки (.) и файлы
-            if ($file->isDot() || !$file->isDir()) {
-                continue;
-            }
-            // Получаем нормализованный путь к поддиректории
-            $theme_dir = $file->getRealPath();
-            // Проверяем, что директория доступна для чтения
-            if (!is_readable($theme_dir)) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Поддиректория темы недоступна для чтения | Директория: $theme_dir"
-                );
-                continue;
-            }
-            // Проверяем, что директория находится внутри $themes_dir
-            if (!str_starts_with($theme_dir, $themes_dir)) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Подозрительная директория темы | Директория: $theme_dir"
-                );
-                continue;
-            }
-            // Добавляем имя папки в список тем
-            $list_themes[] = $file->getFilename();
-        }
+
         // Если ни одна тема не найдена, выбрасываем исключение
         if (empty($list_themes)) {
             throw new RuntimeException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Ни одна тема не найдена | Путь: $themes_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Ни одна тема не найдена | Путь:' . implode(', ', $this->config['template_dirs'])
             );
         }
         return $list_themes;
@@ -1930,6 +1914,76 @@ class Work_CoreLogic implements Work_CoreLogic_Interface
         $this->db->select($table, TBL_PHOTO, ['where' => '`id` = :id_foto', 'params' => [':id_foto' => $photo_id]]);
         $rate = $this->db->result_row();
         return $rate ? $rate[trim($table, '`')] : 0;
+    }
+
+    /**
+     * Ищет файл действия в директориях $this->config['action_dir']
+     *
+     * @param string|null $action Имя действия из $_GET
+     * @return array Имя действия и полный путь к .php-файлу
+     * @throws RuntimeException Если файл не найден
+     * @throws Exception При ошибках check_input()
+     */
+    public function find_action_file(?string $action): array
+    {
+        return $this->_find_action_file_internal($action);
+    }
+
+    /**
+     * Ищет файл действия в директориях $this->config['action_dir']
+     *
+     * @param string|null $action Имя действия из $_GET
+     * @return array Имя действия и полный путь к .php-файлу
+     * @throws RuntimeException Если файл не найден
+     * @throws Exception При ошибках check_input()
+     */
+    protected function _find_action_file_internal(?string $action): array
+    {
+        // 1. Проверяем, что action установлен, не пустой и URL безопасен
+        if (PHP_SAPI === 'cli') {
+            $file_name = 'cron.php';
+            $action_name = 'main';
+        } /** @noinspection NotOptimalIfConditionsInspection */ elseif ($this->work->url_check() &&
+            $this->work->check_input('_GET', 'action', ['isset' => true, 'empty' => true]) &&
+            $action !== 'index'
+        ) {
+            $safe_action = filter_var($action, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if (preg_match('/^[a-z0-9_\-]+$/i', $safe_action)) {
+                $file_name = basename($safe_action) . '.php';
+                $action_name = $action;
+            } else {
+                $file_name = 'main.php';
+                $action_name = 'main';
+            }
+        } else {
+            $file_name = 'main.php';
+            $action_name = 'main';
+        }
+
+        // 2. Поиск файла по $file_name во всех action_dir
+        foreach ($this->config['action_dir'] as $dir) {
+            $full_path = $dir . '/' . $file_name;
+
+            if (is_file($full_path) && is_readable($full_path)) {
+                return [$action_name, $full_path];
+            }
+        }
+
+        // 3. Если это не main.php → ищем резервно main.php
+        if ($file_name !== 'main.php') {
+            foreach ($this->config['action_dir'] as $dir) {
+                $main_path = $dir . '/main.php';
+
+                if (is_file($main_path) && is_readable($main_path)) {
+                    return ['main', $main_path];
+                }
+            }
+        }
+
+        // 4. Файл не найден → исключение
+        throw new RuntimeException(
+            __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Файл действия не найден | Action: ' . ($action ?: '(пустой)')
+        );
     }
 
     /**

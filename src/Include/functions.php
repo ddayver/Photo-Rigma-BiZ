@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection ForgottenDebugOutputInspection */
 /**
  * @file      include/functions.php
  * @brief     Файл содержит глобальные функции для работы с логами.
@@ -132,7 +133,7 @@ function archive_old_logs(): void
     }
 
     // Получаем список файлов логов с расширением .txt
-    $log_files = glob(LOG_DIR . '*_log.txt', GLOB_NOSORT);
+    $log_files = glob(LOG_DIR . '/*_log.txt', GLOB_NOSORT);
     if (empty($log_files)) {
         return; // Если файлов нет, выходим
     }
@@ -274,7 +275,7 @@ function log_in_file(string $txt, bool $die = false): bool
         }
 
         // Определение имени файла лога
-        $log_file = LOG_DIR . date('Y_m_d') . '_log.txt';
+        $log_file = LOG_DIR . '/' . date('Y_m_d') . '_log.txt';
 
         // Ограничение размера файла логов
         if (is_file($log_file) && filesize($log_file) > MAX_LOG_SIZE) {
@@ -316,6 +317,7 @@ function log_in_file(string $txt, bool $die = false): bool
 
         // Добавление трассировки, если DEBUG_GALLERY включен
         if (defined('DEBUG_GALLERY')) {
+            /** @noinspection InsufficientTypesControlInspection */
             $trace_depth = match (true) {
                 DEBUG_GALLERY === false                                           => 0,
                 is_int(DEBUG_GALLERY) && DEBUG_GALLERY >= 1 && DEBUG_GALLERY <= 9 => DEBUG_GALLERY,

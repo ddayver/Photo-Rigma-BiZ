@@ -1202,7 +1202,7 @@ class Work implements Work_Interface
         $this->session['language'] = $this->session['language'] ?? $this->config['language'];
         $lang_files_path = array_map(
             fn (string $dir): string => rtrim($dir, '/') . '/' . $this->session['language'] . '/',
-            $this->config['language_dirs'] ?? [$this->config['site_dir'] . 'language/']
+            $this->config['language_dirs']
         );
 
         // 2. Сканирование папок и формирование массива файлов для загрузки
@@ -1959,6 +1959,19 @@ class Work implements Work_Interface
     public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float
     {
         return $this->core_logic->process_rating($table, $photo_id, $user_id, $rate_value);
+    }
+
+    /**
+     * Ищет файл действия в директориях $this->config['action_dir']
+     *
+     * @param string|null $action Имя действия из $_GET
+     * @return array Имя действия и полный путь к .php-файлу
+     * @throws RuntimeException Если файл не найден
+     * @throws Exception При ошибках check_input()
+     */
+    public function find_action_file(?string $action): array
+    {
+        return $this->core_logic->find_action_file($action);
     }
 
     /**
