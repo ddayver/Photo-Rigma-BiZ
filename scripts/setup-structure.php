@@ -88,12 +88,12 @@ $varDirs = [
     'var/Action',
     'var/avatar',
     'var/cache',
-    'var/gallery',
+    'var/gallery/user',
     'var/language',
     'var/log',
     'var/templates',
     'var/themes',
-    'var/thumbnail',
+    'var/thumbnail/user',
 ];
 
 foreach ($varDirs as $dir) {

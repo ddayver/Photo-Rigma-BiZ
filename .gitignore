@@ -21,3 +21,7 @@ sql_*.txt
 /vendor/
 /composer.lock
 .env
+/public/avatar
+/public/themes/*
+/var
+/tmp
