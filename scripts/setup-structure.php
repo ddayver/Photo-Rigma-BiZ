@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+namespace PhotoRigma;
+
 use Random\RandomException;
 
 if (PHP_SAPI !== 'cli') {
@@ -226,7 +228,6 @@ if (is_dir($coreThemesDir)) {
     foreach ($coreThemes as $theme) {
         $link = "themes/$theme";
         $linkPath = "$publicDir/$link";
-        $targetVar = "../../var/themes/$theme";
         $targetCore = "../../core/themes/$theme";
 
         if (!is_dir("$coreThemesDir/$theme"))

@@ -162,8 +162,10 @@ define(
     hash('sha256', ($_ENV['APP_SALT'] ?? 'PhotoRigma') . '_' . gethostname())
 ); ///< Ключ для использования в глобальном массиве $_SESSION
 define('MIN_FULLTEXT_SEARCH_LENGTH', 4); ///< Минимальная длина для полнотекстового поиска
-define('SQL_LOG', (bool)($_ENV['SQL_LOG'] ?? false)); ///< Включить логирование запросов без плейсхолдеров и медленных запросов
-define('SQL_ANALYZE', (bool)($_ENV['SQL_ANALYZE'] ?? false)); ///< Включить анализ запросов с помощью EXPLAIN/EXPLAIN ANALYZE
+$sql_log = $_ENV['SQL_LOG'] ?? 'false';
+define('SQL_LOG', in_array(strtolower($sql_log), ['1', 'true', 'y', 'yes'], true)); ///< Включить логирование запросов без плейсхолдеров и медленных запросов
+$sql_analyze = $_ENV['SQL_ANALYZE'] ?? 'false';
+define('SQL_ANALYZE', in_array(strtolower($sql_analyze), ['1', 'true', 'y', 'yes'], true)); ///< Включить анализ запросов с помощью EXPLAIN/EXPLAIN ANALYZE
 $rewrite = $_ENV['URL_REWRITE'] ?? 'false';
 define('URL_REWRITE', in_array(strtolower($rewrite), ['1', 'true', 'y', 'yes'], true));
 

@@ -59,21 +59,15 @@
     },
     "scripts": {
         "post-install-cmd": "php scripts/setup-structure.php",
-        "post-update-cmd": [
-            "php -r \"\\$isGit=is_dir('.git'); if(\\$isGit){ \\$changes=shell_exec('git diff --name-only HEAD@{1} HEAD 2>/dev/null'); \\$vendorOnly=\\$changes&&!preg_match('/^(?!vendor\\\\/).+/m',\\$changes); echo \\$vendorOnly?'=== Packages updated ===':'=== Code updated ==='; } else { \\$vendorTime=filemtime('vendor/composer'); \\$codeTime=max(array_map('filemtime',array_merge(glob('src/*'),glob('sql/*/*')))); echo \\$vendorTime>\\$codeTime?'=== Packages updated ===':'=== Code updated ==='; }\"",
-            "php -r \"foreach(['mysql','pgsql','sqlite'] as \\$type){ if(file_exists('sql/'.\\$type.'/update/')&&count(glob('sql/'.\\$type.'/update/*.sql'))){echo 'DB migrations ('.\\$type.'): sql/'.\\$type.'/update/'.PHP_EOL;}}\""
-        ],
-        "post-package-update": [
-            "php -r \"if(isset(\\$argv[1])){echo 'Package updated: '.\\$argv[1].PHP_EOL.'Actions:'.PHP_EOL.'1. Check changelog'.PHP_EOL.'2. Test functionality'.PHP_EOL;}\""
-        ],
-        "check-updates": [
-            "@post-update-cmd",
-            "php -r \"\\$found=false; foreach(['mysql','pgsql','sqlite'] as \\$type){ if(file_exists('sql/'.\\$type.'/update/')&&count(glob('sql/'.\\$type.'/update/*.sql'))){\\$found=true;}} if(\\$found){echo 'WARNING: Pending DB migrations!'.PHP_EOL;}\""
-        ],
+        "build-app": "php scripts/install.php",
+        "post-update-cmd": "php scripts/update.php",
         "cs-check": "php-cs-fixer fix --dry-run --diff",
         "cs-fix": "php-cs-fixer fix"
     },
     "scripts-descriptions": {
+        "post-install-cmd": "Create structure",
+        "build-app": "Install RDBMS",
+        "post-update-cmd": "Update RDBMS",
         "cs-check": "Check code style",
         "cs-fix": "Fix code style issues"
     }

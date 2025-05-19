@@ -77,16 +77,12 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
  *
  * @property string              $ins_header    Данные, вставляемые в заголовок.
  * @property string              $content       Содержимое для вывода.
- * @property bool                $mod_rewrite   Включение читаемых URL.
  * @property string              $template_file Файл шаблона.
  * @property array               $block_object  Блок массивов объектов для обработки.
  * @property array               $block_string  Блок строковых данных для замены.
  * @property array               $block_if      Блок условий для обработки.
  * @property array               $block_case    Блок массивов выбора блока для обработки.
- * @property string              $themes_path   Путь к корню темы.
  * @property string              $themes_url    Ссылка на корень темы.
- * @property string              $site_url      Ссылка корня сайта.
- * @property string              $site_dir      Путь к корню сайта.
  * @property string              $theme         Тема пользователя.
  * @property Work_Interface|null $work          Свойство для объекта класса Work_Interface.
  *
@@ -112,7 +108,6 @@ class Template implements Template_Interface
     private array $block_string = []; ///< Блок строковых данных для замены
     private array $block_if = []; ///< Блок условий для обработки
     private array $block_case = []; ///< Блок массивов выбора блока для обработки
-//    private string $themes_path; ///< Путь к корню темы
     private string $themes_url; ///< Ссылка на корень темы
     private array $template_dirs; ///< Массив с путями к папкам шаблонов
     private string $theme; ///< Тема пользователя
@@ -190,22 +185,7 @@ class Template implements Template_Interface
 
         // Вычисляем пути к темам
         $this->template_dirs = $template_dirs;
-        // $this->themes_path = WORK_DIR . '/themes/' . $this->theme . '/';
         $this->themes_url = SITE_URL . 'themes/' . $this->theme . '/';
-
-        // Проверяем, что директория тем существует
-//        if (!is_dir($this->themes_path)) {
-//            throw new RuntimeException(
-//                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория тем не найдена | Путь: $this->themes_path"
-//            );
-//        }
-
-        // Проверяем права доступа к директории тем
-//        if (!is_readable($this->themes_path)) {
-//            throw new RuntimeException(
-//                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Нет прав доступа к директории тем | Путь: $this->themes_path"
-//            );
-//        }
 
         // Проверяем существует ли шаблон по-умолчанию.
         $this->template_file = $this->_find_template_file($this->template_file);

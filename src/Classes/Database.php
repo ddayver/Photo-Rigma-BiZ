@@ -417,21 +417,21 @@ class Database implements Database_Interface
             }
 
             // Проверка существования файла
-            if (!is_file($this->db_name)) {
+            if (!is_file(VAR_DIR . '/sql/' . basename($this->db_name) . '.sqlite')) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite не существует | Путь: $this->db_name"
                 );
             }
 
             // Проверка прав доступа
-            if (!is_writable($this->db_name)) {
+            if (!is_writable(VAR_DIR . '/sql/' . basename($this->db_name) . '.sqlite')) {
                 throw new RuntimeException(
                     __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Файл базы данных SQLite недоступен для записи | Путь: $this->db_name"
                 );
             }
 
             // Формируем DSN для SQLite
-            $dsn = "sqlite:$this->db_name";
+            $dsn = 'sqlite:' . VAR_DIR . '/sql/' . basename($this->db_name) . '.sqlite';
 
             try {
                 $this->pdo = new PDO($dsn, null, null, [

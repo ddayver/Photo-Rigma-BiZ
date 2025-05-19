@@ -1209,10 +1209,6 @@ class Work implements Work_Interface
         $files_to_load = [];
         foreach ($lang_files_path as $dir_index => $dir) {
             if (!is_dir($dir)) {
-                log_in_file(
-                    __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | ' .
-                    'Папка не найдена | Путь: ' . $dir
-                );
                 continue;
             }
 
