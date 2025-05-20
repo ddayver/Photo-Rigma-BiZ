@@ -3,8 +3,6 @@
 
 namespace PhotoRigma;
 
-use Dotenv\Dotenv;
-use PDO;
 use PDOException;
 use RuntimeException;
 
@@ -13,31 +11,10 @@ if (PHP_SAPI !== 'cli') {
     exit(1);
 }
 
-$workDir = dirname(__DIR__);
-
-// 1. Проверка наличия .env
-$envFile = "$workDir/config/.env";
-if (!file_exists($envFile)) {
-    fwrite(STDERR, '[ERROR] Файл .env не найден. Сначала выполните composer install' . PHP_EOL);
-    exit(1);
-}
-
 define('IN_GALLERY', true);
-require_once "$workDir/vendor/autoload.php";
+$dbType = $dbHost = $dbName = $dbPass = $dbPort = $dbSocket = $dbUser = $workDir = '';
 
-// 2. Загрузка .env
-$dotenv = Dotenv::createImmutable($workDir . '/config');
-/** @noinspection UnusedFunctionResultInspection */
-$dotenv->load();
-
-// 3. Чтение настроек из .env
-$dbType = $_ENV['DB_TYPE'] ?? null;
-$dbHost = $_ENV['DB_HOST'] ?? null;
-$dbPort = $_ENV['DB_PORT'] ?? null;
-$dbSocket = $_ENV['DB_SOCKET'] ?? null;
-$dbUser = $_ENV['DB_USER'] ?? null;
-$dbPass = $_ENV['DB_PASSWORD'] ?? null;
-$dbName = $_ENV['DB_NAME'] ?? null;
+require_once (__DIR__) . '/cli/bootstrap.php';
 
 if (!$dbType || !$dbName) {
     fwrite(STDERR, '[ERROR] Не хватает настроек для подключения к БД в .env' . PHP_EOL);
@@ -49,7 +26,7 @@ echo '[INFO] Начато обновление проекта' . PHP_EOL;
 // 4. Подключение к БД
 try {
     $pdo = match ($dbType) {
-        'sqlite' => connect_sqlite($workDir, $dbName),
+        'sqlite' => connect_sqlite_update($workDir, $dbName),
         'mysql', 'pgsql' => connect_sql($dbType, $dbName, $dbSocket, $dbHost, $dbPort, $dbUser, $dbPass),
         default => throw new RuntimeException("Неизвестный тип БД: $dbType")
     };
@@ -90,14 +67,6 @@ $files = array_diff(scandir($updateDir, SCANDIR_SORT_NONE), ['.', '..']);
 usort($files, static function ($a, $b) {
     return version_compare(extract_version($a), extract_version($b));
 });
-
-function extract_version(string $filename): ?string
-{
-    if (preg_match('/^ver\.(\d+\.\d+\.\d+)\.sql$/i', $filename, $match)) {
-        return $match[1];
-    }
-    return null;
-}
 
 $updates = [];
 foreach ($files as $file) {
@@ -146,39 +115,3 @@ foreach ($updates as $update) {
 
 echo '[OK] Все миграции применены' . PHP_EOL;
 exit(0);
-
-// --- Функции подключения ---
-function connect_sqlite(string $workDir, string $dbName): PDO
-{
-    $sqlitePath = "$workDir/var/sql/$dbName.sqlite";
-
-    if (!file_exists($sqlitePath)) {
-        fwrite(STDERR, "[ERROR] Файл SQLite отсутствует: $sqlitePath" . PHP_EOL);
-        exit(1);
-    }
-
-    return new PDO("sqlite:$sqlitePath", null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-}
-
-function connect_sql(
-    string $dbType,
-    string $dbName,
-    ?string $socket,
-    ?string $host,
-    ?string $port,
-    ?string $user,
-    ?string $pass
-): PDO {
-    try {
-        if ($socket && is_file($socket)) {
-            $dsn = "$dbType:unix_socket=$socket;dbname=$dbName" . (($dbType === 'mysql') ? ';charset=utf8mb4' : '');
-            return new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-        }
-    } catch (PDOException) {
-        echo '[INFO] Сокет недоступен. Переход на host:port...' . PHP_EOL;
-    }
-
-    $dsn = "$dbType:host=$host;" . ($port ? "port=$port;" : '') . "dbname=$dbName" . (($dbType === 'mysql') ? ';charset=utf8mb4' : '');
-
-    return new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-}

@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection DuplicatedCode */
 /** @noinspection PhpUnhandledExceptionInspection */
 /**
  * @file      action/cron.php
@@ -68,6 +69,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -84,7 +86,6 @@ log_in_file(
     'Фоновая задача: начало выполнения работ'
 );
 
-
 // Защита от запуска через браузер
 if (PHP_SAPI !== 'cli') {
     log_in_file(
@@ -93,7 +94,10 @@ if (PHP_SAPI !== 'cli') {
     );
     exit(1);
 }
+
+// Включаем "таймер" выполнения скрипта
 $start_time = microtime(true);
+
 // Выполняем основную логику
 try {
     // Окончательное удаление пользователей
@@ -116,6 +120,7 @@ try {
     exit(2);
 }
 
+// Получаем время выполнения скрипта
 $end_time = microtime(true);
 $execution_time = round(($end_time - $start_time) * 1000, 6); // Время в миллисекундах
 

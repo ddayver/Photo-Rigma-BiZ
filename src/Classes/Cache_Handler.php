@@ -53,6 +53,7 @@ use RuntimeException;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -150,9 +151,6 @@ class Cache_Handler implements Cache_Handler_Interface
      *                         Если порт не указан, используются значения по умолчанию:
      *                         - Redis: 6379
      *                         - Memcached: 11211
-     * @param string $site_dir Полный путь к корню папок проекта (необязательный параметр).
-     *                         Используется только для файлового кеширования. Если путь некорректен или недоступен,
-     *                         это должно быть обработано в методе `_init_cache_file()`.
      *
      * @throws InvalidArgumentException Выбрасывается, если указан неизвестный тип кеширования.
      *                                  Пример сообщения:
@@ -186,12 +184,12 @@ class Cache_Handler implements Cache_Handler_Interface
      * @see    PhotoRigma::Classes::Cache_Handler::_init_cache_memcached()
      *         Метод для инициализации кеширования через Memcached.
      */
-    public function __construct(array $config, string $site_dir = '')
+    public function __construct(array $config)
     {
         $this->type = $config['type'] ?? 'file';
 
         match ($this->type) {
-            'file'      => $this->_init_cache_file($config, $site_dir),
+            'file'      => $this->_init_cache_file(),
             'redis'     => $this->_init_cache_redis($config),
             'memcached' => $this->_init_cache_memcached($config),
             default     => throw new InvalidArgumentException(
@@ -220,13 +218,6 @@ class Cache_Handler implements Cache_Handler_Interface
      *
      * @internal
      * @callergraph
-     *
-     * @param array  $config   Массив с настройками кеширования:
-     *                         - string `cache_dir` (опционально): Путь к директории кеша относительно корня проекта.
-     *                         Если не указан, используется значение по умолчанию: `cache`.
-     *                         Если путь содержит недопустимые символы (например, `../`), выбрасывается исключение.
-     * @param string $site_dir Полный путь к корню папок проекта.
-     *                         Если не указан, используется текущая директория (`__DIR__`).
      *
      * @throws InvalidArgumentException Выбрасывается, если путь к директории кеша содержит недопустимые символы.
      *                                  Пример сообщения:
@@ -259,25 +250,19 @@ class Cache_Handler implements Cache_Handler_Interface
      * @see    PhotoRigma::Classes::Cache_Handler::$client
      *         Свойство, содержащее путь к директории кеша после инициализации.
      */
-    private function _init_cache_file(array $config, string $site_dir): void
+    private function _init_cache_file(): void
     {
-        // 1. Нормализация пути к корню проекта
-        $site_dir = rtrim($site_dir ?: __DIR__, '/') . '/';
-
-        // 2. Формирование пути к директории кеша
-        $cache_dir = rtrim($site_dir . ($config['cache_dir'] ?? 'cache'), '/') . '/';
-
-        // 3. Проверка безопасности пути (запрещаем использование '../')
-        if (preg_match('#\.\.[/\\\\]#', $cache_dir)) {
+        // 1. Проверка безопасности пути (запрещаем использование '../')
+        if (preg_match('#\.\.[/\\\\]#', CACHE_DIR)) {
             throw new InvalidArgumentException(
-                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Недопустимый путь к директории кеша | Путь: $cache_dir"
+                __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ') | Недопустимый путь к директории кеша | Путь: ' . CACHE_DIR
             );
         }
 
-        // 4. Нормализация пути (убираем лишние символы)
-        $normalized_cache_dir = realpath($cache_dir) ?: $cache_dir;
+        // 2. Нормализация пути (убираем лишние символы)
+        $normalized_cache_dir = realpath(CACHE_DIR) ?: CACHE_DIR;
 
-        // 5. Создание директории, если она не существует
+        // 3. Создание директории, если она не существует
         if (!is_dir($normalized_cache_dir) && !mkdir($normalized_cache_dir, 0755, true) && !is_dir(
             $normalized_cache_dir
         )) {
@@ -286,7 +271,7 @@ class Cache_Handler implements Cache_Handler_Interface
             );
         }
 
-        // 6. Проверка прав записи в директорию
+        // 4. Проверка прав записи в директорию
         if (!is_writable($normalized_cache_dir)) {
             throw new RuntimeException(
                 __FILE__ . ':' . __LINE__ . ' (' . (__METHOD__ ?: __FUNCTION__ ?: 'global') . ") | Директория кеша недоступна для записи | Путь: $normalized_cache_dir"
@@ -294,7 +279,7 @@ class Cache_Handler implements Cache_Handler_Interface
         }
         $normalized_cache_dir = rtrim($normalized_cache_dir, '/') . '/';
 
-        // 7. Сохраняем путь к директории кеша
+        // 5. Сохраняем путь к директории кеша
         $this->client = $normalized_cache_dir;
     }
 

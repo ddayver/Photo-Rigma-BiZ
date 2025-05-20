@@ -230,8 +230,7 @@ if (is_dir($coreThemesDir)) {
         $linkPath = "$publicDir/$link";
         $targetCore = "../../core/themes/$theme";
 
-        if (!is_dir("$coreThemesDir/$theme"))
-        {
+        if (!is_dir("$coreThemesDir/$theme")) {
             continue;
         }
         if (file_exists($linkPath)) {

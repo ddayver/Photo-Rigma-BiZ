@@ -105,6 +105,8 @@ define('GALLERY_DIR', VAR_DIR . '/' . $config['gallery_dir']);
 define('THUMBNAIL_DIR', VAR_DIR . '/' . $config['thumbnail_dir']);
 /** Путь к директории с аватарами */
 define('AVATAR_DIR', VAR_DIR . '/' . $config['avatar_dir']);
+/** Путь к директории кеша */
+define('CACHE_DIR', VAR_DIR . '/' . $config['cache']['cache_dir']);
 
 // Что использовать как конец строки (для старых Win-серверов).
 if (!defined('PHP_EOL')) {

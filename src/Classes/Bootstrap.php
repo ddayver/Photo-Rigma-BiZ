@@ -171,7 +171,7 @@ class Bootstrap implements Bootstrap_Interface
     public static function load(array $config, array &$session): array
     {
         // --- Кеширование ---
-        $cache = new Cache_Handler($config['cache'] ?? [], $config['site_dir'] ?? null);
+        $cache = new Cache_Handler($config['cache'] ?? []);
 
         // --- База данных ---
         $db = new Database($config['db'] ?? [], $cache);

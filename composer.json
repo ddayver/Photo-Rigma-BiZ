@@ -59,15 +59,27 @@
     },
     "scripts": {
         "post-install-cmd": "php scripts/setup-structure.php",
-        "build-app": "php scripts/install.php",
-        "post-update-cmd": "php scripts/update.php",
-        "cs-check": "php-cs-fixer fix --dry-run --diff",
-        "cs-fix": "php-cs-fixer fix"
+        "build-app":[
+            "php scripts/install.php",
+            "php scripts/check-env.php || true",
+            "composer run setup-cron"
+        ],
+        "post-update-cmd":[
+            "php scripts/update.php",
+            "php scripts/update-env.php || true",
+            "composer run setup-cron"
+        ],
+        "update-env": "php scripts/update-env.php",
+        "setup-cron": "@php scripts/setup-cron.php || echo '[WARN] Не хватает прав для настройки cron'",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --rules @PSR12 --dry-run --diff -vv ./",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --rules @PSR12 -vv ./"
     },
     "scripts-descriptions": {
         "post-install-cmd": "Create structure",
         "build-app": "Install RDBMS",
-        "post-update-cmd": "Update RDBMS",
+        "post-update-cmd": "Update RDBMS and check .env files",
+        "update-env": "Update .env file",
+        "setup-cron": "Set up daily maintenance tasks",
         "cs-check": "Check code style",
         "cs-fix": "Fix code style issues"
     }

@@ -430,7 +430,7 @@ class Work_Image implements Work_Image_Interface
 
         // Определяем пути к исходным файлам index.php
         $gallery_index_file = sprintf('%s/index.php', GALLERY_DIR);
-        $thumbnail_index_file = sprintf('%s/index.php',THUMBNAIL_DIR);
+        $thumbnail_index_file = sprintf('%s/index.php', THUMBNAIL_DIR);
 
         // Проверяем существование исходных файлов index.php
         if (!is_file($gallery_index_file)) {

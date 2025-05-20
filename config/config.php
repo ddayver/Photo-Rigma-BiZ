@@ -245,10 +245,10 @@ if (empty($config['site_url'])) {
         if (!empty($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] === '1')) {
             $scheme = 'https://';
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && in_array(
-                strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']),
-                ['https', 'h2'],
-                true
-            )) {
+            strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']),
+            ['https', 'h2'],
+            true
+        )) {
             $scheme = 'https://';
         } elseif (!empty($_SERVER['REQUEST_SCHEME']) && strtolower($_SERVER['REQUEST_SCHEME']) === 'https') {
             $scheme = 'https://';
@@ -363,7 +363,7 @@ if (PHP_SAPI !== 'cli' && !is_writable($config['site_dir'])) {
 }
 
 // Добавляем завершающий слеш
-$config['site_dir'] =rtrim($config['site_dir'], '/') . '/';
+$config['site_dir'] = rtrim($config['site_dir'], '/') . '/';
 
 // Пути к директориям действий, языков, шаблонов
 $config['action_dir'] = [
