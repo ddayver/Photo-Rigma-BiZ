@@ -1,24 +1,22 @@
 <?php
 
-/** @noinspection DuplicatedCode */
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUndefinedClassInspection */
 /**
- * @file      action/profile.php
- * @brief     Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.
+ * Работа с пользователями: вход, выход, регистрация, редактирование и просмотр профиля.
+ *
+ * Этот файл отвечает за управление профилями пользователей, включая:
+ * - Вход и выход пользователя.
+ * - Регистрацию новых пользователей.
+ * - Редактирование профиля (изменение аватара, языка, темы и других данных).
+ * - Просмотр профиля другого пользователя.
+ * - Защиту от CSRF-атак при изменении данных.
+ * - Логирование ошибок и подозрительных действий.
  *
  * @author    Dark Dayver
- * @version   0.4.4
- * @date      2025-05-07
+ * @version   0.5.0
+ * @since     2025-05-29
  * @namespace PhotoRigma\\Action
- *
- * @details   Этот файл отвечает за управление профилями пользователей, включая:
- *            - Вход и выход пользователя.
- *            - Регистрацию новых пользователей.
- *            - Редактирование профиля (изменение аватара, языка, темы и других данных).
- *            - Просмотр профиля другого пользователя.
- *            - Защиту от CSRF-атак при изменении данных.
- *            - Логирование ошибок и подозрительных действий.
+ * @package   PhotoRigma
+ * @subpackage Action
  *
  * @section   Profile_Main_Functions Основные функции
  *            - Вход и выход пользователя.
@@ -36,39 +34,28 @@
  *            - `JsonException`: При выполнении методов, использующих JSON.
  *            - `Exception`: При выполнении прочих методов классов, функций или операций.
  *
- * @throws    RuntimeException      Если не удалось выполнить действие с профилем (например, вход, выход,
- *                                  регистрация, редактирование). Пример сообщения:
- *                                  "Неверный CSRF-токен | Пользователь ID: {$user->session['login_id']}".
- * @throws    LogicException        Если не удалось получить данные группы пользователя.
- *                                  Пример сообщения:
- *                                  "Не удалось получить данные гостевой группы | Вызов от пользователя с ID:
- *                                  {$user->session['login_id']}".
+ * @throws    RuntimeException       Если не удалось выполнить действие с профилем (например, вход, выход,
+ *                                   регистрация, редактирование).
+ * @throws    LogicException         Если не удалось получить данные группы пользователя.
  * @throws    Random\RandomException При выполнении методов, использующих random().
  * @throws    JsonException          При выполнении методов, использующих JSON.
  * @throws    Exception              При выполнении прочих методов классов, функций или операций.
  *
- * @section   Profile_Related_Files Связанные файлы и компоненты
+ * @section   Profile_Related_Components Связанные компоненты
  *            - Классы приложения:
- *              - @see PhotoRigma::Classes::Work
- *                     Класс используется для выполнения вспомогательных операций.
- *              - @see PhotoRigma::Classes::Database
- *                     Класс для работы с базой данных.
- *              - @see PhotoRigma::Classes::User
- *                     Класс для управления пользователями.
- *              - @see PhotoRigma::Classes::Template
- *                     Класс для работы с шаблонами.
+ * @uses \PhotoRigma\Classes\Work Класс используется для выполнения вспомогательных операций.
+ * @uses \PhotoRigma\Classes\Database Класс для работы с базой данных.
+ * @uses \PhotoRigma\Classes\User Класс для управления пользователями.
+ * @uses \PhotoRigma\Classes\Template Класс для работы с шаблонами.
  *            - Вспомогательные функции:
- *              - @see PhotoRigma::Include::log_in_file()
- *                     Функция для логирования ошибок.
- *            - Файлы приложения:
- *              - @see index.php Этот файл подключает action/profile.php по запросу из `$_GET`.
+ * @uses \PhotoRigma\Include\log_in_file() Записывает сообщение об ошибке в лог-файл.
  *
  * @note      Этот файл является частью системы PhotoRigma.
  *            Реализованы меры безопасности для предотвращения несанкционированного доступа и выполнения действий.
  *            Используются подготовленные выражения для защиты от SQL-инъекций.
  *
  * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license   MIT License (https://opensource.org/licenses/MIT)
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать,
  *            распространять, сублицензировать и/или продавать копии программного обеспечения,
  *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
@@ -76,6 +63,9 @@
  *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
+/** @noinspection DuplicatedCode */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpUndefinedClassInspection */
 
 namespace PhotoRigma\Action;
 
@@ -230,6 +220,7 @@ if ($subact === 'saveprofile') {
         $user->update_user_data($user_id, $_POST, $_FILES, $max_size);
 
         // Переинициируем класс User для обновления данных в сессии.
+        /** @noinspection PhpUnusedLocalVariableInspection */
         [$user, $template] = Bootstrap::change_user($db, $work, $_SESSION);
         header('Location: ' . $redirect_url);
         exit;
@@ -273,6 +264,7 @@ if ($subact === 'logout') {
     // Регенерация session_id для безопасности
     session_regenerate_id(true);
 
+    /** @noinspection PhpUnusedLocalVariableInspection */
     [$user, $template] = Bootstrap::change_user($db, $work, $_SESSION);
 
     // Уничтожение сессии
@@ -419,6 +411,7 @@ if ($subact === 'regist') {
     // Авторизуем пользователя
     $user->set_property_key('session', 'login_id', $user_id);
     // Инициализация ядра для пользователя (включая гостя)
+    /** @noinspection PhpUnusedLocalVariableInspection */
     [$user, $template] = Bootstrap::change_user($db, $work, $_SESSION);
 
     // Перенаправляем пользователя на целевую страницу

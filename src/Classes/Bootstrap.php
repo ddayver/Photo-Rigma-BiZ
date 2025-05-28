@@ -3,45 +3,32 @@
 /**
  * Инициализация ядра проекта.
  *
- * Класс Bootstrap реализует метод init(), который:
- * - Проверяет наличие WORK_DIR
- * - Проверяет существование обязательных файлов:
+ * Класс Bootstrap реализует методы, которые:
+ * - Проверяют наличие WORK_DIR
+ * - Проверяют существование обязательных файлов:
  *   - config/config.php
  *   - src/Include/constants.php
- *   - src/Impl/session_init.php
+ *   - src/Include/session_init.php
  *   - src/Include/functions.php
- * - Проверяет доступность этих файлов для чтения
- * - Выбрасывает исключение при ошибках инициализации
- * - Подключает файлы через require_once
+ * - Проверяют доступность этих файлов для чтения
+ * - Выбрасывают исключение при ошибках инициализации
+ * - Инициируют объекты ядра класса
  *
- * @package    PhotoRigma\Classes
- * @subpackage Bootstrap
  * @author     Dark Dayver
  * @version    0.5.0
- * @since      2025-05-15
+ * @since      2025-05-26
+ * @namespace  PhotoRigma\\Classes
+ * @package   PhotoRigma
  *
- * @note       Файл должен быть подключен только через точку входа index.php
- * @note       Метод init() вызывается один раз — при запуске приложения
+ * @note       Файл должен быть подключен только через точку входа index.php.
+ *             Методы init(), load() вызываются один раз — при запуске приложения.
  *
- * @warning    Прямой вызов файла запрещён — проверка IN_GALLERY не пройдена → скрипт завершится с "HACK!"
- * @warning    Нарушение порядка проверки файлов может привести к ошибкам инициализации
+ * @warning    Прямой вызов файла запрещён — проверка IN_GALLERY не пройдена → скрипт завершится с "HACK!".
+ *             Нарушение порядка проверки файлов может привести к ошибкам инициализации
  *
- * Пример использования:
- * \PhotoRigma\Classes\Bootstrap::init();
+ * @uses       \PhotoRigma\Interfaces\Bootstrap_Interface Интерфейс точки инициализации.
  *
- * @uses \PhotoRigma\Interfaces\Bootstrap_Interface Интерфейс точки инициализации
- * @uses RuntimeException При ошибках инициализации
- *
- * @see config/config.php
- *      Конфигурационный файл проекта
- * @see src/Include/constants.php
- *      Глобальные константы
- * @see src/Include/session_init.php
- *      Логика инициализации сессии
- * @see src/Include/functions.php
- *      Глобальные функции
- * @see \PhotoRigma\Bootstrap_Interface::init()
- *      Интерфейсный контракт на метод init()
+ * @throws     RuntimeException При ошибках инициализации.
  *
  * @copyright Copyright (c) 2008–2025 Dark Dayver. Все права защищены.
  * @license   MIT License {@link https://opensource.org/licenses/MIT}
@@ -76,32 +63,31 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 /**
- * @class Bootstrap
- *
  * Класс Bootstrap реализует инициализацию ядра проекта.
  *
  * Класс:
- * - Реализует метод init(), который проверяет и подключает обязательные файлы
- * - Используется только через точку входа index.php
- * - Выбрасывает исключения при ошибках инициализации
+ * - Реализует метод init(), который проверяет наличие и доступность обязательных файлов.
+ * - Метод load(), который инициирует объекты ядра проекта.
+ * - Метод change_user(), который позволяет переинициировать объекты, связанные с пользователем.
+ * - Используется только через точку входа index.php.
+ * - Выбрасывает исключения при ошибках инициализации.
  *
- * @note       init() вызывается один раз — при запуске приложения
- * @note       Все ошибки проверок выбрасываются как RuntimeException
+ * @class Bootstrap
  *
- * @warning    Нарушение порядка проверки или подключения файлов может привести к фатальным последствиям.
+ * @note init(), load() вызываются один раз — при запуске приложения.
+ *       Все ошибки проверок выбрасываются как RuntimeException.
  *
- * @see \PhotoRigma\Bootstrap_Interface::init()
- *      Интерфейсный контракт на метод init()
+ * @warning Нарушение порядка проверки или подключения файлов может привести к фатальным последствиям.
  *
- * @throws RuntimeException Если WORK_DIR не определена
- * @throws RuntimeException Если один из обязательных файлов отсутствует или недоступен
+ * @throws RuntimeException Если WORK_DIR не определена.
+ * @throws RuntimeException Если один из обязательных файлов отсутствует или недоступен.
  */
 class Bootstrap implements Bootstrap_Interface
 {
     /**
      * Выполняет инициализацию ядра проекта.
      *
-     * Метод:
+     * Метод является публичным редиректом на защищенный метод _init_internal(), который выполняет следующие действия:
      * - Проверяет наличие WORK_DIR
      * - Формирует список обязательных файлов
      * - Проверяет существование и доступность каждого файла
@@ -109,17 +95,38 @@ class Bootstrap implements Bootstrap_Interface
      * - Выбрасывает исключение при ошибках проверки
      * - Подключает все обязательные файлы через require_once
      *
-     * @return array
+     * @return array Список доступных файлов для подключения с их полным путем.
      *
-     * @note   Метод вызывается один раз — при запуске приложения
-     * @note   Все ошибки логируются через стандартное исключение RuntimeException
+     * @note    Метод вызывается один раз — при запуске приложения.
+     *          Все ошибки логируются через стандартное исключение RuntimeException.
      *
      * @warning Нарушение порядка подключения файлов может привести к фатальным ошибкам.
      *
-     * Пример использования:
-     * \PhotoRigma\Classes\Bootstrap::init();
+     * @uses \PhotoRigma\Classes\Bootstrap::_init_internal() Метод, реализующий основную логику.
      */
     public static function init(): array
+    {
+        return self::_init_internal();
+    }
+
+    /**
+     * Защищенный метод, который выполняет инициализацию ядра проекта.
+     *
+     * Метод:
+     * - Проверяет наличие WORK_DIR
+     * - Формирует список обязательных файлов
+     * - Проверяет существование и доступность каждого файла
+     * - Сохраняет ошибки в массив
+     * - Выбрасывает исключение при ошибках проверки
+     *
+     * @return array Список доступных файлов для подключения с их полным путем.
+     *
+     * @note    Метод вызывается один раз — при запуске приложения.
+     *          Все ошибки логируются через стандартное исключение RuntimeException.
+     *
+     * @warning Нарушение порядка подключения файлов может привести к фатальным ошибкам.
+     */
+    protected static function _init_internal(): array
     {
         // Проверяем, что WORK_DIR определена
         if (!defined('WORK_DIR')) {
@@ -162,13 +169,66 @@ class Bootstrap implements Bootstrap_Interface
     }
 
     /**
-     * @param array $config
-     * @param array $session
-     * @return array
-     * @throws JsonException
-     * @throws Exception
+     * Инициализирует основные компоненты приложения.
+     *
+     * Метод является публичным редиректом для защищенного метода _load_internal, который реализует:
+     * - Создаёт объект кеширования Cache_Handler с настройками из $config['cache']
+     * - Подключает базу данных через Database с параметрами из $config['db']
+     * - Инициализирует класс Work с передачей $db, $config, $session, $cache
+     * - Запускает change_user() для определения пользователя и шаблона
+     * - Возвращает массив с объектами: [$db, $work, $user, $template]
+     *
+     * @param array $config   Конфигурационный массив проекта
+     * @param array $session  Ссылка на сессию — используется для авторизации
+     *
+     * @return array Массив с инициализированными объектами: [Database, Work, User, Template]
+     *
+     * @note Метод вызывается один раз — при запуске приложения.
+     *       Все зависимости создаются внутри метода: Cache_Handler, Database, Work.
+     *       Для работы требует корректного $config и активной сессии.
+     *
+     * @warning Не меняйте порядок инициализации — это может привести к ошибкам.
+     *          Передавайте $session по ссылке — иначе сессия не будет обновляться.
+     *
+     * @throws JsonException При ошибке кодирования прав доступа в JSON.
+     * @throws Exception     При внутренних ошибках создания объектов.
+     *
+     * @uses \PhotoRigma\Classes\Bootstrap::_load_internal() Защищенный метод, реализующий логику.
      */
     public static function load(array $config, array &$session): array
+    {
+        return self::_load_internal($config, $session);
+    }
+
+    /**
+     * Защищенный метод, который инициализирует основные компоненты приложения.
+     *
+     * Метод:
+     * - Создаёт объект кеширования Cache_Handler с настройками из $config['cache']
+     * - Подключает базу данных через Database с параметрами из $config['db']
+     * - Инициализирует класс Work с передачей $db, $config, $session, $cache
+     * - Запускает change_user() для определения пользователя и шаблона
+     * - Возвращает массив с объектами: [$db, $work, $user, $template]
+     *
+     * @param array $config   Конфигурационный массив проекта
+     * @param array $session  Ссылка на сессию — используется для авторизации
+     *
+     * @return array Массив с инициализированными объектами: [Database, Work, User, Template]
+     *
+     * @note Метод вызывается один раз — при запуске приложения.
+     *       Все зависимости создаются внутри метода: Cache_Handler, Database, Work.
+     *       Для работы требует корректного $config и активной сессии.
+     *
+     * @warning Не меняйте порядок инициализации — это может привести к ошибкам.
+     *          Передавайте $session по ссылке — иначе сессия не будет обновляться.
+     *
+     * @throws JsonException При ошибке кодирования прав доступа в JSON.
+     * @throws Exception     При внутренних ошибках создания объектов.
+     *
+     * @uses \PhotoRigma\Classes\Bootstrap::_change_user_internal() Метод, инициирующий объекты пользователя и
+     *                                                              шаблонизатора.
+     */
+    protected static function _load_internal(array $config, array &$session): array
     {
         // --- Кеширование ---
         $cache = new Cache_Handler($config['cache'] ?? []);
@@ -179,19 +239,69 @@ class Bootstrap implements Bootstrap_Interface
         // --- Work - основной класс приложения ---
         $work = new Work($db, $config, $session, $cache);
 
-        [$user, $template] = self::change_user($db, $work, $session);
+        [$user, $template] = self::_change_user_internal($db, $work, $session);
 
         return [$db, $work, $user, $template];
     }
 
     /**
-     * @param Database_Interface $db
-     * @param Work_Interface $work
-     * @param array $session
-     * @return array
-     * @throws JsonException
+     * Инициализирует объекты пользователя и шаблонизатора.
+     *
+     * Метод является публичным редиректом на защищенный метод _change_user_internal, который реализует:
+     * - Создаёт объект User с переданным $db и $session
+     * - Определяет тему оформления из сессии или конфигурации
+     * - Создаёт объект Template с указанием директорий шаблона
+     * - Выполняет DI между объектами: Work → User, Template → Work, User → Work
+     * - Возвращает массив [$user, $template]
+     *
+     * @param Database_Interface $db      Объект подключения к базе данных
+     * @param Work_Interface     $work    Основной класс приложения
+     * @param array              $session Ссылка на сессию — используется для авторизации
+     *
+     * @return array Массив с объектами: [User, Template]
+     *
+     * @note Метод вызывается один раз — при инициализации ядра.
+     *       Работает только с уже созданными $db и $work.
+     *       Тема берётся из сессии пользователя или конфига сайта.
+     *
+     * @warning Не меняйте порядок DI — это может привести к ошибкам в связях.
+     *          Передавайте $session по ссылке — иначе данные не сохранятся.
+     *
+     * @throws JsonException При ошибке кодирования прав доступа в JSON.
+     *
+     * @uses \PhotoRigma\Classes\Bootstrap::_change_user_internal() Метод, реализующий логику.
      */
     public static function change_user(Database_Interface $db, Work_Interface $work, array &$session): array
+    {
+        return self::_change_user_internal($db, $work, $session);
+    }
+
+    /**
+     * Защищенный метод, который инициализирует объекты пользователя и шаблонизатора.
+     *
+     * Метод:
+     * - Создаёт объект User с переданным $db и $session
+     * - Определяет тему оформления из сессии или конфигурации
+     * - Создаёт объект Template с указанием директорий шаблона
+     * - Выполняет DI между объектами: Work → User, Template → Work, User → Work
+     * - Возвращает массив [$user, $template]
+     *
+     * @param Database_Interface $db      Объект подключения к базе данных
+     * @param Work_Interface     $work    Основной класс приложения
+     * @param array              $session Ссылка на сессию — используется для авторизации
+     *
+     * @return array Массив с объектами: [User, Template]
+     *
+     * @note Метод вызывается один раз — при инициализации ядра.
+     *       Работает только с уже созданными $db и $work.
+     *       Тема берётся из сессии пользователя или конфига сайта.
+     *
+     * @warning Не меняйте порядок DI — это может привести к ошибкам в связях.
+     *          Передавайте $session по ссылке — иначе данные не сохранятся.
+     *
+     * @throws JsonException При ошибке кодирования прав доступа в JSON.
+     */
+    protected static function _change_user_internal(Database_Interface $db, Work_Interface $work, array &$session): array
     {
         // --- User - работа с пользователем ---
         $user = new User($db, $session);

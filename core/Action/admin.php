@@ -1,39 +1,30 @@
 <?php
 
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUndefinedClassInspection */
 /**
- * @file      action/admin.php
- * @brief     Администрирование сайта.
+ * Администрирование сайта.
+ *
+ * Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции включают:
+ * - Управление общими настройками сайта (название, описание, мета-теги, размеры изображений и т.д.).
+ * - Управление пользователями (редактирование прав, групп, поиск пользователей).
+ * - Управление группами (редактирование прав групп, создание и удаление групп).
+ * - Защита от несанкционированного доступа к админке (CSRF-токены, проверка прав доступа).
+ * - Логирование ошибок и подозрительных действий.
  *
  * @author    Dark Dayver
- * @version   0.4.4
- * @date      2025-05-07
+ * @version   0.5.0
+ * @since     2025-05-29
  * @namespace PhotoRigma\\Action
+ * @package   PhotoRigma
+ * @subpackage Action
  *
- * @details   Этот файл отвечает за управление настройками сайта, пользователями и группами. Основные функции
- *            включают:
- *            - Управление общими настройками сайта (название, описание, мета-теги, размеры изображений и т.д.).
- *            - Управление пользователями (редактирование прав, групп, поиск пользователей).
- *            - Управление группами (редактирование прав групп, создание и удаление групп).
- *            - Защита от несанкционированного доступа к админке (CSRF-токены, проверка прав доступа).
- *            - Логирование ошибок и подозрительных действий.
- *
- * @section   Admin_Related_Files Связанные файлы и компоненты
+ * @section   Admin_Related_Components Связанные компоненты
  *            - Классы приложения:
- *              - @see PhotoRigma::Classes::Work
- *                     Класс используется для выполнения вспомогательных операций.
- *              - @see PhotoRigma::Classes::Database
- *                     Класс для работы с базой данных.
- *              - @see PhotoRigma::Classes::User
- *                     Класс для управления пользователями.
- *              - @see PhotoRigma::Classes::Template
- *                     Класс для работы с шаблонами.
+ * @uses \PhotoRigma\Classes\Work Класс используется для выполнения вспомогательных операций.
+ * @uses \PhotoRigma\Classes\Database Класс для работы с базой данных.
+ * @uses \PhotoRigma\Classes\User Класс для управления пользователями.
+ * @uses \PhotoRigma\Classes\Template Класс для работы с шаблонами.
  *            - Вспомогательные функции:
- *              - @see PhotoRigma::Include::log_in_file()
- *                     Функция для логирования ошибок.
- *            - Файлы приложения:
- *              - @see index.php Этот файл подключает action/admin.php по запросу из `$_GET`.
+ * @uses \PhotoRigma\Include\log_in_file() Записывает сообщение об ошибке в лог-файл.
  *
  * @section   Admin_Main_Functions Основные функции
  *            - Управление общими настройками сайта.
@@ -56,7 +47,7 @@
  *            Используются подготовленные выражения для защиты от SQL-инъекций.
  *
  * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license   MIT License (https://opensource.org/licenses/MIT)
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать,
  *            распространять, сублицензировать и/или продавать копии программного обеспечения,
  *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
@@ -64,6 +55,8 @@
  *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpUndefinedClassInspection */
 
 namespace PhotoRigma\Action;
 
@@ -534,7 +527,6 @@ if (!empty($user->user['admin']) && $work->check_input(
                     // Проверяем, является ли текущий пользователь админом и мягко удален ли
                     // просматриваемый пользователь и не окончательно
                     if (!empty($user_data['deleted_at']) && (int)$user_data['permanently_deleted'] === 0) {
-                        /** @noinspection DuplicatedCode */
                         $restore_info = $user->is_soft_delete_expired($user_data['deleted_at']);
                         $template->add_if('SOFT_DELETE', true);
                         $template->add_string_array([

@@ -25,4 +25,4 @@ sql_*.txt
 /public/themes/*
 /var
 /tmp
-*.php-cs-fixer.cache
+.php-cs-fixer.php

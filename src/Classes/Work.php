@@ -1,26 +1,24 @@
 <?php
 
 /**
- * @file      include/Work.php
- * @brief     Файл содержит класс Work, который является основным классом приложения.
- *            Объединяет подклассы для выполнения задач.
+ * Файл содержит класс Work, который является основным классом приложения. Объединяет подклассы для выполнения задач.
+ *
+ * Этот файл содержит основной класс приложения `Work`, который объединяет подклассы для выполнения различных задач.
+ * Класс предоставляет:
+ * - Хранилище для данных о конфигурации и языковых переменных проекта.
+ * - Механизмы для работы с безопасностью, включая проверку входных данных и защиту от спам-ботов.
+ * - Механизмы для работы с изображениями через интерфейс `Work_Image_Interface`.
+ * - Интеграцию с интерфейсом `Cache_Handler_Interface` для кеширования данных.
+ * - Кеширование используется для хранения настроек и языковых переменных.
+ * - Класс `Work_Helper` предоставляет методы для очистки строк, преобразования размеров и проверки MIME-типов.
+ * - Интеграцию с интерфейсами для работы с базой данных, обработкой данных.
+ * - Механизмы для управления директориями, пользовательской статистикой и другими компонентами системы.
  *
  * @author    Dark Dayver
- * @version   0.4.4
- * @date      2025-05-07
+ * @version   0.5.0
+ * @since     2025-05-29
  * @namespace PhotoRigma\\Classes
- *
- * @details   Этот файл содержит основной класс приложения `Work`, который объединяет подклассы для выполнения
- *            различных задач. Класс предоставляет:
- *            - Хранилище для данных о конфигурации и языковых переменных проекта.
- *            - Механизмы для работы с безопасностью, включая проверку входных данных и защиту от спам-ботов.
- *            - Механизмы для работы с изображениями через интерфейс `Work_Image_Interface`.
- *            - Интеграцию с интерфейсом `Cache_Handler_Interface` для кеширования данных.
- *            - Кеширование используется для хранения настроек и языковых переменных.
- *            - Класс `Work_Helper` предоставляет методы для очистки строк, преобразования размеров и проверки
- *              MIME-типов.
- *            - Интеграцию с интерфейсами для работы с базой данных, обработкой данных.
- *            - Механизмы для управления директориями, пользовательской статистикой и другими компонентами системы.
+ * @package   PhotoRigma
  *
  * @section   Work_Main_Functions Основные функции
  *            - Хранилище для данных о конфигурации и языковых переменных проекта.
@@ -31,18 +29,13 @@
  *            - Вспомогательные методы (очистка строк, преобразование размеров, проверка MIME-типов).
  *            - Кеширование данных через `Cache_Handler_Interface` для повышения производительности.
  *
- * @see       PhotoRigma::Interfaces::Work_Security_Interface
- *            Интерфейс для работы с безопасностью приложения.
- * @see       PhotoRigma::Interfaces::Work_Image_Interface
- *            Интерфейс, определяющий методы для работы с изображениями.
- * @see       PhotoRigma::Interfaces::Work_Template_Interface
- *            Интерфейс для работы с шаблонами.
- * @see       PhotoRigma::Interfaces::Work_Helper_Interface
- *            Интерфейс для вспомогательных функций, таких как очистка строк и проверка MIME-типов.
- * @see       PhotoRigma::Interfaces::Cache_Handler_Interface
- *            Интерфейс для работы с кешированием данных.
- * @see       PhotoRigma::Include::log_in_file()
- *            Функция для логирования ошибок.
+ * @uses      \PhotoRigma\Interfaces\Work_Security_Interface Интерфейс для работы с безопасностью приложения.
+ * @uses      \PhotoRigma\Interfaces\Work_Image_Interface Интерфейс, определяющий методы для работы с изображениями.
+ * @uses      \PhotoRigma\Interfaces\Work_Template_Interface Интерфейс для работы с шаблонами.
+ * @uses      \PhotoRigma\Interfaces\Work_Helper_Interface Интерфейс для вспомогательных функций, таких как очистка
+ *                                                         строк и проверка MIME-типов.
+ * @uses      \PhotoRigma\Interfaces\Cache_Handler_Interface Интерфейс для работы с кешированием данных.
+ * @uses      \PhotoRigma\Include\log_in_file() Записывает сообщение об ошибке в лог-файл.
  *
  * @note      Этот файл является частью системы PhotoRigma и играет ключевую роль в организации работы приложения.
  *            Реализованы меры безопасности для предотвращения несанкционированного доступа и повреждения данных.
@@ -50,7 +43,7 @@
  *            приложения.
  *
  * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license   MIT License (https://opensource.org/licenses/MIT)
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать, распространять,
  *            сублицензировать и/или продавать копии программного обеспечения, а также разрешать лицам, которым
  *            предоставляется данное программное обеспечение, делать это при соблюдении следующих условий:
@@ -77,6 +70,7 @@ use function PhotoRigma\Include\log_in_file;
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -88,101 +82,58 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
 }
 
 /**
- * @class   Work
- * @brief   Основной класс приложения.
+ * Основной класс приложения.
  *
- * @details Класс `Work` является центральной точкой приложения и предоставляет единый интерфейс для работы с
- *          различными компонентами системы. Он реализует интерфейс `Work_Interface` и интегрирует функционал
- *          следующих классов:
- *          - `Work_Security`: Механизмы для работы с безопасностью (проверка входных данных, защита от спам-ботов).
- *          - `Work_Image`: Работа с изображениями (загрузка, обработка, изменение размеров).
- *          - `Work_Template`: Формирование данных для шаблонов (меню, статистика, блок пользователя).
- *          - `Work_CoreLogic`: Реализация основной логики приложения (работа с категориями, новостями, рейтингами).
- *          - `Work_Helper`: Вспомогательные методы (очистка строк, преобразование размеров, проверка MIME-типов).
- *          - `Cache_Handler_Interface`: Система кеширования для оптимизации работы приложения.
- *          Все методы данного класса являются фасадами, которые перенаправляют вызовы на соответствующие методы
- *          дочерних классов.
+ * Класс `Work` является центральной точкой приложения и предоставляет единый интерфейс для работы с различными
+ * компонентами системы. Он реализует интерфейс `Work_Interface` и интегрирует функционал следующих классов:
+ * - `Work_Security`: Механизмы для работы с безопасностью (проверка входных данных, защита от спам-ботов).
+ * - `Work_Image`: Работа с изображениями (загрузка, обработка, изменение размеров).
+ * - `Work_Template`: Формирование данных для шаблонов (меню, статистика, блок пользователя).
+ * - `Work_CoreLogic`: Реализация основной логики приложения (работа с категориями, новостями, рейтингами).
+ * - `Work_Helper`: Вспомогательные методы (очистка строк, преобразование размеров, проверка MIME-типов).
+ * - `Cache_Handler_Interface`: Система кеширования для оптимизации работы приложения.
+ * Все методы данного класса являются фасадами, которые перенаправляют вызовы на соответствующие методы дочерних
+ * классов.
  *
- * @implements Work_Interface
+ * @property      array $config Массив, хранящий конфигурацию приложения.
+ * @property-read array $lang   Массив с языковыми переменными.
  *
- * @property array                   $config      Массив, хранящий конфигурацию приложения.
- * @property Work_Security           $security    Объект для работы с безопасностью.
- * @property Work_Image              $image       Объект для работы с изображениями.
- * @property Work_Template           $template    Объект для работы с шаблонами.
- * @property Work_CoreLogic          $core_logic  Объект для основной логики приложения.
- * @property Cache_Handler_Interface $cache       Объект для работы с кешем.
- * @property array                   $lang        Массив с языковыми переменными.
- * @property array                   $session     Массив, привязанный к глобальному массиву $_SESSION.
- *
- * Пример использования класса:
- * @code
- * // Инициализация объекта класса Work
- * $db = new \\PhotoRigma\\Classes\\Database();
- * $cache = new \\PhotoRigma\\Classes\\Cache_Handler($cache_config, $site_dir);
- * $config = ['site_name' => 'PhotoRigma', 'theme' => 'dark'];
- * session_start();
- * $work = new \\PhotoRigma\\Classes\\Work($db, $config, $_SESSION, $cache);
- *
- * // Установка языковых данных
- * $work->set_lang();
- *
- * // Установка пользователя
- * $user = new \\PhotoRigma\\Classes\\User($db, $_SESSION);
- * $work->set_user($user);
- *
- * // Вызов метода через фасад (например, генерация CAPTCHA)
- * $captcha = $work->gen_captcha();
- * echo "Вопрос: {$captcha['question']}, Ответ: {$captcha['answer']}";
- *
- * // Пример использования кеша
- * $key = 'user_settings';
- * $checksum = 12345;
- * $data = ['theme' => 'dark', 'language' => 'en'];
- * if ($work->cache->update_cache($key, $checksum, $data)) {
- *     echo "Данные успешно записаны в кеш.";
- * } else {
- *     echo "Ошибка записи данных в кеш.";
- * }
- * @endcode
- *
- * @see    PhotoRigma::Interfaces::Work_Interface
- *         Интерфейс, который реализует данный класс.
- * @see    PhotoRigma::Classes::Work_Security
- *         Класс для работы с безопасностью.
- * @see    PhotoRigma::Classes::Work_Image
- *         Класс для работы с изображениями.
- * @see    PhotoRigma::Classes::Work_Template
- *         Класс для работы с шаблонами.
- * @see    PhotoRigma::Classes::Work_CoreLogic
- *         Класс для реализации основной логики приложения.
- * @see    PhotoRigma::Classes::Work_Helper
- *         Класс для вспомогательных методов.
- * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
- *         Интерфейс для работы с кешем.
+ * @uses \PhotoRigma\Interfaces\Work_Interface Интерфейс, который реализует данный класс.
+ * @uses \PhotoRigma\Classes\Work_Security Класс для работы с безопасностью.
+ * @uses \PhotoRigma\Classes\Work_Image Класс для работы с изображениями.
+ * @uses \PhotoRigma\Classes\Work_Template Класс для работы с шаблонами.
+ * @uses \PhotoRigma\Classes\Work_CoreLogic Класс для реализации основной логики приложения.
+ * @uses \PhotoRigma\Classes\Work_Helper Класс для вспомогательных методов.
+ * @uses \PhotoRigma\Interfaces\Cache_Handler_Interface Интерфейс для работы с кешем.
  */
 class Work implements Work_Interface
 {
-    // Свойства:
-    private array $config; ///< Массив, хранящий конфигурацию приложения.
-    private Work_Security $security; ///< Объект для работы с безопасностью.
-    private Work_Image $image; ///< Объект класса `Work_Image` для работы с изображениями.
-    private Work_Template $template; ///< Объект для работы с шаблонами.
-    private Work_CoreLogic $core_logic; ///< Объект для основной логики приложения.
-    private Cache_Handler_Interface $cache; ///< Объект для работы с кешем.
-    private array $lang = []; ///< Массив с языковыми переменными
-    private array $session; ///< Массив, привязанный к глобальному массиву $_SESSION
+    /** @var array Массив, хранящий конфигурацию приложения. */
+    private array $config;
+    /** @var \PhotoRigma\Classes\Work_Security Объект для работы с безопасностью. */
+    private Work_Security $security;
+    /** @var \PhotoRigma\Classes\Work_Image Объект класса `Work_Image` для работы с изображениями. */
+    private Work_Image $image;
+    /** @var \PhotoRigma\Classes\Work_Template Объект для работы с шаблонами. */
+    private Work_Template $template;
+    /** @var \PhotoRigma\Classes\Work_CoreLogic Объект для основной логики приложения. */
+    private Work_CoreLogic $core_logic;
+    /** @var \PhotoRigma\Interfaces\Cache_Handler_Interface Объект для работы с кешем. */
+    private Cache_Handler_Interface $cache;
+    /** @var array Массив с языковыми переменными. */
+    private array $lang = [];
+    /** @var array Массив, привязанный к глобальному массиву $_SESSION. */
+    private array $session;
 
     /**
-     * @brief   Конструктор класса.
+     * Конструктор класса.
      *
-     * @details Этот метод вызывается автоматически при создании нового объекта класса.
-     *          Используется для инициализации основных компонентов приложения:
-     *          - Загрузка конфигурации через кеш (метод `_load_cached_config`).
-     *          - Инициализация дочерних классов: Work_Security, Work_Image, Work_Template, Work_CoreLogic.
-     *          - Подключение сессии для хранения пользовательских данных.
-     *          - Инициализация системы кеширования через интерфейс `Cache_Handler_Interface`.
-     *
-     * @callgraph
+     * Этот метод вызывается автоматически при создании нового объекта класса. Используется для инициализации
+     * основных компонентов приложения:
+     * - Загрузка конфигурации через кеш (метод `_load_cached_config`).
+     * - Инициализация дочерних классов: Work_Security, Work_Image, Work_Template, Work_CoreLogic.
+     * - Подключение сессии для хранения пользовательских данных.
+     * - Инициализация системы кеширования через интерфейс `Cache_Handler_Interface`.
      *
      * @param Database_Interface      $db      Объект для работы с базой данных.
      *                                         Должен быть экземпляром класса, реализующего интерфейс
@@ -212,31 +163,13 @@ class Work implements Work_Interface
      * @warning Если файл кеша недоступен или данные в нём некорректны, это может привести к ошибкам инициализации.
      *          Ошибки обрабатываются через исключения и не записываются в лог напрямую.
      *
-     * Пример создания объекта класса Work:
-     * @code
-     * $db = new \PhotoRigma\Classes\Database($db_config);
-     * $cache = new \PhotoRigma\Classes\Cache_Handler($cache_config, $site_dir);
-     * $config = [
-     *     'app_name' => 'PhotoRigma',
-     *     'debug_mode' => true,
-     * ];
-     * session_start();
-     * $work = new \PhotoRigma\Classes\Work($db, $config, $_SESSION, $cache);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work::$config
-     *         Свойство, содержащее конфигурацию приложения.
-     * @see    PhotoRigma::Classes::Work::$security
-     *         Свойство, содержащее объект `Work_Security`.
-     * @see    PhotoRigma::Classes::Work::$image
-     *         Свойство, содержащее объект `Work_Image`.
-     * @see    PhotoRigma::Classes::Work::$template
-     *         Свойство, содержащее объект `Work_Template`.
-     * @see    PhotoRigma::Classes::Work::$core_logic
-     *         Свойство, содержащее объект `Work_CoreLogic`.
-     * @see    PhotoRigma::Classes::Work::$cache
-     *         Свойство, содержащее объект `Cache_Handler_Interface` для работы с кешем.
-     * @see    PhotoRigma::Classes::Work::_load_cached_config()
-     *         Метод для загрузки конфигурации через кеш.
+     * @uses \PhotoRigma\Classes\Work::$config Свойство, содержащее конфигурацию приложения.
+     * @uses \PhotoRigma\Classes\Work::$security Свойство, содержащее объект `Work_Security`.
+     * @uses \PhotoRigma\Classes\Work::$image Свойство, содержащее объект `Work_Image`.
+     * @uses \PhotoRigma\Classes\Work::$template Свойство, содержащее объект `Work_Template`.
+     * @uses \PhotoRigma\Classes\Work::$core_logic Свойство, содержащее объект `Work_CoreLogic`.
+     * @uses \PhotoRigma\Classes\Work::$cache Свойство, содержащее объект `Cache_Handler_Interface` для работы с кешем.
+     * @uses \PhotoRigma\Classes\Work::_load_cached_config() Метод для загрузки конфигурации через кеш.
      */
     public function __construct(Database_Interface $db, array $config, array &$session, Cache_Handler_Interface $cache)
     {
@@ -259,24 +192,22 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Проверяет актуальность кеша конфигурации и обновляет его при необходимости.
+     * Проверяет актуальность кеша конфигурации и обновляет его при необходимости.
      *
-     * @details Этот метод выполняет следующие действия:
-     *          1. Получает дату последнего изменения таблицы конфигурации (`TBL_CONFIG`) из таблицы временных меток
-     *             (`TBL_CHANGE_TIMESTAMP`).
-     *          2. Использует систему кеширования через `$this->cache` для проверки актуальности данных:
-     *             - Если кеш актуален, данные загружаются из кеша.
-     *             - Если кеш устарел или отсутствует, данные загружаются из базы данных и записываются в кеш.
-     *          3. Загружает версию базы данных из таблицы `db_version`.
-     *          4. Читает версию приложения из файла по пути: `WORK_DIR . '/config/ver.php'`
-     *             (без использования `eval()` или `include()` — только парсинг строки `$ver = '...'`).
-     *          5. Возвращает ассоциативный массив с данными конфигурации, включая поля:
-     *             - `'db_version'` — версия БД,
-     *             - `'code_version'` — версия приложения.
+     * Этот метод выполняет следующие действия:
+     * 1. Получает дату последнего изменения таблицы конфигурации (`TBL_CONFIG`) из таблицы временных меток
+     *    (`TBL_CHANGE_TIMESTAMP`).
+     * 2. Использует систему кеширования через `$this->cache` для проверки актуальности данных:
+     *    - Если кеш актуален, данные загружаются из кеша.
+     *    - Если кеш устарел или отсутствует, данные загружаются из базы данных и записываются в кеш.
+     * 3. Загружает версию базы данных из таблицы `db_version`.
+     * 4. Читает версию приложения из файла по пути: `WORK_DIR . '/config/ver.php'` (без использования `eval()` или
+     *    `include()` — только парсинг строки `$ver = '...'`).
+     * 5. Возвращает ассоциативный массив с данными конфигурации, включая поля:
+     *    - `'db_version'` — версия БД,
+     *    - `'code_version'` — версия приложения.
      *
      * @internal
-     * @callergraph
-     * @callgraph
      *
      * @param Database_Interface $db Объект базы данных для выполнения запросов.
      *                               Должен быть экземпляром класса, реализующего интерфейс `Database_Interface`.
@@ -288,21 +219,13 @@ class Work implements Work_Interface
      * @throws RuntimeException Выбрасывается в следующих случаях:
      *                          - Не удалось получить дату последнего изменения таблицы `TBL_CONFIG` из таблицы
      *                            `TBL_CHANGE_TIMESTAMP`.
-     *                            Пример сообщения:
-     *                                Не удалось получить дату последнего изменения таблицы: [table_name]
      *                          - Не удалось загрузить данные из таблицы `TBL_CONFIG`.
-     *                            Пример сообщения:
-     *                                Не удалось загрузить данные из таблицы: [TBL_CONFIG]
      *                          - Не удалось записать данные в кеш.
-     *                            Пример сообщения:
-     *                                Не удалось записать данные в кеш: config_cache
      *                          - Не удалось получить версию из таблицы `db_version`.
      *                          - Не удалось прочитать файл версии `ver.php`.
      *                          - Файл `ver.php` не содержит корректную строку `$ver = '...'`.
      *                          - Значение `$ver` не является непустой строкой.
      * @throws Exception        Выбрасывается при ошибках выполнения SQL-запроса через `$db->select()`.
-     *                          Пример сообщения:
-     *                                Ошибка базы данных: [подробное описание ошибки]
      *
      * @note    Для указания таблиц базы данных используются константы:
      *          - `TBL_CONFIG`: Таблица с настройками сервера. Например: '`config`'.
@@ -318,32 +241,11 @@ class Work implements Work_Interface
      *            $ver = 'x.x.x';
      *          Несоблюдение этих условий может привести к ошибкам при работе с кешем.
      *
-     * Пример вызова метода:
-     * @code
-     * // Создание объекта базы данных
-     * $db = new \PhotoRigma\Classes\Database($db_config);
-     *
-     * // Загрузка конфигурации
-     * $config = $this->_load_cached_config($db);
-     * print_r($config);
-     * // Результат:
-     * // [
-     * //     'site_name' => 'PhotoRigma',
-     * //     'theme' => 'dark',
-     * //     'db_version' => '0.4.4',
-     * //     'code_version' => '0.4.3',
-     * // ]
-     * @endcode
-     * @see    PhotoRigma::Classes::Work::$config
-     *         Свойство, содержащее конфигурацию приложения.
-     * @see    PhotoRigma::Interfaces::Database_Interface
-     *         Интерфейс для работы с базой данных.
-     * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
-     *         Интерфейс для работы с кешем.
-     * @see    PhotoRigma::Classes::Cache_Handler::is_valid()
-     *         Метод для проверки актуальности данных в кеше.
-     * @see    PhotoRigma::Classes::Cache_Handler::update_cache()
-     *         Метод для записи данных в кеш.
+     * @uses \PhotoRigma\Classes\Work::$config Свойство, содержащее конфигурацию приложения.
+     * @uses \PhotoRigma\Interfaces\Database_Interface Интерфейс для работы с базой данных.
+     * @uses \PhotoRigma\Interfaces\Cache_Handler_Interface Интерфейс для работы с кешем.
+     * @uses \PhotoRigma\Classes\Cache_Handler::is_valid() Метод для проверки актуальности данных в кеше.
+     * @uses \PhotoRigma\Classes\Cache_Handler::update_cache() Метод для записи данных в кеш.
      */
     private function _load_cached_config(Database_Interface $db): array
     {
@@ -439,11 +341,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Магический метод для получения значений свойств `$config` и `$lang`.
+     * Магический метод для получения значений свойств `$config` и `$lang`.
      *
-     * @details Этот метод вызывается автоматически при попытке получить значение недоступного свойства.
-     *          Доступ разрешён только к свойствам `$config` и `$lang`. Если запрашивается другое свойство,
-     *          выбрасывается исключение InvalidArgumentException.
+     * Этот метод вызывается автоматически при попытке получить значение недоступного свойства.
+     * Доступ разрешён только к свойствам `$config` и `$lang`. Если запрашивается другое свойство, выбрасывается
+     * исключение InvalidArgumentException.
      *
      * @param string $name Имя свойства:
      *                     - Допустимые значения: 'config', 'lang'.
@@ -459,16 +361,8 @@ class Work implements Work_Interface
      * @warning Попытка доступа к несуществующему свойству вызовет исключение.
      *          Убедитесь, что вы запрашиваете только допустимые свойства.
      *
-     * Пример использования метода:
-     * @code
-     * $work = new \PhotoRigma\Classes\Work();
-     * echo $work->config['key']; // Выведет значение ключа 'key' из конфигурации
-     * echo $work->lang['message']; // Выведет значение ключа 'message' из языковых данных
-     * @endcode
-     * @see    PhotoRigma::Classes::Work::$lang
-     *         Свойство, содержащее языковые данные.
-     * @see    PhotoRigma::Classes::Work::$config
-     *         Свойство, содержащее конфигурацию.
+     * @uses \PhotoRigma\Classes\Work::$lang Свойство, содержащее языковые данные.
+     * @uses \PhotoRigma\Classes\Work::$config Свойство, содержащее конфигурацию.
      */
     public function __get(string $name): array
     {
@@ -482,19 +376,16 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Устанавливает значение свойства `$config`.
+     * Устанавливает значение свойства `$config`.
      *
-     * @details Этот метод вызывается автоматически при попытке установить значение недоступного свойства.
-     *          Доступ разрешён только к свойству `$config`. Если запрашивается другое свойство,
-     *          выбрасывается исключение Exception.
-     *          Значение `$config` должно быть массивом, где ключи и значения являются строками.
-     *          При успешном обновлении конфигурации:
-     *          - Изменения логируются с помощью функции log_in_file (за исключением ключей из списка
-     *            $exclude_from_logging).
-     *          - Обновлённая конфигурация передаётся в дочерние классы ($this->image, $this->template,
-     *            $this->core_logic) через их свойства config.
-     *
-     * @callgraph
+     * Этот метод вызывается автоматически при попытке установить значение недоступного свойства.
+     * Доступ разрешён только к свойству `$config`. Если запрашивается другое свойство, выбрасывается исключение
+     * Exception.
+     * Значение `$config` должно быть массивом, где ключи и значения являются строками.
+     * При успешном обновлении конфигурации:
+     * - Изменения логируются с помощью функции log_in_file (за исключением ключей из списка $exclude_from_logging).
+     * - Обновлённая конфигурация передаётся в дочерние классы ($this->image, $this->template, $this->core_logic)
+     *   через их свойства config.
      *
      * @param string $name  Имя свойства:
      *                      - Допустимое значение: 'config'.
@@ -512,24 +403,11 @@ class Work implements Work_Interface
      * @warning Некорректные данные (не массив, нестроковые ключи или значения) вызывают исключение.
      *          Попытка установки значения для несуществующего свойства также вызывает исключение.
      *
-     * Пример использования метода:
-     * @code
-     * $work = new \PhotoRigma\Classes\Work();
-     * $work->config = [
-     *     'theme' => 'dark',
-     *     'language' => 'en'
-     * ];
-     * @endcode
-     * @see    PhotoRigma::Include::log_in_file()
-     *         Логирует ошибки.
-     * @see    PhotoRigma::Classes::Work::$config
-     *         Свойство, содержащее конфигурацию.
-     * @see    PhotoRigma::Classes::Work_CoreLogic::$config
-     *         Свойство дочернего класса Work_CoreLogic.
-     * @see    PhotoRigma::Classes::Work_Image::$config
-     *         Свойство дочернего класса Work_Image.
-     * @see    PhotoRigma::Classes::Work_Template::$config
-     *         Свойство дочернего класса Work_Template.
+     * @uses \PhotoRigma\Include\log_in_file() Записывает сообщение об ошибке в лог-файл.
+     * @uses \PhotoRigma\Classes\Work::$config Свойство, содержащее конфигурацию.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::$config Свойство дочернего класса Work_CoreLogic.
+     * @uses \PhotoRigma\Classes\Work_Image::$config Свойство дочернего класса Work_Image.
+     * @uses \PhotoRigma\Classes\Work_Template::$config Свойство дочернего класса Work_Template.
      */
     public function __set(string $name, array $value): void
     {
@@ -596,11 +474,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Проверяет существование недоступного свойства.
+     * Проверяет существование недоступного свойства.
      *
-     * @details Этот метод вызывается автоматически при использовании оператора `isset()` для проверки
-     *          существования недоступного свойства. Метод возвращает `true`, если свойство существует,
-     *          и `false` в противном случае.
+     * Этот метод вызывается автоматически при использовании оператора `isset()` для проверки существования
+     * недоступного свойства. Метод возвращает `true`, если свойство существует, и `false` в противном случае.
      *
      * @param string $name Имя свойства:
      *                     - Проверяется на существование.
@@ -612,16 +489,6 @@ class Work implements Work_Interface
      * @note    Этот метод предназначен только для проверки существования свойств.
      *
      * @warning Если свойство не определено или является недоступным, результат будет `false`.
-     *
-     * Пример использования метода:
-     * @code
-     * $work = new \PhotoRigma\Classes\Work();
-     * if (isset($work->config)) {
-     *     echo "Свойство 'config' существует.";
-     * } else {
-     *     echo "Свойство 'config' не существует.";
-     * }
-     * @endcode
      */
     public function __isset(string $name): bool
     {
@@ -629,13 +496,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Преобразует размер в байты через вызов публичного метода в дочернем классе.
+     * Преобразует размер в байты через вызов публичного метода в дочернем классе.
      *
-     * @details Этот статический метод является фасадом для вызова публичного метода return_bytes()
-     *          в дочернем классе Work_Helper. Он преобразует размер, заданный в формате "число[K|M|G]", в количество
-     *          байт.
-     *
-     * @callgraph
+     * Этот статический метод является фасадом для вызова публичного метода return_bytes() в дочернем классе
+     * Work_Helper. Он преобразует размер, заданный в формате "число[K|M|G]", в количество байт.
      *
      * @param string|int $val Размер в формате "число[K|M|G]" или число:
      *                        - Поддерживаются суффиксы: K (килобайты), M (мегабайты), G (гигабайты).
@@ -647,26 +511,8 @@ class Work implements Work_Interface
      * @warning Если суффикс недопустим, он игнорируется, и значение преобразуется в число.
      *          Метод чувствителен к формату входных данных. Убедитесь, что они корректны.
      *
-     * Пример использования:
-     * @code
-     * // Преобразование с допустимым суффиксом
-     * $bytes = \PhotoRigma\Classes\Work::return_bytes('2M');
-     * echo $bytes; // Выведет: 2097152
-     *
-     * // Преобразование отрицательного значения
-     * $bytes = \PhotoRigma\Classes\Work::return_bytes('-1G');
-     * echo $bytes; // Выведет: 1073741824
-     *
-     * // Преобразование с недопустимым суффиксом
-     * $bytes = \PhotoRigma\Classes\Work::return_bytes('10X');
-     * echo $bytes; // Выведет: 10
-     *
-     * // Преобразование некорректных данных
-     * $bytes = \PhotoRigma\Classes\Work::return_bytes('abc');
-     * echo $bytes; // Выведет: 0
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Helper::return_bytes()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Helper::return_bytes() Публичный метод в дочернем классе, реализующий основную
+     *                                                       логику.
      */
     public static function return_bytes(string|int $val): int
     {
@@ -674,15 +520,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего
-     *          метода.
+     * Формирует информационную строку для категории или пользовательского альбома через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода category()
-     *          в классе Work_CoreLogic. Он выполняет запросы к базе данных для получения информации о категории
-     *          или пользовательском альбоме, включая количество фотографий, данные о последней и лучшей фотографии,
-     *          а также ссылки на них.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода category() в классе Work_CoreLogic. Он
+     * выполняет запросы к базе данных для получения информации о категории или пользовательском альбоме, включая
+     * количество фотографий, данные о последней и лучшей фотографии, а также ссылки на них.
      *
      * @param int $cat_id    Идентификатор категории или пользователя (если `$user_flag = 1`):
      *                       - Должен быть целым числом >= `0`.
@@ -705,11 +547,7 @@ class Work implements Work_Interface
      *               - 'url_top_photo'  (string): Ссылка на лучшую фотографию.
      *
      * @throws InvalidArgumentException Если входные параметры имеют некорректный тип или значение.
-     *                                  Пример сообщения:
-     *                                      cat_id и user_flag должны быть 0 или положительным целым числом.
      * @throws PDOException             Если возникают ошибки при получении данных из базы данных.
-     *                                  Пример сообщения:
-     *                                      Не удалось получить данные категории или пользователя.
      * @throws Exception                При выполнении запросов к базам данных.
      *
      * @note    Используются константы:
@@ -722,18 +560,8 @@ class Work implements Work_Interface
      *          - База данных содержит необходимые данные для выполнения запросов.
      *          - Пользователь имеет права на просмотр фотографий (если это требуется).
      *
-     * Пример использования:
-     * @code
-     * // Получение данных о категории с ID = 5
-     * $category_data = $work->category(5, 0);
-     * print_r($category_data);
-     *
-     * // Получение данных о пользовательском альбоме с ID = 123
-     * $user_album_data = $work->category(123, 1);
-     * print_r($user_album_data);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::category()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::category() Публичный метод в дочернем классе, реализующий основную
+     *                                                      логику.
      */
     public function category(int $cat_id = 0, int $user_flag = 0): array
     {
@@ -741,14 +569,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Проверяет содержимое поля на соответствие условиям через вызов внутреннего метода.
+     * Проверяет содержимое поля на соответствие условиям через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода check_field()
-     *          в классе Work_Security. Он выполняет проверку значения поля на соответствие регулярному выражению,
-     *          условию "не ноль" ($not_zero) и отсутствие запрещённых паттернов из свойства
-     *          PhotoRigma::Classes::Work_Security::$compiled_rules.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода check_field() в классе Work_Security. Он
+     * выполняет проверку значения поля на соответствие регулярному выражению, условию "не ноль" ($not_zero) и
+     * отсутствие запрещённых паттернов из свойства \PhotoRigma\Classes\Work_Security::$compiled_rules.
      *
      * @param string       $field    Значение поля для проверки:
      *                               - Указывается строковое значение, которое необходимо проверить.
@@ -765,28 +590,16 @@ class Work implements Work_Interface
      *
      * @throws Exception При возникновении ошибок логирования информации через `log_in_file`.
      *
-     * @note    Метод использует свойство PhotoRigma::Classes::Work_Security::$compiled_rules
+     * @note    Метод использует свойство\PhotoRigma\Classes\Work_Security::$compiled_rules
      *          для проверки на наличие запрещённых паттернов.
      *          Свойство должно содержать массив скомпилированных регулярных выражений.
      *
-     * @warning Метод зависит от корректности данных в свойстве PhotoRigma::Classes::Work_Security::$compiled_rules.
+     * @warning Метод зависит от корректности данных в свойстве\PhotoRigma\Classes\Work_Security::$compiled_rules.
      *          Если правила некорректны, результат может быть непредсказуемым.
      *          Также важно убедиться, что регулярное выражение ($regexp) корректно перед использованием.
      *
-     * Пример использования:
-     * @code
-     * // Проверка поля на соответствие регулярному выражению и условию not_zero
-     * $field_value = "example123";
-     * $regexp = "/^[a-z0-9]+$/i";
-     * $is_valid = $work->check_field($field_value, $regexp, true);
-     * if ($is_valid) {
-     *     echo "Поле прошло проверку.";
-     * } else {
-     *     echo "Поле не прошло проверку.";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Security::check_field()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Security::check_field() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public function check_field(string $field, string|false $regexp = false, bool $not_zero = false): bool
     {
@@ -794,13 +607,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Проверяет входные данные через вызов внутреннего метода.
+     * Проверяет входные данные через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода check_input()
-     *          в классе Work_Security. Он выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION,
-     *          $_COOKIE, $_FILES) на соответствие заданным условиям.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода check_input() в классе Work_Security. Он
+     * выполняет проверку данных из различных источников ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES) на
+     * соответствие заданным условиям.
      *
      * @param string $source_name Источник данных ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES):
      *                            - Должен быть одним из допустимых значений: '_GET', '_POST', '_SESSION', '_COOKIE',
@@ -811,7 +622,7 @@ class Work implements Work_Interface
      *                            - Ключ 'isset' (bool, опционально): Проверять наличие поля в источнике данных.
      *                            - Ключ 'empty' (bool, опционально): Проверять, что значение поля не пустое.
      *                            - Ключ 'regexp' (string|false, опционально): Регулярное выражение для проверки
-     *                            значения поля.
+     *                              значения поля.
      *                            - Ключ 'not_zero' (bool, опционально): Проверять, что значение поля не равно нулю.
      *                            - Ключ 'max_size' (int, опционально): Максимальный размер файла (в байтах) для
      *                              $_FILES.
@@ -823,27 +634,14 @@ class Work implements Work_Interface
      * @throws Exception        При возникновении ошибок логирования информации через `log_in_file`.
      *
      * @note    Для источника данных `_SESSION` используется свойство класса
-     *          PhotoRigma::Classes::Work_Security::$session. Метод зависит от корректности данных в источниках ($_GET,
-     *          $_POST, $_SESSION, $_COOKIE, $_FILES). Если источник данных повреждён или содержит некорректные
-     *          значения, результат может быть непредсказуемым.
+     *          \PhotoRigma\Classes\Work_Security::$session. Метод зависит от корректности данных в источниках
+     *          ($_GET, $_POST, $_SESSION, $_COOKIE, $_FILES). Если источник данных повреждён или содержит
+     *          некорректные значения, результат может быть непредсказуемым.
      *
      * @warning Убедитесь, что переданные параметры проверки ($options) корректны и соответствуют требованиям.
      *
-     * Пример использования:
-     * @code
-     * // Проверка поля $_POST['username'] на наличие и непустое значение
-     * $is_valid = $work->check_input('_POST', 'username', [
-     *     'isset' => true,
-     *     'empty' => true,
-     * ]);
-     * if ($is_valid) {
-     *     echo "Поле username прошло проверку.";
-     * } else {
-     *     echo "Поле username не прошло проверку.";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Security::check_input()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Security::check_input() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public function check_input(string $source_name, string $field, array $options = []): bool
     {
@@ -851,14 +649,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Транслитерация строки и замена знаков пунктуации на "_" через вызов публичного метода в дочернем
-     *          классе.
+     * Транслитерация строки и замена знаков пунктуации на "_" через вызов публичного метода в дочернем классе.
      *
-     * @details Этот статический метод является фасадом для вызова публичного метода encodename()
-     *          в дочернем классе Work_Helper. Он выполняет транслитерацию не латинских символов в латиницу и заменяет
-     *          все символы, кроме букв и цифр, на `"_"`.
-     *
-     * @callgraph
+     * Этот статический метод является фасадом для вызова публичного метода encodename() в дочернем классе
+     * Work_Helper. Он выполняет транслитерацию не латинских символов в латиницу и заменяет все символы, кроме букв и
+     * цифр, на `"_"`.
      *
      * @param string $string Исходная строка:
      *                       - Если строка пустая, то она возвращается без обработки.
@@ -871,26 +666,8 @@ class Work implements Work_Interface
      *          Метод не гарантирует сохранение исходного формата строки, так как все специальные символы заменяются на
      *          `"_"`.
      *
-     * Пример использования:
-     * @code
-     * // Транслитерация строки с заменой знаков пунктуации
-     * $encoded = \PhotoRigma\Classes\Work::encodename('Привет, мир!');
-     * echo $encoded; // Выведет: Privet_mir
-     *
-     * // Обработка пустой строки
-     * $encoded = \PhotoRigma\Classes\Work::encodename('');
-     * echo $encoded; // Выведет: пустую строку
-     *
-     * // Обработка строки без кириллицы и знаков пунктуации
-     * $encoded = \PhotoRigma\Classes\Work::encodename('12345');
-     * echo $encoded; // Выведет: 12345
-     *
-     * // Генерация уникальной последовательности для пустой строки после обработки
-     * $encoded = \PhotoRigma\Classes\Work::encodename('!!!');
-     * echo $encoded; // Выведет: уникальную последовательность из 16 символов
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Helper::encodename()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Helper::encodename() Публичный метод в дочернем классе, реализующий основную
+     *                                                     логику.
      */
     public static function encodename(string $string): string
     {
@@ -898,13 +675,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Преобразует BBCode в HTML через вызов публичного метода в дочернем классе.
+     * Преобразует BBCode в HTML через вызов публичного метода в дочернем классе.
      *
-     * @details Этот статический метод является фасадом для вызова публичного метода ubb()
-     *          в дочернем классе Work_Helper. Он преобразует BBCode-теги в соответствующие HTML-теги,
-     *          учитывая рекурсивную обработку вложенных тегов.
-     *
-     * @callgraph
+     * Этот статический метод является фасадом для вызова публичного метода ubb() в дочернем классе Work_Helper. Он
+     * преобразует BBCode-теги в соответствующие HTML-теги, учитывая рекурсивную обработку вложенных тегов.
      *
      * @param string $text Текст с BBCode:
      *                     - Рекомендуется использовать строки в кодировке UTF-8.
@@ -918,27 +692,7 @@ class Work implements Work_Interface
      * @warning Метод ограничивает глубину рекурсии для вложенных тегов (максимум 10 уровней).
      *          Некорректные URL или изображения заменяются на безопасные значения или удаляются.
      *
-     * Пример использования:
-     * @code
-     * // Преобразование жирного текста
-     * $html = \PhotoRigma\Classes\Work::ubb('[b]Bold text[/b]');
-     * echo $html; // Выведет: <strong>Bold text</strong>
-     *
-     * // Преобразование ссылки
-     * $html = \PhotoRigma\Classes\Work::ubb('[url=https://example.com]Example[/url]');
-     * echo $html; // Выведет: <a href="https://example.com" target="_blank" rel="noopener noreferrer"
-     * title="Example">Example</a>
-     *
-     * // Преобразование цитаты
-     * $html = \PhotoRigma\Classes\Work::ubb('[quote=Author]This is a quote.[/quote]');
-     * echo $html; // Выведет: <blockquote><cite>Author:</cite>This is a quote.</blockquote>
-     *
-     * // Преобразование списка
-     * $html = \PhotoRigma\Classes\Work::ubb('[list][*]Item 1[*]Item 2[/list]');
-     * echo $html; // Выведет: <ul><li>Item 1</li><li>Item 2</li></ul>
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Helper::ubb()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Helper::ubb() Публичный метод в дочернем классе, реализующий основную логику.
      */
     public static function ubb(string $text): string
     {
@@ -946,13 +700,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем классе.
+     * Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем классе.
      *
-     * @details Этот статический метод является фасадом для вызова публичного метода utf8_wordwrap()
-     *          в дочернем классе Work_Helper. Он разбивает строку на несколько строк, каждая из которых имеет длину не
-     *          более указанной. Разрыв строки выполняется только по пробелам, чтобы сохранить читаемость текста.
-     *
-     * @callgraph
+     * Этот статический метод является фасадом для вызова публичного метода utf8_wordwrap() в дочернем классе
+     * Work_Helper. Он разбивает строку на несколько строк, каждая из которых имеет длину не более указанной. Разрыв
+     * строки выполняется только по пробелам, чтобы сохранить читаемость текста.
      *
      * @param string $str   Исходная строка:
      *                      - Рекомендуется использовать строки в кодировке UTF-8.
@@ -971,31 +723,8 @@ class Work implements Work_Interface
      *          Если параметры некорректны (например, $width <= 0 или $break пустой), возвращается исходная строка.
      *          Если строка содержит многобайтовые символы, выполняется дополнительная корректировка разбиения.
      *
-     * Пример использования:
-     * @code
-     * // Разбивка строки на части длиной 10 символов
-     * $wrapped = \PhotoRigma\Classes\Work::utf8_wordwrap('This is a very long string that needs to be wrapped.', 10);
-     * echo $wrapped;
-     * // Выведет:
-     * // This is a
-     * // very long
-     * // string that
-     * // needs to be
-     * // wrapped.
-     *
-     * // Разбивка строки с пользовательским символом разрыва
-     * $wrapped = \PhotoRigma\Classes\Work::utf8_wordwrap('This is another example.', 15, '---');
-     * echo $wrapped;
-     * // Выведет:
-     * // This is another---
-     * // example.
-     *
-     * // Некорректные параметры
-     * $wrapped = \PhotoRigma\Classes\Work::utf8_wordwrap('Short text', 0);
-     * echo $wrapped; // Выведет: Short text
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Helper::utf8_wordwrap()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Helper::utf8_wordwrap() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public static function utf8_wordwrap(string $str, int $width = 70, string $break = PHP_EOL): string
     {
@@ -1003,13 +732,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Проверяет MIME-тип файла через вызов публичного метода в дочернем классе.
+     * Проверяет MIME-тип файла через вызов публичного метода в дочернем классе.
      *
-     * @details Этот статический метод является фасадом для вызова публичного метода validate_mime_type()
-     *          в дочернем классе Work_Helper. Он проверяет, поддерживается ли указанный MIME-тип хотя бы одной из
-     *          доступных библиотек: Imagick, Gmagick или встроенных функций PHP (GD).
-     *
-     * @callgraph
+     * Этот статический метод является фасадом для вызова публичного метода validate_mime_type() в дочернем классе
+     * Work_Helper. Он проверяет, поддерживается ли указанный MIME-тип хотя бы одной из доступных библиотек: Imagick,
+     * Gmagick или встроенных функций PHP (GD).
      *
      * @param string $real_mime_type Реальный MIME-тип файла:
      *                               - Должен быть корректным MIME-типом для изображений.
@@ -1023,22 +750,8 @@ class Work implements Work_Interface
      *          Проверка выполняется последовательно, начиная с Imagick. Если MIME-тип поддерживается одной из
      *          библиотек, дальнейшие проверки не выполняются.
      *
-     * Пример использования:
-     * @code
-     * // Проверка поддерживаемого MIME-типа
-     * $is_supported = \PhotoRigma\Classes\Work::validate_mime_type('image/jpeg');
-     * var_dump($is_supported); // Выведет: true
-     *
-     * // Проверка неподдерживаемого MIME-типа
-     * $is_supported = \PhotoRigma\Classes\Work::validate_mime_type('application/pdf');
-     * var_dump($is_supported); // Выведет: false
-     *
-     * // Проверка MIME-типа, поддерживаемого только через Imagick
-     * $is_supported = \PhotoRigma\Classes\Work::validate_mime_type('image/vnd.adobe.photoshop');
-     * var_dump($is_supported); // Выведет: true (если Imagick доступен)
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Helper::validate_mime_type()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Helper::validate_mime_type() Публичный метод в дочернем классе, реализующий
+     *                                                             основную логику.
      */
     public static function validate_mime_type(string $real_mime_type): bool
     {
@@ -1046,24 +759,17 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Устанавливает языковые данные через вызов внутреннего метода.
+     * Устанавливает языковые данные через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для защищённого метода `_set_lang_internal()`.
-     *          Он выполняет загрузку и обработку файлов языковых данных, передавая их в текущий класс и дочерние компоненты.
-     *          Метод предназначен для использования клиентским кодом как точка входа для установки языковых данных.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для защищённого метода `_set_lang_internal()`. Он выполняет загрузку и
+     * обработку файлов языковых данных, передавая их в текущий класс и дочерние компоненты. Метод предназначен для
+     * использования клиентским кодом как точка входа для установки языковых данных.
      *
      * @throws InvalidArgumentException Если массив языковых данных некорректен (например, отсутствует ключ `'lang'` или
-     *                                  содержатся ошибки). Пример сообщения:
-     *                                      Обнаружены ошибки в массиве языковых данных | Путь: [путь к файлу]
+     *                                  содержатся ошибки).
      * @throws RuntimeException         Если возникают проблемы с файлами языковых данных (например, файл отсутствует,
      *                                  недоступен для чтения или не содержит обязательный файл `main.php`).
-     *                                  Пример сообщения:
-     *                                      Не найден обязательный файл main.php
      * @throws JsonException            При ошибках кодирования/декодирования JSON.
-     *                                  Пример сообщения:
-     *                                      Ошибка при кодировании JSON: [подробное описание ошибки]
      * @throws Exception                При ошибках логирования через `log_in_file()`.
      *
      * @note    Этот метод является точкой входа для установки языковых данных. Все проверки и обработка выполняются в
@@ -1072,14 +778,8 @@ class Work implements Work_Interface
      * @warning Если файлы языковых данных отсутствуют, содержат ошибки или недоступны для чтения, метод выбрасывает
      *          исключение.
      *
-     * Пример использования:
-     * @code
-     * // Вызов метода из клиентского кода
-     * $work = new \PhotoRigma\Classes\Work($db, $config, $_SESSION, $cache);
-     * $work->set_lang();
-     * @endcode
-     * @see    PhotoRigma::Classes::Work::_set_lang_internal()
-     *         Защищённый метод, который выполняет основную логику установки языковых данных.
+     * @uses \PhotoRigma\Classes\Work::_set_lang_internal() Защищённый метод, который выполняет основную логику
+     *                                                      установки языковых данных.
      */
     public function set_lang(): void
     {
@@ -1087,84 +787,57 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах.
+     * Загружает и обрабатывает файлы языковых данных, обновляя их в текущем классе и дочерних компонентах.
      *
-     * @details Этот защищённый метод выполняет следующие действия:
-     *          1. Формирует массив путей к директориям языковых данных на основе конфигурации
-     *             (`$this->config['language_dirs']`) или по умолчанию использует директорию
-     *             `$this->config['site_dir'] . '/language/'`.
-     *          2. Сканирует каждую директорию с помощью `DirectoryIterator` и формирует список файлов для загрузки:
-     *             - Пропускаются неподходящие файлы (не `.php`, `index.php`).
-     *             - Для каждого файла вычисляется CRC32 контрольная сумма содержимого.
-     *             - Формируется уникальный ключ кеша для каждого файла.
-     *          3. Проверяет наличие обязательного файла `main.php`. Если файл отсутствует, выбрасывается исключение.
-     *          4. Обрабатывает каждый файл:
-     *             - Загружает данные из файла через `include()`. Файл должен возвращать массив с ключом `'lang'`.
-     *             - Если данные некорректны, логируются ошибки или выбрасываются исключения (для `main.php`).
-     *             - Проверяет актуальность данных в кеше через `$this->cache->is_valid()`. Если кеш актуален, данные
-     *               используются из кеша.
-     *             - Если кеш устарел или отсутствует, данные обрабатываются через `_process_lang_array()`:
-     *               - Логируются изменения (`changes`) и ошибки (`errors`).
-     *               - При наличии ошибок в `main.php` выбрасывается исключение.
-     *             - Данные сохраняются в кеш через `$this->cache->update_cache()`.
-     *          5. Обновляет языковые данные в текущем классе (`$this->lang`) и передаёт их в дочерние классы:
-     *             - `Work_Template::$lang`.
-     *             - `Work_CoreLogic::$lang`.
-     *          Метод является защищённым и предназначен для использования внутри класса или его наследников.
-     *          Однако он может быть вызван публично через фасад, например, через публичный метод `set_lang`.
+     * Этот защищённый метод выполняет следующие действия:
+     * 1. Формирует массив путей к директориям языковых данных на основе конфигурации
+     *    (`$this->config['language_dirs']`).
+     * 2. Сканирует каждую директорию с помощью `DirectoryIterator` и формирует список файлов для загрузки:
+     *    - Пропускаются неподходящие файлы (не `.php`, `index.php`).
+     *    - Для каждого файла вычисляется CRC32 контрольная сумма содержимого.
+     *    - Формируется уникальный ключ кеша для каждого файла.
+     * 3. Проверяет наличие обязательного файла `main.php`. Если файл отсутствует, выбрасывается исключение.
+     * 4. Обрабатывает каждый файл:
+     *    - Загружает данные из файла через `include()`. Файл должен возвращать массив с ключом `'lang'`.
+     *    - Если данные некорректны, логируются ошибки или выбрасываются исключения (для `main.php`).
+     *    - Проверяет актуальность данных в кеше через `$this->cache->is_valid()`. Если кеш актуален, данные
+     *      используются из кеша.
+     *    - Если кеш устарел или отсутствует, данные обрабатываются через `_process_lang_array()`:
+     *      - Логируются изменения (`changes`) и ошибки (`errors`).
+     *      - При наличии ошибок в `main.php` выбрасывается исключение.
+     *    - Данные сохраняются в кеш через `$this->cache->update_cache()`.
+     * 5. Обновляет языковые данные в текущем классе (`$this->lang`) и передаёт их в дочерние классы:
+     *    - `Work_Template::$lang`.
+     *    - `Work_CoreLogic::$lang`.
+     * Метод является защищённым и предназначен для использования внутри класса или его наследников. Однако он может
+     * быть вызван публично через фасад, например, через публичный метод `set_lang`.
      *
-     * @callergraph
-     * @callgraph
+     * @protected
      *
      * @throws RuntimeException         Выбрасывается в следующих случаях:
      *                                  - Отсутствует хотя бы один подходящий файл языковых данных.
-     *                                    Пример сообщения:
-     *                                        Не найдено ни одного подходящего файла языковых данных
      *                                  - Отсутствует обязательный файл `main.php`.
-     *                                    Пример сообщения:
-     *                                        Не найден обязательный файл main.php
      *                                  - Файл языковых данных не возвращает массив с ключом `'lang'`.
-     *                                    Пример сообщения:
-     *                                        Файл языковых данных не возвращает массив с ключом 'lang' |
-     *                                        Путь: [путь к файлу]
      *                                  - Некорректный или отсутствующий `lang_id` в файле `main.php`.
-     *                                    Пример сообщения:
-     *                                        Некорректный или отсутствующий lang_id в файле | Путь: [путь к файлу]
      *                                  - Не удалось сохранить данные в кеш.
-     *                                    Пример сообщения:
-     *                                        Не удалось сохранить данные в кеш | Ключ: [ключ кеша]
      * @throws InvalidArgumentException Выбрасывается при обнаружении ошибок в массиве языковых данных в файле `main.php`.
-     *                                  Пример сообщения:
-     *                                        Обнаружены ошибки в массиве языковых данных | Путь: [путь к файлу]
      * @throws JsonException            Выбрасывается при ошибках кодирования JSON.
-     *                                  Пример сообщения:
-     *                                        Ошибка при кодировании JSON: [подробное описание ошибки]
      * @throws Exception                Выбрасывается при ошибках логирования через `log_in_file()`.
      *
      * @throws RuntimeException (из Cache_Handler::is_valid) Выбрасывается в следующих случаях:
      *                           - Клиент хранилища Redis/Memcached не инициализирован или имеет неправильный тип (из
      *                             подметода `_is_valid_storage`).
-     *                             Пример сообщения:
-     *                                 Клиент хранилища не инициализирован или имеет неправильный тип
      * @throws JsonException    (из Cache_Handler::is_valid) Выбрасывается при ошибках декодирования JSON:
      *                           - Для файлового кеширования: из подметода `_is_valid_file`.
      *                           - Для Redis/Memcached: из подметода `_is_valid_storage`.
-     *                           Пример сообщения:
-     *                               Ошибка декодирования JSON: [подробное описание ошибки]
      *
      * @throws RuntimeException (из Cache_Handler::update_cache) Выбрасывается в следующих случаях:
      *                           - Для файлового кеширования:
      *                             - Если директория для кеша не существует или недоступна для записи.
      *                             - Если файл кеша недоступен для записи.
-     *                               Пример сообщения:
-     *                                   Директория для кеша недоступна для записи | Путь: [путь]
      *                           - Для Redis/Memcached:
      *                             - Если клиент хранилища не инициализирован или имеет неправильный тип.
-     *                               Пример сообщения:
-     *                                   Клиент хранилища не инициализирован или имеет неправильный тип
      * @throws JsonException    (из Cache_Handler::update_cache) Выбрасывается при ошибках кодирования JSON.
-     *                           Пример сообщения:
-     *                               Ошибка кодирования JSON: [подробное описание ошибки]
      *
      * @note    Файлы языковых данных должны быть доступны для чтения и возвращать массив с ключом `'lang'`.
      *          Обязательный файл `main.php` должен содержать корректный `lang_id` в виде строки.
@@ -1172,29 +845,14 @@ class Work implements Work_Interface
      * @warning Если файлы языковых данных отсутствуют, содержат ошибки или недоступны для чтения, метод выбрасывает
      *          исключение.
      *
-     * Пример использования метода:
-     * @code
-     * // Вызов метода внутри класса или его наследника
-     * $this->_set_lang_internal();
-     * @endcode
-     * @see    PhotoRigma::Include::log_in_file()
-     *         Внешняя функция для логирования ошибок.
-     * @see    PhotoRigma::Classes::Work::_process_lang_array()
-     *         Метод для проверки и обработки массива языковых данных.
-     * @see    PhotoRigma::Classes::Work::$lang
-     *         Свойство класса Work, которое изменяется.
-     * @see    PhotoRigma::Classes::Work_CoreLogic::$lang
-     *         Свойство дочернего класса Work_CoreLogic.
-     * @see    PhotoRigma::Classes::Work_Template::$lang
-     *         Свойство дочернего класса Work_Template.
-     * @see    PhotoRigma::Interfaces::Cache_Handler_Interface
-     *         Интерфейс для работы с кешем.
-     * @see    PhotoRigma::Classes::Cache_Handler::is_valid()
-     *         Метод для проверки актуальности данных в кеше.
-     * @see    PhotoRigma::Classes::Cache_Handler::update_cache()
-     *         Метод для записи данных в кеш.
-     * @see    PhotoRigma::Classes::Work::set_lang()
-     *         Публичный метод-фасад для вызова `_set_lang_internal`.
+     * @uses \PhotoRigma\Include\log_in_file() Записывает сообщение об ошибке в лог-файл.
+     * @uses \PhotoRigma\Classes\Work::_process_lang_array() Метод для проверки и обработки массива языковых данных.
+     * @uses \PhotoRigma\Classes\Work::$lang Свойство класса Work, которое изменяется.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::set_lang() Метод дочернего класса Work_CoreLogic.
+     * @uses \PhotoRigma\Classes\Work_Template::set_lang() Метод дочернего класса Work_Template.
+     * @uses \PhotoRigma\Interfaces\Cache_Handler_Interface Интерфейс для работы с кешем.
+     * @uses \PhotoRigma\Classes\Cache_Handler::is_valid() Метод для проверки актуальности данных в кеше.
+     * @uses \PhotoRigma\Classes\Cache_Handler::update_cache() Метод для записи данных в кеш.
      */
     protected function _set_lang_internal(): void
     {
@@ -1343,28 +1001,25 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения. Возвращает массив с
-     *          информацией об ошибках, изменениях и обработанном массиве.
+     * Обрабатывает массив языковых переменных, проверяя его структуру и очищая значения. Возвращает массив с
+     * информацией об ошибках, изменениях и обработанном массиве.
      *
-     * @details Этот метод выполняет следующие шаги:
-     *          1. Проверяет, что ключи первого уровня массива являются строками.
-     *          2. Проверяет, что значения первого уровня являются массивами.
-     *          3. Проверяет, что ключи второго уровня являются строками:
-     *             - Если ключ не является строкой, он преобразуется в строку.
-     *             - Старый ключ удаляется, а новый добавляется в массив.
-     *          4. Проверяет, что значения второго уровня являются строками.
-     *          5. Очищает значения второго уровня через метод `clean_field()` для защиты от XSS:
-     *             - Если значение было изменено при очистке, сохраняется информация об оригинальном и очищенном
-     *             значениях.
-     *          6. Возвращает массив с результатами обработки:
-     *             - `'errors'`: Массив ошибок, если они есть (например, некорректные ключи или значения).
-     *             - `'changes'`: Массив изменений, если значения были очищены (содержит оригинальные и очищенные
-     *             значения).
-     *             - `'result'`: Обработанный массив языковых переменных.
-     *          Этот метод является приватным и предназначен только для использования внутри класса.
+     * Этот метод выполняет следующие шаги:
+     * 1. Проверяет, что ключи первого уровня массива являются строками.
+     * 2. Проверяет, что значения первого уровня являются массивами.
+     * 3. Проверяет, что ключи второго уровня являются строками:
+     *    - Если ключ не является строкой, он преобразуется в строку.
+     *    - Старый ключ удаляется, а новый добавляется в массив.
+     * 4. Проверяет, что значения второго уровня являются строками.
+     * 5. Очищает значения второго уровня через метод `clean_field()` для защиты от XSS:
+     *    - Если значение было изменено при очистке, сохраняется информация об оригинальном и очищенном значениях.
+     * 6. Возвращает массив с результатами обработки:
+     *    - `'errors'`: Массив ошибок, если они есть (например, некорректные ключи или значения).
+     *    - `'changes'`: Массив изменений, если значения были очищены (содержит оригинальные и очищенные значения).
+     *    - `'result'`: Обработанный массив языковых переменных.
+     * Этот метод является приватным и предназначен только для использования внутри класса.
      *
      * @internal
-     * @callergraph
      *
      * @param array $lang Массив языковых переменных для обработки:
      *                    - Ключи первого уровня должны быть строками.
@@ -1375,25 +1030,14 @@ class Work implements Work_Interface
      * @return array Массив с результатами обработки:
      *               - `'errors'` (array): Массив ошибок, если они есть (например, некорректные ключи или значения).
      *               - `'changes'` (array): Массив изменений, если значения были очищены (содержит оригинальные и
-     *               очищенные значения).
+     *                 очищенные значения).
      *               - `'result'` (array): Обработанный массив языковых переменных.
      *
      * @note    Используется метод `clean_field()` для очистки значений (защита от XSS).
      *
      * @warning Метод чувствителен к структуре входного массива. Некорректная структура может привести к ошибкам.
      *
-     * Пример вызова метода внутри класса
-     * @code
-     * $result = $this->_process_lang_array([
-     *     'greeting' => [
-     *         'hello' => 'Hello, World!',
-     *         'goodbye' => 'Goodbye, World!',
-     *     ],
-     * ]);
-     * print_r($result);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work::clean_field()
-     *         Метод для очистки и экранирования полей (защита от XSS).
+     * @uses \PhotoRigma\Classes\Work::clean_field() Метод для очистки и экранирования полей (защита от XSS).
      */
     private function _process_lang_array(array $lang): array
     {
@@ -1458,13 +1102,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.
+     * Очищает строку от HTML-тегов и специальных символов через вызов публичного метода в дочернем классе.
      *
-     * @details Этот статический метод является фасадом для вызова публичного метода clean_field()
-     *          в дочернем классе Work_Helper. Он выполняет очистку строки от HTML-тегов и экранирует специальные
-     *          символы для защиты от XSS-атак и других проблем, связанных с некорректными данными.
-     *
-     * @callgraph
+     * Этот статический метод является фасадом для вызова публичного метода clean_field() в дочернем классе
+     * Work_Helper. Он выполняет очистку строки от HTML-тегов и экранирует специальные символы для защиты от XSS-атак
+     * и других проблем, связанных с некорректными данными.
      *
      * @param string $field Строка или данные, которые могут быть преобразованы в строку:
      *                      - Если входные данные пусты (`null` или пустая строка), метод вернёт пустую строку (`''`).
@@ -1474,15 +1116,8 @@ class Work implements Work_Interface
      * @warning Метод не обрабатывает вложенные структуры данных (например, массивы).
      *          Убедитесь, что входные данные могут быть преобразованы в строку.
      *
-     * Пример использования:
-     * @code
-     * // Очистка строки от HTML-тегов и специальных символов
-     * $dirty_input = '<script>alert("XSS")</script>';
-     * $cleaned = \PhotoRigma\Classes\Work::clean_field($dirty_input);
-     * echo $cleaned; // Выведет: <script>alert(&quot;XSS&quot;)</script>
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Helper::clean_field()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Helper::clean_field() Публичный метод в дочернем классе, реализующий основную
+     *                                                      логику.
      */
     public static function clean_field(string $field): string
     {
@@ -1490,16 +1125,13 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Установка объекта пользователя через сеттер.
+     * Установка объекта пользователя через сеттер.
      *
-     * @details Этот метод позволяет установить объект пользователя, реализующий интерфейс `User_Interface`.
-     *          Метод выполняет следующие действия:
-     *          1. Проверяет, что переданный объект является экземпляром класса, реализующего интерфейс
-     *             `User_Interface`.
-     *          2. Передаёт объект пользователя в связанные компоненты системы (`Work_Template` и `Work_CoreLogic`)
-     *             для дальнейшего использования.
-     *
-     * @callgraph
+     * Этот метод позволяет установить объект пользователя, реализующий интерфейс `User_Interface`.
+     * Метод выполняет следующие действия:
+     * 1. Проверяет, что переданный объект является экземпляром класса, реализующего интерфейс `User_Interface`.
+     * 2. Передаёт объект пользователя в связанные компоненты системы (`Work_Template` и `Work_CoreLogic`) для
+     *    дальнейшего использования.
      *
      * @param User_Interface $user Объект пользователя:
      *                             - Должен быть экземпляром класса, реализующего интерфейс `User_Interface`.
@@ -1512,19 +1144,9 @@ class Work implements Work_Interface
      *
      * @warning Некорректный объект (не экземпляр интерфейса `User_Interface`) вызывает исключение.
      *
-     * Пример использования:
-     * @code
-     * // Создание объекта Work и установка пользователя
-     * $work = new \PhotoRigma\Classes\Work();
-     * $user = new \PhotoRigma\Classes\User($db, $_SESSION);
-     * $work->set_user($user);
-     * @endcode
-     * @see    PhotoRigma::Classes::User_Interface
-     *         Интерфейс, которому должен соответствовать объект пользователя.
-     * @see    PhotoRigma::Classes::Work_Template
-     *         Класс, использующий объект пользователя.
-     * @see    PhotoRigma::Classes::Work_CoreLogic
-     *         Класс, использующий объект пользователя.
+     * @uses \PhotoRigma\Classes\User_Interface Интерфейс, которому должен соответствовать объект пользователя.
+     * @uses \PhotoRigma\Classes\Work_Template::set_user() Метод, использующий объект пользователя.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::set_user() Метод, использующий объект пользователя.
      */
     public function set_user(User_Interface $user): void
     {
@@ -1533,14 +1155,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Проверяет URL на наличие вредоносного кода через вызов внутреннего метода.
+     * Проверяет URL на наличие вредоносного кода через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода url_check()
-     *          в классе Work_Security. Он проверяет строку запроса из глобального массива `$_SERVER['QUERY_STRING']`
-     *          на наличие запрещённых паттернов, определённых в массиве
-     *          PhotoRigma::Classes::Work_Security::$compiled_rules.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода url_check() в классе Work_Security. Он
+     * проверяет строку запроса из глобального массива `$_SERVER['QUERY_STRING']` на наличие запрещённых паттернов,
+     * определённых в массиве \PhotoRigma\Classes\Work_Security::$compiled_rules.
      *
      * @return bool True, если URL безопасен (не содержит запрещённых паттернов), иначе False.
      *
@@ -1549,21 +1168,11 @@ class Work implements Work_Interface
      * @note    Метод работает с глобальным массивом `$_SERVER['QUERY_STRING']`.
      *          Убедитесь, что этот массив доступен и содержит корректные данные.
      *
-     * @warning Метод зависит от корректности данных в свойстве PhotoRigma::Classes::Work_Security::$compiled_rules.
+     * @warning Метод зависит от корректности данных в свойстве\PhotoRigma\Classes\Work_Security::$compiled_rules.
      *          Если правила некорректны, результат может быть непредсказуемым.
      *
-     * Пример использования:
-     * @code
-     * // Проверка безопасности URL
-     * $is_safe = $work->url_check();
-     * if ($is_safe) {
-     *     echo "URL безопасен.";
-     * } else {
-     *     echo "URL содержит запрещённые паттерны.";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Security::url_check()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Security::url_check() Публичный метод в дочернем классе, реализующий основную
+     *                                                      логику.
      */
     public function url_check(): bool
     {
@@ -1571,13 +1180,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Генерирует математический CAPTCHA-вопрос и ответ через вызов внутреннего метода.
+     * Генерирует математический CAPTCHA-вопрос и ответ через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода gen_captcha()
-     *          в классе Work_Security. Он генерирует случайное математическое выражение и вычисляет его результат
-     *          для защиты от спам-ботов.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода gen_captcha() в классе Work_Security. Он
+     * генерирует случайное математическое выражение и вычисляет его результат для защиты от спам-ботов.
      *
      * @return array Массив с ключами 'question' и 'answer':
      *               - Ключ 'question' содержит строку математического выражения (например, "2 x (3 + 4)").
@@ -1590,15 +1196,8 @@ class Work implements Work_Interface
      *
      * @warning Убедитесь, что PHP поддерживает функцию `random_int()`, так как её отсутствие приведёт к ошибке.
      *
-     * Пример использования:
-     * @code
-     * // Генерация CAPTCHA-вопроса и ответа
-     * $captcha = $work->gen_captcha();
-     * echo "Вопрос: {$captcha['question']}\n";
-     * echo "Ответ: {$captcha['answer']}\n";
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Security::gen_captcha()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Security::gen_captcha() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public function gen_captcha(): array
     {
@@ -1606,13 +1205,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Заменяет символы в email-адресах через вызов внутреннего метода.
+     * Заменяет символы в email-адресах через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода filt_email()
-     *          в классе Work_Security. Он проверяет корректность формата email и заменяет символы '@' и '.' на '[at]'
-     *          и '[dot]' соответственно для затруднения автоматического парсинга email-адресов ботами.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода filt_email() в классе Work_Security. Он
+     * проверяет корректность формата email и заменяет символы '@' и '.' на '[at]' и '[dot]' соответственно для
+     * затруднения автоматического парсинга email-адресов ботами.
      *
      * @param string $email Email-адрес для обработки:
      *                      - Должен быть непустым и соответствовать формату email (например, "example@local.com").
@@ -1630,19 +1227,8 @@ class Work implements Work_Interface
      * @warning Убедитесь, что входной email соответствует формату перед вызовом метода.
      *          Если email некорректен или пуст, метод вернёт пустую строку.
      *
-     * Пример использования:
-     * @code
-     * // Обработка email-адреса
-     * $email = "example@local.com";
-     * $filtered_email = $work->filt_email($email);
-     * if (!empty($filtered_email)) {
-     *     echo "Обработанный email: {$filtered_email}";
-     * } else {
-     *     echo "Email некорректен или пуст.";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Security::filt_email()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Security::filt_email() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public function filt_email(string $email): string
     {
@@ -1650,13 +1236,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Удаляет изображение с указанным идентификатором через вызов внутреннего метода.
+     * Удаляет изображение с указанным идентификатором через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода del_photo()
-     *          в классе Work_CoreLogic. Он выполняет удаление изображения с указанным идентификатором, а также все
-     *          упоминания об этом изображении в таблицах сайта.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода del_photo() в классе Work_CoreLogic. Он
+     * выполняет удаление изображения с указанным идентификатором, а также все упоминания об этом изображении в
+     * таблицах сайта.
      *
      * @param int $photo_id Идентификатор удаляемого изображения:
      *                      - Должен быть положительным целым числом.
@@ -1664,12 +1248,8 @@ class Work implements Work_Interface
      * @return bool True, если удаление успешно, иначе False.
      *
      * @throws InvalidArgumentException Если параметр photo_id имеет некорректный тип или значение.
-     *                                  Пример сообщения:
-     *                                      Неверное значение параметра photo_id | Ожидалось положительное целое число.
      * @throws RuntimeException         Если возникает ошибка при выполнении запросов к базе данных или удалении
      *                                  файлов.
-     *                                  Пример сообщения:
-     *                                      Не удалось найти изображение | Переменная photo_id = [значение].
      * @throws Exception                При записи ошибок в лог через log_in_file().
      *
      * @note    Используются константы:
@@ -1681,18 +1261,8 @@ class Work implements Work_Interface
      *          Удаление файлов и записей из базы данных необратимо. Убедитесь, что передан корректный идентификатор
      *          изображения.
      *
-     * Пример использования:
-     * @code
-     * // Удаление изображения с ID = 42
-     * $result = $work->del_photo(42);
-     * if ($result) {
-     *     echo "Изображение успешно удалено.";
-     * } else {
-     *     echo "Не удалось удалить изображение.";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::del_photo()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::del_photo() Публичный метод в дочернем классе, реализующий основную
+     *                                                       логику.
      */
     public function del_photo(int $photo_id): bool
     {
@@ -1700,14 +1270,12 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Получает данные о новостях в зависимости от типа запроса через вызов внутреннего метода.
+     * Получает данные о новостях в зависимости от типа запроса через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода news()
-     *          в классе Work_CoreLogic. Он выполняет запросы к базе данных для получения данных о новостях:
-     *          - Для `$act = 'id'`: Возвращает новость по её ID.
-     *          - Для `$act = 'last'`: Возвращает список новостей с сортировкой по дате последнего редактирования.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода news() в классе Work_CoreLogic. Он
+     * выполняет запросы к базе данных для получения данных о новостях:
+     * - Для `$act = 'id'`: Возвращает новость по её ID.
+     * - Для `$act = 'last'`: Возвращает список новостей с сортировкой по дате последнего редактирования.
      *
      * @param int    $news_id_or_limit Количество новостей или ID новости (в зависимости от параметра `$act`):
      *                                 - Должен быть положительным целым числом.
@@ -1719,15 +1287,7 @@ class Work implements Work_Interface
      * @return array Массив с данными о новостях. Если новостей нет, возвращается пустой массив.
      *
      * @throws InvalidArgumentException Если передан некорректный `$act` или `$news_id_or_limit`.
-     *                                  Пример сообщения:
-     *                                      Некорректный ID новости | Переменная $news_id_or_limit = [значение].
-     *                                  Пример сообщения:
-     *                                      Некорректное количество новостей | Переменная $news_id_or_limit =
-     *                                      [значение]. Пример сообщения: Некорректный тип запроса | Переменная $act =
-     *                                      '$act'.
      * @throws RuntimeException         Если произошла ошибка при выполнении запроса к базе данных.
-     *                                  Пример сообщения:
-     *                                      Не удалось получить данные из базы данных | Тип запроса: '$act'.
      * @throws Exception                При выполнении запросов к базам данных.
      *
      * @note    Используются константы:
@@ -1737,18 +1297,7 @@ class Work implements Work_Interface
      *          Убедитесь, что передаются допустимые значения.
      *          Если новости не найдены, метод возвращает пустой массив.
      *
-     * Пример использования:
-     * @code
-     * // Получение новости с ID = 5
-     * $news_by_id = $work->news(5, 'id');
-     * print_r($news_by_id);
-     *
-     * // Получение 10 последних новостей
-     * $news_list = $work->news(10, 'last');
-     * print_r($news_list);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::news()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::news() Публичный метод в дочернем классе, реализующий основную логику.
      */
     public function news(int $news_id_or_limit, string $act): array
     {
@@ -1756,13 +1305,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Загружает доступные языки из директории /language/ через вызов внутреннего метода.
+     * Загружает доступные языки из директории /language/ через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода get_languages()
-     *          в классе Work_CoreLogic. Он выполняет загрузку доступных языков, проверяя поддиректории в `/language/`
-     *          и безопасно подключая файлы `main.php` для получения названий языков.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода get_languages() в классе Work_CoreLogic.
+     * Он выполняет загрузку доступных языков, проверяя поддиректории в `/language/` и безопасно подключая файлы
+     * `main.php` для получения названий языков.
      *
      * @return array Массив с данными о доступных языках. Каждый элемент массива содержит:
      *               - `value`: Имя директории языка (строка).
@@ -1777,18 +1324,10 @@ class Work implements Work_Interface
      *          Убедитесь, что:
      *          - Файл `main.php` содержит корректную переменную `lang_name` (строка, не пустая).
      *          - Поддиректории находятся внутри директории `/language/`.
-     * @warning Если директория `/language/` пуста или содержит недоступные поддиректории, метод выбрасывает исключение.
+     *          Если директория `/language/` пуста или содержит недоступные поддиректории, метод выбрасывает исключение.
      *
-     * Пример использования:
-     * @code
-     * // Получение списка доступных языков
-     * $languages = $work->get_languages();
-     * foreach ($languages as $language) {
-     *     echo "Язык: " . $language['name'] . " (ID: " . $language['value'] . ")\n";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::get_languages()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::get_languages() Публичный метод в дочернем классе, реализующий
+     *                                                           основную логику.
      */
     public function get_languages(): array
     {
@@ -1796,13 +1335,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Загружает доступные темы из директории /themes/ через вызов внутреннего метода.
+     * Загружает доступные темы из директории /themes/ через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода get_themes()
-     *          в классе Work_CoreLogic. Он выполняет загрузку доступных тем, проверяя поддиректории в `/themes/`
-     *          и добавляя их в список доступных тем.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода get_themes() в классе Work_CoreLogic. Он
+     * выполняет загрузку доступных тем, проверяя поддиректории в `/themes/` и добавляя их в список доступных тем.
      *
      * @return array Массив с именами доступных тем (строки).
      *
@@ -1817,16 +1353,8 @@ class Work implements Work_Interface
      *           - Поддиректории находятся внутри директории `/themes/`.
      *          Если директория `/themes/` пуста или содержит недоступные поддиректории, метод выбрасывает исключение.
      *
-     * Пример использования:
-     * @code
-     * // Получение списка доступных тем
-     * $themes = $work->get_themes();
-     * foreach ($themes as $theme) {
-     *     echo "Доступная тема: $theme\n";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::get_themes()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::get_themes() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public function get_themes(): array
     {
@@ -1834,16 +1362,14 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода.
+     * Генерирует блок данных для вывода изображений различных типов через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода create_photo()
-     *          в классе Work_CoreLogic. Он генерирует данные для вывода изображений различных типов:
-     *          - 'top':  Лучшее изображение (по рейтингу).
-     *          - 'last': Последнее загруженное изображение.
-     *          - 'cat':  Изображение из конкретной категории (требует указания `$id_photo`).
-     *          - 'rand': Любое случайное изображение.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода create_photo() в классе Work_CoreLogic.
+     * Он генерирует данные для вывода изображений различных типов:
+     * - 'top':  Лучшее изображение (по рейтингу).
+     * - 'last': Последнее загруженное изображение.
+     * - 'cat':  Изображение из конкретной категории (требует указания `$id_photo`).
+     * - 'rand': Любое случайное изображение.
      *
      * @param string $type     Тип изображения:
      *                         - 'top':  Лучшее изображение (по рейтингу).
@@ -1872,11 +1398,7 @@ class Work implements Work_Interface
      *               - 'height'               (int):         Высота изображения после масштабирования.
      *
      * @throws InvalidArgumentException Если передан недопустимый `$type` или `$id_photo < 0`.
-     *                                  Пример сообщения:
-     *                                      Некорректный идентификатор фотографии | Значение: {$id_photo}.
      * @throws PDOException             Если произошла ошибка при выборке данных из базы данных.
-     *                                  Пример сообщения:
-     *                                      Не удалось получить данные категории с ID: {$photo_data['category']}.
      * @throws RuntimeException         Если файл изображения недоступен или не существует.
      * @throws Exception                При записи ошибок в лог через `log_in_file()`.
      *
@@ -1892,18 +1414,8 @@ class Work implements Work_Interface
      *          Проверка пути к файлу изображения гарантирует, что доступ возможен только к файлам внутри
      *          директории, указанной в конфигурации.
      *
-     * Пример использования:
-     * @code
-     * // Получение данных для вывода лучшего изображения
-     * $top_photo = $work->create_photo('top', 0);
-     * print_r($top_photo);
-     *
-     * // Получение данных для вывода изображения из категории с ID = 5
-     * $category_photo = $work->create_photo('cat', 5);
-     * print_r($category_photo);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::create_photo()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::create_photo() Публичный метод в дочернем классе, реализующий
+     *                                                          основную логику.
      */
     public function create_photo(string $type = 'top', int $id_photo = 0): array
     {
@@ -1911,13 +1423,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Добавляет новую оценку в таблицу и возвращает среднюю оценку через вызов внутреннего метода.
+     * Добавляет новую оценку в таблицу и возвращает среднюю оценку через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода process_rating()
-     *          в классе Work_CoreLogic. Он выполняет добавление новой оценки в указанную таблицу,
-     *          проверяет успешность вставки и возвращает среднюю оценку для фотографии.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода process_rating() в классе Work_CoreLogic.
+     * Он выполняет добавление новой оценки в указанную таблицу, проверяет успешность вставки и возвращает среднюю
+     * оценку для фотографии.
      *
      * @param string $table      Имя таблицы для вставки оценки:
      *                           - `'rate_user'`: Таблица с оценками фотографий от пользователей.
@@ -1932,8 +1442,8 @@ class Work implements Work_Interface
      * @return float Возвращает число с плавающей точкой, представляющее среднюю оценку.
      *               Если оценок нет, возвращается `0`.
      *
-     * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку.
-     *                              Причина: `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
+     * @throws RuntimeException Выбрасывается исключение, если не удалось добавить оценку. Причина:
+     *                          `get_last_insert_id()` возвращает `0`, что указывает на неудачную вставку.
      * @throws Exception        При выполнении запросов к базам данных.
      *
      * @note    Используются константы:
@@ -1943,14 +1453,8 @@ class Work implements Work_Interface
      *          - Параметр `$table` соответствует одной из допустимых таблиц (`'rate_user'` или `'rate_moder'`).
      *          - В СУБД настроены триггеры и функции для перерасчета средней оценки.
      *
-     * Пример использования:
-     * @code
-     * // Добавление оценки и получение средней оценки
-     * $averageRate = $work->process_rating('rate_user', 123, 456, 5);
-     * echo "Средняя оценка: {$averageRate}";
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_CoreLogic::process_rating()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::process_rating() Публичный метод в дочернем классе, реализующий
+     *                                                            основную логику.
      */
     public function process_rating(string $table, int $photo_id, int $user_id, int $rate_value): float
     {
@@ -1958,12 +1462,31 @@ class Work implements Work_Interface
     }
 
     /**
-     * Ищет файл действия в директориях $this->config['action_dir']
+     * Поиск файла действия.
      *
-     * @param string|null $action Имя действия из $_GET
-     * @return array Имя действия и полный путь к .php-файлу
-     * @throws RuntimeException Если файл не найден
-     * @throws Exception При ошибках check_input()
+     * Метод передаёт управление внутреннему методу `find_action_file()` из дочерного класса `Work_CoreLogic`.
+     * Используется для получения:
+     * - Имени действия
+     * - Полного пути к .php-файлу в директории $this->config['action_dir']
+     *
+     * @param string|null $action Имя действия из $_GET или NULL (для CLI)
+     *                            Пример: 'admin', 'profile'
+     *
+     * @return array [
+     *               'action_name' => string,
+     *               'full_path'   => string
+     *              ]
+     *              Возвращает имя действия и путь к найденному файлу
+     *
+     * @throws RuntimeException Выбрасывается, если файл действия не найден
+     * @throws Exception        При ошибках проверки входных данных через check_input()
+     *
+     * @note    Реализация находится в `_find_action_file_internal()`
+     *          Поддерживает вызов как через веб, так и через CLI
+     *
+     * @warning Не используйте недопустимые символы в $action — это может привести к ошибкам
+     *
+     * @uses \PhotoRigma\Classes\Work_CoreLogic::find_action_file() Метод логики поиска файла из дочерного класса.
      */
     public function find_action_file(?string $action): array
     {
@@ -1971,13 +1494,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Формирует массив данных для меню через вызов внутреннего метода.
+     * Формирует массив данных для меню через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода create_menu()
-     *          в классе Work_Template. Он формирует массив данных для меню в зависимости от типа и активного пункта,
-     *          выполняя запросы к базе данных и проверяя права доступа пользователя.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода create_menu() в классе Work_Template. Он
+     * формирует массив данных для меню в зависимости от типа и активного пункта, выполняя запросы к базе данных и
+     * проверяя права доступа пользователя.
      *
      * @param string $action Активный пункт меню:
      *                       - Указывается строка, соответствующая активному пункту меню (например, 'home', 'profile').
@@ -2005,18 +1526,8 @@ class Work implements Work_Interface
      * @warning Убедитесь, что передаваемые параметры корректны, так как это может привести к ошибкам.
      *          Также убедитесь, что права доступа пользователя настроены правильно.
      *
-     * Пример использования:
-     * @code
-     * // Создание горизонтального меню
-     * $short_menu = $work->create_menu('home', SHORT_MENU);
-     * print_r($short_menu);
-     *
-     * // Создание вертикального меню
-     * $long_menu = $work->create_menu('profile', LONG_MENU);
-     * print_r($long_menu);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Template::create_menu()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Template::create_menu() Публичный метод в дочернем классе, реализующий основную
+     *                                                        логику.
      */
     public function create_menu(string $action, int $menu): array
     {
@@ -2024,47 +1535,39 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Формирует блок пользователя через вызов внутреннего метода.
+     * Формирует блок пользователя через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода template_user()
-     *          в классе Work_Template. Он формирует массив данных для блока пользователя, который используется
-     *          для отображения в шаблоне. Блок зависит от статуса авторизации пользователя:
-     *          - Для неавторизованных пользователей: ссылки на вход, восстановление пароля и регистрацию.
-     *          - Для авторизованных пользователей: приветствие, группа и аватар.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода template_user() в классе Work_Template.
+     * Он формирует массив данных для блока пользователя, который используется для отображения в шаблоне. Блок
+     * зависит от статуса авторизации пользователя:
+     * - Для неавторизованных пользователей: ссылки на вход, восстановление пароля и регистрацию.
+     * - Для авторизованных пользователей: приветствие, группа и аватар.
      *
      * @return array Массив с данными для блока пользователя:
      *               - Для неавторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока (локализованное).
      *                 - 'CSRF_TOKEN': CSRF-токен для защиты формы.
      *                 - 'L_LOGIN', 'L_PASSWORD', 'L_ENTER', 'L_FORGOT_PASSWORD', 'L_REGISTRATION': Локализованные
-     *                 строки.
+     *                   строки.
      *                 - 'U_LOGIN', 'U_FORGOT_PASSWORD', 'U_REGISTRATION': URL для входа, восстановления пароля и
-     *                 регистрации.
+     *                   регистрации.
      *               - Для авторизованных пользователей:
      *                 - 'NAME_BLOCK': Название блока (локализованное).
      *                 - 'L_HI_USER': Приветствие с именем пользователя (локализованное).
      *                 - 'L_GROUP': Группа пользователя (локализованная строка).
      *                 - 'U_AVATAR': URL аватара (или дефолтного аватара, если файл недоступен или некорректен).
      *
-     * @throws RuntimeException Если данные пользователя некорректны.
+     * @throws RuntimeException       Если данные пользователя некорректны.
      * @throws Random\RandomException При ошибке генерации CSRF-токена.
-     * @throws Exception При ошибках проверки MIME-типа файла или логирования.
+     * @throws Exception              При ошибках проверки MIME-типа файла или логирования.
      *
      * @note    Константа DEFAULT_AVATAR определяет значение аватара по умолчанию (например, 'no_avatar.jpg').
      *
      * @warning Убедитесь, что объект пользователя корректно установлен перед вызовом метода.
      *          Также убедитесь, что конфигурация аватаров настроена правильно.
      *
-     * Пример использования:
-     * @code
-     * // Получение данных для блока пользователя
-     * $array_data = $work->template_user();
-     * print_r($array_data);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Template::template_user()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Template::template_user() Публичный метод в дочернем классе, реализующий
+     *                                                          основную логику.
      */
     public function template_user(): array
     {
@@ -2072,16 +1575,13 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Генерирует массив статистических данных для шаблона через вызов внутреннего метода.
+     * Генерирует массив статистических данных для шаблона через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является фасадом и перенаправляет вызов на реализацию в дочернем классе
-     *          `Work_Template::template_stat()`. Он обеспечивает единый интерфейс для получения общей
-     *          статистики сайта, независимо от конкретной реализации в подклассе.
-     *
-     *          Метод должен использоваться как основная точка входа для клиентского кода,
-     *          минимизируя прямые зависимости от дочерних реализаций.
-     *
-     * @callgraph
+     * Этот публичный метод является фасадом и перенаправляет вызов на реализацию в дочернем классе
+     * `Work_Template::template_stat()`. Он обеспечивает единый интерфейс для получения общей статистики сайта,
+     * независимо от конкретной реализации в подклассе.
+     * Метод должен использоваться как основная точка входа для клиентского кода, минимизируя прямые зависимости от
+     * дочерних реализаций.
      *
      * @return array Ассоциативный массив данных для вывода статистики:
      *               - NAME_BLOCK:        Название блока статистики (локализованное).
@@ -2112,14 +1612,8 @@ class Work implements Work_Interface
      * @warning Не рекомендуется переопределять этот метод в дочерних классах. Для изменения логики
      *          следует изменять реализацию в дочернем классе, сохраняя контракт метода.
      *
-     * Пример использования:
-     * @code
-     * // Получение данных для шаблона
-     * $stat_data = $work->template_stat();
-     * print_r($stat_data);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Template::template_stat()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Template::template_stat() Публичный метод в дочернем классе, реализующий
+     *                                                          основную логику.
      */
     public function template_stat(): array
     {
@@ -2127,16 +1621,13 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннего
-     *          метода.
+     * Формирует список пользователей, загрузивших наибольшее количество изображений, через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода template_best_user()
-     *          в классе Work_Template. Он выполняет запросы к базе данных для получения списка пользователей,
-     *          загрузивших наибольшее количество изображений, и формирует массив данных для вывода в шаблон.
-     *          Метод использует данные: только активированных пользователей, с подтверждённой почтой и не удалённых.
-     *          Помечает заблокированных пользователей булевым полем.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода template_best_user() в классе
+     * Work_Template. Он выполняет запросы к базе данных для получения списка пользователей, загрузивших наибольшее
+     * количество изображений, и формирует массив данных для вывода в шаблон. Метод использует данные: только
+     * активированных пользователей, с подтверждённой почтой и не удалённых. Помечает заблокированных пользователей
+     * булевым полем.
      *
      * @param int $best_user Количество лучших пользователей для вывода:
      *                       - Должно быть положительным целым числом.
@@ -2167,14 +1658,8 @@ class Work implements Work_Interface
      * @warning Убедитесь, что таблицы базы данных (TBL_USERS, TBL_PHOTO, TBL_USERS_BANS)
      *          содержат корректные данные. Ошибки в структуре таблиц могут привести к некорректному результату.
      *
-     * Пример использования:
-     * @code
-     * // Получение списка 3 лучших пользователей
-     * $best_users = $work->template_best_user(3);
-     * print_r($best_users);
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Template::template_best_user()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Template::template_best_user() Публичный метод в дочернем классе, реализующий
+     *                                                               основную логику.
      */
     public function template_best_user(int $best_user = 1): array
     {
@@ -2182,13 +1667,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Вычисляет размеры для вывода эскиза изображения через вызов внутреннего метода.
+     * Вычисляет размеры для вывода эскиза изображения через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода size_image()
-     *          в классе Work_Image. Он вычисляет ширину и высоту эскиза на основе реальных размеров изображения
-     *          и конфигурационных параметров.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода size_image() в классе Work_Image. Он
+     * вычисляет ширину и высоту эскиза на основе реальных размеров изображения и конфигурационных параметров.
      *
      * @param string $path_image Путь к файлу изображения:
      *                           - Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
@@ -2206,15 +1688,8 @@ class Work implements Work_Interface
      * @warning Метод зависит от корректности данных в конфигурации (`temp_photo_w` и `temp_photo_h`).
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
      *
-     * Пример использования:
-     * @code
-     * // Вычисление размеров эскиза для изображения
-     * $path = '/path/to/image.jpg';
-     * $sizes = $work->size_image($path);
-     * echo "Ширина: {$sizes['width']}, Высота: {$sizes['height']}";
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::size_image()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::size_image() Публичный метод в дочернем классе, реализующий основную
+     *                                                    логику.
      */
     public function size_image(string $path_image): array
     {
@@ -2222,26 +1697,24 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Изменяет размер изображения через вызов внутреннего метода.
+     * Изменяет размер изображения через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода image_resize()
-     *          в классе Work_Image. Он изменяет размер исходного изображения и сохраняет результат как эскиз,
-     *          проверяя корректность путей, размеры изображения и доступность директорий.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода image_resize() в классе Work_Image. Он
+     * изменяет размер исходного изображения и сохраняет результат как эскиз, проверяя корректность путей, размеры
+     * изображения и доступность директорий.
      *
      * @param string $full_path      Путь к исходному изображению:
      *                               - Путь должен быть абсолютным, соответствовать регулярному выражению
-     *                               `/^[a-zA-Z0-9\/\.\-_]+$/`, и файл должен существовать и быть доступным для
-     *                               чтения.
+     *                                 `/^[a-zA-Z0-9\/\.\-_]+$/`, и файл должен существовать и быть доступным для
+     *                                 чтения.
      * @param string $thumbnail_path Путь для сохранения эскиза:
      *                               - Путь должен быть абсолютным, и директория должна быть доступна для записи.
      *
      * @return bool True, если операция выполнена успешно, иначе False.
      *
      * @throws InvalidArgumentException Если пути к файлам некорректны или имеют недопустимый формат.
-     * @throws RuntimeException Если возникли ошибки при проверке файлов, директорий или размеров изображения.
-     * @throws Exception При возникновении ошибок логирования информации.
+     * @throws RuntimeException         Если возникли ошибки при проверке файлов, директорий или размеров изображения.
+     * @throws Exception                При возникновении ошибок логирования информации.
      *
      * @note    Метод использует следующие константы класса Work_Image для ограничения размеров исходного изображения:
      *          - `MAX_IMAGE_WIDTH`:  Максимальная ширина исходного изображения (в пикселях). Значение: 5000.
@@ -2251,20 +1724,8 @@ class Work implements Work_Interface
      *          Если эти параметры некорректны, результат может быть непредсказуемым.
      *          Убедитесь, что пути к файлам и директориям корректны перед вызовом метода.
      *
-     * Пример использования:
-     * @code
-     * // Изменение размера изображения
-     * $full_path = '/path/to/source_image.jpg';
-     * $thumbnail_path = '/path/to/thumbnail.jpg';
-     * $success = $work->image_resize($full_path, $thumbnail_path);
-     * if ($success) {
-     *     echo "Эскиз успешно создан.";
-     * } else {
-     *     echo "Ошибка при создании эскиза.";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::image_resize()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::image_resize() Публичный метод в дочернем классе, реализующий основную
+     *                                                      логику.
      */
     public function image_resize(string $full_path, string $thumbnail_path): bool
     {
@@ -2272,14 +1733,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Возвращает данные для отсутствующего изображения через вызов внутреннего метода.
+     * Возвращает данные для отсутствующего изображения через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода no_photo()
-     *          в классе Work_Image. Он формирует массив данных, который используется для представления информации
-     *          об отсутствующем изображении. Это может быть полезно, например, если изображение не найдено или
-     *          недоступно.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода no_photo() в классе Work_Image. Он
+     * формирует массив данных, который используется для представления информации об отсутствующем изображении. Это
+     * может быть полезно, например, если изображение не найдено или недоступно.
      *
      * @return array Массив данных об изображении или его отсутствии:
      *               - 'url'                  (string): URL полноразмерного изображения.
@@ -2300,15 +1758,7 @@ class Work implements Work_Interface
      * @warning Метод зависит от корректности данных в конфигурации (`site_url`, `site_dir`, `gallery_folder`,
      *          `thumbnail_folder`). Если эти параметры некорректны, результат может быть непредсказуемым.
      *
-     * Пример использования:
-     * @code
-     * // Получение данных для отсутствующего изображения
-     * $noPhotoData = $work->no_photo();
-     * echo "URL изображения: {$noPhotoData['url']}\n";
-     * echo "Описание: {$noPhotoData['description']}\n";
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::no_photo()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::no_photo() Публичный метод в дочернем классе, реализующий основную логику.
      */
     public function no_photo(): array
     {
@@ -2316,14 +1766,11 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Вывод изображения через HTTP через вызов внутреннего метода.
+     * Вывод изображения через HTTP через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода image_attach()
-     *          в классе Work_Image. Он проверяет существование файла, определяет его MIME-тип,
-     *          отправляет заголовки HTTP и выводит содержимое файла. После завершения отправки
-     *          скрипт завершает выполнение.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода image_attach() в классе Work_Image. Он
+     * проверяет существование файла, определяет его MIME-тип, отправляет заголовки HTTP и выводит содержимое файла.
+     * После завершения отправки скрипт завершает выполнение.
      *
      * @param string $full_path Полный путь к файлу:
      *                          - Путь должен быть абсолютным, и файл должен существовать и быть доступным для чтения.
@@ -2346,13 +1793,8 @@ class Work implements Work_Interface
      * @warning Метод завершает выполнение скрипта (`exit`), отправляя заголовки и содержимое файла.
      *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
      *
-     * Пример использования:
-     * @code
-     * // Вывод изображения через HTTP
-     * $work->image_attach('/path/to/image.jpg', 'example.jpg');
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::image_attach()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::image_attach() Публичный метод в дочернем классе, реализующий основную
+     *                                                      логику.
      */
     #[NoReturn] public function image_attach(string $full_path, string $name_file): void
     {
@@ -2360,17 +1802,14 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Корректировка расширения файла в соответствии с его MIME-типом через вызов внутреннего метода.
+     * Корректировка расширения файла в соответствии с его MIME-типом через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода fix_file_extension()
-     *          в классе Work_Image. Он проверяет MIME-тип файла и корректирует или добавляет расширение,
-     *          соответствующее типу файла.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода fix_file_extension() в классе Work_Image.
+     * Он проверяет MIME-тип файла и корректирует или добавляет расширение, соответствующее типу файла.
      *
      * @param string $full_path Полный путь к файлу:
      *                          - Путь должен быть абсолютным, соответствовать регулярному выражению
-     *                          `/^[a-zA-Z0-9\/\.\-_]+$/`, и файл должен существовать и быть доступным для чтения.
+     *                            `/^[a-zA-Z0-9\/\.\-_]+$/`, и файл должен существовать и быть доступным для чтения.
      *
      * @return string Полный путь к файлу с правильным расширением:
      *                - Если расширение было изменено или добавлено, возвращается новый путь.
@@ -2387,15 +1826,8 @@ class Work implements Work_Interface
      * @warning Метод завершает выполнение с ошибкой, если MIME-тип файла не поддерживается.
      *          Убедитесь, что файл существует и доступен для чтения перед вызовом метода.
      *
-     * Пример использования:
-     * @code
-     * // Корректировка расширения файла
-     * $full_path = '/path/to/file_without_extension';
-     * $corrected_path = $work->fix_file_extension($full_path);
-     * echo "Исправленный путь: {$corrected_path}";
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::fix_file_extension()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::fix_file_extension() Публичный метод в дочернем классе, реализующий
+     *                                                            основную логику.
      */
     public function fix_file_extension(string $full_path): string
     {
@@ -2403,13 +1835,10 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Удаляет директорию и её содержимое через вызов внутреннего метода.
+     * Удаляет директорию и её содержимое через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода remove_directory()
-     *          в классе Work_Image. Он удаляет указанную директорию и всё её содержимое, предварительно проверяя права
-     *          доступа.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода remove_directory() в классе Work_Image.
+     * Он удаляет указанную директорию и всё её содержимое, предварительно проверяя права доступа.
      *
      * @param string $path Путь к директории:
      *                     - Должен быть строкой, указывающей на существующую директорию.
@@ -2428,17 +1857,8 @@ class Work implements Work_Interface
      * @warning Используйте этот метод с осторожностью, так как удаление директории необратимо.
      *          Убедитесь, что переданная директория действительно должна быть удалена.
      *
-     * Пример использования:
-     * @code
-     * // Удаление директории
-     * $path = '/path/to/directory';
-     * $result = $work->remove_directory($path);
-     * if ($result) {
-     *     echo "Директория успешно удалена!";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::remove_directory()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::remove_directory() Публичный метод в дочернем классе, реализующий
+     *                                                          основную логику.
      */
     public function remove_directory(string $path): bool
     {
@@ -2446,39 +1866,25 @@ class Work implements Work_Interface
     }
 
     /**
-     * @brief   Создает директории для категории и копирует файлы через вызов внутреннего метода.
+     * Создает директории для категории через вызов внутреннего метода.
      *
-     * @details Этот публичный метод является обёрткой для вызова внутреннего метода create_directory()
-     *          в классе Work_Image. Он создаёт директории для галереи и миниатюр, а также копирует и модифицирует
-     *          файлы `index.php` для новой категории.
-     *
-     * @callgraph
+     * Этот публичный метод является обёрткой для вызова внутреннего метода create_directory() в классе Work_Image.
+     * Он создаёт директории для галереи и миниатюр.
      *
      * @param string $directory_name Имя директории:
      *                               - Должен быть строкой, содержащей только допустимые символы для имён директорий.
      *                               - Не должен содержать запрещённых символов (например, `\/:*?"<>|`).
      *
-     * @return bool Возвращает `true`, если директории успешно созданы и файлы скопированы.
+     * @return bool Возвращает `true`, если директории успешно созданы.
      *
      * @throws RuntimeException Выбрасывается исключение в следующих случаях:
      *                           - Если родительская директория недоступна для записи.
      *                           - Если не удалось создать директории.
-     *                           - Если исходные файлы `index.php` не существуют.
-     *                           - Если не удалось прочитать или записать файлы `index.php`.
      *
-     * @warning Используйте этот метод с осторожностью, так как он создаёт директории и изменяет файлы.
+     * @warning Используйте этот метод с осторожностью, так как он создаёт директории.
      *
-     * Пример использования:
-     * @code
-     * // Создание директорий для новой категории
-     * $directoryName = 'new_category';
-     * $result = $work->create_directory($directoryName);
-     * if ($result) {
-     *     echo "Директории успешно созданы!";
-     * }
-     * @endcode
-     * @see    PhotoRigma::Classes::Work_Image::create_directory()
-     *         Публичный метод в дочернем классе, реализующий основную логику.
+     * @uses \PhotoRigma\Classes\Work_Image::create_directory() Публичный метод в дочернем классе, реализующий
+     *                                                          основную логику.
      */
     public function create_directory(string $directory_name): bool
     {

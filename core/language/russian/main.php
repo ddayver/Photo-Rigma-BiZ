@@ -1,29 +1,27 @@
 <?php
 
-/** @noinspection PhpRedundantVariableDocTypeInspection */
 /**
- * @file      language/russian/main.php
- * @brief     Локализованные строки для основного ядра сайта на русском языке.
+ * Локализованные строки для основного ядра сайта на русском языке.
+ *
+ * Этот файл содержит строки русского языка, используемые в ядре проекта сайта.
+ * Включает тексты для интерфейса, меню, форм, уведомлений и других элементов.
  *
  * @author    Dark Dayver
- * @version   0.4.4
- * @date      2025-05-07
+ * @version   0.5.0
+ * @since     2025-05-29
  * @namespace PhotoRigma\\Language
- *
- * @details   Этот файл содержит строки русского языка, используемые в ядре проекта сайта.
- *            Включает тексты для интерфейса, меню, форм, уведомлений и других элементов.
+ * @package   PhotoRigma
+ * @subpackage Language
  *
  * @section   LanguageRu_Main_Functions Основные функции
  *            - Предоставление локализованных строк для интерфейса.
  *            - Поддержка многоязычности проекта.
  *            - Упрощение обновления текстов через централизованное хранение.
  *
- * @see       @ref LanguageRussian Группа для русской локализации.
- *
  * @note      Этот файл является частью системы PhotoRigma и обеспечивает локализацию проекта на русском языке.
  *
  * @copyright Copyright (c) 2008-2025 Dark Dayver. Все права защищены.
- * @license   MIT License (https://opensource.org/licenses/MIT)
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Разрешается использовать, копировать, изменять, объединять, публиковать,
  *            распространять, сублицензировать и/или продавать копии программного обеспечения,
  *            а также разрешать лицам, которым предоставляется данное программное обеспечение,
@@ -31,6 +29,7 @@
  *            - Уведомление об авторских правах и условия лицензии должны быть включены во все
  *              копии или значимые части программного обеспечения.
  */
+/** @noinspection PhpRedundantVariableDocTypeInspection */
 
 namespace PhotoRigma\Language;
 
@@ -47,40 +46,15 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die('HACK!');
 }
 
-/**
- * @defgroup LanguageRussian Языковые переменные русского языка
- * @brief    Модуль для работы с языковыми переменными на русском языке.
- */
-
-/**
- * @var string $lang_name
- * @brief   Название языка
- * @ingroup LanguageRussian
- */
+/** @var string $lang_name Название языка */
 $lang_name = 'Русский';
 
-/**
- * @var string $lang_id
- * @brief   Идентификатор языка для HTML
- * @ingroup LanguageRussian
- */
+/** @var string $lang_id Идентификатор языка для HTML */
 $lang_id = 'ru';
 
 /**
- * @addtogroup LanguageRussian
- * @{
- */
-
-/**
- * @var array $lang_ru
- * @brief Массив языковыx переменныx
- */
-/** @noinspection PhpUnusedLocalVariableInspection */
-$lang_ru = [];
-
-/**
- * @defgroup LanguageRussianMain Основные языковые переменные
- * @brief    Основные текстовые переменные, используемые на сайте.
+ * @var array $lang_ru Массив языковыx переменныx
+ * @noinspection PhpUnusedLocalVariableInspection
  */
 $lang_ru = [
     'main' => [
@@ -138,10 +112,6 @@ $lang_ru = [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianMenu Переменные для пунктов меню сайта
- * @brief    Текстовые переменные для навигационного меню.
- */
 $lang_ru += [
     'menu' => [
         'name_block'    => 'Панель навигации',
@@ -161,10 +131,6 @@ $lang_ru += [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianCategory Переменные для категорий
- * @brief    Текстовые переменные для работы с разделами и категориями.
- */
 $lang_ru += [
     'category' => [
         'category'            => 'Раздел',
@@ -194,10 +160,6 @@ $lang_ru += [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianLogin Переменные для регистрации и вxода
- * @brief    Текстовые переменные для форм регистрации, вxода и восстановления пароля.
- */
 $lang_ru += [
     'profile' => [
         'regist'                   => 'Регистрация',
@@ -234,10 +196,6 @@ $lang_ru += [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianNews Переменные для новостей
- * @brief    Текстовые переменные для работы с новостями.
- */
 $lang_ru += [
     'news' => [
         'news'      => 'Арxив новостей',
@@ -268,10 +226,6 @@ $lang_ru += [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianPhoto Переменные для фотографий
- * @brief    Текстовые переменные для работы с изображениями.
- */
 $lang_ru += [
     'photo' => [
         'title'           => 'Изображение',
@@ -299,10 +253,6 @@ $lang_ru += [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianSearch Переменные для поиска
- * @brief    Текстовые переменные для страницы поиска.
- */
 $lang_ru += [
     'search' => [
         'title'         => 'Введите строку для поиска и выберите диапазон',
@@ -315,10 +265,6 @@ $lang_ru += [
     ],
 ];
 
-/**
- * @defgroup LanguageRussianAdmin Переменные для админки
- * @brief    Текстовые переменные для панели администратора.
- */
 $lang_ru += [
     'admin' => [
         'title'                         => 'Администрирование',
@@ -410,10 +356,6 @@ $lang_ru += [
         'confirm_delete_group'          => 'Вы действительно xотите удалить эту группу? Пользователи из этой группу будут перенесены в группу по-умолчанию.',
     ],
 ];
-
-/**
- * @}
- */
 
 return [
     'lang_name' => $lang_name,

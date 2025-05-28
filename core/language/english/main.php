@@ -1,29 +1,27 @@
 <?php
 
-/** @noinspection PhpRedundantVariableDocTypeInspection */
 /**
- * @file      language/english/main.php
- * @brief     Localized strings for the core of the site in English.
+ * Localized strings for the core of the site in English.
+ *
+ * This file contains English language strings used in the core of the project.
+ * It includes texts for the interface, menus, forms, notifications, and other elements.
  *
  * @author    Dark Dayver
- * @version   0.4.4
- * @date      2025-05-07
+ * @version   0.5.0
+ * @since     2025-05-29
  * @namespace PhotoRigma\\Language
- *
- * @details   This file contains English language strings used in the core of the project.
- *            It includes texts for the interface, menus, forms, notifications, and other elements.
+ * @package   PhotoRigma
+ * @subpackage Language
  *
  * @section   LanguageEn_Main_Functions Main Functions
  *            - Providing localized strings for the interface.
  *            - Supporting multilingual functionality of the project.
  *            - Simplifying text updates through centralized storage.
  *
- * @see       @ref LanguageEnglish Group for English localization.
- *
  * @note      This file is part of the PhotoRigma system and provides localization for the project in English.
  *
  * @copyright Copyright (c) 2025 Dark Dayver. All rights reserved.
- * @license   MIT License (https://opensource.org/licenses/MIT)
+ * @license   MIT License {@link https://opensource.org/licenses/MIT}
  *            Permission is hereby granted, free of charge, to any person obtaining a copy
  *            of this software and associated documentation files (the "Software"), to deal
  *            in the Software without restriction, including without limitation the rights
@@ -33,11 +31,13 @@
  *            - The above copyright notice and this permission notice shall be included in all
  *              copies or substantial portions of the Software.
  */
+/** @noinspection PhpRedundantVariableDocTypeInspection */
 
 namespace PhotoRigma\Language;
 
 // Prevent direct file access
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
+    /** @noinspection ForgottenDebugOutputInspection */
     error_log(
         date('H:i:s') . ' [ERROR] | ' . (filter_input(
             INPUT_SERVER,
@@ -48,40 +48,15 @@ if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
     die('HACK!');
 }
 
-/**
- * @defgroup LanguageEnglish English Language Variables
- * @brief    Module for working with English language variables.
- */
-
-/**
- * @var string $lang_name
- * @brief   Language name
- * @ingroup LanguageEnglish
- */
+/** @var string $lang_name Language name */
 $lang_name = 'English';
 
-/**
- * @var string $lang_id
- * @brief   Language identifier for HTML
- * @ingroup LanguageEnglish
- */
+/** @var string $lang_id Language identifier for HTML */
 $lang_id = 'en';
 
 /**
- * @addtogroup LanguageEnglish
- * @{
- */
-
-/**
- * @var array $lang_en
- * @brief Array of language variables
- */
-/** @noinspection PhpUnusedLocalVariableInspection */
-$lang_en = [];
-
-/**
- * @defgroup LanguageEnglishMain Main Language Variables
- * @brief    Main text variables used on the site.
+ * @var array $lang_en Array of language variables
+ * @noinspection PhpUnusedLocalVariableInspection
  */
 $lang_en = [
     'main' => [
@@ -139,10 +114,6 @@ $lang_en = [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishMenu Menu Item Variables
- * @brief    Text variables for site menu items.
- */
 $lang_en += [
     'menu' => [
         'name_block'    => 'Navigation Panel',
@@ -162,10 +133,6 @@ $lang_en += [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishCategory Category Variables
- * @brief    Text variables for category management and browsing.
- */
 $lang_en += [
     'category' => [
         'category'            => 'Category',
@@ -195,10 +162,6 @@ $lang_en += [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishLogin Login and Registration Variables
- * @brief    Text variables for registration, login, and password recovery.
- */
 $lang_en += [
     'profile' => [
         'regist'                   => 'Registration',
@@ -235,10 +198,6 @@ $lang_en += [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishNews News Variables
- * @brief    Text variables for site news.
- */
 $lang_en += [
     'news' => [
         'news'      => 'News Archive',
@@ -269,10 +228,6 @@ $lang_en += [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishPhoto Photo Variables
- * @brief    Text variables for image display, processing, and rating.
- */
 $lang_en += [
     'photo' => [
         'title'           => 'Image',
@@ -300,10 +255,6 @@ $lang_en += [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishSearch Search Variables
- * @brief    Text variables for the search page.
- */
 $lang_en += [
     'search' => [
         'title'         => 'Enter a search string and select a range',
@@ -316,10 +267,6 @@ $lang_en += [
     ],
 ];
 
-/**
- * @defgroup LanguageEnglishAdmin Admin Variables
- * @brief    Text variables for the admin panel.
- */
 $lang_en += [
     'admin' => [
         'title'                         => 'Administration',
@@ -411,10 +358,6 @@ $lang_en += [
         'confirm_delete_group'          => 'Are you sure you want to delete this group? Users from this group will be moved to the default group.',
     ],
 ];
-
-/**
- * @}
- */
 
 return [
     'lang_name' => $lang_name,

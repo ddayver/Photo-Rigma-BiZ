@@ -23,6 +23,8 @@
         "ext-pdo_mysql": "*",
         "ext-session": "*",
         "ext-zip": "*",
+        "ext-memcached": "*",
+        "ext-xml": "*",
         "vlucas/phpdotenv": "^5.6",
         "jeremykendall/php-domain-parser": "^6.4",
         "symfony/polyfill-intl-idn": "^1.32"
@@ -43,7 +45,6 @@
         "ext-gmagick": "Alternative to Imagick for image processing",
         "ext-imagick": "For advanced image processing (alternative to GD)",
         "ext-intl": "For advanced string handling and transliteration",
-        "ext-memcached": "For Memcached cache support",
         "ext-pdo_pgsql": "For PostgreSQL database support",
         "ext-pdo_sqlite": "For SQLite database support",
         "ext-redis": "For Redis cache support"
@@ -85,12 +86,13 @@
         ],
         "update-env": "php scripts/update-env.php",
         "setup-cron": "@php scripts/setup-cron.php || echo '[WARN] Не хватает прав для настройки cron'",
-        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --rules @PSR12 --dry-run --diff -vv ./",
-        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --rules @PSR12 -vv ./",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff -vv",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix -vv",
         "stan": "phpstan --memory-limit=512M analyze src/ tests/ core/",
         "psalm": "psalm",
         "psalm-check": "psalm --find-dead-code --no-suggestions",
-        "psalm-fix": "psalm --alter --issues=all --refactor"
+        "psalm-fix": "psalm --alter --issues=all --refactor",
+        "doc-update": "phpdoc -c phpdoc.xml --defaultpackagename=PhotoRigma --validate --parseprivate --visibility=internal --ignore-tags=noinspection"
     },
     "scripts-descriptions": {
         "post-install-cmd": "Create structure",
@@ -103,6 +105,7 @@
         "stan": "Run PHPStan for static analysis",
         "psalm": "Run Psalm for type safety",
         "psalm-check": "Psalm find dead code without suggestions",
-        "psalm-fix": "Psalm --alter --issues=all --refactor"
+        "psalm-fix": "Psalm --alter --issues=all --refactor",
+        "doc-update": "Generate PHPDoc"
     }
 }
