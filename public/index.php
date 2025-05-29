@@ -130,10 +130,6 @@ use LogicException;
 use OutOfBoundsException;
 use PDOException;
 use PhotoRigma\Classes\Bootstrap;
-use PhotoRigma\Classes\Cache_Handler;
-use PhotoRigma\Classes\Database;
-use PhotoRigma\Classes\Template;
-use PhotoRigma\Classes\User;
 use PhotoRigma\Classes\Work;
 use RangeException;
 use RuntimeException;
@@ -143,15 +139,14 @@ use Dotenv\Dotenv;
 
 use function PhotoRigma\Include\log_in_file;
 
-/** @var Cache_Handler $cache */
-/** @var Database $db */
-/** @var Work $work */
-/** @var User $user */
-/** @var Template $template */
-
 // Устанавливаем кодировку для работы с мультибайтовыми строками
-$encoding = mb_regex_encoding('UTF-8');
 mb_internal_encoding('UTF-8');
+
+/** @var \PhotoRigma\Interfaces\Cache_Handler_Interface $cache */
+/** @var \PhotoRigma\Interfaces\Database_Interface $db */
+/** @var \PhotoRigma\Interfaces\Work_Interface $work */
+/** @var \PhotoRigma\Interfaces\User_Interface $user */
+/** @var \PhotoRigma\Interfaces\Template_Interface $template */
 
 /** Используется для проверки, что файлы подключены через index.php, а не вызваны напрямую. */
 define('IN_GALLERY', true);
@@ -215,7 +210,7 @@ try {
      * - Формируется путь к файлу действия.
      * - Если файл не существует или недоступен, используется файл по умолчанию ('main.php').
      */
-    [$action, $action_file] = $work->find_action_file($_GET['action']);
+    [$action, $action_file] = $work->find_action_file($_GET['action'] ?? 'main');
     include_once $action_file;
 
     // Создаем токен для CSRF-защиты в полях поиска и входа

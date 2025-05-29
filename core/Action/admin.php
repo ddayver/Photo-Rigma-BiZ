@@ -60,18 +60,15 @@
 
 namespace PhotoRigma\Action;
 
-use PhotoRigma\Classes\Database;
-use PhotoRigma\Classes\Template;
-use PhotoRigma\Classes\User;
-use PhotoRigma\Classes\Work;
 use RuntimeException;
+use PhotoRigma\Classes\Work;
 
 use function PhotoRigma\Include\log_in_file;
 
-/** @var Database $db */
-/** @var Work $work */
-/** @var User $user */
-/** @var Template $template */
+/** @var \PhotoRigma\Interfaces\Database_Interface $db */
+/** @var \PhotoRigma\Interfaces\Work_Interface $work */
+/** @var \PhotoRigma\Interfaces\User_Interface $user */
+/** @var \PhotoRigma\Interfaces\Template_Interface $template */
 
 // Предотвращение прямого вызова файла
 if (!defined('IN_GALLERY') || IN_GALLERY !== true) {
