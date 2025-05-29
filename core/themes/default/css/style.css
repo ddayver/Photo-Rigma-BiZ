@@ -1,0 +1,293 @@
+@charset "utf-8";
+
+:root {
+    color-scheme: dark;
+}
+
+/* Стиль для элементов с классом custom-menu */
+.custom-menu:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Изменение цвета текста и фона */
+.custom-input input {
+    background-color: #1e1e1e !important; /* Тёмный фон */
+    color: #ffffff !important; /* Белый текст */
+    border-color: #333333 !important; /* Цвет границы */
+}
+
+.custom-textarea textarea {
+    background-color: #1e1e1e !important; /* Тёмный фон */
+    color: #ffffff !important; /* Белый текст */
+    border-color: #333333 !important; /* Цвет границы */
+}
+
+/* Изменение цвета при наведении */
+.custom-input input:hover {
+    background-color: #333333 !important; /* Темнее при наведении */
+}
+
+.custom-textarea textarea:hover {
+    background-color: #333333 !important; /* Темнее при наведении */
+}
+
+/* Изменение цвета при фокусе */
+.custom-input input:focus {
+    background-color: #2a2a2a !important; /* Фон при фокусе */
+    border-color: #ff6347 !important; /* Оранжевая граница */
+}
+
+.custom-textarea textarea:focus {
+    background-color: #2a2a2a !important; /* Фон при фокусе */
+    border-color: #ff6347 !important; /* Оранжевая граница */
+}
+
+.no-space {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.tiny-space {
+    padding: 1px !important;
+    margin: 2px !important;
+}
+
+#short_menu {
+    position: relative;
+    overflow: visible !important;
+}
+
+.ui.sticky {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.ui.divided.grid > .row > .column:not(:last-child) {
+    border-right: 1px solid gray;
+}
+
+.custom-divider {
+    height: 1px !important; /* Минимальная высота */
+    background-color: #ccc !important; /* Цвет линии */
+    margin: 5px 5% !important; /* Отступы */
+}
+
+.form-field {
+    display: grid;
+    margin: 5px;
+}
+
+.form-field label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.block_border {
+    border: #414b57 ridge 3px !important;
+}
+
+/* Базовые стили для рейтинга */
+
+/* Цвета для положительных, отрицательных и нейтральных значений */
+
+/* Активные иконки */
+
+/* Стиль для частичной заливки */
+
+.ui.buttons.vertical .button:first-child {
+    border-radius: 0;
+}
+
+.ui.buttons.vertical .button:last-child {
+    border-radius: 0 0 15px 15px;
+    margin-bottom: 0;
+}
+
+/* Общий контейнер с использованием CSS Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: var(--left-panel-width) 1fr var(--right-panel-width); /* Ширина колонок */
+    gap: 5px; /* Отступ между колонками */
+    padding-top: 5px;
+}
+
+/* Стиль для левой панели */
+.left-panel {
+    text-align: center;
+}
+
+/* Стиль для центральной части */
+.center-content {
+    text-align: center;
+}
+
+/* Стиль для правой панели */
+.right-panel {
+    text-align: center;
+}
+
+body {
+    background: #141519;
+    font: 14px Helvetica, sans-serif;
+    color: #cccccc
+}
+
+.my {
+    background: #141519;
+    font: 14px Helvetica, sans-serif;
+    border: #414b57 ridge 2px;
+    color: #cccccc;
+    text-align: left;
+    vertical-align: top;
+    margin: 0;
+    padding: 5px
+}
+
+.field {
+    vertical-align: top
+}
+
+.field_small, .field_copyright, .header_site {
+    border: #414b57 ridge 3px;
+    vertical-align: top;
+}
+
+.field_small {
+    background: url(../image/gpadient_small.jpg) repeat-x bottom !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+}
+
+.header_site {
+    background: url(../image/logo-2.png) no-repeat right;
+    overflow: hidden;
+    border-radius: 15px;
+    margin: 0 !important;
+}
+
+.field_big {
+    background: url(../image/gpadient_big.jpg) repeat-x top !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.field_copyright {
+    font: 10px serif;
+    text-align: center;
+    vertical-align: middle
+}
+
+.mini_photo {
+    color: #999999;
+    text-align: center;
+    vertical-align: middle;
+    border-width: 0
+}
+
+.mini_photo a, .mini_photo a:visited, .mini_photo a:hover, .mini_photo a:active {
+    border: hidden 0
+}
+
+.news {
+    text-align: left;
+    text-indent: 10px;
+    vertical-align: top;
+    /*    border-width: 0 */
+}
+
+.news_data {
+    color: #999999;
+    text-align: left;
+    vertical-align: top;
+    /*    border-width: 0 */
+}
+
+.login_user {
+    text-align: center;
+    vertical-align: middle;
+    border-width: 0
+}
+
+.stat_data {
+    color: #999999;
+    text-align: center;
+    vertical-align: bottom
+}
+
+.regist {
+    color: #999999;
+    text-align: center;
+    text-indent: 10px;
+    vertical-align: top;
+    border-width: 0
+}
+
+.regist_data {
+    color: #999999;
+    text-align: left;
+    text-indent: 10px;
+    vertical-align: top;
+    border-width: 0;
+    margin: 0 50px
+}
+
+.form {
+    font: 14px "Courier New", Courier, monospace;
+    height: 14px
+}
+
+.form_textarea {
+    font: 14px "Courier New", Courier, monospace
+}
+
+.category_center {
+    text-align: center;
+    vertical-align: middle;
+    border-width: 0;
+    margin: 0;
+    padding: 0 0 5px
+}
+
+.mini_photo_category {
+    float: left;
+    vertical-align: top;
+    border-width: 0
+}
+
+.description {
+    font: 10px serif
+}
+
+.error {
+    height: 14px;
+    text-align: center;
+    vertical-align: middle;
+    width: 14px
+}
+
+button {
+    background: #1f2329;
+    border: solid 1px;
+    color: #cccccc
+}
+
+.field_copyright a, .field_copyright a:visited, .login_user a, .login_user a:visited, .mini_photo a, .mini_photo a:visited, .news_data a, .news_data a:visited, .news a, .news a:visited, .category_center a, .category_center a:visited {
+    color: #cccccc;
+    text-decoration: none
+}
+
+.field_copyright a:hover, .login_user a:hover, .mini_photo a:hover, .news_data a:hover, .news a:hover, .category_center a:hover {
+    color: #ffffff;
+    text-decoration: none
+}
+
+.field_copyright a:active, .login_user a:active, .mini_photo a:active, .news_data a:active, .news a:active, .category_center a:active {
+    color: #6ec151;
+    text-decoration: none
+}
+
+.line, .select {
+    color: #999999
+}

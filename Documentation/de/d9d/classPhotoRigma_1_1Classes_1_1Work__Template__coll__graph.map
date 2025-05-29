@@ -1,9 +1,0 @@
-<map id="Work_Template" name="Work_Template">
-<area shape="rect" id="Node000001" title="Класс для формирования данных для шаблонов." alt="" coords="210,92,323,117"/>
-<area shape="rect" id="Node000002" href="$d5/d9b/interfacePhotoRigma_1_1Interfaces_1_1Work__Template__Interface.html" title="Интерфейс для формирования данных для шаблонов." alt="" coords="5,5,176,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,35,243,89,241,94,127,39"/>
-<area shape="rect" id="Node000003" href="$d7/dc2/interfacePhotoRigma_1_1Interfaces_1_1Database__Interface.html" title="Интерфейс для работы с базами данных через PDO." alt="" coords="199,5,334,30"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="269,45,269,92,264,92,264,45"/>
-<area shape="rect" id="Node000004" href="$dc/d14/interfacePhotoRigma_1_1Interfaces_1_1User__Interface.html" title="Интерфейс для работы с пользователями и группами." alt="" coords="358,5,466,30"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="381,40,288,94,285,89,378,35"/>
-</map>

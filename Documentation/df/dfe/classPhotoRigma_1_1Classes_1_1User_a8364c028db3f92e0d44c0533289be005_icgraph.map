@@ -1,7 +1,0 @@
-<map id="_load_authenticated_user" name="_load_authenticated_user">
-<area shape="rect" id="Node000001" title="Метод загружает данные аутентифицированного пользователя из базы данных, включая права пользователя и..." alt="" coords="297,5,466,30"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#aee4743c1e7219e86017ef88bdd1a4656" title="Инициализация данных пользователя: определение типа пользователя (гость или аутентифицированный) на о..." alt="" coords="143,5,249,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,20,250,20,250,15,282,15"/>
-<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0524c883699d2510258de9ed3b7b3194" title="Конструктор класса." alt="" coords="5,5,95,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="127,20,95,20,95,15,127,15"/>
-</map>

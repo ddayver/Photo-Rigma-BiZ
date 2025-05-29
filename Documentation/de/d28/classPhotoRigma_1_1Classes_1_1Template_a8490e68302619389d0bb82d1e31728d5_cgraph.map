@@ -1,9 +1,0 @@
-<map id="add_case_array" name="add_case_array">
-<area shape="rect" id="Node000001" title="Добавляет массив данных о выборе блока для вывода фрагментов шаблона через вызов внутреннего метода." alt="" coords="5,5,118,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#ac99bdfb18ef04f15df9609e569e81186" title="Метод добавляет массив данных о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивно..." alt="" coords="166,5,334,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,15,150,15,150,20,118,20"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a0355fc48132e1f91ee539aac498cd4af" title="Метод добавляет данные о выборе блока для вывода фрагментов шаблона, с возможностью рекурсивного разм..." alt="" coords="382,5,515,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,15,367,15,367,20,334,20"/>
-<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#afe519c98f15af68223415e9a57fd25bf" title="Метод проверяет путь, разбирает его на составные части и создает новый объект&#45;массив при необходимост..." alt="" coords="563,5,673,30"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="516,15,548,15,548,20,516,20"/>
-</map>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        configVersion="3"
+        xmlns="https://www.phpdoc.org"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd"
+>
+    <!-- Заголовок проекта -->
+    <title>Photo-Rigma-BiZ</title>
+
+    <!-- Пути проекта -->
+    <paths>
+        <output>Documentation/</output>
+        <cache>var/cache/.phpdoc</cache>
+    </paths>
+
+    <!-- Источник кода и игнорируемые директории -->
+    <version number="wip-composer">
+        <folder>.</folder>
+        <api>
+            <source dsn=".">
+                <path>.</path>
+            </source>
+            <ignore hidden="false" symlinks="false">
+                <path>vendor</path>
+                <path>var</path>
+                <path>scripts</path>
+                <path>submodule</path>
+                <path>config/ver.php</path>
+                <path>.*</path>
+            </ignore>
+        </api>
+    </version>
+
+    <!-- Настройки генерации -->
+    <setting name="defaultpackagename" value="PhotoRigma"/>
+    <setting name="validate" value="true"/>
+    <setting name="parseprivate" value="true"/>
+</phpdocumentor>

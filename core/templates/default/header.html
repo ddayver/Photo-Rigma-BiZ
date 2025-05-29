@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="{HTML_LANG}">
+
+<head>
+	<title>{TITLE}</title>
+	<meta name="description" content="{META_DESCRIPTION}">
+	<meta name="keywords" content="{META_KEYWORDS}">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	{INSERT_HEADER}
+<!-- IF_LOCALHOST_SERVER_BEGIN -->
+	<link href="{THEME_URL}css/semantic.min.css" rel="stylesheet" type="text/css">
+	<script src="{THEME_URL}js/jquery.min.js" defer></script>
+	<script src="{THEME_URL}js/semantic.min.js" defer></script>
+<!-- IF_LOCALHOST_SERVER_ELSE -->
+    <link href="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui/dist/semantic.min.js" defer></script>
+<!-- IF_LOCALHOST_SERVER_END -->
+	<link href="{THEME_URL}css/style.css" rel="stylesheet" type="text/css">
+	<script src="{THEME_URL}js/script.js" defer></script>
+	<style>
+		:root {
+			--left-panel-width: {LEFT_PANEL_WIDTH}px;
+			--right-panel-width: {RIGHT_PANEL_WIDTH}px;
+		}
+	</style>
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#000000">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#000000">
+</head>
+
+<body>
+<div style="display: flex; justify-content: center; align-items: center;">
+	<div class="my" style="width: {GALLERY_WIDTH} !important; border-radius: 15px;">
+		<div class="header_site" style="border-radius: 15px;">
+			<img style="border-radius: 15px 0 0 15px; display: block;" src="{THEME_URL}image/logo-1.png" alt="{SITE_NAME} - {SITE_DESCRIPTION}" title="{SITE_NAME} - {SITE_DESCRIPTION}">
+		</div>
+		<div class="mini ui inverted transparent segment no-space" id="short_menu">
+			<div class="mini ui inverted transparent sticky no-space">
+				<div style="display: flex; justify-content: space-between; align-items: center;">
+					<div>
+<!-- IF_SHORT_MENU_BEGIN -->
+						<div class="small ui black inverted menu">
+<!-- ARRAY_SHORT_MENU_BEGIN -->
+<!-- IF_SHORT_MENU_URL_BEGIN -->
+							<a class="item custom-menu" href="{U_SHORT_MENU}" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
+<!-- IF_SHORT_MENU_URL_ELSE -->
+							<a class="item active" title="{L_SHORT_MENU}">{L_SHORT_MENU}</a>
+<!-- IF_SHORT_MENU_URL_END -->
+<!-- ARRAY_SHORT_MENU_END -->
+						</div>
+<!-- IF_SHORT_MENU_ELSE -->
+						&nbsp;
+<!-- IF_SHORT_MENU_END -->
+					</div>
+					<form name="search" action="{U_SEARCH}" method="post" style="display: flex; align-items: center;">
+						<input type="hidden" name="csrf_token" value="{CSRF_TOKEN}">
+						<div class="ui inverted icon input custom-input">
+							<input class="ui input" type="text" name="search_main_text" placeholder="{L_SEARCH}...">
+							<i class="search icon"></i>
+						</div>
+						<button class="small ui basic inverted button custom-input" name="search" type="submit" title="{L_SEARCH}">
+							{L_SEARCH}
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="grid-container">
+			<div class="left-panel">
+<!-- ARRAY_LEFT_PANEL_BEGIN -->
+<!-- SELECT_LEFT_BLOCK_BEGIN -->
+<!-- CASE_MENU -->
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="bars icon"></i> {LONG_MENU_NAME_BLOCK}
+						</div>
+					</div>
+<!-- IF_LONG_MENU_BEGIN -->
+					<div class="ui buttons vertical" style="width: 100%;">
+<!-- ARRAY_LONG_MENU_BEGIN -->
+<!-- IF_LONG_MENU_URL_BEGIN -->
+						<button style="width: 100%; text-align: left;" class="small ui inverted button" onclick="window.location.href='{U_LONG_MENU}'" title="{L_LONG_MENU}">
+							<i class="folder outline icon"></i> {L_LONG_MENU}
+						</button>
+<!-- IF_LONG_MENU_URL_ELSE -->
+						<button style="width: 100%; text-align: left;" class="small ui secondary active button" title="{L_LONG_MENU}">
+							<i class="folder open outline icon"></i> {L_LONG_MENU}
+						</button>
+<!-- IF_LONG_MENU_URL_END -->
+<!-- ARRAY_LONG_MENU_END -->
+					</div>
+<!-- IF_LONG_MENU_END -->
+				</div>
+<!-- BREAK_MENU -->
+<!-- CASE_TOP_LAST_PHOTO -->
+				<div class="ui segment field_small block_border" style="border-radius: 15px;">
+					<div class="small ui top attached inverted segment" style="border-radius: 15px 15px 0 0;">
+						<div class="small ui center aligned header">
+							<i class="camera retro icon"></i> {NAME_BLOCK}
+						</div>
+					</div>
+					<div class="mini_photo" style="margin: 10px 0; text-align: center;">
+						<div style="margin-bottom: 10px;">
+							<a href="{U_CATEGORY}" title="{D_DESCRIPTION_CATEGORY}">{D_NAME_CATEGORY}</a> ->
+							<a href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">{D_NAME_PHOTO}</a>
+						</div>
+						<div style="margin-bottom: 10px;">
+							<a class="ui small rounded image" href="{U_PHOTO}" title="{D_DESCRIPTION_PHOTO}">
+								<img src="{U_THUMBNAIL_PHOTO}" alt="{D_NAME_PHOTO}" width="{PHOTO_WIDTH}" height="{PHOTO_HEIGHT}" title="{D_DESCRIPTION_PHOTO}">
+							</a>
+						</div>
+						<div style="margin-bottom: 10px;">
+<!-- IF_USER_EXISTS_BEGIN -->
+							{L_USER_ADD}: <a href="{U_PROFILE_USER_ADD}" title="{D_REAL_NAME_USER_ADD}">{D_REAL_NAME_USER_ADD}</a>.
+<!-- IF_USER_EXISTS_ELSE -->
+							{D_REAL_NAME_USER_ADD}
+<!-- IF_USER_EXISTS_END -->
+						</div>
+						<div>{PHOTO_RATE}</div>
+					</div>
+				</div>
+<!-- BREAK_TOP_LAST_PHOTO -->
+<!-- CASE_DEFAULT -->
+				<div class="ui segment field_big" style="border-radius: 15px;">
+					<div class="ui top attached inverted red segment" style="border-radius: 15px;">
+						<div class="ui center aligned header">
+							<i class="exclamation circle icon"></i> ERROR CASE_BLOCK <i class="bug icon"></i>
+						</div>
+					</div>
+				</div>
+<!-- BREAK_DEFAULT -->
+<!-- SELECT_LEFT_BLOCK_END -->
+<!-- ARRAY_LEFT_PANEL_END -->
+			</div>
+			<div class="center-content">

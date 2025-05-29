@@ -1,7 +1,0 @@
-<map id="_utf8_wordwrap_internal" name="_utf8_wordwrap_internal">
-<area shape="rect" id="Node000001" title="Разбивка строки на несколько строк ограниченной длины (защищённый метод)." alt="" coords="352,12,514,37"/>
-<area shape="rect" id="Node000002" href="$db/d20/classPhotoRigma_1_1Classes_1_1Work__Helper.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов внутреннего метода." alt="" coords="198,12,304,37"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="336,27,305,27,305,22,336,22"/>
-<area shape="rect" id="Node000003" href="$d7/d53/classPhotoRigma_1_1Classes_1_1Work.html#aa76be87bb05ca60ff16f6d47f5a44c32" title="Разбивает строку на несколько строк ограниченной длины через вызов публичного метода в дочернем класс..." alt="" coords="5,5,150,44"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="182,27,150,27,150,22,182,22"/>
-</map>

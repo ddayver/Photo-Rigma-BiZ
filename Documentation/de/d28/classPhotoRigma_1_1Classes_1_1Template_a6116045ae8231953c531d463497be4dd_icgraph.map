@@ -1,9 +1,0 @@
-<map id="_template_case" name="_template_case">
-<area shape="rect" id="Node000001" title="Метод обрабатывает блок выбора фрагмента шаблона, выбирая один из блоков CASE_ЗНАЧЕНИЕ или CASE_DEFAU..." alt="" coords="544,5,658,30"/>
-<area shape="rect" id="Node000002" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a3b68a9172091fe4785329b0eab4a4559" title="Метод обрабатывает шаблон для подготовки его к выводу: рекурсивно обрабатывает объектные блоки,..." alt="" coords="386,5,496,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="529,20,497,20,497,15,529,15"/>
-<area shape="rect" id="Node000003" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a4ec1d1b401701fe4bc86759130951668" title="Метод создает и обрабатывает шаблон, включая чтение файла, парсинг и замену плейсхолдеров." alt="" coords="168,5,338,30"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="370,20,338,20,338,15,370,15"/>
-<area shape="rect" id="Node000004" href="$de/d28/classPhotoRigma_1_1Classes_1_1Template.html#a1ef5df918700c21dc94152e4a8329770" title="Создает и обрабатывает шаблон через вызов внутреннего метода." alt="" coords="5,5,120,30"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,20,120,20,120,15,152,15"/>
-</map>

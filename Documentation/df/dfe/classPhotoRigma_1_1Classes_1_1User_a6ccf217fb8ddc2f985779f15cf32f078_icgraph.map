@@ -1,7 +1,0 @@
-<map id="encode_user_rights" name="encode_user_rights">
-<area shape="rect" id="Node000001" title="Преобразует массив прав пользователя в строку JSON через вызов внутреннего метода." alt="" coords="371,12,505,37"/>
-<area shape="rect" id="Node000002" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a0e0a242e5a2f6555e5f5dd0d4f9c52a4" title="Обновляет права пользователя или группу через Админку." alt="" coords="185,5,323,44"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="356,27,323,27,323,22,356,22"/>
-<area shape="rect" id="Node000003" href="$df/dfe/classPhotoRigma_1_1Classes_1_1User.html#a54dd5e694d07ac47b91bf9a7cc58d9d2" title="Обновляет права пользователя или группу через вызов внутреннего метода." alt="" coords="5,12,137,37"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="169,27,137,27,137,22,169,22"/>
-</map>

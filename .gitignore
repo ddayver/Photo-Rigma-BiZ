@@ -18,3 +18,11 @@ doc_gen.bat
 sql_*.txt
 *.log
 /cron.sh
+/vendor/
+/composer.lock
+.env
+/public/avatar
+/public/themes/*
+/var
+/tmp
+.php-cs-fixer.php

@@ -1,7 +1,0 @@
-<map id="_fallback_to_like_mysql" name="_fallback_to_like_mysql">
-<area shape="rect" id="Node000001" title="Выполняет альтернативный поиск по LIKE для MySQL." alt="" coords="214,29,373,54"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="329,17,317,10,293,8,271,10,260,15,257,20,263,27,259,31,252,21,256,11,270,5,293,3,319,5,332,12"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a56dafcbeab9a8a4a7304278eeb2edabe" title="Выполняет полнотекстовый поиск в MySQL с обработкой минимальной длины строки, кешированием ошибок и f..." alt="" coords="5,29,166,54"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="198,44,166,44,166,39,198,39"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="122,17,110,10,85,8,63,10,52,15,49,20,56,27,51,31,44,21,48,11,62,5,86,3,111,5,124,12"/>
-</map>

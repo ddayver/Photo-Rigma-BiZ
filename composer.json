@@ -1,0 +1,111 @@
+{
+    "name": "ddayver/photo-rigma-biz",
+    "description": "Open source photo gallery with multi-DBMS support",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dark Dayver",
+            "email": "admin@rigma.biz"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-ctype": "*",
+        "ext-exif": "*",
+        "ext-fileinfo": "*",
+        "ext-filter": "*",
+        "ext-gd": "*",
+        "ext-hash": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-session": "*",
+        "ext-zip": "*",
+        "ext-memcached": "*",
+        "ext-xml": "*",
+        "vlucas/phpdotenv": "^5.6",
+        "jeremykendall/php-domain-parser": "^6.4",
+        "symfony/polyfill-intl-idn": "^1.32"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "phpunit/phpunit": "^12.1",
+        "vimeo/psalm": "^6.11",
+        "phpstan/phpstan": "^2.1",
+        "symfony/var-dumper": "^7.2",
+        "slevomat/coding-standard": "^8.18",
+        "phpstan/extension-installer": "^1.4",
+        "phpunit/php-timer": "^8.0",
+        "symfony/filesystem": "^7.2"
+    },
+    "suggest": {
+        "ext-gmagick": "Alternative to Imagick for image processing",
+        "ext-imagick": "For advanced image processing (alternative to GD)",
+        "ext-intl": "For advanced string handling and transliteration",
+        "ext-pdo_pgsql": "For PostgreSQL database support",
+        "ext-pdo_sqlite": "For SQLite database support",
+        "ext-redis": "For Redis cache support"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "PhotoRigma\\Classes\\": "src/Classes/",
+            "PhotoRigma\\Interfaces\\": "src/Interfaces/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhotoRigma\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "platform-check": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-cs-fixer/factory": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true,
+            "roave/security-advisories": true
+        }
+    },
+    "scripts": {
+        "post-install-cmd": "php scripts/setup-structure.php",
+        "build-app":[
+            "php scripts/install.php",
+            "php scripts/check-env.php || true",
+            "composer run setup-cron"
+        ],
+        "post-update-cmd":[
+            "php scripts/update.php",
+            "php scripts/update-env.php || true",
+            "composer run setup-cron"
+        ],
+        "update-env": "php scripts/update-env.php",
+        "setup-cron": "@php scripts/setup-cron.php || echo '[WARN] Не хватает прав для настройки cron'",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff -vv",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix -vv",
+        "stan": "phpstan --memory-limit=512M analyze src/ tests/ core/",
+        "psalm": "psalm",
+        "psalm-check": "psalm --find-dead-code --no-suggestions",
+        "psalm-fix": "psalm --alter --issues=all --refactor",
+        "doc-update": "phpdoc -c phpdoc.xml --defaultpackagename=PhotoRigma --validate --parseprivate --visibility=internal --ignore-tags=noinspection"
+    },
+    "scripts-descriptions": {
+        "post-install-cmd": "Create structure",
+        "build-app": "Install RDBMS",
+        "post-update-cmd": "Update RDBMS and check .env files",
+        "update-env": "Update .env file",
+        "setup-cron": "Set up daily maintenance tasks",
+        "cs-check": "Check code style",
+        "cs-fix": "Fix code style issues",
+        "stan": "Run PHPStan for static analysis",
+        "psalm": "Run Psalm for type safety",
+        "psalm-check": "Psalm find dead code without suggestions",
+        "psalm-fix": "Psalm --alter --issues=all --refactor",
+        "doc-update": "Generate PHPDoc"
+    }
+}

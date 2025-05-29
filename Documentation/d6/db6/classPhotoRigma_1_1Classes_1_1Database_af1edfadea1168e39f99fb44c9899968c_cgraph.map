@@ -1,7 +1,0 @@
-<map id="_full_text_search_pgsql" name="_full_text_search_pgsql">
-<area shape="rect" id="Node000001" title="Выполняет полнотекстовый поиск в PostgreSQL с обработкой минимальной длины строки,..." alt="" coords="5,36,163,61"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="53,38,46,28,50,18,63,12,84,10,107,12,119,19,116,24,106,17,84,15,64,17,54,22,52,27,57,34"/>
-<area shape="rect" id="Node000002" href="$d6/db6/classPhotoRigma_1_1Classes_1_1Database.html#a90a18b9fa64057e99f74cbc20edb17d8" title="Выполняет альтернативный поиск по ILIKE с ранжированием similarity() для PostgreSQL." alt="" coords="211,29,332,68"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,46,195,46,195,51,163,51"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="236,30,234,20,239,11,252,5,271,3,292,5,304,12,302,16,291,10,271,8,253,10,243,15,239,21,241,28"/>
-</map>

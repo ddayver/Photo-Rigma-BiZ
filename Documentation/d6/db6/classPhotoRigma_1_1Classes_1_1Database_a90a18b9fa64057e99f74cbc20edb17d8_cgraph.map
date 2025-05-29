@@ -1,4 +1,0 @@
-<map id="_fallback_to_ilike_pgsql" name="_fallback_to_ilike_pgsql">
-<area shape="rect" id="Node000001" title="Выполняет альтернативный поиск по ILIKE с ранжированием similarity() для PostgreSQL." alt="" coords="5,29,127,68"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="42,30,41,20,44,11,53,5,66,3,80,5,88,12,85,16,78,10,66,8,55,10,48,14,46,20,47,29"/>
-</map>

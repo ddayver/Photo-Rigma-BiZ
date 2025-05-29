@@ -1,4 +1,3 @@
-[submodule "www/badword"]
-	path = www/badword
-	url = ../../LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words.git
-	branch = master
+[submodule "submodule/naughty-words-js"]
+	path = submodule/naughty-words-js
+	url = git@github.com:alfinforwork/naughty-words-js.git

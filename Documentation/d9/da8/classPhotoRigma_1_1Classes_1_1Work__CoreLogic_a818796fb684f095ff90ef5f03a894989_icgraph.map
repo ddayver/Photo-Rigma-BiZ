@@ -1,5 +1,0 @@
-<map id="_del_photo_internal" name="_del_photo_internal">
-<area shape="rect" id="Node000001" title="Удаляет изображение с указанным идентификатором, а также все упоминания об этом изображении в таблица..." alt="" coords="131,5,264,30"/>
-<area shape="rect" id="Node000002" href="$d9/da8/classPhotoRigma_1_1Classes_1_1Work__CoreLogic.html#a84a1eeee53079a8e60fea1d1e0d94639" title="Удаляет изображение с указанным идентификатором через вызов внутреннего метода." alt="" coords="5,5,83,30"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,20,83,20,83,15,115,15"/>
-</map>
