@@ -1568,7 +1568,7 @@ INSERT INTO public.menu VALUES (13, 'logout', '?action=profile&subact=logout', '
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: photorigma_wip
 --
 
-INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default', DEFAULT, NULL, false, true, NULL, NULL, true, false, 'UTC', NULL);
+INSERT INTO public.users VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@foii.ru', 'no_avatar.jpg', 'russian', '2009-01-20 12:31:35', '2025-04-07 15:40:15.054838', '2025-04-07 15:40:06.894219', 3, '{"admin": 1, "cat_user": 1, "news_add": 1, "pic_view": 1, "news_view": 1, "pic_upload": 1, "comment_add": 1, "cat_moderate": 1, "comment_view": 1, "pic_moderate": 1, "news_moderate": 1, "pic_rate_user": 1, "pic_rate_moder": 1, "comment_moderate": 1}', 'default', DEFAULT, NULL, false, true, NULL, NULL, true, false, 'UTC', NULL);
 
 
 --
