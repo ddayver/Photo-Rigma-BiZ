@@ -19,10 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `photorigma`
+-- База данных: `photorigma_release`
 --
-CREATE DATABASE IF NOT EXISTS `photorigma` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `photorigma`;
+CREATE DATABASE IF NOT EXISTS `photorigma_release` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `photorigma_release`;
 
 -- --------------------------------------------------------
 
@@ -517,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `real_name`, `email`, `email_confirmed`, `avatar`, `language`, `theme`, `timezone`, `activation`, `date_regist`, `date_last_activ`, `date_last_logout`, `deleted_at`, `permanently_deleted`, `token`, `token_expires_at`, `group_id`, `allow_newsletter`, `user_rights`, `other_params`) VALUES
-(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 1, 'no_avatar.jpg', 'russian', 'default', 'UTC', 1, '2009-01-20 12:31:35', '2025-05-11 18:43:48', '2025-05-09 19:45:42', NULL, 0, NULL, NULL, 3, 0, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}', NULL);
+(1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@foii.ru', 1, 'no_avatar.jpg', 'russian', 'default', 'UTC', 1, '2009-01-20 12:31:35', '2025-05-11 18:43:48', '2025-05-09 19:45:42', NULL, 0, NULL, NULL, 3, 0, '{\"pic_view\": true, \"pic_rate_user\": true, \"pic_rate_moder\": true, \"pic_upload\": true, \"pic_moderate\": true, \"cat_moderate\": true, \"cat_user\": true, \"comment_view\": true, \"comment_add\": true, \"comment_moderate\": true, \"news_view\": true, \"news_add\": true, \"news_moderate\": true, \"admin\": true}', NULL);
 
 -- --------------------------------------------------------
 

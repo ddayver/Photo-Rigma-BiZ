@@ -231,7 +231,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_rights TEXT DEFAULT NULL,
     other_params TEXT DEFAULT NULL
 );
-INSERT INTO users (id, login, password, real_name, email, email_confirmed, avatar, language, theme, timezone, activation, date_regist, date_last_activ, date_last_logout, deleted_at, permanently_deleted, token, token_expires_at, group_id, allow_newsletter, user_rights, other_params) VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@rigma.biz', 1, 'no_avatar.jpg', 'russian', 'default', 'UTC', 1, '2009-01-20 12:31:35', '2025-04-07 15:10:36', '2025-04-05 11:21:57', NULL, 0, NULL, NULL, 3, 0, '{"pic_view": true, "pic_rate_user": true, "pic_rate_moder": true, "pic_upload": true, "pic_moderate": true, "cat_moderate": true, "cat_user": true, "comment_view": true, "comment_add": true, "comment_moderate": true, "news_view": true, "news_add": true, "news_moderate": true, "admin": true}', NULL);
+INSERT INTO users (id, login, password, real_name, email, email_confirmed, avatar, language, theme, timezone, activation, date_regist, date_last_activ, date_last_logout, deleted_at, permanently_deleted, token, token_expires_at, group_id, allow_newsletter, user_rights, other_params) VALUES (1, 'admin', '$2y$12$66PqD9l3yDp3qj40j.rXNeh7JGzjt/AKkizosLmdbyjB7pQmt6UxW', 'Администратор', 'admin@foii.ru', 1, 'no_avatar.jpg', 'russian', 'default', 'UTC', 1, '2009-01-20 12:31:35', '2025-04-07 15:10:36', '2025-04-05 11:21:57', NULL, 0, NULL, NULL, 3, 0, '{"pic_view": true, "pic_rate_user": true, "pic_rate_moder": true, "pic_upload": true, "pic_moderate": true, "cat_moderate": true, "cat_user": true, "comment_view": true, "comment_add": true, "comment_moderate": true, "news_view": true, "news_add": true, "news_moderate": true, "admin": true}', NULL);
 
 -- Таблица: users_fts
 DROP TABLE IF EXISTS users_fts;
@@ -243,7 +243,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS users_fts USING fts5(
     content_rowid='id',
     tokenize='porter'
 );
-INSERT INTO users_fts (login, real_name, email) VALUES ('admin', 'Администратор', 'admin@rigma.biz');
+INSERT INTO users_fts (login, real_name, email) VALUES ('admin', 'Администратор', 'admin@foii.ru');
 
 -- Индекс: idx_config_value
 DROP INDEX IF EXISTS idx_config_value;
